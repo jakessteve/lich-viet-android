@@ -1,0 +1,26 @@
+{
+  "name": "lich-viet-android",
+  "version": "3.0.0",
+  "description": "Lịch Việt — Android wrapper (Capacitor)",
+  "main": "index.js",
+  "scripts": {
+    "build:web": "cd ../lich-viet && npm run build",
+    "sync": "npx cap sync android",
+    "build:apk": "cd android && ./gradlew assembleDebug",
+    "build:release": "cd android && ./gradlew assembleRelease",
+    "open:studio": "npx cap open android",
+    "full:build": "./scripts/build-sync.sh"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/android": "^8.3.4",
+    "@capacitor/cli": "^8.3.4",
+    "@capacitor/core": "^8.3.4"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
