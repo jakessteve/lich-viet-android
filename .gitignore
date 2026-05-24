@@ -49,6 +49,9 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+# Generated Git hook scaffolding
+.husky/
+
 # Testing & Coverage
 coverage/
 .nyc_output/
