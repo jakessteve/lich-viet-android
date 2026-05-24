@@ -1,0 +1,62 @@
+{
+  "app": {
+    "title": "Lịch Việt",
+    "subtitle": "Tra cứu Âm Lịch & Phong Thủy",
+    "loading": "Đang tải...",
+    "copyright": "© {{year}} Lịch Việt — Tra cứu âm lịch & phong thủy."
+  },
+  "nav": {
+    "amLich": "Âm lịch",
+    "gieoQue": "Gieo quẻ",
+    "soon": "Soon",
+    "skipToContent": "Chuyển đến nội dung chính",
+    "mainNav": "Điều hướng chính",
+    "features": "Chức năng",
+    "toggleDarkMode": "Chuyển chế độ sáng/tối",
+    "userMenu": "Menu ngườii dùng"
+  },
+  "calendar": {
+    "sidebarLabel": "Lịch tháng và thông tin nhanh",
+    "mainContent": "Nội dung chính",
+    "lunarDate": "Âm lịch",
+    "solarTerm": "Tiết khí",
+    "day": "Ngày",
+    "month": "Tháng",
+    "year": "Năm",
+    "buddhistYear": "Phật Lịch",
+    "dayPrefix": "ngày",
+    "monthPrefix": "tháng",
+    "yearPrefix": "năm",
+    "today": "Hôm nay",
+    "weekdays": ["CN", "T2", "T3", "T4", "T5", "T6", "T7"]
+  },
+  "user": {
+    "guest": "Khách",
+    "loginPrompt": "Đăng nhập để lưu thông tin",
+    "login": "Đăng nhập",
+    "register": "Đăng ký",
+    "settings": "Cài đặt",
+    "help": "Trợ giúp",
+    "about": "Giới thiệu"
+  },
+  "footer": {
+    "about": "Giới thiệu",
+    "guide": "Hướng dẫn",
+    "feedback": "Phản hồi"
+  },
+  "maiHoa": {
+    "title": "Mai Hoa Dịch Số",
+    "inputLabel": "Nhập số",
+    "calculate": "Gieo Quẻ",
+    "result": "Kết quả"
+  },
+  "dayView": {
+    "catThan": "Cát Thần",
+    "hungThan": "Hung Thần",
+    "dungSu": "Dụng Sự",
+    "nen": "Nên",
+    "kieng": "Kiêng",
+    "hourlyStars": "Giờ hoàng đạo",
+    "extraStars": "Thần sát phụ"
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "description": "Thái Ất hexagrams derived from Host/Guest count ratios, with Vietnamese interpretations.",
+  "dominanceInterpretations": {
+    "hostDominant": {
+      "label": "Chủ Vượng Khách",
+      "summary": "Thuận lợi cho bảo vệ, giữ vững, ổn định. Bất lợi cho thay đổi lớn.",
+      "advice": "Nên giữ nguyên hiện trạng, không nên mạo hiểm đổi mới.",
+      "detailedAnalysis": "Khi Chủ Toán lớn hơn Khách Toán đáng kể, lực lượng 'chủ nhà' chiếm ưu thế. Đây là năm thuận lợi cho việc bảo vệ thành quả đã có, củng cố vị trí, ổn định nội bộ. Tuy nhiên, không thuận cho mở rộng, phiêu lưu hoặc bắt đầu điều mới mẻ. Giống như một pháo đài kiên cố — an toàn bên trong nhưng không thể tiến ra ngoài.",
+      "careerAdvice": "Nên duy trì công việc hiện tại, tập trung cải thiện quy trình nội bộ. Không nên nhảy việc, khởi nghiệp, hoặc mở rộng kinh doanh sang lĩnh vực mới. Đầu tư vào đào tạo nhân viên hiện có thay vì tuyển mới.",
+      "personalAdvice": "Năm ổn định cá nhân — tốt cho xây dựng gia đình, mua nhà, tích lũy. Không nên di cư, chuyển nhà xa, hoặc thay đổi lối sống đột ngột."
+    },
+    "guestDominant": {
+      "label": "Khách Vượng Chủ",
+      "summary": "Thuận lợi cho đổi mới, sáng tạo, mở rộng. Bất lợi cho bảo thủ.",
+      "advice": "Nên chủ động thay đổi, tìm cơ hội mới, không nên trì hoãn.",
+      "detailedAnalysis": "Khi Khách Toán vượt Chủ Toán, lực lượng 'bên ngoài' chiếm ưu thế. Đây là năm của sự thay đổi, đổi mới, và cơ hội từ bên ngoài. Năng lượng biến động mạnh — những ai linh hoạt thích nghi sẽ thành công, ai bảo thủ sẽ tụt lại. Giống như dòng sông cuốn trôi — phải bơi theo dòng, không thể đứng yên.",
+      "careerAdvice": "Năm tuyệt vời cho nhảy việc, khởi nghiệp, mở rộng thị trường mới, hợp tác quốc tế. Nên đón nhận cơ hội bất ngờ, cải tổ quy trình cũ kỹ. Cơ hội thường đến từ 'người ngoài' — đối tác mới, thị trường mới.",
+      "personalAdvice": "Năm thay đổi cá nhân — tốt cho du học, di cư, thay đổi nghề nghiệp, kết hôn với người nước ngoài. Nên mở lòng đón nhận cái mới."
+    },
+    "balanced": {
+      "label": "Chủ Khách Quân Bình",
+      "summary": "Cân bằng giữa ổn định và đổi mới. Thuận lợi cho hòa giải và phát triển bền vững.",
+      "advice": "Nên cân nhắc kỹ, không quá bảo thủ cũng không quá mạo hiểm.",
+      "detailedAnalysis": "Khi Chủ Toán và Khách Toán gần bằng nhau, vũ trụ đạt trạng thái cân bằng hiếm có. Đây là năm 'vàng' cho sự hòa hợp — nội bộ và bên ngoài đều thuận, phát triển ổn định không quá nhanh cũng không quá chậm. Giống như mùa xuân — đủ ấm áp để sinh trưởng, đủ mát mẻ để bền vững.",
+      "careerAdvice": "Năm lý tưởng cho phát triển bền vững — vừa mở rộng vừa củng cố. Tốt cho tăng trưởng từng bước, xây dựng thương hiệu, đào tạo thế hệ kế tiếp. Đầu tư cân bằng giữa ngắn hạn và dài hạn.",
+      "personalAdvice": "Năm cân bằng cuộc sống — tốt cho cả sự nghiệp lẫn gia đình. Nên tận hưởng sự hài hòa hiếm có này, xây dựng mối quan hệ bền vững."
+    }
+  },
+  "palaceForecasts": {
+    "1": {
+      "element": "Kim",
+      "forecast": "Năm thiên mạng — quyền uy chuyển đổi, thuận cho lãnh đạo mới",
+      "tone": "cautious",
+      "detailedForecast": "Thái Ất tọa Càn Cung (Kim) — năm của sự chuyển giao quyền lực và thay đổi lãnh đạo. Như bầu trời mùa thu trong vắt, năm nay mọi thứ trở nên rõ ràng và quyết đoán. Thuận lợi cho người có năng lực thực sự bước lên vị trí lãnh đạo. Tuy nhiên, cần thận trọng vì Kim khí mạnh cũng mang đến sự cứng rắn quá mức.",
+      "monthlyHighlights": "Tháng 1-3: thích nghi với thay đổi. Tháng 4-6: cơ hội thăng tiến. Tháng 7-9: Kim khí mạnh nhất, quyết định quan trọng. Tháng 10-12: ổn định thành quả."
+    },
+    "2": {
+      "element": "Hỏa",
+      "forecast": "Năm văn minh — sáng tạo bùng nổ, thuận cho giáo dục và nghệ thuật",
+      "tone": "optimistic",
+      "detailedForecast": "Thái Ất tọa Ly Cung (Hỏa) — năm của ánh sáng tri thức và sáng tạo rực rỡ. Như mặt trời giữa trưa, mọi thứ được chiếu sáng, trí tuệ sắc bén, nghệ thuật nở rộ. Đặc biệt thuận lợi cho giáo dục, phát minh, truyền thông, và mọi hoạt động cần sự sáng tạo. Năm đột phá công nghệ và văn hóa.",
+      "monthlyHighlights": "Tháng 1-3: ý tưởng nảy mầm. Tháng 4-6: Hỏa khí đỉnh điểm, sáng tạo bùng nổ. Tháng 7-9: thu hoạch thành quả trí tuệ. Tháng 10-12: tổng kết, xuất bản, chia sẻ kiến thức."
+    },
+    "3": {
+      "element": "Thổ",
+      "forecast": "Năm chuyển giao — cần ổn định nội bộ trước khi tiến bước",
+      "tone": "neutral",
+      "detailedForecast": "Thái Ất tọa Cấn Cung (Thổ) — năm của sự dừng lại để nhìn nhận và chuyển giao. Như ngọn núi vững vàng, năm nay cần ổn định nền tảng, giải quyết vấn đề tồn đọng trước khi bước vào giai đoạn phát triển mới. Tốt cho suy ngẫm, lập kế hoạch, và chuyển giao kinh nghiệm.",
+      "monthlyHighlights": "Tháng 1-3: đánh giá lại tình hình. Tháng 4-6: giải quyết tồn đọng. Tháng 7-9: ổn định nội bộ. Tháng 10-12: chuẩn bị cho giai đoạn mới."
+    },
+    "4": {
+      "element": "Mộc",
+      "forecast": "Năm sinh sôi — khởi đầu mới tốt đẹp, thuận cho khai trương và xây dựng",
+      "tone": "optimistic",
+      "detailedForecast": "Thái Ất tọa Chấn Cung (Mộc) — năm của khởi đầu mạnh mẽ và sinh trưởng bùng nổ. Như tiếng sấm mùa xuân đánh thức vạn vật, năm nay tràn đầy năng lượng khởi nghiệp. Dự án mới, công việc mới, cuộc sống mới — tất cả đều được ủng hộ. Năng lượng Mộc thúc đẩy sự phát triển nhanh nhưng cần kiểm soát.",
+      "monthlyHighlights": "Tháng 1-3: Mộc khí mạnh nhất, khởi đầu tuyệt vời. Tháng 4-6: phát triển nhanh. Tháng 7-9: cần tỉa bớt, tập trung. Tháng 10-12: chậm lại, tích lũy."
+    },
+    "5": {
+      "element": "Mộc",
+      "forecast": "Năm giao thương — thương mại phát triển, thuận cho đàm phán và hợp tác",
+      "tone": "optimistic",
+      "detailedForecast": "Thái Ất tọa Tốn Cung (Mộc) — năm của giao tiếp, thương mại, và hợp tác quốc tế. Như gió nhẹ mang phấn hoa đi khắp nơi, năm nay thuận lợi cho giao thương xuyên biên giới, hợp tác đa phương, và xây dựng mạng lưới quan hệ rộng. Đặc biệt tốt cho xuất nhập khẩu, thương mại điện tử, và ngành du lịch.",
+      "monthlyHighlights": "Tháng 1-3: mở rộng mạng lưới. Tháng 4-6: đàm phán thuận lợi. Tháng 7-9: ký kết hợp đồng lớn. Tháng 10-12: thu hoạch từ hợp tác."
+    },
+    "6": {
+      "element": "Thổ",
+      "forecast": "Năm nuôi dưỡng — cần kiên nhẫn, tích lũy sức mạnh, chờ thời",
+      "tone": "neutral",
+      "detailedForecast": "Thái Ất tọa Khôn Cung (Thổ) — năm của sự nuôi dưỡng, kiên nhẫn, và đất mẹ bao dung. Như đất đai âm thầm nuôi dưỡng hạt giống, năm nay cần tập trung vào nội lực, chăm sóc gia đình, xây dựng nền tảng vững chắc. Không phải năm để 'ra mặt' mà để chuẩn bị lực lượng.",
+      "monthlyHighlights": "Tháng 1-3: gieo hạt, chuẩn bị. Tháng 4-6: nuôi dưỡng, chăm sóc. Tháng 7-9: củng cố, gia cố. Tháng 10-12: thu hoạch âm thầm."
+    },
+    "7": {
+      "element": "Kim",
+      "forecast": "Năm thu hoạch — kết quả từ nỗ lực trước, thuận cho giao dịch và đầu tư",
+      "tone": "optimistic",
+      "detailedForecast": "Thái Ất tọa Đoài Cung (Kim) — năm của niềm vui, thu hoạch, và giao tiếp phong phú. Như mùa thu vàng óng, năm nay là lúc hái quả ngọt từ những nỗ lực trước đó. Giao dịch tài chính thuận lợi, đầu tư sinh lời, quan hệ xã hội vui vẻ. Năm của sự hài lòng.",
+      "monthlyHighlights": "Tháng 1-3: nhìn lại thành quả. Tháng 4-6: đẩy mạnh giao dịch. Tháng 7-9: Kim khí mạnh, thu hoạch tối đa. Tháng 10-12: tận hưởng và chia sẻ."
+    },
+    "8": {
+      "element": "Thủy",
+      "forecast": "Năm trí tuệ — nghiên cứu và học hỏi thuận lợi, cần cẩn trọng trong mạo hiểm",
+      "tone": "cautious",
+      "detailedForecast": "Thái Ất tọa Khảm Cung (Thủy) — năm của trí tuệ sâu, bí ẩn, và tiềm ẩn nguy hiểm. Như dòng sông chảy âm thầm, năm nay mang lại hiểu biết sâu sắc nhưng cũng ẩn chứa rủi ro. Thuận lợi cho nghiên cứu, học tập chuyên sâu, phát triển công nghệ. Cẩn trọng với đầu tư mạo hiểm và di chuyển đường thủy.",
+      "monthlyHighlights": "Tháng 1-3: Thủy khí mạnh, nghiên cứu thuận lợi. Tháng 4-6: cẩn thận rủi ro tài chính. Tháng 7-9: trí tuệ sáng suốt. Tháng 10-12: tổng hợp kiến thức."
+    },
+    "9": {
+      "element": "Thủy",
+      "forecast": "Năm khởi đầu — chu kỳ mới bắt đầu, nhiều cơ hội nhưng cũng nhiều bất định",
+      "tone": "cautious",
+      "detailedForecast": "Thái Ất bước vào ngoại cung Chiêu Dao — chu kỳ mới bắt đầu trong sự bất định. Như bước đầu tiên trên con đường mới, mọi thứ đều khả thi nhưng chưa rõ ràng. Năm nay cần dũng cảm bước đi nhưng cũng cần linh hoạt điều chỉnh. Cơ hội xuất hiện ở mọi nơi nhưng không phải tất cả đều thực.",
+      "monthlyHighlights": "Tháng 1-3: thăm dò, thử nghiệm. Tháng 4-6: chọn lọc cơ hội. Tháng 7-9: cam kết con đường đã chọn. Tháng 10-12: đánh giá và điều chỉnh."
+    },
+    "10": {
+      "element": "Mộc",
+      "forecast": "Năm biến động — thay đổi xã hội lớn, thuận cho cải cách",
+      "tone": "neutral",
+      "detailedForecast": "Thái Ất ở ngoại cung Thần Phong (Mộc) — gió thay đổi thổi mạnh, mang theo cả cơ hội lẫn bất ổn. Năm của cải cách xã hội, thay đổi công nghệ, và biến chuyển văn hóa. Ai nắm bắt được xu hướng mới sẽ thành công; ai cố bám vào cái cũ sẽ bị bỏ lại.",
+      "monthlyHighlights": "Tháng 1-3: nhận diện xu hướng. Tháng 4-6: thích nghi với thay đổi. Tháng 7-9: dẫn dắt cải cách. Tháng 10-12: ổn định sau biến động."
+    },
+    "11": {
+      "element": "Kim",
+      "forecast": "Năm thử thách — cần vượt qua khó khăn để trưởng thành",
+      "tone": "cautious",
+      "detailedForecast": "Thái Ất ở ngoại cung Thái Bạch (Kim) — năm của thử thách và rèn luyện. Như vàng qua lửa, năm nay đòi hỏi sự kiên cường và bản lĩnh. Khó khăn xuất hiện để thử nghiệm năng lực thực sự. Ai vượt qua được sẽ trở nên mạnh mẽ hơn bao giờ hết.",
+      "monthlyHighlights": "Tháng 1-3: nhận diện thử thách. Tháng 4-6: đối mặt và vượt qua. Tháng 7-9: Kim khí sắc bén, quyết đoán. Tháng 10-12: thu hoạch sau khó khăn."
+    },
+    "12": {
+      "element": "Thổ",
+      "forecast": "Năm may mắn — nhiều quý nhân phù trợ, thuận cho mọi việc lớn",
+      "tone": "optimistic",
+      "detailedForecast": "Thái Ất ở ngoại cung Thiên Phù (Thổ) — năm được trời phù hộ, quý nhân giúp đỡ từ mọi phía. Như được thiên thần bảo hộ, năm nay mọi việc lớn đều thuận lợi. Đặc biệt tốt cho cưới hỏi, mua nhà, khai trương, và bắt đầu dự án quan trọng. Năng lượng may mắn bao trùm.",
+      "monthlyHighlights": "Tháng 1-3: quý nhân xuất hiện. Tháng 4-6: mọi việc suôn sẻ. Tháng 7-9: đỉnh điểm may mắn. Tháng 10-12: tận hưởng thành quả."
+    },
+    "13": {
+      "element": "Mộc",
+      "forecast": "Năm nhìn xa — tầm nhìn chiến lược, tốt cho kế hoạch dài hạn",
+      "tone": "neutral",
+      "detailedForecast": "Thái Ất ở ngoại cung Thiên Mục (Mộc) — 'con mắt trời' cho phép nhìn thấy tương lai. Năm nay trực giác đặc biệt sắc bén, phù hợp cho hoạch định chiến lược, nghiên cứu thị trường, và đưa ra quyết định ảnh hưởng lâu dài. Ai có tầm nhìn xa sẽ gieo hạt mầm cho 5-10 năm sau.",
+      "monthlyHighlights": "Tháng 1-3: quan sát, phân tích. Tháng 4-6: lập kế hoạch chiến lược. Tháng 7-9: thực thi bước đầu. Tháng 10-12: đánh giá và điều chỉnh."
+    },
+    "14": {
+      "element": "Hỏa",
+      "forecast": "Năm dũng cảm — thuận cho hành động quyết đoán và đột phá",
+      "tone": "optimistic",
+      "detailedForecast": "Thái Ất ở ngoại cung Thiên Anh (Hỏa) — năm rực sáng của hành động dũng cảm và đột phá. Như ngọn lửa chiến thắng, năm nay tưởng thưởng cho những ai dám hành động, dám thay đổi, dám đối mặt thử thách. Đặc biệt tốt cho lãnh đạo, khởi nghiệp, và mọi hoạt động đòi hỏi sự can đảm.",
+      "monthlyHighlights": "Tháng 1-3: tích lũy năng lượng. Tháng 4-6: Hỏa khí bùng nổ, hành động. Tháng 7-9: đối mặt thử thách lớn. Tháng 10-12: vinh quang sau đột phá."
+    },
+    "15": {
+      "element": "Thổ",
+      "forecast": "Năm bền vững — nền tảng vững chắc, thuận cho bất động sản và gia đình",
+      "tone": "neutral",
+      "detailedForecast": "Thái Ất ở ngoại cung Địa Phù (Thổ) — năm của sự bền vững, ổn định, và xây dựng nền tảng lâu dài. Như phiến đá ngàn năm, năm nay tưởng thưởng sự kiên nhẫn và nỗ lực bền bỉ. Rất tốt cho mua nhà, đầu tư bất động sản, xây dựng gia đình, và mọi việc cần thời gian.",
+      "monthlyHighlights": "Tháng 1-3: đặt nền tảng. Tháng 4-6: xây dựng kiên trì. Tháng 7-9: gia cố và mở rộng. Tháng 10-12: tận hưởng sự ổn định."
+    },
+    "16": {
+      "element": "Thủy",
+      "forecast": "Năm tổng kết — kết thúc chu kỳ cũ, chuẩn bị cho giai đoạn mới",
+      "tone": "cautious",
+      "detailedForecast": "Thái Ất ở ngoại cung Đại Vũ (Thủy) — chu kỳ cũ kết thúc, năng lượng trở về gốc để khởi đầu lại. Như cơn mưa lớn rửa sạch bụi bặm, năm nay là lúc kết thúc những gì cần kết thúc, giải quyết tồn đọng, và chuẩn bị tinh thần cho 360 năm mới. Buông bỏ cái cũ để đón cái mới.",
+      "monthlyHighlights": "Tháng 1-3: nhìn lại toàn bộ chu kỳ. Tháng 4-6: kết thúc việc dở dang. Tháng 7-9: dọn dẹp, thanh lọc. Tháng 10-12: chuẩn bị năng lượng cho chu kỳ mới."
+    }
+  },
+  "monthlyModifiers": {
+    "1": {
+      "shift": 0,
+      "note": "Tháng Giêng — khí đầu năm, vạn vật chưa động, nên thận trọng quan sát trước khi hành động. Thuận lợi cho lập kế hoạch và thiết lập mục tiêu năm mới."
+    },
+    "1L": {
+      "shift": 0,
+      "note": "Tháng Giêng Nhuận — năng lượng tương tự tháng Giêng nhưng được kéo dài, cần kiên nhẫn hơn. Tháng nhuận mang tính chất 'chờ đợi' trước khi bước vào giai đoạn mới."
+    },
+    "2": {
+      "shift": 1,
+      "note": "Tháng Hai — khí xuân bắt đầu, sinh lực hồi phục. Cây cỏ đâm chồi, thuận lợi cho khởi đầu mới, gieo trồng, và bắt đầu dự án. Năng lượng tăng dần."
+    },
+    "2L": {
+      "shift": 1,
+      "note": "Tháng Hai Nhuận — xuân được kéo dài, sinh trưởng thêm thời gian. Thuận cho gieo trồng, xây dựng nền tảng, nhưng cần kiên nhẫn hơn bình thường trước khi hái quả."
+    },
+    "3": {
+      "shift": 1,
+      "note": "Tháng Ba — xuân sung mãn, đỉnh điểm sinh trưởng. Mộc khí tràn đầy, mọi sự phát triển mạnh mẽ. Tốt nhất cho khai trương, cưới hỏi, và mở rộng kinh doanh."
+    },
+    "3L": {
+      "shift": 1,
+      "note": "Tháng Ba Nhuận — xuân sung mãn kéo dài, năng lượng Mộc tăng cường. Tháng nhuận giữ nhịp sinh trưởng, thuận cho phát triển liên tục và mở rộng."
+    },
+    "4": {
+      "shift": 2,
+      "note": "Tháng Tư — chuyển sang hạ, năng lượng đạt đỉnh. Hành động quyết đoán được tưởng thưởng, nhưng cần cẩn thận không quá nóng vội. Tốt cho quyết định quan trọng."
+    },
+    "4L": {
+      "shift": 2,
+      "note": "Tháng Tư Nhuận — chuyển giao giữa xuân và hạ được kéo dài. Năng lượng chuyển đổi mạnh, cần quyết đoán nhưng cũng thận trọng. Thuận cho chuẩn bị trước khi bước vào giai đoạn năng lượng cao."
+    },
+    "5": {
+      "shift": 2,
+      "note": "Tháng Năm — hạ cực thịnh, Hỏa khí mạnh nhất. Đoan Ngọ tiết, cần giữ bình tĩnh và tránh xung đột. Thuận lợi cho thanh lọc, tẩy uế, và làm mới."
+    },
+    "5L": {
+      "shift": 2,
+      "note": "Tháng Năm Nhuận — hạ nóng bỏng được kéo dài, Hỏa khí duy trì mức cao. Cần giữ bình tĩnh đặc biệt, tránh xung đột. Thuận cho thanh lọc, tẩy uế, và chuẩn bị cho nửa cuối năm."
+    },
+    "6": {
+      "shift": 3,
+      "note": "Tháng Sáu — giữa hạ nắng gắt, khí nóng gây xung đột. Cần kiên nhẫn đặc biệt, tránh tranh cãi. Thuận cho nghiên cứu, học hành, thu thập kiến thức."
+    },
+    "6L": {
+      "shift": 3,
+      "note": "Tháng Sáu Nhuận — giai đoạn nắng nóng kéo dài, khí nóng gây xung đột cao hơn. Cần kiên nhẫn tối đa, tránh quyết đầu. Thuận cho nghiên cứu chuyên sâu và thu thập trí tuệ."
+    },
+    "7": {
+      "shift": -1,
+      "note": "Tháng Bảy — chuyển sang thu, bắt đầu mùa thu hoạch. Tháng Vu Lan báo hiếu, tâm linh mạnh. Tốt cho tổng kết, đánh giá, và tri ân quý nhân."
+    },
+    "7L": {
+      "shift": -1,
+      "note": "Tháng Bảy Nhuận — thu hoạch được kéo dài, tâm linh mạnh mẽ. Tháng nhuận thuận cho tổng kết âm thầm, tri ân, và chuẩn bị cho mùa thu chính."
+    },
+    "8": {
+      "shift": -1,
+      "note": "Tháng Tám — thu trung, Trung Thu. Quân bình Âm Dương, năng lượng hài hòa nhất trong năm. Tuyệt vời cho giao lưu, đoàn tụ, và quyết định cân bằng."
+    },
+    "8L": {
+      "shift": -1,
+      "note": "Tháng Tám Nhuận — Trung Thu được kéo dài, cân bằng Âm Dương ở mức cao. Tháng nhuận đặc biệt thuận cho hòa giải, đoàn tụ, và quyết định cân bằng."
+    },
+    "9": {
+      "shift": -2,
+      "note": "Tháng Chín — thu tàn, lá rụng. Trùng Cửu tiết, cần chuẩn bị cho mùa đông. Tốt cho tích lũy, tiết kiệm, và hoàn tất dự án dở dang."
+    },
+    "9L": {
+      "shift": -2,
+      "note": "Tháng Chín Nhuận — thu tàn kéo dài, giai đoạn chuẩn bị được tăng cường. Cần tích lũy và hoàn tất nhiều hơn bình thường trước mùa đông."
+    },
+    "10": {
+      "shift": -2,
+      "note": "Tháng Mười — chuyển đông, vạn vật co lại. Năng lượng suy giảm, nên giảm tốc, tránh mạo hiểm. Tốt cho suy ngẫm, thiền định, và kế hoạch dài hạn."
+    },
+    "10L": {
+      "shift": -2,
+      "note": "Tháng Mười Nhuận — chuyển đông kéo dài, năng lượng suy giảm nhưng ổn định. Tháng nhuận thuận cho suy ngẫm sâu, kế hoạch dài hạn, và chuẩn bị nội lực."
+    },
+    "11": {
+      "shift": -3,
+      "note": "Tháng Mười Một — đông cực, Thủy khí mạnh nhất, vạn vật ẩn tàng. Thận trọng tối đa, hạn chế hành động lớn. Tốt cho tích lũy trí tuệ và kiên nhẫn chờ thời."
+    },
+    "11L": {
+      "shift": -3,
+      "note": "Tháng Mười Một Nhuận — đông cực kéo dài, Thủy khí mạnh nhất. Tháng nhuận đòi hỏi thận trọng tối đa, tốt cho trầm tư học hỏi và chờ đợi thời cơ."
+    },
+    "12": {
+      "shift": 0,
+      "note": "Tháng Chạp — kết năm, tổng kết toàn diện. Như vòng tròn khép lại, chuẩn bị năng lượng cho năm mới. Tốt cho giải quyết mọi tồn đọng, dọn dẹp, và tri ân."
+    },
+    "12L": {
+      "shift": 0,
+      "note": "Tháng Chạp Nhuận — kết năm được kéo dài, vòng tròn năng lượng chuẩn bị khép lại. Tháng nhuận đặc biệt tốt cho giải quyết tồn đọng và chuẩn bị chu đáo cho năm mới."
+    }
+  }
+}

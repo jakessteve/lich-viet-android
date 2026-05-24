@@ -1,0 +1,182 @@
+{
+  "doors": [
+    {
+      "id": "khai",
+      "nameVi": "Khai Môn",
+      "nameCn": "開門",
+      "nameEn": "Open Door",
+      "element": "Kim",
+      "homePalace": 6,
+      "auspiciousness": "dai_cat",
+      "description": "Đại Cát — Cửa khai mở, vạn sự khởi đầu. Chủ sự nghiệp, quan lộc, lãnh đạo.",
+      "detailedMeaning": "Khai Môn là cửa may mắn nhất, tượng trưng cho sự mở đường, khởi đầu thuận lợi và quan lộ hanh thông. Khi Khai Môn xuất hiện ở cung đắc vị, mọi hành động đều được ủng hộ bởi năng lượng tích cực. Đặc biệt liên quan đến lãnh đạo, quản lý, và thăng tiến trong sự nghiệp.",
+      "elementInteraction": "Thuộc Kim — gặp Thổ (cung 2, 5, 8) được sinh, cực tốt. Gặp Hỏa (cung 9) bị khắc, giảm hiệu quả. Gặp Thủy (cung 1) thì Kim sinh Thủy, cát khí tiêu hao dần.",
+      "favors": [
+        "Khai trương cửa hàng/công ty",
+        "nhậm chức mới",
+        "ký kết hợp đồng lớn",
+        "xuất hành xa",
+        "cưới hỏi",
+        "xây dựng khởi công",
+        "chữa bệnh/ phẫu thuật",
+        "giao dịch bất động sản",
+        "nộp đơn xin việc",
+        "thi cử"
+      ],
+      "disfavors": ["Trốn tránh pháp luật", "ẩn náu", "việc cần bảo mật tuyệt đối", "mai phục"],
+      "practicalAdvice": "Nếu Khai Môn gặp Trực Phù, đây là cách cục Đại Cát nhất — mọi việc thuận buồm xuôi gió. Nếu gặp Đằng Xà hoặc Bạch Hổ, cát khí bị giảm nhưng vẫn tốt hơn các cửa khác."
+    },
+    {
+      "id": "huu",
+      "nameVi": "Hưu Môn",
+      "nameCn": "休門",
+      "nameEn": "Rest Door",
+      "element": "Thủy",
+      "homePalace": 1,
+      "auspiciousness": "cat",
+      "description": "Cát — Cửa nghỉ ngơi, an lành. Chủ quý nhân, hòa hợp, thăng tiến.",
+      "detailedMeaning": "Hưu Môn mang năng lượng thư thái, an nhiên và phúc lộc. Không phải sự may mắn bùng nổ như Khai Môn mà là dòng phúc chảy đều, êm ả. Đặc biệt tốt cho mọi việc liên quan đến giao tiếp con người, tạo thiện cảm và nhận được sự giúp đỡ.",
+      "elementInteraction": "Thuộc Thủy — gặp Kim (cung 6, 7) được sinh, rất tốt. Gặp Thổ (cung 2, 5, 8) bị khắc, giảm cát. Gặp Mộc (cung 3, 4) thì Thủy sinh Mộc, cát khí phân tán nhẹ.",
+      "favors": [
+        "Gặp gỡ bạn bè, đối tác",
+        "cưới hỏi, yến tiệc",
+        "du lịch, thăm thú",
+        "kinh doanh buôn bán",
+        "xây nhà, sửa nhà",
+        "nhận chức ổn định",
+        "cầu phúc, lễ bái"
+      ],
+      "disfavors": ["Kiện tụng", "thi hành án", "hình phạt", "trừng phạt"],
+      "practicalAdvice": "Hưu Môn đặc biệt tốt cho các buổi gặp mặt xã giao, tiệc tùng, và giao lưu. Nếu đang cần tìm quý nhân giúp đỡ, hãy chọn thời điểm Hưu Môn chiếu cung thuận."
+    },
+    {
+      "id": "sinh",
+      "nameVi": "Sinh Môn",
+      "nameCn": "生門",
+      "nameEn": "Life Door",
+      "element": "Thổ",
+      "homePalace": 8,
+      "auspiciousness": "dai_cat",
+      "description": "Đại Cát — Cửa sinh trưởng, phồn vinh. Chủ tài lộc, bất động sản, phát triển.",
+      "detailedMeaning": "Sinh Môn là cửa của sự sinh sôi, phát triển và thịnh vượng. Mang năng lượng Thổ phì nhiêu, tượng trưng cho đất đai màu mỡ nuôi dưỡng vạn vật. Đặc biệt xuất sắc cho tất cả các hoạt động liên quan đến tài chính, bất động sản và tăng trưởng kinh doanh.",
+      "elementInteraction": "Thuộc Thổ — gặp Hỏa (cung 9) được sinh, cực tốt cho tài lộc. Gặp Mộc (cung 3, 4) bị khắc, giảm may mắn. Gặp Kim (cung 6, 7) thì Sinh Môn sinh Kim, xuất tài nhưng có lợi nhuận.",
+      "favors": [
+        "Cầu tài, đầu tư",
+        "khai trương kinh doanh",
+        "giao dịch bất động sản",
+        "mua tài sản lớn",
+        "trồng trọt, nông nghiệp",
+        "nhập học, đào tạo",
+        "xuất hành xa",
+        "chữa bệnh"
+      ],
+      "disfavors": ["Chôn cất, tang lễ", "phá dỡ", "kết thúc dự án"],
+      "practicalAdvice": "Sinh Môn kết hợp với Cửu Địa tạo cách cục cực tốt cho bất động sản. Kết hợp với Thiên Tâm thì tốt cho chữa bệnh. Hãy ưu tiên mọi giao dịch tài chính vào thời điểm Sinh Môn đắc vị."
+    },
+    {
+      "id": "thuong",
+      "nameVi": "Thương Môn",
+      "nameCn": "傷門",
+      "nameEn": "Harm Door",
+      "element": "Mộc",
+      "homePalace": 3,
+      "auspiciousness": "hung",
+      "description": "Hung — Cửa tổn thương, xung đột. Chủ tranh chấp, tổn hại, tai nạn.",
+      "detailedMeaning": "Thương Môn mang năng lượng Mộc sắc nhọn, tượng trưng cho sự tổn hại, đau đớn và thất bại. Khi Thương Môn đến, sự việc dễ gặp trở ngại, giao tiếp dễ gây hiểu lầm, và hành động dễ dẫn đến hậu quả không mong muốn. Tuy nhiên, trong một số trường hợp lại có ích.",
+      "elementInteraction": "Thuộc Mộc — gặp Thủy (cung 1) được sinh, giảm hung. Gặp Kim (cung 6, 7) bị khắc, hung tăng. Gặp Hỏa (cung 9) thì Mộc sinh Hỏa, năng lượng tổn thương lan rộng.",
+      "favors": ["Thu nợ, đòi tiền", "kiện tụng (tấn công)", "thể thao cạnh tranh", "phá sản có kế hoạch"],
+      "disfavors": [
+        "Cưới hỏi, đính hôn",
+        "khai trương",
+        "xây dựng",
+        "di chuyển xa",
+        "giao dịch tài chính",
+        "ký hợp đồng dài hạn"
+      ],
+      "practicalAdvice": "Khi Thương Môn xuất hiện, tránh bắt đầu bất kỳ việc quan trọng nào. Tuy nhiên, nếu bạn cần thu hồi nợ xấu hoặc đối đầu trực diện với đối thủ, Thương Môn lại cho lợi thế."
+    },
+    {
+      "id": "do",
+      "nameVi": "Đỗ Môn",
+      "nameCn": "杜門",
+      "nameEn": "Obstruct Door",
+      "element": "Mộc",
+      "homePalace": 4,
+      "auspiciousness": "trung_binh",
+      "description": "Trung Bình — Cửa chặn, bế tắc. Chủ nghiên cứu, bảo mật, ẩn náu.",
+      "detailedMeaning": "Đỗ Môn tượng trưng cho sự chặn đứng, cô lập nhưng cũng là sự bảo vệ và an toàn bên trong. Giống như cánh cửa đóng — chặn người ngoài nhưng bảo vệ người trong. Mang năng lượng Mộc tĩnh, phù hợp cho suy tư, nghiên cứu sâu và bảo mật thông tin.",
+      "elementInteraction": "Thuộc Mộc — gặp Thủy (cung 1) được sinh, tốt cho ẩn dật. Gặp Kim (cung 6, 7) bị khắc, nguy hiểm cho người đang ẩn náu. Gặp Thổ (cung 2, 5, 8) thì Mộc khắc Thổ, có thể phá vỡ sự ổn định.",
+      "favors": [
+        "Nghiên cứu chuyên sâu",
+        "ẩn dật, lẩn trốn",
+        "thiền định, tu tập",
+        "phát triển sản phẩm bí mật",
+        "bảo mật thông tin"
+      ],
+      "disfavors": ["Khai trương", "gặp gỡ xã giao", "xuất hành", "nhận chức", "quảng cáo", "marketing"],
+      "practicalAdvice": "Đỗ Môn là lúc nên 'đóng cửa' tập trung. Tốt cho việc nghiên cứu R&D, phát triển sản phẩm mới chưa công bố, hoặc đơn giản là nghỉ ngơi lấy sức. Không nên cố gắng mở rộng hay tiếp xúc mới."
+    },
+    {
+      "id": "canh",
+      "nameVi": "Cảnh Môn",
+      "nameCn": "景門",
+      "nameEn": "View Door",
+      "element": "Hỏa",
+      "homePalace": 9,
+      "auspiciousness": "trung_binh",
+      "description": "Trung Bình — Cửa phong cảnh, danh tiếng. Chủ thi cử, quảng cáo, sáng tạo.",
+      "detailedMeaning": "Cảnh Môn mang năng lượng Hỏa sáng rỡ, tượng trưng cho sự rực rỡ, danh tiếng, và mọi thứ liên quan đến 'bố trí bề ngoài'. Giống như phong cảnh đẹp — nhìn vào thì tuyệt vời nhưng không nhất thiết phản ánh bản chất bên trong. Tốt cho thi cử vì Hỏa chiếu sáng trí tuệ.",
+      "elementInteraction": "Thuộc Hỏa — gặp Mộc (cung 3, 4) được sinh, rất tốt cho danh tiếng. Gặp Thủy (cung 1) bị khắc, danh tiếng bị tổn hại. Gặp Thổ (cung 2, 5, 8) thì Hỏa sinh Thổ, danh tiếng chuyển thành tài sản thực.",
+      "favors": [
+        "Thi cử, bảo vệ luận văn",
+        "quảng cáo, marketing",
+        "nộp đơn xin việc",
+        "phỏng vấn",
+        "tổ chức sự kiện",
+        "biểu diễn nghệ thuật",
+        "nhập học"
+      ],
+      "disfavors": ["Kiện tụng", "đòi nợ", "việc cần kín đáo"],
+      "practicalAdvice": "Cảnh Môn đặc biệt tốt cho mọi hoạt động cần 'gây ấn tượng' — phỏng vấn xin việc, thuyết trình, ra mắt sản phẩm. Tuy nhiên, đừng quá tin vào bề ngoài — kiểm tra kỹ nội dung bên trong."
+    },
+    {
+      "id": "tu",
+      "nameVi": "Tử Môn",
+      "nameCn": "死門",
+      "nameEn": "Death Door",
+      "element": "Thổ",
+      "homePalace": 2,
+      "auspiciousness": "dai_hung",
+      "description": "Đại Hung — Cửa tử, đình trệ. Bách sự bất nghi, chỉ phù hợp chôn cất và kết thúc.",
+      "detailedMeaning": "Tử Môn là cửa hung nhất, mang năng lượng Thổ âm u, chết chóc và đình trệ hoàn toàn. Mọi sự sống, phát triển, và khởi đầu đều bị nghẹt lại khi Tử Môn chiếu. Giống như mùa đông đóng băng — không gì sinh trưởng được. Tuy nhiên, cái chết cũng là sự chuyển hóa.",
+      "elementInteraction": "Thuộc Thổ — bất kỳ hành nào cũng không làm giảm hung của Tử Môn nhiều. Gặp Hỏa (cung 9) thì hung giảm nhẹ do được sinh. Gặp Mộc (cung 3, 4) thì Mộc khắc Thổ, xung đột nghiêm trọng.",
+      "favors": ["Chôn cất, tang lễ", "kết thúc dự án cũ", "phá dỡ công trình", "trả nợ xong"],
+      "disfavors": [
+        "Khai trương",
+        "cưới hỏi",
+        "xuất hành",
+        "xây dựng",
+        "giao dịch tài chính",
+        "di chuyển",
+        "cầu tài",
+        "khởi đầu bất kỳ việc gì"
+      ],
+      "practicalAdvice": "Khi Tử Môn xuất hiện, tuyệt đối không khởi đầu bất kỳ công việc mới nào. Đây là lúc để kết thúc, dọn dẹp, giải quyết những việc tồn đọng, và chuẩn bị cho giai đoạn mới. Nghỉ ngơi cũng là lựa chọn khôn ngoan."
+    },
+    {
+      "id": "kinh",
+      "nameVi": "Kinh Môn",
+      "nameCn": "驚門",
+      "nameEn": "Alarm Door",
+      "element": "Kim",
+      "homePalace": 7,
+      "auspiciousness": "hung",
+      "description": "Hung — Cửa kinh hoàng, lo sợ. Chủ kiện tụng, khẩu thiệt, bất an.",
+      "detailedMeaning": "Kinh Môn mang năng lượng Kim sắc bén gây sốc, hoảng loạn và bất an. Tượng trưng cho tin xấu, sự kiện bất ngờ gây sợ hãi, và mọi tình huống khiến tâm không yên. Tuy nhiên, Kinh Môn cũng có mặt tích cực — nó rung chuông báo động, giúp ta phòng bị.",
+      "elementInteraction": "Thuộc Kim — gặp Thổ (cung 2, 5, 8) được sinh, hung giảm nhẹ. Gặp Hỏa (cung 9) bị khắc, hung tăng mạnh. Gặp Thủy (cung 1) thì Kim sinh Thủy, sự sợ hãi lan truyền.",
+      "favors": ["Kiện tụng (phía tấn công)", "cảnh giác an ninh", "phát hiện lỗ hổng"],
+      "disfavors": ["Khai trương", "cưới hỏi", "xuất hành", "xây dựng", "giao dịch", "cầu phúc", "du lịch"],
+      "practicalAdvice": "Khi Kinh Môn xuất hiện, đừng hoảng loạn mà hãy bình tĩnh đánh giá tình hình. Nếu đang trong kiện tụng, Kinh Môn có thể giúp gây áp lực lên đối phương. Trong sinh hoạt hàng ngày, nên cẩn thận hơn với mọi quyết định."
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/png" href="/icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#1a1a2e" />
+  <meta
+    name="description"
+    content="Lịch Việt — tra cứu âm lịch, giờ tốt xấu, gieo quẻ và lá số Tử Vi trong một ứng dụng web."
+  />
+
+  <!-- Open Graph / Facebook / Zalo -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://lichviet.app/" />
+  <meta property="og:title" content="Lịch Việt — Âm Lịch, Gieo Quẻ & Tử Vi" />
+  <meta
+    property="og:description"
+    content="Tra cứu âm lịch, giờ tốt xấu, gieo quẻ và lá số Tử Vi trong một ứng dụng web."
+  />
+  <meta property="og:image" content="https://lichviet.app/icons/icon-512.png" />
+  <meta property="og:locale" content="vi_VN" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lịch Việt — Âm Lịch, Gieo Quẻ & Tử Vi" />
+  <meta
+    name="twitter:description"
+    content="Tra cứu âm lịch, giờ tốt xấu, gieo quẻ và lá số Tử Vi trong một ứng dụng web."
+  />
+  <meta name="twitter:image" content="https://lichviet.app/icons/icon-512.png" />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://lichviet.app/" />
+
+  <!-- Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:;
+        style-src 'self' 'unsafe-inline';
+        style-src-elem 'self' 'unsafe-inline';
+        style-src-attr 'unsafe-inline';
+        font-src 'self' data:;
+        img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com;
+        connect-src 'self' ws: wss: https://date.nager.at https://ipapi.co https://nominatim.openstreetmap.org;
+        frame-src 'none';
+        object-src 'none';
+        base-uri 'self';
+      " />
+
+  <!-- Referrer Policy -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <!-- X-Content-Type-Options equivalent -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+  <!-- Note: X-Frame-Options and frame-ancestors must be set via HTTP headers, not meta tags.
+       Configure these in your web server (nginx/Apache) or hosting platform (Vercel/Netlify). -->
+
+  <!-- Restrict unused browser features -->
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), camera=(), microphone=(), payment=(), usb=()" />
+
+  <title>Lịch Việt — Âm Lịch, Gieo Quẻ &amp; Tử Vi</title>
+
+  <!-- P1-8: Font preloading — preload critical weights -->
+  <link rel="preload" href="/fonts/noto-sans-latin.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
+  <link rel="preload" href="/fonts/noto-sans-vietnamese.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
+  <link rel="preload" href="/fonts/material-icons-round.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- P1-6: Critical CSS — inline above-the-fold skeleton to prevent layout shift -->
+  <style>
+    :root { --gold: #b8860b; }
+    html { font-family: 'Noto Sans', system-ui, -apple-system, sans-serif; }
+    body { margin: 0; background: #F5F5F7; color: #1D1D1F; }
+    .dark body { background: #0a0a1a; color: #F5F5F7; }
+    #root { min-height: 100vh; }
+  </style>
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Lịch Việt",
+    "url": "https://lichviet.app/",
+    "description": "Tra cứu âm lịch, giờ tốt xấu, gieo quẻ và lá số Tử Vi trong một ứng dụng web.",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Web",
+    "inLanguage": "vi",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "VND"
+    }
+  }
+  </script>
+
+  <!-- Dark mode initialization — external script to avoid unsafe-inline CSP -->
+  <script defer src="/darkModeInit.js"></script>
+</head>
+
+<body class="antialiased font-sans">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <!-- Service worker auto-registered by vite-plugin-pwa -->
+</body>
+
+</html>

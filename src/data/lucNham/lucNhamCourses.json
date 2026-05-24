@@ -1,0 +1,200 @@
+{
+  "description": "Named course types (Khóa Thức) for Đại Lục Nhâm divination. Each course has a pattern identification rule and interpretation.",
+  "courses": [
+    {
+      "id": "nguyenThu",
+      "nameVi": "Nguyên Thủ Khóa",
+      "nameCn": "元首课",
+      "condition": "Khóa 1 thượng khắc hạ, không có đặc biệt",
+      "meaning": "Sự việc thuận lợi, trên dưới hòa thuận, kết quả hợp ý",
+      "nature": "cat",
+      "advice": "Tiến hành thuận lợi, không cần lo lắng nhiều",
+      "detailedMeaning": "Nguyên Thủ Khóa được coi là khóa thuận nhất — 'thủ lĩnh chính danh'. Khi khóa 1 thượng khắc hạ, biểu thị bề trên (thiên, cha, sếp) kiểm soát tốt bề dưới, trật tự được duy trì. Sự việc diễn ra theo đúng kế hoạch, cấp dưới phục tùng, mọi người hợp tác.",
+      "contextualAdvice": {
+        "career": "Thuận lợi cho thăng tiến, nhận chức, bắt đầu dự án mới. Lãnh đạo ra quyết định đúng, đội nhóm tuân theo.",
+        "love": "Tình cảm hòa thuận, người chủ động (nam hoặc nữ) dẫn dắt tốt mối quan hệ.",
+        "finance": "Đầu tư ổn định, thu nhập đều đặn, tài chính có tổ chức."
+      }
+    },
+    {
+      "id": "trungThau",
+      "nameVi": "Trùng Thẩu Khóa",
+      "nameCn": "重审课",
+      "condition": "Khóa 1 hạ khắc thượng",
+      "meaning": "Bên dưới phản kháng, có trở ngại từ cấp dưới hoặc hoàn cảnh",
+      "nature": "hung",
+      "advice": "Cần xem xét lại kế hoạch, lắng nghe ý kiến người khác",
+      "detailedMeaning": "Trùng Thẩu Khóa cảnh báo: 'kẻ dưới chống lại người trên'. Khi hạ khắc thượng, cấp dưới bất mãn, hoàn cảnh chống lại kế hoạch. Sự việc gặp trở ngại không phải do kế hoạch sai mà do thiếu sự đồng thuận từ những người liên quan.",
+      "contextualAdvice": {
+        "career": "Cấp dưới phản đối, đồng nghiệp thiếu hợp tác. Cần lắng nghe ý kiến, điều chỉnh phương pháp lãnh đạo.",
+        "love": "Đối phương có ý kiến trái chiều, cần nhượng bộ và lắng nghe. Ép buộc sẽ phản tác dụng.",
+        "finance": "Chi phí phát sinh bất ngờ, đầu tư bị trở ngại bởi yếu tố bên ngoài (chính sách, thị trường)."
+      }
+    },
+    {
+      "id": "thiMach",
+      "nameVi": "Thiệp Mạch Khóa",
+      "nameCn": "涉脉课",
+      "condition": "Tứ Khóa không có tương khắc",
+      "meaning": "Tình hình phức tạp, nhiều mối liên hệ chồng chéo",
+      "nature": "trung_binh",
+      "advice": "Từ từ gỡ rối, đừng vội vàng quyết định",
+      "detailedMeaning": "Thiệp Mạch Khóa xuất hiện khi mọi mối quan hệ đều hòa bình nhưng thiếu rõ ràng — 'lội qua mạch nước ngầm'. Không có xung đột rõ ràng nhưng cũng không có hướng đi rõ ràng. Sự việc rối rắm như mạng nhện, cần kiên nhẫn gỡ từng sợi.",
+      "contextualAdvice": {
+        "career": "Nhiều đầu việc chồng chéo, ưu tiên không rõ ràng. Cần tập trung vào 1-2 việc quan trọng nhất.",
+        "love": "Tình cảm mơ hồ, không rõ đối phương muốn gì. Cần giao tiếp trực tiếp thay vì đoán ý.",
+        "finance": "Nhiều khoản thu chi rối rắm, cần hệ thống lại tài chính. Chưa nên đầu tư lớn."
+      }
+    },
+    {
+      "id": "biaCach",
+      "nameVi": "Biệt Cách Khóa",
+      "nameCn": "别责课",
+      "condition": "Không có chi cho bốn khóa thông thường, phải dùng phép đặc biệt",
+      "meaning": "Sự việc bất thường, nằm ngoài dự kiến",
+      "nature": "trung_binh",
+      "advice": "Cần linh hoạt thay đổi phương pháp, không nên cứng nhắc",
+      "detailedMeaning": "Biệt Cách Khóa là khóa đặc biệt — 'phương pháp khác thường'. Xuất hiện khi quy tắc thông thường không áp dụng được, phải dùng cách giải quyết ngoài lề. Sự việc diễn biến bất ngờ, không theo bất kỳ khuôn mẫu nào.",
+      "contextualAdvice": {
+        "career": "Phương pháp truyền thống không hiệu quả. Cần nghĩ ra giải pháp sáng tạo, 'phá cách'.",
+        "love": "Mối quan hệ có yếu tố đặc biệt (khác biệt lớn tuổi, văn hóa, khoảng cách). Đừng áp dụng tiêu chuẩn thông thường.",
+        "finance": "Cơ hội tài chính đến từ nguồn bất ngờ. Cần linh hoạt nắm bắt."
+      }
+    },
+    {
+      "id": "phucNgam",
+      "nameVi": "Phục Ngâm Khóa",
+      "nameCn": "伏吟课",
+      "condition": "Thiên Bàn trùng Địa Bàn",
+      "meaning": "Bế tắc, ứ trệ, sự việc không tiến triển",
+      "nature": "hung",
+      "advice": "Nên kiên nhẫn chờ đợi, không nên cưỡng ép hành động",
+      "detailedMeaning": "Phục Ngâm — 'rên rỉ nằm im'. Khi Thiên Bàn hoàn toàn trùng Địa Bàn, mọi năng lượng bị đông cứng, không có sự di chuyển hay phát triển nào. Giống như cỗ máy bị kẹt bánh răng — cố đẩy chỉ làm hỏng thêm.",
+      "contextualAdvice": {
+        "career": "Dự án bị đình trệ, thăng tiến bị hoãn. KHÔNG nên nghỉ việc hoặc bắt đầu dự án mới. Kiên nhẫn chờ đợi.",
+        "love": "Mối quan hệ đứng yên, không tiến không lùi. Cần chấp nhận giai đoạn tĩnh lặng này, đừng ép.",
+        "finance": "Tiền bị kẹt — nợ khó đòi, đầu tư không sinh lời. Giữ nguyên hiện trạng, tránh mạo hiểm."
+      }
+    },
+    {
+      "id": "fanNgam",
+      "nameVi": "Phản Ngâm Khóa",
+      "nameCn": "返吟课",
+      "condition": "Thiên Bàn xung Địa Bàn (cách 6 cung)",
+      "meaning": "Sự việc đảo chiều, quay lại vạch xuất phát",
+      "nature": "hung",
+      "advice": "Điều đang theo đuổi sẽ quay ngược — hãy chuẩn bị kế hoạch B",
+      "detailedMeaning": "Phản Ngâm — 'rên rỉ quay đầu'. Khi Thiên Bàn đối xung Địa Bàn, mọi thứ đảo ngược hoàn toàn như soi gương. Cầu tiến thì lùi, cầu hợp thì tan, cầu tài thì mất. Kế hoạch A sẽ thất bại, cần có kế hoạch B sẵn sàng.",
+      "contextualAdvice": {
+        "career": "Dự án quay ngược, thăng tiến biến thành giáng chức nếu không cẩn thận. Chuẩn bị phương án phòng thủ.",
+        "love": "Tình cảm đảo chiều — gần thành xa, hợp thành tan. Nếu đang chia tay, có thể quay lại. Nếu đang yêu, cẩn thận.",
+        "finance": "Đầu tư sinh lời có thể đảo chiều thành thua lỗ. Cắt lỗ kịp thời nếu thấy dấu hiệu xấu."
+      }
+    },
+    {
+      "id": "bachHo",
+      "nameVi": "Bát Chuyên Khóa",
+      "nameCn": "八专课",
+      "condition": "Nhật Can và Chi cùng thuộc một ngũ hành",
+      "meaning": "Sức mạnh tập trung nhưng thiếu cân bằng",
+      "nature": "trung_binh",
+      "advice": "Mạnh mẽ ở một mặt nhưng yếu ở mặt khác — cần bổ sung",
+      "detailedMeaning": "Bát Chuyên — 'tám lần chuyên nhất'. Khi Can Chi cùng hành, năng lượng tập trung mạnh ở một mặt nhưng thiếu hụt ở các mặt khác. Giống như thanh kiếm cực sắc nhưng không có khiên — tấn công mạnh nhưng phòng thủ yếu.",
+      "contextualAdvice": {
+        "career": "Chuyên sâu vào một lĩnh vực sẽ thành công, nhưng đừng phớt lờ các mặt khác.",
+        "love": "Một bên cho nhiều hơn bên kia. Cần cân bằng lại mối quan hệ.",
+        "finance": "Tập trung vào một nguồn thu. Cần đa dạng hóa thu nhập."
+      }
+    },
+    {
+      "id": "maoTinh",
+      "nameVi": "Mão Tinh Khóa",
+      "nameCn": "昴星课",
+      "condition": "Sơ Truyền tại Mão hoặc Dậu",
+      "meaning": "Liên quan đến đàm phán, thương lượng, hòa giải",
+      "nature": "cat",
+      "advice": "Thuận lợi cho giao tiếp, đàm phán, ký kết thỏa thuận",
+      "detailedMeaning": "Mão Tinh — sao Mão liên quan đến giao tiếp và thương lượng. Khi Sơ Truyền rơi vào Mão (Mộc — mềm mại) hoặc Dậu (Kim — quyết đoán), khả năng đàm phán và giao tiếp được kích hoạt mạnh mẽ. Mọi thỏa thuận đạt được đều có giá trị.",
+      "contextualAdvice": {
+        "career": "Tuyệt vời cho phỏng vấn, đàm phán lương, ký kết hợp đồng, hòa giải mâu thuẫn.",
+        "love": "Tốt cho tỏ tình, nói chuyện thẳng thắn, giải quyết hiểu lầm.",
+        "finance": "Thuận lợi cho thương lượng giá, mặc cả, đàm phán điều khoản."
+      }
+    },
+    {
+      "id": "triNhat",
+      "nameVi": "Tri Nhất Khóa",
+      "nameCn": "知一课",
+      "condition": "Tứ Khóa chỉ có đúng 1 cặp tương khắc",
+      "meaning": "Sự việc tập trung, chỉ có một mâu thuẫn chính cần giải quyết",
+      "nature": "trung_binh",
+      "advice": "Tập trung giải quyết điểm mâu thuẫn duy nhất, sau đó mọi việc sẽ thuận",
+      "detailedMeaning": "Tri Nhất — 'biết chỉ có một'. Khi chỉ 1 trong 4 khóa có quan hệ khắc, vấn đề rất rõ ràng: chỉ có 1 trở ngại cần vượt qua. Đây là dấu hiệu thuận lợi vì cho thấy sự rõ ràng trong tình thế.",
+      "contextualAdvice": {
+        "career": "Chỉ có 1 vấn đề cản trở sự nghiệp. Xác định rõ và giải quyết dứt điểm.",
+        "love": "Mối quan hệ có 1 điểm bất đồng chính. Nói chuyện thẳng thắn sẽ giải quyết được.",
+        "finance": "Có 1 khoản chi hoặc rủi ro cần xử lý. Tập trung vào đó thay vì lo lắng chung."
+      }
+    },
+    {
+      "id": "thiepHai",
+      "nameVi": "Thiệp Hại Khóa",
+      "nameCn": "涉害课",
+      "condition": "Tứ Khóa không có khắc, nhưng thượng thần trùng nhau",
+      "meaning": "Sự việc ngấm ngầm tổn hại, ảnh hưởng sâu xa không lộ rõ",
+      "nature": "hung",
+      "advice": "Cẩn thận với nguy hiểm tiềm ẩn, kiểm tra kỹ mọi thứ trước khi hành động",
+      "detailedMeaning": "Thiệp Hại — 'lội qua vùng hại'. Mặt ngoài mọi thứ bình yên nhưng bên dưới có dòng chảy nguy hiểm. Giống như đi qua vùng nước tưởng nông nhưng thực ra sâu — cần dò dẫm cẩn thận từng bước.",
+      "contextualAdvice": {
+        "career": "Đồng nghiệp có thể đang âm thầm cạnh tranh. Cần quan sát kỹ hơn là hành động.",
+        "love": "Người yêu/đối tác có thể giấu cảm xúc thật. Cần kiên nhẫn tìm hiểu sâu.",
+        "finance": "Chi phí ẩn, phí phát sinh không lường trước. Đọc kỹ hợp đồng, điều khoản nhỏ."
+      }
+    },
+    {
+      "id": "dieuKhac",
+      "nameVi": "Diêu Khắc Khóa",
+      "nameCn": "遥克课",
+      "condition": "Các cặp khóa có quan hệ khắc từ xa (khác cung)",
+      "meaning": "Ảnh hưởng từ xa, người ở nơi khác hoặc sự kiện gián tiếp tác động",
+      "nature": "trung_binh",
+      "advice": "Chú ý đến nhân tố bên ngoài và người ở xa đang ảnh hưởng đến tình thế",
+      "detailedMeaning": "Diêu Khắc — 'khắc chế từ xa'. Mâu thuẫn không nằm ngay trước mắt mà đến từ nơi khác — có thể là người ở xa, sự kiện ở nơi khác, hoặc hậu quả từ quá khứ đuổi theo.",
+      "contextualAdvice": {
+        "career": "Quyết định từ trụ sở chính hoặc cấp quản lý cao hơn ảnh hưởng đến bạn. Cần cập nhật thông tin.",
+        "love": "Mối quan hệ tầm xa hoặc người cũ ảnh hưởng. Cần giải quyết vấn đề từ gốc.",
+        "finance": "Biến động thị trường quốc tế hoặc chính sách từ xa ảnh hưởng đến tài chính cá nhân."
+      }
+    },
+    {
+      "id": "muoiGian",
+      "nameVi": "Muội Giản Khóa",
+      "nameCn": "昧简课",
+      "condition": "Tất cả 4 khóa đều là quan hệ Sinh — không có Khắc",
+      "meaning": "Tình thế bình lặng nhưng mơ hồ, thiếu rõ ràng, mọi thứ 'đều tốt' nhưng không rõ hướng",
+      "nature": "trung_binh",
+      "advice": "Tình hình ổn nhưng thiếu động lực. Cần tự tạo mục tiêu rõ ràng",
+      "detailedMeaning": "Muội Giản — 'mờ mịt đơn giản'. Mọi mối quan hệ đều thuận hòa nhưng thiếu rõ ràng — giống như sương mù nhẹ, không thấy đường đi rõ ràng. Không có nguy hiểm nhưng cũng không có định hướng.",
+      "contextualAdvice": {
+        "career": "Công việc ổn định nhưng nhàm chán. Cần tự đặt mục tiêu thách thức cho bản thân.",
+        "love": "Tình cảm ổn nhưng thiếu lửa. Cần tạo bất ngờ, tổ chức hoạt động mới.",
+        "finance": "Tài chính ổn định nhưng không tăng trưởng. Cần chủ động tìm cơ hội mới."
+      }
+    },
+    {
+      "id": "bietTrach",
+      "nameVi": "Biệt Trách Khóa",
+      "nameCn": "别责课",
+      "condition": "Nhật Can dương, không có khóa thông thường phù hợp",
+      "meaning": "Sự việc đặc biệt, cần phương pháp riêng biệt để giải quyết",
+      "nature": "trung_binh",
+      "advice": "Tình thế độc đáo, dùng cách nghĩ thông thường sẽ không hiệu quả",
+      "detailedMeaning": "Biệt Trách — 'trách nhiệm riêng biệt'. Xuất hiện khi Can ngày thuộc Dương nhưng không tìm được khóa phù hợp — phải dùng phương pháp đặc biệt. Sự việc nằm ngoài khuôn khổ, cần giải pháp sáng tạo.",
+      "contextualAdvice": {
+        "career": "Vấn đề chưa có tiền lệ. Cần tư duy sáng tạo và dám thử phương pháp mới.",
+        "love": "Mối quan hệ có hoàn cảnh đặc biệt. Đừng so sánh với người khác, hãy tìm cách riêng.",
+        "finance": "Cơ hội tài chính đến từ kênh phi truyền thống. Đáng cân nhắc nếu nghiên cứu kỹ."
+      }
+    }
+  ]
+}

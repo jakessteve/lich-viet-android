@@ -1,0 +1,1020 @@
+{
+  "stars": [
+    {
+      "name": "Thiên Đức",
+      "type": "Good",
+      "suitable": [
+        "Mọi việc đều tốt",
+        "Cầu phúc, cầu may",
+        "Cưới hỏi",
+        "Xây dụng, làm nhà",
+        "Khai trương, mở hàng",
+        "Cúng tế, lễ bái",
+        "Vào nhà mới",
+        "Đi nhận chức"
+      ],
+      "criteria": {
+        "month_day_can": {
+          "1": "Đinh",
+          "2": "Thân",
+          "3": "Nhâm",
+          "4": "Tân",
+          "5": "Hợi",
+          "6": "Giáp",
+          "7": "Quý",
+          "8": "Dần",
+          "9": "Bính",
+          "10": "Ất",
+          "11": "Tỵ",
+          "12": "Canh"
+        }
+      }
+    },
+    {
+      "name": "Nguyệt Đức",
+      "type": "Good",
+      "suitable": [
+        "Mọi việc đều tốt",
+        "Cầu phúc, cầu may",
+        "Cưới hỏi",
+        "Xây dụng, làm nhà",
+        "Khai trương, mở hàng",
+        "Chôn cất",
+        "Dựng cột, làm nhà"
+      ],
+      "criteria": {
+        "month_day_can": {
+          "1": "Nhâm",
+          "2": "Canh",
+          "3": "Bính",
+          "4": "Giáp",
+          "5": "Nhâm",
+          "6": "Canh",
+          "7": "Bính",
+          "8": "Giáp",
+          "9": "Nhâm",
+          "10": "Canh",
+          "11": "Bính",
+          "12": "Giáp"
+        }
+      }
+    },
+    {
+      "name": "Thiên Ân",
+      "type": "Good",
+      "suitable": ["Làm việc thiện, cứu giúp", "Làm việc thiện", "Cúng tế, lễ bái", "Nhân nghĩa"],
+      "criteria": {
+        "day_can_chi": [
+          "Giáp Tý",
+          "Ất Sửu",
+          "Bính Dần",
+          "Đinh Mão",
+          "Mậu Thìn",
+          "Kỷ Mão",
+          "Canh Thìn",
+          "Tân Tỵ",
+          "Nhâm Ngọ",
+          "Quý Mùi",
+          "Kỷ Dậu",
+          "Canh Tuất",
+          "Tân Hợi",
+          "Nhâm Tý",
+          "Quý Sửu"
+        ]
+      }
+    },
+    {
+      "name": "Thiên Xá",
+      "type": "Good",
+      "suitable": ["Giải tội", "Giải hạn, trừ họa", "Đi xa, khởi hành", "Cúng tế, lễ bái", "Làm việc thiện, công đức"],
+      "criteria": {
+        "season_day_can_chi": {
+          "Xuân": "Mậu Dần",
+          "Hạ": "Giáp Ngọ",
+          "Thu": "Mậu Thân",
+          "Đông": "Giáp Tý"
+        }
+      }
+    },
+    {
+      "name": "Thiên Nguyện",
+      "type": "Good",
+      "suitable": ["Cầu phúc", "Cầu phúc, cầu may", "Đi nhận chức", "Nhận việc, nhận chức"],
+      "criteria": {
+        "season_day_can_chi": {
+          "Xuân": "Bính Thân",
+          "Hạ": "Nhâm Tý",
+          "Thu": "Bính Thìn",
+          "Đông": "Nhâm Tý"
+        }
+      }
+    },
+    {
+      "name": "Nguyệt Đức Hợp",
+      "type": "Good",
+      "suitable": ["Mọi việc đều tốt", "Giao dịch, buôn bán", "Cưới hỏi"],
+      "criteria": {
+        "month_day_can": {
+          "1": "Mậu",
+          "2": "Bính",
+          "3": "Giáp",
+          "4": "Nhâm",
+          "5": "Canh",
+          "6": "Mậu",
+          "7": "Bính",
+          "8": "Giáp",
+          "9": "Nhâm",
+          "10": "Canh",
+          "11": "Mậu",
+          "12": "Bính"
+        }
+      }
+    },
+    {
+      "name": "Cát Khánh",
+      "type": "Good",
+      "suitable": [
+        "Lễ mừng",
+        "Mở tiệc",
+        "Gặp gỡ bạn bè",
+        "Nộp đơn từ",
+        "Nhận việc, gặp cấp trên",
+        "Đi nhận việc",
+        "Mọi việc đều tốt",
+        "Cưới hỏi",
+        "Giải nỗi oan ức",
+        "Hội thân hữu",
+        "Mở cửa hàng",
+        "Khánh điển",
+        "Thiết yến"
+      ],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dậu",
+          "2": "Dần",
+          "3": "Hợi",
+          "4": "Thìn",
+          "5": "Sửu",
+          "6": "Ngọ",
+          "7": "Mão",
+          "8": "Thân",
+          "9": "Tỵ",
+          "10": "Tuất",
+          "11": "Mùi",
+          "12": "Tý"
+        }
+      },
+      "description": "Tốt cho mọi việc, chủ về vui vẻ, may mắn"
+    },
+    {
+      "name": "Phúc Sinh",
+      "type": "Good",
+      "suitable": [
+        "Cầu phúc, cầu may",
+        "Cầu nguyện",
+        "Hội thân hữu",
+        "Cầu chúc",
+        "Cầu phúc",
+        "Giải hạn",
+        "Cứu người nghèo",
+        "Làm việc thiện",
+        "Kì phúc",
+        "Hứa nguyện",
+        "Thiết trai tiếu"
+      ],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dậu",
+          "2": "Dần",
+          "3": "Hợi",
+          "4": "Thìn",
+          "5": "Sửu",
+          "6": "Ngọ",
+          "7": "Mão",
+          "8": "Thân",
+          "9": "Tỵ",
+          "10": "Tuất",
+          "11": "Mùi",
+          "12": "Tý"
+        }
+      },
+      "description": "Tốt cho cầu phúc, cứu giúp người nghèo"
+    },
+    {
+      "name": "Âm Đức",
+      "type": "Good",
+      "suitable": [
+        "Làm việc thiện, cứu giúp",
+        "Làm việc thiện",
+        "Làm việc thiện, công đức",
+        "Giải nỗi oan ức",
+        "Giúp người nghèo khó",
+        "Công đức",
+        "Cứu giúp",
+        "Thi ân",
+        "Hành huệ",
+        "Tuất cô quỳnh"
+      ],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dậu",
+          "2": "Mùi",
+          "3": "Tỵ",
+          "4": "Mão",
+          "5": "Sửu",
+          "6": "Hợi",
+          "7": "Dậu",
+          "8": "Mùi",
+          "9": "Tỵ",
+          "10": "Mão",
+          "11": "Sửu",
+          "12": "Hợi"
+        }
+      },
+      "description": "Tốt cho việc thiện, công đức"
+    },
+    {
+      "name": "Đại Minh",
+      "type": "Good",
+      "suitable": [
+        "Đi học, nhập học",
+        "Đi nhận chức",
+        "Cưới hỏi",
+        "Khai trương, mở hàng",
+        "Cầu tài lộc",
+        "Mọi việc đều tốt",
+        "Khai trương",
+        "Nhập trạch"
+      ],
+      "criteria": {
+        "day_can_chi": [
+          "Tân Mùi",
+          "Nhâm Thân",
+          "Quý Dậu",
+          "Kỷ Mão",
+          "Nhâm Ngọ",
+          "Giáp Thân",
+          "Nhâm Dần",
+          "Giáp Thìn",
+          "Bính Ngọ",
+          "Kỷ Dậu",
+          "Canh Tuất",
+          "Bính Thìn",
+          "Kỷ Mùi",
+          "Canh Thân",
+          "Tân Dậu"
+        ]
+      },
+      "description": "Đại cát cho mọi việc, chủ về danh tiếng"
+    },
+    {
+      "name": "Nguyệt Không",
+      "type": "Good",
+      "suitable": ["Phá thổ", "Chôn cất", "Sửa chữa nhà"],
+      "criteria": {
+        "month_day_chi": {
+          "1": ["Tuất", "Hợi"],
+          "2": ["Thân", "Dậu"],
+          "3": ["Ngọ", "Mùi"],
+          "4": ["Thìn", "Tỵ"],
+          "5": ["Dần", "Mão"],
+          "6": ["Tý", "Sửu"],
+          "7": ["Tuất", "Hợi"],
+          "8": ["Thân", "Dậu"],
+          "9": ["Ngọ", "Mùi"],
+          "10": ["Thìn", "Tỵ"],
+          "11": ["Dần", "Mão"],
+          "12": ["Tý", "Sửu"]
+        }
+      }
+    },
+    {
+      "name": "Minh Phệ",
+      "type": "Good",
+      "suitable": [
+        "Cưới hỏi",
+        "Khai trương, mở hàng",
+        "Nhận việc, nhận chức",
+        "Cúng tế",
+        "Chữa bệnh",
+        "Xuất hành",
+        "An táng",
+        "Cầu phúc",
+        "Cải mộ",
+        "Tu lí phần mộ"
+      ],
+      "criteria": {
+        "month_day_chi": {
+          "1": ["Ngọ", "Mùi", "Hợi"],
+          "2": ["Sửu", "Ngọ", "Dần"],
+          "3": ["Tỵ", "Dậu"],
+          "4": ["Dần", "Mão", "Ngọ"],
+          "5": ["Tỵ", "Sửu"],
+          "6": ["Dần", "Thân", "Quý"],
+          "7": ["Tý", "Ngọ"],
+          "8": ["Hợi", "Dậu"],
+          "9": ["Quý", "Thìn"],
+          "10": ["Mão", "Dậu"],
+          "11": ["Tý", "Mão"],
+          "12": ["Tỵ", "Dần"]
+        }
+      },
+      "description": "Tốt cho cúng tế, chữa bệnh, thi ân"
+    },
+    {
+      "name": "Hội Đồng",
+      "type": "Good",
+      "suitable": [
+        "Gặp gỡ bạn bè",
+        "Mở tiệc, liên hoan",
+        "Hợp tác",
+        "Hội họp",
+        "Gặp gỡ",
+        "Cầu tài",
+        "Hội hữu",
+        "Hợp tương"
+      ],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Dậu",
+          "3": "Sửu",
+          "4": "Thân",
+          "5": "Tý",
+          "6": "Thìn",
+          "7": "Hợi",
+          "8": "Mão",
+          "9": "Mùi",
+          "10": "Dần",
+          "11": "Ngọ",
+          "12": "Tuất"
+        }
+      },
+      "description": "Tốt cho hội họp, gặp gỡ, cầu tài"
+    },
+    {
+      "name": "Thất Thánh",
+      "type": "Good",
+      "suitable": ["Cầu phúc, cầu may", "Cúng tế", "Giải hạn, trừ họa", "Cầu phúc", "Thi cử", "Học hành", "Kiến tiếu"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Ngọ",
+          "3": "Tuất",
+          "4": "Hợi",
+          "5": "Mão",
+          "6": "Mùi",
+          "7": "Thân",
+          "8": "Tý",
+          "9": "Thìn",
+          "10": "Tỵ",
+          "11": "Dậu",
+          "12": "Sửu"
+        }
+      },
+      "description": "Tốt cho học hành, thi cử, danh vọng"
+    },
+    {
+      "name": "Thần Tại",
+      "type": "Good",
+      "suitable": [
+        "Cúng tế, lễ bái",
+        "Cầu bình an",
+        "Lập bàn thờ, làm lễ",
+        "Cúng tế",
+        "Lễ bái",
+        "Lập bàn thờ",
+        "Tụng kinh",
+        "Tế tự",
+        "Đảo từ"
+      ],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dậu",
+          "2": "Tuất",
+          "3": "Hợi",
+          "4": "Tý",
+          "5": "Sửu",
+          "6": "Dần",
+          "7": "Mão",
+          "8": "Thìn",
+          "9": "Tỵ",
+          "10": "Ngọ",
+          "11": "Mùi",
+          "12": "Thân"
+        }
+      },
+      "description": "Tốt cho cúng tế, lập bàn thờ"
+    },
+    {
+      "name": "Thủ Nhật",
+      "type": "Good",
+      "suitable": ["Mọi việc đều tốt", "Sửa chữa", "Sửa chữa, tôn tạo", "Mọi việc trung bình"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tuất",
+          "2": "Hợi",
+          "3": "Tý",
+          "4": "Sửu",
+          "5": "Dần",
+          "6": "Mão",
+          "7": "Thìn",
+          "8": "Tỵ",
+          "9": "Ngọ",
+          "10": "Mùi",
+          "11": "Thân",
+          "12": "Dậu"
+        }
+      },
+      "description": "Tốt cho các việc bình thường, sửa chữa"
+    },
+    {
+      "name": "Trừ Thần",
+      "type": "Good",
+      "suitable": [
+        "Giải hạn, trừ họa",
+        "Chữa bệnh",
+        "Tắm gội",
+        "Tẩy uế",
+        "Sửa chữa tôn tạo",
+        "Chỉnh dung thế đầu",
+        "Mộc dục",
+        "Trừ phục",
+        "Tảo xá vũ"
+      ],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Hợi",
+          "3": "Thân",
+          "4": "Tỵ",
+          "5": "Dần",
+          "6": "Hợi",
+          "7": "Thân",
+          "8": "Tỵ",
+          "9": "Dần",
+          "10": "Hợi",
+          "11": "Thân",
+          "12": "Tỵ"
+        }
+      },
+      "description": "Tốt cho chữa bệnh, tẩy uế, trừ phục"
+    },
+    {
+      "name": "Vượng Nhật",
+      "type": "Good",
+      "suitable": ["Mọi việc đều tốt", "Khởi công, đào móng", "Khai trương, mở hàng"],
+      "criteria": {
+        "season_day_can": {
+          "Xuân": ["Giáp", "Ất"],
+          "Hạ": ["Bính", "Đinh"],
+          "Thu": ["Canh", "Tân"],
+          "Đông": ["Nhâm", "Quý"]
+        }
+      }
+    },
+    {
+      "name": "Tướng Nhật",
+      "type": "Good",
+      "suitable": ["Mọi việc đều tốt", "Cưới hỏi", "Đi nhận chức"],
+      "criteria": {
+        "season_day_can": {
+          "Xuân": ["Bính", "Đinh"],
+          "Hạ": ["Mậu", "Kỷ"],
+          "Thu": ["Nhâm", "Quý"],
+          "Đông": ["Giáp", "Ất"]
+        }
+      }
+    },
+    {
+      "name": "Thiên Mã",
+      "type": "Good",
+      "suitable": ["Đi xa, khởi hành", "Cầu tài lộc", "Giao dịch, buôn bán"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Ngọ",
+          "2": "Thân",
+          "3": "Tuất",
+          "4": "Tý",
+          "5": "Dần",
+          "6": "Thìn",
+          "7": "Ngọ",
+          "8": "Thân",
+          "9": "Tuất",
+          "10": "Tý",
+          "11": "Dần",
+          "12": "Thìn"
+        }
+      }
+    },
+    {
+      "name": "Dịch Mã",
+      "type": "Good",
+      "suitable": ["Di chuyển", "Đi xa, khởi hành", "Đi nhận chức"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thân",
+          "2": "Tỵ",
+          "3": "Dần",
+          "4": "Hợi",
+          "5": "Thân",
+          "6": "Tỵ",
+          "7": "Dần",
+          "8": "Hợi",
+          "9": "Thân",
+          "10": "Tỵ",
+          "11": "Dần",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Sinh Khí",
+      "type": "Good",
+      "suitable": ["Xây dụng, làm nhà", "Cầu con cái", "Chữa bệnh", "Khởi công, đào móng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tý",
+          "2": "Sửu",
+          "3": "Dần",
+          "4": "Mão",
+          "5": "Thìn",
+          "6": "Tỵ",
+          "7": "Ngọ",
+          "8": "Mùi",
+          "9": "Thân",
+          "10": "Dậu",
+          "11": "Tuất",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Thiên Y",
+      "type": "Good",
+      "suitable": ["Chữa bệnh", "Khám bệnh"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Mão",
+          "2": "Dần",
+          "3": "Sửu",
+          "4": "Tý",
+          "5": "Hợi",
+          "6": "Tuất",
+          "7": "Dậu",
+          "8": "Thân",
+          "9": "Mùi",
+          "10": "Ngọ",
+          "11": "Tỵ",
+          "12": "Thìn"
+        }
+      }
+    },
+    {
+      "name": "Thiên Hỷ",
+      "type": "Good",
+      "suitable": ["Cưới hỏi", "Mở tiệc", "Gặp gỡ bạn bè", "Vào nhà mới"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tuất",
+          "2": "Hợi",
+          "3": "Tý",
+          "4": "Sửu",
+          "5": "Dần",
+          "6": "Mão",
+          "7": "Thìn",
+          "8": "Tỵ",
+          "9": "Ngọ",
+          "10": "Mùi",
+          "11": "Thân",
+          "12": "Dậu"
+        }
+      }
+    },
+    {
+      "name": "Địa Giải",
+      "type": "Good",
+      "suitable": ["Giải hạn, trừ họa", "Giải nỗi oan ức"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thâm",
+          "2": "Dậu",
+          "3": "Tuất",
+          "4": "Hợi",
+          "5": "Tý",
+          "6": "Sửu",
+          "7": "Dần",
+          "8": "Mão",
+          "9": "Thìn",
+          "10": "Tỵ",
+          "11": "Ngọ",
+          "12": "Mùi"
+        }
+      }
+    },
+    {
+      "name": "Giải Thần",
+      "type": "Good",
+      "suitable": ["Giải hạn, trừ họa", "Giải nỗi oan ức", "Cúng tế, lễ bái"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thân",
+          "2": "Thân",
+          "3": "Tuất",
+          "4": "Tuất",
+          "5": "Tý",
+          "6": "Tý",
+          "7": "Dần",
+          "8": "Dần",
+          "9": "Thìn",
+          "10": "Thìn",
+          "11": "Ngọ",
+          "12": "Ngọ"
+        }
+      }
+    },
+    {
+      "name": "Thánh Tâm",
+      "type": "Good",
+      "suitable": ["Cầu con cái", "Cầu phúc", "Cúng tế, lễ bái"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Hợi",
+          "2": "Tý",
+          "3": "Sửu",
+          "4": "Dần",
+          "5": "Mão",
+          "6": "Thìn",
+          "7": "Tỵ",
+          "8": "Ngọ",
+          "9": "Mùi",
+          "10": "Thân",
+          "11": "Dậu",
+          "12": "Tuất"
+        }
+      }
+    },
+    {
+      "name": "Ích Hậu",
+      "type": "Good",
+      "suitable": ["Cưới hỏi", "Ăn hỏi, đính hôn"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tý",
+          "2": "Sửu",
+          "3": "Dần",
+          "4": "Mão",
+          "5": "Thìn",
+          "6": "Tỵ",
+          "7": "Ngọ",
+          "8": "Mùi",
+          "9": "Thân",
+          "10": "Dậu",
+          "11": "Tuất",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Tục Thế",
+      "type": "Good",
+      "suitable": ["Cầu phúc", "Làm việc thiện"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Hợi",
+          "2": "Tuất",
+          "3": "Dậu",
+          "4": "Thân",
+          "5": "Mùi",
+          "6": "Ngọ",
+          "7": "Tỵ",
+          "8": "Thìn",
+          "9": "Mão",
+          "10": "Dần",
+          "11": "Sửu",
+          "12": "Tý"
+        }
+      }
+    },
+    {
+      "name": "Yếu Yên",
+      "type": "Good",
+      "suitable": ["Cưới hỏi", "Giao dịch, buôn bán"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Thân",
+          "3": "Mão",
+          "4": "Dậu",
+          "5": "Thìn",
+          "6": "Tuất",
+          "7": "Tỵ",
+          "8": "Hợi",
+          "9": "Ngọ",
+          "10": "Tý",
+          "11": "Mùi",
+          "12": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Ngọc Vũ",
+      "type": "Good",
+      "suitable": ["Khai trương, mở hàng", "Giao dịch, buôn bán"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Sửu",
+          "2": "Mùi",
+          "3": "Dần",
+          "4": "Thân",
+          "5": "Mão",
+          "6": "Dậu",
+          "7": "Thìn",
+          "8": "Tuất",
+          "9": "Tỵ",
+          "10": "Hợi",
+          "11": "Ngọ",
+          "12": "Tý"
+        }
+      }
+    },
+    {
+      "name": "Kính An",
+      "type": "Good",
+      "suitable": ["Chôn cất", "Xây mộ, làm mộ"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Mão",
+          "3": "Thìn",
+          "4": "Tỵ",
+          "5": "Ngọ",
+          "6": "Mùi",
+          "7": "Thân",
+          "8": "Dậu",
+          "9": "Tuất",
+          "10": "Hợi",
+          "11": "Tý",
+          "12": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Phổ Hộ",
+      "type": "Good",
+      "suitable": ["Cầu bình an", "Làm việc thiện"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thân",
+          "2": "Dần",
+          "3": "Dậu",
+          "4": "Mão",
+          "5": "Tuất",
+          "6": "Thìn",
+          "7": "Hợi",
+          "8": "Tỵ",
+          "9": "Tý",
+          "10": "Ngọ",
+          "11": "Sửu",
+          "12": "Mùi"
+        }
+      }
+    },
+    {
+      "name": "Tam Hợp",
+      "type": "Good",
+      "suitable": ["Mọi việc đều tốt", "Cưới hỏi", "Khởi công, làm nhà"],
+      "criteria": {
+        "month_day_chi": {
+          "1": ["Ngọ", "Tuất"],
+          "2": ["Hợi", "Mùi"],
+          "3": ["Thân", "Tý"],
+          "4": ["Dậu", "Sửu"],
+          "5": ["Tuất", "Dần"],
+          "6": ["Hợi", "Mão"],
+          "7": ["Tý", "Thìn"],
+          "8": ["Sửu", "Tỵ"],
+          "9": ["Dần", "Ngọ"],
+          "10": ["Mão", "Mùi"],
+          "11": ["Thìn", "Thân"],
+          "12": ["Tỵ", "Dậu"]
+        }
+      }
+    },
+    {
+      "name": "Mẫu Thương",
+      "type": "Good",
+      "suitable": ["Cầu tài lộc", "Khai trương, mở hàng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": ["Hợi", "Tý"],
+          "2": ["Hợi", "Tý"],
+          "3": ["Hợi", "Tý"],
+          "4": ["Dần", "Mão"],
+          "5": ["Dần", "Mão"],
+          "6": ["Dần", "Mão"],
+          "7": ["Thìn", "Tuất", "Sửu", "Mùi"],
+          "8": ["Thìn", "Tuất", "Sửu", "Mùi"],
+          "9": ["Thìn", "Tuất", "Sửu", "Mùi"],
+          "10": ["Thân", "Dậu"],
+          "11": ["Thân", "Dậu"],
+          "12": ["Thân", "Dậu"]
+        }
+      }
+    },
+    {
+      "name": "Thiên Phúc",
+      "type": "Good",
+      "suitable": ["Cầu phúc", "Làm việc thiện", "Thi cử", "Nhập học", "Nhận chức"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dậu",
+          "2": "Thân",
+          "3": "Mùi",
+          "4": "Ngọ",
+          "5": "Tỵ",
+          "6": "Thìn",
+          "7": "Mão",
+          "8": "Dần",
+          "9": "Sửu",
+          "10": "Tý",
+          "11": "Hợi",
+          "12": "Tuất"
+        }
+      },
+      "description": "Tốt cho cầu phúc, thi cử, danh lợi"
+    },
+    {
+      "name": "Ngũ Phú",
+      "type": "Good",
+      "suitable": ["Giao dịch, buôn bán", "Thu tiền"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Hợi",
+          "2": "Dần",
+          "3": "Tỵ",
+          "4": "Thân",
+          "5": "Hợi",
+          "6": "Dần",
+          "7": "Tỵ",
+          "8": "Thân",
+          "9": "Hợi",
+          "10": "Dần",
+          "11": "Tỵ",
+          "12": "Thân"
+        }
+      }
+    },
+    {
+      "name": "Quang Nhật",
+      "type": "Good",
+      "suitable": ["Tắm gội, tẩy trần", "Lễ bái"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tuất",
+          "2": "Dậu",
+          "3": "Thân",
+          "4": "Mùi",
+          "5": "Ngọ",
+          "6": "Tỵ",
+          "7": "Thìn",
+          "8": "Mão",
+          "9": "Dần",
+          "10": "Sửu",
+          "11": "Tý",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Thiên Phú",
+      "type": "Good",
+      "suitable": ["Xây dựng", "Khai trương, mở hàng", "Chôn cất"],
+      "description": "Tốt cho xây dựng, khai trương, an táng",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thìn",
+          "2": "Tỵ",
+          "3": "Ngọ",
+          "4": "Mùi",
+          "5": "Thân",
+          "6": "Dậu",
+          "7": "Tuất",
+          "8": "Hợi",
+          "9": "Tý",
+          "10": "Sửu",
+          "11": "Dần",
+          "12": "Mão"
+        }
+      }
+    },
+    {
+      "name": "Lộc Khố",
+      "type": "Good",
+      "suitable": ["Cầu tài lộc", "Giao dịch, buôn bán"],
+      "description": "Tốt cho cầu tài, giao dịch",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thìn",
+          "2": "Tỵ",
+          "3": "Ngọ",
+          "4": "Mùi",
+          "5": "Thân",
+          "6": "Dậu",
+          "7": "Tuất",
+          "8": "Hợi",
+          "9": "Tý",
+          "10": "Sửu",
+          "11": "Dần",
+          "12": "Mão"
+        }
+      }
+    },
+    {
+      "name": "Thiên Thành",
+      "type": "Good",
+      "suitable": ["Ký kết hợp đồng", "Giao dịch, buôn bán"],
+      "description": "Tốt cho mọi việc",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Ngọ",
+          "2": "Thân",
+          "3": "Tuất",
+          "4": "Tý",
+          "5": "Dần",
+          "6": "Thìn",
+          "7": "Ngọ",
+          "8": "Thân",
+          "9": "Tuất",
+          "10": "Tý",
+          "11": "Dần",
+          "12": "Thìn"
+        }
+      }
+    },
+    {
+      "name": "Hoạt Diệu",
+      "type": "Good",
+      "suitable": ["Đi xa, khởi hành", "Giao dịch, buôn bán"],
+      "description": "Tốt cho mọi việc",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Mão",
+          "3": "Thìn",
+          "4": "Tỵ",
+          "5": "Ngọ",
+          "6": "Mùi",
+          "7": "Thân",
+          "8": "Dậu",
+          "9": "Tuất",
+          "10": "Hợi",
+          "11": "Tý",
+          "12": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Lục Hợp",
+      "type": "Good",
+      "suitable": ["Cưới hỏi", "Giao dịch, buôn bán"],
+      "description": "Tốt cho cưới hỏi, giao dịch",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Hợi",
+          "2": "Tuất",
+          "3": "Dậu",
+          "4": "Thân",
+          "5": "Mùi",
+          "6": "Ngọ",
+          "7": "Tỵ",
+          "8": "Thìn",
+          "9": "Mão",
+          "10": "Dần",
+          "11": "Sửu",
+          "12": "Tý"
+        }
+      }
+    },
+    {
+      "name": "Thiên Quý",
+      "type": "Good",
+      "suitable": ["Gặp cấp trên", "Nộp đơn từ"],
+      "description": "Tốt cho mọi việc",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Giáp",
+          "2": "Ất",
+          "3": "Bính",
+          "4": "Đinh",
+          "5": "Mậu",
+          "6": "Kỷ",
+          "7": "Canh",
+          "8": "Tân",
+          "9": "Nhâm",
+          "10": "Quý"
+        }
+      }
+    }
+  ]
+}

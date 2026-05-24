@@ -1,0 +1,44 @@
+# Project Configuration (Per-Project Override)
+#
+# Place this file in each project's .agent/ directory to inject
+# project-specific context without bloating AGENTS.md.
+#
+# The agent reads this file during the entry protocol to understand
+# the project's tech stack, conventions, and active skill subset.
+
+project: "my-project"
+description: "Brief description of the project"
+
+# Tech stack — used by @sa and @dev for context
+stack:
+  - "React 19"
+  - "TypeScript 5"
+  - "Vite 7"
+
+# Build tools
+build:
+  tool: "npm"
+  dev: "npm run dev"
+  build: "npm run build"
+  test: "npm run test"
+
+# Coding conventions
+conventions:
+  commits: "conventional"      # conventional | angular | none
+  tests: "vitest"              # vitest | jest | playwright | none
+  linter: "eslint"             # eslint | biome | none
+  formatting: "prettier"       # prettier | biome | none
+
+# Active skills subset — only these are prioritized for this project
+# (others are still available but won't be auto-suggested)
+active_skills:
+  - "react-patterns"
+  - "typescript-expert"
+  - "performance-optimization"
+
+# Prebuild cleanup targets — override defaults in cleanup-state.ps1
+# (optional — defaults are used if not specified)
+prebuild_clean:
+  - "dist/"
+  - "node_modules/.cache/"
+  - "coverage/"

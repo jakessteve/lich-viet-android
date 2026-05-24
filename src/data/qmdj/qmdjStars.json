@@ -1,0 +1,121 @@
+{
+  "stars": [
+    {
+      "id": "thienBong",
+      "nameVi": "Thiên Bồng",
+      "nameCn": "天蓬",
+      "element": "Thủy",
+      "homePalace": 1,
+      "auspiciousness": "hung",
+      "description": "Hung — Chủ mạo hiểm, lãnh đạo, can đảm nhưng nhiều rủi ro.",
+      "personality": "Thiên Bồng là ngôi sao dũng mãnh nhất trong Cửu Tinh, mang năng lượng Thủy mạnh mẽ và khó kiểm soát. Tượng trưng cho sức mạnh quân sự, sự liều lĩnh và khả năng lãnh đạo trong hoàn cảnh nguy hiểm. Khi Thiên Bồng tỏa sáng, mọi thứ diễn ra nhanh, mạnh và không thể lùi.",
+      "domainInfluence": "Chủ về hành động quân sự, mạo hiểm, phiêu lưu. Liên quan đến nước (lũ lụt, đường biển, thủy sản). Ám chỉ trộm cắp, bạo lực nếu gặp cung hung.",
+      "careerImplication": "Thuận lợi cho quân nhân, cảnh sát, lính cứu hỏa, thể thao mạo hiểm. Bất lợi cho kinh doanh, đàm phán cần kiên nhẫn.",
+      "healthImplication": "Liên quan đến bệnh thận, bàng quang, hệ tiết niệu. Cẩn thận tai nạn liên quan đến nước."
+    },
+    {
+      "id": "thienNhue",
+      "nameVi": "Thiên Nhuế",
+      "nameCn": "天芮",
+      "element": "Thổ",
+      "homePalace": 2,
+      "auspiciousness": "hung",
+      "description": "Hung — Chủ bệnh tật, sai lầm, phiền não. Bất lợi cho sức khỏe.",
+      "personality": "Thiên Nhuế là ngôi sao bệnh tật, mang năng lượng Thổ nặng nề và ứ trệ. Tượng trưng cho sự suy yếu thể chất và tinh thần, bệnh tật langman, và những sai lầm do thiếu sáng suốt. Thiên Nhuế không gây nguy hiểm tức thì nhưng gặm nhấm dần dần.",
+      "domainInfluence": "Chủ về bệnh tật, nhập viện, chẩn đoán sai. Liên quan đến thất bại trong kinh doanh do thiếu năng lượng, phụ nữ gây trở ngại. Cũng ám chỉ đất đai có vấn đề.",
+      "careerImplication": "Bất lợi cho hầu hết các hoạt động kinh doanh. Tuy nhiên, thuận lợi cho ngành y (bác sĩ, dược sĩ) vì Thiên Nhuế 'hiểu' bệnh tật.",
+      "healthImplication": "Liên quan đến bệnh mãn tính, dạ dày, lá lách, hệ tiêu hóa. Cần kiểm tra sức khỏe tổng quát khi gặp sao này."
+    },
+    {
+      "id": "thienXung",
+      "nameVi": "Thiên Xung",
+      "nameCn": "天冲",
+      "element": "Mộc",
+      "homePalace": 3,
+      "auspiciousness": "trung_binh",
+      "description": "Trung Bình — Chủ dũng cảm, hành động nhanh, quân sự.",
+      "personality": "Thiên Xung mang năng lượng Mộc bùng nổ, tượng trưng cho sấm sét và hành động quyết đoán. Là ngôi sao của sự dũng cảm, xung kích, và khởi đầu mạnh mẽ. Thiên Xung thúc đẩy mọi thứ tiến nhanh nhưng đôi khi quá nóng vội.",
+      "domainInfluence": "Chủ về hành động nhanh, quyết định tức thì, quân sự, thể thao. Liên quan đến tranh giành, cạnh tranh, phản ứng nhanh. Có thể tích cực nếu ở cung cát, tiêu cực nếu ở cung hung.",
+      "careerImplication": "Tốt cho khởi nghiệp, mở chi nhánh, chạy chiến dịch marketing ngắn hạn. Không phù hợp cho kế hoạch dài hạn cần sự kiên nhẫn.",
+      "healthImplication": "Liên quan đến gan, mật, gân cốt. Dễ bị chấn thương do hành động nóng vội."
+    },
+    {
+      "id": "thienPhu",
+      "nameVi": "Thiên Phụ",
+      "nameCn": "天辅",
+      "element": "Mộc",
+      "homePalace": 4,
+      "auspiciousness": "cat",
+      "description": "Cát — Chủ văn hóa, trí tuệ, học vấn. Rất tốt cho học tập và giáo dục.",
+      "personality": "Thiên Phụ là ngôi sao văn khúc, mang năng lượng Mộc dịu dàng và nuôi dưỡng. Tượng trưng cho trí tuệ, học vấn, giáo dục và sự phát triển tinh thần. Khi Thiên Phụ chiếu rọi, trí óc sáng suốt, học tập thuận lợi, quý nhân chỉ dẫn.",
+      "domainInfluence": "Chủ về thi cử, học tập, nghiên cứu, sáng tác, giảng dạy. Liên quan đến giáo dục con cái, đào tạo nhân viên, viết sách, xuất bản. Đặc biệt tốt cho các ngành sáng tạo và truyền thông.",
+      "careerImplication": "Xuất sắc cho giáo viên, nhà nghiên cứu, nhà văn, nhà báo, designer. Tốt cho mọi hoạt động cần trí tuệ và sáng tạo.",
+      "healthImplication": "Liên quan tích cực đến sức khỏe tinh thần. Khi Thiên Phụ mạnh, tâm trí an nhiên, giảm stress."
+    },
+    {
+      "id": "thienCam",
+      "nameVi": "Thiên Cầm",
+      "nameCn": "天禽",
+      "element": "Thổ",
+      "homePalace": 5,
+      "auspiciousness": "cat",
+      "description": "Cát — Chủ tổng quát, quản lý, ổn định. Trung cung, tĩnh lặng và bao quát.",
+      "personality": "Thiên Cầm nằm ở trung tâm (Trung Cung), là ngôi sao tọa trấn mọi phương. Mang năng lượng Thổ cân bằng, ổn định và bao dung. Tượng trưng cho khả năng quản lý tổng thể, nhìn thấy toàn cảnh, và điều phối mọi nguồn lực.",
+      "domainInfluence": "Chủ về quản lý, điều hành, tổng quát hóa. Liên quan đến bất động sản ở trung tâm, quyền lực tập trung, chính trị. Thiên Cầm thường ký gửi cung 2 (Khôn), nên cũng chịu ảnh hưởng của cung đó.",
+      "careerImplication": "Tốt cho quản lý cấp trung và cao, CEO, giám đốc. Thích hợp với vai trò điều phối, không phải chuyên gia từng lĩnh vực.",
+      "healthImplication": "Liên quan đến tỳ vị (dạ dày, lá lách). Sức khỏe ổn định nhưng cần chú ý ăn uống điều độ."
+    },
+    {
+      "id": "thienTam",
+      "nameVi": "Thiên Tâm",
+      "nameCn": "天心",
+      "element": "Kim",
+      "homePalace": 6,
+      "auspiciousness": "cat",
+      "description": "Cát — Chủ trí tuệ, chiến lược, y khoa. Rất tốt cho chữa bệnh và hoạch định.",
+      "personality": "Thiên Tâm là ngôi sao trí tuệ sắc bén nhất, mang năng lượng Kim chính xác và quyết đoán. Tượng trưng cho bộ não chiến lược, khả năng phân tích, chẩn đoán và ra quyết định chính xác. Khi Thiên Tâm sáng, mọi vấn đề phức tạp đều có lời giải.",
+      "domainInfluence": "Chủ về y khoa, chữa bệnh, chiến lược quân sự, quản lý rủi ro. Liên quan đến phẫu thuật thành công, kê đơn thuốc, tư vấn chuyên gia. Cũng ám chỉ lãnh đạo cấp cao, cố vấn, mưu sĩ.",
+      "careerImplication": "Xuất sắc cho bác sĩ, phẫu thuật viên, chuyên gia tư vấn, nhà chiến lược. Rất tốt cho chẩn đoán vấn đề kinh doanh và đề ra giải pháp.",
+      "healthImplication": "Đây là ngôi sao chữa bệnh. Khi gặp Thiên Tâm ở cung cát, thuận lợi cho đi khám bệnh, phẫu thuật, điều trị."
+    },
+    {
+      "id": "thienTru",
+      "nameVi": "Thiên Trụ",
+      "nameCn": "天柱",
+      "element": "Kim",
+      "homePalace": 7,
+      "auspiciousness": "hung",
+      "description": "Hung — Chủ khẩu thiệt, tranh luận, tổn hại, phá hoại.",
+      "personality": "Thiên Trụ mang năng lượng Kim sắc bén nhưng mang tính phá hoại. Tượng trưng cho lời nói gây tổn thương, phê phán, chỉ trích và sự sụp đổ cấu trúc. Thiên Trụ đốn gãy mọi thứ đang đứng, phơi bày điểm yếu.",
+      "domainInfluence": "Chủ về khẩu thiệt, tranh cãi, phá sản, tháo dỡ. Liên quan đến kiện tụng bất lợi, mất danh tiếng, scandal. Tuy nhiên lại tốt cho việc phá bỏ cái cũ để xây cái mới — nếu có kế hoạch.",
+      "careerImplication": "Bất lợi cho hầu hết hoạt động kinh doanh mới. Tuy nhiên, tốt cho luật sư, nhà tái cấu trúc, chuyên gia phá sản. Cũng tốt cho việc cắt giảm nhân sự, tái cơ cấu.",
+      "healthImplication": "Liên quan đến bệnh phổi, đường hô hấp, răng miệng. Cẩn thận với các vấn đề xương khớp."
+    },
+    {
+      "id": "thienNham",
+      "nameVi": "Thiên Nhậm",
+      "nameCn": "天任",
+      "element": "Thổ",
+      "homePalace": 8,
+      "auspiciousness": "cat",
+      "description": "Cát — Chủ trung thành, chăm chỉ, bền vững. Tốt cho việc dài hạn và tích lũy.",
+      "personality": "Thiên Nhậm là ngôi sao của sự kiên nhẫn, chăm chỉ và đáng tin cậy. Mang năng lượng Thổ vững vàng như ngọn núi, tượng trưng cho sức chịu đựng, lòng trung thành và phần thưởng xứng đáng cho nỗ lực bền bỉ.",
+      "domainInfluence": "Chủ về bất động sản, xây dựng, nông nghiệp, tích lũy tài sản. Liên quan đến kế hoạch dài hạn thành công, đầu tư ổn định, xây dựng danh tiếng qua thời gian.",
+      "careerImplication": "Tốt cho bất động sản, nông nghiệp, giáo dục, chăm sóc sức khỏe. Thích hợp cho mọi nghề cần sự kiên trì và uy tín tích lũy.",
+      "healthImplication": "Liên quan tích cực đến sức khỏe tổng thể. Khi Thiên Nhậm mạnh, thể lực bền bỉ, hồi phục nhanh."
+    },
+    {
+      "id": "thienAnh",
+      "nameVi": "Thiên Anh",
+      "nameCn": "天英",
+      "element": "Hỏa",
+      "homePalace": 9,
+      "auspiciousness": "trung_binh",
+      "description": "Trung Bình — Chủ danh tiếng, dũng cảm nhưng nóng nảy, bùng cháy nhanh.",
+      "personality": "Thiên Anh mang năng lượng Hỏa bùng cháy, tượng trưng cho ánh sáng, danh tiếng, sự nổi bật nhưng cũng có thể thiêu đốt. Là ngôi sao của sự rực rỡ thoáng qua — cháy sáng nhưng cháy nhanh. Khi Thiên Anh ở cung tốt, mang lại danh tiếng; ở cung xấu, gây scandal.",
+      "domainInfluence": "Chủ về danh tiếng, quảng cáo, biểu diễn, truyền thông. Liên quan đến sự kiện nổi bật, viral, thành công bùng nổ nhưng ngắn hạn. Cũng ám chỉ hỏa hoạn, cháy nổ nếu ở cung hung.",
+      "careerImplication": "Tốt cho nghệ sĩ, người nổi tiếng, marketing, sự kiện. Cẩn thận với danh tiếng — có thể tăng nhanh nhưng cũng sụp nhanh.",
+      "healthImplication": "Liên quan đến tim mạch, hệ tuần hoàn, mắt. Dễ bị stress, nóng trong, mất ngủ do áp lực danh tiếng."
+    }
+  ]
+}

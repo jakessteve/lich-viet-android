@@ -1,0 +1,52 @@
+[
+  {
+    "goodStar": "Cát Thần",
+    "badStar": "Thiên Sát",
+    "ratio": 0.5
+  },
+  {
+    "goodStar": "Cát Thần",
+    "badStar": "Địa Sát",
+    "ratio": 0.5
+  },
+  {
+    "goodStar": "Thiên Phước",
+    "badStar": "Hoàng Sa",
+    "ratio": 0.7
+  },
+  {
+    "goodStar": "Thái Dương",
+    "badStar": "Thái Hổ",
+    "ratio": 0.6
+  },
+  {
+    "goodStar": "Thái Bạch",
+    "badStar": "Thái Thư",
+    "ratio": 0.6
+  },
+  {
+    "goodStar": "Thành Đạo",
+    "badStar": "Bạch Hổ",
+    "ratio": 0.5
+  },
+  {
+    "goodStar": "Thần Tại",
+    "badStar": "Huyền Vũ",
+    "ratio": 0.8
+  },
+  {
+    "goodStar": "Đại cát",
+    "badStar": "Thiên Hình",
+    "ratio": 0.9
+  },
+  {
+    "goodStar": "Đại cát",
+    "badStar": "Câu Trận",
+    "ratio": 0.9
+  },
+  {
+    "goodStar": "Thất Thánh",
+    "badStar": "Lôi Binh",
+    "ratio": 0.7
+  }
+]

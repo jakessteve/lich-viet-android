@@ -1,0 +1,59 @@
+{
+  "description": "Solar Term → Yuan → Game Number lookup (Cục Số). Yang Dun: Đông Chí → Mang Chủng. Yin Dun: Hạ Chí → Đại Tuyết.",
+  "yangDun": {
+    "Đông chí": { "upper": 1, "middle": 7, "lower": 4 },
+    "Tiểu hàn": { "upper": 2, "middle": 8, "lower": 5 },
+    "Đại hàn": { "upper": 3, "middle": 9, "lower": 6 },
+    "Lập xuân": { "upper": 8, "middle": 5, "lower": 2 },
+    "Vũ thủy": { "upper": 9, "middle": 6, "lower": 3 },
+    "Kinh trập": { "upper": 1, "middle": 7, "lower": 4 },
+    "Xuân phân": { "upper": 3, "middle": 9, "lower": 6 },
+    "Thanh minh": { "upper": 4, "middle": 1, "lower": 7 },
+    "Cốc vũ": { "upper": 5, "middle": 2, "lower": 8 },
+    "Lập hạ": { "upper": 4, "middle": 1, "lower": 7 },
+    "Tiểu mãn": { "upper": 5, "middle": 2, "lower": 8 },
+    "Mang chủng": { "upper": 6, "middle": 3, "lower": 9 }
+  },
+  "yinDun": {
+    "Hạ chí": { "upper": 9, "middle": 3, "lower": 6 },
+    "Tiểu thử": { "upper": 8, "middle": 2, "lower": 5 },
+    "Đại thử": { "upper": 7, "middle": 1, "lower": 4 },
+    "Lập thu": { "upper": 2, "middle": 5, "lower": 8 },
+    "Xử thử": { "upper": 1, "middle": 4, "lower": 7 },
+    "Bạch lộ": { "upper": 9, "middle": 3, "lower": 6 },
+    "Thu phân": { "upper": 7, "middle": 1, "lower": 4 },
+    "Hàn lộ": { "upper": 6, "middle": 9, "lower": 3 },
+    "Sương giáng": { "upper": 5, "middle": 8, "lower": 2 },
+    "Lập đông": { "upper": 6, "middle": 9, "lower": 3 },
+    "Tiểu tuyết": { "upper": 5, "middle": 8, "lower": 2 },
+    "Đại tuyết": { "upper": 4, "middle": 7, "lower": 1 }
+  },
+  "yangDunTerms": [
+    "Đông chí",
+    "Tiểu hàn",
+    "Đại hàn",
+    "Lập xuân",
+    "Vũ thủy",
+    "Kinh trập",
+    "Xuân phân",
+    "Thanh minh",
+    "Cốc vũ",
+    "Lập hạ",
+    "Tiểu mãn",
+    "Mang chủng"
+  ],
+  "yinDunTerms": [
+    "Hạ chí",
+    "Tiểu thử",
+    "Đại thử",
+    "Lập thu",
+    "Xử thử",
+    "Bạch lộ",
+    "Thu phân",
+    "Hàn lộ",
+    "Sương giáng",
+    "Lập đông",
+    "Tiểu tuyết",
+    "Đại tuyết"
+  ]
+}

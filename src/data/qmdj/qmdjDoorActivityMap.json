@@ -1,0 +1,80 @@
+{
+  "description": "Maps each QMDJ Door to activity IDs from ACTIVITY_CATALOG. 'favors' = Door gives bonus. 'disfavors' = Door gives penalty.",
+  "khai": {
+    "favors": [
+      "khai-truong",
+      "nhan-chuc",
+      "ky-hop-dong",
+      "xuat-hanh",
+      "cuoi-hoi",
+      "xay-dung",
+      "chua-benh",
+      "giao-dich",
+      "nop-don",
+      "gap-ban",
+      "mo-tiec"
+    ],
+    "disfavors": []
+  },
+  "huu": {
+    "favors": [
+      "gap-ban",
+      "cuoi-hoi",
+      "di-doi",
+      "chuyen-nha",
+      "giao-dich",
+      "xay-dung",
+      "nhan-chuc",
+      "cau-phuc",
+      "cau-con",
+      "lam-viec-tot"
+    ],
+    "disfavors": ["kien-tung"]
+  },
+  "sinh": {
+    "favors": [
+      "cau-tai",
+      "khai-truong",
+      "giao-dich",
+      "mua-tai-san",
+      "trong-trot",
+      "chan-nuoi",
+      "nhap-hoc",
+      "xuat-hanh",
+      "chua-benh",
+      "cho-vay",
+      "thu-tien"
+    ],
+    "disfavors": ["chon-cat", "tang-phuc"]
+  },
+  "thuong": {
+    "favors": ["thu-tien", "kien-tung"],
+    "disfavors": ["cuoi-hoi", "khai-truong", "xay-dung", "di-doi", "giao-dich", "ky-hop-dong", "cau-phuc"]
+  },
+  "do": {
+    "favors": ["ngoi-thien"],
+    "disfavors": ["khai-truong", "gap-ban", "xuat-hanh", "nhan-chuc", "mo-tiec"]
+  },
+  "canh": {
+    "favors": ["thi-cu", "ky-hop-dong", "nop-don", "nhap-hoc"],
+    "disfavors": ["kien-tung"]
+  },
+  "tu": {
+    "favors": ["chon-cat"],
+    "disfavors": [
+      "khai-truong",
+      "cuoi-hoi",
+      "xuat-hanh",
+      "xay-dung",
+      "giao-dich",
+      "di-doi",
+      "cau-tai",
+      "cau-phuc",
+      "chua-benh"
+    ]
+  },
+  "kinh": {
+    "favors": ["kien-tung"],
+    "disfavors": ["khai-truong", "cuoi-hoi", "xuat-hanh", "xay-dung", "giao-dich", "cau-phuc", "cau-tai", "gap-ban"]
+  }
+}

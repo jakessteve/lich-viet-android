@@ -1,0 +1,591 @@
+/* Traditional Tử Vi chart surface, closer to the printed reference-table feel. */
+.tuvi-chart-shell {
+  width: 100%;
+  overflow-x: hidden;
+  padding: 4px 0 0;
+}
+
+.tuvi-chart-stage {
+  position: relative;
+}
+
+.tuvi-chart {
+  --tuvi-line: #b8860b;
+  --tuvi-paper: #ffffff;
+  --tuvi-paper-soft: #faf7ef;
+  --tuvi-ink: #1b1c19;
+  --tuvi-muted: #5f5a50;
+  --tuvi-red: #b91c1c;
+
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
+  background: var(--tuvi-line);
+  border: 1px solid var(--tuvi-line);
+  border-radius: 8px;
+  box-shadow: none;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.tuvi-chart > div {
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.tuvi-center-cell {
+  background: var(--tuvi-paper);
+}
+
+.tuvi-palace,
+.tuvi-center {
+  height: 100%;
+  color: var(--tuvi-ink);
+  background: var(--tuvi-paper);
+  font-family: inherit;
+}
+
+.tuvi-palace {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid rgba(27, 28, 25, 0.82);
+  padding: 5px 6px 34px;
+  overflow: hidden;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.tuvi-palace:hover {
+  background: #fcfaf3;
+}
+
+.tuvi-palace.selected {
+  background: #fff8e8;
+  box-shadow: inset 0 0 0 2px rgba(184, 134, 11, 0.65);
+  z-index: 4;
+}
+
+.tuvi-palace.trine {
+  background: #fffdf4;
+  box-shadow: inset 0 0 0 1px rgba(184, 134, 11, 0.35);
+  z-index: 3;
+}
+
+.tuvi-palace.opposite {
+  background: #fff9f9;
+  box-shadow: inset 0 0 0 1px rgba(185, 28, 28, 0.32);
+}
+
+.tuvi-palace.nguyet-han-active {
+  background: #fffbe8;
+}
+
+.tuvi-palace-header {
+  position: relative;
+  min-height: 22px;
+  padding-bottom: 0;
+}
+
+.tuvi-can-chi {
+  position: absolute;
+  left: 0;
+  top: 1px;
+  max-width: 42%;
+  color: #8a6d1d;
+  font-size: 0.64rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.tuvi-palace-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  color: var(--tuvi-ink);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.05;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.tuvi-dai-han-number {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--tuvi-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: right;
+}
+
+.tuvi-dai-han-number strong {
+  color: var(--tuvi-ink);
+  font-size: 0.96rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.tuvi-dai-han-number em {
+  color: var(--tuvi-muted);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.tuvi-palace-title em {
+  color: inherit;
+  font-size: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  letter-spacing: 0;
+}
+
+.tuvi-chinh-tinh {
+  display: flex;
+  min-height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  text-align: center;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.08;
+  margin-bottom: 4px;
+}
+
+.tuvi-chinh-tinh > span {
+  text-transform: none;
+}
+
+.tuvi-chinh-tinh small {
+  margin-left: 2px;
+  color: #383838;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.tuvi-major-placeholder {
+  min-height: 1em;
+}
+
+.tuvi-empty-star {
+  color: #7b7469;
+  font-size: 0.78rem;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.tuvi-tu-hoa {
+  display: block;
+  font-weight: 600;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  white-space: normal;
+}
+
+.tuvi-tu-hoa.loc {
+  color: #166534;
+}
+.tuvi-tu-hoa.quyen {
+  color: #6d28d9;
+}
+.tuvi-tu-hoa.khoa {
+  color: #1d4ed8;
+}
+.tuvi-tu-hoa.ky {
+  color: #b91c1c;
+}
+
+.tuvi-phu-tinh-grid {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-auto-rows: min-content;
+  align-content: start;
+  gap: 6px;
+  min-height: 0;
+  max-height: 100%;
+  margin-top: 0;
+  padding-top: 6px;
+  font-size: 0.71rem;
+  font-weight: 500;
+  line-height: 1.04;
+}
+
+.tuvi-phu-tinh-grid > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+  min-height: 0;
+}
+
+.tuvi-phu-tinh-grid > div:first-child {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.tuvi-phu-tinh-grid > div:last-child {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.tuvi-phu-tinh-grid span {
+  display: block;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  line-height: 1.02;
+}
+
+.tuvi-phu-tinh-grid small {
+  margin-left: 2px;
+  color: #383838;
+  font-size: 0.61rem;
+}
+
+.tuvi-phu-tinh-grid .sat {
+  font-weight: 500;
+}
+
+.tuvi-khong-banner {
+  position: absolute;
+  right: 6px;
+  bottom: 30px;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+.tuvi-palace-footer {
+  position: absolute;
+  right: 7px;
+  bottom: 4px;
+  left: 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  color: var(--tuvi-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.tuvi-footer-primary {
+  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: end;
+  column-gap: 6px;
+  min-width: 0;
+}
+
+.tuvi-branch-label {
+  color: #1f2937;
+  font-weight: 800;
+  justify-self: start;
+}
+
+.tuvi-truong-sinh-label {
+  color: #6b4f1d;
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  justify-self: center;
+}
+
+.tuvi-nguyet-han {
+  color: #1f2937;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+  justify-self: end;
+}
+
+.tuvi-nguyet-han.active {
+  color: #991b1b;
+  font-weight: 800;
+}
+
+.tuvi-khong-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #111827;
+  background: #111827;
+  color: #fff;
+  padding: 1px 6px;
+  border-radius: 2px;
+  font-size: 0.64rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.tuvi-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 1px;
+  height: 100%;
+  padding: 6px 8px 6px;
+  overflow: hidden;
+  background: var(--tuvi-paper-soft);
+}
+
+.tuvi-center-title {
+  text-align: center;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: 1px solid rgba(27, 28, 25, 0.1);
+}
+
+.tuvi-center-title h3 {
+  margin: 0;
+  color: var(--tuvi-ink);
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.tuvi-center-title p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tuvi-center-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 2px;
+  flex: 1;
+  width: min(100%, 290px);
+  margin: 0 auto;
+  padding-top: 2px;
+  min-height: 0;
+  overflow: hidden;
+  align-items: stretch;
+}
+
+.tuvi-center-warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 2px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(107, 114, 128, 0.16);
+  color: #9a3412;
+  font-size: 0.65rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.tuvi-center-warnings p {
+  margin: 0;
+}
+
+.tuvi-center-column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 4px;
+  width: 100%;
+}
+
+.tuvi-center-row {
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr);
+  min-width: 0;
+  align-items: center;
+  column-gap: 3px;
+  color: var(--tuvi-muted);
+  font-size: 0.8rem;
+  line-height: 1.18;
+  min-height: 1.45rem;
+  padding: 0;
+}
+
+.tuvi-center-label {
+  flex: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  color: #73695b;
+  white-space: nowrap;
+}
+
+.tuvi-center-values {
+  display: flex;
+  min-width: 0;
+  align-items: baseline;
+  justify-content: flex-end;
+  gap: 3px;
+  overflow: hidden;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tuvi-center-value-primary {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--tuvi-ink);
+  font-weight: 800;
+  line-height: 1.06;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+}
+
+.tuvi-connection-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  mix-blend-mode: normal;
+}
+
+.tuvi-connection-line {
+  stroke: rgba(90, 90, 90, 0.4);
+  stroke-width: 0.9;
+  stroke-dasharray: 2.4 3.2;
+  vector-effect: non-scaling-stroke;
+}
+
+.tuvi-chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 8px auto 0;
+  color: var(--text-secondary-light, #6b7280);
+  font-size: 0.78rem;
+}
+
+.tuvi-brightness-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 6px auto 0;
+  color: var(--text-secondary-light, #6b7280);
+  font-size: 0.72rem;
+}
+
+.dark .tuvi-chart-legend {
+  color: var(--text-secondary-dark, #9ca3af);
+}
+
+.dark .tuvi-brightness-legend {
+  color: var(--text-secondary-dark, #9ca3af);
+}
+
+.tuvi-chart-legend span {
+  border: 1px solid rgba(148, 163, 184, 0.22);
+  border-radius: 2px;
+  padding: 2px 7px;
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.tuvi-brightness-legend span {
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 2px;
+  padding: 2px 6px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.dark .tuvi-chart-legend span {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dark .tuvi-brightness-legend span {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+  .tuvi-chart-stage {
+    margin-inline: auto;
+  }
+
+  .tuvi-chart-shell {
+    overflow-x: hidden;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    padding-bottom: 8px;
+  }
+
+  .tuvi-chart {
+    max-width: none;
+    margin: 0;
+    will-change: transform;
+  }
+
+  .tuvi-chart-legend,
+  .tuvi-brightness-legend {
+    justify-content: flex-start;
+    padding-inline: 8px;
+    font-size: 0.7rem;
+  }
+
+  .tuvi-chart-legend span,
+  .tuvi-brightness-legend span {
+    padding-inline: 6px;
+  }
+
+  .tuvi-connection-svg {
+    display: none;
+  }
+
+  .tuvi-palace.trine::after,
+  .tuvi-palace.opposite::after {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    content: '';
+    pointer-events: none;
+  }
+
+  .tuvi-palace.trine::after {
+    background: rgba(184, 134, 11, 0.9);
+  }
+
+  .tuvi-palace.opposite::after {
+    background: rgba(185, 28, 28, 0.9);
+  }
+}

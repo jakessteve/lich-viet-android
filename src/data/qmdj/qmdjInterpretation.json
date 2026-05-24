@@ -1,0 +1,132 @@
+{
+  "doorStarCombinations": {
+    "doc": "Per-door × per-star Vietnamese interpretation. Key format: doorId_starId.",
+    "khai_thienTam": "Cánh cửa mở ra trước mặt bạn, và bạn có cả trí tuệ lẫn thời cơ để bước qua. Khai Môn gặp Thiên Tâm — đây là tổ hợp Đại Cát hiếm có. Nếu bạn đang cân nhắc ký hợp đồng, nhận chức vụ mới, hay khởi động dự án lớn — hãy hành động quyết đoán. Cả trời và đất đều đang nói: 'Tiến lên'.",
+    "khai_thienPhu": "Bạn đang đứng ở ngưỡng cửa của một hành trình mới, và trí tuệ cùng quý nhân đang sẵn sàng phù trợ. Khai Môn gặp Thiên Phụ — Đại Cát cho mọi khởi đầu liên quan đến trí tuệ. Đây là thời điểm tuyệt vời để khai trương, nhập học, khởi nghiệp sáng tạo, hoặc bắt đầu bất kỳ dự án nào đòi hỏi sự thông minh.",
+    "khai_thienNham": "Bạn đang khởi đầu trên nền tảng vững chắc — như xây nhà trên đá, không sợ mưa gió. Khai Môn gặp Thiên Nhậm — Đại Cát cho những kế hoạch dài hạn. Đặc biệt thuận lợi cho bất động sản, đầu tư ổn định, và xây dựng nền tảng mà bạn muốn tồn tại nhiều năm.",
+    "khai_thienCam": "Khởi đầu ổn định nhưng thiếu yếu tố bất ngờ — như con tàu ra khơi trong ngày trời lặng gió. Khai Môn gặp Thiên Cầm cho bạn sự an toàn, nhưng nếu muốn đột phá thì cần thêm chất xúc tác. Phù hợp hơn cho việc mở rộng kinh doanh hiện tại thay vì mạo hiểm với cái hoàn toàn mới.",
+    "khai_thienXung": "Bạn có đà rất mạnh để khởi đầu — nhưng hãy cẩn thận đừng để sự nóng vội đốt cháy cơ hội. Khai Môn gặp Thiên Xung mang năng lượng nhanh và quyết liệt, tốt cho chiến dịch marketing ngắn hạn hoặc hành động cần tốc độ. Nhưng đừng quên phanh — không phải mọi tốc độ đều an toàn.",
+    "khai_thienAnh": "Khởi đầu rực rỡ nhưng giống pháo hoa — sáng chói rồi tắt nhanh. Khai Môn gặp Thiên Anh mang lại sự chú ý ban đầu, nhưng may mắn này thoáng qua nếu bạn không nhanh tay nắm lấy. Cẩn thận với danh tiếng ảo — đừng nhầm sự nổi tiếng với thành công thực sự.",
+    "khai_thienBong": "Bạn bắt đầu thuận lợi, nhưng đằng sau cánh cửa sáng có bóng tối đang chờ. Khai Môn gặp Thiên Bồng — tiên cát hậu hung. Đừng chủ quan khi mọi thứ trôi chảy ban đầu — hãy chuẩn bị kế hoạch dự phòng cho những rủi ro có thể xuất hiện sau này.",
+    "khai_thienNhue": "Khởi đầu tốt nhưng năng lượng giảm dần theo thời gian — như pin mới dùng rồi hết. Khai Môn gặp Thiên Nhuế cảnh báo bạn cần duy trì sức khỏe và động lực. Nếu bắt đầu dự án dài hạn, hãy chắc chắn bạn có đủ 'nhiên liệu' để đi trọn hành trình.",
+    "khai_thienTru": "Cẩn thận với lời nói khi bắt đầu — Khai Môn gặp Thiên Trụ mang năng lượng khẩu thiệt. Một câu nói sai thời điểm có thể phá hỏng cả kế hoạch. Nếu đang khai trương hay ra mắt, hãy chuẩn bị kỹ bài phát biểu và tránh hứa suông.",
+
+    "sinh_thienTam": "Dòng tài lộc của bạn đang hội tụ với trí tuệ chiến lược — như thợ săn vàng tìm đúng mạch quặng. Sinh Môn gặp Thiên Tâm — Đại Cát cho đầu tư chính xác, giao dịch bất động sản, và mọi quyết định tài chính cần sự sáng suốt.",
+    "sinh_thienPhu": "Tài chính phát triển bền vững nhờ kiến thức — tiền đến từ trí tuệ, không phải may rủi. Sinh Môn gặp Thiên Phụ đặc biệt tốt cho đào tạo nhân viên, đầu tư giáo dục, hoặc kinh doanh liên quan đến tri thức. Học hỏi lúc này chính là đầu tư sinh lời cao nhất.",
+    "sinh_thienNham": "Bạn đang ở vùng đất màu mỡ — tài sản tích lũy chậm nhưng vững chắc như rễ cây ăn sâu. Sinh Môn gặp Thiên Nhậm — Đại Cát cho bất động sản, nông nghiệp, và mọi hình thức tích lũy dài hạn. Kiên nhẫn là chìa khóa.",
+    "sinh_thienCam": "Tài chính ổn định nhưng không có đòn bẩy — như hồ nước yên bình, không sóng nhưng cũng không chảy xiết. Sinh Môn gặp Thiên Cầm phù hợp cho duy trì và quản lý tốt hơn là mở rộng đột phá.",
+    "sinh_thienXung": "Tiền vào nhanh nhưng cũng đi nhanh — bạn cần kiểm soát cảm giác hưng phấn khi có tiền trong tay. Sinh Môn gặp Thiên Xung cảnh báo: đừng chi tiêu xung động, và đừng để tốc độ kiếm tiền che mờ kỷ luật quản lý.",
+    "sinh_thienAnh": "Tài lộc đến từ danh tiếng nhưng không bền — như ngọn lửa rơm, sáng rồi tắt. Sinh Môn gặp Thiên Anh cảnh báo: đừng đầu tư theo phong trào hay tin đồn. Hãy kiểm chứng mọi cơ hội trước khi bỏ tiền vào.",
+    "sinh_thienBong": "Cơ hội tài chính lớn nhưng tiềm ẩn rủi ro nghiêm trọng — như mỏ vàng trong vùng sạt lở. Sinh Môn gặp Thiên Bồng nhắc bạn: không nên liều lĩnh. Nếu một thương vụ có vẻ 'quá đẹp để là thật', nó có lẽ đúng là vậy.",
+    "sinh_thienNhue": "Tài lộc bị cản trở bởi vấn đề sức khỏe hoặc sai sót chi tiết — như xe hỏng giữa đường đến chợ. Sinh Môn gặp Thiên Nhuế nhắc bạn kiểm tra mọi thứ kỹ lưỡng trước khi ký kết. Chú ý sức khỏe — nếu bạn gục, tiền cũng theo.",
+    "sinh_thienTru": "Cẩn thận đầu tư dựa trên thông tin sai lệch — Sinh Môn gặp Thiên Trụ là tín hiệu mạnh cho nguy cơ bị lừa đảo. Đừng tin lời đồn, hãy xác minh mọi nguồn tin. Nếu ai đó thúc giục bạn 'đầu tư gấp', đó là cờ đỏ.",
+
+    "huu_thienTam": "Bạn đang ở giai đoạn nghỉ ngơi tuyệt vời — không phải lười biếng, mà là nạp lại năng lượng với trí tuệ sáng suốt. Hưu Môn gặp Thiên Tâm — Đại Cát. Quý nhân có thể xuất hiện khi bạn thư giãn, sức khỏe hồi phục nhanh. Đây là lúc lắng nghe cơ thể và tâm trí.",
+    "huu_thienPhu": "An nhiên và thông thái — như nhà hiền triết ngồi bên suối. Hưu Môn gặp Thiên Phụ rất tốt cho du lịch, thăm thầy, học hỏi kinh nghiệm từ người đi trước. Hãy cho phép mình chậm lại — đôi khi đứng yên mới thấy đường đi rõ nhất.",
+    "huu_thienNham": "Nghỉ ngơi và phục hồi hiệu quả — cơ thể bạn đang tự chữa lành. Hưu Môn gặp Thiên Nhậm phù hợp cho xây dựng nền tảng sức khỏe bền vững: bắt đầu chế độ ăn mới, thói quen ngủ tốt hơn, hoặc yoga/thiền định.",
+    "huu_thienCam": "Trạng thái an ổn và cân bằng — tâm trí thoải mái, thích hợp để nhìn lại toàn cảnh. Hưu Môn gặp Thiên Cầm là thời điểm vàng để hoạch định chiến lược khi không bị áp lực chi phối.",
+    "huu_thienXung": "Bạn muốn nghỉ ngơi nhưng có cái gì đó cứ thúc giục hành động — như cố ngủ mà đầu vẫn chạy. Hưu Môn gặp Thiên Xung tạo ra mâu thuẫn giữa nghỉ và làm. Hãy cho mình một thời gian biểu rõ ràng: lúc nào nghỉ thì nghỉ thật sự.",
+    "huu_thienAnh": "Bạn đang nghỉ ngơi nhưng tâm trí bận rộn — suy nghĩ lan man, khó thư giãn hoàn toàn. Hưu Môn gặp Thiên Anh có thể gây mất ngủ do lo nghĩ. Thử thiền, tắm nước ấm, hoặc viết nhật ký trước khi ngủ.",
+    "huu_thienBong": "An lành bị phá vỡ bởi sự cố bất ngờ — như đang picnic thì gặp mưa giông. Hưu Môn gặp Thiên Bồng cảnh báo: đề phòng trộm cắp khi đi du lịch, kiểm tra ổ khóa, và đừng để đồ quý ở nơi dễ thấy.",
+    "huu_thienNhue": "Nghỉ ngơi vì cơ thể buộc bạn phải dừng — không phải tự nguyện mà vì kiệt sức. Hưu Môn gặp Thiên Nhuế nhắc bạn: sức khỏe không phải thứ để đánh đổi. Hãy chủ động nghỉ ngơi trước khi cơ thể phải 'cưỡng chế'.",
+    "huu_thienTru": "Sự yên bình bị khuấy động bởi tin xấu hoặc lời nói gây tổn thương. Hưu Môn gặp Thiên Trụ cảnh báo khẩu thiệt — ai đó có thể nói điều không hay về bạn khi bạn không có mặt. Đừng để lời đồn phá vỡ sự an nhiên.",
+
+    "canh_thienTam": "Danh tiếng của bạn đang được trí tuệ chiến lược hỗ trợ — như thí sinh bước vào phòng thi với sự chuẩn bị hoàn hảo. Cảnh Môn gặp Thiên Tâm rất tốt cho thi cử , phỏng vấn, và mọi tình huống bạn cần tỏa sáng bằng trí tuệ.",
+    "canh_thienPhu": "Đây là thời khắc tỏa sáng về mặt trí tuệ — Cảnh Môn gặp Thiên Phủ là Đại Cát cho thi cử, sáng tác, xuất bản, và mọi hoạt động trí tuệ. Nếu bạn đang viết sách, hoàn thành luận văn, hay ra mắt sản phẩm sáng tạo — đây chính là lúc.",
+    "canh_thienNham": "Danh tiếng bền vững — không phải nổi tiếng qua đêm mà là uy tín xây dựng qua thời gian. Cảnh Môn gặp Thiên Nhậm rất tốt cho xây dựng thương hiệu cá nhân, uy tín chuyên môn, và hình ảnh dài hạn.",
+    "canh_thienCam": "Danh tiếng ở mức trung bình — không nổi bật nhưng cũng không bị tổn hại. Cảnh Môn gặp Thiên Cầm là giai đoạn 'giữ phong độ' — duy trì những gì bạn đã xây dựng, không cần mạo hiểm.",
+    "canh_thienXung": "Bạn có thể nổi tiếng nhanh nhưng gây tranh cãi — như video viral hai phe bình luận. Cảnh Môn gặp Thiên Xung mang lại sự chú ý, nhưng không phải mọi sự chú ý đều tốt. Cân nhắc kỹ trước khi phát ngôn công khai.",
+    "canh_thienAnh": "Danh tiếng rực rỡ — sân khấu thuộc về bạn. Cảnh Môn gặp Thiên Anh rất tốt cho sự kiện nghệ thuật, biểu diễn, quảng cáo, và mọi hoạt động cần sự tỏa sáng. Nhưng nhớ rằng đèn sân khấu cũng có lúc tắt.",
+    "canh_thienBong": "Danh tiếng bị đe dọa bởi scandal hoặc thông tin bị bóp méo. Cảnh Môn gặp Thiên Bồng — Hung. Cẩn thận với truyền thông, mạng xã hội, và bất kỳ ai có thể xuyên tạc lời bạn. Im lặng đôi khi là vàng.",
+    "canh_thienNhue": "Thi cử hoặc trình diễn có thể thất bại do sai sót nhỏ — Cảnh Môn gặp Thiên Nhuế cho thấy chi tiết nhỏ quyết định thành bại. Kiểm tra kỹ mọi thứ trước khi 'lên sân khấu'.",
+    "canh_thienTru": "Danh tiếng bị phá hoại nghiêm trọng — Cảnh Môn gặp Thiên Trụ là tổ hợp Hung cho khẩu thiệt. Tránh phát ngôn công khai, họp báo, hoặc bất kỳ hoạt động nào đặt bạn dưới ống kính. Nếu bắt buộc phải nói, chuẩn bị kỹ từng câu chữ.",
+
+    "do_thienTam": "Bạn đang trong ngõ cụt nhưng trí tuệ sẽ giúp bạn tìm thấy cánh cửa ẩn. Đỗ Môn gặp Thiên Tâm — dù bế tắc bên ngoài, bên trong bạn có sự sắc bén để giải mã vấn đề. Đặc biệt tốt cho nghiên cứu, điều tra, và tìm nguyên nhân gốc rễ.",
+    "do_thienPhu": "Bế tắc bên ngoài lại là cơ hội phát triển bên trong — như nhà sư nhập thất, cắt đứt bên ngoài để khai sáng bên trong. Đỗ Môn gặp Thiên Phụ rất tốt cho nghiên cứu chuyên sâu, ẩn dật tu luyện, và phát triển nội tại.",
+    "do_thienNham": "Bế tắc kéo dài nhưng không nguy hiểm — như mùa đông lạnh lẽo nhưng xuân sẽ đến. Đỗ Môn gặp Thiên Nhậm khuyên bạn giữ vững lập trường và kiên nhẫn. Đừng hoảng loạn — thời gian đứng về phía bạn.",
+    "do_thienCam": "Im lặng và quan sát — đây là thời điểm phân tích, không phải hành động. Đỗ Môn gặp Thiên Cầm phù hợp cho chiến lược: ngồi lại, nhìn toàn cảnh, rồi mới quyết định bước tiếp theo.",
+    "do_thienXung": "Bạn muốn hành động nhưng mọi cánh cửa đều đóng — sự dồn nén gây bực bội và khó chịu. Đỗ Môn gặp Thiên Xung đòi hỏi kiên nhẫn — hãy tìm cách xả năng lượng qua thể thao hoặc hoạt động sáng tạo thay vì đập phá rào cản.",
+    "do_thienAnh": "Bí mật có thể bị phơi bày — kế hoạch kín bị lộ, thông tin riêng tư bị lan truyền. Đỗ Môn gặp Thiên Anh cảnh báo bạn cẩn thận bảo mật. Đừng tin tưởng ai quá dễ dàng trong giai đoạn này.",
+    "do_thienBong": "Bế tắc nguy hiểm — nếu đang ẩn náu hoặc giấu điều gì, có nguy cơ cao bị phát hiện. Đỗ Môn gặp Thiên Bồng — Hung. Đừng cố đi đường tắt hay lách luật — hậu quả sẽ nặng hơn bạn tưởng.",
+    "do_thienNhue": "Đang bế tắc mà sức khỏe cũng suy yếu — nghiên cứu sai hướng, nỗ lực không đúng chỗ. Đỗ Môn gặp Thiên Nhuế nhắc bạn dừng lại, kiểm tra lại hướng đi trước khi tiếp tục. Đừng lãng phí năng lượng vào ngõ cụt.",
+    "do_thienTru": "Thông tin bị rò rỉ gây hại nghiêm trọng — bí mật bị phá vỡ bằng lời nói. Đỗ Môn gặp Thiên Trụ — Hung. Đặc biệt cẩn thận với email, tin nhắn, và bất kỳ kênh giao tiếp nào có thể bị đọc trộm.",
+
+    "thuong_thienTam": "Tổn thương giảm nhẹ nhờ trí tuệ can thiệp đúng lúc — như bác sĩ giỏi chẩn đoán chính xác. Thương Môn gặp Thiên Tâm giúp bạn hiểu vấn đề nằm ở đâu và đưa ra giải pháp đúng. Tuy không tránh được đau, nhưng hồi phục nhanh.",
+    "thuong_thienPhu": "Tổn thương đến từ lĩnh vực học thuật hoặc tranh luận trí tuệ — bạn thua vì lý lẽ, không phải vì sức mạnh. Thương Môn gặp Thiên Phủ nhắc bạn: đôi khi thắng cuộc tranh luận nhưng mất đi mối quan hệ.",
+    "thuong_thienNham": "Tổn thất dài hạn nhưng không chí mạng — vết thương chậm lành nhưng sẽ lành. Thương Môn gặp Thiên Nhậm đòi hỏi kiên nhẫn trong hồi phục. Đừng cố nhanh — hãy để thời gian làm công việc của nó.",
+    "thuong_thienCam": "Tổn thương đến từ trung tâm — cấu trúc tổ chức, hệ thống, hoặc nền tảng bị ảnh hưởng. Thương Môn gặp Thiên Cầm cảnh báo: vấn đề nằm ở gốc rễ, không phải ngọn ngành. Sửa triệu chứng không đủ — phải tìm nguyên nhân.",
+    "thuong_thienXung": "Hai sức mạnh phá hoại kết hợp — xung đột bùng nổ, tai nạn nghiêm trọng, hoặc va chạm dữ dội. Thương Môn gặp Thiên Xung — Đại Hung. Hãy tránh mọi hoạt động nguy hiểm, đối đầu, hoặc di chuyển tốc độ cao trong ngày này.",
+    "thuong_thienAnh": "Sự việc tổn thương bị phơi bày công khai — scandal, sai lầm bị mọi người biết, hoặc tổn thất trở thành tâm điểm chú ý. Thương Môn gặp Thiên Anh — Hung. Nếu có vấn đề, hãy giải quyết riêng tư trước khi nó bị công khai.",
+    "thuong_thienBong": "Tổn thương nghiêm trọng — bạo lực, tai nạn nặng, hoặc mất mát lớn. Thương Môn gặp Thiên Bồng — Đại Hung. Đây là tổ hợp nguy hiểm nhất cho sức khỏe thể chất. Hãy cực kỳ cẩn thận và tránh mọi rủi ro không cần thiết.",
+    "thuong_thienNhue": "Sức khỏe bị tổn thương — bệnh tật do tai nạn, sai sót y khoa, hoặc kiệt sức quá mức. Thương Môn gặp Thiên Nhuế — Hung. Nếu có triệu chứng bất thường, đi khám ngay. Đừng tự chẩn đoán hoặc trì hoãn.",
+    "thuong_thienTru": "Phá hoại cùng cực — tổn thất vật chất và danh tiếng đồng thời, như bão quét qua không chừa thứ gì. Thương Môn gặp Thiên Trụ — Đại Hung. Không khởi sự, không ký kết, không phát ngôn. Ẩn mình là chiến lược tốt nhất.",
+
+    "tu_thienTam": "Kết thúc mang tính chữa lành — như phẫu thuật cắt bỏ phần bệnh để cơ thể hồi phục. Tử Môn gặp Thiên Tâm giúp bạn kết thúc đúng thứ cần kết thúc: bệnh tật, mối quan hệ độc hại, hoặc thói quen xấu. Đau nhưng cần thiết.",
+    "tu_thienPhu": "Kết thúc quá trình cũ để bắt đầu hành trình mới — tốt nghiệp, hoàn thành khóa học, hoặc chuyển đổi trí tuệ. Tử Môn gặp Thiên Phụ không phải cái chết mà là sự chuyển hóa. Bạn đang bước qua cánh cửa, không phải ngã xuống.",
+    "tu_thienNham": "Kết thúc chậm rãi, từ từ — như mùa thu lá rụng dần. Tử Môn gặp Thiên Nhậm phù hợp cho thanh lý tài sản cũ, chốt sổ, hoàn tất nghĩa vụ lâu dài. Không có gì vội vã — hãy để mọi thứ tự nhiên đi đến kết thúc.",
+    "tu_thienCam": "Đình trệ hoàn toàn — mọi hoạt động tê liệt tại trung tâm. Tử Môn gặp Thiên Cầm — Hung. Đây không phải lúc cố gắng — hãy chấp nhận rằng một số thứ cần thời gian để tự giải quyết.",
+    "tu_thienXung": "Kết thúc đột ngột và không báo trước — như sấm giữa trời quang. Tử Môn gặp Thiên Xung — Đại Hung. Chuẩn bị tinh thần cho những thay đổi bất ngờ và đảm bảo bạn có kế hoạch dự phòng.",
+    "tu_thienAnh": "Kết thúc gây chú ý công khai — sự ra đi được nhiều người biết, danh tiếng gắn liền với sự việc. Tử Môn gặp Thiên Anh — Hung. Nếu phải kết thúc điều gì, hãy làm kín đáo thay vì công khai.",
+    "tu_thienBong": "Năng lượng tiêu cực cực điểm — tuyệt đối không khởi sự bất cứ điều gì quan trọng. Tử Môn gặp Thiên Bồng — Đại Hung. Đây là thời điểm ẩn mình, tránh rủi ro, và bảo vệ bản thân. Hãy chờ qua.",
+    "tu_thienNhue": "Sức khỏe suy kiệt nghiêm trọng — nếu có bệnh nền, cần đặc biệt cẩn thận. Tử Môn gặp Thiên Nhuế — Đại Hung. Đi khám sức khỏe ngay nếu có bất kỳ triệu chứng bất thường nào. Phòng bệnh hơn chữa bệnh.",
+    "tu_thienTru": "Sụp đổ không thể phục hồi — như cầu gãy giữa dòng. Tử Môn gặp Thiên Trụ — Đại Hung. Không có gì có thể làm trong giai đoạn này ngoài chờ đợi và bảo toàn. Đừng cố sửa — hãy chờ xây lại.",
+
+    "kinh_thienTam": "Bạn sợ, nhưng trí tuệ giúp bạn hiểu nỗi sợ đó là gì — và hóa giải nó. Kinh Môn gặp Thiên Tâm là nỗi lo có giải pháp. Hãy phân tích thay vì hoảng loạn — vấn đề không lớn như bạn tưởng.",
+    "kinh_thienPhu": "Lo lắng về học tập, thi cử, hoặc quyết định trí tuệ — áp lực cao nhưng kết quả cuối cùng không tệ. Kinh Môn gặp Thiên Phụ nhắc bạn: nỗi sợ trước khi thi thường tệ hơn kỳ thi thực sự. Hãy tin vào sự chuẩn bị của mình.",
+    "kinh_thienNham": "Lo lắng dài hạn nhưng không có nguy hiểm thực sự — như cơn mưa nhỏ không bao giờ thành bão. Kinh Môn gặp Thiên Nhậm cho bạn biết: kiên nhẫn sẽ vượt qua. Nỗi lo sẽ tự tan khi bạn nhìn lại.",
+    "kinh_thienCam": "Bất an lan rộng — không chỉ bạn mà cả nhóm hoặc gia đình cùng lo lắng. Kinh Môn gặp Thiên Cầm — Tiểu Hung. Hãy là người trấn an, đừng là người khuếch đại nỗi sợ.",
+    "kinh_thienXung": "Hoảng loạn dẫn đến hành động sai — sợ quá nên quyết định vội, vội quá nên sai liên tiếp. Kinh Môn gặp Thiên Xung — Hung. Bước quan trọng nhất lúc này: DỪNG LẠI. Thở. Suy nghĩ. RỒI mới hành động.",
+    "kinh_thienAnh": "Tin xấu bùng nổ — scandal lan truyền nhanh chóng, hoảng loạn lan rộng. Kinh Môn gặp Thiên Anh — Hung. Đừng tiếp tay cho sự hoảng loạn — kiểm chứng thông tin trước khi phản ứng.",
+    "kinh_thienBong": "Kinh hoàng cùng cực — nguy hiểm thực sự, không phải tưởng tượng. Kinh Môn gặp Thiên Bồng — Đại Hung. Nếu có thể, hãy tránh xa nguồn nguy hiểm, sơ tán hoặc ẩn náu. Đây không phải lúc anh hùng.",
+    "kinh_thienNhue": "Bất an về sức khỏe — kết quả xét nghiệm đáng lo, triệu chứng mới xuất hiện, hoặc lo lắng về bệnh tật. Kinh Môn gặp Thiên Nhuế — Hung. Đi khám ngay thay vì ngồi lo — biết rõ vấn đề luôn tốt hơn đoán mò.",
+    "kinh_thienTru": "Tin xấu dồn dập, lời nói gây tổn thương sâu — như dao cắt bằng ngôn từ. Kinh Môn gặp Thiên Trụ — Hung. Tắt thông báo, tránh mạng xã hội, và bao quanh mình bằng những người tích cực."
+  },
+  "palaceElementInteraction": {
+    "sinh": "Năng lượng của cung đang hỗ trợ bạn từ bên ngoài — như gió thuận đẩy buồm về đúng hướng. Mọi hành động trong không gian này đều được tiếp sức.",
+    "khac": "Môi trường xung quanh tạo áp lực lên bạn — như bơi ngược dòng. Bạn vẫn tiến lên được, nhưng cần nỗ lực gấp đôi so với bình thường.",
+    "bi_sinh": "Năng lượng của bạn đang bị rút ra — như cây phải nuôi quá nhiều cành. Bạn cho đi nhiều hơn nhận lại, dễ kiệt sức nếu không biết đặt ranh giới.",
+    "bi_khac": "Bạn đang bị kiềm chế bởi yếu tố bên ngoài — như chim trong lồng. Hành động cần sự khéo léo và kiên nhẫn thay vì lực mạnh.",
+    "ty_hoa": "Năng lượng cân bằng hoàn hảo — không xung đột, không hao tổn. Như hai người bạn cũ ngồi bên nhau — thoải mái, tự nhiên, không cần cố gắng."
+  },
+  "deityInfluence": {
+    "truc_phu": {
+      "influence": "Trực Phù đang hiện diện trong cung này — năng lượng tôn quý nhất, như được sếp lớn đứng sau bảo kê. Mọi thứ liên quan đến cấp trên, thẩm quyền, và thăng tiến đều được phù trợ mạnh mẽ.",
+      "advice": "Đây là thời điểm vàng để gặp cấp trên, xin phê duyệt, ký hợp đồng quan trọng, hoặc trình bày ý tưởng lớn. Hãy tự tin — bạn có 'backing' từ năng lượng cao nhất."
+    },
+    "dang_xa": {
+      "influence": "Đằng Xà xuất hiện — mọi thứ xung quanh bạn có thể không đúng như bề ngoài. Như sương mù che đường, thực và ảo lẫn lộn. Cẩn thận bị lừa dối, mộng mị, hoặc hỏa hoạn.",
+      "advice": "Đừng ký kết bất cứ điều gì khi chưa kiểm tra kỹ 3 lần. Đề phòng giả dối — nếu trực giác nói 'có gì sai', hãy tin nó. Kiểm tra kỹ mọi thông tin trước khi hành động."
+    },
+    "thai_am": {
+      "influence": "Thái Âm bao trùm cung — năng lượng ẩn mật, sâu kín, và mưu lược. Như mặt trăng soi sáng trong đêm — bạn thấy rõ khi người khác không thấy. Phù trợ mạnh cho kế hoạch bí mật và chiến lược dài hạn.",
+      "advice": "Đây là thời điểm hoàn hảo để lên kế hoạch âm thầm, chuẩn bị ngầm, và di chuyển mà không ai biết. Không nên công khai ý định. Nữ giới được hưởng lợi đặc biệt từ năng lượng này."
+    },
+    "luc_hop": {
+      "influence": "Lục Hợp hiện diện — năng lượng hòa hợp, gắn kết, và hợp tác tràn ngập. Như hai mảnh ghép tìm thấy nhau — mọi mối quan hệ trong giai đoạn này đều có tiềm năng 'win-win'.",
+      "advice": "Rất tốt cho thương lượng, hợp tác kinh doanh, mai mối, và mọi giao dịch cần đôi bên cùng có lợi. Nếu đang tìm đối tác — hãy mở cửa, người đúng sẽ đến."
+    },
+    "bach_ho": {
+      "influence": "Bạch Hổ gầm trong cung — năng lượng hung bạo, sắc bén, và quyết liệt. Như thanh kiếm tuốt khỏi vỏ — có sức mạnh lớn nhưng cũng nguy hiểm. Cẩn thận tai nạn, kiện tụng, và mọi hình thức xung đột.",
+      "advice": "Tránh tranh chấp, đối đầu, và mọi hoạt động nguy hiểm. Nếu phải hành động, hãy nhanh và dứt khoát — Bạch Hổ tôn trọng sức mạnh nhưng trừng phạt sự do dự. Thích hợp cho quân sự hoặc cạnh tranh có kiểm soát."
+    },
+    "huyen_vu": {
+      "influence": "Huyền Vũ ẩn mình — năng lượng trộm cắp, gian trá, và mất mát tinh vi. Như nước rò rỉ — bạn không biết mình đang mất cho đến khi quá muộn. Đặc biệt nguy hiểm cho tài sản.",
+      "advice": "Kiểm tra bảo mật mọi thứ: khóa cửa, mật khẩu, hợp đồng. Đừng cho vay, đừng tin ai quá dễ dàng, và đặc biệt cẩn thận với giao dịch tài chính có dấu hiệu mờ ám."
+    },
+    "cuu_dia": {
+      "influence": "Cửu Địa trấn giữ — năng lượng ẩn tàng, thủ giữ, và phòng thủ. Như pháo đài dưới lòng đất — an toàn nhưng không thể tấn công. Phù trợ mạnh cho mọi hình thức bảo vệ và giấu giữ.",
+      "advice": "Đây là lúc phòng thủ, giữ vị trí, và bảo vệ thành quả. Không nên tấn công, khởi sự lớn, hoặc bộc lộ ý đồ. Ẩn mình và chờ thời cơ — đôi khi không hành động cũng là một chiến lược."
+    },
+    "cuu_thien": {
+      "influence": "Cửu Thiên bay cao — năng lượng thăng phát, bay bổng, và đột phá giới hạn. Như chim ưng cất cánh — tầm nhìn rộng mở, thời cơ chín muồi. Mọi thứ thuận lợi cho khởi đầu và hành động quyết đoán.",
+      "advice": "Đây là lúc cất cánh! Khởi nghiệp, xuất phát, cất quân — hành động quyết đoán sẽ mang lại thành công. Đừng do dự khi cơ hội đã rõ ràng. Năng lượng này ưu ái những ai dám nghĩ dám làm."
+    }
+  },
+  "inquiryGuidance": {
+    "tai_loc": "Xem tài lộc: Hãy quan sát Sinh Môn kết hợp với Tam Cát Tinh. Nếu Sinh Môn của bạn đang ở cung vượng, dòng tiền đang chảy mạnh về phía bạn — đây là tín hiệu đại phát.",
+    "su_nghiep": "Xem sự nghiệp: Tập trung vào Khai Môn và Trực Phù — hai yếu tố quyết định con đường công danh. Nếu Khai Môn gặp cát tinh, cánh cửa thăng tiến đang mở rộng cho bạn.",
+    "hon_nhan": "Xem hôn nhân: Quan sát Lục Hợp và Hưu Môn — hai chỉ dấu của tình duyên. Nếu cung Lục Hợp vượng, duyên số đang ở giai đoạn thuận lợi nhất — đừng bỏ lỡ.",
+    "benh_tat": "Xem bệnh tật: Chú ý Thiên Nhuế Tinh và Tử Môn — hai yếu tố phản ánh sức khỏe. Nếu cả hai đều ở cung suy, đây là cảnh báo nghiêm túc — hãy đi khám sức khỏe ngay.",
+    "kien_tung": "Xem kiện tụng: So sánh Khai Môn (đại diện cho bạn) với Đỗ Môn (đại diện đối phương). Cung nào vượng hơn, bên đó có lợi thế. Phân tích cẩn thận trước khi quyết định đối đầu."
+  }
+}

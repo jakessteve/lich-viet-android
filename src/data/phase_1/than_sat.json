@@ -1,0 +1,364 @@
+{
+  "than_sat": [
+    {
+      "name": "Thiên Đức",
+      "type": "Good",
+      "description": "Tốt mọi việc",
+      "base_score": 10,
+      "criteria": {
+        "month_can_chi": ["Đinh", "Thân", "Nhâm", "Tân", "Hợi", "Giáp", "Quý", "Dần", "Bính", "Ất", "Tỵ", "Canh"]
+      }
+    },
+    {
+      "name": "Nguyệt Đức",
+      "type": "Good",
+      "description": "Tốt mọi việc",
+      "base_score": 10,
+      "criteria": {
+        "month_can_chi": [
+          "Nhâm",
+          "Canh",
+          "Bính",
+          "Giáp",
+          "Nhâm",
+          "Canh",
+          "Bính",
+          "Giáp",
+          "Nhâm",
+          "Canh",
+          "Bính",
+          "Giáp"
+        ]
+      }
+    },
+    {
+      "name": "Thiên Đức Hợp",
+      "type": "Good",
+      "description": "Tốt mọi việc",
+      "base_score": 8,
+      "criteria": {
+        "month_can_chi": ["Nhâm", "Tỵ", "Đinh", "Bính", "Dần", "Kỷ", "Mậu", "Hợi", "Tân", "Canh", "Thân", "Ất"]
+      }
+    },
+    {
+      "name": "Nguyệt Đức Hợp",
+      "type": "Good",
+      "description": "Tốt mọi việc",
+      "base_score": 8,
+      "criteria": {
+        "month_can_chi": ["Đinh", "Ất", "Tân", "Kỷ", "Đinh", "Ất", "Tân", "Kỷ", "Đinh", "Ất", "Tân", "Kỷ"]
+      }
+    },
+    {
+      "name": "Thiên Binh",
+      "type": "Bad",
+      "description": "Kỵ xuất binh, dâng sớ",
+      "base_score": -10,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Dần",
+          "Sửu": "Mão",
+          "Dần": "Thìn",
+          "Mão": "Tỵ",
+          "Thìn": "Ngọ",
+          "Tỵ": "Mùi",
+          "Ngọ": "Thân",
+          "Mùi": "Dậu",
+          "Thân": "Tuất",
+          "Dậu": "Hợi",
+          "Tuất": "Tý",
+          "Hợi": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Địa Binh",
+      "type": "Bad",
+      "description": "Kỵ động thổ, xây dựng",
+      "base_score": -10,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Thân",
+          "Sửu": "Dậu",
+          "Dần": "Tuất",
+          "Mão": "Hợi",
+          "Thìn": "Tý",
+          "Tỵ": "Sửu",
+          "Ngọ": "Dần",
+          "Mùi": "Mão",
+          "Thân": "Thìn",
+          "Dậu": "Tỵ",
+          "Tuất": "Ngọ",
+          "Hợi": "Mùi"
+        }
+      }
+    },
+    {
+      "name": "Lôi Binh",
+      "type": "Bad",
+      "description": "Kỵ đi tàu thuyền",
+      "base_score": -8,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Tý",
+          "Sửu": "Sửu",
+          "Dần": "Dần",
+          "Mão": "Mão",
+          "Thìn": "Thìn",
+          "Tỵ": "Tỵ",
+          "Ngọ": "Ngọ",
+          "Mùi": "Mùi",
+          "Thân": "Thân",
+          "Dậu": "Dậu",
+          "Tuất": "Tuất",
+          "Hợi": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Thiên Hình (Hắc Đạo)",
+      "type": "Bad",
+      "description": "Kỵ kiện tụng",
+      "base_score": -15,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Dần",
+          "Sửu": "Mão",
+          "Dần": "Thìn",
+          "Mão": "Tỵ",
+          "Thìn": "Ngọ",
+          "Tỵ": "Mùi",
+          "Ngọ": "Thân",
+          "Mùi": "Dậu",
+          "Thân": "Tuất",
+          "Dậu": "Hợi",
+          "Tuất": "Tý",
+          "Hợi": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Chu Tước (Hắc Đạo)",
+      "type": "Bad",
+      "description": "Kỵ cãi vã, giao dịch",
+      "base_score": -12,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Mão",
+          "Ngọ": "Mão",
+          "Sửu": "Tỵ",
+          "Mùi": "Tỵ",
+          "Dần": "Mùi",
+          "Thân": "Mùi",
+          "Mão": "Dậu",
+          "Dậu": "Dậu",
+          "Thìn": "Hợi",
+          "Tuất": "Hợi",
+          "Tỵ": "Sửu",
+          "Hợi": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Bạch Hổ (Hắc Đạo)",
+      "type": "Bad",
+      "description": "Kỵ mai táng",
+      "base_score": -15,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Ngọ",
+          "Ngọ": "Ngọ",
+          "Sửu": "Thân",
+          "Mùi": "Thân",
+          "Dần": "Tuất",
+          "Thân": "Tuất",
+          "Mão": "Tý",
+          "Dậu": "Tý",
+          "Thìn": "Dần",
+          "Tuất": "Dần",
+          "Tỵ": "Thìn",
+          "Hợi": "Thìn"
+        }
+      }
+    },
+    {
+      "name": "Thiên Lao (Hắc Đạo)",
+      "type": "Bad",
+      "description": "Mọi việc đều kỵ",
+      "base_score": -12,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Thân",
+          "Ngọ": "Thân",
+          "Sửu": "Tuất",
+          "Mùi": "Tuất",
+          "Dần": "Tý",
+          "Thân": "Tý",
+          "Mão": "Dần",
+          "Dậu": "Dần",
+          "Thìn": "Thìn",
+          "Tuất": "Thìn",
+          "Tỵ": "Ngọ",
+          "Hợi": "Ngọ"
+        }
+      }
+    },
+    {
+      "name": "Huyền Vũ (Hắc Đạo)",
+      "type": "Bad",
+      "description": "Kỵ xuất hành",
+      "base_score": -10,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Dậu",
+          "Ngọ": "Dậu",
+          "Sửu": "Hợi",
+          "Mùi": "Hợi",
+          "Dần": "Sửu",
+          "Thân": "Sửu",
+          "Mão": "Mão",
+          "Dậu": "Mão",
+          "Thìn": "Tỵ",
+          "Tuất": "Tỵ",
+          "Tỵ": "Mùi",
+          "Hợi": "Mùi"
+        }
+      }
+    },
+    {
+      "name": "Câu Trận (Hắc Đạo)",
+      "type": "Bad",
+      "description": "Kỵ khởi công",
+      "base_score": -10,
+      "criteria": {
+        "day_hour_chi": {
+          "Tý": "Hợi",
+          "Ngọ": "Hợi",
+          "Sửu": "Sửu",
+          "Mùi": "Sửu",
+          "Dần": "Mão",
+          "Thân": "Mão",
+          "Mão": "Tỵ",
+          "Dậu": "Tỵ",
+          "Thìn": "Mùi",
+          "Tuất": "Mùi",
+          "Tỵ": "Dậu",
+          "Hợi": "Dậu"
+        }
+      }
+    },
+    {
+      "name": "Triệt Lộ Không Vong",
+      "type": "Bad",
+      "description": "Kỵ xuất hành, khai trương",
+      "base_score": -20,
+      "criteria": {
+        "day_can": {
+          "Giáp": ["Thân", "Dậu"],
+          "Kỷ": ["Thân", "Dậu"],
+          "Ất": ["Ngọ", "Mùi"],
+          "Canh": ["Ngọ", "Mùi"],
+          "Bính": ["Thìn", "Tỵ"],
+          "Tân": ["Thìn", "Tỵ"],
+          "Đinh": ["Dần", "Mão"],
+          "Nhâm": ["Dần", "Mão"],
+          "Mậu": ["Tý", "Sửu"],
+          "Quý": ["Tý", "Sửu"]
+        }
+      }
+    },
+    {
+      "name": "Tuần Không Vong",
+      "type": "Bad",
+      "description": "Làm ăn thất bại, cầu mong không thành",
+      "base_score": -15,
+      "criteria": {
+        "tuan_khong": true
+      }
+    },
+    {
+      "name": "Tuế Phá",
+      "type": "Bad",
+      "description": "Xấu mọi việc",
+      "base_score": -15,
+      "criteria": {
+        "day_chi_clash_year_chi": true
+      }
+    },
+    {
+      "name": "Nguyệt Phá",
+      "type": "Bad",
+      "description": "Xấu mọi việc",
+      "base_score": -12,
+      "criteria": {
+        "day_chi_clash_month_chi": true
+      }
+    },
+    {
+      "name": "Kiếp Sát",
+      "type": "Bad",
+      "description": "Xấu mọi việc",
+      "base_score": -10,
+      "criteria": {
+        "year_chi": {
+          "Thân": "Tỵ",
+          "Tý": "Tỵ",
+          "Thìn": "Tỵ",
+          "Dần": "Hợi",
+          "Ngọ": "Hợi",
+          "Tuất": "Hợi",
+          "Hợi": "Thân",
+          "Mão": "Thân",
+          "Mùi": "Thân",
+          "Tỵ": "Dần",
+          "Dậu": "Dần",
+          "Sửu": "Dần"
+        }
+      }
+    },
+    {
+      "name": "Tai Sát",
+      "type": "Bad",
+      "description": "Xấu mọi việc",
+      "base_score": -10,
+      "criteria": {
+        "year_chi": {
+          "Thân": "Ngọ",
+          "Tý": "Ngọ",
+          "Thìn": "Ngọ",
+          "Dần": "Tý",
+          "Ngọ": "Tý",
+          "Tuất": "Tý",
+          "Hợi": "Dậu",
+          "Mão": "Dậu",
+          "Mùi": "Dậu",
+          "Tỵ": "Mão",
+          "Dậu": "Mão",
+          "Sửu": "Mão"
+        }
+      }
+    },
+    {
+      "name": "Tuế Sát",
+      "type": "Bad",
+      "description": "Xấu mọi việc",
+      "base_score": -10,
+      "criteria": {
+        "year_chi": {
+          "Thân": "Mùi",
+          "Tý": "Mùi",
+          "Thìn": "Mùi",
+          "Dần": "Sửu",
+          "Ngọ": "Sửu",
+          "Tuất": "Sửu",
+          "Hợi": "Tuất",
+          "Mão": "Tuất",
+          "Mùi": "Tuất",
+          "Tỵ": "Thìn",
+          "Dậu": "Thìn",
+          "Sửu": "Thìn"
+        }
+      }
+    }
+  ]
+}

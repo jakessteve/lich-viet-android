@@ -1,0 +1,64 @@
+{
+  "starWeight": [
+    {
+      "name": "Cát Thần",
+      "type": "good",
+      "weight": 8,
+      "category": "cat"
+    },
+    {
+      "name": "Thành Đạo",
+      "type": "good",
+      "weight": 7,
+      "category": "special"
+    },
+    {
+      "name": "Thần Tại",
+      "type": "good",
+      "weight": 7,
+      "category": "cat"
+    },
+    {
+      "name": "Thiên Sát",
+      "type": "bad",
+      "weight": 9,
+      "category": "hung"
+    },
+    {
+      "name": "Địa Sát",
+      "type": "bad",
+      "weight": 8,
+      "category": "hung"
+    },
+    {
+      "name": "Hoàng Sa",
+      "type": "bad",
+      "weight": 9,
+      "category": "hung"
+    },
+    {
+      "name": "Thái Dương",
+      "type": "good",
+      "weight": 6,
+      "category": "cat"
+    },
+    {
+      "name": "Thái Bạch",
+      "type": "good",
+      "weight": 6,
+      "category": "cat"
+    },
+    {
+      "name": "Thái Hổ",
+      "type": "bad",
+      "weight": 7,
+      "category": "hung"
+    },
+    {
+      "name": "Thái Thư",
+      "type": "bad",
+      "weight": 7,
+      "category": "hung"
+    }
+  ]
+}

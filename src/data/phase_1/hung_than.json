@@ -1,0 +1,829 @@
+{
+  "stars": [
+    {
+      "name": "Thụ Tử",
+      "type": "Bad",
+      "unsuitable": ["Tránh làm các việc", "Kị khởi tạo", "Cưới hỏi", "Chôn cất", "Kê giường", "Khởi công, đào móng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tuất",
+          "2": "Thìn",
+          "3": "Hợi",
+          "4": "Tỵ",
+          "5": "Tý",
+          "6": "Ngọ",
+          "7": "Sửu",
+          "8": "Mùi",
+          "9": "Dần",
+          "10": "Thân",
+          "11": "Mão",
+          "12": "Dậu"
+        }
+      }
+    },
+    {
+      "name": "Tứ Ly",
+      "type": "Bad",
+      "unsuitable": ["Tránh làm việc lớn", "Đi xa, khởi hành", "Cưới hỏi"],
+      "criteria": {
+        "solar_terms_eve": ["Xuân Phân", "Hạ Chí", "Thu Phân", "Đông Chí"]
+      }
+    },
+    {
+      "name": "Tứ Tuyệt",
+      "type": "Bad",
+      "unsuitable": ["Tránh làm việc lớn", "Khởi công, làm nhà", "Chôn cất"],
+      "criteria": {
+        "solar_terms_eve": ["Lập Xuân", "Lập Hạ", "Lập Thu", "Lập Đông"]
+      }
+    },
+    {
+      "name": "Nguyệt Kỵ",
+      "type": "Bad",
+      "unsuitable": ["Tránh làm việc lớn", "Cưới hỏi", "Khai trương, mở hàng"],
+      "criteria": {
+        "lunar_days": [5, 14, 23]
+      }
+    },
+    {
+      "name": "Đại Hao",
+      "type": "Bad",
+      "unsuitable": ["Giao dịch, buôn bán", "Thu tiền, thu lợi", "Mở cửa hàng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Ngọ",
+          "2": "Mùi",
+          "3": "Thân",
+          "4": "Dậu",
+          "5": "Tuất",
+          "6": "Hợi",
+          "7": "Tý",
+          "8": "Sửu",
+          "9": "Dần",
+          "10": "Mão",
+          "11": "Thìn",
+          "12": "Tỵ"
+        }
+      }
+    },
+    {
+      "name": "Tiểu Hao",
+      "type": "Bad",
+      "unsuitable": ["Thu tiền, thu lợi", "Ký kết hợp đồng", "Giao dịch, buôn bán"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Ngọ",
+          "3": "Mùi",
+          "4": "Thân",
+          "5": "Dậu",
+          "6": "Tuất",
+          "7": "Hợi",
+          "8": "Tý",
+          "9": "Sửu",
+          "10": "Dần",
+          "11": "Mão",
+          "12": "Thìn"
+        }
+      }
+    },
+    {
+      "name": "Huyền Vũ",
+      "type": "Bad",
+      "unsuitable": ["Chôn cất", "Khâm liệm", "Xây mộ, làm mộ"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dậu",
+          "2": "Hợi",
+          "3": "Sửu",
+          "4": "Mão",
+          "5": "Tỵ",
+          "6": "Mùi",
+          "7": "Thân",
+          "8": "Tuất",
+          "9": "Tý",
+          "10": "Dần",
+          "11": "Thìn",
+          "12": "Ngọ"
+        }
+      },
+      "description": "Xấu cho an táng, khâm liệm, chủ về trộm cắp"
+    },
+    {
+      "name": "Nhân Cách",
+      "type": "Bad",
+      "unsuitable": ["Cưới hỏi", "Khởi công, làm nhà", "Khởi công", "Xây dựng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dậu",
+          "2": "Mùi",
+          "3": "Tỵ",
+          "4": "Mão",
+          "5": "Sửu",
+          "6": "Hợi",
+          "7": "Dậu",
+          "8": "Mùi",
+          "9": "Tỵ",
+          "10": "Mão",
+          "11": "Sửu",
+          "12": "Hợi"
+        }
+      },
+      "description": "Xấu cho cưới hỏi, khởi công"
+    },
+    {
+      "name": "Thiên Cẩu",
+      "type": "Bad",
+      "unsuitable": ["Cầu con cái", "Khởi công, làm nhà", "Xây dựng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tý",
+          "2": "Sửu",
+          "3": "Dần",
+          "4": "Mão",
+          "5": "Thìn",
+          "6": "Tỵ",
+          "7": "Ngọ",
+          "8": "Mùi",
+          "9": "Thân",
+          "10": "Dậu",
+          "11": "Tuất",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Bát Tọa",
+      "type": "Bad",
+      "unsuitable": ["Di dời", "Vào nhà mới", "Xây dựng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Ngọ",
+          "2": "Tuất",
+          "3": "Dần",
+          "4": "Dậu",
+          "5": "Sửu",
+          "6": "Tỵ",
+          "7": "Tý",
+          "8": "Thìn",
+          "9": "Thân",
+          "10": "Mão",
+          "11": "Mùi",
+          "12": "Hợi"
+        }
+      },
+      "description": "Xấu cho việc xây dựng, khởi công"
+    },
+    {
+      "name": "Cửu Khổ Bát Cùng",
+      "type": "Bad",
+      "unsuitable": [
+        "Tránh làm mọi việc (Bách sự hung)",
+        "Tránh làm việc lớn",
+        "Mở kho, xuất kho",
+        "Đi xa, khởi hành",
+        "Đi xa",
+        "Mở kho",
+        "Giao dịch"
+      ],
+      "criteria": {
+        "day_can_chi": ["Nhâm Dần", "Quý Tỵ", "Ất Hợi", "Canh Thân", "Giáp Tý"]
+      },
+      "description": "Đại hung, cực xấu cho mọi việc khởi đầu"
+    },
+    {
+      "name": "Hoang Vu",
+      "type": "Bad",
+      "unsuitable": [
+        "Tránh làm mọi việc lớn",
+        "Khởi công, làm nhà",
+        "Khai trương, mở hàng",
+        "Mọi việc đều xấu",
+        "Khởi công",
+        "Xây dựng",
+        "Khai trương"
+      ],
+      "criteria": {
+        "season_day_chi": {
+          "Xuân": ["Tỵ", "Dậu", "Sửu"],
+          "Hạ": ["Thân", "Tý", "Thìn"],
+          "Thu": ["Hợi", "Mão", "Mùi"],
+          "Đông": ["Dần", "Ngọ", "Tuất"]
+        }
+      },
+      "description": "Xấu cho khởi công, xây dựng, khai trương"
+    },
+    {
+      "name": "Ngâm Thần",
+      "type": "Bad",
+      "unsuitable": ["Hầu hết các việc", "Chữa bệnh", "Chôn cất"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thân",
+          "2": "Dậu",
+          "3": "Tuất",
+          "4": "Hợi",
+          "5": "Tý",
+          "6": "Sửu",
+          "7": "Dần",
+          "8": "Mão",
+          "9": "Thìn",
+          "10": "Tỵ",
+          "11": "Ngọ",
+          "12": "Mùi"
+        }
+      },
+      "description": "Xấu cho chữa bệnh, an táng"
+    },
+    {
+      "name": "Ngũ Ngâm",
+      "type": "Bad",
+      "unsuitable": ["Đi xa, khởi hành", "Kiện tụng"],
+      "criteria": {
+        "month_day_can": {
+          "1": "Bính",
+          "2": "Đinh",
+          "3": "Mậu",
+          "4": "Kỷ",
+          "5": "Canh",
+          "6": "Tân",
+          "7": "Nhâm",
+          "8": "Quý",
+          "9": "Giáp",
+          "10": "Ất",
+          "11": "Mậu",
+          "12": "Kỷ"
+        }
+      }
+    },
+    {
+      "name": "Phục Thi",
+      "type": "Bad",
+      "unsuitable": ["Chôn cất", "Sửa mộ", "Chữa bệnh", "An táng", "Xây mộ"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Mão",
+          "3": "Thìn",
+          "4": "Tỵ",
+          "5": "Ngọ",
+          "6": "Mùi",
+          "7": "Thân",
+          "8": "Dậu",
+          "9": "Tuất",
+          "10": "Hợi",
+          "11": "Tý",
+          "12": "Sửu"
+        }
+      },
+      "description": "Xấu cho an táng, sửa mộ"
+    },
+    {
+      "name": "Địa Quả",
+      "type": "Bad",
+      "unsuitable": ["Cưới hỏi", "Chôn cất"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thìn",
+          "2": "Sửu",
+          "3": "Tuất",
+          "4": "Mùi",
+          "5": "Thìn",
+          "6": "Sửu",
+          "7": "Tuất",
+          "8": "Mùi",
+          "9": "Thìn",
+          "10": "Sửu",
+          "11": "Tuất",
+          "12": "Mùi"
+        }
+      }
+    },
+    {
+      "name": "Trùng Phục",
+      "type": "Bad",
+      "unsuitable": ["Chôn cất", "Cưới hỏi", "Khởi công, làm nhà"],
+      "criteria": {
+        "month_day_can": {
+          "1": ["Canh", "Giáp"],
+          "2": ["Tân", "Ất"],
+          "3": ["Kỷ", "Mậu"],
+          "4": ["Nhâm", "Bính"],
+          "5": ["Quý", "Đinh"],
+          "6": ["Kỷ", "Mậu"],
+          "7": ["Giáp", "Canh"],
+          "8": ["Ất", "Tân"],
+          "9": ["Mậu", "Kỷ"],
+          "10": ["Bính", "Nhâm"],
+          "11": ["Đinh", "Quý"],
+          "12": ["Mậu", "Kỷ"]
+        }
+      }
+    },
+    {
+      "name": "Ngoại Khí",
+      "type": "Bad",
+      "unsuitable": ["Chữa bệnh", "Kiện tụng"],
+      "criteria": {
+        "season_day_chi": {
+          "Xuân": ["Tuất", "Hợi"],
+          "Hạ": ["Sửu", "Dần"],
+          "Thu": ["Thìn", "Tỵ"],
+          "Đông": ["Mùi", "Thân"]
+        }
+      }
+    },
+    {
+      "name": "Quan Phù",
+      "type": "Bad",
+      "unsuitable": ["Ký hợp đồng", "Giao dịch, buôn bán"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tuất",
+          "2": "Tý",
+          "3": "Dần",
+          "4": "Thìn",
+          "5": "Ngọ",
+          "6": "Thân",
+          "7": "Tuất",
+          "8": "Tý",
+          "9": "Dần",
+          "10": "Thìn",
+          "11": "Ngọ",
+          "12": "Thân"
+        }
+      }
+    },
+    {
+      "name": "Lục Bất Thành",
+      "type": "Bad",
+      "unsuitable": ["Khởi công, làm nhà", "Xây dựng", "Khởi công, đào móng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Ngọ",
+          "3": "Tuất",
+          "4": "Tỵ",
+          "5": "Dậu",
+          "6": "Sửu",
+          "7": "Thân",
+          "8": "Tý",
+          "9": "Thìn",
+          "10": "Hợi",
+          "11": "Mão",
+          "12": "Mùi"
+        }
+      }
+    },
+    {
+      "name": "Thiên Cương",
+      "type": "Bad",
+      "unsuitable": ["Tránh làm mọi việc lớn", "Khởi công, làm nhà"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Tý",
+          "3": "Mùi",
+          "4": "Dần",
+          "5": "Dậu",
+          "6": "Thìn",
+          "7": "Hợi",
+          "8": "Ngọ",
+          "9": "Sửu",
+          "10": "Thân",
+          "11": "Mão",
+          "12": "Tuất"
+        }
+      }
+    },
+    {
+      "name": "Thiên Lại",
+      "type": "Bad",
+      "unsuitable": ["Tránh làm mọi việc", "Mở cửa hàng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Ngọ",
+          "2": "Dậu",
+          "3": "Tý",
+          "4": "Mão",
+          "5": "Ngọ",
+          "6": "Dậu",
+          "7": "Tý",
+          "8": "Mão",
+          "9": "Ngọ",
+          "10": "Dậu",
+          "11": "Tý",
+          "12": "Mão"
+        }
+      },
+      "description": "Xấu cho mọi việc, chủ về tổn hại"
+    },
+    {
+      "name": "Thiên Ngục",
+      "type": "Bad",
+      "unsuitable": ["Kiện tụng", "Tranh chấp"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Thân",
+          "3": "Hợi",
+          "4": "Dần",
+          "5": "Tỵ",
+          "6": "Thân",
+          "7": "Hợi",
+          "8": "Dần",
+          "9": "Tỵ",
+          "10": "Thân",
+          "11": "Hợi",
+          "12": "Dần"
+        }
+      }
+    },
+    {
+      "name": "Thiên Hỏa",
+      "type": "Bad",
+      "unsuitable": ["Sửa chữa nhà", "Làm nhà", "Phá dỡ nhà"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tý",
+          "2": "Mão",
+          "3": "Ngọ",
+          "4": "Dậu",
+          "5": "Tý",
+          "6": "Mão",
+          "7": "Ngọ",
+          "8": "Dậu",
+          "9": "Tý",
+          "10": "Mão",
+          "11": "Ngọ",
+          "12": "Dậu"
+        }
+      }
+    },
+    {
+      "name": "Địa Hỏa",
+      "type": "Bad",
+      "unsuitable": ["Khởi công, đào móng", "Làm bếp"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tuất",
+          "2": "Dậu",
+          "3": "Thân",
+          "4": "Mùi",
+          "5": "Ngọ",
+          "6": "Tỵ",
+          "7": "Thìn",
+          "8": "Mão",
+          "9": "Sửu",
+          "10": "Tý",
+          "11": "Hợi",
+          "12": "Tuất"
+        }
+      }
+    },
+    {
+      "name": "Độc Hỏa",
+      "type": "Bad",
+      "unsuitable": ["Sửa chữa nhà", "Làm bếp"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Thìn",
+          "3": "Mão",
+          "4": "Dần",
+          "5": "Sửu",
+          "6": "Tý",
+          "7": "Hợi",
+          "8": "Tuất",
+          "9": "Dậu",
+          "10": "Thân",
+          "11": "Mùi",
+          "12": "Ngọ"
+        }
+      }
+    },
+    {
+      "name": "Vãng Vong",
+      "type": "Bad",
+      "unsuitable": ["Đi xa, khởi hành", "Cưới hỏi", "Nhận việc"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Dần",
+          "2": "Tỵ",
+          "3": "Thân",
+          "4": "Hợi",
+          "5": "Mão",
+          "6": "Ngọ",
+          "7": "Dậu",
+          "8": "Tý",
+          "9": "Thìn",
+          "10": "Mùi",
+          "11": "Tuất",
+          "12": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Cửu Không",
+      "type": "Bad",
+      "unsuitable": ["Giao dịch, buôn bán", "Khai trương, mở hàng", "Cầu tài lộc"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thìn",
+          "2": "Sửu",
+          "3": "Tuất",
+          "4": "Mùi",
+          "5": "Mão",
+          "6": "Tý",
+          "7": "Dậu",
+          "8": "Ngọ",
+          "9": "Dần",
+          "10": "Hợi",
+          "11": "Thân",
+          "12": "Tỵ"
+        }
+      }
+    },
+    {
+      "name": "Sát Chủ",
+      "type": "Bad",
+      "unsuitable": ["Tránh làm mọi việc lớn", "Xây dựng", "Cưới hỏi"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Tý",
+          "3": "Mùi",
+          "4": "Mão",
+          "5": "Thân",
+          "6": "Tuất",
+          "7": "Hợi",
+          "8": "Sửu",
+          "9": "Ngọ",
+          "10": "Dậu",
+          "11": "Dần",
+          "12": "Thìn"
+        }
+      }
+    },
+    {
+      "name": "Thiên Tặc",
+      "type": "Bad",
+      "unsuitable": ["Nhận chức", "Vào nhà mới", "Khai trương, mở hàng"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thìn",
+          "2": "Dậu",
+          "3": "Dần",
+          "4": "Mùi",
+          "5": "Tý",
+          "6": "Tỵ",
+          "7": "Tuất",
+          "8": "Mão",
+          "9": "Thân",
+          "10": "Sửu",
+          "11": "Ngọ",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Địa Tặc",
+      "type": "Bad",
+      "unsuitable": ["Khởi công, đào móng", "Vào nhà mới", "Chôn cất"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tý",
+          "2": "Sửu",
+          "3": "Dần",
+          "4": "Mão",
+          "5": "Thìn",
+          "6": "Tỵ",
+          "7": "Ngọ",
+          "8": "Mùi",
+          "9": "Thân",
+          "10": "Dậu",
+          "11": "Tuất",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Nguyệt Yếm",
+      "type": "Bad",
+      "unsuitable": ["Cưới hỏi", "Chôn cất"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tuất",
+          "2": "Dậu",
+          "3": "Thân",
+          "4": "Mùi",
+          "5": "Ngọ",
+          "6": "Tỵ",
+          "7": "Thìn",
+          "8": "Mão",
+          "9": "Dần",
+          "10": "Sửu",
+          "11": "Tý",
+          "12": "Hợi"
+        }
+      }
+    },
+    {
+      "name": "Băng Tiêu",
+      "type": "Bad",
+      "unsuitable": ["Đi xa, khởi hành", "Đi tàu thuyền"],
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Tý",
+          "3": "Sửu",
+          "4": "Thân",
+          "5": "Ngọ",
+          "6": "Mão",
+          "7": "Hợi",
+          "8": "Mùi",
+          "9": "Tý",
+          "10": "Thìn",
+          "11": "Dần",
+          "12": "Dậu"
+        }
+      }
+    },
+    {
+      "name": "Quỷ Khốc",
+      "type": "Bad",
+      "unsuitable": ["Cúng tế, lễ bái", "Chôn cất"],
+      "description": "Kỵ tế tự, an táng",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Ngọ",
+          "2": "Mùi",
+          "3": "Thân",
+          "4": "Dậu",
+          "5": "Tuất",
+          "6": "Hợi",
+          "7": "Tý",
+          "8": "Sửu",
+          "9": "Dần",
+          "10": "Mão",
+          "11": "Thìn",
+          "12": "Tỵ"
+        }
+      }
+    },
+    {
+      "name": "Hỏa Tai",
+      "type": "Bad",
+      "unsuitable": ["Xây dựng", "Lợp nhà, lợp mái"],
+      "description": "Kỵ xây dựng, lợp nhà",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Sửu",
+          "2": "Mùi",
+          "3": "Dần",
+          "4": "Thân",
+          "5": "Mão",
+          "6": "Dậu",
+          "7": "Thìn",
+          "8": "Tuất",
+          "9": "Tỵ",
+          "10": "Hợi",
+          "11": "Ngọ",
+          "12": "Tý"
+        }
+      }
+    },
+    {
+      "name": "Nguyệt Hình",
+      "type": "Bad",
+      "unsuitable": ["Kiện tụng", "Tranh chấp"],
+      "description": "Kỵ kiện tụng, tranh chấp",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Thìn",
+          "3": "Mùi",
+          "4": "Thân",
+          "5": "Dậu",
+          "6": "Hợi",
+          "7": "Sửu",
+          "8": "Tuất",
+          "9": "Mão",
+          "10": "Tý",
+          "11": "Ngọ",
+          "12": "Dần"
+        }
+      }
+    },
+    {
+      "name": "Nguyệt Hại",
+      "type": "Bad",
+      "unsuitable": ["Giao dịch, buôn bán", "Khởi công, làm nhà"],
+      "description": "Kỵ giao dịch, làm nhà",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Thìn",
+          "3": "Mão",
+          "4": "Dần",
+          "5": "Sửu",
+          "6": "Tý",
+          "7": "Hợi",
+          "8": "Tuất",
+          "9": "Dậu",
+          "10": "Thân",
+          "11": "Mùi",
+          "12": "Ngọ"
+        }
+      }
+    },
+    {
+      "name": "Cô Thần",
+      "type": "Bad",
+      "unsuitable": ["Cưới hỏi"],
+      "description": "Kỵ cưới hỏi",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Tỵ",
+          "3": "Tỵ",
+          "4": "Thân",
+          "5": "Thân",
+          "6": "Thân",
+          "7": "Hợi",
+          "8": "Hợi",
+          "9": "Hợi",
+          "10": "Dần",
+          "11": "Dần",
+          "12": "Dần"
+        }
+      }
+    },
+    {
+      "name": "Quả Tú",
+      "type": "Bad",
+      "unsuitable": ["Cưới hỏi"],
+      "description": "Kỵ cưới hỏi",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Sửu",
+          "2": "Sửu",
+          "3": "Sửu",
+          "4": "Thìn",
+          "5": "Thìn",
+          "6": "Thìn",
+          "7": "Mùi",
+          "8": "Mùi",
+          "9": "Mùi",
+          "10": "Tuất",
+          "11": "Tuất",
+          "12": "Tuất"
+        }
+      }
+    },
+    {
+      "name": "Thổ Phủ",
+      "type": "Bad",
+      "unsuitable": ["Xây dựng", "Khởi công, đào móng"],
+      "description": "Kỵ xây dựng, động thổ",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Thìn",
+          "2": "Mùi",
+          "3": "Tuất",
+          "4": "Sửu",
+          "5": "Thìn",
+          "6": "Mùi",
+          "7": "Tuất",
+          "8": "Sửu",
+          "9": "Thìn",
+          "10": "Mùi",
+          "11": "Tuất",
+          "12": "Sửu"
+        }
+      }
+    },
+    {
+      "name": "Thổ Ôn",
+      "type": "Bad",
+      "unsuitable": ["Xây dựng", "Đào ao"],
+      "description": "Kỵ xây dựng, đào ao",
+      "criteria": {
+        "month_day_chi": {
+          "1": "Tỵ",
+          "2": "Dần",
+          "3": "Hợi",
+          "4": "Thân",
+          "5": "Tỵ",
+          "6": "Dần",
+          "7": "Hợi",
+          "8": "Thân",
+          "9": "Tỵ",
+          "10": "Dần",
+          "11": "Hợi",
+          "12": "Thân"
+        }
+      }
+    }
+  ]
+}

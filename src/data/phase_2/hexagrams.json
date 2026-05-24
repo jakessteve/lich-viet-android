@@ -1,0 +1,3380 @@
+[
+  {
+    "id": 1,
+    "name": "Thuần Càn",
+    "upper": 1,
+    "lower": 1,
+    "chineseName": "乾 kiền",
+    "briefExplanation": "Kiện dã. Mạnh mẽ. Cứng cỏi, sáng suốt, tự cường, sáng tạo, khởi nguyên.",
+    "meaning": "Trời trên trời, sức mạnh thuần dương. Hanh thông, lợi về chính đạo. Khởi đầu thuận lợi, vạn sự hanh thông.",
+    "image": "Trời vận hành mạnh mẽ, người quân tử tự cường không ngừng",
+    "thoanTu": {
+      "original": "乾元亨利貞.",
+      "meaning": "Càn: nguyên, hanh, lợi, trinh. Đại thông suốt, lợi về chính đạo."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 潛龍勿用.",
+        "meaning": "Rồng còn ẩn, chưa nên dùng.",
+        "commentary": "Hào 1, dương: Như con rồng còn nấp ở dưới nước, chưa phải lúc hành động, phải kiên nhẫn chờ thời."
+      },
+      {
+        "position": 2,
+        "original": "九二: 見龍在田, 利見大人.",
+        "meaning": "Rồng hiện ở ruộng, lợi khi gặp đại nhân.",
+        "commentary": "Hào 2, dương: Rồng đã hiện ra ruộng, tức người có tài đã bắt đầu xuất hiện, nên tìm gặp người có đức lớn để được giúp đỡ."
+      },
+      {
+        "position": 3,
+        "original": "九三: 君子終日乾乾, 夕惕若厲, 无咎.",
+        "meaning": "Quân tử suốt ngày cố gắng, tối vẫn lo sợ cẩn thận, tuy nguy nhưng không lỗi.",
+        "commentary": "Hào 3, dương: Ở giữa đạo nhân và đạo thiên, phải luôn cố gắng, cẩn thận thì dù nguy hiểm cũng tránh được lỗi lầm."
+      },
+      {
+        "position": 4,
+        "original": "九四: 或躍在淵, 无咎.",
+        "meaning": "Có khi nhảy lên trên vực sâu, không có lỗi.",
+        "commentary": "Hào 4, dương: Đến lúc có thể nhảy lên cao, tiến thoái tùy thời, miễn là hợp đạo thì không lỗi."
+      },
+      {
+        "position": 5,
+        "original": "九五: 飛龍在天, 利見大人.",
+        "meaning": "Rồng bay trên trời, lợi khi gặp đại nhân.",
+        "commentary": "Hào 5, dương: Ngôi chí tôn, dương cương mà trung chính, như rồng bay trên trời, vạn vật ngước nhìn. Đây là hào tốt nhất."
+      },
+      {
+        "position": 6,
+        "original": "上九: 亢龍有悔.",
+        "meaning": "Rồng bay quá cao, có hối hận.",
+        "commentary": "Hào trên cùng, dương: Lên cao quá mà không biết lùi thì sẽ hối hận. Cực thịnh tất suy, đạo trời vậy."
+      }
+    ],
+    "commentary": "Quẻ này toàn dương, tượng trưng cho sức mạnh sáng tạo của trời. Sáu hào diễn tả quá trình phát triển của một người tài giỏi từ lúc ẩn mình đến khi thành công rồi khi già cỗi."
+  },
+  {
+    "id": 2,
+    "name": "Thuần Khôn",
+    "upper": 8,
+    "lower": 8,
+    "chineseName": "坤 khôn",
+    "briefExplanation": "Thuận dã. Nhu thuận. Bao dung, chở che, thuận tùng, đức dày.",
+    "meaning": "Đất trên đất, thuận theo tự nhiên. Nhu thuận, bao dung, lợi về phương Tây Nam. Thuận lợi khi phục tùng.",
+    "image": "Đất dày mang chở vạn vật, người quân tử lấy đức dày mang chở muôn loài",
+    "thoanTu": {
+      "original": "坤元亨, 利牝馬之貞. 君子有攸往, 先迷後得主, 利. 西南得朋, 東北喪朋, 安貞吉.",
+      "meaning": "Khôn: nguyên hanh, lợi về sự chính của con ngựa cái. Quân tử có nơi đi, trước mê sau được chủ, lợi. Tây Nam được bạn, Đông Bắc mất bạn, yên giữ chính thì tốt."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 履霜, 堅冰至.",
+        "meaning": "Dẫm lên sương, biết rằng băng cứng sắp đến.",
+        "commentary": "Hào 1, âm: Âm mới sinh ở dưới, ám chỉ sự xấu bắt đầu manh nha. Dẫm lên sương từ từ mà thành băng cứng, cần đề phòng sớm."
+      },
+      {
+        "position": 2,
+        "original": "六二: 直方大, 不習无不利.",
+        "meaning": "Thẳng, vuông, lớn, không cần học tập gì cũng không gì bất lợi.",
+        "commentary": "Hào 2, âm: Đắc trung đắc chính, cương trực mà bao dung, đức tốt tự nhiên, không cần gắng sức mà vẫn hanh thông."
+      },
+      {
+        "position": 3,
+        "original": "六三: 含章可貞, 或從王事, 无成有終.",
+        "meaning": "Giấu vẻ đẹp bên trong, giữ chính đạo. Hoặc theo giúp vua, không cần tranh công mà được kết quả.",
+        "commentary": "Hào 3, âm: Có tài nhưng không khoe khoang, cam lòng phụ tá. Đạo bề tôi, không cần thành công riêng mà cuối cùng được toàn vẹn."
+      },
+      {
+        "position": 4,
+        "original": "六四: 括囊, 无咎无譽.",
+        "meaning": "Buộc chặt cái túi, không lỗi mà cũng không khen.",
+        "commentary": "Hào 4, âm: Thời thế khó khăn, nên im lặng, giấu kín tài năng, không được khen nhưng cũng không bị hại."
+      },
+      {
+        "position": 5,
+        "original": "六五: 黃裳元吉.",
+        "meaning": "Mặc xiêm vàng, rất tốt lành.",
+        "commentary": "Hào 5, âm: Vàng là màu trung, xiêm là đồ mặc phía dưới, ý nói ở ngôi cao mà khiêm tốn giữ đạo trung thì rất tốt."
+      },
+      {
+        "position": 6,
+        "original": "上六: 龍戰于野, 其血玄黃.",
+        "meaning": "Rồng đánh nhau ở ngoài đồng, máu chảy đen vàng.",
+        "commentary": "Hào trên cùng, âm: Âm lên đến cực thì tranh với dương, hai bên đều bị tổn thương. Cực thì biến, tất suy."
+      }
+    ],
+    "commentary": "Quẻ này toàn âm, tượng trưng cho đức của đất. Đất thuận theo trời mà chở muôn vật. Dạy người ta đức nhu thuận, khiêm nhường, không tranh giành, biết giữ phận."
+  },
+  {
+    "id": 3,
+    "name": "Thủy Lôi Truân",
+    "upper": 6,
+    "lower": 4,
+    "chineseName": "屯 truân",
+    "briefExplanation": "Nan dã. Khó khăn. Buổi đầu gian nan, khai sáng, mọi sự mới bắt đầu.",
+    "meaning": "Mây sấm giao nhau, buổi đầu khó khăn. Khởi sự gian nan nhưng cuối cùng hanh thông. Cần kiên nhẫn, không vội vàng.",
+    "image": "Mây sấm bao phủ, vạn vật mới sinh, khó khăn ban đầu",
+    "thoanTu": {
+      "original": "屯, 元亨利貞. 勿用有攸往, 利建侯.",
+      "meaning": "Truân: nguyên hanh lợi trinh. Chớ vội đi đâu, lợi khi dựng chư hầu (lập người giúp việc)."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 磐桓, 利居貞, 利建侯.",
+        "meaning": "Quanh quẩn không tiến được, lợi khi giữ chính, lợi khi dựng chư hầu.",
+        "commentary": "Hào 1, dương: Cương mà ở đầu thời truân, chưa nên tiến mà nên giữ chính đạo, tìm người giúp đỡ."
+      },
+      {
+        "position": 2,
+        "original": "六二: 屯如邅如, 乘馬班如, 匪寇婚媾. 女子貞不字, 十年乃字.",
+        "meaning": "Khó khăn lúng túng, cưỡi ngựa quanh quẩn, không phải giặc mà là người đến cầu hôn. Nữ giữ chính không chịu lấy, mười năm mới chịu.",
+        "commentary": "Hào 2, âm: Ứng hợp với hào 5, nhưng bị hào 1 cản trở. Nên giữ trinh không vội, chờ đúng thời."
+      },
+      {
+        "position": 3,
+        "original": "六三: 即鹿无虞, 惟入于林中, 君子幾不如舍, 往吝.",
+        "meaning": "Đuổi hươu mà không có người dẫn đường, chỉ lạc vào rừng. Quân tử thấy vậy bỏ còn hơn, đi thì hối tiếc.",
+        "commentary": "Hào 3, âm: Bất trung bất chính, tham lam mà không biết lượng sức, như đuổi hươu không có người dẫn. Nên bỏ, miễn cưỡng thì xấu."
+      },
+      {
+        "position": 4,
+        "original": "六四: 乘馬班如, 求婚媾, 往吉无不利.",
+        "meaning": "Cưỡi ngựa quanh quẩn, cầu hôn, đi thì tốt lành, không gì bất lợi.",
+        "commentary": "Hào 4, âm: Ở gần hào 1 dương cương, nên hạ mình cầu hiền, thuận theo đạo thì tốt."
+      },
+      {
+        "position": 5,
+        "original": "九五: 屯其膏, 小貞吉, 大貞凶.",
+        "meaning": "Ân trạch bị tắc nghẽn; việc nhỏ giữ chính thì tốt, việc lớn giữ chính thì xấu.",
+        "commentary": "Hào 5, dương: Ở ngôi chí tôn nhưng trong thời truân nan, ân trạch không ban xuống được. Việc nhỏ thì nên làm, việc lớn phải chờ."
+      },
+      {
+        "position": 6,
+        "original": "上六: 乘馬班如, 泣血漣如.",
+        "meaning": "Cưỡi ngựa quanh quẩn, khóc ròng máu mắt.",
+        "commentary": "Hào trên cùng, âm: Ở cuối quẻ Truân, khó khăn đến cùng cực. Âm nhu mà ở trên cùng, không còn lối thoát, nên rất bi thương."
+      }
+    ],
+    "commentary": "Quẻ này tượng cho buổi đầu gian nan. Trên mây dưới sấm, vạn vật mới sinh. Dạy ta trong thời khó khăn phải kiên nhẫn, tìm người giúp đỡ, không nên nóng vội."
+  },
+  {
+    "id": 4,
+    "name": "Sơn Thủy Mông",
+    "upper": 7,
+    "lower": 6,
+    "chineseName": "蒙 mông",
+    "briefExplanation": "Muội dã. Tối tăm. Mông muội, u tối, cần khai sáng, học hỏi.",
+    "meaning": "Núi dưới có nước, mông muội chưa khai sáng. Cần tìm thầy chỉ dạy. Hỏi lần đầu thì được đáp, hỏi nhiều lần thì bất kính.",
+    "image": "Dưới núi có suối, người quân tử lấy hành vi quả quyết để nuôi đức",
+    "thoanTu": {
+      "original": "蒙, 亨. 匪我求童蒙, 童蒙求我. 初筮告, 再三瀆, 瀆則不告. 利貞.",
+      "meaning": "Mông hanh thông. Không phải ta tìm đứa trẻ mông muội mà đứa trẻ mông muội tìm ta. Hỏi lần đầu thì bảo, hỏi hai ba lần là nhàm, nhàm thì không bảo. Lợi về giữ chính."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 發蒙, 利用刑人, 用說桎梏, 以往吝.",
+        "meaning": "Mở mang kẻ mông muội, lợi dùng hình phạt để dạy, tháo gông cùm; nhưng đi quá thì hối tiếc.",
+        "commentary": "Hào 1, âm: Bắt đầu khai sáng, cần phải nghiêm khắc, nhưng sau khi đã giáo dục thì nên thả ra. Quá nghiêm thì xấu."
+      },
+      {
+        "position": 2,
+        "original": "九二: 包蒙, 吉. 納婦吉. 子克家.",
+        "meaning": "Bao dung kẻ mông muội, tốt. Cưới vợ tốt. Con trẻ lo được việc nhà.",
+        "commentary": "Hào 2, dương: Dương cương đắc trung, bao dung kẻ ngu dốt, đó là đức của bậc thầy. Hào này là chủ quẻ."
+      },
+      {
+        "position": 3,
+        "original": "六三: 勿用取女, 見金夫, 不有躬, 无攸利.",
+        "meaning": "Chớ nên lấy cô gái này. Thấy người giàu sang thì mất mình, không có gì lợi.",
+        "commentary": "Hào 3, âm: Bất trung bất chính, thấy lợi mà quên nghĩa, không đáng kết giao."
+      },
+      {
+        "position": 4,
+        "original": "六四: 困蒙, 吝.",
+        "meaning": "Bị mông muội vây khốn, đáng hối tiếc.",
+        "commentary": "Hào 4, âm: Xa cách các hào dương, chung quanh toàn âm nhu, bị mông muội vây bọc, không ai khai sáng cho."
+      },
+      {
+        "position": 5,
+        "original": "六五: 童蒙, 吉.",
+        "meaning": "Trẻ thơ mông muội (biết khiêm tốn học hỏi), tốt.",
+        "commentary": "Hào 5, âm: Âm nhu mà đắc trung, khiêm tốn như trẻ thơ, đến cầu hào 2 dương cương, cho nên tốt."
+      },
+      {
+        "position": 6,
+        "original": "上九: 擊蒙, 不利為寇, 利禦寇.",
+        "meaning": "Đánh kẻ mông muội, không lợi khi là giặc, lợi khi chống giặc.",
+        "commentary": "Hào trên cùng, dương: Dùng biện pháp mạnh để khai sáng, nhưng đừng quá tay mà thành bạo ngược. Phòng thủ thì tốt, tấn công thì xấu."
+      }
+    ],
+    "commentary": "Quẻ này bàn về sự giáo dục, khai sáng. Dưới núi có suối, nước từ chỗ tối chảy ra chỗ sáng. Thầy không tìm trò mà trò tìm thầy, phải thành tâm thì mới dạy."
+  },
+  {
+    "id": 5,
+    "name": "Thủy Thiên Nhu",
+    "upper": 6,
+    "lower": 1,
+    "chineseName": "需 nhu",
+    "briefExplanation": "Tu dã. Chờ đợi. Kiên nhẫn, chờ thời, nuôi dưỡng, ẩm thực.",
+    "meaning": "Mây trên trời, chờ đợi. Có lòng tin thì tốt lành. Kiên nhẫn chờ thời, không nên nóng vội.",
+    "image": "Mây lên trời, người quân tử ăn uống yến tiệc vui vẻ",
+    "thoanTu": {
+      "original": "需, 有孚, 光亨, 貞吉. 利涉大川.",
+      "meaning": "Nhu: có lòng tin, sáng và hanh thông, chính thì tốt. Lợi khi vượt sông lớn."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 需于郊, 利用恆, 无咎.",
+        "meaning": "Chờ ở ngoài đồng, lợi khi giữ vững lâu dài, không lỗi.",
+        "commentary": "Hào 1, dương: Còn xa chỗ hiểm, chờ ở ngoại ô, bình tĩnh giữ sự bền lòng thì không lỗi."
+      },
+      {
+        "position": 2,
+        "original": "九二: 需于沙, 小有言, 終吉.",
+        "meaning": "Chờ ở bãi cát, hơi bị chê trách, cuối cùng tốt.",
+        "commentary": "Hào 2, dương: Đã gần chỗ hiểm hơn (cát gần nước), tuy bị lời ra tiếng vào nhưng hào dương đắc trung, cuối cùng tốt đẹp."
+      },
+      {
+        "position": 3,
+        "original": "九三: 需于泥, 致寇至.",
+        "meaning": "Chờ ở bùn lầy, chuốc lấy giặc đến.",
+        "commentary": "Hào 3, dương: Sát biên chỗ hiểm, nóng vội sẽ rước họa. Ở trong bùn mà không cẩn thận thì giặc sẽ đến."
+      },
+      {
+        "position": 4,
+        "original": "六四: 需于血, 出自穴.",
+        "meaning": "Chờ ở trong máu, ra khỏi hang.",
+        "commentary": "Hào 4, âm: Đã lọt vào chỗ hiểm nạn, nhưng âm nhu thuận, biết nhường biết chờ, nên thoát được."
+      },
+      {
+        "position": 5,
+        "original": "九五: 需于酒食, 貞吉.",
+        "meaning": "Chờ trong rượu thịt, giữ chính thì tốt.",
+        "commentary": "Hào 5, dương: Dương cương đắc trung, ở ngôi chí tôn, bình tĩnh hưởng phúc lộc mà chờ thời, giữ chính thì tốt."
+      },
+      {
+        "position": 6,
+        "original": "上六: 入于穴, 有不速之客三人來, 敬之終吉.",
+        "meaning": "Vào trong hang, có ba vị khách không mời mà đến, kính trọng họ thì cuối cùng tốt.",
+        "commentary": "Hào trên cùng, âm: Đã hết giai đoạn chờ đợi. Ba hào dương dưới (1, 2, 3) đến. Tiếp đón kính trọng thì tốt."
+      }
+    ],
+    "commentary": "Quẻ Nhu nói về sự chờ đợi. Trên trời có mây chưa mưa, mưa chưa đến thì phải chờ. Chờ đợi mà vui vẻ, bình tĩnh, giữ vững lòng tin, đó mới là đạo."
+  },
+  {
+    "id": 6,
+    "name": "Thiên Thủy Tụng",
+    "upper": 1,
+    "lower": 6,
+    "chineseName": "訟 tụng",
+    "briefExplanation": "Tranh dã. Kiện tụng. Tranh chấp, bất hòa, cần trung gian phân xử.",
+    "meaning": "Trời và nước đi ngược chiều, tranh chấp kiện tụng. Cần người trung gian phân xử, không nên đẩy đến cùng.",
+    "image": "Trời và nước trái chiều, người quân tử mưu sự từ đầu",
+    "thoanTu": {
+      "original": "訟, 有孚窒. 惕中吉, 終凶. 利見大人, 不利涉大川.",
+      "meaning": "Tụng: có lòng tin mà bị tắc nghẽn. Lo sợ giữ trung thì tốt, đẩy đến cùng thì xấu. Lợi khi gặp đại nhân, không lợi khi vượt sông lớn."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 不永所事, 小有言, 終吉.",
+        "meaning": "Không nên kéo dài việc kiện, dù bị chê trách nhỏ, cuối cùng tốt.",
+        "commentary": "Hào 1, âm: Âm nhu ở dưới, sức yếu không nên tranh tụng. Chịu chút thiệt mà bỏ thì cuối cùng tốt đẹp."
+      },
+      {
+        "position": 2,
+        "original": "九二: 不克訟, 歸而逋, 其邑人三百戶无眚.",
+        "meaning": "Kiện không được, về trốn. Ấp nhỏ ba trăm hộ không bị tai vạ.",
+        "commentary": "Hào 2, dương: Dương cương nhưng ở dưới, kiện với hào 5 ở trên không lại. Biết rút lui thì dân chúng khỏi bị vạ lây."
+      },
+      {
+        "position": 3,
+        "original": "六三: 食舊德, 貞厲, 終吉. 或從王事, 无成.",
+        "meaning": "Ăn lộc cũ, giữ chính dù nguy, cuối cùng tốt. Hoặc theo giúp vua, không cần tranh công.",
+        "commentary": "Hào 3, âm: Bất trung bất chính, nên giữ phận cũ, đừng tranh tụng. Theo giúp vua thì được, nhưng không nên mong thành công riêng."
+      },
+      {
+        "position": 4,
+        "original": "九四: 不克訟, 復即命, 渝安貞吉.",
+        "meaning": "Kiện không được, quay lại thuận theo mệnh, thay đổi mà yên giữ chính thì tốt.",
+        "commentary": "Hào 4, dương: Bất đắc trung, kiện không thắng. Nhưng biết quay lại, thuận theo lẽ phải, thay đổi tâm tính thì tốt."
+      },
+      {
+        "position": 5,
+        "original": "九五: 訟, 元吉.",
+        "meaning": "Kiện tụng, rất tốt lành.",
+        "commentary": "Hào 5, dương: Dương cương đắc trung, ở ngôi chí tôn, là người phán xử công minh. Kiện mà gặp vị phán xử này thì rất tốt."
+      },
+      {
+        "position": 6,
+        "original": "上九: 或錫之鞶帶, 終朝三褫之.",
+        "meaning": "Hoặc được ban đai lưng, nhưng trong buổi sáng ba lần bị tước.",
+        "commentary": "Hào trên cùng, dương: Kiện đến cùng, dù thắng cũng không giữ được. Được rồi lại mất, vì tranh tụng mà đến nỗi đó."
+      }
+    ],
+    "commentary": "Quẻ này bàn về tranh tụng. Trời đi lên, nước chảy xuống, trái chiều nhau nên sinh tranh chấp. Dạy ta nên hòa giải, đừng đẩy đến cùng, cần người trung gian công minh."
+  },
+  {
+    "id": 7,
+    "name": "Địa Thủy Sư",
+    "upper": 8,
+    "lower": 6,
+    "chineseName": "師 sư",
+    "briefExplanation": "Chúng dã. Quân đội. Đám đông, tập hợp, lãnh đạo, kỷ luật.",
+    "meaning": "Đất chứa nước, quân đội tập hợp. Cần người chỉ huy giỏi, chính nhân lãnh đạo thì tốt lành.",
+    "image": "Giữa đất có nước, người quân tử dung nạp dân chúng nuôi dưỡng muôn dân",
+    "thoanTu": {
+      "original": "師, 貞, 丈人吉, 无咎.",
+      "meaning": "Sư: chính, trượng phu (người lớn tuổi, kinh nghiệm) lãnh đạo thì tốt, không lỗi."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 師出以律, 否臧凶.",
+        "meaning": "Quân đội ra quân phải có kỷ luật, không tốt thì xấu.",
+        "commentary": "Hào 1, âm: Bắt đầu xuất quân, điều quan trọng nhất là kỷ luật. Không có kỷ luật thì dù mạnh cũng thua."
+      },
+      {
+        "position": 2,
+        "original": "九二: 在師中, 吉, 无咎. 王三錫命.",
+        "meaning": "Ở giữa quân, tốt lành, không lỗi. Vua ba lần ban lệnh.",
+        "commentary": "Hào 2, dương: Một hào dương ở giữa năm hào âm, là vị tướng cương trung. Được vua tin cậy, ba lần ban thưởng. Hào này là chủ quẻ."
+      },
+      {
+        "position": 3,
+        "original": "六三: 師或輿尸, 凶.",
+        "meaning": "Quân đội có khi chở xác về, xấu.",
+        "commentary": "Hào 3, âm: Bất trung bất chính, nếu lãnh đạo quân đội thì thất bại, chỉ chở xác về."
+      },
+      {
+        "position": 4,
+        "original": "六四: 師左次, 无咎.",
+        "meaning": "Quân đội đóng lui phía trái (rút lui), không lỗi.",
+        "commentary": "Hào 4, âm: Biết lúc nào nên rút lui, đóng quân phòng thủ. Không tiến mà lùi, tùy thời mà không lỗi."
+      },
+      {
+        "position": 5,
+        "original": "六五: 田有禽, 利執言, 无咎. 長子帥師, 弟子輿尸, 貞凶.",
+        "meaning": "Ruộng có cầm thú, lợi khi bắt. Không lỗi. Con trưởng thống lĩnh quân, con thứ chở xác, giữ chính mà xấu.",
+        "commentary": "Hào 5, âm: Ở ngôi vua nhưng âm nhu, giao binh cho hào 2 dương cương. Giao cho con trưởng (người đức tài) thì thắng, giao cho kẻ bất tài thì bại."
+      },
+      {
+        "position": 6,
+        "original": "上六: 大君有命, 開國承家, 小人勿用.",
+        "meaning": "Đại quân có lệnh, mở nước nối nhà. Tiểu nhân chớ dùng.",
+        "commentary": "Hào trên cùng, âm: Chiến thắng rồi, phong thưởng. Nhưng chỉ nên dùng quân tử, không nên dùng tiểu nhân kẻo sinh loạn."
+      }
+    ],
+    "commentary": "Quẻ này bàn về dùng binh. Giữa đất có nước, nước ẩn trong đất cũng như dân ẩn trong nước, gặp lúc cần thì tập hợp thành quân đội. Điều cốt yếu là phải có tướng giỏi, kỷ luật nghiêm."
+  },
+  {
+    "id": 8,
+    "name": "Thủy Địa Tỷ",
+    "upper": 6,
+    "lower": 8,
+    "chineseName": "比 bỉ",
+    "briefExplanation": "Tư dã. Chọn lọc. Thân liền, gạn lọc, mật thiết, tư hữu riêng, trưởng đoàn.",
+    "meaning": "Nước trên đất, thân cận hòa thuận. Tốt lành, đoàn kết gắn bó. Người đến sau không kịp thì xấu.",
+    "image": "Trên đất có nước, kẻ làm vua dựng muôn nước để thân chư hầu",
+    "thoanTu": {
+      "original": "比吉. 原筮, 元永貞, 无咎. 不寧方來, 後夫凶.",
+      "meaning": "Gần gũi thì tốt. Bói lần thứ nhì mà được như lần đầu, rất tốt, lâu dài, chính thì không có lỗi. Kẻ nào ở chỗ chưa yên sẽ lại với mình, kẻ nào tới sau thì xấu."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 有孚比之, 无咎. 有孚盈缶, 終來有他吉.",
+        "meaning": "Có lòng thành tín mà gần gũi nhau thì không có lỗi. Nếu lòng thành tín nhiều như đầy một cái ảng thì có thêm điều tốt khác nữa.",
+        "commentary": "Hào 1, âm: Mới đầu gần gũi, cần thành tín. Lòng thành tín phải đầy đặn như nước đầy ảng thì sẽ có nhiều điều tốt đến."
+      },
+      {
+        "position": 2,
+        "original": "六二: 比之自內, 貞吉.",
+        "meaning": "Tự trong mà gần gũi với ngoài, chính đáng thì tốt.",
+        "commentary": "Hào 2, âm: Âm nhu đắc trung đắc chính, ở nội quái, ứng hợp với hào 5 dương cương cũng đắc trung. Hai bên thân nhau vì đạo đồng chí hợp, không phải vì lợi."
+      },
+      {
+        "position": 3,
+        "original": "六三: 比之匪人.",
+        "meaning": "Gần gũi người không xứng đáng.",
+        "commentary": "Hào 3, âm: Bất trung bất chính, chung quanh toàn âm nhu, không có ai đáng kết giao. Ví với kẻ chọn bạn sai."
+      },
+      {
+        "position": 4,
+        "original": "六四: 外比之, 貞吉.",
+        "meaning": "Gần gũi với bên ngoài (hào 5), giữ đạo chính thì tốt.",
+        "commentary": "Hào 4, âm: Đắc chính, gần hào 5 chí tôn, thân với người hiền và phục tùng bề trên, cho nên tốt."
+      },
+      {
+        "position": 5,
+        "original": "九五: 顯比, 王用三驅.",
+        "meaning": "Gần gũi quang minh, vua dùng phép ba mặt bao vây.",
+        "commentary": "Hào 5, dương: Dương cương đắc trung đắc chính, ở ngôi chí tôn, cả năm hào âm đều phục tùng. Như đi săn không bao vây bốn mặt mà chừa một mặt, để cho tự do tới lui."
+      },
+      {
+        "position": 6,
+        "original": "上六: 比之无首, 凶.",
+        "meaning": "Không có đầu mối để gần gũi, xấu.",
+        "commentary": "Hào trên cùng, âm: Bất trung, ở trên cùng, không sao gần gũi với những hào dưới, vô thủy thì vô chung, cho nên xấu."
+      }
+    ],
+    "commentary": "Quẻ này nói về phép nhóm bạn tìm thầy. Phải cẩn thận từ lúc đầu, thành tín, trung chính, vì đạo chứ không vì lợi. Và phải để cho tự do, không nên ép buộc."
+  },
+  {
+    "id": 9,
+    "name": "Phong Thiên Tiểu Súc",
+    "upper": 5,
+    "lower": 1,
+    "chineseName": "小畜 tiểu súc",
+    "briefExplanation": "Tắc dã. Bế tắc. Lúc bế tắc, không đồng ý nhau, cô quả, súc oán, chứa nhóm.",
+    "meaning": "Bế tắc tạm thời, mưa chưa tới. Tích lũy nhỏ, cần nhẫn nại chờ thời cơ thích hợp.",
+    "image": "Gió đi trên trời, người quân tử trau dồi văn đức.",
+    "thoanTu": {
+      "original": "小畜, 亨. 密雲不雨, 自我西郊.",
+      "meaning": "Tiểu súc có được sự hanh thông. Mây kéo đen kịt từ ngoại ô phía tây phương mà chưa mưa."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 復自道, 何其咎, 吉.",
+        "meaning": "Trở về với chính đạo của mình, không có tai họa gì, tốt lành.",
+        "commentary": "Hào 1: Ngay từ đầu đã biết sửa mình về đường ngay lẽ phải, nên không có lỗi lầm."
+      },
+      {
+        "position": 2,
+        "original": "九二: 牽復, 吉.",
+        "meaning": "Do bị lôi kéo mà trở lại đường ngay, tốt lành.",
+        "commentary": "Hào 2: Dương cương đắc trung, tự tin cùng tiến lên với hào 1, chia sẻ chí hướng thì kết cục tốt đẹp."
+      },
+      {
+        "position": 3,
+        "original": "九三: 輿說輻, 夫妻反目.",
+        "meaning": "Cỗ xe bị sứt mẻ thanh trục, vợ chồng lục đục ngoảnh mặt lại với nhau.",
+        "commentary": "Hào 3: Sức chưa đủ mà muốn tiến lên nên bị cản trở, ví như gia đạo bất hòa, cãi vã."
+      },
+      {
+        "position": 4,
+        "original": "六四: 有孚, 血去惕出, 无咎.",
+        "meaning": "Có lòng thành tín, nhờ đó máu không chảy và sự sợ hãi cũng qua, không có lỗi lầm.",
+        "commentary": "Hào 4: Âm nhu kề cận bậc chí tôn, dùng sự chân thành mềm mỏng mà thoát khỏi tai họa hiểm nghèo."
+      },
+      {
+        "position": 5,
+        "original": "九五: 有孚攣如, 富以其鄰.",
+        "meaning": "Lòng thành tín tạo sự gắn bó, lấy của cải để chia sẻ cho láng giềng.",
+        "commentary": "Hào 5: Ở ngôi cao, chân thành gắn kết với mọi người, lan tỏa sự giúp đỡ, sẽ gặt hái phúc lộc."
+      },
+      {
+        "position": 6,
+        "original": "上九: 既雨既處, 尚德載, 婦貞厲. 月幾望, 君子征凶.",
+        "meaning": "Đã mưa đã tạnh, đức đã chứa đầy đủ. Phụ nữ giữ trinh thì nguy. Trăng gần tròn, quân tử ra quân thì xấu.",
+        "commentary": "Hào 6: Ở cực điểm của sự tích lũy, đã thành quả nhưng nên biết đủ mà dừng lại."
+      }
+    ],
+    "commentary": "Quẻ này hào 4 âm nhu nhường nhịn che chở 5 hào dương tiến lên, tuy sức giữ còn yếu (Tiểu Súc) nên thành quả chưa bung vỡ dạt dào. Đại ý khuyên ta phải ẩn nhẫn, chứa đức tích tài đợi lúc vượng."
+  },
+  {
+    "id": 10,
+    "name": "Thiên Trạch Lý",
+    "upper": 1,
+    "lower": 2,
+    "chineseName": "履 lý",
+    "briefExplanation": "Lễ dã. Có lễ. Bước đi, hành động, dẫm lên, định ra lễ nghi, khuôn phép.",
+    "meaning": "Hành động cẩn trọng, lễ phép. Dẫm lên đuôi hổ mà cọp không cắn, an toàn hanh thông.",
+    "image": "Trời trên đầm dưới, người quân tử phân biệt trên dưới để giữ lòng dân.",
+    "thoanTu": {
+      "original": "履虎尾, 不咥人, 亨.",
+      "meaning": "Lý (giẫm lên): Dẫm lên đuôi con cọp mà nó không cắn mình, hanh thông."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 素履, 往无咎.",
+        "meaning": "Giữ đạo bình dị chất phác mà tiến lên, không có lỗi gì.",
+        "commentary": "Hào 1: Biết rõ bản thân sức kém, không tham danh lợi xa hoa, sống giản dị thì không lỗi."
+      },
+      {
+        "position": 2,
+        "original": "九二: 履道坦坦, 幽人貞吉.",
+        "meaning": "Đường đi bằng phẳng rộng rãi, người tu ẩn giữ đạo chính thì tốt lành.",
+        "commentary": "Hào 2: Cương trung, có định lực, không xô bồ chạy theo thế tục nên luôn bình an."
+      },
+      {
+        "position": 3,
+        "original": "六三: 眇能視, 跛能履, 履虎尾, 咥人, 凶. 武人為于大君.",
+        "meaning": "Mắt chột mà cố nhìn, chân thọt mà cố đi, dẫm lên đuôi cọp bị cọp cắn, xấu. Kẻ võ biền mà làm việc của người cai trị.",
+        "commentary": "Hào 3: Thiếu tài năng mà hiếu thắng kiêu hãnh, ắt tự rước họa vào thân."
+      },
+      {
+        "position": 4,
+        "original": "九四: 履虎尾, 愬愬終吉.",
+        "meaning": "Giẫm lên đuôi cọp, lòng dè dặt sợ hãi, nhưng cuối cùng lại được tốt lành.",
+        "commentary": "Hào 4: Vượt qua nơi hiểm nguy nhưng biết cẩn thận, biết e sợ, nên rốt cục vẫn được thoát nạn."
+      },
+      {
+        "position": 5,
+        "original": "九五: 夬履, 貞厲.",
+        "meaning": "Quyết đoán đạp lên, tiến bước một cách cương quyết, cố chấp thì nguy.",
+        "commentary": "Hào 5: Ở ngôi cao nhưng quá ương ngạnh cương quyết, nôn nóng áp đặt thì sẽ mang tới rủi ro."
+      },
+      {
+        "position": 6,
+        "original": "上九: 視履考祥, 其旋元吉.",
+        "meaning": "Nhìn lại con đường đã qua để kiểm nghiệm, nếu vẹn toàn không tì vết thì đại cát.",
+        "commentary": "Hào 6: Giai đoạn cuối, nếu đánh giá lại thấy hoàn toàn không vi phạm đạo lý thì có phúc lớn."
+      }
+    ],
+    "commentary": "Quẻ Lý bàn về Lễ, sự cách biệt trên dưới (Thiên và Trạch). Quân tử đi phải biết nhún nhường, thận trọng, lấy nhu đáp cương như đạp lên đuôi hổ thì hóa nguy thành an."
+  },
+  {
+    "id": 11,
+    "name": "Địa Thiên Thái",
+    "upper": 8,
+    "lower": 1,
+    "chineseName": "泰 thái",
+    "briefExplanation": "Thông dã. Thông hiểu. Thái bình, thông vượt, lại sang, hanh thông, hiểu biết.",
+    "meaning": "Trời đất giao hòa, âm dương thông thuận. Quẻ Thái báo hiệu thời kỳ hưng vượng, kẻ tiểu nhân lui bước.",
+    "image": "Trời đất giao hợp, bậc quân tử phân chia và hoàn thành đạo trời đất, hỗ trợ muôn dân.",
+    "thoanTu": {
+      "original": "泰, 小往大來, 吉亨.",
+      "meaning": "Thái: Khí nhỏ (âm) mất đi, khí lớn (dương) lớn lên, hanh thông tốt lành."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 拔茅茹, 以其彙, 征吉.",
+        "meaning": "Nhổ cỏ tranh bứt lên cả cụm, cùng những người đồng chí hướng tiến tới thì tốt.",
+        "commentary": "Hào 1: Ở đầu thời thái bình, người quân tử nên liên kết với những người tài đức cùng góp sức cống hiến cho đời."
+      },
+      {
+        "position": 2,
+        "original": "九二: 包荒, 用馮河, 不遐遺, 朋亡, 得尚于中行.",
+        "meaning": "Bao dung những kẻ hoang dại, lội qua sông dài, không bỏ rơi người xa. Dù không có bè phái, vẫn hợp đạo trung.",
+        "commentary": "Hào 2: Lòng dạ bao dung, độ lượng đủ sức dung nạp mọi thứ, giữ đúng đạo lý trung dung để kéo dài sự thịnh trị."
+      },
+      {
+        "position": 3,
+        "original": "九三: 无平不陂, 无往不復, 艱貞无咎. 勿恤其孚, 于食有福.",
+        "meaning": "Không có chỗ bằng phẳng nào mà không biến thành dốc, không có sự ra đi nào mà không trở lại. Giữ đạo trong gian truân rốt cuộc cũng không có lỗi.",
+        "commentary": "Hào 3: Biết quy luật thịnh suy đan xen, thận trọng gìn giữ lúc đang hưng vượng thì sẽ không có biến."
+      },
+      {
+        "position": 4,
+        "original": "六四: 翩翩不富, 以其鄰, 不戒以孚.",
+        "meaning": "Bướm lượn bay (cùng giáng xuống), chẳng giàu có, theo xóm giềng không cần dặn bảo cũng tin nhau.",
+        "commentary": "Hào 4: Âm tiệm thoái nhường chỗ cho quần chúng, chan hòa tin cậy cùng nhau, làm phúc."
+      },
+      {
+        "position": 5,
+        "original": "六五: 帝乙歸妹, 以祉元吉.",
+        "meaning": "Hoàng đế đế Ất gả em gái, được phúc, rất tốt.",
+        "commentary": "Hào 5: Kẻ ở vị thế cao nhưng lại chịu hạ mình xuống để kết thân với láng giềng thì đại cát."
+      },
+      {
+        "position": 6,
+        "original": "上六: 城復于隍, 勿用師. 自邑告命, 貞吝.",
+        "meaning": "Tường thành lở sụp đổ lấp đầy con hào, đừng dùng binh lính nữa. Dùng mệnh lệnh báo cho ấp mình cẩn thận bảo vệ, hối tiếc.",
+        "commentary": "Hào 6: Ở cuối thời vượng, chuyển sang bĩ cực. Nên ngừng chinh phạt, lui về thủ thế tự lo mình."
+      }
+    ],
+    "commentary": "Quẻ Thái với Trời ở dưới Dương thăng lên, Đất ở trên Âm lại đi xuống, hai khí giao hòa, vạn vật sinh sôi thịnh trị tốt đẹp nhất. Nhưng trong yên vui phải luôn nghĩ về lúc bĩ cực."
+  },
+  {
+    "id": 12,
+    "name": "Thiên Địa Bĩ",
+    "upper": 1,
+    "lower": 8,
+    "chineseName": "否 bĩ",
+    "briefExplanation": "Tắc dã. Bế tắc. Không thông, rủi ro, khốn khó, gièm pha, chê bai, tiểu nhân đắc chí.",
+    "meaning": "Trời đất không giao cảm, vạn vật bế tắc. Tiểu nhân nhởn nhơ, quân tử lui về phòng thủ chức phận.",
+    "image": "Trời và đất không giao hòa nhau, người quân tử vì vậy phải tiết kiệm ân đức, giấu thân để tránh nạn.",
+    "thoanTu": {
+      "original": "否之匪人, 不利君子貞, 大往小來.",
+      "meaning": "Bĩ: Bế tắc, kẻ tiểu nhân đắc thế, không có lợi cho đạo trinh chính của người quân tử. Lớn đi nhỏ đến."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 拔茅茹, 以其彙, 貞吉亨.",
+        "meaning": "Nhổ cỏ rễ bứt lên cả cụm, giữ lòng ngay thẳng kiên trinh thì mọi sự tốt hanh.",
+        "commentary": "Hào 1: Thời buổi suy đồi, quân tử cùng nhau rút lui ở ẩn để bảo toàn phẩm tiết, thế mới yên ổn."
+      },
+      {
+        "position": 2,
+        "original": "六二: 包承. 小人吉, 大人否亨.",
+        "meaning": "Bao che ôm ấp tà nịnh. Kẻ tiểu nhân thì tốt, đại nhân thì gặp khó nhưng giữ trinh tiết thì hanh.",
+        "commentary": "Hào 2: Trong thời loạn, quân tử phải biết nhẫn nhục lòn cúi để mưu việc lớn."
+      },
+      {
+        "position": 3,
+        "original": "六三: 包羞.",
+        "meaning": "Mang trong lòng sự xấu hổ nhục nhã.",
+        "commentary": "Hào 3: Bọn trục lợi không có tài đức bám lấy nhau cầu vinh, trong tâm luôn thấy cắn rứt, sợ hãi, thẹn thùng."
+      },
+      {
+        "position": 4,
+        "original": "九四: 有命无咎, 疇離祉.",
+        "meaning": "Có thiên mệnh ban xuống nên không lỗi, bậc quân tử chung sức thì nhận được nhiều phúc lành.",
+        "commentary": "Hào 4: Thời bĩ bắt đầu chuyển biến tích cực, người tài trợ giúp có cơ hội khôi phục đạo lý."
+      },
+      {
+        "position": 5,
+        "original": "九五: 休否, 大人吉. 其亡其亡, 繫于苞桑.",
+        "meaning": "Chấm dứt bế tắc suy yếu, bậc đại nhân đắc chí rất tốt lành. Tuy vậy vẫn lo nghĩ sợ hãi (cẩn thận nơm nớp giữ chặt như khóm cây dâu).",
+        "commentary": "Hào 5: Nạn đã qua, nhưng người lãnh đạo vẫn cần thận trọng canh cánh thì cơ đồ mới bền vững."
+      },
+      {
+        "position": 6,
+        "original": "上九: 傾否, 先否後喜.",
+        "meaning": "Đổ vỡ sự bế tắc, trước suy sụp sau mừng vui hỉ hả.",
+        "commentary": "Hào 6: Tột cùng cái suy ắt sinh cái thịnh, bế tắc qua tận cùng sẽ tới thời hanh thông, niềm vui ùa đến."
+      }
+    ],
+    "commentary": "Trời bốc cao, mặt Đất thì hạ thấp không giao thoa là điềm bế tắc nhất. Người quân tử phải biết lúc không dùng được mình hãy giấu đuôi chờ vượng."
+  },
+  {
+    "id": 13,
+    "name": "Thiên Hỏa Đồng Nhân",
+    "upper": 1,
+    "lower": 3,
+    "chineseName": "同人 đồng nhân",
+    "briefExplanation": "Thân dã. Thân thiện. Cùng người, giống người, cùng một bọn, hòa hợp, giao tình.",
+    "meaning": "Đồng tâm hiệp lực, hòa ái thân thiết với nhau một cách quảng đại vì mục đích trong sáng.",
+    "image": "Trời và lửa, người quân tử phân loại các bộ lạc sống chung.",
+    "thoanTu": {
+      "original": "同人于野, 亨. 利涉大川, 利君子貞.",
+      "meaning": "Đồng nhân gặp ở ngoài đồng (nơi xa rộng lớn), hanh thông, qua sông hiểm trợ lợi lành, tốt cho đạo trinh chính."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 同人于門, 无咎.",
+        "meaning": "Hòa đồng cùng người từ ngoài cửa, sẽ không có lỗi lầm.",
+        "commentary": "Hào 1: Làm quen kết giao mở rộng tự thuở ban sơ, xuất phát từ chân thành, không tư kỷ vụ lợi, nên rất tốt đẹp."
+      },
+      {
+        "position": 2,
+        "original": "六二: 同人于宗, 吝.",
+        "meaning": "Chỉ giao hảo với người trong gia tộc tông môn của mình, đáng hối tiếc.",
+        "commentary": "Hào 2: Hẹp hòi kéo bè kéo cánh chỉ lo cho người quen sẽ khiến lòng bao dung mất đi, dễ sinh thù ghét."
+      },
+      {
+        "position": 3,
+        "original": "九三: 伏戎于莽, 升其高陵, 三歲不興.",
+        "meaning": "Phục binh giấu vũ khí trong bụi rậm lau sậy rậm rạp, trèo lên gò cao quan sát, ba năm chả dám đánh.",
+        "commentary": "Hào 3: Tính toán ích kỷ, luôn nghi ngờ người khác, nên mang mưu sâu tự nhốt mình không tự tin, mất đi cơ hội."
+      },
+      {
+        "position": 4,
+        "original": "九四: 乘其墉, 弗克攻, 吉.",
+        "meaning": "Cưỡi đánh trên bức tường thành, không sao vây hãm nổi, dừng tay lại nên tốt.",
+        "commentary": "Hào 4: Dùng uy quyền cưỡng đoạt không bằng đạo nghĩa, tự xét mình bất lợi sức nên lùi bước, hóa lành lặn."
+      },
+      {
+        "position": 5,
+        "original": "九五: 同人, 先號咷而後笑. 大師克相遇.",
+        "meaning": "Đồng tâm hiệp lực, trước khóc lóc thở than sau mới vui vẻ cười nói. Đem đạo vương giả chinh phạt rồi mới gặp gỡ.",
+        "commentary": "Hào 5: Đã tìm được người tâm giao nhưng vẫn phải trải qua sóng gió cách trở, vượt qua nghịch cảnh thì vui vẻ đoàn tụ."
+      },
+      {
+        "position": 6,
+        "original": "上九: 同人于郊, 无悔.",
+        "meaning": "Hòa đồng ở nơi xa xôi miền ngoại ô tĩnh lặng vắng vẻ, không phải ăn năn hối hận.",
+        "commentary": "Hào 6: Sống ẩn dật cách biệt nhân thế, lòng thanh tịnh, tự tại, tự lo thân nên cũng không thẹn với ai."
+      }
+    ],
+    "commentary": "Lửa dưới gầm trời cùng lan sáng, quân tử đồng tâm cùng chí hướng chung vai gánh vác, dẹp vị kỉ tư lợi tạo nên khối đại đồng nhân loại phồn vinh."
+  },
+  {
+    "id": 14,
+    "name": "Hỏa Thiên Đại Hữu",
+    "upper": 3,
+    "lower": 1,
+    "chineseName": "大有 đại hữu",
+    "briefExplanation": "Khoan dã. Rộng rãi. Sở hữu lớn, có nhiều, giàu rộng, không ích kỷ, tha thứ.",
+    "meaning": "Tài sản dồi dào, trí tuệ sáng tỏ. Biết rộng lượng và khiêm nhường để được phúc lớn.",
+    "image": "Có lửa trên bầu trời cao, người quân tử trừng phạt điều ác, biểu dương điều thiện, thuận theo mệnh trời.",
+    "thoanTu": {
+      "original": "大有, 元亨.",
+      "meaning": "Đại hữu: Rất mực dồi dào, thu được cái sung túc cực thịnh."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 无交害, 匪咎, 艱則无咎.",
+        "meaning": "Không giao du liên lụy với bọn người gây hại dèm pha, thì đâu có ai oán trách bắt bẻ. Cẩn trọng trước hiểm nguy thì khỏi tai vạ.",
+        "commentary": "Hào 1: Giữ mình thanh bạch, tự cường cẩn thận khi mới khởi nghiệp tích trữ thì không vướng lụy."
+      },
+      {
+        "position": 2,
+        "original": "九二: 大車以載, 有攸往, 无咎.",
+        "meaning": "Có cỗ xe to dùng để chở hàng, yên tâm tiến bước đi mà chẳng ai trách cứ.",
+        "commentary": "Hào 2: Tài trí đủ sức gánh vác đại nghiệp, chuyên tâm việc chính thì đi đâu cũng làm được lợi."
+      },
+      {
+        "position": 3,
+        "original": "九三: 公用亨于天子, 小人弗克.",
+        "meaning": "Bậc chư hầu được dùng lễ hưởng lộc của thiên tử, kẻ tiểu nhân chẳng vượt ngưỡng nhận được phúc đấy.",
+        "commentary": "Hào 3: Phụng sự vô tư lấy công phò tá nên được trọng vọng; tiểu nhân hay tư đoạt thì đành chịu rỉ oán tự rụng."
+      },
+      {
+        "position": 4,
+        "original": "九四: 匪其彭, 无咎.",
+        "meaning": "Không tự phụ cậy giàu tự khoe sung túc, thì sẽ không vướng vào trách lầm.",
+        "commentary": "Hào 4: Giàu quá dễ chuốc ghen ghét thị phi; biết dè dặt thu mình, hạn chế phô trương sẽ yên hòa vô sự."
+      },
+      {
+        "position": 5,
+        "original": "六五: 厥孚交如, 威如, 吉.",
+        "meaning": "Lấy thành tín trao nhau, có thái độ đường hoàng oai nghiêm, thì tốt.",
+        "commentary": "Hào 5: Đứng chỗ ngôi vị lớn cai quản bằng tấm lòng thành tự tin và cốt cách nể trọng từ dưới, sẽ đạt đỉnh thành toàn."
+      },
+      {
+        "position": 6,
+        "original": "上九: 自天祐之, 吉无不利.",
+        "meaning": "Bởi ngậm đức hiền thiện thuận mệnh trời sẽ được Trời ban ơn độ xá, tốt lành không gì bất lợi.",
+        "commentary": "Hào 6: Cao thượng biết khiêm cung, giàu chẳng kiêu, lại trọng lễ, được cả ơn trên và lòng người ủng hộ, vinh cát."
+      }
+    ],
+    "commentary": "Mặt trời rực sáng giữa đỉnh thái không. Mọi vật dưới gầm đều chịu ân huệ tỏa rộng của ánh sáng sức nóng dương cương ban lộc."
+  },
+  {
+    "id": 15,
+    "name": "Địa Sơn Khiêm",
+    "upper": 8,
+    "lower": 7,
+    "chineseName": "謙 khiêm",
+    "briefExplanation": "Thoái dã. Khiêm tốn. Nhường nhịn, rút lui, chịu thua, khiêm từ, quy phục.",
+    "meaning": "Khiêm tốn, biết nhường nhịn lui về sau, lấy ít bù nhiều nên mọi sự được ban may mắn.",
+    "image": "Núi ẩn giấu trong đất, bậc quân tử giảm bớt nơi thừa, bù đắp chỗ thiếu, định lượng phân chia để đảm bảo cân bằng.",
+    "thoanTu": {
+      "original": "謙, 亨, 君子有終.",
+      "meaning": "Khiêm: Thuận lợi. Người quân tử kiên trì sẽ có kết cục tốt đẹp."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 謙謙君子, 用涉大川, 吉.",
+        "meaning": "Người quân tử vô cùng khiêm tốn nhún nhường, dù lội qua sông lớn cũng bình an tốt đẹp.",
+        "commentary": "Hào 1: Khởi sự biết thân mình yếu dở, cư xử hòa nhã nên dù đối mặt nguy biến cũng được cứu trợ qua cửa an lành."
+      },
+      {
+        "position": 2,
+        "original": "六二: 鳴謙, 貞吉.",
+        "meaning": "Lòng khiêm nhường biểu hiện ra trong lời nói và hành vi đều kiên chính, vì thế rất tốt.",
+        "commentary": "Hào 2: Khiêm tốn ngấm trong cốt tủy, lan tỏa tự nhiên rạng danh thơm, người đời tự khắc trọng mà gặt hái vẻ vang."
+      },
+      {
+        "position": 3,
+        "original": "九三: 勞謙君子, 有終吉.",
+        "meaning": "Bậc quân tử gánh vác bao công lao vất vả nhọc nhằn mà vẫn cung kính không kể lể, nên có kết cục đầy đặn vinh vang.",
+        "commentary": "Hào 3: Rất tài giỏi đóng góp to lớn nhưng giữ nếp từ tốn, không ngạo mạn. Nên mọi người tôn phục rập đầu thán phục."
+      },
+      {
+        "position": 4,
+        "original": "六四: 无不利, 撝謙.",
+        "meaning": "Luôn biết phô diễn đức tính khiêm hạ ra với mọi người, tiến hành việc gì rồi cũng thâu được mối lợi.",
+        "commentary": "Hào 4: Sắp cận kề với bậc ngôi cao, biết cách nín nhịn khiêm tốn thu mình thì không sợ ai ghen ghét đắc lợi tốt tươi."
+      },
+      {
+        "position": 5,
+        "original": "六五: 不富以其鄰, 利用侵伐, 无不利.",
+        "meaning": "Không ỷ của nhiều, sống chan hòa hòa láng giềng thì sẽ dùng binh chinh phục tiêu biểu để đánh phạt kẻ ngang ngạnh kiêu ngạo, khỏi sợ bất lợi.",
+        "commentary": "Hào 5: Khiêm tốn bao dung đến đâu cũng có giới hạn. Nếu gặp kẻ càn rỡ dùng đức thu không lọt thì lấy uy chinh phạt cũng không ai oán thán."
+      },
+      {
+        "position": 6,
+        "original": "上六: 鳴謙, 利用行師, 征邑國.",
+        "meaning": "Sự khiêm thanh vang lại danh tiếng lớn, lợi ích rành rành cho việc tung quân chinh phạt chính ấp vương quốc mình.",
+        "commentary": "Hào 6: Ở tột đỉnh của khí sự nhún nhường, dễ bị lợi dụng khinh nhờn. Vậy nên lúc hiển đạt thì có thể cứng rắn diệt trừ kẻ bất nghĩa mà vô lỗi."
+      }
+    ],
+    "commentary": "Khâu đồi cao lớn lại chịu cúi mình giấu kín sau lớp đất đai. Đạo trời cao vút mà gieo tinh khí xuống, bao dung nuôi muôn vạn trượng chẳng khoe danh vãn tụng."
+  },
+  {
+    "id": 16,
+    "name": "Lôi Địa Dự",
+    "upper": 4,
+    "lower": 8,
+    "chineseName": "豫 dự",
+    "briefExplanation": "Duyệt dã. Vui vẻ. Thuận động, hoan hỉ, hòa dự, dự bị, lười biếng, sung sướng.",
+    "meaning": "Hòa duyệt, vui vẻ, dự bị. Thuận ứng với tự nhiên và thời thế thì hanh thông.",
+    "image": "Sấm vang trên mặt đất. Người quân tử làm nhạc để tôn vinh đức trời, cúng tế tổ tiên.",
+    "thoanTu": {
+      "original": "豫, 利建侯行師.",
+      "meaning": "Dự: Lợi cho việc lập chư hầu và hành quân xuất sư."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 鳴豫, 凶.",
+        "meaning": "Khoe khoang sự vui sướng của mình ra ngoài, xấu thảm.",
+        "commentary": "Hào 1: Còn non nớt lại đi phô trương sự vui vẻ thái quá, dễ chuốc lấy tai họa."
+      },
+      {
+        "position": 2,
+        "original": "六二: 介于石, 不終日, 貞吉.",
+        "meaning": "Giữ mình vững chắc như đá, không cần đợi hết ngày đã biết phân biệt tốt xấu, bền gan trì chí thì rất tốt.",
+        "commentary": "Hào 2: Âm nhu nhưng cương chính, biết kiềm chế bản thân không bị vui thú cám dỗ."
+      },
+      {
+        "position": 3,
+        "original": "六三: 盱豫, 悔. 遲有悔.",
+        "meaning": "Ngước nhìn lên trên để hòng cầu vui nhờ kẻ khác, nếu chậm trễ sẽ phải hối hận.",
+        "commentary": "Hào 3: Vị trí không chính đáng, thiếu độc lập, chỉ biết dựa dẫm kẻ khác thì không thể bền bỉ."
+      },
+      {
+        "position": 4,
+        "original": "九四: 由豫, 大有得. 勿疑. 朋盍簪.",
+        "meaning": "Đem niềm vui đến cho mọi người, thu hoạch lớn. Đừng nghi ngờ, bạn bè sẽ theo về.",
+        "commentary": "Hào 4: Đứng ra làm chủ quy tụ mọi người tạo niềm vui chung thì thành công lớn."
+      },
+      {
+        "position": 5,
+        "original": "六五: 貞疾, 恆不死.",
+        "meaning": "Có bệnh dai dẳng, nhưng không chết.",
+        "commentary": "Hào 5: Ngôi vị cao nhưng quyền vào tay kẻ khác (hào 4) nên đau ốm lo nghĩ, nhưng biết giữ chừng mực nên không vong mạng."
+      },
+      {
+        "position": 6,
+        "original": "上六: 冥豫, 成有渝, 无咎.",
+        "meaning": "Mê đắm quá mức vào thú vui. Dù hối lỗi thay đổi thì cũng không lỗi lầm.",
+        "commentary": "Hào 6: Ở lúc tột cùng của sự mê đắm, nếu biết tỉnh ngộ quay đầu thì vẫn còn kịp."
+      }
+    ],
+    "commentary": "Sấm nổ bừng lúc mùa xuân khiến vạn vật tỉnh mộng nảy hạt chồi đâm tú tủa vui chơi. Âm thanh báo hiệu điềm vui thuận lòng hỉ."
+  },
+  {
+    "id": 17,
+    "name": "Trạch Lôi Tùy",
+    "upper": 2,
+    "lower": 4,
+    "chineseName": "隨 tùy",
+    "briefExplanation": "Thuận dã. Cùng theo. Theo gót, chí hướng chưa quyết định, không rành rẽ, mù mờ, chạy theo.",
+    "meaning": "Đi theo, tuân theo. Tùy thời mà biến chuyển, thuận theo thời thế để đạt kết quả tốt.",
+    "image": "Sấm động trong đầm. Người quân tử khi trời chiều thì vào nhà nghỉ ngơi.",
+    "thoanTu": {
+      "original": "隨, 元亨利貞, 无咎.",
+      "meaning": "Tùy: Vô cùng hanh thông, giữ đạo chính thì có lợi, không có lỗi."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 官有渝, 貞吉. 出門交有功.",
+        "meaning": "Tuy có thay đổi chỗ ở hay chức vị, bước ra cửa kết giao rộng rãi thì có công lớn.",
+        "commentary": "Hào 1: Bắt đầu giao tiếp, ra ngoài liên kết với nhiều người không phân biệt bè phái thì đạt thành quả."
+      },
+      {
+        "position": 2,
+        "original": "六二: 係小子, 失丈夫.",
+        "meaning": "Theo kẻ tiểu nhân mà bỏ mất bậc đại trượng phu.",
+        "commentary": "Hào 2: Không biết nhìn người, chạy theo kẻ kém cỏi mà bỏ rơi người tài đức, thật đáng tiếc."
+      },
+      {
+        "position": 3,
+        "original": "六三: 係丈夫, 失小子. 隨有求得, 利居貞.",
+        "meaning": "Bám theo bậc trượng phu mà bỏ kẻ kém cỏi, cầu gì được nấy. Cứ kiên định thì tốt.",
+        "commentary": "Hào 3: Biết chọn bạn mà chơi, theo bậc quân tử tài trí thì tìm được con đường đúng đắn."
+      },
+      {
+        "position": 4,
+        "original": "九四: 隨有獲, 貞凶. 有孚在道, 以明, 何咎.",
+        "meaning": "Thuận theo người trên sẽ dễ bị nghi ngờ. Cần có lòng thành tín, sáng sủa, không lỗi.",
+        "commentary": "Hào 4: Kề cận người quyền thế dễ bị vạ lây, nhưng nếu lòng ngay thẳng chính trực thì sẽ tai qua nạn khỏi."
+      },
+      {
+        "position": 5,
+        "original": "九五: 孚于嘉, 吉.",
+        "meaning": "Lấy sự thành tín mà theo điều tốt đẹp, rất tốt lành.",
+        "commentary": "Hào 5: Ở vị thế chí tôn, lấy đức tín trung chính để tụ tập người hiền, mọi sự đều hanh thông."
+      },
+      {
+        "position": 6,
+        "original": "上六: 拘係之, 乃從維之. 王用亨于西山.",
+        "meaning": "Bị trói buộc chặt chẽ để theo. Đức vua thành kính cúng tế ở núi tây.",
+        "commentary": "Hào 6: Dùng sự chân thành tột bực để ép kẻ dưới tuân theo, như lòng thành tế thần, rốt cuộc sẽ được báo đáp."
+      }
+    ],
+    "commentary": "Đầm (Trạch) đè bọc lấy Sấm (Lôi). Sấm nổ dưới đầm khiến đầm biến động theo sấm, uyển chuyển nghe theo lẽ tự nhiên vạn sự lúc tùy duyên là hợp đạo."
+  },
+  {
+    "id": 18,
+    "name": "Sơn Phong Cổ",
+    "upper": 7,
+    "lower": 5,
+    "chineseName": "蠱 cổ",
+    "briefExplanation": "Sự dã. Sự việc. Có sự làm hoặc hữu sự, trùng độc, nghi ngờ, không yên lòng, đồi bại.",
+    "meaning": "Sự đổ nát, mục rữa cần phải được chấn chỉnh, sửa sang khôi phục lại.",
+    "image": "Gió thổi mạnh dưới chân núi. Quân tử cứu giúp dân, vun trồng đức hạnh.",
+    "thoanTu": {
+      "original": "蠱, 元亨, 利涉大川. 先甲三日, 後甲三日.",
+      "meaning": "Cổ: Rất hanh thông, có lợi khi vượt sông lớn khốn khó. Trước công việc 3 ngày, sau công việc 3 ngày phải cẩn thận suy xét."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 幹父之蠱, 有子, 考无咎, 厲終吉.",
+        "meaning": "Sửa chữa lại sự nghiệp đã đổ nát của cha. Có con gánh vác, cha không mắc lỗi. Nếu dè chừng nguy hiểm thì cuối cùng sẽ tốt.",
+        "commentary": "Hào 1: Bắt tay vào sửa chữa lỗi lầm từ thế hệ trước, cần thận trọng từng bước một sẽ thành công."
+      },
+      {
+        "position": 2,
+        "original": "九二: 幹母之蠱, 不可貞.",
+        "meaning": "Sửa chữa cái hư nát mềm yếu của mẹ. Không nên quá gay gắt cứng rắn.",
+        "commentary": "Hào 2: Xử lý những sai sót của phái nữ, cần khoan dung êm dịu, không nên dùng luật quá khắt khe."
+      },
+      {
+        "position": 3,
+        "original": "九三: 幹父之蠱, 小有悔, 无大咎.",
+        "meaning": "Sửa chữa cái hư nát của cha. Có chút hối hận vì nóng vội nhưng cuối cùng không lỗi.",
+        "commentary": "Hào 3: Sốt sắng giải quyết hậu quả nên đôi khi vấp váp xích mích, nhưng do có tâm sửa sai nên cuối cùng êm xuôi."
+      },
+      {
+        "position": 4,
+        "original": "六四: 裕父之蠱, 往見吝.",
+        "meaning": "Khoan thứ, dung túng cho cái hư nát của cha. Nếu tiếp tục đi thì sẽ đáng hối tiếc.",
+        "commentary": "Hào 4: Nhu nhược yếu đuối, không dám đối diện trị tận gốc sự mục nát, để mặc thì càng ngày càng hư hỏng."
+      },
+      {
+        "position": 5,
+        "original": "六五: 幹父之蠱, 用譽.",
+        "meaning": "Sửa chữa sự hư nát của cha, đáng được khen ngợi.",
+        "commentary": "Hào 5: Ở ngôi cao, biết dùng người tài (trợ giúp từ dưới) để dọn dẹp khôi phục nền nếp, thu được hiển vinh."
+      },
+      {
+        "position": 6,
+        "original": "上九: 不事王侯, 高尚其事.",
+        "meaning": "Không phục vụ vương hầu, mà lo chăm chút lo bồi dưỡng đức thanh cao của mình.",
+        "commentary": "Hào 6: Vượt qua khỏi vòng thế tục quyền danh, ẩn dật tu tâm dưỡng tính để diệt trừ sự thối nát từ tâm hồn."
+      }
+    ],
+    "commentary": "Gió (Tốn) bị ngọn núi (Cấn) đè nén chặn lại nên không khí úng tắc sinh dòi mọt sâu bọ (Cổ). Đại biểu thế cùng cực của sự thối rữa nhưng đồng thời là giai đoạn làm lại từ đầu."
+  },
+  {
+    "id": 19,
+    "name": "Địa Trạch Lâm",
+    "upper": 8,
+    "lower": 2,
+    "chineseName": "臨 lâm",
+    "briefExplanation": "Đại dã. Bao quản. Việc lớn, người lớn, đến gần, giáng lâm, cai quản.",
+    "meaning": "Đến gần, quang lâm, lớn mạnh, tiến lên. Bao dung dân chúng.",
+    "image": "Đầm ở trên đất là quẻ Lâm. Bậc quân tử chỉ bảo không mệt mỏi, dung nạp bảo vệ dân chúng kiên trì không có giới hạn.",
+    "thoanTu": {
+      "original": "臨, 元亨利貞. 至于八月有凶.",
+      "meaning": "Lâm:Rất hanh thông, giữ đạo chính thì có lợi. Nhưng đến tháng 8 (khi âm thịnh dương suy) sẽ có biến xấu."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 咸臨, 貞吉.",
+        "meaning": "Cùng nhau mà tiến tới, cùng nhau đến cai trị. Giữ vững đạo ngay thẳng thì tốt lành.",
+        "commentary": "Hào 1: Liên kết với những người tài đức cùng tiến lên xây dựng cơ đồ, không bị tư lợi cám dỗ thì thành công."
+      },
+      {
+        "position": 2,
+        "original": "九二: 咸臨, 吉无不利.",
+        "meaning": "Cảm ứng mà cùng tiến đến lãnh đạo. Tốt lành, không có gì là không lợi.",
+        "commentary": "Hào 2: Dương cương đắc trung, tự tin có tài, được sự tín nhiệm giao phó nên công việc xuôi lọt mọi bề."
+      },
+      {
+        "position": 3,
+        "original": "六三: 甘臨, 无攸利. 既憂之, 无咎.",
+        "meaning": "Đến bằng những lời dỗ dành ngọt nhạt. Nếu cứ tiếp tục thì sẽ có hại. Biết lo buồn mà hối sửa thì không có lỗi.",
+        "commentary": "Hào 3: Dùng xảo ngữ tiểu nhân lừa dối người trên kẻ dưới để tiến thân. Nếu biết điểm dừng sửa đổi thì sẽ tai qua."
+      },
+      {
+        "position": 4,
+        "original": "六四: 至臨, 无咎.",
+        "meaning": "Đích thân đến trị dân một cách đường hoàng trọn vẹn, không có lỗi.",
+        "commentary": "Hào 4: Âm nhu đứng vị trí đại thần, biết khiêm hạ thân chinh đi làm việc, dùng nhân tài ở dưới nên tốt đẹp."
+      },
+      {
+        "position": 5,
+        "original": "六五: 知臨, 大君之宜, 吉.",
+        "meaning": "Đến theo phương thức sáng suốt của bậc quân vương, tốt lành.",
+        "commentary": "Hào 5: Quân vương đắc trung, uỷ quyền đúng tể tướng hiền tài, biết người biết ta, sự nghiệp ắt vẻ vang."
+      },
+      {
+        "position": 6,
+        "original": "上六: 敦臨, 吉无咎.",
+        "meaning": "Đến với lòng trung hậu, đôn từ, rất tốt lành, không có lầm lỗi.",
+        "commentary": "Hào 6: Vị trí thanh cao, đem lòng chân thành đôn hậu chỉ bảo người dưới đi đúng đường, nên kết cuộc đại cát."
+      }
+    ],
+    "commentary": "Bờ hồ trạch bằng đất mềm thấm tưới, cũng như bậc đại nhân trị dân gần dân dùng khoan từ nhu độ giáo hóa khiến dân tin theo vui vẻ."
+  },
+  {
+    "id": 20,
+    "name": "Phong Địa Quán",
+    "upper": 5,
+    "lower": 8,
+    "chineseName": "觀 quán",
+    "briefExplanation": "Quan dã. Quan sát. Lướt qua, xem xét, cảnh vật, trông thấy, thanh thanh.",
+    "meaning": "Xem xét, quan sát cẩn thận.",
+    "image": "Gió thổi trên mặt đất, người quân tử xem xét để giáo hóa dân.",
+    "thoanTu": {
+      "original": "觀, 盥而不薦, 有孚顒若.",
+      "meaning": "Lòng thành kính thể hiện như trước khi tế lễ."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 童觀, 小人无咎, 君子吝.",
+        "meaning": "Nhìn nông cạn.",
+        "commentary": "Hào 1: Thiếu tầm nhìn xa."
+      },
+      {
+        "position": 2,
+        "original": "六二: 闚觀, 利女貞.",
+        "meaning": "Nhìn qua khe cửa hẹp.",
+        "commentary": "Hào 2: Sự hạn hẹp."
+      },
+      {
+        "position": 3,
+        "original": "六三: 觀我生, 進退.",
+        "meaning": "Nhìn nhận bản thân để lui tới.",
+        "commentary": "Hào 3: Biết tiến biết lùi."
+      },
+      {
+        "position": 4,
+        "original": "六四: 觀國之光, 利用賓于王.",
+        "meaning": "Nhìn sự to lớn của thiên hạ.",
+        "commentary": "Hào 4: Được vua tin tưởng."
+      },
+      {
+        "position": 5,
+        "original": "九五: 觀我生, 君子无咎.",
+        "meaning": "Tự nhìn lại bản thân.",
+        "commentary": "Hào 5: Quân tử tự tu dưỡng."
+      },
+      {
+        "position": 6,
+        "original": "上九: 觀其生, 君子无咎.",
+        "meaning": "Nhìn thấu lý lẽ nhân sinh.",
+        "commentary": "Hào 6: Thông thái vượt khỏi thói đời."
+      }
+    ],
+    "commentary": "Gió trên cao (Tốn) rít bay thổi dọc mặt đất bao trùm (Khôn). Quẻ này là đạo đức của bậc chí nhân lan tỏa như gió phủ đất khiến muôn loài phải ngửa mặt kính chiêm."
+  },
+  {
+    "id": 21,
+    "name": "Hỏa Lôi Phệ Hạp",
+    "upper": 3,
+    "lower": 4,
+    "chineseName": "噬嗑 phệ hạp",
+    "briefExplanation": "Khiết dã. Cắn hợp. Cấu kết, vương vấp, hỗn tạp, nhai cắn, khớp nhau.",
+    "meaning": "Cắn hợp, cắn vật cứng để cho thông. Trừng trị kẻ gian ác bằng pháp luật kiên thiết, minh bạch rõ ràng.",
+    "image": "Sấm chớp giao nhau. Bậc Tiên vương lấy sự sáng tỏ mà đề ra hình phạt củng cố pháp luật cương chính.",
+    "thoanTu": {
+      "original": "噬嗑, 亨. 利用獄.",
+      "meaning": "Phệ Hạp: Hanh thông. Lợi cho việc dùng hình luật để trừng trị kẻ có tội."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 屨校滅趾, 无咎.",
+        "meaning": "Bị mang gông cùm ngập dấu chân chịu sự trừng phạt cảnh cáo ban đầu để không sa lầy lỗi lớn.",
+        "commentary": "Hào 1: Lỗi mới manh nha, phạt nhẹ răn đe để cảnh tỉnh, ngăn ngừa sự bành trướng cái ác nên sau cùng tốt lành."
+      },
+      {
+        "position": 2,
+        "original": "六二: 噬膚滅鼻, 无咎.",
+        "meaning": "Cắn ngấu thịt mềm lún tới mũi. Không có tì vết hoạn nạn gì lấm.",
+        "commentary": "Hào 2: Dùng uy trị mạnh tay vào tội ác thích đáng, thẳng thừng đanh thép. Tuy hơi cứng rắn nhưng xử lý triệt để không dư tai."
+      },
+      {
+        "position": 3,
+        "original": "六三: 噬臘肉, 遇毒. 小吝, 无咎.",
+        "meaning": "Cắn nhai miếng thịt khô dai vướng độc, gặp chút ít sự thẹn nhưng rốt cục tránh khỏi tội lỗi trọng hình.",
+        "commentary": "Hào 3: Tiến trị việc ác mà gặp trở ngại nan giải vì đối thủ mưu dảo, gian truân nhiều nhưng kiên gan bám đuổi thì thành tựu."
+      },
+      {
+        "position": 4,
+        "original": "九四: 噬乾胏, 得金矢, 利艱貞, 吉.",
+        "meaning": "Cắn miếng thịt lẫn có xương lún cắn đến vào mũi tên bằng đồng. Cần phải giữ vững sự khó khăn gian nan trinh chính thì tốt.",
+        "commentary": "Hào 4: Dẹp kẻ quyền thế ương ngạnh cứng cổ, đòi hỏi sự cứng cỏi sắc bén hơn sắt thép, bền chí thì mang lại vinh hiển sau trọn."
+      },
+      {
+        "position": 5,
+        "original": "六五: 噬乾肉, 得黃金, 貞厲, 无咎.",
+        "meaning": "Cắn nhai thịt khô mắc trúng vàng sắc cứng, tuy khó nhằn sợ rủi ro nhưng rốt cục cũng không có lỗi.",
+        "commentary": "Hào 5: Đứng chỗ chí tôn mềm mỏng xử lý sự chống đối ương ngạnh ngoan cố. Minh bạch ngay thẳng lấy đức trị nghiêm luật thì đắc."
+      },
+      {
+        "position": 6,
+        "original": "上九: 何校滅耳, 凶.",
+        "meaning": "Mang cùm đeo trên cái cổ to sứt cả tai đi, gông đeo nặng quá. Rất hung họa.",
+        "commentary": "Hào 6: Ở cõi tột cùng quyền lực mà ngoan cố tạo ác bao kiếp, tội chồng chất như sơn. Không còn quay đầu sẽ hứng lãnh hình phạt nát diệt tối mạng."
+      }
+    ],
+    "commentary": "Sấm chạy đùng đùng Lửa đuốc soi tỏa, tạo nên ánh oai diệu rực phẫn nộ uy nghi dẹp tiểu nhân hình ngục gian lận để cắn đứt vướng trướng làm trong chính sự."
+  },
+  {
+    "id": 22,
+    "name": "Sơn Hỏa Bí",
+    "upper": 7,
+    "lower": 3,
+    "chineseName": "賁 bí",
+    "briefExplanation": "Sức dã. Trang sức. Trang điểm, tô điểm, trau chuốt, rực rỡ, vẻ bề ngoài.",
+    "meaning": "Trang điểm, làm đẹp bề ngoài.",
+    "image": "Lửa cháy dưới núi, sáng sủa.",
+    "thoanTu": {
+      "original": "賁, 亨. 小利有攸往.",
+      "meaning": "Hanh thông nhỏ."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 賁其趾, 舍車而徒.",
+        "meaning": "Trang điểm cho nếp sống giản dị.",
+        "commentary": "Hào 1: Biết giữ mình."
+      },
+      {
+        "position": 2,
+        "original": "六二: 賁其須.",
+        "meaning": "Trang điểm vẻ ngoài.",
+        "commentary": "Hào 2: Chăm chút hình thức."
+      },
+      {
+        "position": 3,
+        "original": "九三: 賁如濡如, 永貞吉.",
+        "meaning": "Trang điểm cẩn thận.",
+        "commentary": "Hào 3: Cần cẩn trọng rủi ro."
+      },
+      {
+        "position": 4,
+        "original": "六四: 賁如皤如, 白馬翰如. 匪寇婚媾.",
+        "meaning": "Trang sức thuần khiết.",
+        "commentary": "Hào 4: Chân thành tìm bạn."
+      },
+      {
+        "position": 5,
+        "original": "六五: 賁于丘園, 束帛戔戔, 吝, 終吉.",
+        "meaning": "Trang sức khu vườn nhỏ.",
+        "commentary": "Hào 5: Ít ỏi nhưng thực lòng."
+      },
+      {
+        "position": 6,
+        "original": "上九: 白賁, 无咎.",
+        "meaning": "Trang sức trong trắng.",
+        "commentary": "Hào 6: Giá trị gốc là tốt nhất."
+      }
+    ],
+    "commentary": "Ánh lửa (Ly) dưới kẽ non cắn cao (Cấn) le lói tỏa sắc cỏ hoa bóng vách nhuộm hào mỹ. Quẻ khuyên ta trang điểm sắc bề ngoài chỉ là tạm tùy, lấy bản phác mộc là vĩnh chân."
+  },
+  {
+    "id": 23,
+    "name": "Sơn Địa Bác",
+    "upper": 7,
+    "lower": 8,
+    "chineseName": "剝 bác",
+    "briefExplanation": "Lạc dã. Tiêu điều. Tàn rụng, lột vỏ, tiêu mòn, hao tổn, rơi rụng.",
+    "meaning": "Gọt đẽo, rơi rụng, suy yếu.",
+    "image": "Núi dựa vào đất, người trên khoan dung với kẻ dưới.",
+    "thoanTu": {
+      "original": "剝, 不利有攸往.",
+      "meaning": "Bất lợi tiến hành đại sự."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 剝床以足, 蔑貞凶.",
+        "meaning": "Hư hỏng từ chân giường.",
+        "commentary": "Hào 1: Sự suy gãy bắt đầu."
+      },
+      {
+        "position": 2,
+        "original": "六二: 剝床以辨, 蔑貞凶.",
+        "meaning": "Hư hỏng tới thành giường.",
+        "commentary": "Hào 2: Cái xấu tiến sát."
+      },
+      {
+        "position": 3,
+        "original": "六三: 剝之, 无咎.",
+        "meaning": "Từ bỏ cái hư hỏng.",
+        "commentary": "Hào 3: Tránh được liên lụy."
+      },
+      {
+        "position": 4,
+        "original": "六四: 剝床以膚, 凶.",
+        "meaning": "Hư hỏng tới mặt giường.",
+        "commentary": "Hào 4: Bị ảnh hưởng nặng nề."
+      },
+      {
+        "position": 5,
+        "original": "六五: 貫魚以宮人寵, 无不利.",
+        "meaning": "Nhờ người khác mà qua nạn.",
+        "commentary": "Hào 5: Rút lui giữ mình."
+      },
+      {
+        "position": 6,
+        "original": "上九: 碩果不食, 君子得輿, 小人剝廬.",
+        "meaning": "Quả to chưa rụng hết.",
+        "commentary": "Hào 6: Cơ hội hồi sinh bắt đầu."
+      }
+    ],
+    "commentary": "Núi (Cấn) cao bao đứng trên đất bằng (Khôn). Quá cao thì mưa xói gió cuốn lở lỏi dần cho bằng địa, thời của thịnh gãy suy vong không nên chọc ngoáy phải chui giữ đạo."
+  },
+  {
+    "id": 24,
+    "name": "Địa Lôi Phục",
+    "upper": 8,
+    "lower": 4,
+    "chineseName": "復 phục",
+    "briefExplanation": "Phản dã. Trở lại. Phục hồi, tuần hoàn, tái phát, khôi phục.",
+    "meaning": "Sự trở lại, hồi sinh, bắt đầu lại. Cái tốt phục hồi.",
+    "image": "Sấm vang trong lòng đất. Mùa đông đóng cửa nghỉ ngơi để tĩnh dưỡng.",
+    "thoanTu": {
+      "original": "復, 亨. 出入无疾, 朋來无咎. 反復其道, 七日來復, 利有攸往.",
+      "meaning": "Hanh thông. Việc đi lại thuận lợi. Qua 7 ngày thì tuần hoàn trở lại."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 不遠復, 无祇悔, 元吉.",
+        "meaning": "Quay về ngay từ lúc vừa sai phạm, không có gì hối tiếc, rất tốt lành.",
+        "commentary": "Hào 1: Biết tự sửa chữa lỗi lầm ngay lập tức."
+      },
+      {
+        "position": 2,
+        "original": "六二: 休復, 吉.",
+        "meaning": "Khôi phục lại trạng thái yên vui, tốt lành.",
+        "commentary": "Hào 2: Âm nhu nhưng biết lẽ phải, tự cải thiện bản thân."
+      },
+      {
+        "position": 3,
+        "original": "六三: 頻復, 厲无咎.",
+        "meaning": "Sự phục hồi liên tục xen lẫn lo âu. Dù nguy hiểm nhưng không có lỗi lớn.",
+        "commentary": "Hào 3: Tâm trí chưa kiên định, thường dao động nhưng cố gắng phục thiện."
+      },
+      {
+        "position": 4,
+        "original": "六四: 中行獨復.",
+        "meaning": "Một mình dứt bỏ cái xấu để quay về con đường đúng đắn.",
+        "commentary": "Hào 4: Dứt khoát đi theo lẽ phải, dù những người xung quanh không hiểu."
+      },
+      {
+        "position": 5,
+        "original": "六五: 敦復, 无悔.",
+        "meaning": "Quay lại với lòng nhân hậu chân thành, không có điều gì phải ân hận.",
+        "commentary": "Hào 5: Sẵn sàng nhận sai và quay lại con đường đúng với tâm chân thật."
+      },
+      {
+        "position": 6,
+        "original": "上六: 迷復, 凶. 有災眚, 用行師, 終有大敗, 以其國君凶. 至于十年不克征.",
+        "meaning": "Lạc đường không biết lối về. Rất xấu. Ra quân dễ gặp thất bại lớn.",
+        "commentary": "Hào 6: Thiếu sáng suốt, cứ đi sâu vào bế tắc mà không nhận ra đường sai."
+      }
+    ],
+    "commentary": "Đạo âm tận thì dương mọc mới ra (Sấm động mầm dưới lòng Đất trống Cấn). Cái mầm sống phục sinh sau tiết hàn Đông tái diễn là sức mạng mãnh liệt nhất vũ trụ chu kỳ."
+  },
+  {
+    "id": 25,
+    "name": "Thiên Lôi Vô Vọng",
+    "upper": 1,
+    "lower": 4,
+    "chineseName": "無妄 vô vọng",
+    "briefExplanation": "Tai dã. Thiên tai. Xằng bậy, làm càn, hư không, tai vạ, không dối trá.",
+    "meaning": "Không làm càn bậy, thuận theo tự nhiên. Không giả dối.",
+    "image": "Sấm nổ dưới trời. Vạn vật phát triển theo lẽ tự nhiên.",
+    "thoanTu": {
+      "original": "无妄, 元, 亨, 利, 貞. 其匪正有眚, 不利有攸往.",
+      "meaning": "Rất lón, hanh thông, giữ đạo chính thì có lợi. Làm việc xằng bậy sẽ gặp tai vạ."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 无妄, 往吉.",
+        "meaning": "Không làm điều vọng động, tiến lên thì tốt lành.",
+        "commentary": "Hào 1: Không có tư tâm, hành xử theo đúng lẽ phải thì luôn suôn sẻ."
+      },
+      {
+        "position": 2,
+        "original": "六二: 不耕獲, 不菑畬, 則利有攸往.",
+        "meaning": "Không cày mà gặt, không vỡ đất mà khai hoang. Đi đâu cũng có lợi.",
+        "commentary": "Hào 2: Làm việc không đặt nặng tính toán lợi ích từ đầu, cứ thuận tự nhiên thì thu hoạch tốt."
+      },
+      {
+        "position": 3,
+        "original": "六三: 无妄之災, 或繫之牛, 行人之得, 邑人之災.",
+        "meaning": "Tai họa bất ngờ ập đến như con bò bị dắt trộm, khách qua đường được mà người trong làng chịu thiệt.",
+        "commentary": "Hào 3: Có những rủi ro khách quan xảy ra không do lỗi của bản thân, đành chấp nhận."
+      },
+      {
+        "position": 4,
+        "original": "九四: 可貞, 无咎.",
+        "meaning": "Cố gắng giữ vững sự kiên định, không mắc lỗi.",
+        "commentary": "Hào 4: Giữ vững phẩm chất tốt, không để ngoại cảnh làm lay động."
+      },
+      {
+        "position": 5,
+        "original": "九五: 无妄之疾, 勿藥有喜.",
+        "meaning": "Bệnh tự nhiên mà có, đừng dùng thuốc sẽ tự khỏi và gặp chuyện đáng mừng.",
+        "commentary": "Hào 5: Khó khăn tự đến rồi sẽ tự đi, không dùng biện pháp ép buộc."
+      },
+      {
+        "position": 6,
+        "original": "上九: 无妄, 行有眚, 无攸利.",
+        "meaning": "Tiến đến cùng mà vẫn vọng động thì có tai họa, chẳng được lợi ích gì.",
+        "commentary": "Hào 6: Ở lúc nguy cấp mà không biết dừng hành động sai trái thì chắc chắn gánh hậu quả."
+      }
+    ],
+    "commentary": "Thiên đạo vận hành là Sấm rền, động làm sinh sôi vạn vật tự nhiên không cưỡng cầu (Vô Vọng). Ngụ ý người ta làm việc vì đạo nghĩa bổn phận chứ tuyệt không tư lợi mưu kế tà đạo."
+  },
+  {
+    "id": 26,
+    "name": "Sơn Thiên Đại Súc",
+    "upper": 7,
+    "lower": 1,
+    "chineseName": "大畜 đại súc",
+    "briefExplanation": "Tụ dã. Tích tụ. Chứa nhóm, súc tích, lắng đọng, giữ lại, câu thúc.",
+    "meaning": "Trời trong núi, tích lũy lớn. Lợi về giữ chính, không ăn ở nhà thì tốt. Lợi khi vượt sông lớn.",
+    "image": "Trời ở trong núi, người quân tử học nhiều lời xưa việc cũ để nuôi đức",
+    "thoanTu": {
+      "original": "大畜, 利貞, 不家食吉, 利涉大川.",
+      "meaning": "Đại Súc: lợi về bảo dưỡng đức trinh chính. Chẳng thể ăn cơm nhàn ở nhà mà phải ăn lộc vua ban thì tốt. Cực lợi lộc khi dấn thân vượt nguy cõi sông lớn."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 有厲利已.",
+        "meaning": "Có hiểm họa rủi ro, nên ngừng dừng tay lại thì lợi.",
+        "commentary": "Hào 1, dương: Dương khí mạnh trực lên nhưng bị hào 4 phía trên chẹn ép. Chưa phải lúc vượt xào, ẩn tích nấp mình thu giữ thực lực lợi hơn."
+      },
+      {
+        "position": 2,
+        "original": "九二: 輿說輹.",
+        "meaning": "Cỗ xe đã tháo bỏ phần thanh trục (không chạy nổi nữa).",
+        "commentary": "Hào 2, dương: Lương tâm đắc trung hiểu lý, tự tháo bỏ quyền lực tiến lên để dưỡng binh nghỉ sức tránh đối đầu với hào 5 hùng cường đang ngăn cản."
+      },
+      {
+        "position": 3,
+        "original": "九三: 良馬逐, 利艱貞. 曰閑輿衛, 利有攸往.",
+        "meaning": "Ngựa giỏi đua đuổi nhanh, lợi ích khi có răn đe gian nguy để giữ được cái chính. Hằng ngày huấn luyện xe pháo tinh nhuệ hộ vệ phò nguy, đi thì đạt lợi.",
+        "commentary": "Hào 3, dương: Ngựa hay cực dương cương bạo tiến lên, không cản được nữa. Nếu cẩn thận võ nghệ túc trí tập súc và đồng tâm với hào 6 thì thỏa đắc đại nghiệp."
+      },
+      {
+        "position": 4,
+        "original": "六四: 童牛之牿, 元吉.",
+        "meaning": "Chặn cài gông thanh sừng con bò mộng con tơ chưa nhú sừng nhọn, thì yên tâm tốt tột phần.",
+        "commentary": "Hào 4, âm: Đắc chính lại mềm mỏng, phòng tai họa ngay từ lúc nó chưa mạnh sừng sỏ. Phép trị dân giáo hóa diệt tula từ non nớt thì quốc thái dân an."
+      },
+      {
+        "position": 5,
+        "original": "六五: 豶豕之牙, 吉.",
+        "meaning": "Thiến hoạn con lợn rừng lòi hung bạo để tuyệt nọc tính răng nanh dại, điều này đắc tốt.",
+        "commentary": "Hào 5, âm: Vua mềm mỏng thu phục hào 2. Muốn ngăn chặn thế lực hung hăng chỉ bằng luật lệ chưa đủ, phải tìm tận gốc trừ cội nguồn tà tâm thì êm đẹp."
+      },
+      {
+        "position": 6,
+        "original": "上九: 何天之衢, 亨.",
+        "meaning": "Khai thông mở mọi bế tắc, nhận lãnh đường thênh thang của đạo trời, vận đại hanh thông.",
+        "commentary": "Hào trên cùng, dương: Sức tích lũy Cấn cuối cùng cực thịnh vỡ oà để bung đạo lớn che chở nhân gian, lúc này đạo nuôi dưỡng nhân sinh đạt đại đắc thành phồn vinh."
+      }
+    ],
+    "commentary": "Gói gọn bao phủ lấy sức sáng của Trời (Càn), là ngọn quái Núi sừng sững (Cấn). Cầm giữ một vật có nguyên sức cương mãnh chính đính là tích tụ lại tài đức cho ngập đầy."
+  },
+  {
+    "id": 27,
+    "name": "Sơn Lôi Di",
+    "upper": 7,
+    "lower": 4,
+    "chineseName": "頤 di",
+    "briefExplanation": "Dưỡng dã. Nuôi nấng. Bồi dưỡng, giáo dục, ăn uống, nhao nhai.",
+    "meaning": "Sấm dưới núi, nuôi dưỡng. Chính thì tốt lành. Xem cách nuôi dưỡng bản thân và người khác.",
+    "image": "Dưới núi có sấm, người quân tử cẩn thận lời nói, tiết chế ăn uống",
+    "thoanTu": {
+      "original": "頤, 貞吉. 觀頤, 自求口實.",
+      "meaning": "Di: dưỡng sinh. Giữ lòng chính trực kiên định thì tốt lành. Hãy quan sát cách người ta dưỡng đức và đồ cái đưa vào miệng nạp thân thế nào."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 舍爾靈龜, 觀我朵頤, 凶.",
+        "meaning": "Bỏ mất cái đức con rùa thiêng của nhà người, ngó ta thèm thuồng rủ nước dãi, chuốc bạo hung.",
+        "commentary": "Hào 1, dương: Bản tâm người là có đức linh quy nuôi sống không cậy ăn, lại bỏ bê tự ti mà dòm hào 4 thì chỉ sinh tủi thân hèn mạt bại liệt hung họa."
+      },
+      {
+        "position": 2,
+        "original": "六二: 顛頤, 拂經, 于丘頤, 征凶.",
+        "meaning": "Đảo lộn đi tìm kẻ hạ cấp xin ăn nuôi, trái ngược đạo thường, còn quị lụy ngước đồi cao ăn bám, đi tất bị xấu chuốc hung họa.",
+        "commentary": "Hào 2, âm: Không đủ sức tự sinh nên chạy quẩn van vỉ từ thấp hèn đến kiêu ngạo. Lòng tiểu nhân trái luân thường chông chênh chỉ rước nhục mang bần."
+      },
+      {
+        "position": 3,
+        "original": "六三: 拂頤, 貞凶, 十年勿用, 无攸利.",
+        "meaning": "Trái hẳn với phép chánh dưỡng, cố giữ thì hung khốn, tới mười năm còn chẳng dùng xài được vào chuyện chi, lợi hết.",
+        "commentary": "Hào 3, âm: Âm nhu bất chính. Vì quá ham muốn dục tính tư lợi nên đạo hỏng tà ác hóa, cứ thế này mười năm nữa vẫn là cặn bã vô liêm."
+      },
+      {
+        "position": 4,
+        "original": "六四: 顛頤, 吉. 虎視眈眈, 其欲逐逐, 无咎.",
+        "meaning": "Nhìn đảo xuống cầu xin nuôi hiền, rất tốt. Ánh mắt oai như cọp ngóng theo, lòng đầy ước theo đuổi không ngừng, chẳng trách lỗi chi.",
+        "commentary": "Hào 4, âm: Đắc trung có tâm muốn giúp đỡ thiên hạ nhưng sức nhược. Phải thèm thuồng nhìn người tài 1 mà lật đật cầu dưỡng thì mới lập sự chẳng lỗi lầm vĩ."
+      },
+      {
+        "position": 5,
+        "original": "六五: 拂經, 居貞吉, 不可涉大川.",
+        "meaning": "Trái cái lẻ đi nuôi người mà phải nhờ người, giữ đạo chính tại chỗ mộc mạc thì yên tốt, không nên ra gió vượt sóng sông sâu.",
+        "commentary": "Hào 5, âm: Bậc quân vương nhu nhược thiếu bề năng, đành thuận vị gửi mệnh cấp dưới là hào 6. Nhường người vĩ để giữ quốc thì bảo toàn nhưng không kiến quốc đại danh vọng được."
+      },
+      {
+        "position": 6,
+        "original": "上九: 由頤, 厲吉, 利涉大川.",
+        "meaning": "Do nhờ cả vào nơi đây mà vạn dân được dưỡng no; tuy cẩn nơm nớp lo úy mà đại thuận cát lời vinh, qua mọi sông hiểm tước cũng hanh.",
+        "commentary": "Hào trên cùng, dương: Tột đỉnh cương cường. Đem gánh vác sự sống lê dân cho mọi phương. Gánh trách nhiệm nặng trĩu mà không hưng phấn xao cẩn mới bảo hộ được thuyền lớn qua biển phong ba."
+      }
+    ],
+    "commentary": "Hình quẻ rỗng giữa trên dưới là gân cứng, tượng trưng cái miệng mở rộng (Di). Nuôi sống cái miệng là cái gốc tạo nên mầm đạo lý, vào ra phải giữ đạo."
+  },
+  {
+    "id": 28,
+    "name": "Trạch Phong Đại Quá",
+    "upper": 2,
+    "lower": 5,
+    "chineseName": "大過 đại quá",
+    "briefExplanation": "Họa dã. Cả quá. Cương nhu thái quá, nặng trĩu, sụp đổ, gãy, tổn thương.",
+    "meaning": "Gió dưới đầm, quá lớn. Cây trĩu xuống, lợi khi có nơi đi. Hanh thông nhưng tình thế cực đoan.",
+    "image": "Đầm ngập cây, người quân tử đứng một mình không sợ, xa đời không buồn",
+    "thoanTu": {
+      "original": "大過, 棟橈, 利有攸往, 亨.",
+      "meaning": "Đại Quá: Quá độ mỏi lớn. Rường cột đã võng cong xuống vì nặng; nhưng có lợi khi cố rướng qua thoát chỗ đó để hành động thì tìm sự hanh thông."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 藉用白茅, 无咎.",
+        "meaning": "Lót vật dùng cỏ tranh màu trắng mịn, cẩn thận không có lỗi gì.",
+        "commentary": "Hào 1, âm: Ở thời quá độ (dương quá nhiều), âm nhu phải cực kì cung nhẫn cẩn thận, mượt như cỏ thanh tịnh để qua cái vạ sơ xuất."
+      },
+      {
+        "position": 2,
+        "original": "九二: 枯楊生稊, 老夫得其女妻, 无不利.",
+        "meaning": "Cây dương liễu khô kiệt lại trồi nhú bật mầm, Lão hán già sọm lại cưới được cô vợ vọi tươi tắn, không trắc trặc nào là không lợi lành.",
+        "commentary": "Hào 2, dương: Mặc dù cương mà quá độ nhưng lại được cái âm ở dưới giúp, âm tinh vượng trợ lại nên nảy sinh sinh cơ đắc lộc hiếm thấy lội ngược."
+      },
+      {
+        "position": 3,
+        "original": "九三: 棟橈, 凶.",
+        "meaning": "Cột rường chính trĩu cong đứt gãy, thảm hung tới bến.",
+        "commentary": "Hào 3, dương: Ngạo mạn dương cương bất chính tại nội, kiêu mạn quá trớn gánh việc không nổi khiến gia sự đổ sụp mạt nhà."
+      },
+      {
+        "position": 4,
+        "original": "九四: 棟隆, 吉. 有它, 吝.",
+        "meaning": "Rường cột cứng vững uốn vống lên, điềm lành. Nhưng nếu ôm tư tình ý riêng thì chuốc hối hận rủi.",
+        "commentary": "Hào 4, dương: Dương đắc vị gần tôn. Biết liên kết với yếu âm dưới thì công trạng cột đứng nước, ôm kiêu tham tà riêng là chết."
+      },
+      {
+        "position": 5,
+        "original": "九五: 枯楊生華, 老婦得其士夫, 无咎无譽.",
+        "meaning": "Dương khô chỉ phun được bông không sinh trái. Bà lão già cập bến anh chồng trai tráng, đành không lỗi mà thôi lại điếm sỉ cũng không ngợi khen.",
+        "commentary": "Hào 5, dương: Dương trên quá dương. Dương phụ dương không sinh con đẻ cái phồn thịnh được. Cuộc luyến bất thường chỉ cho qua ngày tránh tủi bần."
+      },
+      {
+        "position": 6,
+        "original": "上六: 過涉滅頂, 凶, 无咎.",
+        "meaning": "Liều mạng lội ngoi qua dòng sông tàn lấp sụp qua đỉnh đầu chết ngợp hung vạ, nhưng không đáng phạt trách lỗi tâm chí anh hùng tử.",
+        "commentary": "Hào trên cùng, âm: Dù đuối trí vô độ nhưng liều chết lấy nhân khí vương đạo quy vì nước chuộc mạng. Anh linh mất mà chẳng hối."
+      }
+    ],
+    "commentary": "Trong Tốn (Gỗ, Cây), ngoài Đoài (Đầm). Gỗ ngập trong đầm nước tất mục. Âm nhược không quánh nổi rào dương áp bức trọng gọi là Đại thế đã suy quỵ quá thể."
+  },
+  {
+    "id": 29,
+    "name": "Thuần Khảm",
+    "upper": 6,
+    "lower": 6,
+    "chineseName": "坎 khảm",
+    "briefExplanation": "Hãm dã. Hiểm nan. Trắc trở, gập ghềnh, vực sâu, giăng mắc bẫy, nguy họa, nợ nần.",
+    "meaning": "Nước chồng nước, hiểm nạn chồng chất. Có lòng tin thì được, giữ vững tâm thì hanh thông.",
+    "image": "Nước chảy liên tục, người quân tử giữ đức hạnh, tập đi lại không ngừng",
+    "thoanTu": {
+      "original": "習坎, 有孚, 維心亨, 行有尚.",
+      "meaning": "Tập Khảm (Khảm lặp Khảm hiểm trùng phùng). Chỉ có lòng thành tín nương tựa, duy giữ nội tâm tĩnh lự thì mới rạng hanh thông. Hành động vượt ải như vậy sẽ được bao người trọng vọng."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 習坎, 入于坎窞, 凶.",
+        "meaning": "Vực sâu hiểm độc lại thêm lướt vào tận đáy vực tối sâu xa bùn lầy, thật thê lương gặp điềm đại ác hung.",
+        "commentary": "Hào 1, âm: Rơi rụng nơi bùn đen mờ hạ đáy. Âm nhu bất chính vô vọng vùng vẫy vô tri chỉ rước sập tiệt không thoát nợ."
+      },
+      {
+        "position": 2,
+        "original": "九二: 坎有險, 求小得.",
+        "meaning": "Trong bãi Khảm hiểm họa khôn trắc, nếu chịu cầu nhỏ xíu cho qua chuyện thì có thể vớt đặng ít tí teo.",
+        "commentary": "Hào 2, dương: Tuy có tài dương cương nhưng giữa bủa vây âm mưu. Không thể hoành tráng phá vòng mà len lén kiếm mành con giữ thân."
+      },
+      {
+        "position": 3,
+        "original": "六三: 來之坎坎, 險且枕. 入于坎窞, 勿用.",
+        "meaning": "Xoay tới tới lui đều chui vào chỗ Khảm vực hiểm hóc khó tựa góc dựa. Đang bị ghim vào đáy huyệt sâu hút, kiêng không hành sự cựa quậy chi hết.",
+        "commentary": "Hào 3, âm: Âm ti tiện nhảy vào ngay mồm ác hổ, vờ lượn qua lại đều nát óc sầu não. Nằm thin thít để che tai giấu tội mạng là tột kế."
+      },
+      {
+        "position": 4,
+        "original": "六四: 樽酒簋貳, 用缶, 納約自牖, 終无咎.",
+        "meaning": "Dùng ly bình rượu với hai bát đồ thết ăn chỉ lấy chậu sành chứa đựng bình dị, đem dâng lên qua cửa sổ ngách lỗ thủng để đưa, làm thân tín chất phác sẽ vô vạ lỗi lầm.",
+        "commentary": "Hào 4, âm: Đứng sát nguy khốn. Hãy chân thành mộc mạc bỏ lối dối xa hoa cầu hiền với bậc minh quân (hào 5), dùng thực tâm giải nạn cứu mạng mỏng manh."
+      },
+      {
+        "position": 5,
+        "original": "九五: 坎不盈, 祇既平, 无咎.",
+        "meaning": "Vực bị nhồi chưa quá ngập nghẹt nhưng dâng lên sát bằng liền miệng sắp tràn tứa, giữ nguyên ổn chớ động là không gây lỗi nát vạ hại.",
+        "commentary": "Hào 5, dương: Có quyền năng chí trung cao cường trong chốn nạn trùng. Nếu chịu nín ẩn đừng khinh dương khơi hỏa quá trớn hỏng bờ thành."
+      },
+      {
+        "position": 6,
+        "original": "上六: 係用徽纆, 寘于叢棘, 三歲不得, 凶.",
+        "meaning": "Bị dây thừng thắt bó chặt dìm nhốt vùi vào chốn đám bụi gai chằng góc gai đâm, tới ba năm bị gông kiệt chả thấy ánh sáng lối về thoát đặng ngõ ra, hung hiểm chết nhục gào.",
+        "commentary": "Hào trên cùng, âm: Cực đỉnh hiểm gian áy oán. Oan nghiệt tội tích ác không đường rút, nhận chịu thảm kịch dìm tới đáy vong mạng bi thiết rủa đời."
+      }
+    ],
+    "commentary": "Tuyệt tận sinh cơ của Nước và Vực sâu. Khảm có họa bủa vây tứ hướng gieo giăng. Cương cường trung chính mới là thuyền duy nhất vượt cửa ải Khảm sinh sinh lưu lạc."
+  },
+  {
+    "id": 30,
+    "name": "Thuần Ly",
+    "upper": 3,
+    "lower": 3,
+    "chineseName": "離 ly",
+    "briefExplanation": "Lệ dã. Sáng láng. Rực rỡ, trang sức, bám, phụ dựa, dính líu, tỏa sáng muôn nơi.",
+    "meaning": "Sáng sủa, bám vào nhau. Sức nóng và ánh sáng. Nhờ vả và phụ thuộc.",
+    "image": "Quang minh xuất hiện hai lần. Người coi việc nước lấy sự trong sáng lan tỏa muôn nơi.",
+    "thoanTu": {
+      "original": "離, 利貞, 亨. 畜牝牛, 吉.",
+      "meaning": "Lợi cho việc giữ bản chất vững vàng, nuôi con bò cái thì tốt."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 履錯然, 敬之无咎.",
+        "meaning": "Đi đứng lộn xộn, nếu biết đề phòng thận trọng thì không có sai lầm.",
+        "commentary": "Hào 1: Mới khởi đầu chưa vững, cần sự nghiêm túc phòng xa."
+      },
+      {
+        "position": 2,
+        "original": "六二: 黃離, 元吉.",
+        "meaning": "Ánh sáng tỏa rạng màu vàng, rất tốt.",
+        "commentary": "Hào 2: Âm nhu đúng vị, biểu tượng của sự sáng suốt và hiền từ."
+      },
+      {
+        "position": 3,
+        "original": "九三: 日昃之離, 不鼓缶而歌, 則大耋之嗟, 凶.",
+        "meaning": "Ánh sáng xế chiều, không gõ nhịp hát ca thì sẽ khóc lóc than vãn, hung hiểm.",
+        "commentary": "Hào 3: Tuổi xế chiều, sức lực tàn, hay bi quan buồn bực. Nếu không lạc quan sẽ gánh muộn phiền."
+      },
+      {
+        "position": 4,
+        "original": "九四: 突如其來如, 焚如, 死如, 棄如.",
+        "meaning": "Đột nhiên bùng cháy dữ dội, rồi chết đi bị lãng quên.",
+        "commentary": "Hào 4: Sự phát triển bốc đồng thiêu đốt mạnh mẽ, rất dễ lụi tàn nhanh."
+      },
+      {
+        "position": 5,
+        "original": "六五: 出涕沱若, 戚嗟若, 吉.",
+        "meaning": "Khóc lóc than thở sầu thảm thì sẽ được cát tường tốt lành.",
+        "commentary": "Hào 5: Có địa vị nhưng biết sợ hãi, biết cảnh giác lo xa, nhờ vậy giữ được yên ổn."
+      },
+      {
+        "position": 6,
+        "original": "上九: 王用出征, 有嘉折首, 獲匪其醜, 无咎.",
+        "meaning": "Nhà vua ra lệnh trừng trị nhóm đầu sỏ, bỏ qua kẻ a dua tòng phạm, thì không lỗi.",
+        "commentary": "Hào 6: Ở đỉnh cao quyền lực, dùng sự sáng suốt diệt trừ kẻ ác triệt để, giáo hóa kẻ dưới."
+      }
+    ],
+    "commentary": "Bát thuần Ly lửa bốc sáng phụ dựa. Mọi đạo lý từ sáng mà sinh minh, nếu bừng rỡ chói mà bạo tàn ác sẽ đốt sạch mạng vong tàn phế. Lấy đức ngọc trung nhu hoàng lưu hóa tỏa thắm thiên niên bách sinh."
+  },
+  {
+    "id": 31,
+    "name": "Trạch Sơn Hàm",
+    "upper": 2,
+    "lower": 7,
+    "chineseName": "咸 hàm",
+    "briefExplanation": "Cảm dã. Tự nhiên. Cảm ứng, nghe thấy, xúc động, tình cảm, rung động, phu thê giao cảm.",
+    "meaning": "Đầm trên núi, nam nữ cảm ứng. Hanh thông, lợi về giữ chính, rước gái về nhà nương tốt.",
+    "image": "Trên núi có đầm, người quân tử lấy lòng trống để đón nhận người",
+    "thoanTu": {
+      "original": "咸, 亨, 利貞, 取女吉.",
+      "meaning": "Hàm (Cảm): Rào thông suốt trơi nhuận, lợi khi kiên định đường chính. Việc cưới thiếu nữ lập thân thành gia gia đạo thì lành."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 咸其拇.",
+        "meaning": "Cảm ứng mới chạm rung nhẹ đến mút ngón chân cái dưới cùng lót thôi.",
+        "commentary": "Hào 1, âm: Mới chớm cảm, chưa hình thành hành vi rõ rệt. Nhỏ nên không thành lỗi vạ vì động thái chưa vội vập."
+      },
+      {
+        "position": 2,
+        "original": "六二: 咸其腓, 凶, 居吉.",
+        "meaning": "Cảm ứng lan rung lắc cựa quẩy tới bắp chân tơ, có phần nguy tà, nôn đi sẽ hung nhục, ngồi im tịnh rũ trinh thì nảy họa an vinh lành.",
+        "commentary": "Hào 2, âm: Sức động mạnh hơn nên dễ chệch theo ham hố theo cái thấp, đắc trung giữ tĩnh thì khắc chế dục nảy dại chuốc hại hung."
+      },
+      {
+        "position": 3,
+        "original": "九三: 咸其股, 執其隨, 往吝.",
+        "meaning": "Sự rung kích xúc động chạy rung chạy ngứa dọc lấn lên bờ đùi đùi bắp, hễ ôm thói dựa nhắm theo a dua dâm dục mù tiến bước hoài lầm thì hối nhục.",
+        "commentary": "Hào 3, dương: Dương cường ngạo nên dễ bị hùa theo âm nhu dục vọng sa kéo đi bồng bột bất kham nhục trí chuốc hại."
+      },
+      {
+        "position": 4,
+        "original": "九四: 貞吉悔亡, 憧憧往來, 朋從爾思.",
+        "meaning": "Kiên chính thì tốt mà mọi xui vạ xót tiêu vong, còn cứ bồn chồn rộn rạo tới tới lui lác sác tâm rối nhiễu dật, bọn người theo lầm rầy lối tà tưởng sai theo hướng dục vọng.",
+        "commentary": "Hào 4, dương: Vượt quá ranh giới, giữ chí chính mới vượt thị phi vong. Tuyệt không giao cảm dỏm vất va để bè cánh bị dụ quái sa đọa vẩn vơ điên cuồng theo."
+      },
+      {
+        "position": 5,
+        "original": "九五: 咸其脢, 无悔.",
+        "meaning": "Xúc động cảm rung bùng bế tới cả phiến thịt thăn dọc sống lưng chắc khự ngự, thôi sẽ không ân tiếc muộn hối não ruột.",
+        "commentary": "Hào 5, dương: Ngự tôn quyền tột sống lưng không linh hoảng dại dột bầy. Lòng vững khự tự định không tùy phiểm tư lợi nên trong yên chẳng sầu uất."
+      },
+      {
+        "position": 6,
+        "original": "上六: 咸其輔, 頰, 舌.",
+        "meaning": "Rung cảm nức rát bóp lến tới má hàm đôi môi chóp lưỡi múa khua loạn biện lí xảo uốn uốn điệu.",
+        "commentary": "Hào trên cùng, âm: Vô tài bất đức dùng khua môi chót miệng dụ nịnh chiêu người. Lời đãi môi bôi bợ thì nào giữ bền lâu tín sự hão huyền mạt."
+      }
+    ],
+    "commentary": "Đầm (Đoài - Thiếu Nữ) bên trên lũng Núi (Cấn - Thiếu Nam). Hai bên tĩnh lặng trống rỗng hút kéo cảm ứng thuận thành quyện nhã đồng điệu phu thê tình sủng giao lưu rực tốt thiêng mộng mị trĩu trăng."
+  },
+  {
+    "id": 32,
+    "name": "Lôi Phong Hằng",
+    "upper": 4,
+    "lower": 5,
+    "chineseName": "恆 hằng",
+    "briefExplanation": "Cửu dã. Lâu dài. Thường xuyên, mãi mãi, đạo vợ chồng, kiên nhẫn đạo lớn.",
+    "meaning": "Sấm gió giao hòa, bền bỉ lâu dài. Hanh thông, không lỗi, lợi về giữ chính. Lợi khi có nơi đi.",
+    "image": "Sấm gió trên dưới, người quân tử đứng mà không đổi phương",
+    "thoanTu": {
+      "original": "恆, 亨, 无咎, 利貞, 利有攸往.",
+      "meaning": "Hằng: thông suất vô lường, không có điều hại tì, đem lợi khi khăng khăng bền nếp giữ lấy đạo chính minh. Lợi sự khi rảo bước giong duổi việc tiến lớn."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 浚恆, 貞凶, 无攸利.",
+        "meaning": "Đào khoét vét xới đào sâu tìm moi cho cố đạt cái đức thường hằng ngay vừa lúc bước khởi đầu thì dẫu giữ chính cũng quấy sầu ngộ hung, không điểm chích gì đáng sinh lợi.",
+        "commentary": "Hào 1, âm: Thấp kém dưới ngoi mà tham cầu thành Hằng sơm nên vấy dục đứt nghẽo. Mưu trí xằng dại nôn nóng không vẹn nên chuốc họa âu tai."
+      },
+      {
+        "position": 2,
+        "original": "九二: 悔亡.",
+        "meaning": "Cái than khóc chán oán lụy rủi của sự hối tiếc rụng triệt biến mất đi hết.",
+        "commentary": "Hào 2, dương: Dương đắc trung tài cao dù ở dưới nhưng tu rèn luyện rèn nên trung dung. Không cố kị cực đoan do vậy bình phục được những lấm lỗi mỏng trớ trêu."
+      },
+      {
+        "position": 3,
+        "original": "九三: 不恆其德, 或承之羞, 貞吝.",
+        "meaning": "Không đoan giữ định hình nết đức thường luân hằng, bị thẹn nhục ê dề bêu danh dội tới mang chịu rụt xấu hỗ tủi sầu.",
+        "commentary": "Hào 3, dương: Bất trung nên tính nết chao đổi cuồng. Nay thế này mai thế khác quay cuồng u mê khiến thiên hạ khinh diễu mắng ngã đồi nhơ mạt thế."
+      },
+      {
+        "position": 4,
+        "original": "九四: 田无禽.",
+        "meaning": "Chạy đi dỏng rong săn thú chim trong cỏ đồng rậm mà không tìm lấp bắn được rớt con giống nào tay tay bạt khôn.",
+        "commentary": "Hào 4, dương: Không đắc đúng chỗ đứng sai phương nên dù bỏ bao tâm bám trụ luân nài vẫn tốn công phí hoài lao xao không đắc thọ kết tích của mọc nhú tí tẹo."
+      },
+      {
+        "position": 5,
+        "original": "六五: 恆其德, 貞, 婦人吉, 夫子凶.",
+        "meaning": "Giữ ru rú cái đạo hạnh hằng thường thủ cố, giới đàn bà phận nhi nữ thì lành ấm gối nôi. Chứ đấng nam nhi trượng phu mà nát mềm rệu nhu thế thì tịt chôn hỏng bét hung vạ.",
+        "commentary": "Hào 5, âm: Vị vua nhu nhược uất yếu thụ quyền không uy không biến hóa thông. Vợ chồng thì phải, chứ rường trị quốc mà âm thuận như cô hầu thì vỡ lở ải mục nước nguy."
+      },
+      {
+        "position": 6,
+        "original": "上六: 振恆, 凶.",
+        "meaning": "Cầm lay rụng rinh rung động quay cuồng đánh mất ráo chóp mỏ sự trường cửu thường hằng tịnh rễ, hung hung cực tử chết vạ điêu.",
+        "commentary": "Hào trên cùng, âm: Đến mức điên dại của động loạn biến hoán không trụ (Chấn đỉnh). Sống chao tràng nhảy vọt thì vong tàn sớm chôn lấp thân tự làm tàn gãy mục rỗng bại cốt tu tủy."
+      }
+    ],
+    "commentary": "Trưởng nam Sấm vút trên, đè Trưởng nữ Gió hù hụt dưới, thuận tòng nương quy định nếp rường cốt gia đạo thiên thu phu xướng phụ tùy. Bền gan không chuyển hóa tàn tâm ác trượt là Hằng sống phô vinh."
+  },
+  {
+    "id": 33,
+    "name": "Thiên Sơn Độn",
+    "upper": 1,
+    "lower": 7,
+    "chineseName": "遯 độn",
+    "briefExplanation": "Thoái dã. Lui ẩn. Lẩn tránh, trốn tránh, ẩn dạng, lui về, rút lui bỏ trốn.",
+    "meaning": "Núi dưới trời, lui ẩn. Hanh thông, giữ chính nhỏ thì lợi. Biết lúc nào nên rút lui thiên sơn càn rợ.",
+    "image": "Dưới trời có núi, người quân tử xa kẻ tiểu nhân, không giận mà nghiêm",
+    "thoanTu": {
+      "original": "遯, 亨, 小利貞.",
+      "meaning": "Độn: Hanh thông. Kẻ tiểu nhân (âm) giữ mức chính đang phát triển thì có lợi, nhưng đại nhân biết từ thời rút lui."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 遯尾, 厲, 勿用有攸往.",
+        "meaning": "Vị trí đoạn chót đuôi nhóm bỏ chạy tụt hậu, rất hiểm cớn, chớ có dùng bóc lội hăm đi xa lên mặt làm gì.",
+        "commentary": "Hào 1, âm: Tiểu nhân bắt đầu lớn mạnh, người yếu thế rớt tuột phía sau tàn cuộc thì tuyệt đối phải giấu mình như bị thiến thì an mạng."
+      },
+      {
+        "position": 2,
+        "original": "六二: 執之用黃牛之革, 莫之勝說.",
+        "meaning": "Cầm giữ được chặt bằng mảnh dây da con bò vàng, bền riết không sức nào gỡ giật sút phai ra được.",
+        "commentary": "Hào 2, âm: Đắc trung mềm mỏng, cố ôm chặt chí với hào 5 nên rất khắng khít kết bền đạo quân thần dẫu thời rủi trôi xa."
+      },
+      {
+        "position": 3,
+        "original": "九三: 係遯, 有疾厲, 畜臣妾吉.",
+        "meaning": "Lòng quyến vướng bị thắt buộc bởi tiểu nhân khi rút lẩn, coi như mang tật bệnh vào thân nguy hiểm rủi, nếu dùng dưỡng đám tiểu thần nàng thiếp thì thấy lợi lạp.",
+        "commentary": "Hào 3, dương: Dương kẹt ở chốn ranh giới, lại chập thân ôm quyến cái âm (hào 2) chẳng nỡ rũ lùi. Chí lớn bị thê nhi cản nghẹn quỵ luy thân nam."
+      },
+      {
+        "position": 4,
+        "original": "九四: 好遯, 君子吉, 小人否.",
+        "meaning": "Rút thoái một ách đẹp mắt sảng khoái (sớm và rạch ròi), quân tử tuốt thoát thì tốt vạn, còn bọn lòng dạ ích kỉ tiểu nhân thì ứ kẹt ách rác.",
+        "commentary": "Hào 4, dương: Mặc dù thân thiết hào 1 âm nhưng trí não dứt khoát rạch ròi tháo thân khi thấy thế hãm không bám nhũn nhờ bợ đợ thị phi."
+      },
+      {
+        "position": 5,
+        "original": "九五: 嘉遯, 貞吉.",
+        "meaning": "Sự dời bước một cách cực tươi tắn khen thưởng đắc danh, luôn giữ chính đạo thì trọn cát tường lành an phước vạn.",
+        "commentary": "Hào 5, dương: Có quyền tôn đắc chính nhưng minh quân thấy nhẽ thoái thì đường gót nhường trị trơn tuột rút chẳng chút lấn cấn nhục bi lụy chí."
+      },
+      {
+        "position": 6,
+        "original": "上九: 肥遯, 无不利.",
+        "meaning": "Trốn xa thoát cao đập kiếp dứt rẽ nhẹ như cõi thênh phật mâynh, chẳng chốn vướng ngả nào là không ưu tú rực phước hoàn thiện.",
+        "commentary": "Hào trên cùng, dương: Tột đỉnh trời nhạt mây không vướng cái bóng tiểu nhân nào theo níu. Đây là tiên hiền lánh tục phi thân tòng tuyệt lộ thế sự."
+      }
+    ],
+    "commentary": "Bóng núi nhỏ nhen không ngáng được vòm Trời to khoang khoát. Âm tà quật khởi áp bức chân rễ ngầm, kẻ sĩ sĩ thấy ngộp liền phủi tục chuồn thân tĩnh an tiên ngoại."
+  },
+  {
+    "id": 34,
+    "name": "Lôi Thiên Đại Tráng",
+    "upper": 4,
+    "lower": 1,
+    "chineseName": "大壯 đại tráng",
+    "briefExplanation": "Chí dã. Tự cường. Chí khí, mạnh mẽ, hưng thịnh, phồn thịnh, vượng sức.",
+    "meaning": "Sấm trên trời, mạnh mẽ lớn. Lợi về giữ chính. Sức mạnh to lớn, cần dùng đúng đạo.",
+    "image": "Sấm ở trên trời, người quân tử không đi đường phi lễ",
+    "thoanTu": {
+      "original": "大壯, 利貞.",
+      "meaning": "Đại tráng: sự cường thịnh dũng dội lớn báng. Cần lợi sự giữ vững tiết thanh chính trị lễ cương."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 壯于趾, 征凶, 有孚.",
+        "meaning": "Khí kiêu dồn cộm mạnh tới tận ngón chân ngộ lực, hùng hổ tiến xô ắt lãnh vạ hung bại chết, có bề cam bực thành tin.",
+        "commentary": "Hào 1, dương: Tráng cuồng lúc phôi khai rễ ở thấp chưa định hình, hiếu chiến đùng đục mù bước găm nhọn thì đổ gãy nghiệp vỡ họa khôn cùng."
+      },
+      {
+        "position": 2,
+        "original": "九二: 貞吉.",
+        "meaning": "Giữ đúng bền nết chính cội đạo thì rước hỉ lành bình vẹn.",
+        "commentary": "Hào 2, dương: Có bề trung đắc chính, dẫu mạnh dương hoành tráng nhưng khiêm giữ không xấc ngược kiêu căng nên không vấy rác hỏng chuyện đời."
+      },
+      {
+        "position": 3,
+        "original": "九三: 小人用壯, 君子用罔, 貞厲. 羝羊觸藩, 羸其角.",
+        "meaning": "Cái kẻ nhỏ hèn ngót thì hung rống phô sức vóc, còn bậc thiện lương lại xem tráng lực nhạt như hư không chẳng màng. Nếu ôm mãi mán cái tráng đó dù danh chính cũng vạ nguy. Tích con dê đực húc mù đầu rúc rào quấn ngạnh bị dính gãy góc sừng.",
+        "commentary": "Hào 3, dương: Dương ở cực điểm nội độ hung tàn vươn đỉnh, rấn thân xô ác liệt chẳng kiêng nể cắn vạ thì như dê kẹt sừng chết tươi ứa tiết."
+      },
+      {
+        "position": 4,
+        "original": "九四: 貞吉, 悔亡. 藩決不羸, 壯于大輿之輹.",
+        "meaning": "Nhịn trinh chính thì hái điềm gặt phúc, não uất sầu oán bay tiệt tích. Cái thứ bờ rào ngăn vấp đã gãy nát chả làm trụ được sừng, xe được tra trục lầm lỳ chở sức mạnh lướt ruội.",
+        "commentary": "Hào 4, dương: Sức mạnh đã qua lúc ngáo cường xô đốn, biết xả cái oai tà chuyển hóa lấy hòa, nên tháo đặng rào cản tiểu nhân (âm 5, 6) làm bộc đại thành lực xe tải."
+      },
+      {
+        "position": 5,
+        "original": "六五: 喪羊于易, 无悔.",
+        "meaning": "Đánh rớt rụng đánh mất bầy dê (đại diện cho dương cuồng) ngoài bìa đồng ranh trơn tru dễ ợt, khỏi ưu sầu vất oán hận u.",
+        "commentary": "Hào 5, âm: Sức nhu ngự vị cao răn các hào dương dưới, thản nhiên buông bỏ cái thói đực cương (bỏ con dê hung hiếu) nên thái bình tịnh vị chả nhọc gì xót đau."
+      },
+      {
+        "position": 6,
+        "original": "上六: 羝羊觸藩, 不能退, 不能遂, 无攸利, 艱則吉.",
+        "meaning": "Như thú dê xông càn cứng húc vách rậu, giờ kẹt mành chẳng lùi được ra lạy, cũng không nống đâm bứt tới thụ thai, không chút điểm sinh rỉ lợi ích; chịu khuất nhận khổ ải co vòi thì sống lành gượng.",
+        "commentary": "Hào trên cùng, âm: Âm nhu bị các dương quật nạt cản dốc đẩy tận tường móp chết kẹt. Tuyệt tự thế công thủ hai nẻo mù nháp, chỉ biết vạch trần tự thẹn gian nan van vái thì qua điềm ách nguy phôi xỉn."
+      }
+    ],
+    "commentary": "Sấm âm vang lộng sấm rung trên vòm nhô bầu Tinh Tú (Càn). Đây là sức điên tráng kiêu dũng đỉnh dội nhất chấn áp thiên hạ tiểu nhân tiêu tàn, trọng đại oai thần của lý đức đại dương dẹp mạt."
+  },
+  {
+    "id": 35,
+    "name": "Hỏa Địa Tấn",
+    "upper": 3,
+    "lower": 8,
+    "chineseName": "晉 tấn",
+    "briefExplanation": "Tiến dã. Hiển hiện. Tiến tới, gần gũi, theo trước, bước tới, đi lên.",
+    "meaning": "Lửa xuất hiện trên đất, tiến lên. Vua Khang Hầu được ban nhiều ngựa, một ngày được tiếp kiến 3 lần.",
+    "image": "Ánh sáng xuất hiện trên đất, người quân tử tự mình sáng đức",
+    "thoanTu": {
+      "original": "晉, 康侯用錫馬蕃庶, 晝日三接.",
+      "meaning": "Tấn: Sự tiến hóa hưng hiển, phước báo tựa như vị tướng thân hầu an dân được hoàng ơn phong chúa ban hằng nhiều xe cựa ngựa quý, nội một ngày triệu lên tháp tùng càn sủng ba lượt ban bệ."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 晉如摧如, 貞吉. 罔孚, 裕无咎.",
+        "meaning": "Lúc khởi màng nhấp nhổm bị cản đạp đẩy hoài lụn đánh vẹo lại, quyết khăng giữ chính tâm thì không tàn ngợp; chưa lôi thu được tín tin thì cứ thảnh thơi điềm dung lự, qua rập lỗi nhục không dây dưa vạ mạt.",
+        "commentary": "Hào 1, âm: Bắt chân vào việc bị đố kị cản kìm sụp đạp khó lên, người mộc mạc chưa gỡ được lòng tin trên nên hoãn thềm bao quản thư thả không chát khươm dấn."
+      },
+      {
+        "position": 2,
+        "original": "六二: 晉如愁如, 貞吉. 受茲介福, 于其王母.",
+        "meaning": "Ngẩng vươn tiến trong hờn ủ e buồn cựn xót lo, giữ đạo trung khiết tiết thì gặt vẹn lành. Sẽ được hái lãnh ân điền sủng ban ngập từ vì vương đức (thái mẫu / hào 5).",
+        "commentary": "Hào 2, âm: Tính nhu đi thuận chính. Không được các bầy cấp dưới hợp giúp nên chát chua ưu ngát, nhưng rốt cục cảm ứng thấu đến ngôi Vua nương thuận nhận phần thưởng vinh ngạnh."
+      },
+      {
+        "position": 3,
+        "original": "六三: 眾允, 悔亡.",
+        "meaning": "Mọi vạn nhân nương theo quy đồng phục tín theo nên tan loãng hết nỗi lầm buồn sầu khóc oán tích hối.",
+        "commentary": "Hào 3, âm: Nhuận khí thuận chuyển rực lên hòa ứng lòng người chung đụng ủng đồng lòng dốc đẩy đi lên thì ác lụy bay diệt tiêu tan sạch tấc."
+      },
+      {
+        "position": 4,
+        "original": "九四: 晉如鼫鼠, 貞厲.",
+        "meaning": "Hăm đục tiến nhú luần chui ngoi hốc xảo tham như chuột cống, dù giữ dững vỏ bề đạo danh vẫn rước sụp ác thảm họa chuốc hiểm gầm.",
+        "commentary": "Hào 4, dương: Cửa ải của việc giành công chiếm sủng che quyền vua với các kẻ ác tà. Lộ rõ róc rách gian giảo nên bị thiên hạ tủa căm chui nhủi diệt chán rủa thẹn."
+      },
+      {
+        "position": 5,
+        "original": "六五: 悔亡, 失得勿恤, 往吉, 无不利.",
+        "meaning": "Buông tha hối hận rụn dứt, chẳng bận sầu kể công tính vụ mất được, nhẹ nhõm vươn lướt tiếp dĩ tới rỡ cát tuấn lộc thành hảo bách thọ.",
+        "commentary": "Hào 5, âm: Ngự trị đế đỉnh rực huy quang. Thuận buông bỏ hẹp hòi tính chi li để lấy sự sáng mưu đại cục chiếu tỏa minh thiên thì chư hầu bệ rập đều tráng liệt ủng hoan vạn ngàn phước lớn."
+      },
+      {
+        "position": 6,
+        "original": "上九: 晉其角, 維用伐邑, 厲吉无咎, 貞吝.",
+        "meaning": "Đã tiến ngoi lấp họng tới tột rễ nhú sừng sẹo ngoảnh vểnh, chỉ cốt nỏ để dốc trịch trị dẹp nghịch đảng trong nhà, răn đe hiểm nương tay thì tốt không vấp tì oán, nhưng dùng cứng cố thù bấp chính kề lầy hoài cộc lự thì rước xót xa hổ hận.",
+        "commentary": "Hào trên cùng, dương: Thế sáng Tấn dội qua bờ hung liệt đỉnh. Không còn khoảng nào đi thì lo củng nẹp kỉ cương giáo huấn trị gia trị ác nội tâm triều dẹp cho qua trắc nguy nan thì an trụ đặng."
+      }
+    ],
+    "commentary": "Ánh lửa chói vươn vút xuất hiện ló bình minh trên đất mẹ xua sạch tối tăm. Điềm thời huy hoàng quân quốc đắc lệnh, hiền vĩ được sủng ái chiếu kiến bách dân ấm tịnh rạng soi."
+  },
+  {
+    "id": 36,
+    "name": "Địa Hỏa Minh Di",
+    "upper": 8,
+    "lower": 3,
+    "chineseName": "明夷 minh di",
+    "briefExplanation": "Thương dã. Tổn hại. Hại đến, đau thương, bệnh tật, đau buồn. Mặt trời lặn rớt xuống đất khuất bóng.",
+    "meaning": "Lửa lặn vào đất, sáng bị tổn thương. Gian nan nhẫn nhịn, lợi về gian nan giữ chính.",
+    "image": "Ánh sáng vào trong đất, người quân tử cai trị dân chúng bằng cách tối đi cho sáng",
+    "thoanTu": {
+      "original": "明夷, 利艱貞.",
+      "meaning": "Minh Di: Mặt trời khuất dạng ánh nhòa vụt rụng tắt thui ám tàn diệt. Có lộc thuận tốt cho việc vượt chịu bề ải gian truân mà khư thủ kiên trinh giữ mình trong ác đen chờ thời minh bạch."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 明夷于飛, 垂其翼. 君子于行, 三日不食. 有攸往, 主人有言.",
+        "meaning": "Ánh rỡ bị thương thảm diệt trong lúc con chim đang chuyền bay, làm nó sụp rụng cánh lả rũ cắp. Bậc hiền từ thấy gở đành bôn khôn trốn bước lìa ba ngày bạt trôi khát nhịn chẳng màng nhai thực, cố tìm nơi đến trọ tạm thì bị tên gia chủ hồ dọa nghi hoặc dìm mắng mỏ.",
+        "commentary": "Hào 1, dương: Rơi vào ách đen lụi chớm tối ám của rợ (hôn quân vắt lên 6). Người ngộ cao thấy kiếp chạy ngay lánh hung, dẫu đói lủi mang tiếng ngốc nhưng cứu bảo mạng sống bách thân khỏi bầm thảm khốc diệt tiêu củi xé."
+      },
+      {
+        "position": 2,
+        "original": "六二: 明夷, 夷于左股, 用拯馬壯, 吉.",
+        "meaning": "Nạn chìm bị thương đánh dập móp ngay nơi đùi khoeo bắp phía tả. Nhò ráng phi được ngựa tốt dũng nhảy vọt chạy lánh nạn thoái trốn kịp nên hên hên vớt lành lộc mạng.",
+        "commentary": "Hào 2, âm: Đứng giữa trong cung Ly lại bị thương giáng. Tuy nhiên do tài độ bọc sức âm đắc trung dẻo dai luồn vớt thoa lánh nhanh qua kịp hung khố nạn không tàn vong mạng."
+      },
+      {
+        "position": 3,
+        "original": "九三: 明夷于南狩, 得其大首, 不可疾貞.",
+        "meaning": "Rạng sáng đi dẹp nấp ẩn rồi lôi kéo vây quân kéo lùng săn về phía phương Nam, chém chụp được đầu đảng nậu sào ác khốn tột nhơ (hào 6). Tuy vậy chớ ép nốc thúc luật trinh đạo quá sốc thì rối hung dội rụng.",
+        "commentary": "Hào 3, dương: Dương cường oai lại ngụ Ly hỏa nên có thừa đức trí phục trị được ác trùm vô đạo chóp đỉnh. Khuyên chỉ là phải hoãn gỡ từ từ chớ nóng vội trị ngay."
+      },
+      {
+        "position": 4,
+        "original": "六四: 入于左腹, 獲明夷之心, 于出門庭.",
+        "meaning": "Len lỏi chui tuột nhấp vào mấu ruột gan hông bên phía trái của Vua, nắm rành thủng biết cặn đen cái tâm niệm hiểm tà hãm lụn của hôn chúa mà lẻn tránh vượt ra cửa nhà bỏ dời đi biền.",
+        "commentary": "Hào 4, âm: Đứng sát cự ly kề ranh bên hắc ám cực ác tàn mưu. Nhìn tường rõ cái dạ đen hung nịnh nên giật mình chủ đáo thoái li trốn mạng viễn biên tẩu tản sống ẩn cư nhẫn rạng tích tàn."
+      },
+      {
+        "position": 5,
+        "original": "六五: 箕子之明夷, 利貞.",
+        "meaning": "Làm thân điên dại nhẫn chịu che sự tỏ như ông Cơ Tử thời loạn chúa thời Thương, cứ giả khù mịt chịu cực mà nhẫn dũng chính bền thì giữ cốt bảo đặng thân phước thắm ngây đạo tốt.",
+        "commentary": "Hào 5, âm: Kề cạnh ngay sát vị hôn quân bạo nhược. Chẳng thể chạy thoát như hào 4, cũng không dùng nịnh gỡ; đành giả ngây vờ khùng lờ lịt giấu trí huệ chịu xơ xác giam dập tủi sầu chờ hưng hồi cực thịnh dương nảy mới tấu xưng tước danh đền liệt."
+      },
+      {
+        "position": 6,
+        "original": "上六: 不明晦, 初登于天, 後入于地.",
+        "meaning": "Tăm mù chôn che vùi tối mọi đường rạng sáng quắc lòa ráo mục. Xưa sơ kiêu mới bước leo nhóng lên ngất ngự lấp trời đỉnh tít, giờ sụp đoài lọt nhào hố ngầm giam thủng sâu đáy đất chôn mạt kiếp tăm tàn diệt bại.",
+        "commentary": "Hào trên cùng, âm: Vị hôn vương hung khốc tận đỉnh gây tỳ ác sát oan tạo bão oán nợ trần cực đoan thét uất vô đạo lí ác bá. Hưởng vị chóp đỉnh hư phù rồi thì rơi lầu ngã vực tước bại đoạt vong diệt mạng tru dập bi khốc trơ thây phơi gục xụi mả tuyệt."
+      }
+    ],
+    "commentary": "Quẻ hình Tượng Mặt trời chiếu bị lấp chôn lấp úp xuống nấm Đất u mịt lạnh đen. Thời kì tiểu nhân hống hách thâu tóm, người minh đạo phải lờ phủi ánh bọc mình nhẫn trinh chịu điên che trí dũng chịu nhục mong ngày sáng."
+  },
+  {
+    "id": 37,
+    "name": "Phong Hỏa Gia Nhân",
+    "upper": 5,
+    "lower": 3,
+    "chineseName": "家人 gia nhân",
+    "briefExplanation": "Đồng dã. Người nhà. Cùng nhà, gia tộc, đồng hương, nhóm người.",
+    "meaning": "Người trong nhà. Trật tự gia đình, nề nếp gia phong.",
+    "image": "Gió nổi lên từ ngọn lửa. Người quân tử nói lời có thực chất và hành động bền bỉ.",
+    "thoanTu": {
+      "original": "家人, 利女貞.",
+      "meaning": "Người phụ nữ giữ được tính kiên trinh thì tốt lành."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 閑有家, 悔亡.",
+        "meaning": "Xây dựng kỷ cương ngăn ngừa những lỗi lầm sửa từ đầu, xóa tan mọi hối hận.",
+        "commentary": "Hào 1: Thiết lập nội quy ngay lấp tức từ sớm để tránh mâu thuẫn lớn sau này."
+      },
+      {
+        "position": 2,
+        "original": "六二: 无攸遂, 在中饋, 貞吉.",
+        "meaning": "Không chạy theo vọng động bên ngoài, chỉ tập trung lo việc cung cúng bếp núc, thì tốt.",
+        "commentary": "Hào 2: Làm đúng bổn phận nội trợ chăm sóc gia đình, không màng danh lợi phiếm."
+      },
+      {
+        "position": 3,
+        "original": "九三: 家人嗃嗃, 悔厲吉; 婦子嘻嘻, 終吝.",
+        "meaning": "Gia đình có khuôn phép khắt khe khiến người phàn nàn nhưng kết cục tốt. Nếu nới lỏng để phụ nữ và trẻ con lộng quyền thì nguy lầm.",
+        "commentary": "Hào 3: Quản lý gia đình nghiêm khắc đôi khi khó chịu nhưng lại bảo vệ được nề nếp."
+      },
+      {
+        "position": 4,
+        "original": "六四: 富家, 大吉.",
+        "meaning": "Làm giàu và tích lũy nâng cao sự thịnh vượng cho gia đình, vô cùng tuyệt vời.",
+        "commentary": "Hào 4: Quản lý chi tiêu tốt, đem lại hạnh phúc sung túc cho cả nhà."
+      },
+      {
+        "position": 5,
+        "original": "九五: 王假有家, 勿恤吉.",
+        "meaning": "Người gia trưởng có uy tín, không lo lắng gì, rất tốt lành.",
+        "commentary": "Hào 5: Người đứng đầu gương mẫu, yêu thương che chở nên gia đình đầm ấm."
+      },
+      {
+        "position": 6,
+        "original": "上九: 有孚威如, 終吉.",
+        "meaning": "Trọn vẹn giữ được uy tín và sự tôn trọng của mọi người, mang lại phúc lộc lớn.",
+        "commentary": "Hào 6: Công việc quản gia trọn đạo, nhận được sự kính trọng tuyệt đối từ cấp dưới và người thân."
+      }
+    ],
+    "commentary": "Lửa bên trong bốc nhiệt sáng nung nóng rồi lôi Gió (Tốn) bề ngoài phẩy tỏa hương đi muôn ngả. Trong gốc gia đạo (tự) trị nghiêm đúng đạo thì nếp nhà hưng vượng quốc gia hân hoan an thế rực thành."
+  },
+  {
+    "id": 38,
+    "name": "Hỏa Trạch Khuê",
+    "upper": 3,
+    "lower": 2,
+    "chineseName": "睽 khuê",
+    "briefExplanation": "Quái dã. Trái ngươc. Tách rời, ruồng rẫy, chia lìa, mỗi người một nẻo, rẽ phang.",
+    "meaning": "Lửa trên đầm, trái ngược bất hòa. Việc nhỏ thì tốt. Hai bên khác biệt nhưng cần tìm điểm chung.",
+    "image": "Trên lửa dưới đầm, người quân tử đồng mà khác",
+    "thoanTu": {
+      "original": "睽, 小事吉.",
+      "meaning": "Khuê: Sự trái lìa ngóc ngách đâm ngược, chỉ làm được chót việc lặt vặt tiểu tiết mọn thì tốt đạt lợi ích."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 悔亡, 喪馬勿逐, 自復; 見惡人无咎.",
+        "meaning": "Tiêu đi nỗi tủi oán hối thẹn ngậm vạ. Cớ chạy lạc tản rụng mất ngựa xổng cũng đừng cất lao đuổi tróc bắt nhọc, tự rồi nó sẽ phục nhớ bến tự vòng quay hồi lại. Buổi chia ly nên chấp tiếp giáp ngộ kẻ hiểm xảo ác gian cũng không mang rước họa đọa lầm.",
+        "commentary": "Hào 1, dương: Trạng thái ban đầu rẽ nhánh, nhưng nhờ dương có đạo không tuyệt nứt. Cố chịu nhịn không đun xô sát sườn thì sự sẽ hợp mòn lại yên xui, gặp giặc không kiêu nghênh thì trừ hại ố gieo ác."
+      },
+      {
+        "position": 2,
+        "original": "九二: 遇主于巷, 无咎.",
+        "meaning": "Gặp lại chủ minh vương ở nơi trong bóng rẽ xó hẻm tối ngách đường ngãng ngang, sự uẩn đúc này chả tì vạy sai chi.",
+        "commentary": "Hào 2, dương: Không gặp gỡ sủng nạp ở đại sảnh đường danh chính mà phải đi vòng cầu tư vì thời ly chắp. Việc này tuy ti tiện không công minh nhưng cốt lõi do muốn phục hợp quy vĩ nên tránh được hung oan."
+      },
+      {
+        "position": 3,
+        "original": "六三: 見輿曳, 其牛掣, 其人天且劓, 无初有終.",
+        "meaning": "Thấy hiện xe thì bị nghẽn giật níu lại sau cản rề rề, bầy trâu kìm bị đè vít khựng rựng hãm sừng, bóng kẻ phu nọ bị hình xẻo lở vót khắc chữ trán nhô và thẻo xẹo sứt mũi. Xô uẩn tủi khốn đằng mào đầu tiên rụng nhưng rốt vẹn gỡ khép chung cuối hỏa áy tan vinh lành giải được đắc phước.",
+        "commentary": "Hào 3, âm: Âm nhu kẹp giữa bầy dương ngạnh áp bức, mòn sức chà xát tả tơi mốc nhão tả tơi hãm hiểm. Do tính quy căn kết bè hiệp với 6 nên rốt cục thoát nan về đích vất qua mốc tuyệt mạt."
+      },
+      {
+        "position": 4,
+        "original": "九四: 睽孤, 遇元夫, 交孚, 厲无咎.",
+        "meaning": "Cảnh thế bị rẽ ngửa bơ vơ chơ vơ tuyệt gác, ngẫu đụng nạp lại gặp phùng vị nhân hùng bạn trượng nghĩa chân cốt, kết thân giao hòa bằng bọc tín đức thật tâm lóng mộc mạc, dẫu hãi nguy đầy đê nhưng tránh gãy gánh vạ đọa lầm rác phế.",
+        "commentary": "Hào 4, dương: Dương cư âm vị bấp bênh lơ cực độ. Tình cờ ngộ được hào đồng tâm (1), thề nguyện chung nạp cứu khổ phò ách nên tuy trôi nổi mà chuyển bại tháo ách nhục diệt."
+      },
+      {
+        "position": 5,
+        "original": "六五: 悔亡, 厥宗噬膚, 往何咎.",
+        "meaning": "Tiêu điển vũng sầu tủi hối đau vạ oán diệt; vị minh chúa dòng tôn nhận lại kẻ cùng tộc nhai cục thịt mềm dễ trôi ruột tan màng phế, bước sấn tới nữa nào mắc tì oan nghiệp ác gì.",
+        "commentary": "Hào 5, âm: Vị nhu hòa cầm trượng ngự ngôi chúa, lấy cái bao dung kéo nhu thuận về. Vết rạn xước sâu đằng mây khói tan êm hòa phục dễ dãi cực độ tan rạn chia phe mạt chướng."
+      },
+      {
+        "position": 6,
+        "original": "上九: 睽孤, 見豕負塗, 載鬼一車, 先張之弧, 後說之弧, 匪寇婚媾, 往遇雨則吉.",
+        "meaning": "Bơ vơ tới đỉnh chót quái điên lìa tẽ độc đứt, loạn trông mộng tưởng thấy con lợn gánh phủ trát dơ sình bùn, lại ảo dòm nguyên cỗ xe chở đầy đặc tà ma ác quỷ oán ghê khiếp sầu. Thoắt lấy cung tên vót giương nỏ chĩa ngóc bắn diệt, sau vụt bừng tĩnh tắp nạp tháo buông gỡ dây cung xuống. Nhận rành chẳng gớm phải giặc ăn cướp oán mà đích là bè lứa tìm tới mong gả tác kén tình phu thê hòa hạp rủ. Bước xuất đi mà gặp màn mưa trút tưới đổ thì êm mát hanh vinh tuyệt tốt hóa giải hoại hiềm nghi oan mù lấp rữa.",
+        "commentary": "Hào trên cùng, dương: Mức tột cùng đa nghi rạn mác xé nứt chia rẻ móp méo óc dại. Vì ngố nhìn hoảng mường đâm sát oán thù, nay ứa ra sự chân ngợ vỡ nhẽ hợp bồng nương tựa xá tan oán độc ngờ vực để tẩy xóa hết hoại ly đứt nối hàn."
+      }
+    ],
+    "commentary": "Lửa (Ly) cháy mạn ngọn bốc thẳng trời trên, Nước (Đoài) thì đọng hốc đũng chảy trụt bùn dư. Tính chất trái dòng gác tẽ lìa hướng chẳng chịu giao tình phối ngực nhau nên chia rạn. Lãnh hội thời rốc quấn vạn nghi tâm."
+  },
+  {
+    "id": 39,
+    "name": "Thủy Sơn Kiển",
+    "upper": 6,
+    "lower": 7,
+    "chineseName": "蹇 kiển",
+    "briefExplanation": "Nạn dã. Hiểm trở. Gian nan, thọt chân, khó đi, què quất, ngăn cản, què chân.",
+    "meaning": "Nước trên núi, chân bước khó khăn. Lợi về phương Tây Nam, không lợi Đông Bắc. Gặp đại nhân thì tốt.",
+    "image": "Trên núi có nước, người quân tử phản tỉnh bản thân để tu đức",
+    "thoanTu": {
+      "original": "蹇, 利西南, 不利東北. 利見大人, 貞吉.",
+      "meaning": "Kiển: Lợi về phương bằng Tây Nam phẳng láng, chẳng lợi lạp xui hung về cõm hướng Đông Bắc hiểm trở núi vây cự nan. Cực lợi lộc khi dấn diện kiến yết bậc đại nhân hiền. Nếu cứ vững nhịp trinh chính đạo vững tạc thì chốt vạn tốt tốt mướt."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 往蹇, 來譽.",
+        "meaning": "Càng dấn lấn tới bước thì càng nhùng nhằng ách tắc quằn ngoéo trắc trở kẹt vung. Quay chịu rút lùi về ôm chốt thủ thân nghỉ thì tự tại nhận được danh ngoan tiếng khen.",
+        "commentary": "Hào 1, âm: Ở thế yếu dưới tột, đối mặt vực nhọt sâu mịt. Thấy nguy vạn không dám cuồng vọt điệu, biết dừng chân rúc thế nên đạt bề khen mẫn an."
+      },
+      {
+        "position": 2,
+        "original": "六二: 王臣蹇蹇, 匪躬之故.",
+        "meaning": "Tôi đạo ngạch thần trung xả bươn chịu vạn gian khó trùng trùng chất cực truân chuyên vì vị vương trào, chẳng tiếc mảng bưng thân ích kỷ bít tư lợi lấp mình cớ nào do nào chăng.",
+        "commentary": "Hào 2, âm: Đắc trung mềm chính nết tôi vĩ cự gánh bưng hoạn hiểm lo cho sự nguy vờ của hào 5 (Vua). Trung kiên dốc sức quên sống thân hy sinh ách oán."
+      },
+      {
+        "position": 3,
+        "original": "九三: 往蹇, 來反.",
+        "meaning": "Níu quẩy dấn tiếp bước ngoi lên trên tất hỏng vấp trắc quẹo móp, quay đầu lùi lui lại thì bình yên hoan mừng đắc chốn cội dựa tủng trở về nếp cũ bao nạp đầm tựu.",
+        "commentary": "Hào 3, dương: Đỉnh cao nội quái lại dương ngự. Trông đằng trước đầy u hãm chướng gai xốc, nhưng lui về dưới có 2 âm ủng che. Nên ngưng công rút thoái rảo về hái tốt bao phủ mạng vẹn toàn thủ cự."
+      },
+      {
+        "position": 4,
+        "original": "六四: 往蹇, 來連.",
+        "meaning": "Mò nhoi lấn qua rạch nứa tới nữa chuốc hiểm khốn tàn gãy ải ách nan, kéo lùi lui lại thì gắn gụi liên tạc kết gồng ôm chắc với cự đoàn chung hữu đồng tâm chí cốt.",
+        "commentary": "Hào 4, âm: Đứng mép khe hiểm họa ngập. Âm ti yếu nhọc không bứt phá nổi tà khí ngạt rác, đành lôi kết bạn bầy để chia đai gánh nạn sầu tản chia mới lướt vũng hoạn cự."
+      },
+      {
+        "position": 5,
+        "original": "九五: 大蹇, 朋來.",
+        "meaning": "Mặt gánh vác cực đối chọi tai họa hoạn bạo móp tột hiểm, giữa bước bấn cùng kẹt mác u nan thì mừng xuất tụ tấp nập bằng hữu chư đằng trợ nạp kéo ùn tới chia gánh xốc vai đỡ dẹp ách.",
+        "commentary": "Hào 5, dương: Ngôi tôn tuyệt nhưng ở trong tràng vây của Khảm vực rớt ngã. Nhờ đắc trung dương cương vĩ lực nên rước nạp gọi được quần hùng thiên hạ tựa tương thân ái độ hoạn nạp cứu nguy gỡ gạc đại nan uất phước phượng sụp đổ tà."
+      },
+      {
+        "position": 6,
+        "original": "上六: 往蹇, 來碩, 吉, 利見大人.",
+        "meaning": "Vói bước thóp nhấp tiến là mắc đâm họa chướng ngợp vấp, thoái tụt về lùi thì đạt đặng thành quả huân liệt tốt lúa dư muôn cày trĩu công đức phách rảng an cực lộc no thỏa mọng. Đại hỉ lợi được chắp ân kiến vinh hiền bậc đại trí nhân vĩ dũng soi ngự.",
+        "commentary": "Hào trên cùng, âm: Đoạn tột ách mạt kiếp gian lao nạng. Cùng tận rớt vực không nên nài lấn ép nữa rúc họa nứt diệt. Rút chờ rực sáng thì hóa gỡ được ách. Hào cứu cánh vót tận phá hiểm nạp công sủng phong quan hoan liệt diệt phế hoạn nghẽn kẹt áy trần."
+      }
+    ],
+    "commentary": "Hiểm Khảm vực ải đục nằm ngáp úp dọa trên lưng Núi Cấn gập ghì chắn cản. Nhấc chân đi kẹt chân về đụng vực, đó là thời gian khổ nhục ngặt bọc. Lời răn phải biết chờ nhu ngự, ngóng đợi tri kỉ thì tháo tịt tai vạ gỡ nạn u sầu tà lấp bế đạn khổ đau ráng sức bền bỉ."
+  },
+  {
+    "id": 40,
+    "name": "Lôi Thủy Giải",
+    "upper": 4,
+    "lower": 6,
+    "chineseName": "解 giải",
+    "briefExplanation": "Tán dã. Nơi nơi. Phân tán, phai nhạt, giải phóng, xua đi, rã buồn.",
+    "meaning": "Sấm mưa giao hòa, giải thoát. Lợi về phương Tây Nam. Không có chỗ đi thì quay lại thì tốt.",
+    "image": "Sấm mưa nổi lên, người quân tử tha lỗi giảm tội",
+    "thoanTu": {
+      "original": "解, 利西南. 无所往, 其來復吉. 有攸往, 夙吉.",
+      "meaning": "Giải: Sự giải phóng nới cởi oán. Đắc lợi mỏng đi về phương Tây Nam bằng. Không cớ có việc đi đâu dường thì cứ vinh quay phục lại là tốt bọc yên. Đã cất thì mau lấp dứt chóng nhanh lẹ sớm sấn túc thì tốt hỉ vui."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 无咎.",
+        "meaning": "Không dính sai khuyết lỗi hoạn gì.",
+        "commentary": "Hào 1, âm: Nạn mới vừa lơi tháo gút trói, cứ êm xuôi nhu ngự thuận nhịp tĩnh lự mộc phác mà tu thân lại tàn tích thì an."
+      },
+      {
+        "position": 2,
+        "original": "九二: 田獲三狐, 得黃矢, 貞吉.",
+        "meaning": "Ra ruộng đi săn bắn thộp thu tóm bắt ôm được gọn ba con cáo hồ xảo sảo gian dối lưu manh. Mò chuốt nhặt đặng mũi tên ngạnh đồng vàng thẳng nhu, giữ dứt chí chính trung độ thì trọn phúc vinh lộc tráng dạn thênh.",
+        "commentary": "Hào 2, dương: Sức dương ở tại nội âm, biết uyển diệt 3 đứa nịnh tà tiểu nhân quanh sườn rũ họa nịnh lấp (3 con cáo). Lại nắm vững cung đạo vàng thẳng trung thành trừ nghiệt đảng diệt cạn u minh quấy rối vấp rạch."
+      },
+      {
+        "position": 3,
+        "original": "六三: 負且乘, 致寇至, 貞吝.",
+        "meaning": "Vai thì khệ nệ đèo khuân vác đùn hàng kẽo kẹt thấp hèn gánh xà, mà lại trèo ngồi ngông chiễm chệ vót trên cỗ xe ngựa kiêu sang bự, khác nào khiêu trêu kích mồi dụ đám cướp giặc ập nhào tới giật; dù là lấy cớ giữ đoan danh cũng chuốc hẩm thẹn ngậm nấp bi trĩu hổ uất dại.",
+        "commentary": "Hào 3, âm: Tiểu nhân hèn nhược bất tài ngụ sai ghế cao quyền vọng gượng mặt vác trượng kiêu. Dễ gợi tà gian dòm ngó xâu xé dập chết phơi họa đoạt tham tàn vơ lấy của vùi hoại đoạt sát lươn lẹo chuốc lụn tru hãm hớ dại hung tà diệt."
+      },
+      {
+        "position": 4,
+        "original": "九四: 解而拇, 朋至斯孚.",
+        "meaning": "Phân bửa cởi rịt tháo nới tung giật lìa cái ngón chân cái đau găm tì nịnh xấu bấu bám (hào 1), bọn hiền sĩ ắt nhào rủ xúm ùa tín tin dốc phò quy gộp đồng mưu chân tạc đắc nghĩa.",
+        "commentary": "Hào 4, dương: Dám xa lìa dứt bỏ thuyên ti tiện hạ nhược vướng dậu. Cắt nhọt nhỏ sẽ thu lại nguyên phước lớn kết ngự bạn bầy hiền trinh dương rạng đắc cường hùng tương trợ nhau qua giông bão ngợ rạc."
+      },
+      {
+        "position": 5,
+        "original": "六五: 君子維有解, 吉, 有孚于小人.",
+        "meaning": "Bậc sĩ hiền dũng quân tử đã đoạn gỡ tung giải phóng tột hết tà ách oán dộc ra rồi, được trọn thịnh ân. Khiến cho bọn ếch tiểu nhân thấu hãi kiếp cũng tự rúng rợn lạy nể phục phục quy theo niềm uy tin đức tín phục vả tàn phục tùng diệt nấm.",
+        "commentary": "Hào 5, âm: Sức chí tột của việc đập nát u sầu loạn cồn. Giải tà thì trị chính hiển, khiến bè đảng thối nát gian cũng khụ rạp lạy khâm nể đầu hàng đắc trọn vương nghiệp hưng thái tịnh dập."
+      },
+      {
+        "position": 6,
+        "original": "上六: 公用射隼于高墉之上, 獲之, 无不利.",
+        "meaning": "Bậc công tước hầu trượng vĩ giương trương cung tung tên nhắm bắn diệt rụng rớt thủ cấp con chim cắt ma cản dáo ranh sảo nhọn quái đậu nảy tận trên miết chóp nóc luỹ tường đài cao. Thộp bắt diệt trừ gọn cướp chém tàn, muôn chuyện vạn nan ập biến rễ, chẳng rào lợi lộc nào rớt chẳng thành lạm vinh hanh thái phước vô thiên.",
+        "commentary": "Hào trên cùng, âm: Giáp đoạn kết thu vén trọn công vụ nhổ cỏ tận gốc. Đối thủ tuy hùng cực nhú vĩ hiểm nhưng tài súng mưu nhọn dấp dọn đứt tàn quân ác chóp khiến thanh bình thênh vượng đát dội ải tháo sạch bong rỗng oán thâm gút cùm cật nhọc vung nát bấy tiêu tang rã khước u mê hoại lầm diệt vong."
+      }
+    ],
+    "commentary": "Sấm Khí rền phẫn nộ làm mây quằn tan trận, Mưa Nước tưới đổ nhuận ngập đất dẹp bức bách ngột âm u hoảng dật. Hiện cảnh thảm ách tan rã tiêu tản ầm, khuyên ta thời trị này phải chóng dứt nhấp tháo cởi mọi oán khiên chập dọng rũ gươm hoãn hờn nhọc nghỉ phép phước vinh hòa khang nhân độ nịnh rãn khoang bao mộc độ khoan oai dung nhân đạo ân tình thả tù diệt."
+  },
+  {
+    "id": 41,
+    "name": "Sơn Trạch Tổn",
+    "upper": 7,
+    "lower": 2,
+    "meaning": "Tổn thất, hao hụt, bớt đi. Mất cái này được cái kia, kìm hãm dục vọng.",
+    "image": "Dưới núi có đầm lầy. Quân tử kiềm chế phẫn nộ, giảm bỏ dục vọng.",
+    "thoanTu": {
+      "original": "損: 有孚, 元吉, 无咎, 可貞, 利有攸往. 曷之用? 二簋可用享.",
+      "meaning": "Xóa bỏ nhưng nếu kiên định chân thành thì sẽ rất tốt đẹp, không mắc lỗi."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 巳事遄往, 无咎, 酌損之.",
+        "meaning": "Dừng việc riêng để mau chóng đi giúp người khác, cân nhắc mức độ giảm bớt phù hợp.",
+        "commentary": "Hào 1: Sẵn sàng hi sinh bản thân cứu vãn tình thế nhưng cần biết lượng sức."
+      },
+      {
+        "position": 2,
+        "original": "九二: 利貞, 征凶, 弗損益之.",
+        "meaning": "Giữ tinh thần chính trực thì tốt, nhượng bộ quá đáng thì hung hiểm. Không tổn mình mà vẫn giúp được người.",
+        "commentary": "Hào 2: Giúp người nhưng phải giữ đạo nghĩa, không mù quáng chịu thiệt thòi quá mức."
+      },
+      {
+        "position": 3,
+        "original": "六三: 三人行, 則損一人; 一人行, 則得其友.",
+        "meaning": "Ba người cùng đi sẽ bớt đi một người, một người đi thì sẽ gặp được bạn tri kỉ.",
+        "commentary": "Hào 3: Chuyên tâm vào mục tiêu duy nhất thì sẽ tìm thấy sự đồng điệu."
+      },
+      {
+        "position": 4,
+        "original": "六四: 損其疾, 使遄有喜, 无咎.",
+        "meaning": "Giảm đi bệnh tật của mình khiến người khác vui mừng đến giúp, không có lỗi lầm.",
+        "commentary": "Hào 4: Dám nhìn nhận tự sửa khuyết điểm thì sẽ được mọi người yêu mến hỗ trợ."
+      },
+      {
+        "position": 5,
+        "original": "六五: 或益之, 十朋之龜弗克違, 元吉.",
+        "meaning": "Có người đem rùa vỏ mười dải đến tặng, không thể từ chối, rất tốt lành.",
+        "commentary": "Hào 5: Có đạo đức tốt, chẳng cần yêu cầu người ta vẫn dâng hiến kính trọng giúp đỡ."
+      },
+      {
+        "position": 6,
+        "original": "上九: 弗損益之, 无咎, 貞吉, 利有攸往, 得臣无家.",
+        "meaning": "Không làm tổn hại ai mà làm lợi cho mọi người, không lỗi. Có được sự ủng hộ rộng lớn.",
+        "commentary": "Hào 6: Ở vị trí quyền lực, dốc sức lo cho ích lợi nhân chúng mà không vơ vét của cải của dân."
+      }
+    ],
+    "commentary": "Sơn Trạch Tổn khuyên răn về sự tiết chế ham muốn, hy sinh lợi ích nhỏ dưới gầm để bổ sung cho lợi ích chung bền vững, theo thời vận tổn ích điều hòa."
+  },
+  {
+    "id": 42,
+    "name": "Phong Lôi Ích",
+    "upper": 5,
+    "lower": 4,
+    "meaning": "Gia tăng, có ích lợi. Thêm vào, tăng cường. Bề trên chăm lo cho bề dưới.",
+    "image": "Gió sấm cùng lúc hoạt động mạnh mẽ. Quân tử thấy điều thiện thì làm theo, thấy lỗi thì sửa đổi.",
+    "thoanTu": {
+      "original": "益: 利有攸往, 利涉大川.",
+      "meaning": "Có lợi để mưu sự việc lớn. Có lợi để vượt qua sông trải gian khó."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 利用為大作, 元吉, 无咎.",
+        "meaning": "Vận dụng lợi ích để làm những việc lớn lao thì được tốt lành, không bắt bẻ được lỗi lầm.",
+        "commentary": "Hào 1: Nhận được sự trợ giúp, phải biết biến cơ hội đó thành kết quả to lớn."
+      },
+      {
+        "position": 2,
+        "original": "六二: 或益之, 十朋之龜弗克違, 永貞吉. 王用享于帝, 吉.",
+        "meaning": "Xui xẻo mất mát nhưng lúc sau lại được tặng rùa vỏ mười dải dâng hiến. Giữ vận tốt.",
+        "commentary": "Hào 2: Sự trung thành và đức tính tốt của bản thân sẽ mang lại phần thưởng xứng đáng."
+      },
+      {
+        "position": 3,
+        "original": "六三: 益之用凶事, 无咎. 有孚中行, 告公用圭.",
+        "meaning": "Được tăng thêm lợi ích từ những điều không may mắn. Dùng sự trung nghị báo cáo nhà vua.",
+        "commentary": "Hào 3: Trong cái rủi có cái may, vượt qua sự việc khó khăn mà được lợi bồi thêm."
+      },
+      {
+        "position": 4,
+        "original": "六四: 中行, 告公從. 利用為依遷國.",
+        "meaning": "Thông báo với người trên về việc giúp đỡ, được tin tưởng ủy thác làm dời đô rời trung tâm.",
+        "commentary": "Hào 4: Có khả năng tư vấn và triển khai chiến lược quan trọng, tạo phúc lợi to lớn."
+      },
+      {
+        "position": 5,
+        "original": "九五: 有孚惠心, 勿問元吉. 有孚惠我德.",
+        "meaning": "Có lòng tốt thực sự ban phúc cho mọi người thì không cần hỏi cũng biết là rất đẹp, nhận được sự kính trọng.",
+        "commentary": "Hào 5: Lòng tốt xuất phát từ tâm trí tự nguyện bao la lan tỏa sự tích cực."
+      },
+      {
+        "position": 6,
+        "original": "上九: 莫益之, 或擊之. 立心勿恆, 凶.",
+        "meaning": "Không làm gia tăng lợi ích cho ai, nên bị đánh đập tổn hại. Lập tâm không chánh, gặp điềm hung xúi.",
+        "commentary": "Hào 6: Ích kỷ chỉ nghĩ cho bản thân, làm mất đi sự thiện cảm của mọi người nên bị ghét bỏ."
+      }
+    ],
+    "commentary": "Phong Lôi Ích dạy điều quan trọng là cấp trên biết tổn lợi mình để ích lợi cho nhân dân. Lấy công bằng và ân huệ làm gốc, sự phát triển không ngừng."
+  },
+  {
+    "id": 43,
+    "name": "Trạch Thiên Quải",
+    "upper": 2,
+    "lower": 1,
+    "meaning": "Cương quyết, dứt khoát. Dương cương đang thịnh loại trừ âm nhu tiểu nhân.",
+    "image": "Nước hồ bốc lên cung trời. Người lãnh đạo ban phát ơn lộc xuống dưới, cấm việc sống ích kỷ.",
+    "thoanTu": {
+      "original": "夬: 揚于王庭, 孚號, 有厲, 告自邑, 不利即戎, 利有攸往.",
+      "meaning": "Giải quyết một cách công khai tại triều đình. Thành thực báo lên những nguy hiểm khốn khó."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 壯于前趾, 往不勝為咎.",
+        "meaning": "Chân trước mạnh bạo tiến lên, tiến mà không nổi sức thì mắc lỗi.",
+        "commentary": "Hào 1: Không tự lượng sức đánh giá đúng tình thế mà nôn nóng tấn công sẽ hỏng việc."
+      },
+      {
+        "position": 2,
+        "original": "九二: 惕號, 莫夜有戎, 勿恤.",
+        "meaning": "Lo âu cảnh giác gọi báo ban đêm. Cẩn trọng vũ trang thì dẫu địch lại đánh cũng không lo sợ.",
+        "commentary": "Hào 2: Lúc nào cũng phòng bị thì tai qua nạn khỏi."
+      },
+      {
+        "position": 3,
+        "original": "九三: 壯于頄, 有凶. 君子夬夬, 獨行遇雨, 若濡有慍, 无咎.",
+        "meaning": "Mạnh bạo thể hiện trên khuôn mặt sẽ gặp tai họa hung hiểm. Quân tử quyết đoán ngầm chịu tiếng đồn.",
+        "commentary": "Hào 3: Bị hiểu lầm mâu thuẫn nhưng kiên định làm việc lớn trừ hại, kết quả cuối tốt điềm."
+      },
+      {
+        "position": 4,
+        "original": "九四: 臀无膚, 其行次且. 牽羊悔亡, 聞言不信.",
+        "meaning": "Mảng đùi bị sứt trầy, đi lại gian nan. Nghe khuyên nhưng không tin.",
+        "commentary": "Hào 4: Kém tài phân tích tình hình, ngoan cố không nghe lời khuyên dẫn đến đi lại chật vật."
+      },
+      {
+        "position": 5,
+        "original": "九五: 莧陸夬夬, 中行无咎.",
+        "meaning": "Nhè nhẹ cương quyết như rau dền nhổ cỏ, ở vị trí ở giữa giữ vững ý chí thì yên ổn.",
+        "commentary": "Hào 5: Giải quyết việc phải triệt để nhưng tế nhị khéo léo để không gây hỗn loạn lớn."
+      },
+      {
+        "position": 6,
+        "original": "上六: 无號, 終有凶.",
+        "meaning": "Kẻ độc tài âm nhu phía trên không ai kêu gọi, kết cục là tiêu diệt thất bại thảm họa.",
+        "commentary": "Hào 6: Ở cuối đường bĩ cực, cái sai trái không còn bám víu và bị triệt tiêu hoàn toàn."
+      }
+    ],
+    "commentary": "Trạch Thiên Quải biểu hiện của việc ánh sáng dương khí đẩy lùi tà khí âm, dứt khoát và trí tuệ thay vì chỉ dùng sức mạnh áp đảo."
+  },
+  {
+    "id": 44,
+    "name": "Thiên Phong Cấu",
+    "upper": 1,
+    "lower": 5,
+    "meaning": "Gặp gỡ, kết hợp. Quá trình âm bắt đầu chen chân vào dương.",
+    "image": "Dưới vòm trời có tiếng gió mạnh thổi. Quân tử phân bổ mệnh lệnh chỉ đạo đi bốn phương.",
+    "thoanTu": {
+      "original": "姤: 女壯, 勿用取女.",
+      "meaning": "Gái mang sức mạnh lớn. Chớ lấy loại con gái đó."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 繫于金柅, 貞吉, 有攸往, 見凶. 羸豕孚蹢躅.",
+        "meaning": "Cài phanh hãm trục xe lại. Cố tình tiến thì nguy hung. Lợn gầy cứ rậm rực cựa quậy.",
+        "commentary": "Hào 1: Ngăn chặn cái xấu từ trong trứng nước, không để âm khí nhỏ bé ngấm ngầm gây hại."
+      },
+      {
+        "position": 2,
+        "original": "九二: 包有魚, 无咎, 不利賓.",
+        "meaning": "Trong bếp giữ được cá lưới, không bị lỗi sai. Không nên thết đãi khách.",
+        "commentary": "Hào 2: Sự giao tiếp khép kín có chừng mực sẽ đề phòng được xảo trá từ người ngoài."
+      },
+      {
+        "position": 3,
+        "original": "九三: 臀无膚, 其行次且, 厲, 无大咎.",
+        "meaning": "Trên đùi không có da, bước đi lết bết khốn đốn, nhưng ít phàn nàn oán trách.",
+        "commentary": "Hào 3: Dù muốn đi giao quyện nhưng bị chấn thương cản trở, may mà nhờ đó không vướng vào việc xấu."
+      },
+      {
+        "position": 4,
+        "original": "九四: 包无魚, 起凶.",
+        "meaning": "Bếp mà không có gói cá lưới lại, thì nổi lên hung hiểm hoạn nạn.",
+        "commentary": "Hào 4: Không quản lý giám sát người dưới để tiểu nhân thoái hóa, lúc cần lại không có ai giúp."
+      },
+      {
+        "position": 5,
+        "original": "九五: 以杞包瓜, 含章, 有殞自天.",
+        "meaning": "Lấy cây kỷ liễu gói mướp dưa, ngậm chứa vẻ sáng. Có sự ứng nghiệm rơi từ trên cao rớt xuống.",
+        "commentary": "Hào 5: Che giấu cái hay tài sức để đối xử khoan thai với mọi người, thế mới là đường lãnh đạo sáng."
+      },
+      {
+        "position": 6,
+        "original": "上九: 姤其角, 吝, 无咎.",
+        "meaning": "Dùng sừng chạm cựa đối địch, chuốc đau đớn khó chịu nhưng không lầm lỗi lớn.",
+        "commentary": "Hào 6: Quá kiêu căng từ chối giao tiếp kết duyên, tuy bị chỉ trích nhưng thân tránh được hiểm nhơ."
+      }
+    ],
+    "commentary": "Thiên Phong Cấu khuyên ta nên cảnh giác trước những nhỏ nhặt hiểm hóc mới manh nha (cái xấu đang quay lại), có phương pháp kiểm soát kịp thời."
+  },
+  {
+    "id": 45,
+    "name": "Trạch Địa Tụy",
+    "upper": 2,
+    "lower": 8,
+    "meaning": "Tụ tập, tụ họp, đoàn kết.",
+    "image": "Đầm trên mặt đất.",
+    "thoanTu": {
+      "original": "萃: 亨. 王假有廟. 利見大人, 亨, 利貞. 用大牲吉, 利有攸往.",
+      "meaning": "Hưởng sự tốt lành, có lợi khi đi tiến kiến bậc vĩ nhân."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 有孚不終, 乃亂乃萃. 若號, 一握為笑, 未恤, 往无咎.",
+        "meaning": "Gọi tìm bạn tâm giao.",
+        "commentary": "Hào 1: Đi tìm người cùng chí hướng."
+      },
+      {
+        "position": 2,
+        "original": "六二: 引吉, 无咎, 孚乃利用禴.",
+        "meaning": "Chân thành thì được giúp đỡ.",
+        "commentary": "Hào 2: Thực tâm được bù đắp."
+      },
+      {
+        "position": 3,
+        "original": "六三: 萃如, 嗟如, 无攸利. 往无咎, 小吝.",
+        "meaning": "Tụ hợp trong sự phiền lòng.",
+        "commentary": "Hào 3: Giao lưu với người không hợp."
+      },
+      {
+        "position": 4,
+        "original": "九四: 大吉, 无咎.",
+        "meaning": "Tụ họp mọi người vì việc tốt.",
+        "commentary": "Hào 4: Làm việc chung tốt đẹp."
+      },
+      {
+        "position": 5,
+        "original": "九五: 萃有位, 无咎. 匪孚, 元永貞, 悔亡.",
+        "meaning": "Ở vị trí cao tập hợp được người hiền.",
+        "commentary": "Hào 5: Nhờ uy tín cá nhân."
+      },
+      {
+        "position": 6,
+        "original": "上六: 齎咨涕洟, 无咎.",
+        "meaning": "Lệ tuôn rơi vì không ai theo.",
+        "commentary": "Hào 6: Muộn phiền do vị thế đơn độc."
+      }
+    ],
+    "commentary": "Trạch Địa Tụy diễn tả nguyên lý quy tụ đông đúc quần chúng quanh một trung tâm điểm sáng là bậc minh quân."
+  },
+  {
+    "id": 46,
+    "name": "Địa Phong Thăng",
+    "upper": 8,
+    "lower": 5,
+    "meaning": "Đi lên, tiến bộ, thăng tiến.",
+    "image": "Cây mọc từ lòng đất phát triển cao.",
+    "thoanTu": {
+      "original": "升: 元亨, 用見大人, 勿恤, 南征吉.",
+      "meaning": "Tốt lành. Không cần lo ngại."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 允升, 大吉.",
+        "meaning": "Thăng tiến khởi sự dễ dàng.",
+        "commentary": "Hào 1: Khởi đầu gặp may mắn."
+      },
+      {
+        "position": 2,
+        "original": "九二: 孚乃利用禴, 无咎.",
+        "meaning": "Thành tâm dù đơn sơ cũng thành.",
+        "commentary": "Hào 2: Giữ vững tinh thần chân chính."
+      },
+      {
+        "position": 3,
+        "original": "九三: 升虛邑.",
+        "meaning": "Thăng tiến vào nơi không người cản trở.",
+        "commentary": "Hào 3: Không gặp chống đối."
+      },
+      {
+        "position": 4,
+        "original": "六四: 王用亨于岐山, 吉无咎.",
+        "meaning": "Thăng độ tại đền thờ.",
+        "commentary": "Hào 4: Lập công lớn."
+      },
+      {
+        "position": 5,
+        "original": "六五: 貞吉, 升階.",
+        "meaning": "Thăng tiến an bình.",
+        "commentary": "Hào 5: Ổn định và vững chắc."
+      },
+      {
+        "position": 6,
+        "original": "上六: 冥升, 利于不息之貞.",
+        "meaning": "Tiến bộ trong mù ám.",
+        "commentary": "Hào 6: Cần quan sát phương hướng."
+      }
+    ],
+    "commentary": "Địa Phong Thăng nói đến đạo tiến bước cao xa như cây cỏ âm dương vươn dậy. Tiến bước từ từ với lòng thành nhẫn, không lãng trí chìm nghỉm vô cớ."
+  },
+  {
+    "id": 47,
+    "name": "Trạch Thủy Khốn",
+    "upper": 2,
+    "lower": 6,
+    "meaning": "Nguy hiểm, bế tắc, cạn kiệt.",
+    "image": "Hồ hết nước cạn khô.",
+    "thoanTu": {
+      "original": "困: 亨, 貞, 大人吉, 无咎, 有言不信.",
+      "meaning": "Có lời chẳng ai tin, tự giữ mình thì yên."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 臀困于株木, 入于幽谷, 三歲不覿.",
+        "meaning": "Mặc kẹt nơi rừng rậm.",
+        "commentary": "Hào 1: Rơi vào hoạn nạn lâu dài."
+      },
+      {
+        "position": 2,
+        "original": "九二: 困于酒食, 朱紱方來, 利用亨祀, 征凶, 无咎.",
+        "meaning": "Khó khăn ngay lúc no đủ.",
+        "commentary": "Hào 2: Nhiều vấn đề không lường trước."
+      },
+      {
+        "position": 3,
+        "original": "六三: 困于石, 據于蒺藜, 入于其宮, 不見其妻, 凶.",
+        "meaning": "Dẫm phải gai góc.",
+        "commentary": "Hào 3: Gian nan mọi bề."
+      },
+      {
+        "position": 4,
+        "original": "九四: 來徐徐, 困于金車, 吝, 有終.",
+        "meaning": "Xe kẹt không tiến.",
+        "commentary": "Hào 4: Sự việc diễn lui chậm chạp."
+      },
+      {
+        "position": 5,
+        "original": "九五: 劓刖, 困于赤紱, 乃徐有說, 利用祭祀.",
+        "meaning": "Bị tổn hại tay chân.",
+        "commentary": "Hào 5: Tổn thất không tránh khỏi."
+      },
+      {
+        "position": 6,
+        "original": "上六: 困于葛藟, 于臲卼, 曰動悔. 有悔, 征吉.",
+        "meaning": "Bị vướng vào bụi gai.",
+        "commentary": "Hào 6: Biết tu sửa thì tai qua."
+      }
+    ],
+    "commentary": "Trạch Thủy Khốn trình bày triết lý vượt qua bần khốn: dùng đại đức, đức độ, cam chịu mà luyện tâm cơ trí não."
+  },
+  {
+    "id": 48,
+    "name": "Thủy Phong Tỉnh",
+    "upper": 6,
+    "lower": 5,
+    "meaning": "Cái giếng. Nuôi dưỡng lâu dài.",
+    "image": "Gỗ múc nước.",
+    "prophecy": "Khô tỉnh sinh tuyền: Giếng khô thành suối",
+    "deepMeaning": "Khi dự báo, gặp quẻ này, cho biết: rất có thể một cơ hội cũ kỹ nhiều người không đánh giá cao nay bất ngờ đem lại thành quả. Còn sự việc mang tính chất phát triển cái mới thì sẽ bị đóng băng.",
+    "categoryPredictions": {
+      "theVan": "Hiện tình trạng đình đốn, phải chờ thời.",
+      "hyVong": "Sẽ có quý nhân phù trợ.",
+      "taiLoc": "Có, do tích lũy được.",
+      "suNghiep": "Nếu lấy sự tự lực hành động thì thành công.",
+      "nhamChuc": "Có người tiến cử thì thành.",
+      "ngheNghiep": "Cần suy nghĩ kỹ trước khi đổi nghề.",
+      "tinhYeu": "Thành hay không do tư cách bản thân mình.",
+      "honNhan": "Có thể thành.",
+      "doiNguoi": "Họ đến nhưng chờ lâu.",
+      "diXa": "Đi bất lợi.",
+      "phapLy": "Nên hòa giải, tranh chấp sẽ kéo dài rất lâu.",
+      "suViec": "Cứ để cho sự việc tiến triển tự nhiên.",
+      "benhTat": "Bệnh không nặng.",
+      "thiCu": "Đạt kết quả bình thường.",
+      "matCua": "Có thể tìm thấy.",
+      "nguoiRaDi": "Mục đích đi không rõ ràng."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 井泥不食, 舊井无禽.",
+        "meaning": "Giếng bùn lầy.",
+        "commentary": "Hào 1: Bị bỏ hoang."
+      },
+      {
+        "position": 2,
+        "original": "九二: 井谷射鮒, 甕敝漏.",
+        "meaning": "Giếng có lỗ thủng.",
+        "commentary": "Hào 2: Tiêu hao uổng phí."
+      },
+      {
+        "position": 3,
+        "original": "九三: 井渫不食, 為我心惻, 可用汲, 王明, 並受其福.",
+        "meaning": "Giếng trong mà không uống.",
+        "commentary": "Hào 3: Có tài không ai dùng."
+      },
+      {
+        "position": 4,
+        "original": "六四: 井甃, 无咎.",
+        "meaning": "Giếng được dọn sạch.",
+        "commentary": "Hào 4: Tu sửa hoàn thiện."
+      },
+      {
+        "position": 5,
+        "original": "九五: 井冽, 寒泉食.",
+        "meaning": "Giếng mát ngọt.",
+        "commentary": "Hào 5: Cống hiến tài năng."
+      },
+      {
+        "position": 6,
+        "original": "上六: 井收勿幕, 有孚元吉.",
+        "meaning": "Giếng luôn đầy nước.",
+        "commentary": "Hào 6: Ổn định vững vàng."
+      }
+    ],
+    "movingLinePredictions": {
+      "5": {
+        "meaning": "Đã có khả năng và thời cơ thực hiện công việc đến thành công. Bản thân mình có giá trị, được mọi người cần. Cũng cho biết đề phòng xích mích, khẩu thiệt và vạ miệng. Nên ẩn mình im lặng thì mọi sự hung sẽ qua. Có chứng bệnh tâm thần, nên tìm hướng giải quyết.",
+        "business": {
+          "taiVan": "Khá vượng.",
+          "khaiTruong": "Vận thế hiện nay không vượng không nên khai trương.",
+          "buonBan": "Thuận lợi."
+        }
+      }
+    },
+    "thoanTu": {
+      "original": "井: 改邑不改井, 无喪无得, 往來井井. 汔至, 亦未繘井, 羸其瓶, 凶.",
+      "meaning": "Không dời đổi được."
+    },
+    "commentary": "Thủy Phong Tỉnh biểu hiện nền giáo hóa của bậc minh quân, như giếng nước tĩnh mịch nuôi sống nhân quần, cống hiến không vụ lợi."
+  },
+  {
+    "id": 49,
+    "name": "Trạch Hỏa Cách",
+    "upper": 2,
+    "lower": 3,
+    "meaning": "Thay đổi, đổi mới triệt để.",
+    "image": "Lửa bên trong hồ nước.",
+    "thoanTu": {
+      "original": "革: 己日乃孚, 元亨利貞, 悔亡.",
+      "meaning": "Phải thành thực thì mới được người tin."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 鞏用黃牛之革.",
+        "meaning": "Chằng buộc bằng da.",
+        "commentary": "Hào 1: Tính cách kỹ lưỡng."
+      },
+      {
+        "position": 2,
+        "original": "六二: 己日乃革之, 征吉, 无咎.",
+        "meaning": "Cuối ngày thì hoán chuyển mới tốt.",
+        "commentary": "Hào 2: Bắt lấy cơ hội đúng lúc."
+      },
+      {
+        "position": 3,
+        "original": "九三: 征凶, 貞厲, 革言三就, 有孚.",
+        "meaning": "Cần phải tiến hành nhiều lần mới xong.",
+        "commentary": "Hào 3: Chuẩn bị thận trọng."
+      },
+      {
+        "position": 4,
+        "original": "九四: 悔亡, 有孚改命, 吉.",
+        "meaning": "Bỏ điều cũ, mọi người tin tưởng.",
+        "commentary": "Hào 4: Có bước khởi sắc."
+      },
+      {
+        "position": 5,
+        "original": "九五: 大人虎變, 未占有孚.",
+        "meaning": "Biến chuyển mạnh mẽ.",
+        "commentary": "Hào 5: Đạt thành quả rõ ràng."
+      },
+      {
+        "position": 6,
+        "original": "上六: 君子豹變, 小人革面, 征凶, 居貞吉.",
+        "meaning": "Hiệu quả chưa đạt trọn vẹn.",
+        "commentary": "Hào 6: Thay đổi từ từ."
+      }
+    ],
+    "commentary": "Trạch Hỏa Cách dạy việc trừ bỏ cái hủ lậu để kiến thiết cái mới cho tốt đẹp hơn, cần dũng cảm thuận với thời và thuận ý người."
+  },
+  {
+    "id": 50,
+    "name": "Hỏa Phong Đỉnh",
+    "upper": 3,
+    "lower": 5,
+    "meaning": "Nồi vạc đúc kim. Củng cố thành tựu.",
+    "image": "Lửa đốt gỗ đun.",
+    "thoanTu": {
+      "original": "鼎: 元吉, 亨.",
+      "meaning": "Thành quả bền vững."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 鼎顛趾, 利出否, 得妾以其子, 无咎.",
+        "meaning": "Thay cũ đổi mới.",
+        "commentary": "Hào 1: Trừ bỏ sự lạc hậu."
+      },
+      {
+        "position": 2,
+        "original": "九二: 鼎有實, 我仇有疾, 不我能即, 吉.",
+        "meaning": "Gìn giữ tài sản.",
+        "commentary": "Hào 2: Bảo vệ thành quả."
+      },
+      {
+        "position": 3,
+        "original": "九三: 鼎耳革, 其行塞, 雉膏不食, 方雨虧悔, 終吉.",
+        "meaning": "Thay đổi cấu trúc.",
+        "commentary": "Hào 3: Sửa chữa chướng ngại."
+      },
+      {
+        "position": 4,
+        "original": "九四: 鼎折足, 覆公餗, 其形渥, 凶.",
+        "meaning": "Bị gãy vỡ.",
+        "commentary": "Hào 4: Hao hụt đánh mất."
+      },
+      {
+        "position": 5,
+        "original": "六五: 鼎黃耳金鉉, 利貞.",
+        "meaning": "Vật dụng chất lượng cao.",
+        "commentary": "Hào 5: Thành tài đắc lợi."
+      },
+      {
+        "position": 6,
+        "original": "上九: 鼎玉鉉, 大吉, 无不利.",
+        "meaning": "Giá trị ngọc quý.",
+        "commentary": "Hào 6: Thanh khiết vượt bậc."
+      }
+    ],
+    "commentary": "Hỏa Phong Đỉnh hàm ý củng cố vị thế vững chãi tựa đỉnh vạc đắp tạo nhân tài và nuôi dưỡng đức đạo chầu thánh đế quốc quân."
+  },
+  {
+    "id": 51,
+    "name": "Thuần Chấn",
+    "upper": 4,
+    "lower": 4,
+    "meaning": "Sấm chồng sấm, chấn động kinh sợ. Hanh thông, sấm đến sợ hãi rồi sau cười nói vui vẻ.",
+    "image": "Sấm liên tiếp, người quân tử sợ hãi mà tu tỉnh",
+    "thoanTu": {
+      "original": "震: 亨. 震來虩虩, 笑言啞啞. 驚百里, 不喪匕鬯.",
+      "meaning": "Chấn: Hanh thông. Sấm đến khiến sợ hãi, sau cười nói vui vẻ. Kinh động trăm dặm, không đánh rơi bộ đồ tế."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 震來虩虩, 後笑言啞啞, 吉.",
+        "meaning": "Sấm nổ khiến hoảng sợ, sau mới tươi cười hỉ hả, tốt lành.",
+        "commentary": "Hào 1: Biết dự phòng sợ hãi từ sớm thì sau cùng sẽ được bình an vui vẻ."
+      },
+      {
+        "position": 2,
+        "original": "六二: 震來厲, 億喪貝, 躋于九陵, 勿逐, 七日得.",
+        "meaning": "Sấm nổ kinh hoàng, ngờ là mất của, bỏ chạy lên gò cao thì sẽ không mất, bảy ngày sau sẽ tìm lại được.",
+        "commentary": "Hào 2: Gặp lúc nguy hiểm biết lùi lại để bảo toàn thân mình, của cải mất rồi cũng sẽ về cội."
+      },
+      {
+        "position": 3,
+        "original": "六三: 震蘇蘇, 震行无眚.",
+        "meaning": "Tiếng sấm làm tỉnh ngộ, hành động cẩn trọng thì không gặp tai họa.",
+        "commentary": "Hào 3: Sức yếu mà gặp chấn động lớn, biết tùy cơ ứng biến thì khỏi họa."
+      },
+      {
+        "position": 4,
+        "original": "九四: 震遂泥.",
+        "meaning": "Sấm rơi xuống bùn lầy.",
+        "commentary": "Hào 4: Khí dương lún trong bầy âm, nhu nhược không vươn lên được, bất lực trước biến cố."
+      },
+      {
+        "position": 5,
+        "original": "六五: 震往來厲, 億无喪, 有事.",
+        "meaning": "Tiếng sấm qua lại gây nguy hiểm, cẩn thận không để mất mát, có việc phải lo liệu.",
+        "commentary": "Hào 5: Trong lúc loạn động vẫn giữ vững trung đạo, lo liệu công việc không bị sai sót."
+      },
+      {
+        "position": 6,
+        "original": "上六: 震索索, 視矍矍, 征凶. 震不于其躬, 于其鄰, 无咎. 婚媾有言.",
+        "meaning": "Sấm nổ vang trời, nhìn quanh quất hoảng sợ, tiến tới thì hung. Sấm không trúng người mình mà trúng hàng xóm, không lỗi. Chuyện cưới xin có lời qua tiếng lại.",
+        "commentary": "Hào 6: Hoảng loạn quá mức vì lo sợ, nhưng nhờ biết răn mình sớm nên không lụy đến thân."
+      }
+    ],
+    "commentary": "Thuần Chấn báo trước những biến đổi dữ dội giông lôi gầm vang sợ sệt. Ai biết rèn ý chí nín sợ tỉnh trong cảnh nguy cơ ắt vô hoạn."
+  },
+  {
+    "id": 52,
+    "name": "Thuần Cấn",
+    "upper": 7,
+    "lower": 7,
+    "meaning": "Núi chồng núi, dừng lại. Dừng ở lưng, không thấy thân mình. Đi vào sân không thấy người, không lỗi.",
+    "image": "Núi liên tiếp, người quân tử suy nghĩ không vượt quá vị trí",
+    "thoanTu": {
+      "original": "艮: 艮其背, 不獲其身, 行其庭, 不見其人, 无咎.",
+      "meaning": "Cấn: Giữ tĩnh cái lưng, không thấy thân mình. Đi ra ngoài sân không thấy người, không lỗi lầm."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 艮其趾, 无咎, 利永貞.",
+        "meaning": "Dừng lại ở ngón chân, không lỗi lầm, giữ vững bề chính thì có lợi dài lâu.",
+        "commentary": "Hào 1: Mới bắt đầu đã biết dừng lại đúng lúc, kiềm chế dục vọng từ sớm thì tránh được tai họa."
+      },
+      {
+        "position": 2,
+        "original": "六二: 艮其腓, 不拯其隨, 其心不快.",
+        "meaning": "Dừng lại ở bắp chân, không cứu vãn được người đi theo, trong lòng không vui.",
+        "commentary": "Hào 2: Muốn cứu chữa cái sai nhưng vị thế yếu kém không làm được, đành chịu buồn bực trong lòng."
+      },
+      {
+        "position": 3,
+        "original": "九三: 艮其限, 列其夤, 厲薰心.",
+        "meaning": "Dừng lại ngang hông, làm chia lìa xương thịt, nguy hiểm nung nấu tâm can.",
+        "commentary": "Hào 3: Dừng lại một cách cứng nhắc, gượng ép phân ly, gây ra thảm họa và uất ức nội tâm."
+      },
+      {
+        "position": 4,
+        "original": "六四: 艮其身, 无咎.",
+        "meaning": "Dừng lại ở thân mình, không có lỗi gì.",
+        "commentary": "Hào 4: Âm nhu đắc chính, biết co mình lại đúng giới hạn, không phải gánh họa."
+      },
+      {
+        "position": 5,
+        "original": "六五: 艮其輔, 言有序, 悔亡.",
+        "meaning": "Dừng lại ở quai hàm. Nói năng có chừng mực, trật tự nên không hối hận.",
+        "commentary": "Hào 5: Biết cẩn trọng trong lời nói, không buông phóng ngôn từ nên kết cuộc tốt đẹp."
+      },
+      {
+        "position": 6,
+        "original": "上九: 敦艮, 吉.",
+        "meaning": "Đôn hậu giữ trọn đạo tĩnh, tốt lành.",
+        "commentary": "Hào 6: Ở tột đỉnh của sự dừng lại, đạt đến mức hoàn thiện của đạo Cấn, tâm tĩnh mọi bề tốt đẹp."
+      }
+    ],
+    "commentary": "Thuần Cấn phô luận về thuật dứt định tĩnh nội thân. Phải định trước tà tình dâm dục vọng tưởng, đừng cố dập ngớ ngẩn mà sinh loét ngứa."
+  },
+  {
+    "id": 53,
+    "name": "Phong Sơn Tiệm",
+    "upper": 5,
+    "lower": 7,
+    "meaning": "Gió trên núi, tiến dần từ từ. Người nữ đi lấy chồng thì tốt, lợi về giữ chính. Tiến hành từng bước.",
+    "image": "Trên núi có cây, người quân tử ở nơi đức hiền để hóa tục tốt",
+    "thoanTu": {
+      "original": "漸: 女歸吉, 利貞.",
+      "meaning": "Tiệm: Nữ về nhà chồng bề thuận tự thì đạt kiết. Lợi về sự gìn giữ đức chính đính."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 鴻漸于干, 小子厲, 有言, 无咎.",
+        "meaning": "Chim nhạn tiến đến bờ nước, kẻ nhỏ tuổi có nguy hiểm, có lời chê trách nhưng không lỗi lầm.",
+        "commentary": "Hào 1: Khởi đầu sự thăng tiến đầy khó khăn, tuy bị chỉ trích nhưng biết cẩn trọng thì an toàn."
+      },
+      {
+        "position": 2,
+        "original": "六二: 鴻漸于磐, 飲食衎衎, 吉.",
+        "meaning": "Chim nhạn tiến đến tảng đá, ăn uống hòa nhã vui vẻ, tốt lành.",
+        "commentary": "Hào 2: Tiến lên có nền tảng vững vàng, được hưởng lộc bình an vô sự."
+      },
+      {
+        "position": 3,
+        "original": "九三: 鴻漸于陸, 夫征不復, 婦孕不育, 凶. 利禦寇.",
+        "meaning": "Chim nhạn tiến lên gò đất, chồng đi đánh trận không về, vợ chửa không sinh con, hung. Chống giặc cướp thì có lợi.",
+        "commentary": "Hào 3: Tiến quá xa mất chỗ tựa, mất nết thuận hòa, dẫn đến cốt nhục ly tán. Chỉ có tự phòng thủ là ích."
+      },
+      {
+        "position": 4,
+        "original": "六四: 鴻漸于木, 或得其桷, 无咎.",
+        "meaning": "Chim nhạn tiến đến rừng cây, may tìm được cành đậu vững chãi, không bị lỗi.",
+        "commentary": "Hào 4: Vị trí chênh vênh nhưng biết tìm chỗ nương tựa nhu thuận, không bị rớt ngã."
+      },
+      {
+        "position": 5,
+        "original": "九五: 鴻漸于陵, 婦三歲不孕, 終莫之勝, 吉.",
+        "meaning": "Chim nhạn tiến lên gò non, vợ ba năm không chửa, về rốt không ai thắng nổi, việc tất thành tốt lành.",
+        "commentary": "Hào 5: Tuy bị ngăn cách tạm thời nhưng giữ đúng đạo trung chính, cuối cùng vẫn có kết quả tốt đẹp."
+      },
+      {
+        "position": 6,
+        "original": "上九: 鴻漸于阿, 其羽可用為儀, 吉.",
+        "meaning": "Chim nhạn tiến lên ngọn cây cao, mang bộ lông làm nghi trượng, vô cùng tốt lành.",
+        "commentary": "Hào 6: Tiến đến mức cao tột, không vướng bận danh lợi, đức hạnh được biểu dương làm khuôn mẫu cho đời."
+      }
+    ],
+    "commentary": "Phong Sơn Tiệm truyền tụng bài học tu hành phải làm tuần tự, tiến nhích từng nấc như nữ gả chồng theo dạm ngõ, vội vã ắt hung bại."
+  },
+  {
+    "id": 54,
+    "name": "Lôi Trạch Quy Muội",
+    "upper": 4,
+    "lower": 2,
+    "meaning": "Đầm sấm, em gái về nhà chồng. Đi thì xấu, không lợi gì. Quan hệ không chính đáng.",
+    "image": "Trên đầm có sấm, người quân tử biết về cuối cùng để hiểu sai lầm",
+    "thoanTu": {
+      "original": "歸妹: 征凶, 无攸利.",
+      "meaning": "Quy Muội: Gả em gái đi làm lẽ. Đem tiến bừa ắt hung bạo, không có lợi gì."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 歸妹以娣, 跛能履, 征吉.",
+        "meaning": "Lấy em gái về làm thiếp, như bị trẹo chân mà vẫn bước đi, tiến lên vẫn tốt.",
+        "commentary": "Hào 1: Chấp nhận vị trí thấp kém để vươn lên từ từ, nhẫn nhục phó thác giữ thân thì tốt."
+      },
+      {
+        "position": 2,
+        "original": "九二: 眇能視, 利幽人之貞.",
+        "meaning": "Mắt thong dòm ngó, lợi cho người ẩn dật giữ đức trinh chính.",
+        "commentary": "Hào 2: Hoàn cảnh bất lợi như chột mắt, chỉ còn cách thu mình nằm chờ định số, tịnh tâm thì qua họa."
+      },
+      {
+        "position": 3,
+        "original": "六三: 歸妹以須, 反歸以娣.",
+        "meaning": "Gả em bé làm lẽ, về sau trở lại làm thiếp hầu.",
+        "commentary": "Hào 3: Tham vọng không đúng chỗ, đánh mất phẩm giá cuối cùng phải chuốc lấy vị thế hèn mạt hơn."
+      },
+      {
+        "position": 4,
+        "original": "九四: 歸妹愆期, 遲歸有時.",
+        "meaning": "Nữ quá thì, chờ ngày gả muộn.",
+        "commentary": "Hào 4: Giống như người lỡ thì kén chọn, chờ được đôi xứng xứng hợp chứ không bán rẻ bản thân, sau cùng cũng lấy được người xứng tay."
+      },
+      {
+        "position": 5,
+        "original": "六五: 帝乙歸妹, 其君之袂, 不如其娣之袂良, 月幾望, 吉.",
+        "meaning": "Nhà vua Đế Ất gả em gái mọn, áo của công chúa không lộng lẫy bằng áo của tì thiếp. Trăng gần rằm, tốt lành.",
+        "commentary": "Hào 5: Bậc tôn quý lấy đức làm trọng không cậy thế xa hoa, khiêm nhường không giành giật thì hạnh phúc tràn đầy."
+      },
+      {
+        "position": 6,
+        "original": "上六: 女承筐无實, 士刲羊无血, 无攸利.",
+        "meaning": "Gái bưng giỏ không có trái quả, trai mổ dê không thấy máu, không được lợi lộc chi.",
+        "commentary": "Hào 6: Hình thức giả tạo thiếu thực chất, không thành chồng vợ, dối gạt danh nghĩa tốn công vô ích."
+      }
+    ],
+    "commentary": "Lôi Trạch Quy Muội đại biểu cho hành vi hấp tấp lóa lấy theo khoái cảm trái với tuần tự lý trí, gả ép gả trói dục vọng sẽ gặp họa."
+  },
+  {
+    "id": 55,
+    "name": "Lôi Hỏa Phong",
+    "upper": 4,
+    "lower": 3,
+    "meaning": "Thịnh vượng. Ở giai đoạn phát triển.",
+    "image": "Sấm chớp. Xét án phạt.",
+    "thoanTu": {
+      "original": "豐: 亨, 王假之, 勿憂, 宜日中.",
+      "meaning": "Tốt. Không cần lo."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 遇其配主, 雖旬无咎, 往有尚.",
+        "meaning": "Tiến lên không lỗi.",
+        "commentary": "Hào 1: Khởi đầu tốt."
+      },
+      {
+        "position": 2,
+        "original": "六二: 豐其蔀, 日中見斗, 往得疑疾, 有孚發若, 吉.",
+        "meaning": "Bị nghi ngờ nhưng thành thật sẽ mang lại may mắn.",
+        "commentary": "Hào 2: Sự chân thành giúp vượt qua bóng tối."
+      },
+      {
+        "position": 3,
+        "original": "九三: 豐其沛, 日中見沫, 折其右肱, 无咎.",
+        "meaning": "Không có lỗi.",
+        "commentary": "Hào 3: Gặp trục trặc là điều bình thường."
+      },
+      {
+        "position": 4,
+        "original": "九四: 豐其蔀, 日中見斗, 遇其夷主, 吉.",
+        "meaning": "Kết giao tốt.",
+        "commentary": "Hào 4: Tìm được bạn là điều tốt."
+      },
+      {
+        "position": 5,
+        "original": "六五: 來章, 有慶譽, 吉.",
+        "meaning": "Mang lại điều tốt.",
+        "commentary": "Hào 5: Biết dùng người sẽ thành công."
+      },
+      {
+        "position": 6,
+        "original": "上六: 豐其屋, 蔀其家, 闚其戶, 闃其无人, 三歲不覿, 凶.",
+        "meaning": "Tự cao sẽ chuốc họa.",
+        "commentary": "Hào 6: Ở đỉnh cao kiêu ngạo sẽ gặp họa."
+      }
+    ],
+    "commentary": "Lôi Hỏa Phong nhắc con người thấu hiểu định luật cực thịnh tất cực suy. Trong ánh nhật diệu hoang phí phải lo tự răn gìn giữ kẻo lụn bại tăm tối nháy mắt."
+  },
+  {
+    "id": 56,
+    "name": "Hỏa Sơn Lữ",
+    "upper": 3,
+    "lower": 7,
+    "meaning": "Lửa trên núi, lữ khách đi đường. Hanh thông nhỏ, lữ hành giữ chính thì tốt. Đời sống xê dịch.",
+    "image": "Trên núi có lửa, người quân tử sáng suốt thận trọng dùng hình mà không để tụng kéo dài",
+    "thoanTu": {
+      "original": "旅: 小亨, 旅貞吉.",
+      "meaning": "Lữ: Làm khách qua đường. Hanh nhỏ, người đi lữ hành hành xử đúng đắn thì tốt."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 旅瑣瑣, 斯其所取災.",
+        "meaning": "Làm khách mà ti tiện ích kỷ nhỏ nhặt, thế nào cũng chuốc đường vạ họa tai.",
+        "commentary": "Hào 1: Khách lữ tha hương đã nghèo kém còn gây chuyện xét nét sinh u oán tàn thân lụy mạng."
+      },
+      {
+        "position": 2,
+        "original": "六二: 旅即次, 懷其資, 得童仆貞.",
+        "meaning": "Lữ khách đến quán trọ, mang theo tiền bạc, được người tớ trai đáng tin phục vụ.",
+        "commentary": "Hào 2: Làm khách biết nhu thuận nhún nhường nên đặng yên chốn nương thân cùng tiền bạc, có người trung nghĩa tận tuỵ tài trợ."
+      },
+      {
+        "position": 3,
+        "original": "九三: 旅焚其次, 喪其童仆, 貞厲.",
+        "meaning": "Lữ khách làm cháy chốn trọ, mất đứt bầy đầy tớ tâm phúc, giữ chính vẫn nguy.",
+        "commentary": "Hào 3: Kiêu ngông khinh mạn làm mất lòng chủ nhà, tổn hao sản nghiệp lại mất cả người phụ tá, khốn đốn nguy vong."
+      },
+      {
+        "position": 4,
+        "original": "九四: 旅于處, 得其資斧, 我心不快.",
+        "meaning": "Lữ khách ở chỗ trọ, được chút tài sản phủ búa, nhưng trong lòng không vui sướng.",
+        "commentary": "Hào 4: Tuy thân có yên chỗ và vật chất dư dả nhưng chí nguyện tha hương chưa thành, lòng vẫn đau đáu bất bình an."
+      },
+      {
+        "position": 5,
+        "original": "六五: 射雉一矢亡, 終以譽命.",
+        "meaning": "Bắn trĩ mất một mũi tên, rốt cục được khen ngợi sắc phong.",
+        "commentary": "Hào 5: Lấy sự nhu thuận để kết giao nên dẫu phải chịu hao hụt đôi phần nhưng để lại tiếng tăm lừng lẫy, phúc lộc về hậu."
+      },
+      {
+        "position": 6,
+        "original": "上九: 鳥焚其巢, 旅人先笑後號啕. 喪牛于易, 凶.",
+        "meaning": "Chim bị cháy mất tổ, người lữ thoạt tiên cười nói nhưng ngay sau gào khóc thảm thiết, mất bò ngoài đồng dễ dàng. Hung.",
+        "commentary": "Hào 6: Ở cõi chót xa ngạo mạn quên thân, hếch mặt với thiên hạ, sau phải nuốt quả đắng tai ương, mất trắng sự nghiệp tàn lụn khóc oán."
+      }
+    ],
+    "commentary": "Hỏa Sơn Lữ đúc kết thân phận kiều ngụ làm khách, trọng sự khiêm dường nhu trinh thuận chớ xấc xược ngông cuồng ắt nếm mùi tai vạ đau đớn cô quạnh."
+  },
+  {
+    "id": 57,
+    "name": "Thuần Tốn",
+    "upper": 5,
+    "lower": 5,
+    "meaning": "Thuận theo. Mềm mỏng. Nhập vào trong.",
+    "image": "Gió thổi.",
+    "thoanTu": {
+      "original": "巽: 小亨, 利有攸往, 利見大人.",
+      "meaning": "Thuận theo mệnh lệnh để đạt kết quả."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 進退, 利武人之貞.",
+        "meaning": "Lưỡng lự thì không lợi.",
+        "commentary": "Hào 1: Còn thiếu quyết đoán."
+      },
+      {
+        "position": 2,
+        "original": "九二: 巽在床下, 用史巫紛若, 吉无咎.",
+        "meaning": "Giải quyết sự việc tận gốc.",
+        "commentary": "Hào 2: Diệt mầm bệnh từ sâu bên trong."
+      },
+      {
+        "position": 3,
+        "original": "九三: 頻巽, 吝.",
+        "meaning": "Quyết định sai sẽ hối tiếc.",
+        "commentary": "Hào 3: Thận trọng trước khi hành động."
+      },
+      {
+        "position": 4,
+        "original": "六四: 悔亡, 田獲三品.",
+        "meaning": "Thu được kết quả.",
+        "commentary": "Hào 4: Làm việc chăm chỉ đắc lợi."
+      },
+      {
+        "position": 5,
+        "original": "九五: 貞吉悔亡, 无不利. 无初有終, 先庚三日, 後庚三日, 吉.",
+        "meaning": "Ban đầu khó khăn nhưng sau sẽ tốt.",
+        "commentary": "Hào 5: Kiên nhẫn mang lại thành quả."
+      },
+      {
+        "position": 6,
+        "original": "上九: 巽在床下, 喪其資斧, 貞凶.",
+        "meaning": "Tiến quá sâu vào đường cùng sẽ thất bại.",
+        "commentary": "Hào 6: Biết dừng lại đúng lúc."
+      }
+    ],
+    "commentary": "Thuần Tốn răn giới rằng thuận theo hoàn cảnh hay người là tốt nhưng phải dứt khoát lập thân, tránh xu xe mèn nịnh quỳ đớn sinh u lạt nhược đọa mất uy cơ."
+  },
+  {
+    "id": 58,
+    "name": "Thuần Đoài",
+    "upper": 2,
+    "lower": 2,
+    "meaning": "Đầm chồng đầm, vui vẻ trao đổi. Hanh thông, lợi về giữ chính. Vui vẻ hòa thuận.",
+    "image": "Đầm liên tiếp, người quân tử bạn bè giảng tập lẫn nhau",
+    "thoanTu": {
+      "original": "兌: 亨, 利貞.",
+      "meaning": "Đoài: Vui vẻ hài hòa. Hanh thông, giữ đạo trinh chính thì có lợi."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 和兌, 吉.",
+        "meaning": "Hòa nhã vui vẻ tự đáy lòng, rất tốt lành.",
+        "commentary": "Hào 1: Vui vẻ một cách chân thực, giao tiếp bình đẳng không mưu cầu tư lợi thì mọi sự thuận lợi trong sáng."
+      },
+      {
+        "position": 2,
+        "original": "九二: 孚兌, 吉, 悔亡.",
+        "meaning": "Tin tưởng vào nếp vui chân thật thì tốt lành, hối hận tiêu tan.",
+        "commentary": "Hào 2: Lấy sự thành tín chân chính mà đối đãi, dẫu đứng giữa bầy âm thì vẫn tránh được sầu muộn."
+      },
+      {
+        "position": 3,
+        "original": "六三: 來兌, 凶.",
+        "meaning": "Đến để cầu xin mua vui, hung hiểm.",
+        "commentary": "Hào 3: Bất chính bất trung, vì hám danh lợi mà uốn mình quỵ lụy hòng mua dăm ba tiếng vui giả tạo, mang họa diệt thân."
+      },
+      {
+        "position": 4,
+        "original": "九四: 商兌未寧, 介疾有喜.",
+        "meaning": "Còn đắn đo suy lượng chưa yên, dứt bỏ hẳn mọi thứ mầm ác thì mới đạt được niềm vui sướng.",
+        "commentary": "Hào 4: Nằm giữa lối rẽ theo tà vui hay giữ chính đạo. Phải quyết tâm đoạn tuyệt tính mềm lòng thỏa hiệp cái xấu thì thu phúc lớn."
+      },
+      {
+        "position": 5,
+        "original": "九五: 孚于剝, 有厲.",
+        "meaning": "Tin cậy kẻ hay bóc lột xu nịnh, sẽ có nguy hiểm.",
+        "commentary": "Hào 5: Đứng chỗ ngôi cao mà đặt nhầm niềm tin vào bọn nịnh thần xảo quyệt, ắt sẽ chuốc lấy tại họa tàn rụi vây khốn."
+      },
+      {
+        "position": 6,
+        "original": "上六: 引兌.",
+        "meaning": "Dẫn dụ lôi kéo nhau vào đam mê khoái lạc.",
+        "commentary": "Hào 6: Ở cuối đường bế tắc, lôi kéo người khác bù đắp nỗi niềm tăm tối của mình, rơi vào cảnh truỵ lạc mất phước."
+      }
+    ],
+    "commentary": "Thuần Đoài khuyên sự đối nhân xử thế hoan hỉ nên dựa nền móng thành trinh và đính đắn; chớ cầu dụ dỗ lẳng lơ truy lộng lượn rỗng thì lạc dâm uổng mạng nát tuế hoa."
+  },
+  {
+    "id": 59,
+    "name": "Phong Thủy Hoán",
+    "upper": 5,
+    "lower": 6,
+    "meaning": "Gió trên nước, tan rã phân tán. Hanh thông, vua đến miếu. Lợi khi vượt sông lớn, lợi khi giữ chính.",
+    "image": "Gió chạy trên nước, kẻ làm vua dựng miếu tế trời",
+    "thoanTu": {
+      "original": "渙: 亨. 王假有廟, 利涉大川, 利貞.",
+      "meaning": "Hoán: Giải tán, phân tán. Hanh thông. Vua dời việc tới thái miếu. Lợi lội qua sông lớn. Lợi duy trì đức chính."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 用拯馬壯, 吉.",
+        "meaning": "Dùng sức tuấn mã mà cứu vớt người khi nguy nan, tốt lành.",
+        "commentary": "Hào 1: Họa tan rã mới nhen nhóm, dùng sức lực mạnh mẽ dập tắt ngay thì dứt được ly tán."
+      },
+      {
+        "position": 2,
+        "original": "九二: 渙其機, 悔亡.",
+        "meaning": "Hoán chạy ẩn náu nơi cái sạp an toàn, hối tiếc tiêu tan.",
+        "commentary": "Hào 2: Gặp nạn chia ly biết tìm chỗ tựa vững vàng ở người mạnh, bảo nguy thành yên, tránh được u phiền."
+      },
+      {
+        "position": 3,
+        "original": "六三: 渙其躬, 无悔.",
+        "meaning": "Bỏ mặc riêng tư của bản thân để cứu giúp, không hối hận.",
+        "commentary": "Hào 3: Quyết hy sinh quyền lợi bản thân xông pha dẹp loạn chia lìa cho đại cục, thoát khỏi u uất."
+      },
+      {
+        "position": 4,
+        "original": "六四: 渙其群, 元吉. 渙有丘, 匪夷所思.",
+        "meaning": "Tiêu tán được bầy đảng riêng tư gộp thành đoàn kết lớn như đòi núi, đó là cái phước vĩ đại đến mức tưởng chả đặng nổi, vô cùng tốt.",
+        "commentary": "Hào 4: Dẹp bỏ lợi ích nhóm, gom người tứ tán về lập đại cục sừng sững, thành quả rạng rỡ bất ngờ."
+      },
+      {
+        "position": 5,
+        "original": "九五: 渙汗其大號, 渙王居, 无咎.",
+        "meaning": "Lệnh phát ra rõ rệt dứt khoát như mồ hôi ứ đọng tuôn trào không thu về. Dùng tài sản nhà Vua ban để cứu dân nghèo, không lỗi.",
+        "commentary": "Hào 5: Ngôi vua ban mệnh lệnh sáng suốt kịp thời hóa giải hung họa, làm đại phước xua tan ly loạn trong dân."
+      },
+      {
+        "position": 6,
+        "original": "上九: 渙其血, 去逖出, 无咎.",
+        "meaning": "Tiêu tán đi máu huyết sầu đoạ, xua họa hại đi thật xa, rốt cuộc không lỗi lầm.",
+        "commentary": "Hào 6: Tổn hết mọi thương tật và mầm oán hận tận gốc, cứu toàn mạng hưng vượng về sau an lành."
+      }
+    ],
+    "commentary": "Phong Thủy Hoán nêu tỏ cơn xao động chia phôi thì nhà lãnh tụ cần tung sức phất lệnh ban đức hóa giải quy tụ quần chúng nạp tâm bình loạn tái lập vĩ độ sinh."
+  },
+  {
+    "id": 60,
+    "name": "Thủy Trạch Tiết",
+    "upper": 6,
+    "lower": 2,
+    "meaning": "Tiết chế. Điểm dừng. Có chừng mực.",
+    "image": "Cân bằng Nước - Đầm.",
+    "thoanTu": {
+      "original": "節: 亨. 苦節不可貞.",
+      "meaning": "Biết tiết chế là tốt."
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 不出戶庭, 无咎.",
+        "meaning": "Không vượt qua giới hạn.",
+        "commentary": "Hào 1: Biết giữ mình."
+      },
+      {
+        "position": 2,
+        "original": "九二: 不出門庭, 凶.",
+        "meaning": "Tiến thoái sai nhịp.",
+        "commentary": "Hào 2: Lỡ cơ hội."
+      },
+      {
+        "position": 3,
+        "original": "六三: 不節若, 則嗟若, 无咎.",
+        "meaning": "Thất bại nếu không kiềm chế.",
+        "commentary": "Hào 3: Nuông chiều bản thân."
+      },
+      {
+        "position": 4,
+        "original": "六四: 安節, 亨.",
+        "meaning": "Tiết độ hợp lý.",
+        "commentary": "Hào 4: Mọi sự đều vừa vặn."
+      },
+      {
+        "position": 5,
+        "original": "九五: 甘節, 吉; 往有尚.",
+        "meaning": "Biết cân bằng.",
+        "commentary": "Hào 5: Đạt thành công."
+      },
+      {
+        "position": 6,
+        "original": "上六: 苦節, 貞凶, 悔亡.",
+        "meaning": "Quá nghiêm khắc.",
+        "commentary": "Hào 6: Khổ hạnh quá sẽ không bền."
+      }
+    ],
+    "commentary": "Thủy Trạch Tiết luận bàn nếp giữ mức độ chừng chực hài hòa. Phóng túng ắt lún kiệt, cay khe mặn dập thắt buốt ắt bùng nát; chỉ êm thấm ngọt ngào trung đạo duy tân vĩnh đại hưng vượng đắc phúc mỹ diệu."
+  },
+  {
+    "id": 61,
+    "name": "Phong Trạch Trung Phu",
+    "upper": 5,
+    "lower": 2,
+    "meaning": "Gió trên đầm, lòng chân thành. Tốt lành, lợi khi vượt sông lớn, lợi khi giữ chính. Thành tín cảm hóa.",
+    "image": "Trên đầm có gió, người quân tử nghị tụng hoãn tử",
+    "thoanTu": {
+      "original": "中孚: 豚魚吉, 利涉大川, 利貞.",
+      "meaning": "Trung phu: Lòng chân thành tạc từ trong lõi. Thành tín soi tỏ đến cả lợn cắp cá ngu ngơ cũng phải đắc phúc. Lợi cho việc lội qua sông lớn. Lợi cho việc giữ vững đạo chính đính.",
+      "commentary": ""
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 虞吉, 有它不燕.",
+        "meaning": "Tìm cách biết trước tính toan để đặng lành. Có dự tính vơ vẩn thì lòng dạ không yên tĩnh vỡ nát.",
+        "commentary": "Hào 1: Ngay từ đầu phải dốc tâm thẳng thật thì bình an muôn lối. Suy diễn vạy lệch dẫn đến mệt trí sầu bi."
+      },
+      {
+        "position": 2,
+        "original": "九二: 鳴鶴在陰, 其子和之, 我有好爵, 吾與爾靡之.",
+        "meaning": "Cò mẹ kêu ở chỗ râm mờ, cò con hót đáp lại. Ta có chén rượu quí, ta cùng ngươi san sẻ thưởng thức.",
+        "commentary": "Hào 2: Tâm giao đắc tín từ sâu trong cốt, dẫu chẳng phô bày thì thiện dạ vẫn cảm hóa, cùng nhau hưởng chung ngọc quả ngọt bùi."
+      },
+      {
+        "position": 3,
+        "original": "六三: 得敵, 或鼓或罷, 或泣或歌.",
+        "meaning": "Chạm mặt địch thủ bất kỳ, có lúc khua trống đánh hăng, có lúc lại mệt lả buông xuôi rỗng tuếch, có lúc khóc ré có lúc hát.",
+        "commentary": "Hào 3: Không có lòng trung tín, chập chờn bốc đồng mất lý trí, thất bại sầu hão ngây ngô tiều tụy chuốc vạ bu."
+      },
+      {
+        "position": 4,
+        "original": "六四: 月幾望, 馬匹亡, 无咎.",
+        "meaning": "Lúc trăng sắp tròn đầy. Dù để mất đôi ngựa nhưng không lỗi lầm.",
+        "commentary": "Hào 4: Âm nhu bỏ qua bầy đảng mà hướng lòng tín thành theo đại nhân như trăng hướng về mặt trời, giữ được trong sáng thanh nhàn dù hao tổn."
+      },
+      {
+        "position": 5,
+        "original": "九五: 有孚攣如, 无咎.",
+        "meaning": "Có tấm lòng chí thành kết nối người cùng chung sức, không có lỗi lầm.",
+        "commentary": "Hào 5: Cương trung ngự trị lòng chân thành, tập hợp muôn vạn trái tim tín mộ dồi dào, phúc diệu rạng rỡ."
+      },
+      {
+        "position": 6,
+        "original": "上九: 翰音登于天, 貞凶.",
+        "meaning": "Tiếng gà gáy vút bay xa lên tới trời, giữ chính dẫu vậy vẫn hung.",
+        "commentary": "Hào 6: Miệng gáy ngông cuồng như gà đòi cất cánh bay tới trời cao, thực tế hư vô rỗng tuếch ắt rơi rụng tàn nát."
+      }
+    ],
+    "commentary": "Phong Trạch Trung Phu chỉ rằng kẻ trí thành thấu tâm trung đạo tin lân gầy dựng đức tin bền chân thật chí thiện; múa mép trơn dối khoe khoang tín ảo ắt tuột dốc."
+  },
+  {
+    "id": 62,
+    "name": "Lôi Sơn Tiểu Quá",
+    "upper": 4,
+    "lower": 7,
+    "meaning": "Quá khứ nhỏ bé. Phụ trợ nhỏ.",
+    "image": "Chú trọng việc vừa và nhỏ.",
+    "thoanTu": {
+      "original": "小過: 亨, 利貞, 可小事, 不可大事. 飛鳥遺之音, 不宜上, 宜下, 大吉.",
+      "meaning": "Vững vàng tiến lên.",
+      "commentary": ""
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 飛鳥以凶.",
+        "meaning": "Chim nhỏ vút lên cao sai bầy.",
+        "commentary": "Hào 1: Quá mức chịu đựng."
+      },
+      {
+        "position": 2,
+        "original": "六二: 過其祖, 遇其妣, 不及其君, 遇其臣, 无咎.",
+        "meaning": "Tuân theo bổn phận.",
+        "commentary": "Hào 2: Giữ đúng vị trí bản thân."
+      },
+      {
+        "position": 3,
+        "original": "九三: 弗過防之, 從或戕之, 凶.",
+        "meaning": "Vượt qua giới hạn bị phòng bị.",
+        "commentary": "Hào 3: Sẽ gặp tổn thương."
+      },
+      {
+        "position": 4,
+        "original": "九四: 无咎, 弗過遇之, 往厲必戒, 勿用永貞.",
+        "meaning": "Lùi một bước.",
+        "commentary": "Hào 4: Dè chừng tự giữ mình."
+      },
+      {
+        "position": 5,
+        "original": "六五: 密雲不雨, 自我西郊, 公弋取彼在穴.",
+        "meaning": "Mây nhiều không mưa.",
+        "commentary": "Hào 5: Sự rủi ro có thể cản bước."
+      },
+      {
+        "position": 6,
+        "original": "上六: 弗遇過之, 飛鳥離之, 凶, 是謂災眚.",
+        "meaning": "Chim lệch bay xa khỏi tổ.",
+        "commentary": "Hào 6: Tách rời quá xa hiện tại."
+      }
+    ],
+    "commentary": "Lôi Sơn Tiểu Quá đắn đo răn hứa việc lỡ làm lố cũng chỉ độ nhỏ thỏ sập dỏ, lố lớn sụp họa. Khiêm cung hạ mình né cao tụt nhẫn nấp uốn là phúc cao chánh bảo trinh an khang bền lị."
+  },
+  {
+    "id": 63,
+    "name": "Thủy Hỏa Ký Tế",
+    "upper": 6,
+    "lower": 3,
+    "meaning": "Mọi việc đã xong.",
+    "image": "Nước và Lửa cân bằng.",
+    "thoanTu": {
+      "original": "既濟: 亨, 小利貞, 初吉終亂.",
+      "meaning": "Khởi đầu tốt nhưng cần thận trọng về sau.",
+      "commentary": ""
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初九: 曳其輪, 濡其尾, 无咎.",
+        "meaning": "Kiềm chế lại.",
+        "commentary": "Hào 1: Tránh nôn nóng."
+      },
+      {
+        "position": 2,
+        "original": "六二: 婦喪其茀, 勿逐, 七日得.",
+        "meaning": "Mất mát rồi sẽ tìm lại được.",
+        "commentary": "Hào 2: Kiên nhẫn chờ đợi."
+      },
+      {
+        "position": 3,
+        "original": "九三: 高宗伐鬼方, 三年克之, 小人勿用.",
+        "meaning": "Hành động vất vả dẹp giặc.",
+        "commentary": "Hào 3: Bỏ công sức để bảo vệ thành quả."
+      },
+      {
+        "position": 4,
+        "original": "六四: 繻有衣袽, 終日戒.",
+        "meaning": "Đề phòng thuyền thủng.",
+        "commentary": "Hào 4: Ngăn ngừa rủi ro nhỏ."
+      },
+      {
+        "position": 5,
+        "original": "九五: 東鄰殺牛, 不如西鄰之禴祭, 實受其福.",
+        "meaning": "Thành tâm tế lễ.",
+        "commentary": "Hào 5: Quan trọng ở tấm lòng chân thật."
+      },
+      {
+        "position": 6,
+        "original": "上六: 濡其首, 厲.",
+        "meaning": "Nước ướt đầu.",
+        "commentary": "Hào 6: Ở lúc kết thúc càng phải cẩn thận."
+      }
+    ],
+    "commentary": "Thủy Hỏa Ký Tế diễn cảnh mọi bề xong xuôi êm lọt. Tột bậc hoàn mãn sinh nguy họa mầm rã loạn bươn lụn, kỉnh dặn thân ý răn phải thủ bảo phòng cơ ngự oán hão thì vạn thọ bọc điềm an rỡ tú diệu sương hoan."
+  },
+  {
+    "id": 64,
+    "name": "Hỏa Thủy Vị Tế",
+    "upper": 3,
+    "lower": 6,
+    "meaning": "Chưa hoàn tất.",
+    "image": "Đi tìm sự thật cuối cùng.",
+    "thoanTu": {
+      "original": "未濟: 亨, 小狐汔濟, 濡其尾, 无攸利.",
+      "meaning": "Chưa qua bờ bên kia.",
+      "commentary": ""
+    },
+    "haoTexts": [
+      {
+        "position": 1,
+        "original": "初六: 濡其尾, 吝.",
+        "meaning": "Bị rơi xuống nước ướt đuôi.",
+        "commentary": "Hào 1: Quá háo hức tiến nhanh."
+      },
+      {
+        "position": 2,
+        "original": "九二: 曳其輪, 貞吉.",
+        "meaning": "Kéo giữ lại.",
+        "commentary": "Hào 2: Kiềm chế chờ đợi."
+      },
+      {
+        "position": 3,
+        "original": "六三: 未濟, 征凶, 利涉大川.",
+        "meaning": "Chuẩn bị đi qua sông.",
+        "commentary": "Hào 3: Khởi đầu lần nữa."
+      },
+      {
+        "position": 4,
+        "original": "九四: 貞吉, 悔亡, 震用伐鬼方, 三年有賞于大國.",
+        "meaning": "Thất bại đã lùi sau lưng.",
+        "commentary": "Hào 4: Lập công danh sau khó khăn."
+      },
+      {
+        "position": 5,
+        "original": "六五: 貞吉, 无悔, 君子之光, 有孚, 吉.",
+        "meaning": "Tìm được vinh quang.",
+        "commentary": "Hào 5: Thành tựu rực rỡ."
+      },
+      {
+        "position": 6,
+        "original": "上九: 有孚于飲酒, 无咎, 濡其首, 有孚失是.",
+        "meaning": "Uống say quá sẽ gặp rắc rối.",
+        "commentary": "Hào 6: Bất cẩn khi tiệc tùng ăn mừng."
+      }
+    ],
+    "commentary": "Hỏa Thủy Vị Tế diễn luận việc xoay vận chu kỳ mới sau vòng dở dang bứt kết. Giữ tín trinh chí minh uốn êm bọc cẩn đề lộng sụp đổ, nhẫn nhịn ráng trí tịnh đợi thời vượt bĩ ngãi rỡ cao ngõ thái hòa vĩnh bảo."
+  }
+]

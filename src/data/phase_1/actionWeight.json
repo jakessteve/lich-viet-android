@@ -1,0 +1,114 @@
+{
+  "Cưới hỏi": {
+    "baseWeight": 10,
+    "starMultipliers": {
+      "cat": 1.5,
+      "hung": 0.5
+    }
+  },
+  "Cầu tài": {
+    "baseWeight": 8,
+    "starMultipliers": {
+      "cat": 1.4,
+      "hung": 0.6
+    }
+  },
+  "Động thổ": {
+    "baseWeight": 9,
+    "starMultipliers": {
+      "cat": 1.5,
+      "hung": 0.3
+    }
+  },
+  "Khai trương": {
+    "baseWeight": 9,
+    "starMultipliers": {
+      "cat": 1.5,
+      "hung": 0.4
+    }
+  },
+  "Ký hợp đồng": {
+    "baseWeight": 8,
+    "starMultipliers": {
+      "cat": 1.3,
+      "hung": 0.5
+    }
+  },
+  "Giao dịch": {
+    "baseWeight": 7,
+    "starMultipliers": {
+      "cat": 1.2,
+      "hung": 0.6
+    }
+  },
+  "Xuất hành": {
+    "baseWeight": 6,
+    "starMultipliers": {
+      "cat": 1.3,
+      "hung": 0.7
+    }
+  },
+  "Chôn cất": {
+    "baseWeight": 10,
+    "starMultipliers": {
+      "cat": 1.0,
+      "hung": 0.2
+    }
+  },
+  "Nhận chức": {
+    "baseWeight": 7,
+    "starMultipliers": {
+      "cat": 1.4,
+      "hung": 0.6
+    }
+  },
+  "Chữa bệnh": {
+    "baseWeight": 8,
+    "starMultipliers": {
+      "cat": 1.2,
+      "hung": 0.5
+    }
+  },
+  "Chuyển nhà": {
+    "baseWeight": 8,
+    "starMultipliers": {
+      "cat": 1.3,
+      "hung": 0.4
+    }
+  },
+  "Cúng lễ": {
+    "baseWeight": 9,
+    "starMultipliers": {
+      "cat": 1.5,
+      "hung": 0.8
+    }
+  },
+  "Cầu phúc": {
+    "baseWeight": 8,
+    "starMultipliers": {
+      "cat": 1.4,
+      "hung": 0.8
+    }
+  },
+  "Kiện tụng": {
+    "baseWeight": 7,
+    "starMultipliers": {
+      "cat": 1.2,
+      "hung": 0.3
+    }
+  },
+  "Khởi công": {
+    "baseWeight": 9,
+    "starMultipliers": {
+      "cat": 1.4,
+      "hung": 0.3
+    }
+  },
+  "Di dời": {
+    "baseWeight": 7,
+    "starMultipliers": {
+      "cat": 1.3,
+      "hung": 0.4
+    }
+  }
+}

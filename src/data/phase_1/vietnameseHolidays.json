@@ -1,0 +1,240 @@
+{
+  "solar": [
+    {
+      "month": 1,
+      "day": 1,
+      "name": "Tết Dương lịch",
+      "emoji": "🎉"
+    },
+    {
+      "month": 2,
+      "day": 3,
+      "name": "Ngày thành lập Đảng Cộng sản Việt Nam",
+      "emoji": "🇻🇳"
+    },
+    {
+      "month": 2,
+      "day": 14,
+      "name": "Ngày Valentine",
+      "emoji": "❤️"
+    },
+    {
+      "month": 2,
+      "day": 27,
+      "name": "Ngày Thầy thuốc Việt Nam",
+      "emoji": "🩺"
+    },
+    {
+      "month": 3,
+      "day": 8,
+      "name": "Ngày Quốc tế Phụ nữ",
+      "emoji": "🌷"
+    },
+    {
+      "month": 3,
+      "day": 26,
+      "name": "Ngày thành lập Đoàn TNCS Hồ Chí Minh",
+      "emoji": "🇻🇳"
+    },
+    {
+      "month": 4,
+      "day": 30,
+      "name": "Ngày Giải phóng miền Nam, thống nhất đất nước",
+      "emoji": "🇻🇳"
+    },
+    {
+      "month": 5,
+      "day": 1,
+      "name": "Ngày Quốc tế Lao động",
+      "emoji": "✊"
+    },
+    {
+      "month": 5,
+      "day": 7,
+      "name": "Ngày chiến thắng Điện Biên Phủ",
+      "emoji": "🇻🇳"
+    },
+    {
+      "month": 5,
+      "day": 19,
+      "name": "Ngày sinh Chủ tịch Hồ Chí Minh",
+      "emoji": "🌟"
+    },
+    {
+      "month": 6,
+      "day": 1,
+      "name": "Ngày Quốc tế Thiếu nhi",
+      "emoji": "🧒"
+    },
+    {
+      "month": 6,
+      "day": 28,
+      "name": "Ngày Gia đình Việt Nam",
+      "emoji": "👨‍👩‍👧‍👦"
+    },
+    {
+      "month": 7,
+      "day": 27,
+      "name": "Ngày Thương binh Liệt sĩ",
+      "emoji": "🎗️"
+    },
+    {
+      "month": 8,
+      "day": 19,
+      "name": "Ngày Cách mạng tháng Tám",
+      "emoji": "🇻🇳"
+    },
+    {
+      "month": 9,
+      "day": 2,
+      "name": "Ngày Quốc khánh",
+      "emoji": "🇻🇳"
+    },
+    {
+      "month": 10,
+      "day": 1,
+      "name": "Ngày Quốc tế Người cao tuổi",
+      "emoji": "👴"
+    },
+    {
+      "month": 10,
+      "day": 20,
+      "name": "Ngày Phụ nữ Việt Nam",
+      "emoji": "🌹"
+    },
+    {
+      "month": 11,
+      "day": 20,
+      "name": "Ngày Nhà giáo Việt Nam",
+      "emoji": "📚"
+    },
+    {
+      "month": 12,
+      "day": 22,
+      "name": "Ngày thành lập Quân đội Nhân dân Việt Nam",
+      "emoji": "🇻🇳"
+    },
+    {
+      "month": 12,
+      "day": 24,
+      "name": "Đêm Giáng sinh",
+      "emoji": "🎄"
+    },
+    {
+      "month": 12,
+      "day": 25,
+      "name": "Lễ Giáng sinh",
+      "emoji": "🎄"
+    }
+  ],
+  "lunar": [
+    {
+      "month": 1,
+      "day": 1,
+      "name": "Tết Nguyên Đán (Mùng 1)",
+      "emoji": "🧧",
+      "daysOff": true
+    },
+    {
+      "month": 1,
+      "day": 2,
+      "name": "Tết Nguyên Đán (Mùng 2)",
+      "emoji": "🧧",
+      "daysOff": true
+    },
+    {
+      "month": 1,
+      "day": 3,
+      "name": "Tết Nguyên Đán (Mùng 3)",
+      "emoji": "🧧",
+      "daysOff": true
+    },
+    {
+      "month": 1,
+      "day": 4,
+      "name": "Tết Nguyên Đán (Mùng 4)",
+      "emoji": "🧧",
+      "daysOff": true
+    },
+    {
+      "month": 1,
+      "day": 5,
+      "name": "Tết Nguyên Đán (Mùng 5)",
+      "emoji": "🧧",
+      "daysOff": true
+    },
+    {
+      "month": 1,
+      "day": 10,
+      "name": "Vía Thần Tài",
+      "emoji": "💰"
+    },
+    {
+      "month": 1,
+      "day": 15,
+      "name": "Tết Nguyên Tiêu (Rằm tháng Giêng)",
+      "emoji": "🏮"
+    },
+    {
+      "month": 3,
+      "day": 3,
+      "name": "Tết Hàn Thực",
+      "emoji": "🍡"
+    },
+    {
+      "month": 3,
+      "day": 10,
+      "name": "Giỗ Tổ Hùng Vương",
+      "emoji": "🇻🇳",
+      "daysOff": true
+    },
+    {
+      "month": 4,
+      "day": 15,
+      "name": "Lễ Phật Đản",
+      "emoji": "🪷"
+    },
+    {
+      "month": 5,
+      "day": 5,
+      "name": "Tết Đoan Ngọ",
+      "emoji": "🐉"
+    },
+    {
+      "month": 7,
+      "day": 15,
+      "name": "Lễ Vu Lan (Rằm tháng 7)",
+      "emoji": "🪷"
+    },
+    {
+      "month": 8,
+      "day": 15,
+      "name": "Tết Trung Thu",
+      "emoji": "🥮"
+    },
+    {
+      "month": 9,
+      "day": 9,
+      "name": "Tết Trùng Cửu",
+      "emoji": "🌼"
+    },
+    {
+      "month": 10,
+      "day": 15,
+      "name": "Tết Hạ Nguyên (Rằm tháng 10)",
+      "emoji": "🏮"
+    },
+    {
+      "month": 12,
+      "day": 23,
+      "name": "Ông Táo về trời",
+      "emoji": "🔥"
+    },
+    {
+      "month": 12,
+      "day": 30,
+      "name": "Tất Niên (Giao thừa)",
+      "emoji": "🧨"
+    }
+  ]
+}

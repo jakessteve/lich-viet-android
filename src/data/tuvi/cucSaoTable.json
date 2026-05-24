@@ -1,0 +1,10 @@
+{
+  "description": "Sao Chủ Cục: Cục name → governing star",
+  "table": {
+    "Thủy Nhị Cục": "Thiên Lương",
+    "Mộc Tam Cục": "Thiên Cơ",
+    "Kim Tứ Cục": "Vũ Khúc",
+    "Thổ Ngũ Cục": "Thiên Phủ",
+    "Hỏa Lục Cục": "Thất Sát"
+  }
+}

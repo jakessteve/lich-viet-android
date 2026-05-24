@@ -1,0 +1,28 @@
+{
+  "can": {
+    "Giáp": "Giáp bất khai thương, tài vật hao vong (Ngày Giáp không nên mở kho, chủ về hao tốn tiền của)",
+    "Ất": "Ất bất tài thực, thiên tai địa ương (Ngày Ất không nên gieo trồng, chủ về thiên tai làm hại)",
+    "Bính": "Bính bất tu táo, tất kiến hỏa ương (Ngày Bính không nên sửa bếp, dễ gặp hỏa hoạn)",
+    "Đinh": "Đinh bất thế đầu, đầu chủ sanh sang (Ngày Đinh không nên cắt tóc, dễ bị lở loét đầu)",
+    "Mậu": "Mậu bất thụ điền, điền chủ bất tường (Ngày Mậu không nên nhận ruộng, gặp điều không may)",
+    "Kỷ": "Kỷ bất phá khoán, nhị chủ tịnh vong (Ngày Kỷ không nên hủy hợp đồng, cả chủ và khách đều hại)",
+    "Canh": "Canh bất kinh lạc, chức cơ hư trướng (Ngày Canh không nên quay tơ dệt vải, hư hỏng máy móc)",
+    "Tân": "Tân bất hợp tương, chủ bất thường (Ngày Tân không nên nếm tương, chủ nhà gặp điều lạ)",
+    "Nhâm": "Nhâm bất phục dược, khí bất hồi dương (Ngày Nhâm không nên uống thuốc, sinh khí khó hồi phục)",
+    "Quý": "Quý bất từ tụng, lí nhược địch cường (Ngày Quý không nên kiện tụng, lý yếu hơn đối phương)"
+  },
+  "chi": {
+    "Tý": "Tý bất vấn bốc, tựa chiêu tai họa (Ngày Tý không nên xem bói, dễ chuốc tai họa)",
+    "Sửu": "Sửu bất quan đới, chủ bất hoàn hương (Ngày Sửu không nên nhận chức, đi xa khó về)",
+    "Dần": "Dần bất tế tự, quỷ thần bất thường (Ngày Dần không nên cúng tế, quỷ thần không hưởng lễ)",
+    "Mão": "Mão bất xuyên tỉnh, tuyền thủy bất hương (Ngày Mão không nên đào giếng, mạch nước không sạch)",
+    "Thìn": "Thìn bất khốc khấp, tất chủ trọng tang (Ngày Thìn không nên khóc lóc, dễ dẫn đến tang chồng chất)",
+    "Tỵ": "Tỵ bất viễn hành, tài vật phục tàng (Ngày Tỵ không nên đi xa, của cải bị mất mát)",
+    "Ngọ": "Ngọ bất thiêm trang, tất chủ canh trương (Ngày Ngọ không nên sửa sang nhà cửa, phải đổi thay nhiều)",
+    "Mùi": "Mùi bất phục dược, nan dĩ khang cường (Ngày Mùi không nên uống thuốc, khó được khỏe mạnh)",
+    "Thân": "Thân bất an sàng, quỷ tú nhập phòng (Ngày Thân không nên kê giường, quỷ dữ dễ vào phòng)",
+    "Dậu": "Dậu bất hội khách, tân chủ hữu thương (Ngày Dậu không nên tiệc tùng mời khách, dễ bị hại)",
+    "Tuất": "Tuất bất cẩu thực, quỷ thần bất thường (Ngày Tuất không nên ăn thịt chó, quỷ thần ghét bỏ)",
+    "Hợi": "Hợi bất giá thú, tất chủ phân trương (Ngày Hợi không nên cưới hỏi, sớm chịu cảnh ly tán)"
+  }
+}

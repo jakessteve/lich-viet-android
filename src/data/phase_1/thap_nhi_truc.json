@@ -1,0 +1,88 @@
+{
+  "thap_nhi_truc": [
+    {
+      "name": "Kiến",
+      "quality": "Good",
+      "description": "Khởi đầu mới, vạn sự khởi đầu nan.",
+      "suitable_activities": ["Xuất hành", "Nhậm chức", "Giao dịch", "Cầu tài"],
+      "unsuitable_activities": ["Động thổ", "Xây dựng", "Mai táng"]
+    },
+    {
+      "name": "Trừ",
+      "quality": "Good",
+      "description": "Tẩy rửa, loại bỏ cái cũ.",
+      "suitable_activities": ["Giải trừ", "Chữa bệnh", "Phá dỡ", "Tắm gội"],
+      "unsuitable_activities": ["Khai trương", "Cưới hỏi", "Nhậm chức"]
+    },
+    {
+      "name": "Mãn",
+      "quality": "Good",
+      "description": "Đầy đủ, sung túc.",
+      "suitable_activities": ["Khai trương", "Cưới hỏi", "Cầu tài", "Xây dựng"],
+      "unsuitable_activities": ["Nhậm chức", "Kiện tụng"]
+    },
+    {
+      "name": "Bình",
+      "quality": "Neutral",
+      "description": "Bình hòa, ổn định.",
+      "suitable_activities": ["Cưới hỏi", "Giao dịch", "Tu tạo", "Chữa bệnh"],
+      "unsuitable_activities": ["Tranh tụng", "Nhậm chức"]
+    },
+    {
+      "name": "Định",
+      "quality": "Good",
+      "description": "Ấn định, ký kết.",
+      "suitable_activities": ["Cưới hỏi", "Khai trương", "Nhậm chức", "Giao dịch"],
+      "unsuitable_activities": ["Chữa bệnh", "Kiện tụng"]
+    },
+    {
+      "name": "Chấp",
+      "quality": "Neutral",
+      "description": "Giữ gìn, bảo thủ.",
+      "suitable_activities": ["Sửa chữa", "Xây dựng", "Khai trương"],
+      "unsuitable_activities": ["Chuyển nhà", "Xuất hành"]
+    },
+    {
+      "name": "Phá",
+      "quality": "Bad",
+      "description": "Phá vỡ, xung đột.",
+      "suitable_activities": ["Phá dỡ nhà", "Chữa bệnh"],
+      "unsuitable_activities": ["Mọi sự cầu cát", "Xây dựng", "Cưới hỏi"]
+    },
+    {
+      "name": "Nguy",
+      "quality": "Bad",
+      "description": "Nguy hiểm, cẩn trọng.",
+      "suitable_activities": ["Sắp xếp nhà cửa", "Thờ cúng"],
+      "unsuitable_activities": ["Xây dựng", "Sửa chữa", "Đi xa", "Tranh chấp"]
+    },
+    {
+      "name": "Thành",
+      "quality": "Good",
+      "description": "Thành công, hoàn tất.",
+      "suitable_activities": ["Nhập học", "Nhậm chức", "Cưới hỏi", "Khai trương"],
+      "unsuitable_activities": ["Kiện tụng"]
+    },
+    {
+      "name": "Thâu",
+      "quality": "Good",
+      "description": "Thu hoạch, nhận vào.",
+      "suitable_activities": ["Nhập kho", "Mua bán", "Cưới hỏi", "Nhậm chức"],
+      "unsuitable_activities": ["Động thổ", "Mai táng", "Chữa bệnh"]
+    },
+    {
+      "name": "Khai",
+      "quality": "Good",
+      "description": "Mở mang, khai trương.",
+      "suitable_activities": ["Khai trương", "Cưới hỏi", "Xây dựng", "Nhậm chức", "Xuất hành"],
+      "unsuitable_activities": ["Mai táng", "Bốc mộ"]
+    },
+    {
+      "name": "Bế",
+      "quality": "Bad",
+      "description": "Đóng cửa, kết thúc.",
+      "suitable_activities": ["Mai táng", "Sửa lăng mộ"],
+      "unsuitable_activities": ["Xây dựng", "Chữa bệnh", "Khai trương", "Cưới hỏi"]
+    }
+  ]
+}

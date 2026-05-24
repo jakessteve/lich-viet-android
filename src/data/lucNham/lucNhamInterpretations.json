@@ -1,0 +1,96 @@
+{
+  "description": "Tam Truyền narrative templates and category-specific interpretations for Đại Lục Nhâm.",
+  "tamTruyenNarratives": {
+    "description": "Templates for Beginning/Development/Outcome based on branch + general combinations",
+    "branchMeanings": {
+      "ti": "Khởi đầu trong im lặng, tiềm ẩn sức mạnh chưa bộc lộ. Như hạt giống dưới đất mùa đông — chưa thấy gì trên bề mặt nhưng rễ đã âm thầm phát triển. Thời điểm tốt để ấp ủ kế hoạch, nghiên cứu thầm lặng, và chuẩn bị nội lực.",
+      "suu": "Nền tảng vững chắc đang được xây dựng, tích lũy từ từ chậm mà chắc. Như con trâu cần cù cày đất — không nhanh nhưng không gì cản nổi. Kiên nhẫn là đức tính quan trọng nhất lúc này, mọi nỗ lực đều tích lũy thành quả.",
+      "dan": "Bùng nổ năng lượng mạnh mẽ, hành động nhanh, cơ hội đến từ phương Đông. Như hổ rời hang — thời điểm để xung trận, thể hiện bản lĩnh. Ai dám hành động sẽ nắm bắt được vận may, ai do dự sẽ bỏ lỡ.",
+      "mao": "Giao tiếp thuận lợi, mối quan hệ mở rộng, sự hòa hợp bao trùm. Như hoa xuân nở rộ — thu hút mọi ánh nhìn. Thời điểm tuyệt vời cho đàm phán, kết bạn, hợp tác. Sự mềm mại chiến thắng sự cứng rắn.",
+      "thin": "Chuyển biến phức tạp, nhiều yếu tố tác động đồng thời. Như rồng ẩn mây — sức mạnh tiềm ẩn nhưng hướng đi chưa rõ. Cần kiên nhẫn phân tích, không vội vàng kết luận. Sự kiên nhẫn sẽ được đền đáp.",
+      "ty": "Biến đổi âm thầm đang diễn ra, cơ hội ẩn chứa trong thử thách. Như rắn thay da — đau đớn nhưng cần thiết để phát triển. Cần thận trọng nhưng đừng sợ hãi, vì sau biến đổi là phiên bản tốt hơn.",
+      "ngo": "Đỉnh điểm sáng rõ, mọi thứ được phơi bày dưới ánh mặt trời giữa trưa. Thời điểm quyết định quan trọng, hành động quyết đoán sẽ mang lại kết quả. Tuy nhiên, đỉnh cao cũng là lúc bắt đầu đi xuống — nên biết dừng đúng lúc.",
+      "mui": "Sự việc đang chín muồi từ từ, cần chờ thêm một chút nữa. Như mùa hè sang thu — quả chưa hoàn toàn chín. Thuận lợi cho ẩm thực, lễ nghi, yến tiệc. Đừng hái quả non, hãy để thời gian hoàn thiện.",
+      "than": "Thay đổi nhanh chóng, tin tức bất ngờ, di chuyển hối hả. Như khỉ chuyền cành — nhanh nhẹn, linh hoạt nhưng thiếu ổn định. Cơ hội đến và đi nhanh, cần phản ứng tức thì. Tốt cho giao thông, vận tải, chuyến đi.",
+      "dau": "Thu hoạch đã đến, kết quả xuất hiện rõ ràng. Như mùa thu vàng — thời điểm hái quả ngọt. Liên quan đến tiền bạc, đàm phán thành công, kết thúc giao dịch. Tận hưởng nhưng đừng quên tiết kiệm.",
+      "tuat": "Giai đoạn kết thúc hoặc hoàn thành, cần đóng lại một chương. Như chiến binh trở về thành — bảo vệ thành quả đã đạt được. Dọn dẹp, thanh lý, kết thúc việc dở dang. Thời khắc tổng kết và bảo toàn.",
+      "hoi": "Kết thúc chu kỳ, tiềm ẩn mầm mống mới bên trong. Như dòng sông chảy ra biển — kết thúc hành trình nhưng mọi thứ sẽ bốc hơi và quay lại. Cần nghỉ ngơi, suy ngẫm, và chuẩn bị cho vòng quay mới."
+    }
+  },
+  "categoryInterpretations": {
+    "general": {
+      "label": "Tổng quát",
+      "icon": "auto_awesome",
+      "catAdvice": "Năng lượng vũ trụ đang đứng về phía bạn — thiên thời, địa lợi, nhân hòa hội tụ. Mọi kế hoạch bạn đặt ra đều có cơ hội thành hiện thực. Quý nhân sẽ xuất hiện đúng lúc, và vận may đồng hành trên từng bước đi. Hãy tự tin tiến bước, hành động quyết đoán vì thời cơ đã chín muồi. Nếu bạn đã chờ đợi một tín hiệu để hành động — đây chính là nó.",
+      "hungAdvice": "Bạn đang đi vào vùng năng lượng nghịch — không phải mọi thứ sẽ theo ý muốn. Đừng hoảng loạn, nhưng cũng đừng chủ quan. Hãy suy tính kỹ trước mọi quyết định, tránh hành động bốc đồng. Nếu có thể hoãn lại kế hoạch lớn, hãy chờ thời cơ tốt hơn. Nếu bắt buộc phải làm, hãy chuẩn bị kế hoạch B và giảm thiểu rủi ro tối đa. Nhớ rằng: bão nào cũng sẽ qua.",
+      "neutralAdvice": "Năng lượng xung quanh bạn đang ở trạng thái trung tính — không có dấu hiệu rõ ràng thuận hay nghịch. Đây là lúc bạn cần quan sát nhiều hơn và hành động thận trọng. Đừng quá điều chưa chắc, nhưng cũng đừng bỏ lỡ cơ hội vì quá do dự. Lắng nghe trực giác, theo dõi tín hiệu từ môi trường xung quanh, và giữ sự cân bằng giữa táo bạo và cẩn thận."
+    },
+    "career": {
+      "label": "Sự nghiệp",
+      "icon": "work",
+      "catAdvice": "Sự nghiệp của bạn đang ở thời điểm vàng — cánh cửa thăng tiến mở rộng, và người phù hợp sẽ xuất hiện để hỗ trợ. Nếu bạn đang cân nhắc đổi việc, khởi động dự án mới, hoặc đề xuất ý tưởng với sếp — đây là lúc. Đừng khiêm tốn quá — năng lực của bạn xứng đáng được ghi nhận. Quý nhân trong công việc đang đến gần, hãy mở cửa đón họ.",
+      "hungAdvice": "Cẩn thận trong môi trường công việc — có thể có đồng nghiệp tiểu nhân hoặc xung đột với cấp trên. Đây không phải lúc để nhảy việc, thay đổi lớn, hoặc thể hiện cá tính quá mức. Giữ vị trí hiện tại, tập trung làm tốt nhiệm vụ được giao, và tránh tham vọng quá sức. Giai đoạn này sẽ qua — kiên nhẫn là đồng minh của bạn.",
+      "neutralAdvice": "Sự nghiệp ổn định, không có biến động lớn — đây là giai đoạn bạn nên tận dụng để nâng cấp bản thân. Học kỹ năng mới, mở rộng mạng lưới quan hệ, và lặng lẽ chuẩn bị cho cơ hội tiếp theo. Khi cơ hội lớn đến, bạn sẽ là người sẵn sàng nhất."
+    },
+    "love": {
+      "label": "Tình cảm",
+      "icon": "favorite",
+      "catAdvice": "Tình duyên đang ở giai đoạn tuyệt đẹp — nếu bạn đang độc thân, ai đó đặc biệt có thể xuất hiện khi bạn ít ngờ nhất. Nếu đang yêu, tình cảm sâu đậm hơn, kết nối mạnh mẽ hơn. Hãy chủ động bày tỏ — đừng giấu tình cảm trong tim khi trời đang ủng hộ bạn yêu. Giai đoạn này hiếm có, đừng để nó trôi qua trong im lặng.",
+      "hungAdvice": "Tình cảm có thể gặp sóng gió — hiểu lầm, tranh cãi, hoặc khoảng cách tình cảm. Đừng vội kết luận hay phán xét khi cảm xúc dâng cao. Hãy kiên nhẫn lắng nghe đối phương, và đôi khi im lặng là cách yêu thương tốt nhất. Nếu đang trong giai đoạn khó khăn, cho nhau không gian để thở — khoảng cách đúng mức có thể chữa lành.",
+      "neutralAdvice": "Tình cảm bình lặng — không có bất ngờ lớn, nhưng cũng không có vấn đề nghiêm trọng. Nếu muốn có tiến triển, bạn cần chủ động hơn: mời coffee, nhắn tin quan tâm, tạo bất ngờ nhỏ. Tình yêu không tự đến — nó đến với người dám bước ra khỏi vùng an toàn."
+    },
+    "health": {
+      "label": "Sức khỏe",
+      "icon": "health_and_safety",
+      "catAdvice": "Sức khỏe đang ở trạng thái tuyệt vời — năng lượng dồi dào, tinh thần sảng khoái, cơ thể đáp ứng tốt. Đây là thời điểm vàng để bắt đầu chế độ luyện tập mới, khám sức khỏe tổng quát, hoặc thay đổi thói quen ăn uống. Cơ thể bạn đang ở trạng thái sẵn sàng — hãy tận dụng để xây nền tảng sức khỏe cho 10 năm tới.",
+      "hungAdvice": "Cơ thể đang gửi tín hiệu cảnh báo — nếu bạn cảm thấy mệt mỏi bất thường, đau đầu, hoặc giấc ngủ bị gián đoạn, đừng bỏ qua. Đặc biệt chú ý hệ tiêu hóa và thần kinh. Tránh thức khuya, ăn đồ cay nóng, và làm việc quá sức. Stress là kẻ thù lớn nhất lúc này — hãy tìm cách giải tỏa trước khi nó tích lũy thành bệnh.",
+      "neutralAdvice": "Sức khỏe bình thường, không có tín hiệu đáng lo — nhưng đó không phải lý do để lơ là. Duy trì thói quen tốt: đi bộ 30 phút mỗi ngày, uống đủ nước, ngủ đúng giờ. Sức khỏe tốt không đến từ phép màu mà từ những thói quen nhỏ lặp lại mỗi ngày."
+    },
+    "travel": {
+      "label": "Di chuyển",
+      "icon": "flight",
+      "catAdvice": "Xuất hành đại cát — nếu bạn đang lên kế hoạch chuyến đi, đây là thời điểm tuyệt vời. Chuyến đi mang lại trải nghiệm tốt đẹp, gặp gỡ người quý, và mở mang tầm nhìn. Dù công tác hay du lịch, vận may đồng hành trên mỗi cây số. Đi theo hướng phù hợp với quẻ sẽ mang lại may mắn gấp bội.",
+      "hungAdvice": "Nên hoãn chuyến đi nếu có thể — hoặc ít nhất hãy chuẩn bị kỹ hơn bình thường. Kiểm tra phương tiện trước khi khởi hành, mang theo giấy tờ đầy đủ, và luôn có kế hoạch dự phòng. Tránh di chuyển ban đêm, đường xa qua vùng hẻo lánh, hoặc phương tiện không đảm bảo. An toàn trước, lịch trình sau.",
+      "neutralAdvice": "Di chuyển bình thường, không có điều đặc biệt cần lo lắng. Tuân thủ luật giao thông, giữ tốc độ vừa phải, và luôn tỉnh táo khi cầm lái. Nếu không cần thiết, có thể cân nhắc hoãn sang ngày thuận lợi hơn — tại sao không cho mình thêm một chút lợi thế?"
+    },
+    "finance": {
+      "label": "Tài chính",
+      "icon": "payments",
+      "catAdvice": "Dòng tiền đang chảy mạnh về phía bạn — đây là thời điểm vàng cho đầu tư, kinh doanh mới, và mở rộng quy mô. Giao dịch bất động sản, chứng khoán, hoặc khởi nghiệp đều có cơ hội sinh lời. Hãy mạnh dạn nắm lấy cơ hội, nhưng vẫn giữ kỷ luật quản lý rủi ro — may mắn cũng cần người biết tận dụng nó.",
+      "hungAdvice": "Hãy siết chặt ví tiền — đây không phải lúc mạo hiểm tài chính. Tránh đầu tư lớn, không cho vay số tiền đáng kể, và đặc biệt không đánh bạc hoặc đầu tư theo lời đồn. Ưu tiên bảo toàn vốn, cắt giảm chi tiêu không cần thiết, và xây dựng quỹ dự phòng. Tiền mất có thể kiếm lại, nhưng nợ nần thì theo bạn rất lâu.",
+      "neutralAdvice": "Tài chính ổn định, thu chi cân bằng — không có gì đáng lo nhưng cũng chưa có đột phá. Đây là giai đoạn tốt để lập ngân sách, tổ chức lại tài chính cá nhân, và tìm luận nhỏ nhưng chắc chắn. Đừng mạo hiểm quá lớn, nhưng cũng đừng sợ hãi đến mức bỏ lỡ cơ hội vừa tầm."
+    }
+  },
+  "verdictTemplates": {
+    "daiCat": {
+      "label": "Đại Cát",
+      "description": "Rất thuận lợi — mọi việc hanh thông, quý nhân phù trợ, vận may đồng hành",
+      "score": 10,
+      "detailedDescription": "Đây là cách cục hiếm gặp — thiên thời, địa lợi, nhân hòa cùng hội tụ về phía bạn. Mọi hành động đều được năng lượng vũ trụ hỗ trợ mạnh mẽ. Quý nhân xuất hiện đúng lúc bạn cần, khó khăn được hóa giải như sương tan dưới nắng. Nếu bạn đã chuẩn bị sẵn, hãy hành động ngay — thành công gần như nằm trong tay."
+    },
+    "cat": {
+      "label": "Cát",
+      "description": "Thuận lợi — có thể tiến hành, kết quả tốt đẹp, ít trở ngại",
+      "score": 7,
+      "detailedDescription": "Năng lượng đang ủng hộ bạn — dù không hoàn hảo 100%, xu hướng chung rõ ràng tích cực. Bạn có thể gặp vài trở ngại nhỏ, nhưng đều vượt qua được nếu giữ vững tinh thần. Hành động phù hợp với quẻ sẽ mang lại kết quả tốt đẹp. Đừng chần chừ quá lâu — cơ hội tốt không chờ đợi mãi."
+    },
+    "trungBinh": {
+      "label": "Trung Bình",
+      "description": "Bình thường — cần cân nhắc thêm, không nên vội vàng, kết quả tùy thuộc nỗ lực",
+      "score": 4,
+      "detailedDescription": "Năng lượng ở trạng thái trung tính — không rõ ràng thuận hay nghịch. Kết quả phụ thuộc phần lớn vào nỗ lực và phương pháp của chính bạn, không có 'trợ lực trời cho'. Hãy thận trọng, tìm hiểu thêm thông tin, và tham khảo ý kiến người có kinh nghiệm trước khi đưa ra quyết định lớn."
+    },
+    "hung": {
+      "label": "Hung",
+      "description": "Bất lợi — nên hoãn lại hoặc thay đổi kế hoạch, nhiều trở ngại",
+      "score": 2,
+      "detailedDescription": "Năng lượng đang đi ngược mong muốn của bạn — hành động mạnh mẽ lúc này có thể phản tác dụng. Đây không phải lúc để anh hùng — hãy lui một bước, điều chỉnh kế hoạch, hoặc chờ thời cơ tốt hơn. Nhớ rằng: biết chờ cũng là một dạng trí tuệ."
+    },
+    "daiHung": {
+      "label": "Đại Hung",
+      "description": "Rất bất lợi — tránh mọi hành động lớn, chờ thời cơ tốt hơn",
+      "score": 0,
+      "detailedDescription": "Năng lượng tiêu cực ở mức cực điểm — mọi hành động đều gặp cản trở nghiêm trọng. Tuyệt đối không khởi đầu việc mới, không ký kết hợp đồng, không đầu tư. Nghỉ ngơi, suy nghĩ, và chờ bão qua. Đây là lúc 'vô vi' — không hành động chính là hành động khôn ngoan nhất."
+    }
+  }
+}

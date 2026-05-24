@@ -1,0 +1,228 @@
+{
+  "nhi_thap_bat_tu": [
+    {
+      "name": "Giác",
+      "element": "Mộc",
+      "quality": "Good",
+      "description": "Chủ về công danh, học hành.",
+      "suitable_activities": ["Thi cử", "Nhận việc, nhận chức", "Cưới hỏi", "Xây dựng"],
+      "unsuitable_activities": ["Chôn cất"]
+    },
+    {
+      "name": "Cang",
+      "element": "Kim",
+      "quality": "Bad",
+      "description": "Chủ về tranh chấp, kiện tụng.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Mọi việc"]
+    },
+    {
+      "name": "Đê",
+      "element": "Thổ",
+      "quality": "Bad",
+      "description": "Chủ về tai nạn, bệnh tật.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Cưới hỏi", "Khai trương, mở hàng", "Khởi công, đào móng"]
+    },
+    {
+      "name": "Phòng",
+      "element": "Thái Dương",
+      "quality": "Good",
+      "description": "Chủ về hỷ sự, tài lộc.",
+      "suitable_activities": ["Cưới hỏi", "Khai trương, mở hàng", "Xây dựng", "Cúng tế, lễ bái", "Vào nhà mới"],
+      "unsuitable_activities": ["Tôn tạo phần mộ"]
+    },
+    {
+      "name": "Tâm",
+      "element": "Thái Âm",
+      "quality": "Bad",
+      "description": "Chủ về lo âu, phiền muộn.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Mọi việc", "Đặc biệt: Xây dựng", "Cưới hỏi"]
+    },
+    {
+      "name": "Vĩ",
+      "element": "Hỏa",
+      "quality": "Good",
+      "description": "Chủ về xây dựng, cưới hỏi.",
+      "suitable_activities": ["Cưới hỏi", "Khai trương, mở hàng", "Xây dựng", "Giao dịch, buôn bán"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Cơ",
+      "element": "Thủy",
+      "quality": "Good",
+      "description": "Chủ về buôn bán, giao dịch.",
+      "suitable_activities": ["Khai trương, mở hàng", "Xây dựng", "Cưới hỏi", "Giao dịch, buôn bán"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Đẩu",
+      "element": "Mộc",
+      "quality": "Good",
+      "description": "Chủ về thăng tiến, thi cử.",
+      "suitable_activities": ["Xây dựng", "Nhận việc, nhận chức", "Khai trương, mở hàng"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Ngưu",
+      "element": "Kim",
+      "quality": "Bad",
+      "description": "Chủ về hao tán, mất mát.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Xây dựng", "Cưới hỏi", "Khai trương, mở hàng"]
+    },
+    {
+      "name": "Nữ",
+      "element": "Thổ",
+      "quality": "Bad",
+      "description": "Chủ về cãi vã, thị phi.",
+      "suitable_activities": ["Học hành", "May mặc"],
+      "unsuitable_activities": ["Kiện tụng, tranh chấp", "Cưới hỏi"]
+    },
+    {
+      "name": "Hư",
+      "element": "Thái Dương",
+      "quality": "Bad",
+      "description": "Chủ về hư hỏng, đổ vỡ.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Xây dựng", "Khai trương, mở hàng", "Cưới hỏi"]
+    },
+    {
+      "name": "Nguy",
+      "element": "Thái Âm",
+      "quality": "Bad",
+      "description": "Chủ về nguy hiểm, rủi ro.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Cưới hỏi", "Khởi công, đào móng", "Khai trương, mở hàng"]
+    },
+    {
+      "name": "Thất",
+      "element": "Hỏa",
+      "quality": "Good",
+      "description": "Chủ về nhà cửa, đất đai.",
+      "suitable_activities": ["Xây dựng", "Khai trương, mở hàng", "Cưới hỏi"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Bích",
+      "element": "Thủy",
+      "quality": "Good",
+      "description": "Chủ về văn chương, nghệ thuật.",
+      "suitable_activities": ["Khai trương, mở hàng", "Thi cử", "Cưới hỏi", "Vào nhà mới"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Khuê",
+      "element": "Mộc",
+      "quality": "Bad",
+      "description": "Chủ về cô độc, buồn phiền.",
+      "suitable_activities": ["Đi xa, khởi hành"],
+      "unsuitable_activities": ["Khởi công, đào móng", "Khai trương, mở hàng"]
+    },
+    {
+      "name": "Lâu",
+      "element": "Kim",
+      "quality": "Good",
+      "description": "Chủ về chăn nuôi, trồng trọt.",
+      "suitable_activities": ["Khởi công", "Cưới hỏi", "Khai trương, mở hàng"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Vị",
+      "element": "Thổ",
+      "quality": "Good",
+      "description": "Chủ về ăn uống, tiệc tùng.",
+      "suitable_activities": ["Khai trương, mở hàng", "Xây dựng", "Cưới hỏi"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Mão",
+      "element": "Thái Dương",
+      "quality": "Bad",
+      "description": "Chủ về tang tóc, đau thương.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Xây dựng", "Cưới hỏi", "Kiện tụng, tranh chấp"]
+    },
+    {
+      "name": "Tất",
+      "element": "Thái Âm",
+      "quality": "Good",
+      "description": "Chủ về săn bắn, du lịch.",
+      "suitable_activities": ["Khai trương, mở hàng", "Xây dựng", "Cưới hỏi"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Chủy",
+      "element": "Hỏa",
+      "quality": "Bad",
+      "description": "Chủ về hỏa hoạn, tai ương.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Xây dựng", "Cưới hỏi", "Vào nhà mới"]
+    },
+    {
+      "name": "Sâm",
+      "element": "Thủy",
+      "quality": "Good",
+      "description": "Chủ về võ nghiệp, quyền lực.",
+      "suitable_activities": ["Nhận việc, nhận chức", "Khai trương, mở hàng", "Cầu tài lộc"],
+      "unsuitable_activities": ["Khởi công, đào móng"]
+    },
+    {
+      "name": "Tỉnh",
+      "element": "Mộc",
+      "quality": "Good",
+      "description": "Chủ về đào ao, khơi mương.",
+      "suitable_activities": ["Khởi công", "Cưới hỏi", "Mở cửa hàng"],
+      "unsuitable_activities": ["Tu tạo phần mộ"]
+    },
+    {
+      "name": "Quỷ",
+      "element": "Kim",
+      "quality": "Bad",
+      "description": "Chủ về ma quỷ, ám muội.",
+      "suitable_activities": ["Chôn cất"],
+      "unsuitable_activities": ["Xây dựng", "Cưới hỏi"]
+    },
+    {
+      "name": "Liễu",
+      "element": "Thổ",
+      "quality": "Bad",
+      "description": "Chủ về hình phạt, tù tội.",
+      "suitable_activities": [],
+      "unsuitable_activities": ["Mọi việc", "Đặc biệt: Xây dựng", "Cưới hỏi"]
+    },
+    {
+      "name": "Tinh",
+      "element": "Thái Dương",
+      "quality": "Good",
+      "description": "Chủ về may mặc, trang sức.",
+      "suitable_activities": ["Cưới hỏi", "Xây dựng"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Trương",
+      "element": "Thái Âm",
+      "quality": "Good",
+      "description": "Chủ về yến tiệc, vui vẻ.",
+      "suitable_activities": ["Khai trương, mở hàng", "Cưới hỏi", "Xây dựng", "Nhận việc, nhận chức"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Dực",
+      "element": "Hỏa",
+      "quality": "Good",
+      "description": "Chủ về hội họp, kết bạn.",
+      "suitable_activities": ["Cưới hỏi", "Khởi công", "Nhận việc, nhận chức"],
+      "unsuitable_activities": []
+    },
+    {
+      "name": "Chẩn",
+      "element": "Thủy",
+      "quality": "Good",
+      "description": "Chủ về đi xa, di chuyển.",
+      "suitable_activities": ["Khai trương, mở hàng", "Cưới hỏi", "Xây dựng", "Đi xa, khởi hành"],
+      "unsuitable_activities": []
+    }
+  ]
+}

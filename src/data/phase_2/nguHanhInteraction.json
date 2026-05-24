@@ -1,0 +1,71 @@
+{
+  "interactionMatrix": {
+    "Kim": {
+      "Kim": "Tỷ Hòa",
+      "Thủy": "Sinh",
+      "Mộc": "Khắc",
+      "Hỏa": "Bị Khắc",
+      "Thổ": "Bị Sinh"
+    },
+    "Thủy": {
+      "Kim": "Bị Sinh",
+      "Thủy": "Tỷ Hòa",
+      "Mộc": "Sinh",
+      "Hỏa": "Khắc",
+      "Thổ": "Bị Khắc"
+    },
+    "Mộc": {
+      "Kim": "Bị Khắc",
+      "Thủy": "Bị Sinh",
+      "Mộc": "Tỷ Hòa",
+      "Hỏa": "Sinh",
+      "Thổ": "Khắc"
+    },
+    "Hỏa": {
+      "Kim": "Khắc",
+      "Thủy": "Bị Khắc",
+      "Mộc": "Bị Sinh",
+      "Hỏa": "Tỷ Hòa",
+      "Thổ": "Sinh"
+    },
+    "Thổ": {
+      "Kim": "Sinh",
+      "Thủy": "Khắc",
+      "Mộc": "Bị Khắc",
+      "Hỏa": "Bị Sinh",
+      "Thổ": "Tỷ Hòa"
+    }
+  },
+  "seasonalStrength": {
+    "Kim": {
+      "Xuân": "Tù",
+      "Hạ": "Tử",
+      "Thu": "Vượng",
+      "Đông": "Tướng"
+    },
+    "Thủy": {
+      "Xuân": "Hưu",
+      "Hạ": "Tù",
+      "Thu": "Tướng",
+      "Đông": "Vượng"
+    },
+    "Mộc": {
+      "Xuân": "Vượng",
+      "Hạ": "Tướng",
+      "Thu": "Tử",
+      "Đông": "Hưu"
+    },
+    "Hỏa": {
+      "Xuân": "Tướng",
+      "Hạ": "Vượng",
+      "Thu": "Tù",
+      "Đông": "Tử"
+    },
+    "Thổ": {
+      "Xuân": "Tử",
+      "Hạ": "Tướng",
+      "Thu": "Vượng",
+      "Đông": "Tù"
+    }
+  }
+}

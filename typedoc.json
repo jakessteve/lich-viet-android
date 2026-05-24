@@ -1,0 +1,23 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/utils/calendarEngine.ts",
+    "src/utils/baziEngine.ts",
+    "src/utils/natalChartCalculator.ts",
+    "src/utils/numerologyEngine.ts",
+    "src/utils/maiHoaEngine.ts",
+    "src/utils/tamThucSynthesis.ts",
+    "src/utils/flyingStarEngine.ts",
+    "src/utils/activityScorer.ts",
+    "src/utils/errorReporter.ts",
+    "src/utils/webVitals.ts"
+  ],
+  "out": "docs/api",
+  "name": "Lịch Việt v2 — API Reference",
+  "readme": "README.md",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "skipErrorChecking": true,
+  "theme": "default"
+}

@@ -1,0 +1,133 @@
+{
+  "description": "16 Thái Ất palaces arranged on the cosmic board. Palaces 1-8 are the inner ring, 9-16 are the outer ring.",
+  "palaces": [
+    {
+      "number": 1,
+      "nameVi": "Càn Cung",
+      "trigram": "Càn",
+      "direction": "Tây Bắc",
+      "element": "Kim",
+      "cosmicRole": "Thiên môn — Cửa trời, chủ quyền uy, lãnh đạo"
+    },
+    {
+      "number": 2,
+      "nameVi": "Ly Cung",
+      "trigram": "Ly",
+      "direction": "Nam",
+      "element": "Hỏa",
+      "cosmicRole": "Chủ văn minh, danh tiếng, công danh, sáng tạo"
+    },
+    {
+      "number": 3,
+      "nameVi": "Cấn Cung",
+      "trigram": "Cấn",
+      "direction": "Đông Bắc",
+      "element": "Thổ",
+      "cosmicRole": "Chủ ổn định, tĩnh lặng, chuyển giao, nghỉ ngơi"
+    },
+    {
+      "number": 4,
+      "nameVi": "Chấn Cung",
+      "trigram": "Chấn",
+      "direction": "Đông",
+      "element": "Mộc",
+      "cosmicRole": "Chủ hành động, khởi đầu, phát triển, sinh sôi"
+    },
+    {
+      "number": 5,
+      "nameVi": "Tốn Cung",
+      "trigram": "Tốn",
+      "direction": "Đông Nam",
+      "element": "Mộc",
+      "cosmicRole": "Chủ giao tiếp, thương mại, phong thủy, mềm mại"
+    },
+    {
+      "number": 6,
+      "nameVi": "Khôn Cung",
+      "trigram": "Khôn",
+      "direction": "Tây Nam",
+      "element": "Thổ",
+      "cosmicRole": "Chủ thuận tùng, nuôi dưỡng, đất đai, mẫu tính"
+    },
+    {
+      "number": 7,
+      "nameVi": "Đoài Cung",
+      "trigram": "Đoài",
+      "direction": "Tây",
+      "element": "Kim",
+      "cosmicRole": "Chủ niềm vui, đổi mới, giao tiếp, thu hoạch"
+    },
+    {
+      "number": 8,
+      "nameVi": "Khảm Cung",
+      "trigram": "Khảm",
+      "direction": "Bắc",
+      "element": "Thủy",
+      "cosmicRole": "Chủ trí tuệ, nguy hiểm, mạo hiểm, tiềm ẩn"
+    },
+    {
+      "number": 9,
+      "nameVi": "Chiêu Dao",
+      "trigram": null,
+      "direction": "Bắc-Đông Bắc",
+      "element": "Thủy",
+      "cosmicRole": "Ngoại cung — Chủ khởi đầu chu kỳ mới"
+    },
+    {
+      "number": 10,
+      "nameVi": "Thần Phong",
+      "trigram": null,
+      "direction": "Đông-Đông Nam",
+      "element": "Mộc",
+      "cosmicRole": "Ngoại cung — Chủ gió thay đổi, biến động"
+    },
+    {
+      "number": 11,
+      "nameVi": "Thái Bạch",
+      "trigram": null,
+      "direction": "Nam-Tây Nam",
+      "element": "Kim",
+      "cosmicRole": "Ngoại cung — Chủ hiểm nguy, thử thách"
+    },
+    {
+      "number": 12,
+      "nameVi": "Thiên Phù",
+      "trigram": null,
+      "direction": "Tây-Tây Bắc",
+      "element": "Thổ",
+      "cosmicRole": "Ngoại cung — Chủ may mắn, được phù hộ"
+    },
+    {
+      "number": 13,
+      "nameVi": "Thiên Mục",
+      "trigram": null,
+      "direction": "Đông Bắc",
+      "element": "Mộc",
+      "cosmicRole": "Ngoại cung — Chủ quan sát, nhìn xa"
+    },
+    {
+      "number": 14,
+      "nameVi": "Thiên Anh",
+      "trigram": null,
+      "direction": "Đông Nam",
+      "element": "Hỏa",
+      "cosmicRole": "Ngoại cung — Chủ dũng cảm, sáng chói"
+    },
+    {
+      "number": 15,
+      "nameVi": "Địa Phù",
+      "trigram": null,
+      "direction": "Tây Nam",
+      "element": "Thổ",
+      "cosmicRole": "Ngoại cung — Chủ bền vững, kiên nhẫn"
+    },
+    {
+      "number": 16,
+      "nameVi": "Đại Vũ",
+      "trigram": null,
+      "direction": "Tây Bắc",
+      "element": "Thủy",
+      "cosmicRole": "Ngoại cung — Chủ kết thúc chu kỳ, tổng kết"
+    }
+  ]
+}

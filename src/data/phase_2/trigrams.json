@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "name": "Càn",
+    "element": "Kim",
+    "lines": [true, true, true],
+    "nature": "Thiên"
+  },
+  {
+    "id": 2,
+    "name": "Đoài",
+    "element": "Kim",
+    "lines": [true, true, false],
+    "nature": "Trạch"
+  },
+  {
+    "id": 3,
+    "name": "Ly",
+    "element": "Hỏa",
+    "lines": [true, false, true],
+    "nature": "Hỏa"
+  },
+  {
+    "id": 4,
+    "name": "Chấn",
+    "element": "Mộc",
+    "lines": [true, false, false],
+    "nature": "Lôi"
+  },
+  {
+    "id": 5,
+    "name": "Tốn",
+    "element": "Mộc",
+    "lines": [false, true, true],
+    "nature": "Phong"
+  },
+  {
+    "id": 6,
+    "name": "Khảm",
+    "element": "Thủy",
+    "lines": [false, true, false],
+    "nature": "Thủy"
+  },
+  {
+    "id": 7,
+    "name": "Cấn",
+    "element": "Thổ",
+    "lines": [false, false, true],
+    "nature": "Sơn"
+  },
+  {
+    "id": 8,
+    "name": "Khôn",
+    "element": "Thổ",
+    "lines": [false, false, false],
+    "nature": "Địa"
+  }
+]

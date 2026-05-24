@@ -1,0 +1,36 @@
+{
+  "nap_giap": {
+    "1": {
+      "inner": ["Giáp Tý", "Giáp Dần", "Giáp Thìn"],
+      "outer": ["Nhâm Ngọ", "Nhâm Thân", "Nhâm Tuất"]
+    },
+    "2": {
+      "inner": ["Đinh Tỵ", "Đinh Mão", "Đinh Sửu"],
+      "outer": ["Đinh Hợi", "Đinh Dậu", "Đinh Mùi"]
+    },
+    "3": {
+      "inner": ["Kỷ Mão", "Kỷ Sửu", "Kỷ Hợi"],
+      "outer": ["Kỷ Dậu", "Kỷ Mùi", "Kỷ Tỵ"]
+    },
+    "4": {
+      "inner": ["Canh Tý", "Canh Dần", "Canh Thìn"],
+      "outer": ["Canh Ngọ", "Canh Thân", "Canh Tuất"]
+    },
+    "5": {
+      "inner": ["Tân Sửu", "Tân Hợi", "Tân Dậu"],
+      "outer": ["Tân Mùi", "Tân Tỵ", "Tân Mão"]
+    },
+    "6": {
+      "inner": ["Mậu Dần", "Mậu Thìn", "Mậu Ngọ"],
+      "outer": ["Mậu Thân", "Mậu Tuất", "Mậu Tý"]
+    },
+    "7": {
+      "inner": ["Bính Thìn", "Bính Ngọ", "Bính Thân"],
+      "outer": ["Bính Tuất", "Bính Tý", "Bính Dần"]
+    },
+    "8": {
+      "inner": ["Ất Mùi", "Ất Tỵ", "Ất Mão"],
+      "outer": ["Quý Sửu", "Quý Hợi", "Quý Dậu"]
+    }
+  }
+}

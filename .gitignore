@@ -1,9 +1,86 @@
+# Dependencies
 node_modules/
-android/.gradle/
-android/build/
-android/app/build/
-android/.idea/
-*.apk
-*.aab
+vendor/
+.pnp
+.pnp.js
+
+# Build Outputs
+build/
+build32/
+build64/
+dist/
+out/
+bin/
+obj/
+installer/
+release/
+production/
+target/
+.next/
+.nuxt/
+.output/
+
+# Logs & Databases
+*.log
+*.sqlite
+*.db
+
+# Environment Variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# IDEs & OS Files
+.vscode/
+.idea/
+.vs/
 .DS_Store
-local.properties
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# Debug/Lint/Test output artifacts (temp files)
+lint*.txt
+lint*.json
+test_*.txt
+test_*.json
+test_*.log
+typecheck*.txt
+typecheck*.log
+failed_tests*.txt
+parse-lint.js
+fix-tiers*.ps1
+
+# Cache directories
+.eslintcache
+.stylelintcache
+.npm
+.yarn
+
+# Agent runtime artifacts (not framework)
+.agent/spawn_agent_tasks/output-*.log
+.agent/spawn_agent_tasks/temp_runner_*.ps1
+.agent/spawn_agent_tasks/huge_prompt.txt
+
+# Kickstart scripts (auto-generated from .agent/scripts/ by spawn-agent.ps1)
+pm.cmd
+pm.ps1
+pm.sh
+
+# HC runtime artifacts
+.hc/debug/
+.hc/perf-audit/

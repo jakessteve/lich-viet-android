@@ -1,0 +1,149 @@
+{
+  "auspicious": [
+    {
+      "id": "thanhLongPhanThu",
+      "nameVi": "Thanh Long Phản Thủ",
+      "nameCn": "青龙返首",
+      "condition": { "heavenlyStem": "Mậu", "earthlyStem": "Bính" },
+      "effect": "dai_cat",
+      "description": "Đại Cát cho sự nghiệp, cầu tài, xây dựng, xuất hành.",
+      "detailedMeaning": "Thanh Long Phản Thủ là cách cục cát nhất — rồng xanh quay đầu nhìn lại, tượng trưng cho quý nhân xuất hiện, vận may quay trở lại. Mậu (Giáp ẩn) ở Thiên Bàn gặp Bính ở Địa Bàn, Hỏa sinh Thổ, tạo nên năng lượng thăng hoa mạnh mẽ.",
+      "practicalApplication": "Mọi việc đều thuận lợi, đặc biệt: thăng chức, mở công ty, mua bất động sản, cưới hỏi, xuất hành. Nếu gặp thêm Khai Môn hoặc Sinh Môn, hiệu quả gấp nhiều lần.",
+      "historicalNote": "Cổ nhân nói: 'Thanh Long Phản Thủ, hung sự hóa cát' — dù đang gặp khó khăn, khi xuất hiện cách cục này, tình hình sẽ đảo chiều tích cực."
+    },
+    {
+      "id": "phiDieuDietHuyet",
+      "nameVi": "Phi Điểu Điệt Huyệt",
+      "nameCn": "飞鸟跌穴",
+      "condition": { "heavenlyStem": "Bính", "earthlyStem": "Mậu" },
+      "effect": "dai_cat",
+      "description": "Đại Cát cho cầu tài, cưới hỏi, khai trương, nhận chức.",
+      "detailedMeaning": "Phi Điểu Điệt Huyệt — chim bay đậu đúng tổ. Tượng trưng cho mọi thứ rơi vào đúng vị trí, cơ hội đến như trời sắp đặt. Bính ở Thiên gặp Mậu ở Địa, Hỏa trên Thổ dưới, nóng bức nhưng màu mỡ.",
+      "practicalApplication": "Đặc biệt tốt cho: tìm được nhà ở lý tưởng, gặp đúng đối tác kinh doanh, phỏng vấn đúng công ty phù hợp. Mọi lựa chọn đều 'đúng vị trí'.",
+      "historicalNote": "Cách cục này thường xuất hiện khi ta 'vô tình' đưa ra quyết định đúng đắn — như thể được dẫn lối bởi trực giác."
+    },
+    {
+      "id": "tamKyDacSu",
+      "nameVi": "Tam Kỳ Đắc Sử",
+      "nameCn": "三奇得使",
+      "condition": { "nobles": ["Ất", "Bính", "Đinh"], "withTrucSu": true },
+      "effect": "cat",
+      "description": "Cát — Tam Kỳ gặp Trực Sử, thuận lợi dù Môn không hoàn hảo.",
+      "detailedMeaning": "Ba ngôi sao quý (Ất Kỳ — Nguyệt Kỳ, Bính Kỳ — Nhật Kỳ, Đinh Kỳ — Tinh Kỳ) gặp Trực Sử Môn, tạo nên cách cục quý hiếm. Dù cung hay Môn không hoàn hảo, sức mạnh của Tam Kỳ vẫn hóa giải được nhiều hung khí.",
+      "practicalApplication": "Ất Kỳ: tốt cho mọi việc cần sự mềm mỏng, đàm phán, ngoại giao. Bính Kỳ: tốt cho hành động quyết đoán, lãnh đạo. Đinh Kỳ: tốt cho thi cử, tìm quý nhân, việc tâm linh.",
+      "historicalNote": "Tam Kỳ được coi là 'bảo kiếm' trong Kỳ Môn — khi xuất hiện, có thể biến hung thành cát."
+    },
+    {
+      "id": "thienDon",
+      "nameVi": "Thiên Độn",
+      "nameCn": "天遁",
+      "condition": { "stem": "Bính", "door": "sinh", "deityOrStar": ["cuuThien", "thienCam"] },
+      "effect": "dai_cat",
+      "description": "Đại Cát cho quân sự, kinh doanh lớn, cưới hỏi.",
+      "detailedMeaning": "Thiên Độn — trốn trên trời. Bính (Nhật kỳ — ánh mặt trời) gặp Sinh Môn tại cung có Cửu Thiên hoặc Thiên Cầm, tạo nên bảo hộ từ thiên thượng. Tượng trưng cho sức mạnh siêu nhiên bảo vệ, mọi kế hoạch được 'che chở từ trên cao'.",
+      "practicalApplication": "Cực tốt cho: chiến lược quân sự, kinh doanh quy mô lớn, mở rộng quốc tế, cưới hỏi quý phái. Hành động dưới Thiên Độn như có 'tấm khiên vô hình'.",
+      "historicalNote": "Trong lịch sử, các tướng lĩnh thường chọn thời điểm Thiên Độn để xuất binh, vì tin rằng được thiên mệnh che chở."
+    },
+    {
+      "id": "diaDon",
+      "nameVi": "Địa Độn",
+      "nameCn": "地遁",
+      "condition": { "stem": "Ất", "door": "khai", "deityOrStar": ["cuuDia"] },
+      "effect": "dai_cat",
+      "description": "Đại Cát cho bất động sản, nông nghiệp, ẩn náu an toàn.",
+      "detailedMeaning": "Địa Độn — trốn dưới đất. Ất (Nguyệt kỳ — ánh trăng mềm mại) gặp Khai Môn tại cung có Cửu Địa, được đất mẹ che chở. Tượng trưng cho sự an toàn tuyệt đối, nền tảng vững chắc, và nguồn tài nguyên dồi dào.",
+      "practicalApplication": "Cực tốt cho: mua bán đất đai, xây dựng nhà cửa, nông nghiệp, khai thác tài nguyên. Cũng tốt cho ẩn náu, phòng thủ, và tích lũy lực lượng.",
+      "historicalNote": "Địa Độn thường là dấu hiệu của 'may mắn bền vững' — không bùng nổ nhất thời mà kéo dài lâu bền."
+    },
+    {
+      "id": "nhanDon",
+      "nameVi": "Nhân Độn",
+      "nameCn": "人遁",
+      "condition": { "stem": "Đinh", "door": "huu", "deityOrStar": ["thaiAm"] },
+      "effect": "cat",
+      "description": "Cát cho giao tiếp, kết nối, tìm quý nhân, tình duyên.",
+      "detailedMeaning": "Nhân Độn — trốn giữa người. Đinh (Tinh kỳ — ánh sao sáng) gặp Hưu Môn tại cung có Thái Âm, được quý nhân che chở trong bóng tối. Tượng trưng cho sự giúp đỡ kín đáo, mối quan hệ bí mật nhưng có ích.",
+      "practicalApplication": "Tốt cho: tìm quý nhân, đàm phán kín đáo, xây dựng mối quan hệ chiến lược, tình duyên lãng mạn. Đặc biệt thuận lợi khi cần sự giúp đỡ của phụ nữ quyền quý.",
+      "historicalNote": "Nhân Độn là cách cục 'mưu sĩ' — không hành động ầm ĩ mà âm thầm vận động, bày binh bố trận trong bóng tối."
+    },
+    {
+      "id": "ngocNuThuMon",
+      "nameVi": "Ngọc Nữ Thủ Môn",
+      "nameCn": "玉女守门",
+      "condition": { "trucSuWithEarthDinh": true },
+      "effect": "cat",
+      "description": "Cát cho tình duyên, việc riêng tư, bí mật thuận lợi.",
+      "detailedMeaning": "Ngọc Nữ Thủ Môn — nàng ngọc nữ canh cửa. Trực Sử Môn gặp Đinh ở Địa Bàn, như có mỹ nhân giữ cửa bảo vệ. Tượng trưng cho sự bảo mật, quyến rũ, và cơ hội đến từ phía nữ giới.",
+      "practicalApplication": "Tốt cho tình duyên, hẹn hò, cầu hôn. Cũng tốt cho mọi việc cần giữ bí mật, giao dịch kín đáo. Đặc biệt thuận lợi cho kinh doanh mỹ phẩm, thời trang, và ngành dịch vụ.",
+      "historicalNote": "Trong truyền thống, Ngọc Nữ Thủ Môn là cách cục 'nữ nhân phò trợ' — người phụ nữ đóng vai trò quan trọng trong thành công."
+    }
+  ],
+  "inauspicious": [
+    {
+      "id": "bachHoXuongCuong",
+      "nameVi": "Bạch Hổ Xương Cuồng",
+      "nameCn": "白虎猖狂",
+      "condition": { "heavenlyStem": "Tân", "earthlyStem": "Ất" },
+      "effect": "dai_hung",
+      "description": "Đại Hung — Tai họa, tổn thương, xung đột. Bách sự bất nghi.",
+      "detailedMeaning": "Bạch Hổ Xương Cuồng — hổ trắng điên cuồng. Tân (Kim sắc bén) ở Thiên gặp Ất (Mộc yếu) ở Địa, Kim khắc Mộc tàn bạo. Tượng trưng cho sự bạo lực, tai nạn nghiêm trọng, và mất mát không thể phục hồi.",
+      "practicalApplication": "TUYỆT ĐỐI TRÁNH: xuất hành xa, phẫu thuật (trừ cấp cứu), ký kết hợp đồng, cưới hỏi, khai trương. Đặc biệt nguy hiểm cho di chuyển bằng phương tiện cơ giới — cẩn thận tai nạn giao thông.",
+      "historicalNote": "Bạch Hổ Xương Cuồng là cách cục hung nhất liên quan đến bạo lực vật lý. Cổ nhân khuyên: 'Gặp Bạch Hổ, bế môn bất xuất' — đóng cửa ở nhà."
+    },
+    {
+      "id": "thanhLongDaoTau",
+      "nameVi": "Thanh Long Đào Tẩu",
+      "nameCn": "青龙逃走",
+      "condition": { "heavenlyStem": "Ất", "earthlyStem": "Tân" },
+      "effect": "hung",
+      "description": "Hung — Tổn tài, mất mát, rủi ro. May mắn bỏ chạy.",
+      "detailedMeaning": "Thanh Long Đào Tẩu — rồng xanh bỏ chạy. Ất (Mộc mềm) ở Thiên gặp Tân (Kim cứng) ở Địa, quý nhân chạy khỏi hiểm nguy. Tượng trưng cho vận may biến mất, quý nhân bỏ đi, cơ hội tuột khỏi tay.",
+      "practicalApplication": "Cẩn thận với: mất tiền qua đầu tư sai lầm, bạn tốt xa lánh, hợp tác tan vỡ. Không nên bắt đầu kinh doanh mới hoặc đầu tư mạo hiểm.",
+      "historicalNote": "Ngược lại với Thanh Long Phản Thủ (rồng quay lại), cách cục này cho thấy may mắn đang rời xa — cần 'giữ lại' những gì đang có thay vì chạy theo cái mới."
+    },
+    {
+      "id": "chuTuocDauGiang",
+      "nameVi": "Chu Tước Đầu Giang",
+      "nameCn": "朱雀投江",
+      "condition": { "heavenlyStem": "Đinh", "earthlyStem": "Quý" },
+      "effect": "hung",
+      "description": "Hung — Tranh chấp lời nói, kiện tụng bất lợi, thất bại giao tiếp.",
+      "detailedMeaning": "Chu Tước Đầu Giang — chim lửa nhảy xuống sông. Đinh (Hỏa nhỏ) ở Thiên gặp Quý (Thủy lớn) ở Địa, Hỏa bị Thủy dập tắt. Tượng trưng cho mọi nỗ lực giao tiếp đều thất bại, lời nói gây phản tác dụng.",
+      "practicalApplication": "Tránh: phát ngôn công khai, đăng bài tranh cãi, gửi email quan trọng, đàm phán hợp đồng. Mọi lời nói có thể bị hiểu sai hoặc dùng chống lại bạn.",
+      "historicalNote": "Cách cục này đặc biệt nguy hiểm trong thời đại mạng xã hội — một bài đăng sai thời điểm có thể gây hậu quả lớn."
+    },
+    {
+      "id": "dangXaYeuKieu",
+      "nameVi": "Đằng Xà Yểu Kiểu",
+      "nameCn": "螣蛇夭矫",
+      "condition": { "heavenlyStem": "Quý", "earthlyStem": "Đinh" },
+      "effect": "hung",
+      "description": "Hung — Lo âu dai dẳng, rắc rối pháp lý, bất an tinh thần.",
+      "detailedMeaning": "Đằng Xà Yểu Kiểu — rắn bay uốn lượn trên không. Quý (Thủy âm) ở Thiên gặp Đinh (Hỏa âm) ở Địa, Thủy-Hỏa giao chiến, tạo nên sương mù mê hoặc. Tượng trưng cho ảo giác, lo âu không rõ nguyên nhân, và sự rối trí kéo dài.",
+      "practicalApplication": "Cần đặc biệt cảnh giác với: ác mộng, quyết định thiếu sáng suốt, tin vào thông tin sai. Tránh ký hợp đồng hoặc cam kết lâu dài. Kiểm tra kỹ mọi thông tin nhận được.",
+      "historicalNote": "Đằng Xà tượng trưng cho 'tâm ma' — kẻ thù lớn nhất lúc này là chính lo âu và sợ hãi của bản thân, không phải hoàn cảnh bên ngoài."
+    },
+    {
+      "id": "phucNgam",
+      "nameVi": "Phục Ngâm",
+      "nameCn": "伏吟",
+      "condition": { "allPlatesHome": true },
+      "effect": "hung",
+      "description": "Hung — Đình trệ, mọi thứ dừng lại. Không nên khởi sự mới.",
+      "detailedMeaning": "Phục Ngâm — rên rỉ nằm im. Khi tất cả các bàn (Thiên, Địa, Nhân, Thần) đều ở vị trí gốc, năng lượng bị đóng băng hoàn toàn. Giống như cỗ máy bị kẹt — không tiến không lùi. Mọi nỗ lực đều vô ích.",
+      "practicalApplication": "KHÔNG nên: bắt đầu bất kỳ việc gì mới, thay đổi, di chuyển, ký kết, khởi nghiệp. NÊN: tiếp tục những việc đang làm dở, chờ đợi, tích lũy năng lượng cho giai đoạn tiếp theo.",
+      "historicalNote": "Cổ nhân nói: 'Phục Ngâm, Phản Ngâm — cần nhẫn nại'. Giai đoạn bế tắc không kéo dài lâu, quan trọng là không ép mình hành động khi vũ trụ chưa sẵn sàng."
+    },
+    {
+      "id": "phanNgam",
+      "nameVi": "Phản Ngâm",
+      "nameCn": "反吟",
+      "condition": { "allPlatesOpposite": true },
+      "effect": "dai_hung",
+      "description": "Đại Hung — Đảo ngược hoàn toàn, mọi việc trái ý. Không nên bắt đầu.",
+      "detailedMeaning": "Phản Ngâm — rên rỉ quay đầu. Khi tất cả các bàn đều đối nghịch vị trí gốc (cách 4 cung), năng lượng bị đảo ngược hoàn toàn. Giống như chiếc gương phản chiếu — mọi thứ đều ngược lại với mong muốn. Cầu tiến thì lùi, cầu hợp thì tan.",
+      "practicalApplication": "TUYỆT ĐỐI TRÁNH: mọi hoạt động mới, đặc biệt đầu tư, cưới hỏi, ký kết. Nếu đang theo đuổi mục tiêu, chuẩn bị tinh thần cho kết quả ngược lại hoàn toàn.",
+      "historicalNote": "Phản Ngâm hung hơn Phục Ngâm vì Phục Ngâm chỉ đình trệ, còn Phản Ngâm thì đảo chiều — mất mát thực sự có thể xảy ra. Tuy nhiên, cũng có thể 'phản phản' — nếu đang bệnh, Phản Ngâm có thể khiến bệnh 'quay ngược' thành khỏi."
+    }
+  ]
+}

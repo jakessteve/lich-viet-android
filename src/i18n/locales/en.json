@@ -1,0 +1,62 @@
+{
+  "app": {
+    "title": "Vietnamese Calendar",
+    "subtitle": "Lunar Calendar & Feng Shui Lookup",
+    "loading": "Loading...",
+    "copyright": "© {{year}} Vietnamese Calendar — Lunar calendar & feng shui lookup."
+  },
+  "nav": {
+    "amLich": "Lunar Calendar",
+    "gieoQue": "Divination",
+    "soon": "Soon",
+    "skipToContent": "Skip to main content",
+    "mainNav": "Main navigation",
+    "features": "Features",
+    "toggleDarkMode": "Toggle light/dark mode",
+    "userMenu": "User menu"
+  },
+  "calendar": {
+    "sidebarLabel": "Month calendar and quick info",
+    "mainContent": "Main content",
+    "lunarDate": "Lunar date",
+    "solarTerm": "Solar term",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "buddhistYear": "Buddhist Year",
+    "dayPrefix": "day",
+    "monthPrefix": "month",
+    "yearPrefix": "year",
+    "today": "Today",
+    "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  },
+  "user": {
+    "guest": "Guest",
+    "loginPrompt": "Sign in to save your data",
+    "login": "Sign in",
+    "register": "Sign up",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About"
+  },
+  "footer": {
+    "about": "About",
+    "guide": "Guide",
+    "feedback": "Feedback"
+  },
+  "maiHoa": {
+    "title": "Mai Hoa Divination",
+    "inputLabel": "Enter number",
+    "calculate": "Cast Hexagram",
+    "result": "Result"
+  },
+  "dayView": {
+    "catThan": "Auspicious Stars",
+    "hungThan": "Inauspicious Stars",
+    "dungSu": "Daily Activities",
+    "nen": "Recommended",
+    "kieng": "Avoid",
+    "hourlyStars": "Auspicious Hours",
+    "extraStars": "Additional Stars"
+  }
+}

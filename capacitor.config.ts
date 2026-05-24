@@ -3,15 +3,10 @@ import type { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'app.lichviet.calendar',
   appName: 'Lịch Việt',
-  webDir: '../lich-viet/dist',
+  webDir: 'dist',
   server: {
+    hostname: 'app.lichviet.calendar',
     androidScheme: 'https',
-  },
-  plugins: {
-    SplashScreen: {
-      launchAutoHide: true,
-      fadeOutDuration: 300,
-    },
   },
 };
 

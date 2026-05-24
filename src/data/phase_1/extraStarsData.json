@@ -1,0 +1,322 @@
+{
+  "canChiStars": {
+    "Canh Ngọ": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      }
+    ],
+    "Nhâm Thân": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      }
+    ],
+    "Quý Dậu": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      },
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Nhâm Ngọ": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      }
+    ],
+    "Giáp Thân": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      }
+    ],
+    "Ất Dậu": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      },
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Canh Dần": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      }
+    ],
+    "Bính Thân": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      }
+    ],
+    "Đinh Dậu": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      }
+    ],
+    "Nhâm Dần": [
+      {
+        "name": "Minh Phệ",
+        "type": "good"
+      },
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Bính Dần": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Đinh Mão": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      },
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Bính Tý": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Tân Mão": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Giáp Ngọ": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Canh Tý": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Quý Mão": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Nhâm Tý": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Giáp Dần": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Ất Mão": [
+      {
+        "name": "Minh Phệ Đối",
+        "type": "good"
+      }
+    ],
+    "Giáp Tuất": [
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Tân Sửu": [
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Mậu Tý": [
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Ất Mùi": [
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ],
+    "Bính Thìn": [
+      {
+        "name": "Kê Hoãn",
+        "type": "bad"
+      }
+    ]
+  },
+  "dayChiStars": {
+    "Thân": [
+      {
+        "name": "Ngũ Ly",
+        "type": "bad"
+      },
+      {
+        "name": "Trừ Thần",
+        "type": "good"
+      }
+    ],
+    "Dậu": [
+      {
+        "name": "Ngũ Ly",
+        "type": "bad"
+      },
+      {
+        "name": "Trừ Thần",
+        "type": "good"
+      }
+    ],
+    "Tý": [],
+    "Sửu": [],
+    "Dần": [],
+    "Mão": [],
+    "Thìn": [],
+    "Tỵ": [],
+    "Ngọ": [],
+    "Mùi": [],
+    "Tuất": [],
+    "Hợi": []
+  },
+  "monthMaps": {
+    "batToa": ["Dậu", "Tuất", "Hợi", "Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân"],
+    "nguyenVu": ["Dậu", "Hợi", "Sửu", "Mão", "Tỵ", "Mùi", "Dậu", "Hợi", "Sửu", "Mão", "Tỵ", "Mùi"],
+    "phucSinh": ["Dậu", "Mão", "Tuất", "Thìn", "Hợi", "Tỵ", "Tý", "Ngọ", "Sửu", "Mùi", "Dần", "Thân"],
+    "catKhanh": ["Dậu", "Dần", "Hợi", "Thìn", "Sửu", "Ngọ", "Mão", "Thân", "Tỵ", "Tuất", "Tý", "Mùi"],
+    "amDuc": ["Dậu", "Mùi", "Tỵ", "Mão", "Sửu", "Hợi", "Dậu", "Mùi", "Tỵ", "Mão", "Sửu", "Hợi"],
+    "thienLai": ["Dậu", "Ngọ", "Mão", "Tý", "Dậu", "Ngọ", "Mão", "Tý", "Dậu", "Ngọ", "Mão", "Tý"],
+    "ngamThan": ["Dậu", "Tỵ", "Sửu", "Dậu", "Tỵ", "Sửu", "Dậu", "Tỵ", "Sửu", "Dậu", "Tỵ", "Sửu"]
+  },
+  "seasonChiMatches": {
+    "tuQuyBatToa": [
+      ["Sửu", "Mão"],
+      ["Dần", "Ngọ"],
+      ["Ngọ", "Thân"],
+      ["Mùi", "Dậu"]
+    ],
+    "nguHu": [
+      ["Tỵ", "Dậu", "Sửu"],
+      ["Thân", "Tý", "Thìn"],
+      ["Hợi", "Mão", "Mùi"],
+      ["Dần", "Ngọ", "Tuất"]
+    ],
+    "satSuNhat": [["Dậu"], ["Ngọ"], ["Mão"], ["Tý"]],
+    "thuNhat": [["Dậu"], ["Tý"], ["Mão"], ["Ngọ"]],
+    "phucThi": [
+      ["Thân", "Dậu"],
+      ["Sửu", "Dần"],
+      ["Tuất", "Hợi"],
+      ["Thìn", "Tỵ"]
+    ]
+  },
+  "canChiGroups": {
+    "Giáp": ["Tý", "Ngọ", "Thân", "Tuất"],
+    "Ất": ["Sửu", "Mão", "Tỵ", "Dậu", "Hợi"],
+    "Bính": ["Tý", "Dần", "Tuất"],
+    "Đinh": ["Sửu", "Mão", "Mùi", "Hợi"],
+    "Mậu": ["Tý", "Thìn", "Thân"],
+    "Kỷ": ["Sửu", "Mão", "Tỵ", "Dậu"],
+    "Canh": ["Tý", "Dần", "Tuất"],
+    "Tân": ["Sửu", "Mão", "Mùi", "Hợi"],
+    "Nhâm": ["Ngọ", "Thân", "Thìn"],
+    "Quý": ["Sửu", "Tỵ", "Dậu", "Hợi"]
+  },
+  "daiminhGroups": {
+    "Giáp": ["Thìn", "Thân"],
+    "Ất": ["Mão", "Tỵ", "Mùi"],
+    "Bính": ["Thìn", "Ngọ", "Thân", "Tuất"],
+    "Đinh": ["Sửu", "Mùi", "Dậu", "Hợi"],
+    "Mậu": ["Thìn", "Ngọ", "Thân"],
+    "Kỷ": ["Sửu", "Tỵ", "Mùi", "Dậu"],
+    "Canh": ["Tuất"],
+    "Tân": ["Sửu", "Mão", "Hợi"],
+    "Nhâm": ["Tý", "Dần", "Ngọ"],
+    "Quý": ["Tỵ", "Dậu", "Hợi"]
+  },
+  "thatthanhGroups": {
+    "Giáp": ["Dần", "Thìn", "Ngọ", "Thân", "Tuất"],
+    "Ất": ["Mão", "Tỵ", "Mùi", "Dậu", "Hợi"],
+    "Bính": ["Tý", "Dần"],
+    "Đinh": ["Sửu", "Mão"],
+    "Mậu": ["Tý", "Thìn", "Ngọ", "Thân", "Tuất"],
+    "Kỷ": ["Sửu", "Tỵ", "Mùi", "Dậu", "Hợi"],
+    "Canh": ["Dần", "Thìn", "Thân", "Tuất"],
+    "Tân": ["Mão", "Tỵ", "Dậu"],
+    "Nhâm": ["Tý", "Dần", "Thân"],
+    "Quý": ["Sửu", "Mão", "Dậu"]
+  },
+  "hoidongGroups": {
+    "Giáp": ["Tý", "Thân"],
+    "Ất": ["Dậu"],
+    "Bính": ["Dần", "Thân"],
+    "Mậu": ["Dần"],
+    "Kỷ": ["Mão"],
+    "Tân": ["Dậu"],
+    "Quý": ["Dậu"]
+  },
+  "xichKhauPatterns": {
+    "1": {
+      "positive": [6, 12, 18, 24, 30],
+      "negative": [3, 9, 15, 21, 27]
+    },
+    "2": {
+      "positive": [5, 11, 17, 23, 29],
+      "negative": [2, 8, 14, 20, 30]
+    },
+    "3": {
+      "positive": [4, 10, 16, 22, 28],
+      "negative": [1, 7, 13, 19, 25]
+    },
+    "4": {
+      "positive": [3, 9, 15, 21, 27],
+      "negative": [6, 12, 18, 24, 30]
+    },
+    "5": {
+      "positive": [2, 8, 14, 20, 30],
+      "negative": [5, 11, 17, 23, 29]
+    },
+    "6": {
+      "positive": [1, 7, 13, 19, 25],
+      "negative": [4, 10, 16, 22, 28]
+    }
+  },
+  "tuHuBai": [
+    {
+      "can": "Kỷ",
+      "chi": "Dậu"
+    },
+    {
+      "can": "Giáp",
+      "chi": "Tý"
+    },
+    {
+      "can": "Tân",
+      "chi": "Mão"
+    },
+    {
+      "can": "Mậu",
+      "chi": "Ngọ"
+    }
+  ]
+}

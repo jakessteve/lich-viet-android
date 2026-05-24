@@ -1,0 +1,287 @@
+/* Lunar Event Manager Styles */
+
+.lunar-event-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.lunar-event-modal {
+  background: var(--color-surface-light, #fff);
+  color: var(--color-text-primary-light, #1d1d1f);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease;
+}
+
+.dark .lunar-event-modal {
+  background: var(--color-surface-dark, #1a1a2e);
+  color: var(--color-text-primary-dark, #f5f5f7);
+}
+
+.lunar-event-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--color-border-light, #e5e5e5);
+}
+
+.dark .lunar-event-header {
+  border-bottom-color: var(--color-border-dark, #2a2a4a);
+}
+
+.lunar-event-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.lunar-event-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  color: inherit;
+}
+
+.lunar-event-close:hover {
+  opacity: 1;
+}
+
+.lunar-event-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+  min-height: 120px;
+}
+
+.lunar-event-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-secondary-light, #86868b);
+}
+
+.dark .lunar-event-empty {
+  color: var(--color-text-secondary-dark, #c7c7d1);
+}
+
+.lunar-event-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid var(--color-border-light, #f0f0f0);
+  transition: background 0.15s;
+}
+
+.dark .lunar-event-item {
+  border-bottom-color: var(--color-border-dark, #2a2a4a);
+}
+
+.lunar-event-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+.dark .lunar-event-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.lunar-event-icon {
+  font-size: 1.5rem;
+}
+
+.lunar-event-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lunar-event-date {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary-light, #86868b);
+}
+
+.dark .lunar-event-date {
+  color: var(--color-text-secondary-dark, #c7c7d1);
+}
+
+.lunar-event-note {
+  font-size: 0.8rem;
+  color: var(--color-text-secondary-light, #86868b);
+  font-style: italic;
+}
+
+.dark .lunar-event-note {
+  color: var(--color-text-secondary-dark, #c7c7d1);
+}
+
+.lunar-event-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.3;
+  color: inherit;
+  padding: 4px;
+}
+
+.lunar-event-delete:hover {
+  opacity: 1;
+  color: #dc2626;
+}
+
+.lunar-event-form {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--color-border-light, #e5e5e5);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.dark .lunar-event-form {
+  border-top-color: var(--color-border-dark, #2a2a4a);
+}
+
+.lunar-event-form input[type='text'],
+.lunar-event-form select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-light, #ddd);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: var(--color-surface-light, #fff);
+  color: var(--color-text-primary-light, #1d1d1f);
+}
+
+.dark .lunar-event-form input[type='text'],
+.dark .lunar-event-form select {
+  border-color: var(--color-border-dark, #2a2a4a);
+  background: var(--color-surface-dark, #1a1a2e);
+  color: var(--color-text-primary-dark, #f5f5f7);
+}
+
+.lunar-event-form input[type='number'] {
+  width: 60px;
+  padding: 0.4rem;
+  border: 1px solid var(--color-border-light, #ddd);
+  border-radius: 6px;
+  text-align: center;
+  background: var(--color-surface-light, #fff);
+  color: var(--color-text-primary-light, #1d1d1f);
+}
+
+.dark .lunar-event-form input[type='number'] {
+  border-color: var(--color-border-dark, #2a2a4a);
+  background: var(--color-surface-dark, #1a1a2e);
+  color: var(--color-text-primary-dark, #f5f5f7);
+}
+
+.lunar-event-form-row {
+  display: flex;
+  gap: 1rem;
+  align-items: end;
+}
+
+.lunar-event-form-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary-light, #86868b);
+}
+
+.dark .lunar-event-form-row label {
+  color: var(--color-text-secondary-dark, #c7c7d1);
+}
+
+.lunar-event-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.lunar-event-form-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border-light, #ddd);
+  cursor: pointer;
+  font-size: 0.85rem;
+  background: var(--color-surface-light, #fff);
+  color: var(--color-text-primary-light, #1d1d1f);
+}
+
+.dark .lunar-event-form-actions button {
+  border-color: var(--color-border-dark, #2a2a4a);
+  background: var(--color-surface-dark, #1a1a2e);
+  color: var(--color-text-primary-dark, #f5f5f7);
+}
+
+.lunar-event-submit {
+  background: var(--color-primary, #d4a017) !important;
+  color: #fff !important;
+  border: none !important;
+  font-weight: 600;
+}
+
+.lunar-event-add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  margin: 0.75rem 1.25rem;
+  border: 2px dashed var(--color-border-light, #ddd);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  background: none;
+  color: var(--color-text-secondary-light, #86868b);
+  transition: all 0.2s;
+}
+
+.dark .lunar-event-add-btn {
+  border-color: var(--color-border-dark, #2a2a4a);
+  color: var(--color-text-secondary-dark, #c7c7d1);
+}
+
+.lunar-event-add-btn:hover {
+  border-color: var(--color-primary, #d4a017);
+  color: var(--color-primary, #d4a017);
+}
+
+.dark .lunar-event-add-btn:hover {
+  border-color: var(--color-primary-dark, #818cf8);
+  color: var(--color-gold-dark, #d4a843);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

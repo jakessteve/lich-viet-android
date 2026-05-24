@@ -1,0 +1,101 @@
+{
+  "path_deities": [
+    "Thanh Long",
+    "Minh Đường",
+    "Thiên Hình",
+    "Chu Tước",
+    "Kim Quỹ",
+    "Bảo Quang",
+    "Bạch Hổ",
+    "Ngọc Đường",
+    "Thiên Lao",
+    "Huyền Vũ",
+    "Tư Mệnh",
+    "Câu Trần"
+  ],
+  "path_deity_meanings": {
+    "Thanh Long": "Mọi việc tốt, chủ về hỷ sự, kinh doanh và thăng tiến",
+    "Minh Đường": "Tốt cho khởi đầu mới, thi cử, học tập và cầu tài",
+    "Thiên Hình": "Xấu, chủ về hình phạt, tranh chấp và thị phi (Hắc đạo)",
+    "Chu Tước": "Xấu, chủ về cãi vã, mất mát tiền bạc và tin đồn (Hắc đạo)",
+    "Kim Quỹ": "Tốt cho kinh doanh, tích trữ tài sản và cầu tài lộc",
+    "Bảo Quang": "Tốt cho chức danh, thi cử và gặp gỡ quý nhân",
+    "Bạch Hổ": "Xấu, chủ về tai nạn, bệnh tật và thương vong (Hắc đạo)",
+    "Ngọc Đường": "Đại cát cho mọi việc, đặc biệt là tu tạo, học hành",
+    "Thiên Lao": "Xấu, chủ về áp lực, khó khăn và bế tắc (Hắc đạo)",
+    "Huyền Vũ": "Xấu, chủ về trộm cướp, tiểu nhân hãm hại (Hắc đạo)",
+    "Tư Mệnh": "Đại cát cho sức khỏe, tuổi thọ và cúng tế",
+    "Câu Trần": "Xấu, chủ về vướng mắc, trì trệ và kiện tụng (Hắc đạo)"
+  },
+  "hoang_dao_indices": [0, 1, 4, 5, 7, 10],
+  "deity_start_indices": {
+    "Dần": 0,
+    "Thân": 0,
+    "Mão": 2,
+    "Dậu": 2,
+    "Thìn": 4,
+    "Tuất": 4,
+    "Tỵ": 6,
+    "Hợi": 6,
+    "Tý": 8,
+    "Ngọ": 8,
+    "Sửu": 10,
+    "Mùi": 10
+  },
+  "hourly_stars": [
+    {
+      "name": "Thiên Sát",
+      "type": "Bad",
+      "criteria": {
+        "day_can": {
+          "Giáp": "Tý",
+          "Kỷ": "Tý",
+          "Ất": "Mão",
+          "Canh": "Mão",
+          "Bính": "Ngọ",
+          "Tân": "Ngọ",
+          "Đinh": "Dậu",
+          "Nhâm": "Dậu",
+          "Mậu": ["Tý", "Ngọ"],
+          "Quý": ["Tý", "Ngọ"]
+        }
+      }
+    },
+    {
+      "name": "Địa Sát",
+      "type": "Bad",
+      "criteria": {
+        "day_can": {
+          "Giáp": "Ngọ",
+          "Kỷ": "Ngọ",
+          "Ất": "Dậu",
+          "Canh": "Dậu",
+          "Bính": "Tý",
+          "Tân": "Tý",
+          "Đinh": "Mão",
+          "Nhâm": "Mão",
+          "Mậu": ["Ngọ", "Tý"],
+          "Quý": ["Ngọ", "Tý"]
+        }
+      }
+    },
+    {
+      "name": "Hoàng Sa",
+      "type": "Bad",
+      "criteria": {
+        "day_can": {
+          "Giáp": "Dậu",
+          "Kỷ": "Dậu",
+          "Ất": "Tý",
+          "Canh": "Tý",
+          "Bính": "Mão",
+          "Tân": "Mão",
+          "Đinh": "Ngọ",
+          "Nhâm": "Ngọ",
+          "Mậu": ["Dậu", "Mão"],
+          "Quý": ["Dậu", "Mão"]
+        }
+      }
+    }
+  ]
+}

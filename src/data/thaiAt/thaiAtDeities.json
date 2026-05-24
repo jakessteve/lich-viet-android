@@ -1,0 +1,67 @@
+{
+  "description": "Thái Ất deities and their placement rules on the cosmic board.",
+  "deities": [
+    {
+      "id": "thaiAt",
+      "nameVi": "Thái Ất",
+      "nameCn": "太乙",
+      "role": "Chủ soái — vị trí của Thái Ất quyết định tính chất chính của năm",
+      "nature": "neutral",
+      "movementRule": "Follows the 72-year cycle within the 360-year Superior Epoch",
+      "personality": "Thái Ất là vị thần tối cao, đứng trên cả Thiên Hoàng, Địa Hoàng. Được coi là hiện thân của Bắc Đẩu Tinh, nắm giữ vận mệnh của cả thiên hạ. Vị trí của Thái Ất trên bàn cờ vũ trụ 16 cung quyết định xu thế chính của năm đó cho toàn thể nhân loại.",
+      "influenceWhenStrong": "Khi Thái Ất ở cung hợp mệnh: năm đó thuận lợi cho phát triển, quốc gia thái bình, kinh tế tăng trưởng. Cá nhân nên mạnh dạn mở rộng, đầu tư dài hạn.",
+      "influenceWhenWeak": "Khi Thái Ất ở cung hình xung: năm đó nhiều biến động, thiên tai, xã hội bất ổn. Cá nhân nên thận trọng, tích trữ, không mạo hiểm."
+    },
+    {
+      "id": "vanXuong",
+      "nameVi": "Văn Xương",
+      "nameCn": "文昌",
+      "role": "Chủ văn hóa, học vấn, thi cử, sáng tạo, giáo dục",
+      "nature": "cat",
+      "movementRule": "Follows Thái Ất with 2-palace offset",
+      "personality": "Văn Xương Tinh là ngôi sao văn khúc, chiếu rọi trí tuệ và sáng tạo. Khi Văn Xương mạnh, năm đó thuận lợi cho giáo dục, phát minh, sáng tác nghệ thuật, và mọi hoạt động liên quan đến tri thức. Là dấu hiệu của thời đại khai sáng.",
+      "influenceWhenStrong": "Thuận lợi cho: thi cử quốc gia, cải cách giáo dục, xuất bản sách, nghiên cứu khoa học. Học sinh và nhà nghiên cứu được hưởng lợi nhiều nhất. Tốt cho khởi đầu chương trình đào tạo.",
+      "influenceWhenWeak": "Trí tuệ bị che mờ, dễ đưa ra quyết định thiếu sáng suốt. Cẩn thận với tin giả, thông tin sai lệch. Nên đầu tư vào tự học thay vì phụ thuộc người khác."
+    },
+    {
+      "id": "thiKich",
+      "nameVi": "Thỉ Kích",
+      "nameCn": "始击",
+      "role": "Chủ hành động, chiến tranh, xung đột, khởi đầu bạo liệt",
+      "nature": "hung",
+      "movementRule": "Opposite of Thái Ất position",
+      "personality": "Thỉ Kích là lực lượng đối lập, luôn ở vị trí đối diện Thái Ất. Tượng trưng cho sự khởi đầu bằng bạo lực, cách mạng, và thay đổi đột ngột. Khi Thỉ Kích mạnh, năm đó nhiều xung đột, nhưng cũng là năm của sự đổi mới triệt để.",
+      "influenceWhenStrong": "Năm nhiều biến động: chiến tranh, cách mạng, khủng hoảng chính trị. Tuy nhiên cũng là năm của sự đổi mới triệt để. Đôi khi phá hủy là bước đầu để xây dựng lại. Cá nhân nên chuẩn bị cho sự thay đổi lớn.",
+      "influenceWhenWeak": "Xung đột lắng dịu, nhưng những mâu thuẫn ẩn chưa được giải quyết. Hòa bình bề ngoài, sóng ngầm bên trong."
+    },
+    {
+      "id": "keThan",
+      "nameVi": "Kế Thần",
+      "nameCn": "计神",
+      "role": "Chủ mưu lược, toan tính, âm mưu, chiến lược dài hạn",
+      "nature": "trung_binh",
+      "movementRule": "3-palace offset from Thỉ Kích",
+      "personality": "Kế Thần là ngôi sao mưu lược, tượng trưng cho những toan tính ngầm, chiến lược dài hạn, và khả năng nhìn xa trông rộng. Không thiện không ác tự thân — Kế Thần phụ thuộc vào ý đồ người sử dụng. Là dấu hiệu của thời kỳ nhiều 'game chính trị'.",
+      "influenceWhenStrong": "Năm nhiều mưu tính chiến lược, liên minh chính trị, thương mại quốc tế phức tạp. Những ai giỏi chiến lược sẽ thành công. Tốt cho hoạch định dài hạn nhưng cẩn thận bị người khác mưu hại.",
+      "influenceWhenWeak": "Ít âm mưu hơn, tình hình rõ ràng hơn. Tuy nhiên, thiếu vắng Kế Thần ở cung mạnh cũng có nghĩa là ít cơ hội chiến lược — mọi thứ diễn ra tuần tự, ít đột phá."
+    },
+    {
+      "id": "thaiAm",
+      "nameVi": "Thái Âm",
+      "nameCn": "太阴",
+      "role": "Chủ bí mật, che giấu, nữ tính, tiềm ẩn, bảo hộ ngầm",
+      "nature": "cat",
+      "movementRule": "Follows Văn Xương with 1-palace offset",
+      "personality": "Thái Âm tượng trưng cho mặt trăng — ánh sáng dịu dàng trong đêm, bảo vệ âm thầm, và sức mạnh tiềm ẩn. Khi Thái Âm chiếu, mọi thứ diễn ra trong yên lặng, quý nhân giúp đỡ không lộ danh tính, và cơ hội đến từ phía không ngờ.",
+      "influenceWhenStrong": "Năm thuận lợi cho mọi hoạt động kín đáo: ngoại giao hậu trường, đàm phán bí mật, phát triển sản phẩm mới chưa công bố. Phụ nữ đóng vai trò quan trọng trong sự thay đổi xã hội. Tốt cho ngành mỹ phẩm, thời trang, nghệ thuật.",
+      "influenceWhenWeak": "Thiếu vắng bảo hộ ngầm, dễ bị lộ bí mật. Cẩn thận với rò rỉ thông tin và phản bội từ người thân cận."
+    }
+  ],
+  "epochConfig": {
+    "superiorEpochYears": 360,
+    "cycleYears": 72,
+    "subCycleYears": 12,
+    "referenceYear": 1864,
+    "referenceEpochStart": 1864
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "deities": [
+    {
+      "id": "trucPhu",
+      "nameVi": "Trực Phù",
+      "nameCn": "直符",
+      "auspiciousness": "dai_cat",
+      "element": "Thổ",
+      "description": "Đại Cát — Thần chủ soái, quý nhân, quyền uy. Thần may mắn nhất trong Bát Thần.",
+      "personality": "Trực Phù là vị thần chủ soái, đứng đầu Bát Thần. Mang năng lượng chính trực, uy nghiêm nhưng nhân từ. Khi Trực Phù đến cung nào, cung đó được kích hoạt mạnh mẽ, mọi việc gặp thuận lợi, được quý nhân bề trên phù trợ.",
+      "domainInfluence": "Chủ về quyền uy, lãnh đạo, sự nghiệp. Đặc biệt tốt cho thăng chức, thi cử, gặp gỡ người có quyền lực. Liên quan đến bổn mệnh, tài sản quý, đất đai, bất động sản.",
+      "favorable": [
+        "Cầu quan lộc",
+        "yết kiến bề trên",
+        "khai trương",
+        "ký kết hợp đồng lớn",
+        "nhận chức vụ",
+        "mua bất động sản",
+        "thi cử"
+      ],
+      "unfavorable": ["Trốn tránh", "ẩn náu", "việc bí mật", "mưu kế ngầm"],
+      "practicalAdvice": "Khi Trực Phù xuất hiện ở cung tốt, hãy mạnh dạn hành động, gặp gỡ người quan trọng, đưa ra quyết định lớn. Nếu Trực Phù rơi vào cung Ngũ Hoàng hoặc gặp Bàng Ngâm, sức mạnh bị giảm nhưng vẫn có yếu tố may mắn."
+    },
+    {
+      "id": "dangXa",
+      "nameVi": "Đằng Xà",
+      "nameCn": "腾蛇",
+      "auspiciousness": "hung",
+      "element": "Hỏa",
+      "description": "Hung — Chủ lừa dối, quanh co, ảo giác, bất an. Thần của sự mê hoặc.",
+      "personality": "Đằng Xà mang bản chất quanh co, biến hóa khó lường như con rắn. Gây ra sự nghi ngờ, lo âu, ác mộng, và những hiểu lầm khó giải thích. Năng lượng âm tính, khiến tâm trí rối loạn, phán đoán sai lầm.",
+      "domainInfluence": "Chủ về sự lừa dối, thị phi, lo âu không rõ nguyên nhân. Liên quan đến giấy tờ pháp lý rắc rối, hợp đồng có kẽ hở, mất ngủ, ác mộng. Cũng ám chỉ tai nạn do lửa, điện, và các vấn đề liên quan đến đường sá quanh co.",
+      "favorable": ["Nghiên cứu tâm linh", "chiêm bốc", "công việc đòi hỏi óc sáng tạo nghệ thuật"],
+      "unfavorable": [
+        "Ký kết hợp đồng",
+        "vay mượn",
+        "hợp tác kinh doanh",
+        "khởi hành đường xa",
+        "quyết định quan trọng"
+      ],
+      "practicalAdvice": "Khi Đằng Xà xuất hiện, cần đặc biệt cẩn thận với thông tin nhận được — có thể là giả hoặc bị bóp méo. Không nên tin lời hứa miệng, yêu cầu mọi thứ bằng văn bản. Kiểm tra kỹ giấy tờ trước khi ký."
+    },
+    {
+      "id": "thaiAm",
+      "nameVi": "Thái Âm",
+      "nameCn": "太阴",
+      "auspiciousness": "cat",
+      "element": "Kim",
+      "description": "Cát — Chủ che chở ngầm, âm đức, quý nhân ẩn danh giúp đỡ.",
+      "personality": "Thái Âm là vị thần mang năng lượng âm tính thuần khiết, tượng trưng cho sự che chở thầm lặng, bảo vệ từ phía sau. Giống như ánh trăng dịu dàng, Thái Âm mang lại sự an toàn, bình yên và những cơ hội đến trong im lặng.",
+      "domainInfluence": "Chủ về quý nhân ẩn danh, phụ nữ quyền quý giúp đỡ, bí mật thuận lợi. Liên quan đến mưu kế khôn khéo, đàm phán kín đáo, tài sản giấu kín. Đặc biệt tốt cho việc liên quan đến phụ nữ, đồ trang sức, vàng bạc.",
+      "favorable": [
+        "Tìm quý nhân",
+        "đàm phán kín đáo",
+        "việc riêng tư",
+        "cưới hỏi",
+        "cầu tài ngầm",
+        "mưu kế",
+        "việc cần bí mật"
+      ],
+      "unfavorable": ["Việc cần công khai", "kiện tụng", "tranh đấu trực diện"],
+      "practicalAdvice": "Khi Thái Âm xuất hiện, đừng vội công khai kế hoạch. Âm thầm chuẩn bị, nhờ vả người phụ nữ tin cậy hoặc người lớn tuổi. Cơ hội sẽ đến từ ngõ không ngờ."
+    },
+    {
+      "id": "lucHop",
+      "nameVi": "Lục Hợp",
+      "nameCn": "六合",
+      "auspiciousness": "cat",
+      "element": "Mộc",
+      "description": "Cát — Chủ hợp tác, hôn nhân, thương lượng, hòa hợp.",
+      "personality": "Lục Hợp là vị thần của sự kết hợp, hòa thuận và đồng thuận. Mang năng lượng gắn kết, trung gian hòa giải, tạo cầu nối giữa các bên. Khi Lục Hợp hiện diện, mọi mối quan hệ đều được cải thiện.",
+      "domainInfluence": "Chủ về hôn nhân, hợp tác kinh doanh, liên doanh, thương lượng, đàm phán. Liên quan đến hòa giải tranh chấp, xây dựng mối quan hệ mới, giao kết bạn bè. Cũng ám chỉ thương mại, buôn bán, môi giới.",
+      "favorable": [
+        "Cưới hỏi",
+        "hợp tác kinh doanh",
+        "ký kết hợp đồng",
+        "đàm phán",
+        "hòa giải",
+        "kết bạn",
+        "thương mại",
+        "môi giới"
+      ],
+      "unfavorable": ["Kiện tụng", "tranh đấu", "ly hôn", "chia tách"],
+      "practicalAdvice": "Khi Lục Hợp xuất hiện ở cung tốt, đây là thời điểm vàng để đàm phán, ký kết và xây dựng mối quan hệ. Mọi thỏa thuận đạt được sẽ bền vững. Nếu đang có mâu thuẫn, hãy chủ động hòa giải."
+    },
+    {
+      "id": "bachHo",
+      "nameVi": "Bạch Hổ",
+      "nameCn": "白虎",
+      "auspiciousness": "hung",
+      "element": "Kim",
+      "description": "Hung — Chủ xung đột, bạo lực, tai nạn, thương tổn. Thần chiến tranh (Dương Độn).",
+      "personality": "Bạch Hổ là vị thần hung dữ, mang năng lượng sắc bén, phá hoại và chiến đấu. Tượng trưng cho sức mạnh quân sự, bạo lực, máu me, phẫu thuật. Khi Bạch Hổ đến, sự việc diễn biến nhanh, quyết liệt và không thể đảo ngược.",
+      "domainInfluence": "Chủ về tai nạn giao thông, phẫu thuật, chấn thương, mất mát vật chất. Liên quan đến quân sự, cảnh sát, vũ khí, kim loại sắc nhọn. Cũng ám chỉ tang ma, bệnh tật cấp tính.",
+      "favorable": ["Phẫu thuật cần thiết", "hành động quân sự", "thu nợ cứng rắn", "phá dỡ xây dựng"],
+      "unfavorable": ["Xuất hành", "cưới hỏi", "khai trương", "đầu tư", "ký hợp đồng", "di chuyển xa"],
+      "practicalAdvice": "Khi Bạch Hổ xuất hiện, tuyệt đối cẩn thận trên đường. Tránh các hoạt động nguy hiểm, không tranh cãi nóng nảy. Nếu cần phẫu thuật, đây lại là thời điểm thuận lợi vì năng lượng 'cắt bỏ' mạnh."
+    },
+    {
+      "id": "huyenVu",
+      "nameVi": "Huyền Vũ",
+      "nameCn": "玄武",
+      "auspiciousness": "hung",
+      "element": "Thủy",
+      "description": "Hung — Chủ trộm cắp, lừa đảo, bất minh. Thần bóng tối (Dương Độn).",
+      "personality": "Huyền Vũ là vị thần của bóng tối, che giấu và lừa lọc. Mang năng lượng bí ẩn, khó đoán, liên quan đến mọi hành vi lén lút và bất chính. Khi Huyền Vũ đến, thông tin bị che giấu, sự thật bị bóp méo.",
+      "domainInfluence": "Chủ về trộm cắp, lừa đảo, tham nhũng, phản bội. Liên quan đến mất tài sản, rò rỉ thông tin, gián điệp, ngoại tình. Cũng ám chỉ nghiện ngập, rượu chè, cờ bạc.",
+      "favorable": ["Điều tra bí mật", "thám tử", "công tác tình báo"],
+      "unfavorable": [
+        "Vay mượn",
+        "cho vay",
+        "giao dịch tài chính",
+        "tin tưởng người lạ",
+        "đầu tư mạo hiểm",
+        "gửi tài sản"
+      ],
+      "practicalAdvice": "Khi Huyền Vũ xuất hiện, tuyệt đối bảo vệ tài sản và thông tin cá nhân. Không cho vay tiền, không đầu tư theo lời giới thiệu. Kiểm tra kỹ mọi giấy tờ, cẩn thận với người mới quen."
+    },
+    {
+      "id": "cuuDia",
+      "nameVi": "Cửu Địa",
+      "nameCn": "九地",
+      "auspiciousness": "cat",
+      "element": "Thổ",
+      "description": "Cát — Chủ bền vững, kiên nhẫn, kế hoạch dài hạn, tiềm ẩn.",
+      "personality": "Cửu Địa là vị thần của đất mẹ, mang năng lượng ổn định, nuôi dưỡng và kiên nhẫn. Tượng trưng cho nền tảng vững chắc, sức chịu đựng bền bỉ, và sức mạnh tiềm ẩn dưới bề mặt. Cửu Địa không vội vàng nhưng không gì lay chuyển được.",
+      "domainInfluence": "Chủ về bất động sản, nông nghiệp, xây dựng, tích trữ. Liên quan đến kế hoạch dài hạn, đầu tư ổn định, bảo vệ tài sản. Cũng ám chỉ ẩn náu, phòng thủ, tích lũy lực lượng.",
+      "favorable": [
+        "Mua nhà đất",
+        "xây dựng",
+        "trồng trọt",
+        "tích lũy dài hạn",
+        "phòng thủ",
+        "ẩn náu",
+        "việc cần kiên nhẫn"
+      ],
+      "unfavorable": ["Hành động nhanh", "đầu cơ ngắn hạn", "mạo hiểm", "thay đổi đột ngột"],
+      "practicalAdvice": "Khi Cửu Địa xuất hiện, hãy xây dựng nền tảng vững chắc thay vì chạy theo lợi nhuận nhanh. Đây là lúc tích lũy, chuẩn bị, và kiên nhẫn chờ thời. Đầu tư vào bất động sản hoặc giáo dục sẽ được lợi lâu dài."
+    },
+    {
+      "id": "cuuThien",
+      "nameVi": "Cửu Thiên",
+      "nameCn": "九天",
+      "auspiciousness": "cat",
+      "element": "Kim",
+      "description": "Cát — Chủ chí lớn, mở rộng, tiến bộ nhanh, bay cao.",
+      "personality": "Cửu Thiên là vị thần của bầu trời cao, mang năng lượng thăng hoa, mở rộng và đột phá. Tượng trưng cho tham vọng lớn, tầm nhìn xa, và khả năng vượt qua giới hạn. Khi Cửu Thiên đến, mọi thứ được nâng tầm.",
+      "domainInfluence": "Chủ về thăng tiến nhanh, mở rộng kinh doanh, xuất ngoại, hàng không. Liên quan đến công danh lớn, quyết định táo bạo, đột phá sáng tạo. Cũng ám chỉ du lịch, di cư, xuất khẩu.",
+      "favorable": [
+        "Mở rộng kinh doanh",
+        "thăng tiến",
+        "xuất ngoại",
+        "khởi nghiệp",
+        "quảng cáo",
+        "marketing",
+        "xuất hành xa"
+      ],
+      "unfavorable": ["Ẩn náu", "co cụm", "bảo thủ", "việc cần bí mật"],
+      "practicalAdvice": "Khi Cửu Thiên xuất hiện, hãy mạnh dạn mở rộng, không ngại thử thách mới. Đây là thời điểm tuyệt vời để quảng bá thương hiệu, mở chi nhánh, hoặc đi xa tìm cơ hội. Tuy nhiên, cần có kế hoạch cụ thể, tránh ảo tưởng."
+    }
+  ],
+  "yinDunReplacements": {
+    "bachHo": {
+      "id": "cauTran",
+      "nameVi": "Câu Trần",
+      "nameCn": "勾陈",
+      "auspiciousness": "hung",
+      "element": "Thổ",
+      "description": "Hung — Chủ tranh chấp, chiến đấu, kiện tụng. Thần xung đột (Âm Độn).",
+      "personality": "Câu Trần mang năng lượng trì trệ, kéo dài và vướng mắc. Tượng trưng cho những tranh chấp dai dẳng, thủ tục hành chính phiền phức, và những mối ràng buộc khó gỡ. Khác với Bạch Hổ (nhanh và dứt khoát), Câu Trần gây ra sự bế tắc kéo dài.",
+      "domainInfluence": "Chủ về kiện tụng kéo dài, tranh chấp đất đai, thủ tục pháp lý phức tạp. Liên quan đến quân đội, cảnh sát, lực lượng vũ trang. Cũng ám chỉ những vấn đề 'cũ' quay lại.",
+      "favorable": ["Phòng thủ", "bảo vệ lãnh thổ", "kiện tụng (nếu bạn là bên phòng thủ)"],
+      "unfavorable": ["Khai trương", "di chuyển", "ký kết mới", "cưới hỏi", "xuất hành"],
+      "practicalAdvice": "Khi Câu Trần xuất hiện, chuẩn bị cho sự chậm trễ và trở ngại hành chính. Mọi việc sẽ mất thời gian hơn dự kiến. Không nên khởi kiện mới, nhưng nếu đang bị kiện, có thể phòng thủ thành công."
+    },
+    "huyenVu": {
+      "id": "chuTuoc",
+      "nameVi": "Chu Tước",
+      "nameCn": "朱雀",
+      "auspiciousness": "hung",
+      "element": "Hỏa",
+      "description": "Hung — Chủ khẩu thiệt, thị phi, giấy tờ, tranh cãi. Thần lời nói (Âm Độn).",
+      "personality": "Chu Tước mang năng lượng nóng nảy, sắc bén như lửa trong lời nói. Tượng trưng cho mọi vấn đề liên quan đến giao tiếp: thị phi, tin đồn, tranh cãi, khẩu chiến. Khi Chu Tước đến, lời nói trở thành vũ khí hai lưỡi.",
+      "domainInfluence": "Chủ về tranh cãi, kiện tụng bằng lời, thư từ pháp lý, truyền thông. Liên quan đến văn bản có vấn đề, hợp đồng sai sót, scandal truyền thông. Cũng ám chỉ giáo dục, thi cử, phỏng vấn.",
+      "favorable": ["Thi cử (nếu cung tốt)", "tranh biện", "mặc cả", "marketing (dùng cẩn thận)"],
+      "unfavorable": ["Ký kết hợp đồng", "phát ngôn công khai", "đăng bài trên mạng", "giao tiếp nhạy cảm"],
+      "practicalAdvice": "Khi Chu Tước xuất hiện, cẩn thận với mọi lời nói và văn bản. Suy nghĩ kỹ trước khi phát ngôn, tránh tranh cãi trên mạng xã hội. Kiểm tra kỹ email và tin nhắn trước khi gửi."
+    }
+  }
+}

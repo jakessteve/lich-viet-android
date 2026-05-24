@@ -1,0 +1,177 @@
+{
+  "truc_rules": {
+    "Kiến": {
+      "nghi": [
+        "Đi xa, khởi hành",
+        "Cưới hỏi",
+        "Khởi công, làm nhà",
+        "Nhận việc, nhận chức",
+        "Trồng cây",
+        "Ký hợp đồng",
+        "Đi học, nhập học",
+        "Đền ơn",
+        "Làm việc thiện"
+      ],
+      "ky": ["Khởi công, đào móng", "Chôn cất", "Đào giếng", "Lợp nhà", "Mua xe", "Hạ thủy", "Phá thổ"]
+    },
+    "Trừ": {
+      "nghi": [
+        "Giải hạn, trừ họa",
+        "Chữa bệnh",
+        "Cúng tế, lễ bái",
+        "Cầu bình an",
+        "Tỉa chân hương",
+        "Phá dỡ nhà cũ",
+        "Quét dọn nhà cửa",
+        "Tắm gội"
+      ],
+      "ky": ["Ký hợp đồng", "Xuất tiền lớn", "Cưới hỏi", "Khai trương, mở hàng"]
+    },
+    "Mãn": {
+      "nghi": [
+        "Cầu phúc",
+        "Cúng lễ",
+        "Cầu xin",
+        "Vào nhà mới",
+        "Mua tài sản lớn",
+        "Xây kho",
+        "Khai trương, mở hàng",
+        "Đi xa, khởi hành",
+        "Sửa kho"
+      ],
+      "ky": ["Chôn cất", "Kiện tụng", "Nhận việc, nhận chức", "Cưới hỏi", "Khởi công, đào móng"]
+    },
+    "Bình": {
+      "nghi": ["Mọi việc đều tốt", "Chuyển bếp", "Buôn bán", "Mua bán", "Sửa chữa nhà"],
+      "ky": ["Khai trương, mở hàng", "Cưới hỏi"]
+    },
+    "Định": {
+      "nghi": [
+        "Ngồi thiền",
+        "Ăn hỏi, đính hôn",
+        "Cưới hỏi",
+        "Ký hợp đồng",
+        "Giao dịch, buôn bán",
+        "Cầu tài lộc",
+        "Nộp đơn từ"
+      ],
+      "ky": ["Đi xa, khởi hành", "Di chuyển", "Kiện tụng", "Chữa bệnh", "Hội họp"]
+    },
+    "Chấp": {
+      "nghi": ["Trồng trọt", "Cất giữ tiền", "Bắt đầu việc mới", "Tu giới mộc", "Thợ thuyền"],
+      "ky": ["Xuất tiền", "Dời nhà", "Đi xa, khởi hành", "Mở cửa hàng"]
+    },
+    "Phá": {
+      "nghi": ["Phá dỡ nhà", "Phá thổ", "Giải hạn, trừ họa", "Chấm dứt hợp tác", "Phá vách"],
+      "ky": ["Tránh làm việc lớn", "Khởi công, làm nhà", "Cưới hỏi", "Khai trương, mở hàng", "Ký thỏa thuận"]
+    },
+    "Nguy": {
+      "nghi": ["Lễ bái", "Cầu con cái", "Tụng kinh", "Chữa bệnh", "Châm cứu", "Giải hạn, trừ họa"],
+      "ky": ["Đi xa, khởi hành", "Di chuyển", "Khởi công, đào móng", "Kê giường", "Cưới hỏi", "Leo núi"]
+    },
+    "Thành": {
+      "nghi": [
+        "Cưới hỏi",
+        "Đi học, nhập học",
+        "Xây nhà",
+        "Khai trương, mở hàng",
+        "Mở hàng, khai trương",
+        "Ký kết hợp đồng",
+        "Lấp dòng, xây đắp",
+        "Ban thưởng, mừng",
+        "Bắt đầu mặc áo tang"
+      ],
+      "ky": ["Kiện tụng"]
+    },
+    "Thâu": {
+      "nghi": ["Thu tiền", "Cầu tài lộc", "Giao dịch, buôn bán", "Vào nhà mới", "Ký hợp đồng", "Mua nuôi gia súc"],
+      "ky": ["Kê giường", "Cho vay", "Đi xa, khởi hành", "Khởi công, làm nhà", "Chôn cất"]
+    },
+    "Khai": {
+      "nghi": [
+        "Khai trương, mở hàng",
+        "Học tập",
+        "Dựng cột, làm nhà",
+        "Giao dịch, buôn bán",
+        "Đi xa, khởi hành",
+        "Cưới hỏi",
+        "Gặp gỡ",
+        "Hòa giải"
+      ],
+      "ky": ["Chôn cất", "Khởi công, đào móng", "Kiện tụng"]
+    },
+    "Bế": {
+      "nghi": ["Xây tường", "Lấp vá", "Đào ao", "Đắp đê", "Ngăn nước", "Cúng tế"],
+      "ky": ["Mở cửa", "Khai trương, mở hàng", "Đi xa, khởi hành", "Khám bệnh", "Nhận việc, nhận chức"]
+    }
+  },
+  "rules": [],
+  "sat_su_unsuitable": ["Cúng tế", "Lễ bái", "Cầu phúc", "Cầu nguyện", "Khai trương", "Nhập học", "Nhận chức"],
+  "major_hung_unsuitable": [
+    "Cưới hỏi",
+    "Khởi công xây dựng",
+    "Xây dựng",
+    "Khai trương",
+    "Nhập trạch",
+    "Chôn cất",
+    "Mai táng",
+    "Động thổ"
+  ],
+  "bach_ky_list": [
+    "An doanh (Lập doanh trại)",
+    "An sàng (Kê giường)",
+    "An táng (Chôn cất)",
+    "Bàn di (Di chuyển)",
+    "Châm cứu",
+    "Chủng thực (Trồng trọt)",
+    "Cúng tế",
+    "Cầu y (Khám bệnh)",
+    "Di cư (Chuyển nhà)",
+    "Di tỉ (Dời chỗ ở)",
+    "Doanh kiến cung thất (Xây dựng nhà)",
+    "Giá thú (Cưới hỏi)",
+    "Hành thuyền (Đi thuyền)",
+    "Hưng tạo (Khởi công xây dựng)",
+    "Hợp tương (Làm tương, làm bếp)",
+    "Khai cừ (Đào kênh)",
+    "Khai nghiệp (Khai trương)",
+    "Khai trì (Đào ao)",
+    "Kinh thương (Buôn bán)",
+    "Kiến tiếu (Cầu phúc, làm việc thiện)",
+    "Liệu bệnh (Chữa bệnh)",
+    "Lập khế mãi mại (Ký hợp đồng, mua bán)",
+    "Nhập học",
+    "Nhập sơn (Vào núi, săn bắn)",
+    "Phạt mộc (Chặt cây)",
+    "Phục dược (Uống thuốc)",
+    "Quy gia (Về nhà)",
+    "Quy ninh (Thăm người thân)",
+    "Thú phụ (Lấy vợ, cưới gả)",
+    "Thượng biểu chương (Nộp đơn từ)",
+    "Thượng lương (Lợp mái)",
+    "Thượng sách (Dâng kế sách)",
+    "Thụ trụ (Dựng cột)",
+    "Tiến biểu chương (Dâng sớ, nộp đơn)",
+    "Tiến nhân khẩu (Nhận người làm)",
+    "Tu cung thất (Sửa chữa nhà cửa)",
+    "Tu thương khố (Sửa chữa kho tàng)",
+    "Tu trai (Sửa sang lễ vật)",
+    "Tu trí sản thất (Sắp xếp đồ đạc)",
+    "Tuyên bố chánh sự (Công bố việc công)",
+    "Tạo thuyền (Đóng thuyền)",
+    "Tạo tửu (Làm rượu)",
+    "Viễn hành (Đi xa, khởi hành)",
+    "Viễn hồi (Đi xa về)",
+    "Vấn danh (Ăn hỏi)",
+    "Xuyên ngưu tị (Xỏ mũi trâu)",
+    "Xuyên nhĩ khổng (Xỏ lỗ tai)",
+    "Xuyên tỉnh (Đào giếng)",
+    "Xuất hành",
+    "Xuất hỏa (Dời bếp)",
+    "Xuất quân",
+    "Xuất sư (Ra quân)",
+    "Xuất tài (Xuất tiền)",
+    "Yết lục súc (Thăm nuôi gia súc)",
+    "Động thổ (Đào móng)"
+  ]
+}
