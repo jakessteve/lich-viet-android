@@ -41,7 +41,8 @@ const OPPOSITE_CHI: Record<number, number> = {
   11: 5,
 };
 
-const MOBILE_BASE_SIZE = 700;
+const MOBILE_BASE_WIDTH = 700;
+const MOBILE_BASE_HEIGHT = 820;
 
 function getTamHopGroup(chiIndex: number): number[] {
   return [...(TAM_HOP_GROUPS.find((group) => group.includes(chiIndex)) ?? [])];
@@ -73,6 +74,7 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
   const chartLegendRef = useRef<HTMLDivElement>(null);
   const brightnessLegendRef = useRef<HTMLDivElement>(null);
   const [mobileScale, setMobileScale] = useState(1);
+  const [mobileZoomed, setMobileZoomed] = useState(false);
   const [isMobileViewport, setIsMobileViewport] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia('(max-width: 768px)').matches : false,
   );
@@ -98,8 +100,19 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
     return () => media.removeEventListener('change', handleChange);
   }, []);
 
+  useEffect(() => {
+    if (!isMobileViewport) {
+      setMobileZoomed(false);
+    }
+  }, [isMobileViewport]);
+
   const updateMobileScale = useCallback(() => {
     if (!isMobileViewport) {
+      setMobileScale(1);
+      return;
+    }
+
+    if (mobileZoomed) {
       setMobileScale(1);
       return;
     }
@@ -111,8 +124,13 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
     const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
     const availableHeight = Math.max(0, viewportHeight - 24);
 
-    const nextScale = Math.min(shellWidth / MOBILE_BASE_SIZE, availableHeight / MOBILE_BASE_SIZE, 1);
+    const nextScale = Math.min(shellWidth / MOBILE_BASE_WIDTH, availableHeight / MOBILE_BASE_HEIGHT, 1);
     setMobileScale(Number.isFinite(nextScale) && nextScale > 0 ? nextScale : 1);
+  }, [isMobileViewport, mobileZoomed]);
+
+  const handleMobileZoomToggle = useCallback(() => {
+    if (!isMobileViewport) return;
+    setMobileZoomed((current) => !current);
   }, [isMobileViewport]);
 
   useEffect(() => {
@@ -139,13 +157,40 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
     };
   }, [isMobileViewport, updateMobileScale]);
 
+  useEffect(() => {
+    if (!isMobileViewport) return;
+
+    const shell = shellRef.current;
+    if (!shell) return;
+
+    const frame = window.requestAnimationFrame(() => {
+      if (mobileZoomed) {
+        const maxScrollLeft = Math.max(0, shell.scrollWidth - shell.clientWidth);
+        shell.scrollTo({
+          left: maxScrollLeft / 2,
+          top: 0,
+          behavior: 'smooth',
+        });
+      } else {
+        shell.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: 'smooth',
+        });
+      }
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [isMobileViewport, mobileZoomed]);
+
   const mobileStageStyle = useMemo<React.CSSProperties | undefined>(() => {
     if (!isMobileViewport) return undefined;
 
-    const scaledSize = MOBILE_BASE_SIZE * mobileScale;
+    const scaledWidth = MOBILE_BASE_WIDTH * mobileScale;
+    const scaledHeight = MOBILE_BASE_HEIGHT * mobileScale;
     return {
-      width: `${scaledSize}px`,
-      height: `${scaledSize}px`,
+      width: `${scaledWidth}px`,
+      height: `${scaledHeight}px`,
     };
   }, [isMobileViewport, mobileScale]);
 
@@ -153,16 +198,23 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
     if (!isMobileViewport) return undefined;
 
     return {
-      width: `${MOBILE_BASE_SIZE}px`,
-      minWidth: `${MOBILE_BASE_SIZE}px`,
-      transform: `scale(${mobileScale})`,
+      width: `${MOBILE_BASE_WIDTH}px`,
+      minWidth: `${MOBILE_BASE_WIDTH}px`,
+      backfaceVisibility: 'hidden',
+      WebkitBackfaceVisibility: 'hidden',
+      transform: `translateZ(0) scale(${mobileScale})`,
       transformOrigin: 'top left',
+      willChange: 'transform, opacity',
     };
   }, [isMobileViewport, mobileScale]);
 
   return (
-    <div className="tuvi-chart-shell" ref={shellRef}>
-      <div className="tuvi-chart-stage" style={mobileStageStyle}>
+    <div className={`tuvi-chart-shell${isMobileViewport && mobileZoomed ? ' mobile-zoomed' : ''}`} ref={shellRef}>
+      <div
+        className={`tuvi-chart-stage${isMobileViewport ? ' tuvi-chart-stage-mobile' : ''}`}
+        onClick={handleMobileZoomToggle}
+        style={{ ...mobileStageStyle, cursor: isMobileViewport ? (mobileZoomed ? 'zoom-out' : 'zoom-in') : undefined }}
+      >
         <div className="tuvi-chart" data-tuvi-chart-export role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>
           {triangleLines.length > 0 && (
             <svg className="tuvi-connection-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
@@ -213,7 +265,6 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
           >
             <TuViCenterPanel
               centerInfo={chart.centerInfo}
-              huyenKhi={chart.huyenKhi}
               hanContext={chart.hanContext}
               engineMeta={chart.engineMeta}
             />
@@ -231,6 +282,8 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
         <span>(M) Miếu</span>
         <span>(V) Vượng</span>
         <span>(Đ) Đắc</span>
+        <span>(Đị) Địa</span>
+        <span>(L) Lợi</span>
         <span>(H) Hãm</span>
       </div>
     </div>

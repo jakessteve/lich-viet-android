@@ -16,19 +16,16 @@
  * }
  * ```
  *
- * ## Adding a new locale
- * 1. Create a new JSON file in `src/i18n/locales/` (e.g., `zh.json`)
- * 2. Add the locale to the `SUPPORTED_LOCALES` array below
- * 3. Import and register it in the `localeModules` map
+ * This app is Vietnamese-only in the UI, so the locale layer is kept
+ * intentionally narrow and always resolves to Vietnamese.
  */
 
 import viLocale from './locales/vi.json';
-import enLocale from './locales/en.json';
 
 // ── Types ──────────────────────────────────────────────────────────
 
 /** Supported locale codes */
-export type LocaleCode = 'vi' | 'en';
+export type LocaleCode = 'vi';
 
 /** Flat key-value map of translations */
 type TranslationMap = Record<string, string | string[]>;
@@ -39,7 +36,7 @@ type TemplateVars = Record<string, string | number>;
 // ── Constants ──────────────────────────────────────────────────────
 
 /** List of supported locale codes */
-export const SUPPORTED_LOCALES: readonly LocaleCode[] = ['vi', 'en'] as const;
+export const SUPPORTED_LOCALES: readonly LocaleCode[] = ['vi'] as const;
 
 /** Default locale — Vietnamese since this is a Vietnamese cultural app */
 export const DEFAULT_LOCALE: LocaleCode = 'vi';
@@ -47,7 +44,6 @@ export const DEFAULT_LOCALE: LocaleCode = 'vi';
 /** Human-readable locale names for UI display */
 export const LOCALE_NAMES: Record<LocaleCode, string> = {
   vi: 'Tiếng Việt',
-  en: 'English',
 };
 
 // ── Locale Registry ────────────────────────────────────────────────
@@ -58,7 +54,6 @@ export const LOCALE_NAMES: Record<LocaleCode, string> = {
  */
 const localeModules: Record<LocaleCode, Record<string, unknown>> = {
   vi: viLocale,
-  en: enLocale,
 };
 
 // ── Core Translation Engine ────────────────────────────────────────
@@ -174,20 +169,6 @@ export function translateArray(key: string, locale: LocaleCode = DEFAULT_LOCALE)
  * Returns a supported locale code, falling back to DEFAULT_LOCALE.
  */
 export function detectLocale(): LocaleCode {
-  if (typeof window === 'undefined') return DEFAULT_LOCALE;
-
-  // Check localStorage first (user preference)
-  const saved = localStorage.getItem('locale');
-  if (saved && SUPPORTED_LOCALES.includes(saved as LocaleCode)) {
-    return saved as LocaleCode;
-  }
-
-  // Check browser language
-  const browserLang = navigator.language.split('-')[0];
-  if (SUPPORTED_LOCALES.includes(browserLang as LocaleCode)) {
-    return browserLang as LocaleCode;
-  }
-
   return DEFAULT_LOCALE;
 }
 

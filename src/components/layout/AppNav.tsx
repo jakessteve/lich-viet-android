@@ -3,15 +3,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 import { NAV_LINKS, ROUTE_TO_TAB, TAB_TO_ROUTE, type ActiveTab } from '@/router/constants';
-import { LOCALE_NAMES, type LocaleCode, SUPPORTED_LOCALES } from '@/i18n';
 
 export default function AppNav() {
   const isDark = useAppStore((s) => s.isDark);
   const toggleDarkMode = useAppStore((s) => s.toggleDarkMode);
   const fontSize = useAppStore((s) => s.fontSize);
   const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
-  const locale = useAppStore((s) => s.locale);
-  const setLocale = useAppStore((s) => s.setLocale);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [darkModeFlash, setDarkModeFlash] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
@@ -47,10 +44,6 @@ export default function AppNav() {
   // Font size helpers
   const levels: ('small' | 'normal' | 'large')[] = ['small', 'normal', 'large'];
   const fontSizeLabel = fontSize === 'small' ? 'Nhỏ' : fontSize === 'normal' ? 'Vừa' : 'Lớn';
-
-  // Locale flag mapping
-  // Locale display labels (no emoji — use text-only per design system §4 no-emoji-icons)
-  const LOCALE_LABELS: Record<LocaleCode, string> = { vi: 'VI', en: 'EN' };
 
   return (
     <nav className="sticky top-0 z-50 glass-nav" aria-label="Điều hướng chính">
@@ -220,34 +213,6 @@ export default function AppNav() {
                       >
                         <span className="text-xs font-bold">A+</span>
                       </button>
-                    </div>
-                  </div>
-
-                  {/* Language selector */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark">
-                        language
-                      </span>
-                      <span className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
-                        Ngôn ngữ
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      {SUPPORTED_LOCALES.map((loc) => (
-                        <button
-                          key={loc}
-                          onClick={() => setLocale(loc)}
-                          className={`px-2 py-0.5 rounded-md text-xs font-medium transition-all duration-150 ${
-                            locale === loc
-                              ? 'bg-gold/15 dark:bg-gold-dark/15 text-gold dark:text-gold-dark'
-                              : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700'
-                          }`}
-                          aria-label={LOCALE_NAMES[loc]}
-                        >
-                          {LOCALE_LABELS[loc]}
-                        </button>
-                      ))}
                     </div>
                   </div>
                 </div>

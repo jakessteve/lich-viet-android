@@ -44,7 +44,6 @@ import cucSaoTableData from '../../data/tuvi/cucSaoTable.json';
 import menhChuTableData from '../../data/tuvi/menhChuTable.json';
 import thanChuTableData from '../../data/tuvi/thanChuTable.json';
 import { detectCombinations } from './combinationDetection';
-import { calculateHuyenKhi } from './huyenKhi';
 import { DEFAULT_TU_VI_SCHOOL, resolveTuViSchoolProfile } from './schoolProfiles';
 import { formatCivilDateYmd } from './timeNormalization';
 
@@ -81,6 +80,9 @@ const HONG_LOAN_TABLE = [3, 2, 1, 0, 11, 10, 9, 8, 7, 6, 5, 4];
 
 /** Thiên Hỉ position by year Chi index. */
 const THIEN_HI_TABLE = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 10];
+
+/** Lưu Hà position by year Can index (classic Can-based rule). */
+const LUU_HA_TABLE = [9, 10, 7, 4, 5, 6, 8, 3, 11, 2];
 
 /** Hỏa Tinh classical start table by Tam Hợp group and hour branch. */
 const HOA_TINH_TABLE: Record<number, readonly number[]> = {
@@ -326,7 +328,7 @@ function getYearlySupportStars(
     'Thiên Sứ': mod12(menhPosition + 7),
     'Kiếp Sát': [5, 2, 11, 8, 5, 2, 11, 8, 5, 2, 11, 8][yearChiIndex],
     'Giải Thần': [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11][yearChiIndex],
-    'Lưu Hà': [9, 10, 11, 0, 1, 2, 3, 4, 5, 6][mod10(yearCanIndex)],
+    'Lưu Hà': LUU_HA_TABLE[mod10(yearCanIndex)],
     'Thiên La': 4,
     'Địa Võng': 10,
   };
@@ -669,6 +671,7 @@ export function calculatePalaceCans(yearCanIndex: number): number[] {
 export function generateChart(input: TuViInput): TuViChart {
   const schoolProfile = resolveTuViSchoolProfile(input.school);
   const birthContext = buildTuViBirthContext(input, schoolProfile);
+  const auditWarnings = [...birthContext.warnings];
   const correctedDate = birthContext.correctedDate;
   const lunar = birthContext.lunarDate;
   const yearCanIndex = birthContext.yearCanIndex;
@@ -744,9 +747,13 @@ export function generateChart(input: TuViInput): TuViChart {
 
   const tuHoaResolved: Record<string, { starName: string; position: number }> = {};
   for (const [type, entry] of Object.entries(tuHoaRaw)) {
+    const position = allStarPositions[entry.starName];
+    if (position === undefined) {
+      auditWarnings.push(`Không tìm thấy sao ${entry.starName} để an Tứ Hóa ${type}.`);
+    }
     tuHoaResolved[type] = {
       starName: entry.starName,
-      position: allStarPositions[entry.starName] ?? -1,
+      position: position ?? -1,
     };
   }
 
@@ -789,14 +796,18 @@ export function generateChart(input: TuViInput): TuViChart {
     for (const [starName, pos] of Object.entries(phuTinhMap)) {
       if (pos === chiIdx) {
         const info = PHU_TINH_BY_NAME.get(starName);
+        if (!info) {
+          auditWarnings.push(`Không tìm thấy Ngũ Hành cho sao ${starName}; bỏ qua sao này.`);
+          continue;
+        }
         const b = getBrightness(starName, chiIdx);
         const star: TuViStar = {
           name: starName,
-          type: info?.type === 'sat' ? 'satTinh' : 'phuTinh',
-          nguHanh: info?.nguHanh ?? 'Âm Thổ',
+          type: info.type === 'sat' ? 'satTinh' : 'phuTinh',
+          nguHanh: info.nguHanh,
           brightness: b,
         };
-        if (info?.type === 'sat') {
+        if (info.type === 'sat') {
           satTinh.push(star);
         } else {
           phuTinh.push(star);
@@ -906,7 +917,6 @@ export function generateChart(input: TuViInput): TuViChart {
   }
 
   const combinations = detectCombinations(palaces);
-  const huyenKhi = calculateHuyenKhi(palaces, []);
 
   const centerInfo = {
     hoTen: input.name ?? '',
@@ -940,13 +950,13 @@ export function generateChart(input: TuViInput): TuViChart {
       timePolicy: schoolProfile.timePolicy,
     },
     engineMeta: {
-      version: input.engineVersion ?? 'legacy-v3',
+      version: input.engineVersion ?? 'accuracy-v4',
       schoolLabel: schoolProfile.label,
       leapMonthPolicy: birthContext.leapMonthPolicy,
       timePolicy: birthContext.timePolicy,
       historicalRegion: birthContext.historicalRegion,
       catalog: getTuViCatalogSummary(),
-      warnings: birthContext.warnings,
+      warnings: auditWarnings,
       sources: ['current-engine', 'iztro', 'fortel-ziweidoushu', 'lunar-javascript', '@dqcai/vn-lunar'],
     },
     correctedDate,
@@ -967,9 +977,8 @@ export function generateChart(input: TuViInput): TuViChart {
     centerInfo,
     palaces,
     combinations,
-    huyenKhi,
     menhCucRelation,
-    auditWarnings: birthContext.warnings,
+    auditWarnings,
   };
 }
 

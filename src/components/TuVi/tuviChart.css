@@ -25,12 +25,15 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 1 / 1.17;
   margin: 0 auto;
   background: var(--tuvi-line);
   border: 1px solid var(--tuvi-line);
   border-radius: 8px;
   box-shadow: none;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform, opacity;
   font-family: var(--font-sans);
   font-size: 0.95rem;
   line-height: 1.2;
@@ -238,7 +241,7 @@
   display: flex;
   min-width: 0;
   flex-direction: column;
-  gap: 1px;
+  gap: 4px;
   min-height: 0;
 }
 
@@ -547,6 +550,11 @@
     padding-bottom: 8px;
   }
 
+  .tuvi-chart-shell.mobile-zoomed {
+    overflow-x: auto;
+    overflow-y: auto;
+  }
+
   .tuvi-chart {
     max-width: none;
     margin: 0;
@@ -563,6 +571,10 @@
   .tuvi-chart-legend span,
   .tuvi-brightness-legend span {
     padding-inline: 6px;
+  }
+
+  .tuvi-phu-tinh-grid > div {
+    gap: 5px;
   }
 
   .tuvi-connection-svg {

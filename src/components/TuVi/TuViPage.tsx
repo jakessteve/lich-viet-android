@@ -106,7 +106,7 @@ export const TuViPage: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
             <IconButton
               onClick={() => setHanView(viewYear - 1, viewMonth)}
               icon="chevron_left"
@@ -189,10 +189,9 @@ export const TuViPage: React.FC = () => {
         </div>
       )}
 
-      {chart && <TuViSummaryPanel chart={chart} />}
-
-      {/* Markdown Export */}
       {chart && <TuViMarkdownExport />}
+
+      {chart && <TuViSummaryPanel chart={chart} />}
     </div>
   );
 };

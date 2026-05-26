@@ -309,24 +309,6 @@ export interface TuViCombination {
   sourcePatternId?: string;
 }
 
-// ── Huyền Khí ───────────────────────────────────────────────
-
-/**
- * Huyền Khí (Mysterious Energy) scoring for the entire chart.
- *
- * Each palace receives a score based on the brightness and
- * auspiciousness of its stars. The total determines the
- * overall grade of the chart.
- */
-export interface TuViHuyenKhi {
-  /** Total score across all 12 palaces */
-  totalScore: number;
-  /** Per-palace score (palace name → score) */
-  palaceScores: Record<string, number>;
-  /** Overall grade: "Thượng" (high), "Trung" (middle), "Hạ" (low) */
-  grade: string;
-}
-
 // ── Mệnh-Cục Relation ─────────────────────────────────────
 
 /**
@@ -409,7 +391,7 @@ export interface TuViCenterInfo {
  *
  * This is the top-level result of a Tử Vi calculation,
  * containing all palaces, center metadata, combinations,
- * Huyền Khí scoring, and Mệnh-Cục relation.
+ * and Mệnh-Cục relation.
  */
 export interface TuViChart {
   /** Original input data */
@@ -442,8 +424,6 @@ export interface TuViChart {
   palaces: TuViPalace[];
   /** Detected named combinations */
   combinations: TuViCombination[];
-  /** Huyền Khí scoring */
-  huyenKhi: TuViHuyenKhi;
   /** Mệnh-Cục elemental relation */
   menhCucRelation: MenhCucRelation;
   /** Non-fatal generation warnings */
@@ -460,8 +440,6 @@ export interface TuViChart {
 export interface TuViMarkdownOptions {
   /** Include combination analysis (default: true) */
   includeCombinations: boolean;
-  /** Include Huyền Khí scoring (default: true) */
-  includeHuyenKhi: boolean;
   /** Include star brightness annotations (default: true) */
   includeBrightness: boolean;
   /** Optional header text prepended to the output */

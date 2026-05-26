@@ -20,8 +20,7 @@ export type AnalyticsEventName =
   | 'lunar_date_change'
   | 'engine_calculation'
   | 'theme_toggle'
-  | 'font_size_change'
-  | 'locale_change';
+  | 'font_size_change';
 
 export interface AnalyticsEvent {
   name: AnalyticsEventName;

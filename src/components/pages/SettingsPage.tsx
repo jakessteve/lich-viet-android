@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useMemo } from 'react';
+import React, { useState, useRef, useMemo } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../stores/appStore';
@@ -136,7 +136,7 @@ export default function SettingsPage() {
   const SECTIONS = useMemo(
     () => [
       { id: 'appearance', icon: 'palette', label: 'Giao diện' },
-      { id: 'language', icon: 'translate', label: 'Ngôn ngữ' },
+      { id: 'general', icon: 'schedule', label: 'Ngày tháng' },
       { id: 'calendar', icon: 'calendar_month', label: 'Âm Lịch' },
       { id: 'notifications', icon: 'notifications', label: 'Thông báo' },
       { id: 'data', icon: 'security', label: 'Dữ liệu' },
@@ -280,7 +280,6 @@ export default function SettingsPage() {
   };
 
   // Local settings state (persisted to localStorage)
-  const [language, setLanguage] = useState(() => localStorage.getItem('lang') || 'vi');
   const [dateFormat, setDateFormat] = useState(() => localStorage.getItem('dateFormat') || 'dd/mm/yyyy');
   const [defaultView, setDefaultView] = useState(() => localStorage.getItem('defaultView') || 'month');
   const [showLunarDetails, setShowLunarDetails] = useState(() => localStorage.getItem('showLunarDetails') !== 'false');
@@ -295,11 +294,6 @@ export default function SettingsPage() {
   const importInputRef = useRef<HTMLInputElement>(null);
 
   const save = (key: string, value: string) => localStorage.setItem(key, value);
-
-  // D4: Apply stored lang attribute on mount and keep in sync
-  useEffect(() => {
-    document.documentElement.lang = language;
-  }, [language]);
 
   return (
     <div className="mx-auto max-w-5xl animate-fade-in-up">
@@ -401,22 +395,8 @@ export default function SettingsPage() {
           )}
 
           {/* Language & Region */}
-          {activeSection === 'language' && (
-            <SectionCard icon="translate" title="Ngôn ngữ & Vùng miền">
-              <SettingRow icon="language" label="Ngôn ngữ">
-                <Select
-                  id="select-language"
-                  value={language}
-                  onChange={(v) => {
-                    setLanguage(v);
-                    save('lang', v);
-                  }}
-                  options={[
-                    { value: 'vi', label: 'Tiếng Việt' },
-                    { value: 'en', label: 'English' },
-                  ]}
-                />
-              </SettingRow>
+          {activeSection === 'general' && (
+            <SectionCard icon="schedule" title="Ngày tháng">
               <SettingRow icon="date_range" label="Định dạng ngày">
                 <Select
                   id="select-date-format"
@@ -537,7 +517,6 @@ export default function SettingsPage() {
                     onClick={() => {
                       const EXPORTABLE_KEYS = [
                         'fontSize',
-                        'lang',
                         'dateFormat',
                         'defaultView',
                         'theme',
@@ -577,7 +556,6 @@ export default function SettingsPage() {
                         try {
                           const IMPORTABLE_KEYS = [
                             'fontSize',
-                            'lang',
                             'dateFormat',
                             'defaultView',
                             'showLunarDetails',
@@ -627,7 +605,6 @@ export default function SettingsPage() {
                     if (confirm('Khôi phục tất cả cài đặt về mặc định?')) {
                       const SETTING_KEYS = [
                         'fontSize',
-                        'lang',
                         'dateFormat',
                         'defaultView',
                         'showLunarDetails',

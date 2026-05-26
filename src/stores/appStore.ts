@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { type LocaleCode, detectLocale, setLocalePreference } from '@/i18n';
 import { analytics } from '@/services/analyticsService';
 import { getDetailedDayData } from '@/utils/calendarEngine';
 import type { SwissGeoLocation } from '@/services/astronomy/swissEphemeris';
@@ -38,8 +37,6 @@ interface AppState {
   isDark: boolean;
   /** Current font size level */
   fontSize: FontSizeLevel;
-  /** Current locale */
-  locale: LocaleCode;
 }
 
 interface AppActions {
@@ -53,8 +50,6 @@ interface AppActions {
   cycleFontSize: () => void;
   /** Set font size to a specific level */
   setFontSizeLevel: (level: FontSizeLevel) => void;
-  /** Set locale and persist preference */
-  setLocale: (locale: LocaleCode) => void;
 }
 
 type AppStore = AppState & AppActions;
@@ -127,7 +122,6 @@ export const useAppStore = create<AppStore>()((set) => ({
   viewerLocation: null,
   isDark: getInitialDarkMode(),
   fontSize: getInitialFontSize(),
-  locale: detectLocale(),
 
   // Actions
   setSelectedDate: (date: Date) => {
@@ -180,14 +174,5 @@ export const useAppStore = create<AppStore>()((set) => ({
       properties: { font_size: level },
     });
     set({ fontSize: level });
-  },
-
-  setLocale: (locale: LocaleCode) => {
-    setLocalePreference(locale);
-    analytics.trackEvent({
-      name: 'locale_change',
-      properties: { locale },
-    });
-    set({ locale });
   },
 }));

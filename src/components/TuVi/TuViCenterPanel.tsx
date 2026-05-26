@@ -1,9 +1,8 @@
 import React from 'react';
-import type { TuViCenterInfo, TuViHanContext, TuViHuyenKhi, TuViEngineMeta } from '../../types/tuvi';
+import type { TuViCenterInfo, TuViHanContext, TuViEngineMeta } from '../../types/tuvi';
 
 interface TuViCenterPanelProps {
   centerInfo: TuViCenterInfo;
-  huyenKhi: TuViHuyenKhi;
   hanContext?: TuViHanContext;
   engineMeta?: TuViEngineMeta;
 }
@@ -19,7 +18,7 @@ const FieldRow: React.FC<{ label: string; value: string }> = ({ label, value }) 
   </div>
 );
 
-export const TuViCenterPanel: React.FC<TuViCenterPanelProps> = ({ centerInfo, huyenKhi, hanContext, engineMeta }) => {
+export const TuViCenterPanel: React.FC<TuViCenterPanelProps> = ({ centerInfo, hanContext, engineMeta }) => {
   const hanLabel =
     hanContext?.daiHanPalaceName && hanContext.daiHanAgeRange
       ? `${hanContext.daiHanPalaceName} · ${hanContext.daiHanAgeRange}`
@@ -38,7 +37,6 @@ export const TuViCenterPanel: React.FC<TuViCenterPanelProps> = ({ centerInfo, hu
     { label: 'Mệnh cung', value: centerInfo.menhCung },
     { label: 'Thân cung', value: centerInfo.thanCungLabel },
     { label: 'Đại hạn', value: hanLabel },
-    { label: 'Điểm huyền khí', value: `${huyenKhi.totalScore} · ${huyenKhi.grade}` },
   ];
 
   return (

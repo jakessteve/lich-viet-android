@@ -59,7 +59,7 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
     const color = getStarColor(star);
     const marker = getStarBrightnessMarker(star);
     return (
-      <span key={star.name} className={className} style={{ color }} title={`${star.name} ${star.nguHanh}`}>
+      <span key={star.name} className={className} style={{ color }} title={`${star.name} ${star.nguHanh} • ${star.brightness}`}>
         {star.name}
         {marker && <small>{marker}</small>}
       </span>
@@ -109,7 +109,7 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
       <div className="tuvi-chinh-tinh">
         {palace.chinhTinh.length > 0 ? (
           <>
-            {palace.chinhTinh.slice(0, 2).map((star) => renderStar(star))}
+            {palace.chinhTinh.map((star) => renderStar(star))}
             {palace.chinhTinh.length === 1 && <span className="tuvi-major-placeholder">&nbsp;</span>}
           </>
         ) : (

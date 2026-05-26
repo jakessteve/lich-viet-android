@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'Lịch Việt',
   webDir: 'dist',
   server: {
-    hostname: 'app.lichviet.calendar',
+    hostname: 'app-v2.lichviet.calendar',
     androidScheme: 'https',
   },
 };

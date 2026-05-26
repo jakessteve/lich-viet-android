@@ -78,6 +78,32 @@ function Badge({
   );
 }
 
+function getCombinationRenderKey(combination: TuViCombination, index: number) {
+  return `${combination.id ?? combination.name}-${index}-${combination.involvedCung.join('-')}-${combination.involvedStars.join('-')}`;
+}
+
+function TuHoaHeaderIcon() {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className="h-4 w-4 shrink-0 text-gold-light dark:text-gold-dark"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.8"
+    >
+      <path d="M7 6h8" />
+      <path d="M9 4l-2 2 2 2" />
+      <path d="M17 18H9" />
+      <path d="M15 16l2 2-2 2" />
+      <path d="M6 12h12" />
+      <path d="M12 6v12" />
+    </svg>
+  );
+}
+
 function summarizeTuHoa(chart: TuViChartType) {
   const order: Record<string, number> = { Lộc: 0, Quyền: 1, Khoa: 2, Kỵ: 3 };
   return chart.palaces
@@ -136,7 +162,6 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
     const totalMajorStars = palaceStats.reduce((sum, palace) => sum + palace.majorCount, 0);
     const totalAuxiliaryStars = palaceStats.reduce((sum, palace) => sum + palace.auxiliaryCount, 0);
     const totalSatStars = palaceStats.reduce((sum, palace) => sum + palace.satCount, 0);
-    const totalTuHoa = palaceStats.reduce((sum, palace) => sum + palace.tuHoaCount, 0);
     const maxMajorStars = palaceStats.reduce((max, palace) => Math.max(max, palace.majorCount), 0);
     const strongestPalaces = palaceStats
       .filter((palace) => palace.majorCount === maxMajorStars && maxMajorStars > 0)
@@ -144,46 +169,18 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
     const emptyMajorPalaces = palaceStats.filter((palace) => palace.majorCount === 0).map((palace) => palace.name);
     const tuHoaEntries = summarizeTuHoa(chart);
     const { sorted: combinations, counts: combinationCounts } = getCombinationSummary(chart.combinations);
-    const tuanCount = palaceStats.filter((palace) => palace.hasTuan).length;
-    const trietCount = palaceStats.filter((palace) => palace.hasTriet).length;
 
     return {
       totalMajorStars,
       totalAuxiliaryStars,
       totalSatStars,
-      totalTuHoa,
       strongestPalaces,
       emptyMajorPalaces,
       tuHoaEntries,
       combinations,
       combinationCounts,
-      tuanCount,
-      trietCount,
     };
   }, [chart, palaceStats]);
-
-  const overviewBadges = [
-    {
-      label: 'Cách cục',
-      value: `${summary.combinations.length}`,
-      icon: 'auto_awesome',
-    },
-    {
-      label: 'Cung vô chính diệu',
-      value: `${summary.emptyMajorPalaces.length}`,
-      icon: 'radio_button_unchecked',
-    },
-    {
-      label: 'Tứ Hóa',
-      value: `${summary.totalTuHoa}`,
-      icon: 'rebase',
-    },
-    {
-      label: 'Tuần / Triệt',
-      value: `${summary.tuanCount} / ${summary.trietCount}`,
-      icon: 'sync_alt',
-    },
-  ];
 
   return (
     <section className="surface-panel space-y-4 p-4 sm:p-5">
@@ -211,24 +208,11 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
 
       {activeTab === 'overview' && (
         <div className="space-y-4">
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            <StatCard label="Trường phái" value={chart.centerInfo.schoolLabel} icon="account_tree" />
-            <StatCard label="Mệnh / Thân" value={`${chart.centerInfo.menhCung} • ${chart.centerInfo.thanCungLabel}`} icon="groups" />
-            <StatCard label="Cục / Mệnh-Cục" value={`${chart.centerInfo.cuc} • ${chart.menhCucRelation.description}`} icon="hub" />
-            <StatCard label="Huyền khí" value={`${chart.huyenKhi.totalScore} · ${chart.huyenKhi.grade}`} icon="blur_on" />
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {overviewBadges.map((badge) => (
-              <StatCard key={badge.label} label={badge.label} value={badge.value} icon={badge.icon} />
-            ))}
-          </div>
-
           <div className="grid gap-3 xl:grid-cols-2">
             <div className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4">
-              <div className="flex items-center gap-2">
-                <span className="material-icons-round text-base text-gold-light dark:text-gold-dark">straighten</span>
-                <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
+              <div className="flex items-center gap-1.5">
+                <span className="material-icons-round shrink-0 text-base text-gold-light dark:text-gold-dark">straighten</span>
+                <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
                   Bố cục chính tinh
                 </h4>
               </div>
@@ -258,9 +242,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
             </div>
 
             <div className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4">
-              <div className="flex items-center gap-2">
-                <span className="material-icons-round text-base text-gold-light dark:text-gold-dark">conversion_path</span>
-                <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
+              <div className="flex items-center gap-1.5">
+                <TuHoaHeaderIcon />
+                <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
                   Tứ Hóa hiện diện
                 </h4>
               </div>
@@ -281,23 +265,23 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
           </div>
 
           <div className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4">
-            <div className="flex items-center gap-2">
-              <span className="material-icons-round text-base text-gold-light dark:text-gold-dark">sparkles</span>
-              <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
+            <div className="flex items-center gap-1.5">
+              <span className="material-icons-round shrink-0 text-base text-gold-light dark:text-gold-dark">star</span>
+              <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
                 Cách cục nổi bật
               </h4>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
-              {summary.combinations.length === 0 ? (
-                <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                {summary.combinations.length === 0 ? (
+                  <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
                   Chưa phát hiện Cách cục theo thư viện hiện tại.
                 </p>
               ) : (
-                summary.combinations.slice(0, 6).map((combination) => (
-                  <div
-                    key={combination.id ?? combination.name}
-                    className="flex flex-wrap items-center gap-2 rounded-2xl border border-border-light/60 bg-surface-container-low px-3 py-2 text-sm dark:border-border-dark/60 dark:bg-white/5"
-                  >
+                  summary.combinations.slice(0, 6).map((combination, index) => (
+                    <div
+                      key={getCombinationRenderKey(combination, index)}
+                      className="flex flex-wrap items-center gap-2 rounded-2xl border border-border-light/60 bg-surface-container-low px-3 py-2 text-sm dark:border-border-dark/60 dark:bg-white/5"
+                    >
                     <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">{combination.name}</span>
                     <Badge className={COMBINATION_CATEGORY_CLASS[combination.category]}>
                       {COMBINATION_CATEGORY_LABEL[combination.category]}
@@ -326,9 +310,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
             </div>
           ) : (
             <div className="space-y-3">
-              {summary.combinations.map((combination) => (
+              {summary.combinations.map((combination, index) => (
                 <article
-                  key={combination.id ?? `${combination.name}-${combination.involvedCung.join('-')}`}
+                  key={getCombinationRenderKey(combination, index)}
                   className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4"
                 >
                   <div className="flex flex-wrap items-start justify-between gap-3">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTuViStore } from '../../stores/tuviStore';
 import { formatTuViChartAsMarkdown } from '../../services/tuvi/markdownFormatter';
+import { buildTuViImageFilename, downloadTuViChartAsImage } from '../../services/tuvi/chartImageExport';
 
 export const TuViMarkdownExport: React.FC = () => {
   const { chart } = useTuViStore();
@@ -33,7 +34,6 @@ export const TuViMarkdownExport: React.FC = () => {
   const handleDownloadImage = async () => {
     try {
       setIsDownloadingImage(true);
-      const { buildTuViImageFilename, downloadTuViChartAsImage } = await import('../../services/tuvi/chartImageExport');
       await downloadTuViChartAsImage('[data-tuvi-chart-export]', buildTuViImageFilename(chart.input.name));
     } catch (error) {
       console.error('Failed to export Tử Vi chart as image:', error);

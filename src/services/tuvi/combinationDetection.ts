@@ -475,13 +475,15 @@ function detectGiap(
     const leftPalace = palaces[leftIdx];
     const rightPalace = palaces[rightIdx];
 
-    const leftHasSat = leftPalace.satTinh.length > 0;
-    const rightHasSat = rightPalace.satTinh.length > 0;
+    const leftSatStars = leftPalace.satTinh.filter((star) => ALL_SAT_TINH.has(star.name));
+    const rightSatStars = rightPalace.satTinh.filter((star) => ALL_SAT_TINH.has(star.name));
+    const leftHasSat = leftSatStars.length > 0;
+    const rightHasSat = rightSatStars.length > 0;
 
     if (!leftHasSat || !rightHasSat) continue;
 
     const involvedPalaces = [palace, leftPalace, rightPalace];
-    const satStarNames = [...leftPalace.satTinh.map((s) => s.name), ...rightPalace.satTinh.map((s) => s.name)];
+    const satStarNames = [...leftSatStars.map((s) => s.name), ...rightSatStars.map((s) => s.name)];
     addCombination(
       def,
       [palace.name, leftPalace.name, rightPalace.name],

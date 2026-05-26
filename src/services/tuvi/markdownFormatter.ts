@@ -5,7 +5,6 @@
  */
 
 import type { TuViChart, TuViCenterInfo, TuViPalace, TuViCombination, TuViMarkdownOptions } from '../../types/tuvi';
-import { PALACE_NAMES } from './constants';
 import { getStarBrightnessMarker } from './starGrouping';
 import { formatCivilDateYmd } from './timeNormalization';
 
@@ -41,8 +40,8 @@ export function formatCenterInfoAsMarkdown(centerInfo: TuViCenterInfo): string {
  */
 export function formatPalacesAsMarkdown(palaces: TuViPalace[], includeBrightness: boolean): string {
   const header = `## Thập Nhị Cung
-| Cung | Can Chi | Chính Tinh | Phụ Tinh | Tứ Hóa | Đại Hạn |
-|------|---------|------------|----------|--------|---------|`;
+| Cung | Can Chi | Chính Tinh | Phụ Tinh | Sát Tinh | Tứ Hóa | Đại Hạn |
+|------|---------|------------|----------|---------|--------|---------|`;
 
   const rows = palaces.map((palace) => {
     const chinhTinh = palace.chinhTinh
@@ -63,9 +62,18 @@ export function formatPalacesAsMarkdown(palaces: TuViPalace[], includeBrightness
       })
       .join(', ');
 
+    const satTinh = palace.satTinh
+      .map((star) => {
+        if (includeBrightness) {
+          return `${star.name}${getStarBrightnessMarker(star)}`;
+        }
+        return star.name;
+      })
+      .join(', ');
+
     const tuHoa = palace.tuHoa.map((t) => t.type).join(', ');
 
-    return `| ${palace.name} | ${palace.canChi} | ${escapeMarkdown(chinhTinh)} | ${escapeMarkdown(phuTinh)} | ${tuHoa} | ${palace.daiHanAgeRange} |`;
+    return `| ${palace.name} | ${palace.canChi} | ${escapeMarkdown(chinhTinh)} | ${escapeMarkdown(phuTinh)} | ${escapeMarkdown(satTinh)} | ${tuHoa} | ${palace.daiHanAgeRange} |`;
   });
 
   return [header, ...rows].join('\n');
@@ -97,9 +105,8 @@ export function generatePromptHeader(chart: TuViChart): string {
   const menhHanh = chart.menhCucRelation.menhHanh;
   const cungName = chart.centerInfo.menhCung.replace('Mệnh cư ', '');
   const cuc = chart.centerInfo.cuc;
-  const score = chart.huyenKhi.totalScore;
 
-  return `Phân tích lá số Tử Vi: ${name}, sinh ${date}, ${gender}. Mệnh ${menhHanh} ${cungName}, Cục ${cuc}. Điểm huyền khí: ${score}.`;
+  return `Phân tích lá số Tử Vi: ${name}, sinh ${date}, ${gender}. Mệnh ${menhHanh} ${cungName}, Cục ${cuc}.`;
 }
 
 /**
@@ -108,7 +115,6 @@ export function generatePromptHeader(chart: TuViChart): string {
 export function formatTuViChartAsMarkdown(chart: TuViChart, options?: Partial<TuViMarkdownOptions>): string {
   const opts: TuViMarkdownOptions = {
     includeCombinations: true,
-    includeHuyenKhi: true,
     includeBrightness: true,
     promptHeader: '',
     ...options,
@@ -158,19 +164,6 @@ ${meta.warnings.map((warning) => `- ${warning}`).join('\n')}`);
 - Tháng xem: ${han.viewMonth}
 - Tuổi xem: ${han.viewAge}
 - Đại hạn: ${han.daiHanPalaceName || '—'} ${han.daiHanAgeRange ? `(${han.daiHanAgeRange})` : ''}`);
-  }
-
-  if (opts.includeHuyenKhi) {
-    const hk = chart.huyenKhi;
-    const scoreEntries = PALACE_NAMES.map((name) => {
-      const score = hk.palaceScores[name] ?? 0;
-      return `${name}: ${score}`;
-    }).join(', ');
-
-    parts.push(`## Điểm Huyền Khí
-- Tổng điểm: ${hk.totalScore}
-- Cấp: ${hk.grade} Cách
-- ${scoreEntries}`);
   }
 
   parts.push(formatPalacesAsMarkdown(chart.palaces, opts.includeBrightness));

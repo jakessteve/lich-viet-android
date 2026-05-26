@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@/stores/authStore';
 import {
   getLunarDate,
   getCanChiDay,
@@ -21,12 +22,6 @@ import MoonPhaseSVG from './LandingPage/MoonPhaseSVG';
 import HeroAuspiciousArt from './LandingPage/HeroAuspiciousArt';
 import MysticBackgroundPattern from './LandingPage/MysticBackgroundPattern';
 import { ActionButton, IconButton } from '../shared';
-
-const HERO_BENEFITS = [
-  { icon: 'devices', text: 'Không cần cài đặt' },
-  { icon: 'wifi_off', text: 'Hoạt động offline' },
-  { icon: 'shield', text: 'Bảo mật ưu tiên' },
-] as const;
 
 const TRUST_VALUES = [
   {
@@ -61,9 +56,32 @@ export default function LandingPage() {
   usePageTitle('Tra cứu Âm Lịch, Gieo Quẻ & Tử Vi');
   const navigate = useNavigate();
   const [isDark, setIsDark] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+  const { user, isAuthenticated, logout } = useAuthStore();
 
   useEffect(() => {
     setIsDark(document.documentElement.classList.contains('dark'));
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setUserMenuOpen(false);
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') setUserMenuOpen(false);
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   const toggleDark = () => {
@@ -199,13 +217,115 @@ export default function LandingPage() {
               icon={isDark ? 'light_mode' : 'dark_mode'}
               label="Chuyển chế độ sáng/tối"
             />
-            <ActionButton
-              onClick={() => navigate('/app/am-lich')}
-              className="hidden rounded-full px-5 py-2 sm:flex"
-              icon="arrow_forward"
-            >
-              Trải nghiệm ngay
-            </ActionButton>
+            <div className="relative" ref={userMenuRef}>
+              <IconButton
+                onClick={() => setUserMenuOpen((prev) => !prev)}
+                className="rounded-full text-gray-400 dark:text-gray-500"
+                icon="person"
+                label="Menu người dùng"
+              />
+
+              {userMenuOpen ? (
+                <div className="absolute right-0 mt-2 w-64 rounded-xl border border-border-light bg-white py-1.5 shadow-xl dark:border-mystery-purple/15 dark:bg-mystery-surface/90 dark:backdrop-blur-xl">
+                  <div className="border-b border-border-light px-4 py-3 dark:border-border-dark">
+                    {isAuthenticated && user ? (
+                      <>
+                        <div className="flex items-center gap-2.5">
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-mystery-purple/20 to-mystery-blue/20 dark:from-mystery-purple/25 dark:to-mystery-blue/15">
+                            <span className="text-xs font-bold text-mystery-purple dark:text-mystery-purple-light">
+                              {user.displayName.charAt(0).toUpperCase()}
+                            </span>
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
+                              {user.displayName}
+                            </p>
+                            <p className="truncate text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                              {user.email}
+                            </p>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">Khách</p>
+                        <p className="mt-0.5 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                          Phiên bản miễn phí
+                        </p>
+                      </>
+                    )}
+                  </div>
+
+                  <div className="py-1">
+                    {isAuthenticated ? (
+                      <>
+                        <button
+                          onClick={() => {
+                            navigate('/app/cai-dat');
+                            setUserMenuOpen(false);
+                          }}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
+                        >
+                          <span className="material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark">
+                            settings
+                          </span>
+                          Cài đặt
+                        </button>
+                        <button
+                          onClick={() => {
+                            navigate('/');
+                            setUserMenuOpen(false);
+                          }}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
+                        >
+                          <span className="material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark">
+                            info
+                          </span>
+                          Giới thiệu
+                        </button>
+                        <div className="mt-1 border-t border-border-light/50 pt-1 dark:border-border-dark/30">
+                          <button
+                            onClick={() => {
+                              logout();
+                              setUserMenuOpen(false);
+                            }}
+                            className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-500 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/15"
+                          >
+                            <span className="material-icons-round text-lg">logout</span>
+                            Đăng xuất
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          onClick={() => {
+                            navigate('/app/dang-nhap');
+                            setUserMenuOpen(false);
+                          }}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
+                        >
+                          <span className="material-icons-round text-lg text-gold dark:text-gold-dark">login</span>
+                          Đăng nhập
+                        </button>
+                        <button
+                          onClick={() => {
+                            navigate('/app/dang-ky');
+                            setUserMenuOpen(false);
+                          }}
+                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
+                        >
+                          <span className="material-icons-round text-lg text-mystery-purple dark:text-mystery-purple-light">
+                            person_add
+                          </span>
+                          Đăng ký
+                        </button>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       </nav>
@@ -256,24 +376,11 @@ export default function LandingPage() {
               </span>
             </p>
 
-            {/* Benefit pills */}
-            <div className="flex items-center justify-start gap-2.5 mb-8 flex-wrap animate-fade-in-up animate-delay-2">
-              {HERO_BENEFITS.map((t) => (
-                <span
-                  key={t.text}
-                  className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-surface-container-low dark:bg-surface-elevated-dark/60 text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark backdrop-blur-sm"
-                >
-                  <span className="material-icons-round text-xs text-gold dark:text-gold-dark">{t.icon}</span>
-                  {t.text}
-                </span>
-              ))}
-            </div>
-
             {/* CTA buttons */}
-            <div className="flex items-center justify-start gap-4 animate-fade-in-up animate-delay-3">
+            <div className="flex flex-wrap items-center justify-start gap-4 animate-fade-in-up animate-delay-3">
               <ActionButton
                 onClick={() => navigate('/app/am-lich')}
-                className="hidden sm:inline-flex px-8 py-3.5"
+                className="px-5 py-3 font-medium"
                 icon="arrow_forward"
               >
                 Trải nghiệm ngay

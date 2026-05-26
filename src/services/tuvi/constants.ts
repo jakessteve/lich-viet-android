@@ -88,7 +88,7 @@ export const CHINH_TINH_LIST: Array<{
   nguHanh: string;
   group: 'bacDau' | 'namDau' | 'trungThien';
 }> = [
-  { name: 'Tử Vi', nguHanh: 'Âm Thổ', group: 'bacDau' },
+  { name: 'Tử Vi', nguHanh: 'Dương Thổ', group: 'bacDau' },
   { name: 'Thiên Cơ', nguHanh: 'Âm Mộc', group: 'bacDau' },
   { name: 'Thái Dương', nguHanh: 'Dương Hỏa', group: 'trungThien' },
   { name: 'Vũ Khúc', nguHanh: 'Âm Kim', group: 'bacDau' },
@@ -97,9 +97,9 @@ export const CHINH_TINH_LIST: Array<{
   { name: 'Thiên Phủ', nguHanh: 'Dương Thổ', group: 'namDau' },
   { name: 'Thái Âm', nguHanh: 'Âm Thủy', group: 'trungThien' },
   { name: 'Tham Lang', nguHanh: 'Dương Mộc', group: 'bacDau' },
-  { name: 'Cự Môn', nguHanh: 'Âm Thổ', group: 'bacDau' },
+  { name: 'Cự Môn', nguHanh: 'Âm Thủy', group: 'bacDau' },
   { name: 'Thiên Tướng', nguHanh: 'Dương Thủy', group: 'namDau' },
-  { name: 'Thiên Lương', nguHanh: 'Dương Thổ', group: 'namDau' },
+  { name: 'Thiên Lương', nguHanh: 'Âm Mộc', group: 'namDau' },
   { name: 'Thất Sát', nguHanh: 'Dương Kim', group: 'namDau' },
   { name: 'Phá Quân', nguHanh: 'Âm Thủy', group: 'bacDau' },
 ];
@@ -348,7 +348,7 @@ export const BRIGHTNESS_MARKERS: Record<string, string> = {
   Miếu: '(M)',
   Vượng: '(V)',
   Đắc: '(Đ)',
-  Địa: '(Đ)',
+  Địa: '(Đị)',
   Lợi: '(L)',
   Hãm: '(H)',
 };

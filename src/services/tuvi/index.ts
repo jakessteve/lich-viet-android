@@ -82,9 +82,6 @@ export {
   calculateCombinationStrength,
 } from './combinationDetection';
 
-// ── Huyền Khí ──────────────────────────────────────────────────
-export { calculateHuyenKhi, calculatePalaceScore } from './huyenKhi';
-
 // ── Mệnh-Cục Relation ──────────────────────────────────────────
 export { calculateMenhCucRelation, getMenhHanh, getCucHanh } from './menhCucRelation';
 

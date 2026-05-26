@@ -105,12 +105,12 @@ export function getStarBrightnessMarker(star: TuViStar): string {
 /**
  * Looks up the Ngũ Hành string for a star by name.
  */
-function findStarNguHanh(starName: string): string {
+function findStarNguHanh(starName: string): string | null {
   const chinh = CHINH_TINH_BY_NAME.get(starName);
   if (chinh) return chinh.nguHanh;
   const phu = PHU_TINH_BY_NAME.get(starName);
   if (phu) return phu.nguHanh;
-  return 'Âm Thổ';
+  return null;
 }
 
 /**
@@ -122,6 +122,7 @@ function findStarNguHanh(starName: string): string {
 export function formatPalaceStars(palace: TuViPalace): {
   chinhTinhLines: string[];
   phuTinhLines: string[];
+  satTinhLines: string[];
   tuHoaLabels: string[];
 } {
   const chinhTinhLines = palace.chinhTinh.map((star) => {
@@ -135,14 +136,19 @@ export function formatPalaceStars(palace: TuViPalace): {
     phuTinhLines.push(pair.map((s) => s.name).join(', '));
   }
 
+  const satTinhLines = palace.satTinh.map((star) => {
+    const marker = getStarBrightnessMarker(star);
+    return `${star.name}${marker}`;
+  });
+
   const tuHoaLabels = palace.tuHoa.map((tuHoa) => {
     const nguHanh = findStarNguHanh(tuHoa.starName);
-    const element = getNguHanhElement(nguHanh);
-    const color = STAR_COLORS[element] ?? '#888888';
+    const element = nguHanh ? getNguHanhElement(nguHanh) : null;
+    const color = element ? (STAR_COLORS[element] ?? '#888888') : '#888888';
     return `${tuHoa.type} [${color}]`;
   });
 
-  return { chinhTinhLines, phuTinhLines, tuHoaLabels };
+  return { chinhTinhLines, phuTinhLines, satTinhLines, tuHoaLabels };
 }
 
 /**
