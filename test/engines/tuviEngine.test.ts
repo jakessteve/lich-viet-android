@@ -75,13 +75,6 @@ describe('TuVi Engine - Golden Fixtures', () => {
       expect(['Thuận', 'Nghịch']).toContain(chart.thuanNghich);
     });
 
-    it('should have Huyền Khí scoring', () => {
-      const chart = generateChart(input);
-      expect(chart.huyenKhi.totalScore).toBeGreaterThan(0);
-      expect(chart.huyenKhi.palaceScores).toBeDefined();
-      expect(Object.keys(chart.huyenKhi.palaceScores)).toHaveLength(12);
-    });
-
     it('should have Mệnh-Cục relation', () => {
       const chart = generateChart(input);
       expect(['sinh', 'khắc', 'bình hòa']).toContain(chart.menhCucRelation.relation);

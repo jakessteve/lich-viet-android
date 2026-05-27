@@ -96,7 +96,7 @@ export const CHINH_TINH_LIST: Array<{
   { name: 'Liêm Trinh', nguHanh: 'Âm Hỏa', group: 'bacDau' },
   { name: 'Thiên Phủ', nguHanh: 'Dương Thổ', group: 'namDau' },
   { name: 'Thái Âm', nguHanh: 'Âm Thủy', group: 'trungThien' },
-  { name: 'Tham Lang', nguHanh: 'Dương Mộc', group: 'bacDau' },
+  { name: 'Tham Lang', nguHanh: 'Âm Thủy', group: 'bacDau' },
   { name: 'Cự Môn', nguHanh: 'Âm Thủy', group: 'bacDau' },
   { name: 'Thiên Tướng', nguHanh: 'Dương Thủy', group: 'namDau' },
   { name: 'Thiên Lương', nguHanh: 'Âm Mộc', group: 'namDau' },
@@ -113,7 +113,7 @@ export const PHU_TINH_LIST: Array<{
   placementRule: string;
 }> = [
   // Lục Cát Tinh (6 Auspicious)
-  { name: 'Văn Xương', nguHanh: 'Âm Kim', type: 'cat', placementRule: 'hourBranch' },
+  { name: 'Văn Xương', nguHanh: 'Dương Kim', type: 'cat', placementRule: 'hourBranch' },
   { name: 'Văn Khúc', nguHanh: 'Âm Thủy', type: 'cat', placementRule: 'hourBranch' },
   { name: 'Tả Phụ', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'monthBranch' },
   { name: 'Hữu Bật', nguHanh: 'Âm Thủy', type: 'cat', placementRule: 'monthBranch' },
@@ -127,7 +127,7 @@ export const PHU_TINH_LIST: Array<{
   { name: 'Địa Không', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'hourBranch' },
   { name: 'Địa Kiếp', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'hourBranch' },
   // Other important stars
-  { name: 'Lộc Tồn', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'yearCan' },
+  { name: 'Lộc Tồn', nguHanh: 'Âm Thổ', type: 'cat', placementRule: 'yearCan' },
   { name: 'Thiên Mã', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'yearBranch' },
   { name: 'Đào Hoa', nguHanh: 'Âm Thủy', type: 'hoa', placementRule: 'yearBranch' },
   { name: 'Hồng Loan', nguHanh: 'Âm Thủy', type: 'hoa', placementRule: 'yearBranch' },

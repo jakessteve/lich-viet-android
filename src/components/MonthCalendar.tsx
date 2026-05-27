@@ -104,72 +104,149 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   return (
     <div className="space-y-4">
       {/* Month/Year Picker */}
-      <div className="surface-card rounded-xl p-2 flex items-center justify-between w-full relative">
-        <IconButton
-          onClick={prevMonth}
-          className="z-10"
-          icon="chevron_left"
-          label="Tháng trước"
-        />
+      <div className="surface-card rounded-xl p-2 w-full relative">
+        <div className="sm:hidden flex items-center gap-1">
+          <IconButton
+            onClick={prevMonth}
+            className="z-10 shrink-0 h-10 w-10 min-h-10 min-w-10"
+            icon="chevron_left"
+            label="Tháng trước"
+          />
 
-        <div className="flex-1 flex justify-center py-1.5">
-          <div className="flex items-center gap-1 sm:gap-2 font-semibold text-sm sm:text-sm">
-            <select
-              value={currentDate.getMonth()}
-              onChange={handleMonthChange}
-              className={selectClass}
-              aria-label="Chọn tháng"
-            >
-              {monthOptions.map((i) => (
-                <option key={i} value={i}>
-                  Tháng {i + 1}
-                </option>
-              ))}
-            </select>
-            <span className="text-gray-300 dark:text-gray-600 select-none">|</span>
-            <select
-              value={currentDate.getFullYear()}
-              onChange={handleYearChange}
-              className={selectClass}
-              aria-label="Chọn năm"
-            >
-              {yearOptions.map((year) => (
-                <option key={year} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
+          <div className="flex min-w-0 flex-1 justify-center px-1">
+            <div className="flex items-center gap-1 whitespace-nowrap font-semibold text-sm">
+              <select
+                value={currentDate.getMonth()}
+                onChange={handleMonthChange}
+                className={selectClass}
+                aria-label="Chọn tháng"
+              >
+                {monthOptions.map((i) => (
+                  <option key={i} value={i}>
+                    Tháng {i + 1}
+                  </option>
+                ))}
+              </select>
+              <span className="text-gray-300 dark:text-gray-600 select-none">|</span>
+              <select
+                value={currentDate.getFullYear()}
+                onChange={handleYearChange}
+                className={selectClass}
+                aria-label="Chọn năm"
+              >
+                {yearOptions.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="z-10 flex items-center gap-1 shrink-0">
+            <IconButton
+              onClick={nextMonth}
+              className="shrink-0 h-10 w-10 min-h-10 min-w-10"
+              icon="chevron_right"
+              label="Tháng sau"
+            />
+            <IconButton
+              onClick={() => {
+                const today = viewerLocation
+                  ? getCivilDateForOffset(new Date(), viewerLocation.timezoneOffsetHours)
+                  : new Date();
+                setCurrentDate(today);
+                onSelectDate(today);
+              }}
+              className="shrink-0 h-10 w-10 min-h-10 min-w-10"
+              title="Hôm nay"
+              icon="today"
+              label="Về hôm nay"
+            />
+            <div className="w-px h-4 bg-border-light dark:bg-border-dark mx-1 shrink-0" />
+            <IconButton
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="shrink-0 h-10 w-10 min-h-10 min-w-10"
+              icon="expand_more"
+              iconClassName={isExpanded ? 'rotate-180' : undefined}
+              label={isExpanded ? 'Thu gọn lịch' : 'Mở rộng lịch'}
+            />
+            <span className="sr-only" aria-live="polite">
+              {isExpanded ? 'Lịch đang mở rộng' : 'Lịch đang thu gọn'}
+            </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 z-10">
+        <div className="hidden sm:flex items-center justify-between w-full">
           <IconButton
-            onClick={nextMonth}
-            icon="chevron_right"
-            label="Tháng sau"
+            onClick={prevMonth}
+            className="z-10 shrink-0"
+            icon="chevron_left"
+            label="Tháng trước"
           />
-          <IconButton
-            onClick={() => {
-              const today = viewerLocation
-                ? getCivilDateForOffset(new Date(), viewerLocation.timezoneOffsetHours)
-                : new Date();
-              setCurrentDate(today);
-              onSelectDate(today);
-            }}
-            title="Hôm nay"
-            icon="today"
-            label="Về hôm nay"
-          />
-          <div className="w-px h-4 bg-border-light dark:bg-border-dark mx-1" />
-          <IconButton
-            onClick={() => setIsExpanded(!isExpanded)}
-            icon="expand_more"
-            iconClassName={isExpanded ? 'rotate-180' : undefined}
-            label={isExpanded ? 'Thu gọn lịch' : 'Mở rộng lịch'}
-          />
-          <span className="sr-only" aria-live="polite">
-            {isExpanded ? 'Lịch đang mở rộng' : 'Lịch đang thu gọn'}
-          </span>
+
+          <div className="flex-1 flex justify-center py-1.5">
+            <div className="flex items-center gap-1 sm:gap-2 font-semibold text-sm sm:text-sm">
+              <select
+                value={currentDate.getMonth()}
+                onChange={handleMonthChange}
+                className={selectClass}
+                aria-label="Chọn tháng"
+              >
+                {monthOptions.map((i) => (
+                  <option key={i} value={i}>
+                    Tháng {i + 1}
+                  </option>
+                ))}
+              </select>
+              <span className="text-gray-300 dark:text-gray-600 select-none">|</span>
+              <select
+                value={currentDate.getFullYear()}
+                onChange={handleYearChange}
+                className={selectClass}
+                aria-label="Chọn năm"
+              >
+                {yearOptions.map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="z-10 flex items-center gap-1 shrink-0">
+            <IconButton
+              onClick={nextMonth}
+              className="shrink-0"
+              icon="chevron_right"
+              label="Tháng sau"
+            />
+            <IconButton
+              onClick={() => {
+                const today = viewerLocation
+                  ? getCivilDateForOffset(new Date(), viewerLocation.timezoneOffsetHours)
+                  : new Date();
+                setCurrentDate(today);
+                onSelectDate(today);
+              }}
+              className="shrink-0"
+              title="Hôm nay"
+              icon="today"
+              label="Về hôm nay"
+            />
+            <div className="w-px h-4 bg-border-light dark:bg-border-dark mx-1" />
+            <IconButton
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="shrink-0"
+              icon="expand_more"
+              iconClassName={isExpanded ? 'rotate-180' : undefined}
+              label={isExpanded ? 'Thu gọn lịch' : 'Mở rộng lịch'}
+            />
+            <span className="sr-only" aria-live="polite">
+              {isExpanded ? 'Lịch đang mở rộng' : 'Lịch đang thu gọn'}
+            </span>
+          </div>
         </div>
       </div>
 

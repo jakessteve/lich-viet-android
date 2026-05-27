@@ -15,7 +15,6 @@ describe('appStore', () => {
       expect(state.dayData.solarDate).toBeDefined();
       expect(state.isDark).toBe(false);
       expect(state.fontSize).toBe('normal');
-      expect(state.locale).toBeDefined();
     });
   });
 
@@ -82,19 +81,4 @@ describe('appStore', () => {
     });
   });
 
-  describe('setLocale()', () => {
-    it('updates locale', () => {
-      const store = useAppStore.getState();
-      store.setLocale('en');
-      const state = useAppStore.getState();
-      expect(state.locale).toBe('en');
-    });
-
-    it('updates locale to vi', () => {
-      const store = useAppStore.getState();
-      store.setLocale('vi');
-      const state = useAppStore.getState();
-      expect(state.locale).toBe('vi');
-    });
-  });
 });

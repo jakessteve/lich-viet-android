@@ -81,7 +81,10 @@ export function IconButton({ icon, label, iconClassName, className, type = 'butt
       aria-label={label}
       {...props}
     >
-      <span className={cx('material-icons-round text-xl transition-transform duration-300', iconClassName)} aria-hidden="true">
+      <span
+        className={cx('material-icons-round block text-xl leading-none transition-transform duration-300', iconClassName)}
+        aria-hidden="true"
+      >
         {icon}
       </span>
     </button>

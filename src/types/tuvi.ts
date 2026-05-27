@@ -303,6 +303,8 @@ export interface TuViCombination {
   strength: number;
   /** Additional interpretive note */
   note: string;
+  /** Richer human-readable phrase for UI presentation */
+  description?: string;
   /** Auspiciousness category */
   category: CombinationCategory;
   /** Optional source key when the pattern is mirrored from a larger library */

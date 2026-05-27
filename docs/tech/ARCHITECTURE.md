@@ -249,7 +249,7 @@ graph TD
 
 | Store | Key state | Purpose |
 | --- | --- | --- |
-| `useAppStore` | `selectedDate`, `dayData`, `viewerLocation`, theme, font size, locale | Shared app state for the main shell and calendar |
+| `useAppStore` | `selectedDate`, `dayData`, `viewerLocation`, theme, font size | Shared app state for the main shell and calendar |
 | `useAuthStore` | Local auth/session/profile data | Demo-only auth and profile persistence |
 | `useTuViStore` | Input, chart, selected palace, view year/month, errors | Tu Vi chart state and hạn navigation |
 
@@ -272,4 +272,3 @@ Latest local validation in this workspace:
 | Lint | `npm run lint` passes with one pre-existing warning in `src/components/DetailedDayView.tsx` |
 
 ---
-

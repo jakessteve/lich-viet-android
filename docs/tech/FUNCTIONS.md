@@ -117,8 +117,6 @@ Security note: auth remains client-side demo auth. It seeds a local admin accoun
 - `calculateCenterInfo(...)`
 - `formatTuViChartAsMarkdown(chart)`
 - `generatePromptHeader(...)`
-- `calculateHuyenKhi(chart)`
-- `calculatePalaceScore(...)`
 
 ### Divination and scoring
 
@@ -161,4 +159,3 @@ Latest local validation in this workspace:
 | TypeScript | `npm run typecheck` passes |
 | Tests | `npm test` passes |
 | Lint | `npm run lint` passes with one pre-existing warning in `src/components/DetailedDayView.tsx` |
-

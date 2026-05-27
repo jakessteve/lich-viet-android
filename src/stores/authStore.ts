@@ -52,6 +52,7 @@ function getSeededAdminUser(): StoredUser {
       id: ADMIN_SEED_USER_ID,
       email: ADMIN_SEED_EMAIL,
       displayName: 'Admin',
+      accessTier: 'admin',
       provider: 'email',
       createdAt: ADMIN_SEED_CREATED_AT,
     },
@@ -205,6 +206,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       id: generateId(),
       email: data.email,
       displayName: data.displayName,
+      accessTier: 'free',
       provider: 'email',
       createdAt: new Date().toISOString(),
     };
@@ -233,6 +235,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       id: generateId(),
       email: `user@${provider}.com`,
       displayName: `Người dùng ${providerNames[provider]}`,
+      accessTier: 'free',
       avatarUrl: undefined,
       provider,
       createdAt: new Date().toISOString(),

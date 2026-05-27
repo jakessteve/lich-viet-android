@@ -57,9 +57,6 @@ export const TuViPage: React.FC = () => {
           <span className="material-icons-round text-xl text-amber-500 dark:text-amber-400">auto_awesome</span>
           Tử Vi Đẩu Số
         </h2>
-        <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-          Luận giải lá số theo trường phái Thiên Lương (天梁)
-        </p>
       </div>
 
       {/* Input Form */}

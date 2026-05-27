@@ -1,5 +1,5 @@
 import React from 'react';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { TuViSummaryPanel } from '../../src/components/TuVi/TuViSummaryPanel';
 import type { TuViChart, TuViPalace, TuViCombination } from '../../src/types/tuvi';
@@ -39,6 +39,7 @@ function makeChart(): TuViChart {
       purity: 'thuần',
       strength: 7,
       note: '',
+      description: 'Cách cục vô cùng mạnh mẽ, đại diện cho sự khai sáng, tiên phong và những biến động lớn trong cuộc đời.',
       category: 'hung',
       sourcePatternId: 'sat-pha-lang',
     },
@@ -50,7 +51,7 @@ function makeChart(): TuViChart {
     name: 'Mệnh',
     chi: 'Tý',
     isMenh: true,
-    chinhTinh: [{ name: 'Tử Vi', type: 'chinhTinh', nguHanh: 'Âm Thổ', brightness: 'Miếu' }],
+    chinhTinh: [{ name: 'Tử Vi', type: 'chinhTinh', nguHanh: 'Dương Thổ', brightness: 'Miếu' }],
     tuHoa: [{ type: 'Lộc', starName: 'Tử Vi', sourceCan: 'Giáp' }],
   });
   palaces[2] = makePalace({
@@ -109,11 +110,6 @@ function makeChart(): TuViChart {
     },
     palaces,
     combinations,
-    huyenKhi: {
-      totalScore: 18.7,
-      palaceScores: Object.fromEntries(palaces.map((palace) => [palace.name, 0])),
-      grade: 'Trung Cách',
-    },
     menhCucRelation: {
       relation: 'sinh',
       description: 'Cục sinh Mệnh',
@@ -124,18 +120,44 @@ function makeChart(): TuViChart {
   };
 }
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe('TuViSummaryPanel', () => {
-  it('shows overview facts and switches to combinations', () => {
+  it('shows the overview details and switches to combinations', () => {
     render(<TuViSummaryPanel chart={makeChart()} />);
 
     expect(screen.getByText('Tổng quan cấu trúc và Cách cục')).toBeTruthy();
-    expect(screen.getByText('Thiên Lương')).toBeTruthy();
-    expect(screen.getByText('Thủy Nhị Cục • Cục sinh Mệnh')).toBeTruthy();
+    expect(screen.getByText('Bố cục chính tinh')).toBeTruthy();
+    expect(screen.getByText('Tứ Hóa hiện diện')).toBeTruthy();
+    expect(screen.getByText(/Cách cục vô cùng mạnh mẽ/i)).toBeTruthy();
 
     fireEvent.click(screen.getByRole('tab', { name: /Cách cục/ }));
 
-    expect(screen.getByText('Sát Phá Lang')).toBeTruthy();
+    expect(screen.getByText('Sát Phá Lang').className).toContain('whitespace-nowrap');
+    expect(screen.getByText('殺破狼').className).toContain('whitespace-nowrap');
+    expect(screen.getByText(/Cách cục vô cùng mạnh mẽ/i)).toBeTruthy();
     expect(screen.getByText('Hung')).toBeTruthy();
     expect(screen.getByText('7/10')).toBeTruthy();
+  });
+
+  it('does not reuse keys for repeated combination ids', () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const chart = makeChart();
+
+    chart.combinations = [
+      ...chart.combinations,
+      {
+        ...chart.combinations[0],
+        involvedCung: ['Cung 1', 'Cung 2', 'Cung 3'],
+        involvedStars: ['Kình Dương', 'Đà La'],
+        detectionReason: 'Giáp Sát at another location',
+      },
+    ];
+
+    render(<TuViSummaryPanel chart={chart} />);
+
+    expect(errorSpy.mock.calls.some((call) => String(call[0]).includes('Encountered two children with the same key'))).toBe(false);
   });
 });

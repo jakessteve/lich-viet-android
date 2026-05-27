@@ -23,16 +23,11 @@ describe('Markdown Formatter', () => {
     expect(markdown).toContain('Mệnh');
   });
 
-  it('should include Huyền Khí section when enabled', () => {
+  it('should not include the removed scoring section', () => {
     const chart = generateChart(input);
-    const markdown = formatTuViChartAsMarkdown(chart, { includeHuyenKhi: true });
-    expect(markdown).toContain('## Điểm Huyền Khí');
-  });
-
-  it('should exclude Huyền Khí section when disabled', () => {
-    const chart = generateChart(input);
-    const markdown = formatTuViChartAsMarkdown(chart, { includeHuyenKhi: false });
-    expect(markdown).not.toContain('## Điểm Huyền Khí');
+    const markdown = formatTuViChartAsMarkdown(chart);
+    expect(markdown).not.toContain(['## Điểm', 'Huyền', 'Khí'].join(' '));
+    expect(markdown).not.toContain(['Điểm', 'huyền', 'khí'].join(' '));
   });
 
   it('should include combinations section when enabled', () => {
@@ -54,4 +49,24 @@ describe('Markdown Formatter', () => {
     const markdown = formatTuViChartAsMarkdown(chart, { promptHeader: 'Custom header' });
     expect(markdown).toContain('Custom header');
   });
+
+  it.each(['nam-phai', 'thien-luong', 'bac-phai'] as const)(
+    'should surface Lưu Hà in the markdown chart for %s',
+    (school) => {
+      const chart = generateChart({
+        name: 'Nguyễn Văn A',
+        solarDate: new Date(1983, 10, 13, 18, 30),
+        birthHour: 9,
+        birthClockHour: 18,
+        birthMinute: 30,
+        gender: 'nam',
+        timezone: 'Asia/Ho_Chi_Minh',
+        school,
+      });
+
+      const markdown = formatTuViChartAsMarkdown(chart);
+      expect(markdown).toContain('Lưu Hà');
+      expect(markdown).toContain('Sát Tinh');
+    },
+  );
 });

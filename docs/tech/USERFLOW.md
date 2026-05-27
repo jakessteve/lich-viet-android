@@ -77,7 +77,7 @@ Removed legacy routes redirect to active v3 pages. Tu Vi is no longer a removed 
 ### Settings
 
 1. User opens `/app/cai-dat`.
-2. User adjusts theme, font size, locale, profile data, and local demo-account settings.
+2. User adjusts theme, font size, profile data, and local demo-account settings.
 3. Settings persist in localStorage.
 
 ---
@@ -126,4 +126,3 @@ Current local validation:
 | `npm run typecheck` | Pass |
 | `npm run lint` | Pass with one pre-existing warning in `src/components/DetailedDayView.tsx` |
 | `npm test` | Pass |
-

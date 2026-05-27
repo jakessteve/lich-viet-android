@@ -9,8 +9,10 @@ export type AuthProvider = 'email' | 'google' | 'facebook';
  * User access tiers.
  * - guest: Not logged in. No personalization.
  * - free:  Logged in, basic access.
+ * - premium: Logged in, premium access.
+ * - admin: Logged in, admin access.
  */
-export type UserTier = 'guest' | 'free';
+export type UserTier = 'guest' | 'free' | 'premium' | 'admin';
 
 /** Astrological basic profile for personalization */
 export interface BasicProfile {
@@ -44,6 +46,8 @@ export interface User {
   id: string;
   email: string;
   displayName: string;
+  /** Account access tier for UI labels and feature gating */
+  accessTier?: Exclude<UserTier, 'guest'>;
   avatarUrl?: string;
   /** ISO date string YYYY-MM-DD */
   birthday?: string;

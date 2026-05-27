@@ -271,23 +271,34 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
                 Cách cục nổi bật
               </h4>
             </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-                {summary.combinations.length === 0 ? (
-                  <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+            <div className="mt-3 flex flex-col gap-2">
+              {summary.combinations.length === 0 ? (
+                <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
                   Chưa phát hiện Cách cục theo thư viện hiện tại.
                 </p>
               ) : (
-                  summary.combinations.slice(0, 6).map((combination, index) => (
-                    <div
-                      key={getCombinationRenderKey(combination, index)}
-                      className="flex flex-wrap items-center gap-2 rounded-2xl border border-border-light/60 bg-surface-container-low px-3 py-2 text-sm dark:border-border-dark/60 dark:bg-white/5"
-                    >
-                    <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">{combination.name}</span>
-                    <Badge className={COMBINATION_CATEGORY_CLASS[combination.category]}>
-                      {COMBINATION_CATEGORY_LABEL[combination.category]}
-                    </Badge>
-                    <Badge className={PURITY_CLASS[combination.purity]}>{PURITY_LABEL[combination.purity]}</Badge>
-                    {combination.rarity ? <Badge className={RARITY_CLASS}>Hiếm {combination.rarity}/5</Badge> : null}
+                summary.combinations.slice(0, 6).map((combination, index) => (
+                  <div
+                    key={getCombinationRenderKey(combination, index)}
+                    className="rounded-2xl border border-border-light/60 bg-surface-container-low px-3 py-2 dark:border-border-dark/60 dark:bg-white/5"
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                        {combination.name}
+                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        <Badge className={COMBINATION_CATEGORY_CLASS[combination.category]}>
+                          {COMBINATION_CATEGORY_LABEL[combination.category]}
+                        </Badge>
+                        <Badge className={PURITY_CLASS[combination.purity]}>{PURITY_LABEL[combination.purity]}</Badge>
+                        {combination.rarity ? <Badge className={RARITY_CLASS}>Hiếm {combination.rarity}/5</Badge> : null}
+                      </div>
+                    </div>
+                    {combination.description && (
+                      <p className="mt-1 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+                        {combination.description}
+                      </p>
+                    )}
                   </div>
                 ))
               )}
@@ -315,16 +326,16 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
                   key={getCombinationRenderKey(combination, index)}
                   className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4"
                 >
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <h4 className="text-base font-semibold text-text-primary-light dark:text-text-primary-dark">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                    <div className="min-w-0 flex-1">
+                      <h4 className="whitespace-nowrap text-base font-semibold leading-tight text-text-primary-light dark:text-text-primary-dark">
                         {combination.name}
                       </h4>
-                      <p className="mt-0.5 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                      <p className="mt-0.5 whitespace-nowrap text-sm text-text-secondary-light dark:text-text-secondary-dark">
                         {combination.nameHanViet}
                       </p>
                     </div>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 sm:justify-end">
                       <Badge className={COMBINATION_CATEGORY_CLASS[combination.category]}>
                         {COMBINATION_CATEGORY_LABEL[combination.category]}
                       </Badge>
@@ -335,6 +346,12 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
                       </Badge>
                     </div>
                   </div>
+
+                  {combination.description && (
+                    <p className="mt-2 text-sm leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+                      {combination.description}
+                    </p>
+                  )}
 
                   <div className="mt-3 grid gap-3 lg:grid-cols-2">
                     <div>

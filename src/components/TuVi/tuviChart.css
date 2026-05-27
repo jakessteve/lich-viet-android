@@ -31,9 +31,6 @@
   border: 1px solid var(--tuvi-line);
   border-radius: 8px;
   box-shadow: none;
-  backface-visibility: hidden;
-  transform: translateZ(0);
-  will-change: transform, opacity;
   font-family: var(--font-sans);
   font-size: 0.95rem;
   line-height: 1.2;
@@ -538,6 +535,10 @@
 }
 
 @media (max-width: 768px) {
+  .tuvi-chart {
+    aspect-ratio: 780 / 960;
+  }
+
   .tuvi-chart-stage {
     margin-inline: auto;
   }
@@ -575,6 +576,24 @@
 
   .tuvi-phu-tinh-grid > div {
     gap: 5px;
+  }
+
+  .tuvi-can-chi {
+    font-size: 0.54rem;
+  }
+
+  .tuvi-palace-footer {
+    font-size: 0.62rem;
+  }
+
+  .tuvi-footer-primary {
+    column-gap: 4px;
+  }
+
+  .tuvi-branch-label,
+  .tuvi-truong-sinh-label,
+  .tuvi-nguyet-han {
+    font-size: 0.62rem;
   }
 
   .tuvi-connection-svg {

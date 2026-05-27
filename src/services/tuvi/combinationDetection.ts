@@ -316,6 +316,7 @@ function createCombination(
     purity,
     strength: 0,
     note: def.note,
+    description: def.description,
     category: def.category,
     sourcePatternId: def.id,
   };

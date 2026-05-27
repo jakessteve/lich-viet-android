@@ -1,5 +1,5 @@
 {
-  "description": "Named star combinations (Cách Cục) for detection",
+  "description": "Danh sách các cách cục sao phục vụ việc nhận diện",
   "combinations": [
     {
       "id": "sat-pha-lang",
@@ -9,8 +9,8 @@
       "rarity": 3,
       "stars": ["Thất Sát", "Phá Quân", "Tham Lang"],
       "palaceConstraint": "tamHop",
-      "description": "Thất Sát, Phá Quân, and Tham Lang appear across one Tam Hợp group.",
-      "note": "Detected when the three stars appear in the same Tam Hợp triangle."
+      "description": "Cách cục vô cùng mạnh mẽ, đại diện cho sự khai sáng, tiên phong và những biến động lớn trong cuộc đời. Người có cách này thường quyết đoán, dám nghĩ dám làm, thích hợp với môi trường quân đội, kinh doanh rủi ro cao hoặc những lĩnh vực đòi hỏi sự đột phá. Tuổi trẻ thường nhiều vất vả, bôn ba.",
+      "note": "Được phát hiện khi ba sao cùng xuất hiện trong một tam giác Tam Hợp."
     },
     {
       "id": "co-nguyet-dong-luong",
@@ -20,8 +20,8 @@
       "rarity": 4,
       "stars": ["Thiên Cơ", "Thái Âm", "Thiên Đồng", "Thiên Lương"],
       "palaceConstraint": "tamHop",
-      "description": "The four stars are gathered in the Mệnh zone or its Tam Hợp relation.",
-      "note": "Detected when the four stars appear in Mệnh and its Tam Hợp relation."
+      "description": "Cách cục của sự ổn định, trí tuệ và mưu lược. Trái ngược với Sát Phá Lang, người có cách này thích sự an toàn, làm việc có kế hoạch, nề nếp. Rất phù hợp với công chức, nhà giáo, y bác sĩ hoặc quản lý hành chính. Cuộc đời thường bình hòa, ít sóng gió lớn.",
+      "note": "Được phát hiện khi bốn sao xuất hiện trong Mệnh và tam hợp liên quan."
     },
     {
       "id": "cu-nhat-dong-cung",
@@ -31,8 +31,8 @@
       "rarity": 3,
       "stars": ["Cự Môn", "Thái Dương"],
       "palaceConstraint": "sameCung",
-      "description": "Cự Môn and Thái Dương occupy the same palace.",
-      "note": "Cự Môn and Thái Dương share one palace."
+      "description": "Thái Dương (mặt trời) xua tan đi sự ám muội của Cự Môn. Người có cách này thường có tài ăn nói xuất chúng, khả năng thuyết phục cao và có uy quyền. Rất thích hợp với nghề luật sư, giáo viên, ngoại giao. Đẹp nhất khi ở cung Dần (mặt trời mọc).",
+      "note": "Cự Môn và Thái Dương cùng một cung."
     },
     {
       "id": "tu-phu",
@@ -42,8 +42,8 @@
       "rarity": 4,
       "stars": ["Tử Vi", "Thiên Phủ"],
       "palaceConstraint": "sameCung",
-      "description": "Tử Vi and Thiên Phủ occupy the same palace.",
-      "note": "Tử Vi and Thiên Phủ share one palace."
+      "description": "Hai đế tinh Tử Vi và Thiên Phủ cùng tọa thủ. Tượng trưng cho quyền lực tột đỉnh, khả năng lãnh đạo bẩm sinh và phú quý song toàn. Tuy nhiên, đôi khi ở vị trí quá cao dễ sinh ra cảm giác cô độc.",
+      "note": "Tử Vi và Thiên Phủ cùng một cung."
     },
     {
       "id": "phu-tuong",
@@ -53,8 +53,8 @@
       "rarity": 3,
       "stars": ["Thiên Phủ", "Thiên Tướng"],
       "palaceConstraint": "tamHop",
-      "description": "Thiên Phủ and Thiên Tướng appear in the Mệnh zone or Tam Hợp relation.",
-      "note": "Thiên Phủ and Thiên Tướng appear in the same reading zone."
+      "description": "Thiên Phủ và Thiên Tướng hợp chiếu. Khả năng quản lý, điều hành tuyệt vời. Thường là những người làm rường cột cho quốc gia hoặc tập đoàn, tài trí vẹn toàn, phú quý bền vững.",
+      "note": "Thiên Phủ và Thiên Tướng xuất hiện trong cùng vùng luận giải."
     },
     {
       "id": "nhat-nguyet",
@@ -64,8 +64,8 @@
       "rarity": 4,
       "stars": ["Thái Dương", "Thái Âm"],
       "palaceConstraint": "tamHop",
-      "description": "Thái Dương and Thái Âm appear in the Mệnh zone or Tam Hợp relation.",
-      "note": "Thái Dương and Thái Âm appear in the same chart zone."
+      "description": "Thái Dương và Thái Âm cùng sáng tỏ trong Mệnh hoặc Tam Phương Tứ Chính. Tượng trưng cho danh tiếng vang xa, sự nghiệp thuận lợi cả trong lẫn ngoài, thường được trọng vọng.",
+      "note": "Thái Dương và Thái Âm xuất hiện trong cùng vùng lá số."
     },
     {
       "id": "loc-ma",
@@ -75,8 +75,8 @@
       "rarity": 3,
       "stars": ["Lộc Tồn", "Thiên Mã"],
       "palaceConstraint": "sameCung",
-      "description": "Lộc Tồn and Thiên Mã occupy the same palace.",
-      "note": "Lộc Tồn and Thiên Mã share one palace."
+      "description": "Lộc Tồn và Thiên Mã cùng tọa thủ một cung.",
+      "note": "Lộc Tồn và Thiên Mã cùng một cung."
     },
     {
       "id": "tam-ky",
@@ -86,8 +86,8 @@
       "rarity": 5,
       "stars": [],
       "palaceConstraint": "tamHop",
-      "description": "Hóa Lộc, Hóa Quyền, and Hóa Khoa are all present in the Mệnh zone or Tam Hợp relation.",
-      "note": "Hóa Lộc, Hóa Quyền, and Hóa Khoa all appear in the same reading zone.",
+      "description": "Hóa Khoa, Hóa Quyền, Hóa Lộc cùng hội tụ ở Tam Phương Tứ Chính. Cách cục cực quý - danh, quyền, lộc hội đủ. Người có cách này thường được số phận ưu ái, thành đạt trên nhiều phương diện.",
+      "note": "Hóa Lộc, Hóa Quyền và Hóa Khoa cùng xuất hiện trong cùng vùng luận giải.",
       "requiresTuHoa": true
     },
     {
@@ -98,8 +98,8 @@
       "rarity": 3,
       "stars": ["Văn Xương", "Văn Khúc"],
       "palaceConstraint": "sameCungOrTamHop",
-      "description": "Văn Xương and Văn Khúc appear together in Mệnh or Tam Hợp.",
-      "note": "Văn Xương and Văn Khúc appear together in one reading zone."
+      "description": "Văn Xương và Văn Khúc cùng cư ở Sửu/Mùi. Tài hoa nghệ thuật xuất chúng, văn chương lỗi lạc, sáng tạo phong phú. Rất thích hợp với ngành sáng tạo, nghệ thuật, giáo dục.",
+      "note": "Văn Xương và Văn Khúc cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "ta-huu",
@@ -109,8 +109,8 @@
       "rarity": 3,
       "stars": ["Tả Phụ", "Hữu Bật"],
       "palaceConstraint": "sameCungOrTamHop",
-      "description": "Tả Phụ and Hữu Bật appear together in Mệnh or Tam Hợp.",
-      "note": "Tả Phụ and Hữu Bật appear together in one reading zone."
+      "description": "Tả Phụ và Hữu Bật kẹp hai bên Mệnh cung. 'Quân thần phò tá hai bên.' Biểu thị sự được trọng dụng, có nhiều người hỗ trợ, đắc lực trong sự nghiệp. Rất tốt cho người lãnh đạo, quản lý.",
+      "note": "Tả Phụ và Hữu Bật cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "khuyet-viet",
@@ -120,8 +120,8 @@
       "rarity": 4,
       "stars": ["Thiên Khôi", "Thiên Việt"],
       "palaceConstraint": "sameCungOrTamHop",
-      "description": "Thiên Khôi and Thiên Việt appear together in Mệnh or Tam Hợp.",
-      "note": "Thiên Khôi and Thiên Việt appear together in one reading zone."
+      "description": "Thiên Khôi và Thiên Việt kẹp hai bên Mệnh cung. 'Ngồi trên quý nhân, hướng về quý nhân.' Cách cục đại diện cho sự được quý nhân phò trợ từ mọi phía, thăng tiến nhanh, ít gặp rủi ro.",
+      "note": "Thiên Khôi và Thiên Việt cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "kinh-da",
@@ -131,8 +131,8 @@
       "rarity": 3,
       "stars": ["Kình Dương", "Đà La"],
       "palaceConstraint": "sameCungOrTamHop",
-      "description": "Kình Dương and Đà La appear together in Mệnh or Tam Hợp.",
-      "note": "Kình Dương and Đà La appear together in one reading zone."
+      "description": "Kình Dương và Đà La cùng xuất hiện trong cung Mệnh hoặc trong quan hệ Tam Hợp.",
+      "note": "Kình Dương và Đà La cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "khong-kiep",
@@ -142,8 +142,8 @@
       "rarity": 4,
       "stars": ["Địa Không", "Địa Kiếp"],
       "palaceConstraint": "sameCungOrTamHop",
-      "description": "Địa Không and Địa Kiếp appear together in Mệnh or Tam Hợp.",
-      "note": "Địa Không and Địa Kiếp appear together in one reading zone."
+      "description": "Địa Không và Địa Kiếp cùng xuất hiện trong cung Mệnh hoặc trong quan hệ Tam Hợp.",
+      "note": "Địa Không và Địa Kiếp cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "hoa-linh",
@@ -153,8 +153,8 @@
       "rarity": 3,
       "stars": ["Hỏa Tinh", "Linh Tinh"],
       "palaceConstraint": "sameCungOrTamHop",
-      "description": "Hỏa Tinh and Linh Tinh appear together in Mệnh or Tam Hợp.",
-      "note": "Hỏa Tinh and Linh Tinh appear together in one reading zone."
+      "description": "Hỏa Tinh và Linh Tinh cùng xuất hiện trong cung Mệnh hoặc trong quan hệ Tam Hợp.",
+      "note": "Hỏa Tinh và Linh Tinh cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "giap-sat",
@@ -164,8 +164,8 @@
       "rarity": 3,
       "stars": [],
       "palaceConstraint": "giap",
-      "description": "A palace is flanked by Sát Tinh on both sides.",
-      "note": "A palace is flanked by malefic stars on both sides.",
+      "description": "Một cung bị Sát tinh kẹp hai bên.",
+      "note": "Một cung bị các sát tinh kẹp hai bên.",
       "requiresGiap": true
     },
     {
@@ -177,7 +177,7 @@
       "matchKind": "menhBranchStars",
       "stars": ["Tử Vi"],
       "branches": ["Ngọ"],
-      "description": "Tử Vi sits in the Mệnh palace and the palace branch is Ngọ.",
+      "description": "Tử Vi tọa thủ cung Mệnh và địa chi của cung là Ngọ.",
       "note": "Tử Vi tọa Mệnh ở Ngọ."
     },
     {
@@ -189,8 +189,8 @@
       "matchKind": "minhChau",
       "stars": [],
       "branches": ["Sửu", "Mùi"],
-      "description": "Mệnh vô chính diệu and the Sun/Moon pair sit in the matched bright branches.",
-      "note": "Mệnh vô chính diệu with the Sun/Moon pair in the matched branches."
+      "description": "Mệnh vô chính diệu và bộ Nhật Nguyệt cùng an tại các địa chi sáng đã đối ứng.",
+      "note": "Mệnh vô chính diệu với bộ Nhật Nguyệt ở các địa chi sáng đã đối ứng."
     },
     {
       "id": "duong-luong-xuong-loc",
@@ -200,8 +200,8 @@
       "rarity": 4,
       "matchKind": "tamPhuongCluster",
       "stars": ["Thái Dương", "Thiên Lương", "Văn Xương", "Lộc Tồn"],
-      "description": "Thái Dương, Thiên Lương, Văn Xương, and Lộc Tồn appear in the Mệnh zone or Tam Hợp relation.",
-      "note": "The four required stars appear in the same reading zone."
+      "description": "Thái Dương, Thiên Lương, Văn Xương, Lộc Tồn cùng hội. Cách cục tốt nhất cho thi cử, khoa bảng, tuyển dụng. Trạng nguyên, tiến sĩ đời xưa thường có cách cục này.",
+      "note": "Bốn sao yêu cầu cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "van-que-van-hoa",
@@ -212,8 +212,8 @@
       "matchKind": "menhBranchStars",
       "stars": ["Văn Xương", "Văn Khúc"],
       "branches": ["Sửu", "Mùi"],
-      "description": "Văn Xương and Văn Khúc occupy the Mệnh palace at Sửu or Mùi.",
-      "note": "Văn Xương and Văn Khúc share Mệnh at Sửu or Mùi."
+      "description": "Văn Xương và Văn Khúc cùng tọa thủ cung Mệnh tại Sửu hoặc Mùi.",
+      "note": "Văn Xương và Văn Khúc cùng thủ Mệnh tại Sửu hoặc Mùi."
     },
     {
       "id": "nhat-nguyet-tinh-minh",
@@ -226,8 +226,8 @@
       "branches": ["Sửu", "Mùi"],
       "sunBranches": ["Thìn", "Tỵ", "Ngọ"],
       "moonBranches": ["Dậu", "Tuất", "Hợi", "Tý"],
-      "description": "Mệnh sits at Sửu or Mùi and the Sun/Moon appear in the listed bright branches.",
-      "note": "Mệnh at Sửu or Mùi with the Sun/Moon in the listed bright branches."
+      "description": "Mệnh ở Sửu hoặc Mùi và bộ Nhật Nguyệt hiện ở các địa chi sáng đã liệt kê.",
+      "note": "Mệnh ở Sửu hoặc Mùi với Nhật Nguyệt tại các địa chi sáng đã liệt kê."
     },
     {
       "id": "toa-quy-huong-quy",
@@ -237,8 +237,8 @@
       "rarity": 4,
       "matchKind": "menhBracketStars",
       "stars": ["Thiên Khôi", "Thiên Việt"],
-      "description": "Thiên Khôi and Thiên Việt flank the Mệnh palace.",
-      "note": "Thiên Khôi and Thiên Việt sit on the two sides of Mệnh."
+      "description": "Thiên Khôi và Thiên Việt giáp hai bên cung Mệnh.",
+      "note": "Thiên Khôi và Thiên Việt ngồi hai bên cung Mệnh."
     },
     {
       "id": "ta-huu-giap-menh",
@@ -248,8 +248,8 @@
       "rarity": 3,
       "matchKind": "menhBracketStars",
       "stars": ["Tả Phụ", "Hữu Bật"],
-      "description": "Tả Phụ and Hữu Bật flank the Mệnh palace.",
-      "note": "Tả Phụ and Hữu Bật sit on the two sides of Mệnh."
+      "description": "Tả Phụ và Hữu Bật giáp hai bên cung Mệnh.",
+      "note": "Tả Phụ và Hữu Bật ngồi hai bên cung Mệnh."
     },
     {
       "id": "hinh-ky-giap-menh",
@@ -260,8 +260,8 @@
       "matchKind": "menhBracketMutagen",
       "stars": ["Thiên Hình"],
       "requiredTuHoa": ["Kỵ"],
-      "description": "Thiên Hình and Hóa Kỵ flank the Mệnh palace.",
-      "note": "Thiên Hình and Hóa Kỵ sit on the two sides of Mệnh."
+      "description": "Thiên Hình và Hóa Kỵ giáp hai bên cung Mệnh.",
+      "note": "Thiên Hình và Hóa Kỵ ngồi hai bên cung Mệnh."
     },
     {
       "id": "hoa-linh-giap-menh",
@@ -271,8 +271,8 @@
       "rarity": 4,
       "matchKind": "menhBracketStars",
       "stars": ["Hỏa Tinh", "Linh Tinh"],
-      "description": "Hỏa Tinh and Linh Tinh flank the Mệnh palace.",
-      "note": "Hỏa Tinh and Linh Tinh sit on the two sides of Mệnh."
+      "description": "Hỏa Tinh và Linh Tinh giáp hai bên cung Mệnh.",
+      "note": "Hỏa Tinh và Linh Tinh ngồi hai bên cung Mệnh."
     },
     {
       "id": "thien-la-dia-vong",
@@ -282,8 +282,8 @@
       "rarity": 4,
       "matchKind": "menhBranchMalefic",
       "branches": ["Thìn", "Tuất"],
-      "description": "Mệnh sits at Thìn or Tuất and contains at least one malefic star.",
-      "note": "Mệnh at Thìn or Tuất with at least one malefic star."
+      "description": "Mệnh ở Thìn hoặc Tuất và có ít nhất một sát tinh.",
+      "note": "Mệnh ở Thìn hoặc Tuất với ít nhất một sát tinh."
     },
     {
       "id": "tu-sat-tu-hoi",
@@ -293,8 +293,8 @@
       "rarity": 5,
       "matchKind": "tamPhuongCluster",
       "stars": ["Kình Dương", "Đà La", "Hỏa Tinh", "Linh Tinh"],
-      "description": "All four major malefic stars appear in the Mệnh zone or Tam Hợp relation.",
-      "note": "All four major malefic stars appear in the same reading zone."
+      "description": "Bốn sát tinh chính cùng xuất hiện trong cung Mệnh hoặc trong quan hệ Tam Hợp.",
+      "note": "Bốn sát tinh chính cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "linh-xuong-da-vu",
@@ -304,8 +304,8 @@
       "rarity": 5,
       "matchKind": "tamPhuongCluster",
       "stars": ["Linh Tinh", "Văn Xương", "Đà La", "Vũ Khúc"],
-      "description": "Linh Tinh, Văn Xương, Đà La, and Vũ Khúc appear in the Mệnh zone or Tam Hợp relation.",
-      "note": "The four required stars appear in the same reading zone."
+      "description": "Linh Tinh, Văn Xương, Đà La và Vũ Khúc cùng xuất hiện trong cung Mệnh hoặc trong quan hệ Tam Hợp.",
+      "note": "Bốn sao yêu cầu cùng xuất hiện trong một vùng luận giải."
     },
     {
       "id": "loc-suy-ma-khon",
@@ -315,8 +315,8 @@
       "rarity": 4,
       "matchKind": "hamPair",
       "stars": ["Lộc Tồn", "Thiên Mã"],
-      "description": "Lộc Tồn and Thiên Mã are both present with Hãm/Bất brightness.",
-      "note": "Lộc Tồn and Thiên Mã are both dimmed in the chart."
+      "description": "Lộc Tồn và Thiên Mã đều hiện với trạng thái Hãm/Bất.",
+      "note": "Lộc Tồn và Thiên Mã đều ở trạng thái suy yếu trong lá số."
     },
     {
       "id": "co-cu-dong-lam",
@@ -327,8 +327,8 @@
       "matchKind": "menhBranchStars",
       "stars": ["Thiên Cơ", "Cự Môn"],
       "branches": ["Mão", "Dậu"],
-      "description": "Thiên Cơ and Cự Môn occupy the Mệnh palace at Mão or Dậu.",
-      "note": "Thiên Cơ and Cự Môn share Mệnh at Mão or Dậu."
+      "description": "Thiên Cơ và Cự Môn cùng tọa thủ cung Mệnh tại Mão hoặc Dậu.",
+      "note": "Thiên Cơ và Cự Môn cùng thủ Mệnh tại Mão hoặc Dậu."
     },
     {
       "id": "tu-tham-dong-cung",
@@ -339,8 +339,8 @@
       "matchKind": "menhBranchStars",
       "stars": ["Tử Vi", "Tham Lang"],
       "branches": ["Mão", "Dậu"],
-      "description": "Tử Vi and Tham Lang occupy the Mệnh palace at Mão or Dậu.",
-      "note": "Tử Vi and Tham Lang share Mệnh at Mão or Dậu."
+      "description": "Tử Vi và Tham Lang cùng tọa thủ cung Mệnh tại Mão hoặc Dậu.",
+      "note": "Tử Vi và Tham Lang cùng thủ Mệnh tại Mão hoặc Dậu."
     },
     {
       "id": "tham-vu-dong-hanh",
@@ -351,8 +351,8 @@
       "matchKind": "menhBranchStars",
       "stars": ["Tham Lang", "Vũ Khúc"],
       "branches": ["Thìn", "Tuất", "Sửu", "Mùi"],
-      "description": "Tham Lang and Vũ Khúc occupy the Mệnh palace at one of the four Mộ branches.",
-      "note": "Tham Lang and Vũ Khúc share Mệnh at a Mộ branch."
+      "description": "Tham Lang và Vũ Khúc cùng tọa thủ cung Mệnh tại một trong bốn địa chi Mộ.",
+      "note": "Tham Lang và Vũ Khúc cùng thủ Mệnh tại một địa chi Mộ."
     },
     {
       "id": "nhat-nguyet-dong-cung",
@@ -363,8 +363,8 @@
       "matchKind": "menhBranchStars",
       "stars": ["Thái Dương", "Thái Âm"],
       "branches": ["Sửu", "Mùi"],
-      "description": "Thái Dương and Thái Âm occupy the Mệnh palace at Sửu or Mùi.",
-      "note": "Thái Dương and Thái Âm share Mệnh at Sửu or Mùi."
+      "description": "Thái Dương và Thái Âm cùng tọa thủ cung Mệnh tại Sửu hoặc Mùi.",
+      "note": "Thái Dương và Thái Âm cùng thủ Mệnh tại Sửu hoặc Mùi."
     }
   ]
 }

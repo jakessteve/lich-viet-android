@@ -327,6 +327,16 @@ describe('detectCombinations', () => {
     expect(gs?.involvedCung).toContain('Cung 2');
   });
 
+  it('does not treat broad annual/minor sat tinh as Giáp Sát anchors', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[0] = makePalace({ id: 0, name: 'Cung 0', satTinh: [makeStar('Quan Phù', 'satTinh')] });
+    palaces[2] = makePalace({ id: 2, name: 'Cung 2', satTinh: [makeStar('Bạch Hổ', 'satTinh')] });
+
+    const results = detectCombinations(palaces);
+
+    expect(results.some((r: TuViCombination) => r.name === 'Giáp Sát')).toBe(false);
+  });
+
   it('detects requiresTuHoa combination (Tam Kỳ)', () => {
     const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
     // TAM_HOP group for 0 is [0, 4, 8]

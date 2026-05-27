@@ -11,6 +11,17 @@ import {
   calculatePalaceCans,
   generateChart,
 } from '../../src/services/tuvi/starPlacement';
+import starBrightnessData from '../../src/data/tuvi/starBrightness.json';
+
+const TAN_BIEN_MAIN_STAR_BRIGHTNESS = {
+  'Tử Vi': ['Bình', 'Đắc', 'Miếu', 'Bình', 'Vượng', 'Miếu', 'Miếu', 'Đắc', 'Miếu', 'Bình', 'Vượng', 'Bình'],
+  'Liêm Trinh': ['Vượng', 'Đắc', 'Vượng', 'Hãm', 'Miếu', 'Hãm', 'Vượng', 'Đắc', 'Vượng', 'Hãm', 'Miếu', 'Hãm'],
+  'Thái Dương': ['Hãm', 'Đắc', 'Vượng', 'Vượng', 'Vượng', 'Miếu', 'Miếu', 'Đắc', 'Hãm', 'Hãm', 'Hãm', 'Hãm'],
+  'Thiên Phủ': ['Miếu', 'Bình', 'Miếu', 'Bình', 'Vượng', 'Đắc', 'Miếu', 'Đắc', 'Miếu', 'Bình', 'Vượng', 'Đắc'],
+  'Thái Âm': ['Vượng', 'Đắc', 'Hãm', 'Hãm', 'Hãm', 'Hãm', 'Hãm', 'Đắc', 'Vượng', 'Miếu', 'Miếu', 'Miếu'],
+  'Thất Sát': ['Miếu', 'Đắc', 'Miếu', 'Hãm', 'Hãm', 'Vượng', 'Miếu', 'Đắc', 'Miếu', 'Hãm', 'Hãm', 'Vượng'],
+  'Phá Quân': ['Miếu', 'Vượng', 'Hãm', 'Hãm', 'Đắc', 'Hãm', 'Miếu', 'Vượng', 'Hãm', 'Hãm', 'Đắc', 'Hãm'],
+} as const;
 
 describe('Star Placement Engine', () => {
   describe('calculateMenhCungPosition', () => {
@@ -149,12 +160,42 @@ describe('Star Placement Engine', () => {
     });
   });
 
+  describe('star brightness table', () => {
+    it('keeps key main-star rows aligned to Tử Vi Đẩu Số Tân Biên', () => {
+      for (const [starName, expectedBrightness] of Object.entries(TAN_BIEN_MAIN_STAR_BRIGHTNESS)) {
+        expect(starBrightnessData.brightness[starName as keyof typeof starBrightnessData.brightness]).toEqual(
+          expectedBrightness,
+        );
+      }
+    });
+  });
+
   describe('placePhuTinh Thiên Lương Kình Đà', () => {
     it('places Hỏa Tinh and Linh Tinh from the classical year-branch and hour tables', () => {
       const positions = placePhuTinh(9, 11, 11, 13, 9, 0, 0, 'Thuận');
 
       expect(positions['Hỏa Tinh']).toBe(6); // Ngọ
       expect(positions['Linh Tinh']).toBe(7); // Mùi
+    });
+
+    it('places Lưu Hà by the classical year-can table', () => {
+      const expectations: Array<[number, number]> = [
+        [0, 9], // Giáp → Dậu
+        [1, 10], // Ất → Tuất
+        [2, 7], // Bính → Mùi
+        [3, 4], // Đinh → Thìn
+        [4, 5], // Mậu → Tỵ
+        [5, 6], // Kỷ → Ngọ
+        [6, 8], // Canh → Thân
+        [7, 3], // Tân → Mão
+        [8, 11], // Nhâm → Hợi
+        [9, 2], // Quý → Dần
+      ];
+
+      for (const [yearCanIndex, expectedPosition] of expectations) {
+        const positions = placePhuTinh(yearCanIndex, 0, 1, 1, 0, 0, 0, 'Thuận');
+        expect(positions['Lưu Hà']).toBe(expectedPosition);
+      }
     });
 
     it('places Kình Đà by the Lộc Tồn direction for Thuận charts', () => {
@@ -227,15 +268,22 @@ describe('Star Placement Engine', () => {
       expect(byChi.get('Dần')?.name).toBe('Mệnh');
       expect(byChi.get('Dần')?.canChi).toBe('Mậu Dần');
       expect(byChi.get('Dần')?.chinhTinh.map((star) => star.name)).toEqual(['Vũ Khúc', 'Thiên Tướng']);
-      expect(byChi.get('Dần')?.brightness['Vũ Khúc']).toBe('Đắc');
+      expect(byChi.get('Dần')?.brightness['Vũ Khúc']).toBe('Vượng');
       expect(byChi.get('Dần')?.brightness['Thiên Tướng']).toBe('Miếu');
       expect(byChi.get('Ngọ')?.name).toBe('Quan Lộc');
       expect(byChi.get('Ngọ')?.chinhTinh.map((star) => star.name)).toEqual(['Tử Vi']);
+      expect(byChi.get('Ngọ')?.chinhTinh.find((star) => star.name === 'Tử Vi')?.nguHanh).toBe('Dương Thổ');
       expect(byChi.get('Ngọ')?.brightness['Tử Vi']).toBe('Miếu');
-      expect(byChi.get('Ngọ')?.brightness['Hỏa Tinh']).toBe('Miếu');
-      expect(byChi.get('Ngọ')?.brightness['Văn Xương']).toBe('Hãm');
+      expect(byChi.get('Ngọ')?.brightness['Hỏa Tinh']).toBe('Đắc');
+      expect(byChi.get('Ngọ')?.brightness['Văn Xương']).toBe('Bình');
+      expect(
+        chart.palaces.flatMap((palace) => palace.chinhTinh).find((star) => star.name === 'Cự Môn')?.nguHanh,
+      ).toBe('Âm Thủy');
+      expect(
+        chart.palaces.flatMap((palace) => palace.chinhTinh).find((star) => star.name === 'Thiên Lương')?.nguHanh,
+      ).toBe('Âm Mộc');
       expect(byChi.get('Dậu')?.brightness['Kình Dương']).toBe('Hãm');
-      expect(byChi.get('Mùi')?.brightness['Đà La']).toBe('Miếu');
+      expect(byChi.get('Mùi')?.brightness['Đà La']).toBe('Đắc');
       expect(byChi.get('Tý')?.hasTuan).toBe(true);
       expect(byChi.get('Sửu')?.hasTuan).toBe(true);
       expect(byChi.get('Ngọ')?.hasTriet).toBe(true);
@@ -315,7 +363,7 @@ describe('Star Placement Engine', () => {
       });
     });
 
-    it('keeps Cổ Học reference Huyền Khí scale and restored non-major stars for 1983-11-13 18:30 male', () => {
+    it('keeps restored non-major stars for 1983-11-13 18:30 male', () => {
       const chart = generateChart({
         name: 'Cohoc sample',
         solarDate: new Date(1983, 10, 13, 18, 30),
@@ -326,7 +374,8 @@ describe('Star Placement Engine', () => {
         timezone: 'Asia/Ho_Chi_Minh',
       });
 
-      expect(chart.huyenKhi.totalScore).toBe(18.7);
+      expect(chart.engineMeta?.version).toBe('accuracy-v4');
+      expect(chart.combinations.filter((combination) => combination.id === 'giap-sat')).toHaveLength(2);
 
       const byChi = new Map(chart.palaces.map((palace) => [palace.chi, palace]));
       expect(byChi.get('Tý')?.brightness['Thiên Đồng']).toBe('Vượng');
@@ -345,7 +394,7 @@ describe('Star Placement Engine', () => {
       expect(byChi.get('Tỵ')?.brightness['Tử Vi']).toBe('Miếu');
       expect(byChi.get('Tỵ')?.brightness['Thất Sát']).toBe('Vượng');
       expect(byChi.get('Tỵ')?.brightness['Thiên Mã']).toBe('Đắc');
-      expect(byChi.get('Ngọ')?.brightness['Hỏa Tinh']).toBe('Miếu');
+      expect(byChi.get('Ngọ')?.brightness['Hỏa Tinh']).toBe('Đắc');
       expect(byChi.get('Ngọ')?.brightness['Thiên Hình']).toBe('Hãm');
       expect(byChi.get('Mùi')?.brightness['Linh Tinh']).toBe('Hãm');
       expect(byChi.get('Mùi')?.brightness['Thiên Khốc']).toBe('Đắc');
