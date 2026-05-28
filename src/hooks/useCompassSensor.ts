@@ -35,6 +35,10 @@ function angularDistance(a: number, b: number): number {
   return Math.min(diff, 360 - diff);
 }
 
+function normalizeDeviceAlpha(alpha: number): number {
+  return normalizeHeading(360 - alpha);
+}
+
 function extractHeading(
   event: DeviceOrientationEvent,
 ): { heading: number | null; accuracy: number | null; isAbsolute: boolean } {
@@ -48,8 +52,7 @@ function extractHeading(
     return { heading: null, accuracy: null, isAbsolute: false };
   }
 
-  const alphaHeading = event.absolute ? event.alpha : 360 - event.alpha;
-  return { heading: normalizeHeading(alphaHeading), accuracy: null, isAbsolute: Boolean(event.absolute) };
+  return { heading: normalizeDeviceAlpha(event.alpha), accuracy: null, isAbsolute: Boolean(event.absolute) };
 }
 
 export function useCompassSensor() {

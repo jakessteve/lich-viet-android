@@ -7,15 +7,17 @@ import { LaBanPage } from '@/components/FengShui/LaBanPage';
 import { useAuthStore } from '@/stores/authStore';
 import { useTuViStore } from '@/stores/tuviStore';
 
+let compassHeading: number | null = null;
+
 vi.mock('@/hooks/useIsPhone', () => ({
   useIsPhone: () => true,
 }));
 
 vi.mock('@/hooks/useCompassSensor', () => ({
   useCompassSensor: () => ({
-    headingDeg: null,
-    magneticHeadingDeg: null,
-    trueHeadingDeg: null,
+    headingDeg: compassHeading,
+    magneticHeadingDeg: compassHeading,
+    trueHeadingDeg: compassHeading,
     accuracyDeg: null,
     permissionState: 'prompt',
     calibrationState: 'unknown',
@@ -55,6 +57,7 @@ const savedUser = {
 };
 
 beforeEach(() => {
+  compassHeading = null;
   act(() => {
     useAuthStore.setState({ user: savedUser, isAuthenticated: true, isLoading: false });
     useTuViStore.setState({ chart: null });
@@ -96,5 +99,28 @@ describe('LaBanPage', () => {
     const circles = Array.from(container.querySelectorAll('circle[cx="500"][cy="500"][r="238"]'));
     const centerRing = circles.find((circle) => circle.getAttribute('stroke') === 'rgba(212,174,96,0.18)');
     expect(centerRing).toBeTruthy();
+  });
+
+  it('rotates the luopan dial across north by the shortest path', async () => {
+    compassHeading = 359;
+    const { container, rerender } = render(
+      <MemoryRouter>
+        <LaBanPage />
+      </MemoryRouter>,
+    );
+
+    const dialPlate = () => container.querySelector('[data-testid="luopan-dial-plate"]');
+    expect(dialPlate()?.getAttribute('transform')).toBe('rotate(-359 500 500)');
+
+    compassHeading = 1;
+    await act(async () => {
+      rerender(
+        <MemoryRouter>
+          <LaBanPage />
+        </MemoryRouter>,
+      );
+    });
+
+    expect(dialPlate()?.getAttribute('transform')).toBe('rotate(-361 500 500)');
   });
 });

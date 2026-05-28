@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useCompassSensor } from '@/hooks/useCompassSensor';
@@ -39,6 +39,22 @@ function polarToCartesian(angleDeg: number, radius: number, center = 500): { x: 
     x: center + radius * Math.cos(rad),
     y: center + radius * Math.sin(rad),
   };
+}
+
+function getShortestHeadingDelta(fromDeg: number, toDeg: number): number {
+  return ((normalizeHeading(toDeg) - normalizeHeading(fromDeg) + 540) % 360) - 180;
+}
+
+function useContinuousHeading(headingDeg: number): number {
+  const initialHeadingRef = useRef(normalizeHeading(headingDeg));
+  const [continuousHeading, setContinuousHeading] = useState(initialHeadingRef.current);
+
+  useEffect(() => {
+    const targetHeading = normalizeHeading(headingDeg);
+    setContinuousHeading((currentHeading) => currentHeading + getShortestHeadingDelta(currentHeading, targetHeading));
+  }, [headingDeg]);
+
+  return continuousHeading;
 }
 
 function getChiHourFromClockHour(hour: number): number {
@@ -112,7 +128,8 @@ function LuopanDial({
   sittingMountain: Mountain24;
   menhLabels: Set<string>;
 }) {
-  const dialRotation = -normalizeHeading(headingDeg);
+  const visualHeading = useContinuousHeading(headingDeg);
+  const dialRotation = -visualHeading;
   const palaceMap = new Map(chart.palaces.map((palace) => [palace.positionVi, palace]));
 
   return (
@@ -133,7 +150,7 @@ function LuopanDial({
           </marker>
         </defs>
 
-        <g transform={`rotate(${dialRotation} 500 500)`}>
+        <g data-testid="luopan-dial-plate" transform={`rotate(${dialRotation} 500 500)`}>
           <circle cx="500" cy="500" r="496" fill="none" stroke="rgba(95,65,20,0.7)" strokeWidth="10" />
           <circle cx="500" cy="500" r="478" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="2" />
           <circle cx="500" cy="500" r="454" fill="none" stroke="rgba(212,174,96,0.42)" strokeWidth="2" />
