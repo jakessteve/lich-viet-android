@@ -229,7 +229,7 @@ export default function LandingPage() {
                 <div className="absolute right-0 mt-2 w-64 rounded-xl border border-border-light bg-white py-1.5 shadow-xl dark:border-mystery-purple/15 dark:bg-mystery-surface/90 dark:backdrop-blur-xl">
                   <div className="border-b border-border-light px-4 py-3 dark:border-border-dark">
                     {isAuthenticated && user ? (
-                      <>
+                      <div>
                         <div className="flex items-center gap-2.5">
                           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-mystery-purple/20 to-mystery-blue/20 dark:from-mystery-purple/25 dark:to-mystery-blue/15">
                             <span className="text-xs font-bold text-mystery-purple dark:text-mystery-purple-light">
@@ -245,7 +245,7 @@ export default function LandingPage() {
                             </p>
                           </div>
                         </div>
-                      </>
+                      </div>
                     ) : (
                       <>
                         <p className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">Khách</p>

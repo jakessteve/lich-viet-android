@@ -1,11 +1,14 @@
 import { create } from 'zustand';
 import type { User, AuthProvider, AuthState, LoginCredentials, RegisterData } from '../types/auth';
+import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
+import { formatTuViChartAsMarkdown, generateChart } from '@/services/tuvi';
 
 // ══════════════════════════════════════════════════════════
 // Constants
 // ══════════════════════════════════════════════════════════
 
 const AUTH_STORAGE_KEY = 'auth_user';
+const AUTH_SESSION_MARKER_KEY = 'auth_user_session_initialized';
 const USERS_STORAGE_KEY = 'auth_users_db';
 const ADMIN_SEED_EMAIL = 'admin@lichviet.app';
 const ADMIN_SEED_PASSWORD_HASH = 'ef00af5081263d0c0e72e3f8b98119303d53edc687c02f8b54e220a6b46973d5';
@@ -86,6 +89,39 @@ function saveStoredUsers(users: StoredUser[]): void {
   localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
 }
 
+function saveAuthUser(user: User | null): void {
+  try {
+    if (user) {
+      const serialized = JSON.stringify(user);
+      localStorage.setItem(AUTH_STORAGE_KEY, serialized);
+      localStorage.setItem(AUTH_SESSION_MARKER_KEY, 'true');
+    } else {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      localStorage.removeItem(AUTH_SESSION_MARKER_KEY);
+    }
+  } catch {
+    // Ignore storage failures in private mode / quota edge cases.
+  }
+}
+
+function readAuthUserFromStorage(): User | null {
+  try {
+    if (localStorage.getItem(AUTH_SESSION_MARKER_KEY) !== 'true') {
+      return null;
+    }
+    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+    return raw ? (JSON.parse(raw) as User) : null;
+  } catch {
+    try {
+      localStorage.removeItem(AUTH_STORAGE_KEY);
+      localStorage.removeItem(AUTH_SESSION_MARKER_KEY);
+    } catch {
+      // ignore
+    }
+    return null;
+  }
+}
+
 function generateId(): string {
   return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 }
@@ -103,6 +139,8 @@ interface AuthActions {
   socialLogin: (provider: AuthProvider) => Promise<{ success: boolean; error?: string }>;
   /** Logout */
   logout: () => void;
+  /** Rehydrate auth state from persisted storage */
+  rehydrate: () => void;
   /** Update user profile fields (displayName, avatarUrl, birthday, birthHour, birthMinute, birthLocation) */
   updateProfile: (updates: {
     displayName?: string;
@@ -124,16 +162,8 @@ type AuthStore = AuthState & AuthActions;
 
 function getInitialAuthState(): Pick<AuthState, 'user' | 'isAuthenticated'> {
   if (typeof window === 'undefined') return { user: null, isAuthenticated: false };
-  try {
-    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
-    if (raw) {
-      const user: User = JSON.parse(raw);
-      return { user, isAuthenticated: true };
-    }
-  } catch {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-  }
-  return { user: null, isAuthenticated: false };
+  const user = readAuthUserFromStorage();
+  return user ? { user, isAuthenticated: true } : { user: null, isAuthenticated: false };
 }
 
 // ══════════════════════════════════════════════════════════
@@ -180,7 +210,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     }
 
     // Full login
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(found.user));
+    saveAuthUser(found.user);
     set({ user: found.user, isAuthenticated: true, isLoading: false });
     return { success: true };
   },
@@ -213,7 +243,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
 
     users.push({ user: newUser, passwordHash: hash, salt });
     saveStoredUsers(users);
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(newUser));
+    saveAuthUser(newUser);
     set({ user: newUser, isAuthenticated: true, isLoading: false });
     return { success: true };
   },
@@ -246,12 +276,12 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     const existing = users.find((u) => u.user.provider === provider && u.user.email === mockUser.email);
 
     if (existing) {
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(existing.user));
+      saveAuthUser(existing.user);
       set({ user: existing.user, isAuthenticated: true, isLoading: false });
     } else {
       users.push({ user: mockUser, passwordHash: '' });
       saveStoredUsers(users);
-      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(mockUser));
+      saveAuthUser(mockUser);
       set({ user: mockUser, isAuthenticated: true, isLoading: false });
     }
 
@@ -260,8 +290,13 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
 
   // ── Logout ──────────────────────────────────────────────
   logout: () => {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+    saveAuthUser(null);
     set({ user: null, isAuthenticated: false });
+  },
+
+  rehydrate: () => {
+    const user = readAuthUserFromStorage();
+    set({ user, isAuthenticated: Boolean(user) });
   },
 
   // ── Update Profile ────────────────────────────────────────────
@@ -309,13 +344,49 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       }
     }
 
+    const tuViInput = buildTuViInputFromUser(updated, {
+      gender: updated.profile?.gender === 'female' ? 'nữ' : updated.profile?.gender === 'male' ? 'nam' : undefined,
+      birthHour: updated.profile?.birthHour,
+      birthMinute: updated.profile?.birthMinute,
+      birthLocation: updated.extendedProfile?.birthLocation
+        ? {
+            locationName: updated.extendedProfile.birthLocation.city,
+            lat: updated.extendedProfile.birthLocation.lat,
+            lng: updated.extendedProfile.birthLocation.lng,
+            timezone: Math.max(-12, Math.min(14, Math.round(updated.extendedProfile.birthLocation.lng / 15))),
+            countryCode: updated.extendedProfile.birthLocation.countryCode,
+            countryName: updated.extendedProfile.birthLocation.countryName,
+          }
+        : undefined,
+      timezone: 'Asia/Ho_Chi_Minh',
+      school: 'thien-luong',
+      name: updated.displayName,
+    });
+
+    if (tuViInput) {
+      try {
+        const chart = generateChart(tuViInput);
+        const markdown = formatTuViChartAsMarkdown(chart);
+        updated.extendedProfile = {
+          ...(updated.extendedProfile || {}),
+          natalChartCached: {
+            generatedAt: new Date().toISOString(),
+            markdown,
+            input: tuViInput,
+          },
+        };
+      } catch {
+        // Chart generation should never block profile persistence.
+      }
+    }
+
     const users = getStoredUsers();
     const idx = users.findIndex((u) => u.user.id === user.id);
     if (idx !== -1) {
       users[idx].user = updated;
       saveStoredUsers(users);
     }
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(updated));
+    saveAuthUser(updated);
     set({ user: updated });
     return { success: true };
   },
@@ -339,6 +410,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     users[idx].salt = nextSalt;
     users[idx].passwordHash = await hashPassword(newPassword, nextSalt);
     saveStoredUsers(users);
+    saveAuthUser(user);
     return { success: true };
   },
 }));

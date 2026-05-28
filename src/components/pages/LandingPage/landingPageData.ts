@@ -24,6 +24,17 @@ export const FEATURES = [
     tier: 'Cơ bản',
   },
   {
+    id: 'la-ban',
+    icon: 'explore',
+    title: 'La bàn',
+    desc: 'La bàn Phong Thủy Việt Nam với 24 Sơn, Phi Tinh, hướng thật và cảm biến điện thoại trên mobile.',
+    highlight: '24 sơn',
+    glowColor: 'from-emerald-400/20 to-cyan-600/10',
+    iconBg: 'bg-emerald-500/12 dark:bg-emerald-400/10',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    tier: 'Cơ bản',
+  },
+  {
     id: 'gieo-que',
     icon: 'casino',
     title: 'Gieo Quẻ',

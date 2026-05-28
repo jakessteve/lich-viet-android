@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   calculateMenhCungPosition,
   calculateThanCungPosition,
+  calculateMenhCan,
   calculateCuc,
   calculateHanContext,
   placeTuViStar,
@@ -417,6 +418,60 @@ describe('Star Placement Engine', () => {
       expect(allAuxStarNames).not.toContain('Thiên Đức Q.N');
       expect(allAuxStarNames).not.toContain('Nguyệt Đức Q.N');
       expect(chart.palaces.every((palace) => palace.rings?.truongSinh)).toBe(true);
+    });
+
+    it('allows a dense palace with 19 non-major labels and 21 total labels', () => {
+      const yearCanIndex = 7; // Tân
+      const yearChiIndex = 7; // Mùi
+      const lunarMonth = 2;
+      const lunarDay = 2;
+      const hourBranch = 2; // Dần
+      const thuanNghich = 'Thuận' as const;
+      const school = 'nam-phai' as const;
+
+      const menhPosition = calculateMenhCungPosition(lunarMonth, hourBranch);
+      const thanPosition = calculateThanCungPosition(menhPosition, lunarMonth, hourBranch);
+      const menhCanIndex = calculateMenhCan(yearCanIndex, menhPosition);
+      const cuc = calculateCuc(menhCanIndex, menhPosition);
+      const tuViPosition = placeTuViStar(cuc.number, lunarDay);
+      const chinhMap = placeChinhTinh(tuViPosition);
+      const phuMap = placePhuTinh(
+        yearCanIndex,
+        yearChiIndex,
+        lunarMonth,
+        lunarDay,
+        hourBranch,
+        menhPosition,
+        thanPosition,
+        thuanNghich,
+        school,
+      );
+      const tuHoaRaw = calculateTuHoa(yearCanIndex, school);
+
+      const allStarPositions: Record<string, number> = {};
+      for (const [name, positions] of Object.entries(chinhMap)) {
+        allStarPositions[name] = positions[0];
+      }
+      Object.assign(allStarPositions, phuMap);
+
+      const counts = Array.from({ length: 12 }, (_, palaceIndex) => {
+        const main = Object.values(chinhMap).reduce((sum, positions) => sum + positions.filter((pos) => pos === palaceIndex).length, 0);
+        const nonMajorBase = Object.values(phuMap).filter((pos) => pos === palaceIndex).length;
+        const tuHoaCount = Object.values(tuHoaRaw).filter((entry) => allStarPositions[entry.starName] === palaceIndex).length;
+        return {
+          chi: palaceIndex,
+          main,
+          nonMajor: nonMajorBase + tuHoaCount,
+          total: main + nonMajorBase + tuHoaCount,
+        };
+      });
+
+      const densest = counts.reduce((current, next) => (next.nonMajor > current.nonMajor ? next : current));
+
+      expect(densest.chi).toBe(8); // Thân
+      expect(densest.nonMajor).toBe(19);
+      expect(densest.total).toBe(21);
+      expect(densest.main).toBe(2);
     });
   });
 });

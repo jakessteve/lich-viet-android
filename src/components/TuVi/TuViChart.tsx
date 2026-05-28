@@ -42,8 +42,8 @@ const OPPOSITE_CHI: Record<number, number> = {
 };
 
 const MOBILE_BASE_WIDTH = 780;
-// Keep the mobile canvas taller so the auxiliary-star rows have enough room.
-const MOBILE_BASE_HEIGHT = 960;
+// Keep the mobile canvas tall enough for dense palaces that can reach 19 non-major labels.
+const MOBILE_BASE_HEIGHT = 1080;
 
 function getTamHopGroup(chiIndex: number): number[] {
   return [...(TAM_HOP_GROUPS.find((group) => group.includes(chiIndex)) ?? [])];
@@ -134,6 +134,15 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
     setMobileZoomed((current) => !current);
   }, [isMobileViewport]);
 
+  const handleMobileZoomKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (!isMobileViewport || (event.key !== 'Enter' && event.key !== ' ')) return;
+      event.preventDefault();
+      setMobileZoomed((current) => !current);
+    },
+    [isMobileViewport],
+  );
+
   useEffect(() => {
     updateMobileScale();
 
@@ -211,6 +220,12 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
       <div
         className={`tuvi-chart-stage${isMobileViewport ? ' tuvi-chart-stage-mobile' : ''}`}
         onClick={handleMobileZoomToggle}
+        onKeyDown={handleMobileZoomKeyDown}
+        role="button"
+        tabIndex={isMobileViewport ? 0 : -1}
+        aria-label={mobileZoomed ? 'Thu nhỏ lá số' : 'Phóng to lá số'}
+        aria-disabled={!isMobileViewport}
+        aria-pressed={mobileZoomed}
         style={{ ...mobileStageStyle, cursor: isMobileViewport ? (mobileZoomed ? 'zoom-out' : 'zoom-in') : undefined }}
       >
         <div className="tuvi-chart" data-tuvi-chart-export role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>

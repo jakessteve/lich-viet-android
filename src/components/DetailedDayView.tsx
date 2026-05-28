@@ -171,7 +171,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
       parts.push(text.slice(lastIndex));
     }
 
-    return <>{parts}</>;
+    return parts;
   };
 
   const renderTextListWithPercents = (items: string[] | undefined, emptyText: string) => {

@@ -7,12 +7,13 @@
 
 ## 1. Active Surfaces
 
-Lich Viet v3 is a client-side React SPA with four primary surfaces:
+Lich Viet v3 is a client-side React SPA with five primary surfaces:
 
 | Surface | Route | Primary component |
 | --- | --- | --- |
 | Landing | `/` | `src/components/pages/LandingPage.tsx` |
 | Am Lich + Dung Su | `/app/am-lich` | `src/components/pages/AmLichPage.tsx` |
+| La bàn | `/app/la-ban` | `src/components/FengShui/LaBanPage.tsx` |
 | Gieo Que | `/app/gieo-que` | `src/components/GieoQue/GieoQueView.tsx` |
 | Tu Vi | `/app/tu-vi` | `src/components/TuVi/TuViPage.tsx` |
 
@@ -34,7 +35,7 @@ The active engines live under `src/utils/`.
 | QMDJ | `qmdjEngine.ts`, `qmdjScorer.ts` | Nine-palace chart and scoring helpers |
 | Luc Nham | `lucNhamEngine.ts` | Heaven/Earth board and verdicts |
 | Thai At | `thaiAtEngine.ts` | Year/month overlays and forecast helpers |
-| Flying Star | `flyingStarEngine.ts` | Xuan Kong Flying Star chart |
+| Flying Star / La bàn | `flyingStarEngine.ts` | Xuan Kong Flying Star chart, 24 Sơn, heading mapping, and Lou Pan payloads |
 
 ### Astronomy and Tu Vi services
 
@@ -60,7 +61,7 @@ The public package facades are in `packages/core/src/`.
 | `@lich-viet/core/calendar` | Calendar, Can Chi, solar-term, and hour helpers |
 | `@lich-viet/core/dungsu` | Activity scoring, catalog, Dung Su generation, date suggestions |
 | `@lich-viet/core/maihoa` | Mai Hoa generation, interpretation, and related types |
-| `@lich-viet/core/fengshui` | Flying Star chart helpers |
+| `@lich-viet/core/fengshui` | Flying Star chart helpers, Lou Pan chart generation, and 24 Sơn helpers |
 | `@lich-viet/core/qmdj` | QMDJ chart and scoring helpers |
 | `@lich-viet/core/thaiAt` | Thai At chart and forecast helpers |
 | `@lich-viet/core/lucNham` | Luc Nham chart and interpretation helpers |
@@ -139,6 +140,7 @@ Security note: auth remains client-side demo auth. It seeds a local admin accoun
 | --- | --- |
 | `/` | Landing page |
 | `/app/am-lich` | Calendar, holidays, day detail, and Dung Su |
+| `/app/la-ban` | La bàn Phong Thủy, 24 Sơn, and Phi Tinh |
 | `/app/gieo-que` | Mai Hoa and Tam Thuc |
 | `/app/tu-vi` | Tu Vi charting |
 | `/app/cai-dat` | Settings |

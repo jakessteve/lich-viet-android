@@ -4,7 +4,16 @@ import {
   calculateAnnualStar,
   calculateMonthlyStar,
   COMPASS_DIRECTIONS,
+  normalizeHeading,
+  getMountainForHeading,
+  getActiveVanForYear,
+  getBatTrachCungPhiNumber,
+  getBatTrachProfileFromTuViChart,
+  evaluateBatTrachHeading,
+  recommendBatTrachRoomOrientation,
+  generateLouPanChart,
 } from '@/utils/flyingStarEngine';
+import type { TuViChart } from '@/types/tuvi';
 
 describe('flyingStarEngine', () => {
   describe('generateFlyingStarChart()', () => {
@@ -80,6 +89,7 @@ describe('flyingStarEngine', () => {
     it('returns monthly star for a given month', () => {
       const result = calculateMonthlyStar(2024, 1);
       expect(result).toHaveProperty('centerStar');
+      expect(result).toHaveProperty('starGrid');
       expect(result).toHaveProperty('interpretation');
       expect(result.centerStar).toBeGreaterThanOrEqual(1);
       expect(result.centerStar).toBeLessThanOrEqual(9);
@@ -104,6 +114,95 @@ describe('flyingStarEngine', () => {
         expect(dir).toHaveProperty('degrees');
         expect(dir).toHaveProperty('group');
       });
+    });
+  });
+
+  describe('lou pan helpers', () => {
+    it('normalizes headings into the 0-360 range', () => {
+      expect(normalizeHeading(-10)).toBe(350);
+      expect(normalizeHeading(370)).toBe(10);
+    });
+
+    it('maps headings to the correct 24-mountain sector', () => {
+      expect(getMountainForHeading(0).nameVi).toBe('Tý');
+      expect(getMountainForHeading(24).nameVi).toBe('Sửu');
+      expect(getMountainForHeading(127.5).nameVi).toBe('Tốn');
+    });
+
+    it('returns active vận from construction year', () => {
+      expect(getActiveVanForYear(2024)).toBe(9);
+      expect(getActiveVanForYear(1990)).toBe(7);
+    });
+
+    it('builds a lou pan chart with payload metadata', () => {
+      const chart = generateLouPanChart({
+        headingDeg: 359,
+        constructionYear: 2020,
+        selectedDate: new Date(2024, 1, 10),
+      });
+
+      expect(chart.facingMountain?.nameVi).toBe('Tý');
+      expect(chart.sittingMountain?.nameVi).toBe('Ngọ');
+      expect(chart.activeVan).toBe(8);
+      expect(chart.payload?.spatialContext.facingMountain).toBe('Tý');
+      expect(chart.payload?.spatialContext.sittingMountain).toBe('Ngọ');
+    });
+
+    it('derives Bat Trạch profiles from Tử Vi birth data', () => {
+      expect(getBatTrachCungPhiNumber(1990, 'nam')).toBe(1);
+      expect(getBatTrachCungPhiNumber(1990, 'nữ')).toBe(8);
+    });
+
+    it('evaluates headings against Bat Trạch profiles', () => {
+      const chart = {
+        input: {
+          solarDate: new Date(1990, 0, 1),
+          birthHour: 0,
+          gender: 'nam',
+          timezone: 'Asia/Ho_Chi_Minh',
+        },
+        centerInfo: {
+          menhCung: 'Mệnh cư Dần',
+          thanCungLabel: 'Thân cư Thiên Di',
+        },
+      } as unknown as TuViChart;
+
+      const profile = getBatTrachProfileFromTuViChart(chart);
+      expect(profile?.houseGroup).toBe('Đông Tứ Mệnh');
+
+      const alignment = profile ? evaluateBatTrachHeading(profile, 135) : null;
+      expect(alignment?.direction).toBe('Đông Nam');
+      expect(alignment?.star).toBe('Sinh Khí');
+      expect(alignment?.isAuspicious).toBe(true);
+
+      const recommendation = profile ? recommendBatTrachRoomOrientation('bed', profile) : null;
+      expect(recommendation?.preferredDirections[0].star).toBe('Thiên Y');
+    });
+
+    it('includes Bat Trạch data in the spatial-temporal payload when a Tử Vi chart is present', () => {
+      const tuViChart = {
+        input: {
+          solarDate: new Date(1990, 0, 1),
+          birthHour: 0,
+          gender: 'nam',
+          timezone: 'Asia/Ho_Chi_Minh',
+        },
+        centerInfo: {
+          menhCung: 'Mệnh cư Dần',
+          thanCungLabel: 'Thân cư Thiên Di',
+        },
+      } as unknown as TuViChart;
+
+      const chart = generateLouPanChart({
+        headingDeg: 135,
+        constructionYear: 2020,
+        selectedDate: new Date(2024, 1, 10),
+        tuViChart,
+      });
+
+      expect(chart.payload?.astrologicalMasks.batTrachProfile?.cungName).toBe('Khảm');
+      expect(chart.payload?.astrologicalMasks.batTrachAlignment?.star).toBe('Sinh Khí');
+      expect(chart.payload?.astrologicalMasks.batTrachRoomRecommendation?.roomType).toBe('house');
     });
   });
 });

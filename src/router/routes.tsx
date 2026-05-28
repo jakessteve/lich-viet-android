@@ -2,7 +2,7 @@
  * Application Route Configuration — Lịch Việt v3
  *
  * Simplified route definitions for active pages:
- * Landing, Âm Lịch, Gieo Quẻ, Tử Vi
+ * Landing, Âm Lịch, La Bàn, Gieo Quẻ, Tử Vi
  */
 
 import React, { Suspense } from 'react';
@@ -13,6 +13,7 @@ import LoadingState from '../components/shared/LoadingState';
 // Lazy-load pages
 const LandingPage = React.lazy(() => import('../components/pages/LandingPage'));
 const AmLichPage = React.lazy(() => import('../components/pages/AmLichPage'));
+const LaBanPage = React.lazy(() => import('../components/FengShui/LaBanPage'));
 const GieoQueView = React.lazy(() => import('../components/GieoQue/GieoQueView'));
 const SettingsPage = React.lazy(() => import('../components/pages/SettingsPage'));
 const UpgradePage = React.lazy(() => import('../components/pages/UpgradePage'));
@@ -56,7 +57,19 @@ export function renderModuleRoutes() {
         }
       />
       <Route path="lich-dung-su" element={<Navigate to="/app/am-lich" replace />} />
-      <Route path="phong-thuy" element={<Navigate to="/app/am-lich" replace />} />
+      <Route path="phong-thuy" element={<Navigate to="/app/la-ban" replace />} />
+      <Route
+        path="la-ban"
+        element={
+          <ErrorBoundary viewName="La Bàn Phong Thủy">
+            <div className="animate-fade-scale">
+              <Suspense fallback={<LoadingState />}>
+                <LaBanPage />
+              </Suspense>
+            </div>
+          </ErrorBoundary>
+        }
+      />
       <Route path="acs" element={<Navigate to="/app/am-lich" replace />} />
       <Route
         path="gieo-que"
@@ -144,7 +157,8 @@ export function renderLegacyRedirects() {
     <>
       <Route path="/am-lich" element={<Navigate to="/app/am-lich" replace />} />
       <Route path="/lich-dung-su" element={<Navigate to="/app/am-lich" replace />} />
-      <Route path="/phong-thuy" element={<Navigate to="/app/am-lich" replace />} />
+      <Route path="/phong-thuy" element={<Navigate to="/app/la-ban" replace />} />
+      <Route path="/la-ban" element={<Navigate to="/app/la-ban" replace />} />
       <Route path="/gieo-que" element={<Navigate to="/app/gieo-que" replace />} />
       <Route path="/tu-vi" element={<Navigate to="/app/tu-vi" replace />} />
       <Route path="/bat-tu" element={<Navigate to="/app/am-lich" replace />} />

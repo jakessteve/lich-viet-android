@@ -322,25 +322,27 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
         )}
 
         {/* Calendar Legend — all color-coded indicators */}
-        <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-2 pt-2 border-t border-border-light/50 dark:border-border-dark/50 text-xs text-text-secondary-light dark:text-text-secondary-dark select-none">
-          {/* Day quality indicators */}
-          <span className="flex items-center gap-1">
-            <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-            Hoàng Đạo
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="inline-block w-1.5 h-1.5 bg-red-500 dark:bg-red-400 rotate-45 shrink-0" />
-            Hắc Đạo
-          </span>
-          {/* Personal score indicators */}
-          <span className="flex items-center gap-1">
-            <span className="inline-block w-1.5 h-1.5 rounded-sm bg-purple-500 shrink-0" />
-            Cát theo tuổi
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="inline-block w-1.5 h-1.5 bg-amber-500 dark:bg-amber-400 rotate-45 ring-1 ring-amber-700/25 dark:ring-amber-200/20 shrink-0" />
-            Hung theo tuổi
-          </span>
+        <div className="mt-2 border-t border-border-light/50 pt-2 text-xs text-text-secondary-light select-none dark:border-border-dark/50 dark:text-text-secondary-dark">
+          <div className="mx-auto grid max-w-fit grid-cols-2 gap-x-4 gap-y-1">
+            {/* Day quality indicators */}
+            <span className="flex items-center gap-1">
+              <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
+              Hoàng Đạo
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-red-500 dark:bg-red-400" />
+              Hắc Đạo
+            </span>
+            {/* Personal score indicators */}
+            <span className="flex items-center gap-1">
+              <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-sm bg-purple-500" />
+              Cát theo tuổi
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-amber-500 ring-1 ring-amber-700/25 dark:bg-amber-400 dark:ring-amber-200/20" />
+              Hung theo tuổi
+            </span>
+          </div>
         </div>
       </div>
     </div>

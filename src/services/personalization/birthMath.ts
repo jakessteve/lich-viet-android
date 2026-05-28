@@ -1,4 +1,4 @@
-import type { Chi, CanChi } from '../../types/calendar';
+import type { CanChi } from '../../types/calendar';
 import type { TuViBirthLocation } from '../../types/tuvi';
 import { CAN, CHI } from '../../utils/constants';
 import { getCanChiDay, getCanChiYear, parseCanChi } from '../../utils/calendarEngine';

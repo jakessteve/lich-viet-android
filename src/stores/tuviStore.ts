@@ -4,6 +4,8 @@ import { calculateHanContext, generateChart } from '@/services/tuvi';
 import { formatTuViChartAsMarkdown } from '@/services/tuvi/markdownFormatter';
 import { getDatePartsInTimeZone, VIETNAM_TIME_ZONE } from '@/services/tuvi/timeNormalization';
 
+const MARKDOWN_PREVIEW_STORAGE_KEY = 'tuvi_markdown_preview';
+
 // ══════════════════════════════════════════════════════════
 // Type Definitions
 // ══════════════════════════════════════════════════════════
@@ -82,6 +84,15 @@ function getCurrentHanView(): { viewYear: number; viewMonth: number } {
   };
 }
 
+function getInitialMarkdownPreview(): string | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    return localStorage.getItem(MARKDOWN_PREVIEW_STORAGE_KEY);
+  } catch {
+    return null;
+  }
+}
+
 // ══════════════════════════════════════════════════════════
 // Zustand Store
 // ══════════════════════════════════════════════════════════
@@ -94,7 +105,7 @@ export const useTuViStore = create<TuViStore>()((set, get) => ({
   ...getCurrentHanView(),
   isCalculating: false,
   error: null,
-  markdownPreview: null,
+  markdownPreview: getInitialMarkdownPreview(),
 
   // ── Actions ───────────────────────────────────────────────
 
@@ -190,10 +201,22 @@ export const useTuViStore = create<TuViStore>()((set, get) => ({
     const { chart } = get();
     if (!chart) return;
     const markdown = formatTuViChartAsMarkdown(chart, options);
+    try {
+      localStorage.setItem(MARKDOWN_PREVIEW_STORAGE_KEY, markdown);
+    } catch {
+      // Silently ignore storage quota / private mode failures.
+    }
     set({ markdownPreview: markdown });
   },
 
-  clearMarkdownPreview: () => set({ markdownPreview: null }),
+  clearMarkdownPreview: () => {
+    try {
+      localStorage.removeItem(MARKDOWN_PREVIEW_STORAGE_KEY);
+    } catch {
+      // Silently ignore storage failures.
+    }
+    set({ markdownPreview: null });
+  },
 
   clearError: () => set({ error: null }),
 }));

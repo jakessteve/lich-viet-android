@@ -26,6 +26,10 @@ export const TuViCenterPanel: React.FC<TuViCenterPanelProps> = ({ centerInfo, ha
 
   const centerRows = [
     { label: 'Trường phái', value: centerInfo.schoolLabel },
+    { label: 'NĂM SINH', value: centerInfo.canChiYear },
+    { label: 'THÁNG SINH', value: centerInfo.canChiMonth },
+    { label: 'NGÀY SINH', value: centerInfo.canChiDay },
+    { label: 'GIỜ SINH', value: centerInfo.canChiHour },
     { label: 'Âm dương', value: centerInfo.amDuongLabel },
     { label: 'Mệnh', value: centerInfo.menhNapAm },
     { label: 'Cục', value: centerInfo.cuc },
@@ -43,7 +47,6 @@ export const TuViCenterPanel: React.FC<TuViCenterPanelProps> = ({ centerInfo, ha
     <div className="tuvi-center">
       <div className="tuvi-center-title">
         <h3>{centerInfo.hoTen || 'Lá số Tử Vi'}</h3>
-        <p>{centerInfo.amDuongLabel}</p>
       </div>
 
       <div className="tuvi-center-body">

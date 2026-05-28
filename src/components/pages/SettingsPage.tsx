@@ -3,9 +3,11 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../stores/appStore';
 import { useAuthStore } from '../../stores/authStore';
+import { useTuViStore } from '@/stores/tuviStore';
 import { TuViLocationPicker } from '../TuVi/TuViLocationPicker';
 import { IconButton } from '../shared';
 import type { TuViBirthLocation } from '../../types/tuvi';
+import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
 
 // ══════════════════════════════════════════════════════════
 // Toggle Switch — Modern pill toggle
@@ -236,6 +238,13 @@ export default function SettingsPage() {
     });
     setProfileSaving(false);
     if (result.success) {
+      const currentUser = useAuthStore.getState().user;
+      const nextInput = buildTuViInputFromUser(currentUser, useTuViStore.getState().input);
+      if (nextInput) {
+        useTuViStore.getState().setInput(nextInput);
+        useTuViStore.getState().calculateChart(nextInput);
+        useTuViStore.getState().previewMarkdown();
+      }
       setProfileMsg({ type: 'ok', text: 'Hồ sơ đã được lưu.' });
       setProfileMode('view');
     } else {

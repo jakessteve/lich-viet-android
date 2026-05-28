@@ -28,7 +28,7 @@ export default defineConfig({
       manifest: {
         name: 'Lịch Việt — Âm Lịch & Phong Thủy',
         short_name: 'Lịch Việt',
-        description: 'Tra cứu ngày âm lịch, giờ tốt xấu, gieo quẻ, và lập lá số Tử Vi.',
+        description: 'Tra cứu ngày âm lịch, la bàn phong thủy, giờ tốt xấu, gieo quẻ, và lập lá số Tử Vi.',
         theme_color: '#1a1a2e',
         background_color: '#0f0f1a',
         display: 'standalone',

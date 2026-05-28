@@ -12,6 +12,7 @@ flowchart TD
     HOME["/"] --> LANDING["LandingPage"]
     HOME --> APP["/app"]
     APP --> AMLICH["/app/am-lich"]
+    APP --> LABAN["/app/la-ban"]
     APP --> GIEOQUE["/app/gieo-que"]
     APP --> TUVI["/app/tu-vi"]
     APP --> SETTINGS["/app/cai-dat"]
@@ -20,6 +21,7 @@ flowchart TD
     APP --> UPGRADE["/app/nang-cap"]
 
     AMLICH --> CALENDAR["Calendar + Dung Su"]
+    LABAN --> COMPASS["24 Sơn compass + Phi Tinh"]
     GIEOQUE --> MAIHOA["Mai Hoa"]
     GIEOQUE --> TAMTHUC["Tam Thuc"]
     TUVI --> CHART["Tu Vi chart + hometown normalization"]
@@ -30,6 +32,7 @@ flowchart TD
 | --- | --- | --- |
 | `/` | Active | Landing |
 | `/app/am-lich` | Active | Calendar, Dung Su, holidays, and personalization panels |
+| `/app/la-ban` | Active | La bàn Phong Thủy, 24 Sơn, Phi Tinh, and sensor/manual heading modes |
 | `/app/gieo-que` | Active | Mai Hoa and Tam Thuc |
 | `/app/tu-vi` | Active | Tu Vi charting |
 | `/app/cai-dat` | Active | Settings |
@@ -58,6 +61,15 @@ Removed legacy routes redirect to active v3 pages. Tu Vi is no longer a removed 
 4. The page shows lunar date details, auspicious hours, activity guidance, holidays, and related panels.
 5. Holiday cards still use Geo-IP lookup to determine whether to add local-country holidays.
 6. Authenticated users with birthday data can see personalization signals.
+
+### La bàn
+
+1. User opens `/app/la-ban`.
+2. The page can request phone sensor heading on mobile browsers after a user gesture.
+3. If sensors are unavailable or denied, the user can enter a manual heading and still use the compass.
+4. The compass wheel and Phi Tinh grid update from the active heading, construction year, and selected date.
+5. If a Tử Vi chart exists in the store, the page overlays Mệnh / Thân cues on the compass context.
+6. The user can hand off the heading context to Gieo Quẻ without leaving the app shell.
 
 ### Gieo Que
 

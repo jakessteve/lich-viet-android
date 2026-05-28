@@ -25,7 +25,7 @@
   width: 100%;
   max-width: 100%;
   min-width: 0;
-  aspect-ratio: 1 / 1.17;
+  aspect-ratio: 1 / 1.34;
   margin: 0 auto;
   background: var(--tuvi-line);
   border: 1px solid var(--tuvi-line);
@@ -360,8 +360,8 @@
 
 .tuvi-center-title {
   text-align: center;
-  padding-bottom: 0;
-  margin-bottom: 0;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
   border-bottom: 1px solid rgba(27, 28, 25, 0.1);
 }
 
@@ -386,11 +386,11 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  gap: 2px;
+  gap: 4px;
   flex: 1;
   width: min(100%, 290px);
   margin: 0 auto;
-  padding-top: 2px;
+  padding-top: 6px;
   min-height: 0;
   overflow: hidden;
   align-items: stretch;
@@ -536,7 +536,7 @@
 
 @media (max-width: 768px) {
   .tuvi-chart {
-    aspect-ratio: 780 / 960;
+    aspect-ratio: 780 / 1080;
   }
 
   .tuvi-chart-stage {

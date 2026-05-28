@@ -10,6 +10,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - Model routing enforcement via `-ModelTier` parameter
 - `AGENTS-LITE.md` for lightweight CLI worker context
 - Documentation restructure into `/docs/{tech,biz,log}/`
+- La bàn Phong Thủy surface with 24 Sơn / Phi Tinh compass support and mobile sensor fallback
 
 ### Changed
 - Model routing: 3-model setup (Gemini High, Opus, Sonnet)

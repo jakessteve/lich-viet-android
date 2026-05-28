@@ -9,6 +9,7 @@ import { ROUTE_TO_TAB, type ActiveTab } from './router/constants';
 import { LandingRoute, renderModuleRoutes, renderLegacyRedirects } from './router/routes';
 import { analytics } from './services/analyticsService';
 import { useAppStore } from '@/stores/appStore';
+import { useAuthStore } from '@/stores/authStore';
 import { useViewerLocation } from './hooks/useViewerLocation';
 import { getCivilDateForOffset } from '@/utils/geo';
 
@@ -25,6 +26,19 @@ function AppLayout() {
   const viewerLocation = useViewerLocation();
   const initialSelectedDateRef = useRef<Date>(selectedDate);
   const hasAppliedViewerLocationRef = useRef(false);
+
+  useEffect(() => {
+    useAuthStore.getState().rehydrate();
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key === 'auth_user' || event.key === 'auth_user_session_initialized') {
+        useAuthStore.getState().rehydrate();
+      }
+    };
+
+    window.addEventListener('storage', handleStorage);
+    return () => window.removeEventListener('storage', handleStorage);
+  }, []);
 
   // Track page view on route change
   useEffect(() => {

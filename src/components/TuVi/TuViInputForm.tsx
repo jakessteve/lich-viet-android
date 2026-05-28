@@ -4,7 +4,7 @@ import { useTuViStore } from '../../stores/tuviStore';
 import { useAuthStore } from '../../stores/authStore';
 import type { TuViGender } from '../../types/tuvi';
 import { TuViLocationPicker } from './TuViLocationPicker';
-import { getUserBirthProfile } from '@/utils/userBirthProfile';
+import { buildTuViInputFromUser, getUserBirthProfile } from '@/utils/userBirthProfile';
 
 const getTimezoneForLocation = (utcOffset: number) => {
   if (utcOffset === 7) return 'Asia/Ho_Chi_Minh';
@@ -121,49 +121,16 @@ export const TuViInputForm: React.FC = () => {
   useEffect(() => {
     if (didPrefill.current || !user) return;
 
-    const updates: Parameters<typeof setInput>[0] = {};
-    const birthProfile = userBirthProfile;
-
-    if (user.displayName && !input.name) {
-      updates.name = user.displayName;
-    }
-
-    if (birthProfile?.birthYear && birthProfile.birthMonth && birthProfile.birthDay) {
-      const hourValue = typeof birthProfile.birthHour === 'number' ? birthProfile.birthHour : 0;
-      const minuteValue = typeof birthProfile.birthMinute === 'number' ? birthProfile.birthMinute : 0;
-      updates.solarDate = new Date(
-        birthProfile.birthYear,
-        birthProfile.birthMonth - 1,
-        birthProfile.birthDay,
-        hourValue,
-        minuteValue,
-      );
-    }
-
-    if (typeof birthProfile?.birthHour === 'number') {
-      updates.birthClockHour = birthProfile.birthHour;
-      updates.birthHour = getChiHourFromClockHour(birthProfile.birthHour);
-    }
-
-    if (typeof birthProfile?.birthMinute === 'number') {
-      updates.birthMinute = birthProfile.birthMinute;
-    }
-
-    if (birthProfile?.gender) {
-      updates.gender = birthProfile.gender === 'male' ? 'nam' : 'nữ';
-    }
-
-    if (birthProfile?.birthLocation) {
-      updates.birthLocation = birthProfile.birthLocation;
-      updates.timezone = getTimezoneForLocation(birthProfile.birthLocation.timezone);
-    }
-
-    if (Object.keys(updates).length > 0) {
-      setInput(updates);
+    const nextInput = buildTuViInputFromUser(user, input);
+    if (nextInput) {
+      setInput(nextInput);
+      calculateChart(nextInput);
+    } else if (user.displayName && !input.name) {
+      setInput({ name: user.displayName });
     }
 
     didPrefill.current = true;
-  }, [input.name, setInput, user, userBirthProfile]);
+  }, [calculateChart, input, setInput, user, userBirthProfile]);
 
   const labelBase =
     'block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-2 tracking-wide';
