@@ -94,11 +94,31 @@ describe('LaBanPage', () => {
     const needleLine = container.querySelector('line[stroke="rgb(212,174,96)"]');
     expect(needleLine?.getAttribute('x1')).toBe('500');
     expect(needleLine?.getAttribute('x2')).toBe('500');
+    expect(needleLine?.getAttribute('y2')).toBe('118');
     expect(container.querySelector('line[stroke="rgba(190,18,60,0.72)"]')).toBeNull();
+
+    const needleHeadingLabel = container.querySelector('[data-testid="luopan-needle-heading-label"]');
+    expect(needleHeadingLabel?.getAttribute('transform')).toBe('translate(500 104)');
+    expect(needleHeadingLabel).toHaveTextContent('Tý');
+    expect(needleHeadingLabel).toHaveTextContent('0° tại đầu máy');
 
     const circles = Array.from(container.querySelectorAll('circle[cx="500"][cy="500"][r="238"]'));
     const centerRing = circles.find((circle) => circle.getAttribute('stroke') === 'rgba(212,174,96,0.18)');
     expect(centerRing).toBeTruthy();
+  });
+
+  it('keeps the active direction label upright at the phone top', () => {
+    compassHeading = 90;
+    const { container } = render(
+      <MemoryRouter>
+        <LaBanPage />
+      </MemoryRouter>,
+    );
+
+    const needleHeadingLabel = container.querySelector('[data-testid="luopan-needle-heading-label"]');
+    expect(needleHeadingLabel?.getAttribute('transform')).toBe('translate(500 104)');
+    expect(needleHeadingLabel).toHaveTextContent('Mão');
+    expect(needleHeadingLabel).toHaveTextContent('90° tại đầu máy');
   });
 
   it('rotates the luopan dial across north by the shortest path', async () => {

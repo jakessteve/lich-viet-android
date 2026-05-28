@@ -281,15 +281,21 @@ function LuopanDial({
           <path d="M500 310 L530 500 L500 690 L470 500 Z" fill="rgba(151,104,31,0.16)" stroke="rgba(151,104,31,0.26)" strokeWidth="1" />
           <circle cx="500" cy="500" r="92" fill="url(#luopan-metal)" stroke="rgba(212,174,96,0.7)" strokeWidth="4" />
           <circle cx="500" cy="500" r="46" fill="rgba(17,24,39,0.95)" stroke="rgba(255,255,255,0.8)" strokeWidth="1.5" />
-          <text x="500" y="492" textAnchor="middle" fill="rgba(255,255,255,0.95)" style={{ fontSize: '18px', fontWeight: 700 }}>
-            {activeMountain.nameVi}
-          </text>
-          <text x="500" y="518" textAnchor="middle" fill="rgba(255,255,255,0.86)" style={{ fontSize: '12px', fontWeight: 700 }}>
+          <text x="500" y="508" textAnchor="middle" fill="rgba(255,255,255,0.9)" style={{ fontSize: '13px', fontWeight: 700 }}>
             {chart?.facingDirection || 'La kinh'}
           </text>
         </g>
 
         <line x1="500" y1="500" x2="500" y2="118" stroke="rgb(212,174,96)" strokeWidth="7" strokeLinecap="round" markerEnd="url(#needle-tip)" filter="url(#luopan-soft-shadow)" />
+        <g data-testid="luopan-needle-heading-label" transform="translate(500 104)">
+          <rect x="-78" y="-28" width="156" height="46" rx="14" fill="rgba(17,24,39,0.92)" stroke="rgba(255,255,255,0.82)" strokeWidth="1.5" />
+          <text x="0" y="-7" textAnchor="middle" fill="rgba(255,255,255,0.96)" style={{ fontSize: '18px', fontWeight: 800 }}>
+            {activeMountain.nameVi}
+          </text>
+          <text x="0" y="11" textAnchor="middle" fill="rgba(255,255,255,0.78)" style={{ fontSize: '11px', fontWeight: 700 }}>
+            {Math.round(normalizeHeading(headingDeg))}° tại đầu máy
+          </text>
+        </g>
       </svg>
 
     </div>
