@@ -116,5 +116,22 @@ describe('calendarEngine', () => {
       expect(data.foundationalLayer).toBeDefined();
       expect(data.modifyingLayer).toBeDefined();
     });
+
+    it('uses the tiết khí month, not the lunar month, for the day engine month Can-Chi', () => {
+      const beforeTet = getDetailedDayData(new Date(2024, 1, 5));
+
+      expect(beforeTet.lunarDate.month).toBe(12);
+      expect(beforeTet.canChi.month).toEqual({ can: 'Bính', chi: 'Dần' });
+      expect(beforeTet.fiveElements.napAmMonth).toBe('Lô Trung Hỏa');
+      expect(beforeTet.modifyingLayer.trucDetail.name).toBe('Thâu');
+    });
+
+    it('surfaces the new tiết khí boundary detail on the Âm Lịch day view', () => {
+      const data = getDetailedDayData(new Date(2024, 1, 10));
+
+      expect(data.solarTerm).toBe('Lập Xuân');
+      expect(data.tietKhiDetail).toContain('Tiết Đại Hàn khởi ngày 20/1/2024');
+      expect(data.tietKhiDetail).toContain('Tiết khí Lập Xuân khởi ngày 4/2/2024');
+    });
   });
 });

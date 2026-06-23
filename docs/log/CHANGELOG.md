@@ -10,7 +10,6 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - Model routing enforcement via `-ModelTier` parameter
 - `AGENTS-LITE.md` for lightweight CLI worker context
 - Documentation restructure into `/docs/{tech,biz,log}/`
-- La bàn Phong Thủy surface with 24 Sơn / Phi Tinh compass support and mobile sensor fallback
 
 ### Changed
 - Model routing: 3-model setup (Gemini High, Opus, Sonnet)
@@ -18,6 +17,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 - Mechanical task timeout: 60s with no retry
 
 ### Removed
+- La bàn Phong Thủy surface, compass sensor hook, Flying Star/Lou Pan helpers, and related tests/exports
 - Emoji/icon characters from all framework files (~1,467 icons)
 - Advisory-only model routing disclaimers
 - `GEMINI-L/Fast`, `OPUS/Fast`, `SONNET/Plan` model codes

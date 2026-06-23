@@ -23,36 +23,259 @@ import {
 
 // ── Astronomical helpers ──────────────────────────────────────
 
+const JULIAN_DAY_UNIX_EPOCH = 2440587.5;
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const sunLongitudeCache = new Map<number, number>();
 
 function normalizeDegrees(value: number): number {
   return ((value % 360) + 360) % 360;
 }
 
-/** Apparent solar longitude with nutation and aberration corrections. */
+function julianDayToUnixMs(julianDay: number): number {
+  if (!Number.isFinite(julianDay)) {
+    throw new TypeError('julianDay must be a finite number');
+  }
+
+  return Math.round((julianDay - JULIAN_DAY_UNIX_EPOCH) * DAY_IN_MS);
+}
+
+function computeDeltaT(julianDay: number): number {
+  if (!Number.isFinite(julianDay)) {
+    throw new TypeError('julianDay must be a finite number');
+  }
+
+  const unixMs = julianDayToUnixMs(julianDay);
+  const date = new Date(unixMs);
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth() + 1;
+  const y = year + (month - 0.5) / 12;
+
+  if (y < 1600) {
+    const u = (y - 1000) / 100;
+    return (
+      1574.2 -
+      556.01 * u +
+      71.23472 * u * u +
+      0.319781 * u * u * u -
+      0.8503463 * u * u * u * u -
+      0.005050998 * u * u * u * u * u +
+      0.0083572073 * u * u * u * u * u * u
+    );
+  }
+
+  if (y < 1700) {
+    const t = y - 1600;
+    return 120 - 0.9808 * t - 0.01532 * t * t + (t * t * t) / 7129;
+  }
+
+  if (y < 1800) {
+    const t = y - 1700;
+    return 8.83 + 0.1603 * t - 0.0059285 * t * t + 0.00013336 * t * t * t - (t * t * t * t) / 1174000;
+  }
+
+  if (y < 1860) {
+    const t = y - 1800;
+    return (
+      13.72 -
+      0.332447 * t +
+      0.0068612 * t * t +
+      0.0041116 * t * t * t -
+      0.00037436 * t * t * t * t +
+      0.0000121272 * t * t * t * t * t -
+      0.0000001699 * t * t * t * t * t * t +
+      0.000000000875 * t * t * t * t * t * t * t
+    );
+  }
+
+  if (y < 1900) {
+    const t = y - 1860;
+    return 7.62 + 0.5737 * t - 0.251754 * t * t + 0.01680668 * t * t * t + (t * t * t * t * t) / 233174;
+  }
+
+  if (y < 1920) {
+    const t = y - 1900;
+    return -2.7249 + 1.01453 * t - 0.0223507 * t * t + 0.0009039 * t * t * t;
+  }
+
+  if (y < 1941) {
+    const t = y - 1920;
+    return 21.2 + 0.84493 * t - 0.0761 * t * t + 0.0020936 * t * t * t;
+  }
+
+  if (y < 1961) {
+    const t = y - 1950;
+    return 29.07 + 0.407 * t - (t * t) / 233 + (t * t * t) / 2547;
+  }
+
+  if (y < 1986) {
+    const t = y - 1975;
+    return 45.45 + 1.067 * t - (t * t) / 260 - (t * t * t) / 718;
+  }
+
+  if (y < 2005) {
+    const t = y - 2000;
+    return (
+      63.86 +
+      0.3345 * t -
+      0.060374 * t * t +
+      0.0017275 * t * t * t +
+      0.000651814 * t * t * t * t +
+      0.00002373599 * t * t * t * t * t
+    );
+  }
+
+  if (y < 2050) {
+    const t = y - 2000;
+    return 62.92 + 0.32217 * t + 0.005589 * t * t;
+  }
+
+  const u = (y - 1820) / 100;
+  return -20 + 32 * u * u - 0.5628 * (y - 2150);
+}
+
+function computeJulianCentury(julianDay: number): number {
+  if (!Number.isFinite(julianDay)) {
+    throw new TypeError('julianDay must be a finite number');
+  }
+
+  const T = (julianDay - 2451545) / 36525;
+  return Math.max(-100, Math.min(100, T));
+}
+
+/** Apparent solar longitude with delta-T, nutation, and aberration corrections. */
 function getApparentSunLongitude(jd: number): number {
   const cached = sunLongitudeCache.get(jd);
   if (cached !== undefined) {
     return cached;
   }
 
-  const T = (jd - 2451545.0) / 36525.0;
-  const T2 = T * T;
-  const T3 = T2 * T;
+  const jdTT = jd + computeDeltaT(jd) / 86400;
+  const T = computeJulianCentury(jdTT);
 
-  const L0 = normalizeDegrees(280.46645 + 36000.76983 * T + 0.0003032 * T2);
-  const M = normalizeDegrees(357.5291 + 35999.0503 * T - 0.0001559 * T2 - 0.00000048 * T3);
-  const Mr = (M * Math.PI) / 180;
+  const L0 = normalizeDegrees(280.46646 + T * (36000.76983 + 0.0003032 * T));
+  const M = normalizeDegrees(357.52911 + T * (35999.05029 - 0.0001537 * T));
+  const Mr = M * (Math.PI / 180);
 
   const center =
-    (1.9146 - 0.004817 * T - 0.000014 * T2) * Math.sin(Mr) +
+    (1.914602 - T * (0.004817 + 0.000014 * T)) * Math.sin(Mr) +
     (0.019993 - 0.000101 * T) * Math.sin(2 * Mr) +
-    0.00029 * Math.sin(3 * Mr);
+    0.000289 * Math.sin(3 * Mr);
 
-  const omega = ((125.04 - 1934.136 * T) * Math.PI) / 180;
+  const omega = (125.04 - 1934.136 * T) * (Math.PI / 180);
   const longitude = normalizeDegrees(L0 + center - 0.00569 - 0.00478 * Math.sin(omega));
   sunLongitudeCache.set(jd, longitude);
   return longitude;
+}
+
+function shortestAngleDifference(target: number, current: number): number {
+  const normalized = normalizeDegrees(target) - normalizeDegrees(current);
+  if (normalized > 180) {
+    return normalized - 360;
+  }
+  if (normalized < -180) {
+    return normalized + 360;
+  }
+  return normalized;
+}
+
+function computeSolarLongitudeDerivative(julianDay: number): number {
+  const step = 1 / 24;
+  const next = getApparentSunLongitude(julianDay + step);
+  const previous = getApparentSunLongitude(julianDay - step);
+  return shortestAngleDifference(next, previous) / (step * 2);
+}
+
+function solveSolarTermBoundary({
+  targetLongitude,
+  startJulianDay,
+  toleranceDegrees = 1e-9,
+  maxIterations = 24,
+}: {
+  targetLongitude: number;
+  startJulianDay: number;
+  toleranceDegrees?: number;
+  maxIterations?: number;
+}) {
+  if (!Number.isFinite(targetLongitude)) {
+    throw new TypeError('targetLongitude must be a finite number');
+  }
+  if (!Number.isFinite(startJulianDay)) {
+    throw new TypeError('startJulianDay must be a finite number');
+  }
+
+  let currentJulianDay = startJulianDay;
+
+  for (let iteration = 0; iteration < maxIterations; iteration += 1) {
+    const currentLongitude = getApparentSunLongitude(currentJulianDay);
+    const delta = shortestAngleDifference(targetLongitude, currentLongitude);
+
+    if (Math.abs(delta) <= toleranceDegrees) {
+      return {
+        julianDay: currentJulianDay,
+        longitude: currentLongitude,
+        iterations: iteration + 1,
+      };
+    }
+
+    const derivative = computeSolarLongitudeDerivative(currentJulianDay);
+    if (!Number.isFinite(derivative) || Math.abs(derivative) < 1e-9) {
+      break;
+    }
+
+    currentJulianDay += delta / derivative;
+  }
+
+  let lower = startJulianDay - 10;
+  let upper = startJulianDay + 10;
+  let found = false;
+
+  for (const width of [10, 20, 30]) {
+    lower = startJulianDay - width;
+    upper = startJulianDay + width;
+    let lowerDiff = shortestAngleDifference(targetLongitude, getApparentSunLongitude(lower));
+
+    for (let cursor = lower + 0.25; cursor <= upper; cursor += 0.25) {
+      const currentDiff = shortestAngleDifference(targetLongitude, getApparentSunLongitude(cursor));
+      if ((lowerDiff <= 0 && currentDiff >= 0) || (lowerDiff >= 0 && currentDiff <= 0)) {
+        lower = cursor - 0.25;
+        upper = cursor;
+        found = true;
+        break;
+      }
+      lowerDiff = currentDiff;
+    }
+    if (found) {
+      break;
+    }
+  }
+
+  for (let iteration = 0; iteration < maxIterations * 2; iteration += 1) {
+    const midpoint = (lower + upper) / 2;
+    const midpointLongitude = getApparentSunLongitude(midpoint);
+    const midpointDiff = shortestAngleDifference(targetLongitude, midpointLongitude);
+
+    if (Math.abs(midpointDiff) <= toleranceDegrees) {
+      return {
+        julianDay: midpoint,
+        longitude: midpointLongitude,
+        iterations: maxIterations + iteration + 1,
+      };
+    }
+
+    const lowerBoundaryDiff = shortestAngleDifference(targetLongitude, getApparentSunLongitude(lower));
+    if ((lowerBoundaryDiff <= 0 && midpointDiff >= 0) || (lowerBoundaryDiff >= 0 && midpointDiff <= 0)) {
+      upper = midpoint;
+    } else {
+      lower = midpoint;
+    }
+  }
+
+  const finalJulianDay = (lower + upper) / 2;
+  return {
+    julianDay: finalJulianDay,
+    longitude: getApparentSunLongitude(finalJulianDay),
+    iterations: maxIterations * 3,
+  };
 }
 
 export function getJDN(day: number, month: number, year: number): number {
@@ -177,7 +400,21 @@ export function calculateFoundationalLayer(
 export function findSolarTermStart(d: Date): { term: string; date: Date } {
   const temp = new Date(d);
   temp.setHours(12, 0, 0, 0);
-  const term = getSolarTerm(getJDN(temp.getDate(), temp.getMonth() + 1, temp.getFullYear()));
+  const jd = getJDN(temp.getDate(), temp.getMonth() + 1, temp.getFullYear());
+  const term = getSolarTerm(jd);
+  const targetLongitude = Math.floor(getSunLongitude(jd) / 15) * 15;
+
+  try {
+    const boundary = solveSolarTermBoundary({
+      targetLongitude,
+      startJulianDay: jd,
+    });
+    return { term, date: new Date(julianDayToUnixMs(boundary.julianDay)) };
+  } catch {
+    // Fall back to the original day-by-day scan if the boundary solver
+    // cannot converge for an outlier date.
+  }
+
   for (let i = 0; i < SOLAR_TERM_SEARCH_LIMIT; i++) {
     temp.setDate(temp.getDate() - 1);
     const prevTerm = getSolarTerm(getJDN(temp.getDate(), temp.getMonth() + 1, temp.getFullYear()));

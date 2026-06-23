@@ -50,5 +50,12 @@ describe('foundationalLayer', () => {
       const d2 = findSolarTermStart(new Date(2024, 1, 15));
       expect(d1.term).toBe(d2.term);
     });
+
+    it('uses the precise v2-style boundary solver for Lập Xuân 2024', () => {
+      const result = findSolarTermStart(new Date(2024, 1, 10));
+
+      expect(result.term).toBe('Lập Xuân');
+      expect(result.date.toISOString()).toBe('2024-02-04T08:20:11.839Z');
+    });
   });
 });

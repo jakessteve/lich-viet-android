@@ -396,6 +396,10 @@ export function getCanChiMonth(lunarMonth: number, lunarYear: number): string {
   return `${CAN[monthCanIndex]} ${CHI[monthChiIndex]}`;
 }
 
+function getSolarTermYear(date: Date, solarMonth: number): number {
+  return solarMonth === 12 ? date.getFullYear() - 1 : date.getFullYear();
+}
+
 export function getCanChiDay(date: Date): string {
   const jd = getJDN(date.getDate(), date.getMonth() + 1, date.getFullYear());
   const canIndex = dayStemIndex(jd);
@@ -646,12 +650,13 @@ export function getDetailedDayData(date: Date, location?: SwissGeoLocation): Day
 
   // 1. Parse core identifiers
   const lunar = getLunarDate(normalized, location);
-  const yearCanChi = parseCanChi(getCanChiYear(normalized.getFullYear()));
-  const monthCanChi = parseCanChi(getCanChiMonth(lunar.month, lunar.year));
   const dayCanChi = parseCanChi(getCanChiDay(normalized));
 
   // 2. Foundational Layer
   const foundational = calculateFoundationalLayer(normalized, lunar, dayCanChi, getCanChiMonth, getCanChiYear);
+  const solarTermYear = getSolarTermYear(normalized, foundational.solarMonth);
+  const yearCanChi = parseCanChi(getCanChiYear(solarTermYear));
+  const monthCanChi = parseCanChi(getCanChiMonth(foundational.solarMonth, solarTermYear));
 
   // 3. Moon Phase (Tháng đủ/thiếu)
   const tempDate = new Date(normalized);

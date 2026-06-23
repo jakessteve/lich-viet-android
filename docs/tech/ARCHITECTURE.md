@@ -13,7 +13,6 @@ The active product surfaces are:
 
 - Landing
 - Am Lich + Dung Su
-- La bàn
 - Gieo Que
 - Tu Vi
 - Support routes for settings, auth, and upgrade
@@ -21,7 +20,6 @@ The active product surfaces are:
 The current codebase adds two important location-aware flows:
 
 - Am Lich uses browser geolocation to make live lunar/calendar calculations follow the viewer's location.
-- La bàn uses phone sensor heading on supported mobile browsers and falls back to manual heading entry on unsupported devices.
 - Tu Vi uses birthplace geolocation and Swiss ephemeris true-solar correction when the Swiss engine is ready.
 
 There is no active Web Worker layer in the shipped codebase.
@@ -66,7 +64,6 @@ graph TB
     subgraph Surfaces["Active surfaces"]
         Landing["Landing"]
         AmLich["Am Lich + Dung Su"]
-        LaBan["La ban"]
         GieoQue["Gieo Que"]
         TuVi["Tu Vi"]
         Support["Settings / Auth / Upgrade"]
@@ -100,7 +97,6 @@ graph TB
     UI --> Stores
     Surfaces --> Engines --> Data
     BrowserGeo --> AmLich
-    BrowserGeo --> LaBan
     GeoIp --> AmLich
     Birthplace --> TuViEng
     Personal --> Stores
@@ -109,10 +105,9 @@ graph TB
 ### Data Flow Notes
 
 1. Am Lich uses browser geolocation for viewer-local lunar calculations and the current-day shortcut.
-2. La bàn consumes browser sensor data when available and keeps manual heading as the fallback path.
-3. `useHolidays` still performs Geo-IP holiday lookup for country-specific holiday cards.
-4. Tu Vi birth normalization keeps birthplace coordinates as the source of truth and adds Swiss true-solar correction when the Swiss engine is available.
-5. Swiss ephemeris is the precision path; local lunar logic remains the fallback when WASM is not ready.
+2. `useHolidays` still performs Geo-IP holiday lookup for country-specific holiday cards.
+3. Tu Vi birth normalization keeps birthplace coordinates as the source of truth and adds Swiss true-solar correction when the Swiss engine is available.
+4. Swiss ephemeris is the precision path; local lunar logic remains the fallback when WASM is not ready.
 
 ---
 
@@ -126,7 +121,6 @@ src/
 │   ├── pages/              # Landing, auth, settings, upgrade
 │   ├── Calendar/           # Calendar panels and holiday cards
 │   ├── GieoQue/            # Divination surface
-│   ├── FengShui/           # La bàn Phong Thủy surface
 │   ├── MaiHoa/             # Mai Hoa UI
 │   ├── TamThuc/            # Tam Thuc UI
 │   ├── TuVi/               # Tu Vi UI and export flow
@@ -165,7 +159,6 @@ Vite is configured with path aliases for clean imports:
 | `@lich-viet/core/calendar` | `packages/core/src/calendar/index.ts` |
 | `@lich-viet/core/dungsu` | `packages/core/src/dungsu/index.ts` |
 | `@lich-viet/core/maihoa` | `packages/core/src/maihoa/index.ts` |
-| `@lich-viet/core/fengshui` | `packages/core/src/fengshui/index.ts` |
 | `@lich-viet/core/qmdj` | `packages/core/src/qmdj/index.ts` |
 | `@lich-viet/core/thaiAt` | `packages/core/src/thaiAt/index.ts` |
 | `@lich-viet/core/lucNham` | `packages/core/src/lucNham/index.ts` |
@@ -188,9 +181,8 @@ There is no `@lich-viet/core/tuvi` barrel in the current codebase. Tu Vi code li
 | 6 | Thai At | `src/utils/thaiAtEngine.ts` | Year or date | Thai At year and month overlays |
 | 7 | Luc Nham | `src/utils/lucNhamEngine.ts` | Date/time | Heaven/Earth board and verdicts |
 | 8 | Tam Thuc | `src/utils/tamThucSynthesis.ts` | Date/time | QMDJ + Thai At + Luc Nham synthesis |
-| 9 | Flying Star | `src/utils/flyingStarEngine.ts` | Period + direction | Flying Star Luo Shu grid |
-| 10 | Swiss astronomy | `src/services/astronomy/swissEphemeris.ts` | Date + longitude + timezone | True-solar correction, lunar date, boundary warnings |
-| 11 | Tu Vi | `src/services/tuvi/` | Birth data + birthplace location | Tu Vi chart, star placement, hạn context, export data |
+| 9 | Swiss astronomy | `src/services/astronomy/swissEphemeris.ts` | Date + longitude + timezone | True-solar correction, lunar date, boundary warnings |
+| 10 | Tu Vi | `src/services/tuvi/` | Birth data + birthplace location | Tu Vi chart, star placement, hạn context, export data |
 
 ---
 
@@ -208,7 +200,6 @@ graph TD
         QMDJ["qmdjEngine"]
         ThaiAt["thaiAtEngine"]
         DungSu["dungSuEngine"]
-        FlyingStar["flyingStarEngine"]
         Found["foundationalLayer"]
         Mod["modifyingLayer"]
         Hour["hourEngine"]
@@ -225,7 +216,7 @@ graph TD
         VnLunar["@dqcai/vn-lunar"]
     end
 
-    Core --> Cal & MaiHoa & TamThuc & LucNham & QMDJ & ThaiAt & DungSu & FlyingStar
+    Core --> Cal & MaiHoa & TamThuc & LucNham & QMDJ & ThaiAt & DungSu
 
     Cal --> Found & Mod & Hour & CanChi & Swiss & Const & VnLunar
     MaiHoa --> Cal & Const
@@ -234,7 +225,6 @@ graph TD
     QMDJ --> Found & Hour
     ThaiAt --> Cal
     DungSu --> Const
-    FlyingStar --> Const
     TuVi --> Swiss & Cal & Found & Const
     Swiss --> Found
 

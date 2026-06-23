@@ -1,6 +1,6 @@
 import React from 'react';
 
-type MysticBackgroundVariant = 'compass' | 'luoshu' | 'dipper' | 'four-symbols';
+type MysticBackgroundVariant = 'luoshu' | 'dipper' | 'four-symbols';
 
 interface MysticBackgroundPatternProps {
   variant: MysticBackgroundVariant;
@@ -23,64 +23,6 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
       </linearGradient>
     </defs>
   );
-
-  const renderCompass = () => {
-    // 24 Sơn Hướng / Navigation Compass
-    return (
-      <svg className="w-full h-full" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {defs}
-        <g style={{ animation: 'spin 160s linear infinite', transformOrigin: 'center' }}>
-          {/* Concentric Base Rings */}
-          {[380, 360, 320, 270, 210, 160, 100, 60].map((r, i) => (
-            <circle
-              key={r}
-              cx="400"
-              cy="400"
-              r={r}
-              stroke="url(#mysticGold)"
-              strokeWidth={i % 2 === 0 ? '1.5' : '0.5'}
-              strokeDasharray={i === 2 ? '3 10' : i === 4 ? '5 5' : 'none'}
-              opacity={0.3 + (8 - i) * 0.05}
-            />
-          ))}
-
-          {/* 24 Mountains radial lines */}
-          <g opacity="0.5">
-            {[...Array(24)].map((_, i) => (
-              <line
-                key={`rad-24-${i}`}
-                x1="400"
-                y1="40"
-                x2="400"
-                y2="340"
-                stroke="url(#mysticGold)"
-                strokeWidth="0.75"
-                transform={`rotate(${i * 15} 400 400)`}
-              />
-            ))}
-          </g>
-          {/* 64 Hexagrams outer tick marks */}
-          <g opacity="0.3">
-            {[...Array(64)].map((_, i) => (
-              <line
-                key={`rad-64-${i}`}
-                x1="400"
-                y1="80"
-                x2="400"
-                y2="130"
-                stroke="url(#mysticGold)"
-                strokeWidth="0.5"
-                transform={`rotate(${i * (360 / 64)} 400 400)`}
-              />
-            ))}
-          </g>
-          {/* Inner core */}
-          <circle cx="400" cy="400" r="20" stroke="url(#mysticGold)" strokeWidth="2" opacity="0.8" />
-          <circle cx="400" cy="400" r="5" fill="#d4a843" opacity="0.9" />
-        </g>
-      </svg>
-    );
-  };
 
   const renderLuoshu = () => {
     // Lạc Thư / Magic Square - perfect symmetric 3x3 network
@@ -278,7 +220,7 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
             </g>
           ))}
 
-          {/* Intersecting diagonal compass points */}
+          {/* Intersecting diagonal guide lines */}
           <g opacity="0.2">
             {[45, 135, 225, 315].map((angle) => (
               <line
@@ -300,7 +242,6 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
 
   return (
     <div className={`pointer-events-none select-none ${className}`} aria-hidden="true">
-      {variant === 'compass' && renderCompass()}
       {variant === 'luoshu' && renderLuoshu()}
       {variant === 'dipper' && renderDipper()}
       {variant === 'four-symbols' && renderFourSymbols()}
