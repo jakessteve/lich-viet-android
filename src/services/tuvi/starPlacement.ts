@@ -45,7 +45,7 @@ export const placeTuViStar = (cucNumber: number, lunarDay: number): number => {
   return omcePlaceTuViStar(cucNumber, lunarDay);
 };
 
-export const placeChinhTinh = (tuViPosition: number): Record<string, number> => {
+export const placeChinhTinh = (tuViPosition: number): Record<string, any> => {
   return omcePlaceChinhTinh(tuViPosition);
 };
 
@@ -59,7 +59,7 @@ export const placePhuTinh = (
   thanPosition?: number,
   thuanNghich?: any,
   school?: any,
-): Record<string, number> => {
+): Record<string, any> => {
   if (typeof yearCanIndexOrInput === 'object' && yearCanIndexOrInput !== null) {
     return omcePlacePhuTinh(yearCanIndexOrInput);
   }
@@ -68,12 +68,11 @@ export const placePhuTinh = (
     yearChiIndex: yearChiIndex ?? 0,
     lunarMonth: lunarMonth ?? 1,
     lunarDay: lunarDay ?? 1,
-    birthHour: birthHour ?? 0,
+    hourBranch: birthHour ?? 0,
     menhPosition: menhPosition ?? 0,
     thanPosition: thanPosition ?? 0,
-    thuanNghich: thuanNghich ?? 'Thuận',
-    school,
-  });
+    ...(school ? { school } : {}),
+  } as any);
 };
 
 const TU_HOA_TABLE: Record<string, Record<string, string>> = {
