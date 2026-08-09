@@ -93,8 +93,7 @@ const TRUNG_CHAU_TU_HOA: Record<string, Record<string, string>> = {
   Mậu: { Lộc: 'Tham Lang', Quyền: 'Thái Âm', Khoa: 'Thái Dương', Kỵ: 'Thiên Cơ' },
 };
 
-export const calculateTuHoa = (yearCanIndex: number, school?: string) => {
-  const canName = CAN[((yearCanIndex % 10) + 10) % 10];
+export const getTuHoaForCan = (canName: string, school?: string) => {
   const table = school === 'bac-phai' ? TRUNG_CHAU_TU_HOA : TU_HOA_TABLE;
   const entry = table[canName] || TU_HOA_TABLE['Giáp'];
   return {
@@ -103,6 +102,11 @@ export const calculateTuHoa = (yearCanIndex: number, school?: string) => {
     Khoa: { starName: entry['Khoa'], type: 'Khoa' },
     Ky: { starName: entry['Kỵ'], type: 'Kỵ' },
   };
+};
+
+export const calculateTuHoa = (yearCanIndex: number, school?: string) => {
+  const canName = CAN[((yearCanIndex % 10) + 10) % 10];
+  return getTuHoaForCan(canName, school);
 };
 
 export const calculatePalaceCans = (yearCanIndex: number): string[] => {
@@ -248,6 +252,30 @@ export function calculateHanContext(chart: TuViChart, viewYear: number, viewMont
 
   const nguyetHanPalaceIndex = nguyetHanPalaces[(viewMonth - 1) % 12] ?? null;
 
+  // -- Lưu Diệu Calculation --
+  const viewYearCanIndex = ((viewYear - 4) % 10 + 10) % 10;
+  const viewYearChiIndex = ((viewYear - 4) % 12 + 12) % 12;
+
+  const locTonPositions = [2, 3, 5, 6, 5, 6, 8, 9, 11, 0]; // Giáp to Quý
+  const luuLocTonPos = locTonPositions[viewYearCanIndex];
+  const luuKinhDuongPos = (luuLocTonPos + 1) % 12;
+  const luuDaLaPos = (luuLocTonPos + 11) % 12;
+  const luuThaiTuePos = viewYearChiIndex;
+
+  const luuDieuByPalace: Record<number, any[]> = {};
+  for (let i = 0; i < 12; i++) {
+    luuDieuByPalace[i] = [];
+  }
+
+  const addLuuDieu = (pos: number, name: string, type: string = 'luuDieu', nguHanh: string = 'Hỏa', brightness: string = 'Miếu') => {
+    luuDieuByPalace[pos].push({ name, type, nguHanh, brightness });
+  };
+
+  addLuuDieu(luuThaiTuePos, 'Lưu Thái Tuế');
+  addLuuDieu(luuLocTonPos, 'Lưu Lộc Tồn', 'luuDieu', 'Thổ');
+  addLuuDieu(luuKinhDuongPos, 'Lưu Kình Dương', 'luuDieu', 'Kim');
+  addLuuDieu(luuDaLaPos, 'Lưu Đà La', 'luuDieu', 'Kim');
+
   return {
     viewYear,
     viewMonth,
@@ -258,5 +286,6 @@ export function calculateHanContext(chart: TuViChart, viewYear: number, viewMont
     tieuHanPalaceIndex,
     nguyetHanMonthByPalace,
     nguyetHanPalaceIndex,
+    luuDieuByPalace,
   };
 }

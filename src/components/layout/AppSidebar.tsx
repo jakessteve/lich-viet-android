@@ -50,7 +50,7 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
   return (
     <aside
       id="tour-sidebar"
-      className="w-full md:w-[340px] lg:w-[400px] shrink-0 md:sticky md:top-20 flex flex-col gap-6"
+      className="w-full md:w-[280px] lg:w-[340px] xl:w-[400px] shrink-0 md:sticky md:top-20 flex flex-col gap-6"
       aria-label="Lịch tháng và thông tin nhanh"
     >
       <div className="space-y-6">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useIsMobile } from '../hooks/useIsMobile';
+import { useDeviceClass } from '../hooks/useDeviceClass';
 
 type TierLevel = 'free' | 'premium' | 'elite' | 'credit';
 
@@ -76,21 +76,21 @@ function CollapsibleCard({
   creditCost,
   children,
 }: CollapsibleCardProps) {
-  const isMobile = useIsMobile();
-  const [isOpen, setIsOpen] = useState(() => !(collapseOnMobile && isMobile) && defaultOpen);
+  const { isCompact } = useDeviceClass();
+  const [isOpen, setIsOpen] = useState(() => !(collapseOnMobile && isCompact) && defaultOpen);
 
   // On desktop with alwaysOpenOnDesktop, force open
-  const forceOpen = alwaysOpenOnDesktop && !isMobile;
+  const forceOpen = alwaysOpenOnDesktop && !isCompact;
   const effectiveOpen = forceOpen || isOpen;
 
   // Sync collapsed state when tab changes or viewport switches
   useEffect(() => {
-    if (collapseOnMobile && isMobile) {
+    if (collapseOnMobile && isCompact) {
       setIsOpen(false);
     } else if (!collapseOnMobile) {
       setIsOpen(defaultOpen);
     }
-  }, [collapseOnMobile, isMobile, defaultOpen]);
+  }, [collapseOnMobile, isCompact, defaultOpen]);
 
   const badgeCfg = tierBadge ? TIER_BADGE_CONFIG[tierBadge] : null;
 

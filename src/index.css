@@ -720,6 +720,25 @@
   .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
   }
+
+  /* ── Responsive Medium Breakpoint Adjustments ────────── */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    /* Reduce excessive paddings on tablets and foldables */
+    .p-4 { padding: 0.75rem; }
+    .p-5 { padding: 1rem; }
+    
+    /* Make calendar touch targets comfortable for medium screens */
+    .aspect-square { min-height: 3.25rem; }
+  }
+
+  /* ── Foldable Display Hinge Avoidance ────────────────── */
+  @media (horizontal-viewport-segments: 2) {
+    body {
+      /* Safe area insets for hinge when spanning across two screens */
+      padding-left: env(viewport-segment-right 0 0);
+      padding-right: env(viewport-segment-left 1 0);
+    }
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════

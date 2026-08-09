@@ -269,6 +269,13 @@
   font-weight: 500;
 }
 
+.tuvi-phu-tinh-grid .luu-dieu {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-color: rgba(184, 134, 11, 0.4);
+}
+
 .tuvi-khong-banner {
   position: absolute;
   right: 6px;
@@ -308,13 +315,35 @@
   justify-self: start;
 }
 
-.tuvi-truong-sinh-label {
-  color: #6b4f1d;
-  font-size: 0.72rem;
+.tuvi-rings-row {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 2px;
+}
+
+.tuvi-ring-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.tuvi-ring-label.thai-tue { color: #831843; }
+.tuvi-ring-label.bac-si { color: #1e3a8a; }
+.tuvi-ring-label.truong-sinh { color: #6b4f1d; }
+
+.tuvi-tieu-han-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #dc2626;
+  color: #fff;
+  border-radius: 2px;
+  padding: 1px 4px;
+  font-size: 0.58rem;
   font-weight: 800;
   line-height: 1;
-  text-align: center;
-  white-space: nowrap;
   justify-self: center;
 }
 
@@ -484,6 +513,24 @@
   vector-effect: non-scaling-stroke;
 }
 
+.tuvi-connection-line.phi-tinh {
+  stroke-dasharray: none;
+  stroke-width: 1.5;
+}
+
+.tuvi-connection-line.phi-tinh-loc {
+  stroke: rgba(16, 185, 129, 0.7); /* Green for Lộc */
+}
+.tuvi-connection-line.phi-tinh-quyen {
+  stroke: rgba(139, 92, 246, 0.7); /* Purple for Quyền */
+}
+.tuvi-connection-line.phi-tinh-khoa {
+  stroke: rgba(59, 130, 246, 0.7); /* Blue for Khoa */
+}
+.tuvi-connection-line.phi-tinh-ky {
+  stroke: rgba(15, 23, 42, 0.7); /* Dark slate for Kỵ */
+}
+
 .tuvi-chart-legend {
   display: flex;
   flex-wrap: wrap;
@@ -534,7 +581,7 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .tuvi-chart {
     aspect-ratio: 780 / 1080;
   }
@@ -591,13 +638,21 @@
   }
 
   .tuvi-branch-label,
-  .tuvi-truong-sinh-label,
   .tuvi-nguyet-han {
     font-size: 0.62rem;
   }
 
+  .tuvi-ring-label {
+    font-size: 0.54rem;
+  }
+
+  .tuvi-tieu-han-badge {
+    font-size: 0.5rem;
+    padding: 1px 3px;
+  }
+
   .tuvi-connection-svg {
-    display: none;
+    display: block;
   }
 
   .tuvi-palace.trine::after,
@@ -619,4 +674,129 @@
   .tuvi-palace.opposite::after {
     background: rgba(185, 28, 28, 0.9);
   }
+}
+
+/* ── Tablet / Foldable Inner Adjustments ── */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .tuvi-chart {
+    /* Slightly taller aspect ratio for medium screens */
+    aspect-ratio: 1 / 1.4;
+    font-size: 0.9rem;
+  }
+
+  .tuvi-can-chi {
+    font-size: 0.6rem;
+  }
+  
+  .tuvi-chinh-tinh {
+    font-size: 1rem;
+    min-height: 40px;
+  }
+  
+  .tuvi-palace-title {
+    font-size: 0.9rem;
+  }
+  
+  .tuvi-phu-tinh-grid {
+    font-size: 0.68rem;
+    gap: 4px;
+  }
+  
+  .tuvi-center-title h3 {
+    font-size: 0.95rem;
+  }
+  
+  .tuvi-center-row {
+    font-size: 0.75rem;
+  }
+}
+
+/* ── Foldable Display Hinge Avoidance ── */
+@media (horizontal-viewport-segments: 2) {
+  .tuvi-chart {
+    /* Center space is split by the hinge */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 20px minmax(0, 1fr) minmax(0, 1fr);
+  }
+  
+  .tuvi-chart > *:nth-child(n) {
+    /* Add logic to map 4x4 into 5x4 grid avoiding center col, etc... */
+    /* For simplicity right now, we just rely on the main body hinge avoidance */
+  }
+}
+
+
+.tuvi-palace-detail-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tuvi-palace-detail-panel {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  max-height: 90%;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tuvi-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+}
+
+.tuvi-detail-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1e293b;
+}
+
+.tuvi-detail-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #64748b;
+}
+
+.tuvi-detail-content {
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.tuvi-detail-section {
+  margin-bottom: 16px;
+}
+
+.tuvi-detail-section h3 {
+  margin: 0 0 8px 0;
+  font-size: 0.9rem;
+  color: #475569;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 4px;
+}
+
+.tuvi-detail-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.tuvi-detail-section li {
+  font-size: 0.85rem;
+  font-weight: 500;
 }

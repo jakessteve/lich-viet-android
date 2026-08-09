@@ -127,14 +127,24 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
         <div>
           {visiblePhuTinh.map((star) => renderStar(star))}
           {palace.tuHoa.map((tuHoa) => renderTuHoa(tuHoa))}
+          {hanContext?.luuDieuByPalace?.[palace.id]?.map((star) => renderStar(star as any, 'luu-dieu'))}
         </div>
         <div>{visibleSatTinh.map((star) => renderStar(star, 'sat'))}</div>
       </div>
 
       <div className="tuvi-palace-footer">
+        {palace.rings && (
+          <div className="tuvi-rings-row">
+            {palace.rings.thaiTue && <span className="tuvi-ring-label thai-tue">{palace.rings.thaiTue}</span>}
+            {palace.rings.bacSi && <span className="tuvi-ring-label bac-si">{palace.rings.bacSi}</span>}
+            {palace.rings.truongSinh && <span className="tuvi-ring-label truong-sinh">{palace.rings.truongSinh}</span>}
+          </div>
+        )}
         <div className="tuvi-footer-primary">
           <span className="tuvi-branch-label">{palace.chi}</span>
-          {palace.rings?.truongSinh && <span className="tuvi-truong-sinh-label">{palace.rings.truongSinh}</span>}
+          {hanContext?.tieuHanPalaceIndex === palace.id && (
+            <span className="tuvi-tieu-han-badge" title={`Tiểu hạn năm ${hanContext.viewYear}`}>TH</span>
+          )}
           {nguyetHanMonth ? (
             <span className={isNguyetHanPalace ? 'tuvi-nguyet-han active' : 'tuvi-nguyet-han'}>
               Tháng {nguyetHanMonth}

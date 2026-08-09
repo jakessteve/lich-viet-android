@@ -3,6 +3,7 @@ import type { TuViChart as TuViChartType } from '../../types/tuvi';
 import { TuViPalaceCell } from './TuViPalaceCell';
 import { TuViCenterPanel } from './TuViCenterPanel';
 import { GRID_MAP } from './tuviChartLayout';
+import { getTuHoaForCan } from '../../services/tuvi/starPlacement';
 
 interface TuViChartProps {
   chart: TuViChartType;
@@ -89,7 +90,41 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
   const activePalaceIndex = selectedPalaceIndex ?? chart.hanContext?.daiHanPalaceIndex ?? defaultPalace?.id ?? null;
   const activeTamHop = activePalaceIndex === null ? [] : getTamHopGroup(activePalaceIndex);
   const activeOpposite = activePalaceIndex === null ? null : OPPOSITE_CHI[activePalaceIndex];
-  const triangleLines = activePalaceIndex === null ? [] : getTriangleLines(activePalaceIndex);
+
+  const phiTinhLines = useMemo(() => {
+    if (activePalaceIndex === null) return [];
+    const activePalace = palaceByChi.get(activePalaceIndex);
+    if (!activePalace) return [];
+    
+    const phiTinh = getTuHoaForCan(activePalace.can, chart.input.school);
+    const lines: Array<{ x1: number; y1: number; x2: number; y2: number; type: string }> = [];
+    const activeCenter = getCellCenter(activePalaceIndex);
+    if (!activeCenter) return lines;
+
+    const types: ('Loc' | 'Quyen' | 'Khoa' | 'Ky')[] = ['Loc', 'Quyen', 'Khoa', 'Ky'];
+    
+    for (const t of types) {
+      const starName = phiTinh[t].starName;
+      const targetPalace = chart.palaces.find(p => 
+        p.chinhTinh.some(s => s.name === starName) || 
+        p.phuTinh.some(s => s.name === starName) ||
+        p.satTinh.some(s => s.name === starName)
+      );
+      if (targetPalace) {
+        const targetCenter = getCellCenter(targetPalace.id);
+        if (targetCenter) {
+          lines.push({
+            x1: activeCenter.x,
+            y1: activeCenter.y,
+            x2: targetCenter.x,
+            y2: targetCenter.y,
+            type: t
+          });
+        }
+      }
+    }
+    return lines;
+  }, [activePalaceIndex, palaceByChi, chart.input.school, chart.palaces]);
 
   useEffect(() => {
     const media = window.matchMedia('(max-width: 768px)');
@@ -229,12 +264,12 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
         style={{ ...mobileStageStyle, cursor: isMobileViewport ? (mobileZoomed ? 'zoom-out' : 'zoom-in') : undefined }}
       >
         <div className="tuvi-chart" data-tuvi-chart-export role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>
-          {triangleLines.length > 0 && (
+          {phiTinhLines.length > 0 && (
             <svg className="tuvi-connection-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              {triangleLines.map((line, index) => (
+              {phiTinhLines.map((line, index) => (
                 <line
-                  key={`${line.x1}-${line.y1}-${index}`}
-                  className="tuvi-connection-line"
+                  key={`phi-${line.x1}-${line.y1}-${line.type}-${index}`}
+                  className={`tuvi-connection-line phi-tinh phi-tinh-${line.type.toLowerCase()}`}
                   x1={line.x1}
                   y1={line.y1}
                   x2={line.x2}

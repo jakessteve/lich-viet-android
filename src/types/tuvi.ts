@@ -128,6 +128,8 @@ export interface TuViHanContext {
   nguyetHanMonthByPalace: Record<number, number>;
   /** Palace index that contains the selected month in the Nguyệt Hạn map */
   nguyetHanPalaceIndex: number | null;
+  /** Luu Dieu (moving stars) for the selected viewYear, mapped by palace index */
+  luuDieuByPalace?: Record<number, TuViStar[]>;
 }
 
 // ── Input ───────────────────────────────────────────────────

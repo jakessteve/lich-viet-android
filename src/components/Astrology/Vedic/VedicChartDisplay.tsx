@@ -1,5 +1,6 @@
 import React from 'react';
 import type { WesternChartResult, PlanetPosition } from '../../../services/astrology/westernCalculator';
+import { VedicInterpretationPanel } from './VedicInterpretationPanel';
 
 const BODY_LABELS: Record<string, string> = {
   sun: 'Mặt Trời',
@@ -54,6 +55,8 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
 
   return (
     <div className="space-y-6 animate-fade-in-up">
+      <VedicInterpretationPanel result={result} />
+      
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">

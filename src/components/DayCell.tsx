@@ -55,7 +55,7 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
       aria-label={ariaLabel}
       aria-selected={isSelected}
       className={`
-        aspect-square min-h-[2.75rem] sm:min-h-[3rem] flex flex-col items-center justify-center transition-colors duration-150 cursor-pointer relative group
+        aspect-square min-h-[2.75rem] sm:min-h-[3rem] md:min-h-[3.25rem] flex flex-col items-center justify-center transition-colors duration-150 cursor-pointer relative group
         active:scale-95
         ${
           isToday
@@ -81,13 +81,13 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
     >
       <span
         className={`
-        text-xs sm:text-sm font-medium mb-0.5 relative z-10
+        text-xs sm:text-sm md:text-base font-medium mb-0.5 relative z-10
         ${isToday ? 'text-primary' : isWeekend ? 'text-calendar-weekend' : 'text-text-primary-light dark:text-text-primary-dark'}
       `}
       >
         {solarDate}
       </span>
-      <span className="text-xs leading-none text-text-secondary-light dark:text-text-secondary-dark font-semibold relative z-10">
+      <span className="text-xs md:text-sm leading-none text-text-secondary-light dark:text-text-secondary-dark font-semibold relative z-10">
         {lunarDate}
       </span>
 

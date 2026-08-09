@@ -40,7 +40,7 @@ export default function MobileDrawer() {
 
   return (
     <div
-      className={`fixed inset-0 z-[60] sm:hidden ${isClosing ? 'pointer-events-none' : ''}`}
+      className={`fixed inset-0 z-[60] md:hidden ${isClosing ? 'pointer-events-none' : ''}`}
       role="dialog"
       aria-modal="true"
       aria-label="Menu điều hướng"
@@ -60,7 +60,7 @@ export default function MobileDrawer() {
       />
       {/* Drawer panel */}
       <div
-        className={`absolute top-0 left-0 h-full w-64 bg-white dark:bg-mystery-surface/95 dark:backdrop-blur-xl shadow-2xl dark:shadow-mystery-purple/10 flex flex-col transition-transform duration-300 ${isClosing ? '-translate-x-full' : 'animate-fade-in-up'}`}
+        className={`absolute top-0 left-0 h-full w-64 min-[400px]:w-80 bg-white dark:bg-mystery-surface/95 dark:backdrop-blur-xl shadow-2xl dark:shadow-mystery-purple/10 flex flex-col transition-transform duration-300 ${isClosing ? '-translate-x-full' : 'animate-fade-in-up'}`}
         style={{ transitionTimingFunction: 'cubic-bezier(0.32, 0.72, 0, 1)' }}
       >
         {/* Drawer header */}

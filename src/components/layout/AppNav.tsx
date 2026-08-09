@@ -52,7 +52,7 @@ export default function AppNav() {
         <div className="flex items-center gap-2 shrink-0">
           {/* Hamburger button — mobile only */}
           <button
-            className="sm:hidden p-1.5 -ml-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark transition-colors"
+            className="md:hidden p-1.5 -ml-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark transition-colors"
             onClick={() => document.dispatchEvent(new CustomEvent('toggle-mobile-menu'))}
             aria-label="Mở menu điều hướng"
           >
@@ -71,7 +71,7 @@ export default function AppNav() {
         {/* Center: Desktop tabs */}
         <div
           id="tour-tabs"
-          className="hidden sm:flex items-center gap-1 bg-surface-subtle-light dark:bg-white/6 rounded-full p-1 backdrop-blur-sm"
+          className="hidden md:flex items-center gap-1 bg-surface-subtle-light dark:bg-white/6 rounded-full p-1 backdrop-blur-sm"
           role="tablist"
           aria-label="Chức năng"
         >
@@ -79,13 +79,14 @@ export default function AppNav() {
             <button
               key={link.id}
               onClick={() => link.enabled && handleTabChange(link.id)}
-              className={`relative flex items-center gap-1.5 px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+              className={`relative flex items-center gap-1.5 px-3 lg:px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                 activeTab === link.id && !isFullPage
                   ? 'bg-white dark:bg-transparent dark:nav-glass-pill text-text-primary-light dark:text-white shadow-sm dark:shadow-none'
                   : link.enabled
                     ? 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white hover:bg-white/5'
                     : 'text-gray-400 dark:text-gray-600 cursor-default'
               }`}
+              title={link.label}
               disabled={!link.enabled}
               aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
             >
@@ -94,9 +95,9 @@ export default function AppNav() {
               >
                 {link.icon}
               </span>
-              {link.label}
+              <span className="hidden lg:inline">{link.label}</span>
               {!link.enabled && (
-                <span className="text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 leading-none">
+                <span className="hidden lg:inline text-xs font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 leading-none">
                   Soon
                 </span>
               )}

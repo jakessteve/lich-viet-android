@@ -1,3 +1,4 @@
+export { useDeviceClass } from './useDeviceClass';
 export { useHolidays } from './useHolidays';
 export { useIsMobile } from './useIsMobile';
 export { useIsPhone } from './useIsPhone';

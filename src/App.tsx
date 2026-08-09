@@ -109,7 +109,7 @@ function AppLayout() {
           </div>
         ) : (
           /* Module tab routes: with sidebar */
-          <div className="flex flex-col lg:flex-row gap-8 items-start">
+          <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
             {/* Sidebar — now autonomous, handles its own state */}
             <AppSidebar activeTab={activeTab} />
 

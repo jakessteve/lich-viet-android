@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import DayCell from './DayCell';
 import { getCanChiDay, getMonthDays } from '@lich-viet/core/calendar';
-import { useIsMobile } from '../hooks/useIsMobile';
+import { useDeviceClass } from '../hooks/useDeviceClass';
 import { useAuthStore } from '../stores/authStore';
 import { calculatePersonalDayScore } from '../services/personalization';
 import { IconButton } from './shared';
@@ -56,17 +56,19 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   const monthOptions = useMemo(() => Array.from({ length: 12 }, (_, i) => i), []);
   const yearOptions = useMemo(() => Array.from({ length: 201 }, (_, i) => 1900 + i), []);
 
-  const isMobile = useIsMobile();
-  const [isExpanded, setIsExpanded] = useState(!(collapseOnMobile && isMobile));
+  const { isCompact, isMedium } = useDeviceClass();
+  // isMobile equivalent logic: collapse on compact devices
+  const shouldCollapse = collapseOnMobile && isCompact;
+  const [isExpanded, setIsExpanded] = useState(!shouldCollapse);
 
   // Sync expanded state when navigating between tabs (prop changes)
   useEffect(() => {
-    if (collapseOnMobile && isMobile) {
+    if (shouldCollapse) {
       setIsExpanded(false);
-    } else if (!collapseOnMobile) {
+    } else {
       setIsExpanded(true);
     }
-  }, [collapseOnMobile, isMobile]);
+  }, [shouldCollapse]);
 
   const nextMonth = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
@@ -109,7 +111,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
     <div className="space-y-4">
       {/* Month/Year Picker */}
       <div className="surface-card rounded-xl p-2 w-full relative">
-        <div className="sm:hidden flex items-center gap-1">
+        <div className="md:hidden flex items-center gap-1">
           <IconButton
             onClick={prevMonth}
             className="z-10 shrink-0 h-10 w-10 min-h-10 min-w-10"
@@ -181,7 +183,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
           </div>
         </div>
 
-        <div className="hidden sm:flex items-center justify-between w-full">
+        <div className="hidden md:flex items-center justify-between w-full">
           <IconButton
             onClick={prevMonth}
             className="z-10 shrink-0"
