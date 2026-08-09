@@ -26,22 +26,27 @@ export function useViewerLocation(): SwissGeoLocation | null {
 
     let cancelled = false;
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        if (cancelled) return;
-        const { longitude } = position.coords;
-        if (!Number.isFinite(longitude)) {
+    try {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          if (cancelled) return;
+          const { longitude } = position.coords;
+          if (!Number.isFinite(longitude)) {
+            setLocation(getTimezoneLocation());
+            return;
+          }
+          setLocation(buildSwissGeoLocation(longitude));
+        },
+        () => {
+          if (cancelled) return;
           setLocation(getTimezoneLocation());
-          return;
-        }
-        setLocation(buildSwissGeoLocation(longitude));
-      },
-      () => {
-        if (cancelled) return;
-        setLocation(getTimezoneLocation());
-      },
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 },
-    );
+        },
+        { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 },
+      );
+    } catch (e) {
+      console.warn('Geolocation API threw an error:', e);
+      setLocation(getTimezoneLocation());
+    }
 
     return () => {
       cancelled = true;

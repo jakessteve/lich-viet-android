@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import './styles/fonts.css';
 import './index.css';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 import { analytics } from '@/services/analyticsService';
 import { initWebVitals } from '@/utils/webVitals';
@@ -16,8 +17,10 @@ scheduleSwissEphemerisInit();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ErrorBoundary viewName="Ứng dụng (Lỗi nghiêm trọng)">
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ErrorBoundary>
   </React.StrictMode>,
 );
