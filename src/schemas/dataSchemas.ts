@@ -100,6 +100,7 @@ export const HexagramsSchema = z.array(
     upper: z.number().int().min(1).max(8),
     lower: z.number().int().min(1).max(8),
     chineseName: nonEmptyString.optional(),
+    fullChineseName: nonEmptyString.optional(),
     briefExplanation: nonEmptyString.optional(),
     meaning: nonEmptyString,
     image: nonEmptyString,

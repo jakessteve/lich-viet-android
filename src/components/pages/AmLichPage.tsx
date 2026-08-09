@@ -27,7 +27,7 @@ export default function AmLichPage() {
   const selectedDate = useAppStore((s) => s.selectedDate);
   const setSelectedDate = useAppStore((s) => s.setSelectedDate);
   const data = useAppStore((s) => s.dayData);
-
+  
   return (
     <div className="space-y-4">
       <SegmentedControl options={SUB_TABS} value={activeTab} onChange={setActiveTab} ariaLabel="Chức năng Âm Lịch" />

@@ -57,7 +57,7 @@ export const FEATURES = [
     tier: 'Nâng cao',
   },
   {
-    id: 'chiem-tinh',
+    id: 'chiem-tinh-tay-phuong',
     icon: 'public',
     title: 'Chiêm Tinh',
     desc: 'Chiêm tinh Tây phương, Vedic (Jyotish) và so sánh lá số hợp duyên — đa hệ, toàn diện.',

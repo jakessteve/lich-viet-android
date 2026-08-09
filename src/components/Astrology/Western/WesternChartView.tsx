@@ -2,6 +2,7 @@ import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { BirthDataInput, ActionButton } from '../../shared';
+import { WesternChartDisplay } from './WesternChartDisplay';
 
 export const WesternChartView: React.FC = () => {
   const { input, setInput, runCalc, isCalculating, error, result } = useAstrologyStore(
@@ -46,14 +47,7 @@ export const WesternChartView: React.FC = () => {
         </div>
       </div>
 
-      {/* Placeholder for results */}
-      {result && !isCalculating && (
-        <div className="glass-card p-6 text-center animate-fade-in-up">
-          <span className="material-icons-round text-4xl text-gray-300 dark:text-gray-600 mb-2">construction</span>
-          <p className="text-text-primary-light dark:text-text-primary-dark font-semibold">Bản Đồ Sao đang được xây dựng</p>
-          <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mt-1">Dữ liệu từ OMCE v2 đã sẵn sàng.</p>
-        </div>
-      )}
+      {result && !isCalculating && <WesternChartDisplay result={result} />}
     </div>
   );
 };

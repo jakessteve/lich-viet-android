@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import { type WesternChartInput, type VedicChartInput, type SynastryInput } from '../types/astrology';
+import type { VedicChartInput, SynastryInput, WesternChartInput } from '../types/astrology';
+import { calculateWesternChart, type WesternChartResult } from '../services/astrology/westernCalculator';
 
 export type AstrologyTab = 'tay-phuong' | 'vedic' | 'hop-la';
 
@@ -10,8 +11,8 @@ interface AstrologyState {
   vedicInput: VedicChartInput;
   synastryInput: SynastryInput;
 
-  westernResult: Record<string, unknown> | null;
-  vedicResult: Record<string, unknown> | null;
+  westernResult: WesternChartResult | null;
+  vedicResult: WesternChartResult | null;
   synastryResult: Record<string, unknown> | null;
 
   isCalculating: boolean;
@@ -69,7 +70,9 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   calculateWestern: async () => {
     set({ isCalculating: true, error: null });
     try {
-      set({ westernResult: {}, isCalculating: false });
+      const { westernInput } = get();
+      const result = calculateWesternChart(westernInput);
+      set({ westernResult: result, isCalculating: false });
     } catch (e: unknown) {
       set({ error: e instanceof Error ? e.message : String(e), isCalculating: false });
     }
@@ -81,7 +84,17 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   calculateVedic: async () => {
     set({ isCalculating: true, error: null });
     try {
-      set({ vedicResult: {}, isCalculating: false });
+      const { vedicInput } = get();
+      const westernInput = {
+        birthDate: vedicInput.birthDate,
+        birthHour: vedicInput.birthHour,
+        birthMinute: vedicInput.birthMinute,
+        latitude: vedicInput.latitude,
+        longitude: vedicInput.longitude,
+        timezone: vedicInput.timezone,
+      };
+      const result = calculateWesternChart(westernInput);
+      set({ vedicResult: result, isCalculating: false });
     } catch (e: unknown) {
       set({ error: e instanceof Error ? e.message : String(e), isCalculating: false });
     }

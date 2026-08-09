@@ -349,7 +349,7 @@ export default function TheoryCard({
 
         {/* 3. Phân tích Quẻ Chủ (Combined with Giải nghĩa Kinh Dịch) */}
         <CollapsibleSection
-          title={`Phân tích Quẻ Chủ — ${mainHexagram.name}`}
+          title={`Phân tích Quẻ Chủ — ${mainHexagram.name}${mainHexagram.fullChineseName ? ` (${mainHexagram.fullChineseName})` : ''}`}
           icon="menu_book"
           defaultOpen={false}
           accentClass="text-accent-main dark:text-accent-main-dark"
@@ -472,7 +472,7 @@ export default function TheoryCard({
 
         {/* 4. Quẻ Hỗ */}
         <CollapsibleSection
-          title={`Phân tích Quẻ Hỗ — ${mutualHexagram.name}`}
+          title={`Phân tích Quẻ Hỗ — ${mutualHexagram.name}${mutualHexagram.fullChineseName ? ` (${mutualHexagram.fullChineseName})` : ''}`}
           icon="change_history"
           defaultOpen={false}
           accentClass="text-accent-mutual dark:text-accent-mutual-dark"
@@ -525,7 +525,7 @@ export default function TheoryCard({
 
         {/* 5. Quẻ Biến */}
         <CollapsibleSection
-          title={`Phân tích Quẻ Biến — ${changedHexagram.name}`}
+          title={`Phân tích Quẻ Biến — ${changedHexagram.name}${changedHexagram.fullChineseName ? ` (${changedHexagram.fullChineseName})` : ''}`}
           icon="swap_horiz"
           defaultOpen={false}
           accentClass="text-accent-changed dark:text-accent-changed-dark"

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import DayCell from './DayCell';
-import { getMonthDays } from '@lich-viet/core/calendar';
+import { getCanChiDay, getMonthDays } from '@lich-viet/core/calendar';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useAuthStore } from '../stores/authStore';
 import { calculatePersonalDayScore } from '../services/personalization';
@@ -15,6 +15,8 @@ interface MonthCalendarProps {
   viewerLocation?: SwissGeoLocation | null;
   /** Start collapsed on mobile (shows only selected week row) */
   collapseOnMobile?: boolean;
+  /** Whether personalization is toggled on */
+  isPersonalized?: boolean;
 }
 
 const MonthCalendar: React.FC<MonthCalendarProps> = ({
@@ -22,6 +24,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   onSelectDate,
   viewerLocation,
   collapseOnMobile = false,
+  isPersonalized = false,
 }) => {
   const [currentDate, setCurrentDate] = useState(new Date(selectedDate));
   const { user } = useAuthStore();
@@ -39,13 +42,14 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
 
   // Overlay personal scores onto days
   const daysWithScore = useMemo(() => {
-    if (!birthYear) return days;
+    if (!isPersonalized || !birthYear) return days;
     return days.map((day) => {
       if (!day.dayChi) return day;
-      const personalScore = calculatePersonalDayScore(birthYear, day.dayChi, userBirthProfile);
+      const dayCanChi = getCanChiDay(day.fullDate);
+      const personalScore = calculatePersonalDayScore(birthYear, dayCanChi, userBirthProfile);
       return personalScore ? { ...day, personalScore } : day;
     });
-  }, [birthYear, days, userBirthProfile]);
+  }, [isPersonalized, birthYear, days, userBirthProfile]);
 
   // Labels matching the design order (Starting from Monday/T2)
   const visualWeekDays = useMemo(() => ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], []);
@@ -333,6 +337,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
               <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-red-500 dark:bg-red-400" />
               Hắc Đạo
             </span>
+            {isPersonalized && (<>
             {/* Personal score indicators */}
             <span className="flex items-center gap-1">
               <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-sm bg-purple-500" />
@@ -342,6 +347,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
               <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-amber-500 ring-1 ring-amber-700/25 dark:bg-amber-400 dark:ring-amber-200/20" />
               Hung theo tuổi
             </span>
+          </>)}
           </div>
         </div>
       </div>

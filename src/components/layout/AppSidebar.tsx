@@ -16,16 +16,17 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
   const data = useAppStore((s) => s.dayData);
   const viewerLocation = useAppStore((s) => s.viewerLocation);
   const isDark = useAppStore((s) => s.isDark);
-  const _setSelectedDate = useAppStore((s) => s.setSelectedDate);
+  const setSelectedDate = useAppStore((s) => s.setSelectedDate);
+  const isPersonalized = useAppStore((s) => s.isPersonalized);
 
   // P2-11: Wrap date changes in startTransition to keep UI responsive
   const onSelectDate = useCallback(
     (date: Date) => {
       startTransition(() => {
-        _setSelectedDate(date);
+        setSelectedDate(date);
       });
     },
-    [_setSelectedDate],
+    [setSelectedDate],
   );
 
   // Autonomous holiday fetching
@@ -49,7 +50,7 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
   return (
     <aside
       id="tour-sidebar"
-      className="w-full lg:w-[400px] shrink-0 lg:sticky lg:top-20 flex flex-col gap-6"
+      className="w-full md:w-[340px] lg:w-[400px] shrink-0 md:sticky md:top-20 flex flex-col gap-6"
       aria-label="Lịch tháng và thông tin nhanh"
     >
       <div className="space-y-6">
@@ -58,6 +59,7 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
             selectedDate={selectedDate}
             onSelectDate={onSelectDate}
             viewerLocation={viewerLocation}
+            isPersonalized={isPersonalized}
             collapseOnMobile={true}
           />
         </div>
@@ -220,7 +222,7 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
           </div>
         )}
 
-        {activeTab === 'chiem-tinh' && (
+        {String(activeTab).startsWith('chiem-tinh') && (
           <div className="surface-card p-4 rounded-2xl border border-indigo-500/30 bg-indigo-50/50 dark:bg-indigo-900/10">
             <div className="flex items-start gap-3 text-sm text-text-primary-light dark:text-text-primary-dark">
               <span className="material-icons-round text-indigo-600 dark:text-indigo-400 mt-0.5">account_circle</span>

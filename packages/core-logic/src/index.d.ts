@@ -569,3 +569,11 @@ export declare function getBranchRelationship(branchA: number | string, branchB:
 export declare function computeNavamsha(siderealLongitude: number): string;
 export declare function computeVimshottariDasha(moonSidereal: number, birthJulianDay: number, birthYear: number): any;
 export declare function computeAshtakoot(maleMoon: number, femaleMoon: number): any;
+
+// Western-enhanced astrology functions (from western-enhanced.js)
+export function computeDignity(body: string, tropicalLongitude: number): any;
+export function detectMinorAspects(planets: any[], orbMultiplier?: number): any[];
+export function computePorphyryCusps(observer: any): { system: string; cusps: number[]; ascendant: number; midheaven: number };
+export function computeDispositorTree(planets: any[]): any;
+export function detectChartShape(planets: any[]): any;
+export function computePartOfFortune(sunLongitude: number, moonLongitude: number, ascendantLongitude: number, isDayBirth?: boolean): number;

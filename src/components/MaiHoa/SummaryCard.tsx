@@ -213,6 +213,9 @@ export default function SummaryCard({
             <DetailRow icon="menu_book" heading="Ý nghĩa quẻ">
               <p className="text-sm text-text-primary-light dark:text-text-primary-dark font-medium">
                 {summary.hexagramMeaning.name}
+                {summary.fullChineseName && (
+                  <span className="ml-1.5 text-xs opacity-75 font-normal">({summary.fullChineseName})</span>
+                )}
               </p>
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
                 {summary.hexagramMeaning.image}

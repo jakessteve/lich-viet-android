@@ -1,11 +1,11 @@
 // ── InputForm.tsx ──────────────────────────────────────────────
 // Epic 4 (US_MH_10): Input selection form for Mai Hoa divination.
+import type { CalendarMode } from '../../types/maiHoa';
 // Supports two modes:
 //   1. "Current Time" — Uses the currently selected date's lunar data + current hour.
 //   2. "Manual Numbers" — User enters two positive integers (num1, num2).
 
 import React, { useState } from 'react';
-import type { CalendarMode } from '../../types/maiHoa';
 
 /** Which input method is selected. */
 type InputMode = 'time' | 'numbers';
@@ -42,7 +42,7 @@ export default function InputForm({
   idPrefix = 'maiHoa',
 }: InputFormProps): React.ReactElement {
   const [mode, setMode] = useState<InputMode>('time');
-  const [calendarMode, setCalendarMode] = useState<CalendarMode>('lunar');
+  const calendarMode: CalendarMode = 'lunar';
   const [query, setQuery] = useState('');
   const [num1, setNum1] = useState('');
   const [num2, setNum2] = useState('');
@@ -112,36 +112,18 @@ export default function InputForm({
 
       {/* Calendar Mode Toggle */}
       <div className="flex flex-col gap-2 px-1">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1">
             <span className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
-              Hệ lịch tính tháng:
+              Hệ lịch: Âm Lịch
             </span>
             <span
               className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark cursor-help"
-              title="Âm Lịch: tính tháng theo chu kỳ Mặt Trăng (phổ biến). Tiết Khí: tính tháng theo vị trí Mặt Trời trên hoàng đạo (chính xác hơn về mặt thiên văn)."
+              title="Mai Hoa Dịch Số tính tháng theo chu kỳ Mặt Trăng (Âm Lịch)."
             >
               info_outline
             </span>
           </div>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setCalendarMode('lunar')}
-              className={`${pillBaseClass} ${calendarMode === 'lunar' ? pillActiveClass : pillInactiveClass}`}
-            >
-              Âm Lịch
-            </button>
-            <button
-              type="button"
-              onClick={() => setCalendarMode('tietKhi')}
-              className={`${pillBaseClass} ${calendarMode === 'tietKhi' ? pillActiveClass : pillInactiveClass}`}
-            >
-              Tiết Khí
-            </button>
-          </div>
         </div>
-      </div>
 
       {/* Query Input */}
       <div>

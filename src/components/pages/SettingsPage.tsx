@@ -6,6 +6,7 @@ import { useAuthStore } from '../../stores/authStore';
 import { useTuViStore } from '@/stores/tuviStore';
 import { TuViLocationPicker } from '../TuVi/TuViLocationPicker';
 import { IconButton } from '../shared';
+import SuccessToast from '../shared/SuccessToast';
 import type { TuViBirthLocation } from '../../types/tuvi';
 import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
 
@@ -20,7 +21,7 @@ function Toggle({ checked, onChange, id }: { checked: boolean; onChange: (v: boo
       role="switch"
       aria-checked={checked}
       onClick={() => onChange(!checked)}
-      className={`relative w-14 h-8 rounded-full transition-all duration-300 ${
+      className={`relative w-14 h-8 min-h-11 rounded-full transition-all duration-300 ${
         checked
           ? 'bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 shadow-sm shadow-gold/20 dark:shadow-gold-dark/25'
           : 'bg-gray-200 dark:bg-gray-600'
@@ -130,6 +131,7 @@ export default function SettingsPage() {
   const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
   const { user, isAuthenticated, logout, updateProfile, changePassword } = useAuthStore();
   const avatarInputRef = useRef<HTMLInputElement>(null);
+  const [showSaveToast, setShowSaveToast] = useState(false);
 
   // Active section (sidebar navigation)
   const [activeSection, setActiveSection] = useState('appearance');
@@ -158,6 +160,7 @@ export default function SettingsPage() {
   const [editBirthMinute, setEditBirthMinute] = useState('');
   const [editBirthLocation, setEditBirthLocation] = useState<TuViBirthLocation | undefined>(undefined);
   const [editAvatar, setEditAvatar] = useState('');
+  const [editGender, setEditGender] = useState<'male' | 'female' | ''>('');
   const [profileSaving, setProfileSaving] = useState(false);
   const [profileMsg, setProfileMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
 
@@ -186,6 +189,7 @@ export default function SettingsPage() {
     setEditMonth(m);
     setEditYear(y);
 
+    setEditGender(user?.profile?.gender || '');
     setEditBirthHour(user?.profile?.birthHour !== undefined ? String(user.profile.birthHour) : '');
     setEditBirthMinute(user?.profile?.birthMinute !== undefined ? String(user.profile.birthMinute) : '');
     setEditBirthLocation(
@@ -223,6 +227,7 @@ export default function SettingsPage() {
     const result = await updateProfile({
       displayName: editName || undefined,
       birthday: birthdayStr,
+      gender: editGender || undefined,
       avatarUrl: editAvatar || undefined,
       birthHour: editBirthHour === '' ? null : Number(editBirthHour),
       birthMinute: editBirthMinute === '' ? null : Number(editBirthMinute),
@@ -246,6 +251,7 @@ export default function SettingsPage() {
         useTuViStore.getState().previewMarkdown();
       }
       setProfileMsg({ type: 'ok', text: 'Hồ sơ đã được lưu.' });
+      setShowSaveToast(true);
       setProfileMode('view');
     } else {
       setProfileMsg({ type: 'err', text: result.error ?? 'Lỗi không xác định.' });
@@ -768,7 +774,7 @@ export default function SettingsPage() {
                       <label className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark mb-1">
                         Ngày giờ sinh (Dương lịch)
                       </label>
-                      <div className="grid grid-cols-5 gap-2">
+                      <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
                         <input
                           type="text"
                           inputMode="numeric"
@@ -822,6 +828,36 @@ export default function SettingsPage() {
                             </option>
                           ))}
                         </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark mb-1">
+                        Giới tính
+                      </label>
+                      <div className="flex gap-3">
+                        <label className="flex items-center gap-1.5 cursor-pointer min-h-[44px]">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="male"
+                            checked={editGender === 'male'}
+                            onChange={(e) => setEditGender(e.target.value as 'male' | 'female')}
+                            className="accent-gold w-4 h-4"
+                          />
+                          <span className="text-sm">Nam</span>
+                        </label>
+                        <label className="flex items-center gap-1.5 cursor-pointer min-h-[44px]">
+                          <input
+                            type="radio"
+                            name="gender"
+                            value="female"
+                            checked={editGender === 'female'}
+                            onChange={(e) => setEditGender(e.target.value as 'male' | 'female')}
+                            className="accent-gold w-4 h-4"
+                          />
+                          <span className="text-sm">Nữ</span>
+                        </label>
                       </div>
                     </div>
 
@@ -998,6 +1034,7 @@ export default function SettingsPage() {
       </div>{' '}
       {/* end 2-column flex */}
       <div className="h-6" />
+      <SuccessToast message="Thông tin cá nhân đã được cập nhật" visible={showSaveToast} onHide={() => setShowSaveToast(false)} />
     </div>
   );
 }

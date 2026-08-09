@@ -8,6 +8,7 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react'
 import { DayDetailsData } from '../../types/calendar';
 import type { Chi } from '../../types/calendar';
 import { useAuthStore } from '../../stores/authStore';
+import { useAppStore } from '../../stores/appStore';
 import { scoreActivity, ActivityScoreResult } from '@lich-viet/core/dungsu';
 import { getActivityById, mapDungSuToActivityIds } from '@lich-viet/core/dungsu';
 import CollapsibleCard from '../CollapsibleCard';
@@ -56,6 +57,7 @@ function clampPercentage(value: number): number {
 const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDate }) => {
   const { user } = useAuthStore();
   const userBirthProfile = useMemo(() => getUserBirthProfile(user), [user]);
+  const isPersonalized = useAppStore((s) => s.isPersonalized);
   const [selectedActivity, setSelectedActivity] = useState<string | null>(null);
   const [selectedHour, setSelectedHour] = useState<Chi | null>(null);
   const [birthYear, setBirthYear] = useState<string>(() =>
@@ -162,7 +164,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
   const applyPersonalOverlay = useCallback(
     (basePercentage: number, hourChi?: Chi): number => {
       let adjusted = basePercentage;
-      if (effectiveBirthProfile?.birthYear && data.canChi?.day?.chi) {
+      if (isPersonalized && effectiveBirthProfile?.birthYear && data.canChi?.day?.chi) {
         const personalDayScore = calculatePersonalDayScore(
           effectiveBirthProfile.birthYear,
           data.canChi.day.chi,
@@ -175,6 +177,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
       }
 
       if (
+        isPersonalized &&
         effectiveBirthProfile?.birthYear &&
         hourChi &&
         effectiveBirthProfile.birthMonth != null &&
@@ -200,7 +203,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
 
       return clampPercentage(adjusted);
     },
-    [data.allHours, data.canChi.day, effectiveBirthProfile, selectedDate],
+    [isPersonalized, data.allHours, data.canChi.day, effectiveBirthProfile, selectedDate],
   );
 
   const personalizedPercentage = useMemo(() => {

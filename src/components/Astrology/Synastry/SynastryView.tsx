@@ -17,7 +17,7 @@ export const SynastryView: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="glass-card">
           <div className="card-header bg-rose-50 dark:bg-rose-900/10">
             <h3 className="section-title text-sm flex items-center gap-2">

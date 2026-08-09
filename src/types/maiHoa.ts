@@ -115,8 +115,10 @@ export interface Hexagram {
   readonly meaning: string;
   /** Symbolic image (Tượng) description in Vietnamese */
   readonly image: string;
-  /** Chinese name in Hán tự, e.g. "比 bỉ" */
+  /** Chinese name in Hán tự, e.g. "比 tỷ" */
   readonly chineseName?: string;
+  /** Full 3-character Hán tự name, e.g. "水地比" or "乾為天" */
+  readonly fullChineseName?: string;
   /** Quẻ diagram notation, e.g. "::::|:" */
   readonly diagram?: string;
   /** Brief interpretation keywords, e.g. "Tư dã. Chọn lọc." */
@@ -339,8 +341,10 @@ export interface DivineReadingSummary {
   readonly movingLinePrediction?: MovingLinePrediction;
   /** Category-specific predictions, if available */
   readonly categoryPredictions?: HexagramCategoryPredictions;
-  /** Chinese name of the hexagram, e.g. "比 bỉ" */
+  /** Chinese name of the hexagram, e.g. "比 tỷ" */
   readonly chineseName?: string;
+  /** Full 3-character Hán tự name, e.g. "水地比" */
+  readonly fullChineseName?: string;
   /** Brief explanation keywords */
   readonly briefExplanation?: string;
   /** Thoán Từ (Judgment) by Văn Vương */

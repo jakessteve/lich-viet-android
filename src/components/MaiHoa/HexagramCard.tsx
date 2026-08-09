@@ -104,6 +104,11 @@ export default function HexagramCard({
         <h4 className="text-xs sm:text-base md:text-lg font-bold text-text-primary-light dark:text-text-primary-dark text-center leading-tight">
           {hexagram.name}
         </h4>
+        {hexagram.fullChineseName && (
+          <span className="text-[10px] sm:text-xs font-medium tracking-wide opacity-80 text-text-secondary-light dark:text-text-secondary-dark">
+            {hexagram.fullChineseName}
+          </span>
+        )}
 
         {/* Hexagram Lines — Clean visual, no inline metadata */}
         <div className="py-1 sm:py-2 w-14 sm:w-20 md:w-24 mx-auto">

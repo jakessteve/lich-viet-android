@@ -20,7 +20,9 @@ const LoginPage = React.lazy(() => import('../components/pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('../components/pages/RegisterPage'));
 const TuViPage = React.lazy(() => import('../components/TuVi/TuViPage').then((m) => ({ default: m.TuViPage })));
 const ElectionPage = React.lazy(() => import('../components/Election/ElectionPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Ngày Tốt...</div> })));
-const AstrologyPage = React.lazy(() => import('../components/Astrology/AstrologyPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Chiêm Tinh...</div> })));
+const WesternAstrologyPage = React.lazy(() => import('../components/Astrology/Western/WesternAstrologyPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Chiêm Tinh Tây Phương...</div> })));
+const VedicAstrologyPage = React.lazy(() => import('../components/Astrology/Vedic/VedicAstrologyPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Chiêm Tinh Ấn Độ...</div> })));
+const SynastryPage = React.lazy(() => import('../components/Astrology/Synastry/SynastryPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Hợp Lá Số...</div> })));
 
 // ══════════════════════════════════════════════════════════
 // Landing Route (standalone, no app chrome)
@@ -101,11 +103,39 @@ export function renderModuleRoutes() {
       />
       <Route
         path="chiem-tinh"
+        element={<Navigate to="/app/chiem-tinh/tay-phuong" replace />}
+      />
+      <Route
+        path="chiem-tinh/tay-phuong"
         element={
-          <ErrorBoundary viewName="Chiêm Tinh">
+          <ErrorBoundary viewName="Chiêm Tinh Tây Phương">
             <div className="animate-fade-scale">
               <Suspense fallback={<LoadingState />}>
-                <AstrologyPage />
+                <WesternAstrologyPage />
+              </Suspense>
+            </div>
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="chiem-tinh/vedic"
+        element={
+          <ErrorBoundary viewName="Chiêm Tinh Ấn Độ">
+            <div className="animate-fade-scale">
+              <Suspense fallback={<LoadingState />}>
+                <VedicAstrologyPage />
+              </Suspense>
+            </div>
+          </ErrorBoundary>
+        }
+      />
+      <Route
+        path="chiem-tinh/hop-la"
+        element={
+          <ErrorBoundary viewName="Hợp Lá Số">
+            <div className="animate-fade-scale">
+              <Suspense fallback={<LoadingState />}>
+                <SynastryPage />
               </Suspense>
             </div>
           </ErrorBoundary>
@@ -113,7 +143,7 @@ export function renderModuleRoutes() {
       />
       <Route path="bat-tu" element={<Navigate to="/app/am-lich" replace />} />
       <Route path="than-so-hoc" element={<Navigate to="/app/am-lich" replace />} />
-      <Route path="hop-la" element={<Navigate to="/app/am-lich" replace />} />
+      <Route path="hop-la" element={<Navigate to="/app/chiem-tinh/hop-la" replace />} />
 
       {/* Settings page */}
       <Route

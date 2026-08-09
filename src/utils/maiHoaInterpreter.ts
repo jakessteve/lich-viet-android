@@ -516,6 +516,7 @@ export function interpretDivination(result: DivinationResult, lunarMonth: number
     movingLinePrediction,
     categoryPredictions,
     chineseName: result.mainHexagram.chineseName,
+    fullChineseName: result.mainHexagram.fullChineseName,
     briefExplanation: result.mainHexagram.briefExplanation,
     thoanTu: result.mainHexagram.thoanTu,
     allHaoTexts: result.mainHexagram.haoTexts,

@@ -109,7 +109,7 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
 
         {/* WCAG compliant Personal Score Badge */}
         {personalScore &&
-          (personalScore.actionScore >= 3 ? (
+          (personalScore.actionScore >= 2 ? (
             <div
               className="w-1.5 h-1.5 rounded-sm bg-purple-500"
               title={`Cát theo tuổi: ${personalScore.label}`}

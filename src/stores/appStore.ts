@@ -37,6 +37,8 @@ interface AppState {
   isDark: boolean;
   /** Current font size level */
   fontSize: FontSizeLevel;
+  /** Whether personalization is active (toggle by user) */
+  isPersonalized: boolean;
 }
 
 interface AppActions {
@@ -50,6 +52,8 @@ interface AppActions {
   cycleFontSize: () => void;
   /** Set font size to a specific level */
   setFontSizeLevel: (level: FontSizeLevel) => void;
+  /** Toggle personalization on/off */
+  togglePersonalization: () => void;
 }
 
 type AppStore = AppState & AppActions;
@@ -121,6 +125,7 @@ export const useAppStore = create<AppStore>()((set) => ({
   dayData: getDetailedDayData(initialDate),
   viewerLocation: null,
   isDark: getInitialDarkMode(),
+  isPersonalized: false,
   fontSize: getInitialFontSize(),
 
   // Actions
@@ -164,6 +169,15 @@ export const useAppStore = create<AppStore>()((set) => ({
         properties: { font_size: next },
       });
       return { fontSize: next };
+    }),
+
+  togglePersonalization: () =>
+    set((state) => {
+      analytics.trackEvent({
+        name: "personalization_toggle",
+        properties: { is_personalized: !state.isPersonalized },
+      });
+      return { isPersonalized: !state.isPersonalized };
     }),
 
   setFontSizeLevel: (level: FontSizeLevel) => {

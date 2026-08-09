@@ -146,6 +146,7 @@ interface AuthActions {
     displayName?: string;
     avatarUrl?: string;
     birthday?: string;
+    gender?: 'male' | 'female';
     birthHour?: number | null;
     birthMinute?: number | null;
     birthLocation?: { lat: number; lng: number; city: string; countryCode?: string; countryName?: string } | null;
@@ -300,7 +301,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   },
 
   // ── Update Profile ────────────────────────────────────────────
-  updateProfile: async ({ displayName, avatarUrl, birthday, birthHour, birthMinute, birthLocation }) => {
+  updateProfile: async ({ displayName, avatarUrl, birthday, gender, birthHour, birthMinute, birthLocation }) => {
     const { user } = get();
     if (!user) return { success: false, error: 'Chưa đăng nhập.' };
 
@@ -315,9 +316,10 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       ...(birthday !== undefined && { birthday }),
     };
 
-    if (birthHour !== undefined || birthMinute !== undefined || birthday !== undefined) {
+    if (gender !== undefined || birthHour !== undefined || birthMinute !== undefined || birthday !== undefined) {
       updated.profile = {
         ...(updated.profile || {}),
+        ...(gender !== undefined && { gender }),
         ...(birthHour !== undefined && { birthHour: birthHour === null ? undefined : birthHour }),
         ...(birthMinute !== undefined && { birthMinute: birthMinute === null ? undefined : birthMinute }),
       };

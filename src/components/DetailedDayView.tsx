@@ -10,6 +10,7 @@ import {
 } from '../utils/formatHelpers';
 import { normalizeDungSuBuckets } from '../utils/dungSuDisplay';
 import { useAuthStore } from '../stores/authStore';
+import { useAppStore } from '../stores/appStore';
 import {
   calculatePersonalDayScore,
   calculatePersonalHourModifier,
@@ -25,25 +26,28 @@ interface DetailedDayViewProps {
 
 const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuthStore();
+  const { user } = useAuthStore();
+  const isPersonalized = useAppStore((s) => s.isPersonalized);
+  const togglePersonalization = useAppStore((s) => s.togglePersonalization);
   const [sortByScore, setSortByScore] = useState(false);
-  const [showPersonalized, setShowPersonalized] = useState(false);
-
+  
   const computedProfile = useMemo(() => {
     return getUserBirthProfile(user);
   }, [user]);
 
   const hasBirthday = !!computedProfile?.birthYear;
 
+  const dayChi = data.canChi?.day?.chi;
+
   // Personal day score
   const personalScore = useMemo(() => {
-    if (!computedProfile?.birthYear || !data.canChi?.day?.chi) return null;
-    return calculatePersonalDayScore(computedProfile.birthYear, data.canChi.day.chi, computedProfile);
-  }, [computedProfile, data.canChi.day.chi]);
+    if (!isPersonalized || !computedProfile?.birthYear || !dayChi) return null;
+    return calculatePersonalDayScore(computedProfile.birthYear, dayChi, computedProfile);
+  }, [isPersonalized, computedProfile, dayChi]);
 
   // Personalized hours with modifier overlay
   const personalizedHours = useMemo(() => {
-    if (!showPersonalized || !computedProfile?.birthYear) return data.allHours;
+    if (!isPersonalized || !computedProfile?.birthYear) return data.allHours;
     return data.allHours.map((h) => {
       const hour = { ...h, advancedInfo: [...(h.advancedInfo || [])] };
       const modifier = calculatePersonalHourModifier(
@@ -65,13 +69,13 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
       }
       return hour;
     });
-  }, [data.allHours, data.canChi.day, date, showPersonalized, computedProfile]);
+  }, [isPersonalized, data.allHours, data.canChi.day, date, computedProfile]);
 
   // Personalized Dụng Sự
   const personalDungSu = useMemo(() => {
-    if (!computedProfile?.birthYear || !data.canChi?.day?.chi || !data.dungSu?.suitable) return null;
+    if (!isPersonalized || !computedProfile?.birthYear || !data.canChi?.day?.chi || !data.dungSu?.suitable) return null;
     return getPersonalDungSu(computedProfile.birthYear, data.canChi.day.chi, data.dungSu.suitable, computedProfile);
-  }, [computedProfile, data.canChi.day.chi, data.dungSu.suitable]);
+  }, [isPersonalized, computedProfile, data.canChi.day.chi, data.dungSu.suitable]);
 
   const sortedHours = useMemo(() => {
     if (!sortByScore) return personalizedHours;
@@ -85,7 +89,6 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
   }, [personalizedHours]);
 
   const solarDateStr = date.toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric' });
-  const _lunarDateStr = `${data.lunarDate.day}/${data.lunarDate.month}/${data.lunarDate.year}`;
   const dayOfWeekAbbr = data.dayOfWeek === 'Chủ Nhật' ? 'CN' : `T${date.getDay() + 1}`;
 
   // Helper to deduplicate and clean bracket descriptions
@@ -105,18 +108,6 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
 
   const formattedNghi = useMemo(() => formatDungSu(normalizedDungSu.nghi, 'Tốt mọi việc'), [normalizedDungSu.nghi]);
   const formattedKy = useMemo(() => formatDungSu(normalizedDungSu.ky, 'Xấu mọi việc'), [normalizedDungSu.ky]);
-
-  const getSignedModifierTotal = (breakdowns: string[]): number | null => {
-    if (breakdowns.length === 0) return null;
-
-    const total = breakdowns.reduce((sum, entry) => {
-      const match = entry.match(/\(([+-]\d+)%\)/);
-      if (!match) return sum;
-      return sum + Number(match[1]);
-    }, 0);
-
-    return Number.isFinite(total) ? total : null;
-  };
 
   const getSignedModifierTotalBySign = (breakdowns: string[], sign: '+' | '-'): number | null => {
     if (breakdowns.length === 0) return null;
@@ -199,17 +190,6 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
     };
   };
 
-  const handlePersonalizeClick = () => {
-    if (!isAuthenticated) {
-      navigate('/app/dang-ky');
-      return;
-    }
-    if (!hasBirthday) {
-      navigate('/app/cai-dat');
-      return;
-    }
-    setShowPersonalized((prev) => !prev);
-  };
 
   return (
     <div className="w-full space-y-4 animate-fade-scale" data-testid="detailed-day-view">
@@ -247,34 +227,36 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               )}
             </div>
           </div>
-          <button
-            onClick={handlePersonalizeClick}
-            className={`flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full transition-colors shrink-0 w-full sm:w-auto ${
-              showPersonalized
-                ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300'
-                : 'bg-gray-100 dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-200 dark:hover:bg-white/15'
-            }`}
-            title={
-              !isAuthenticated
-                ? 'Đăng nhập để cá nhân hoá'
-                : !hasBirthday
-                  ? 'Cập nhật ngày sinh để cá nhân hoá'
-                  : showPersonalized
-                    ? 'Tắt cá nhân hoá'
-                    : 'Cá nhân hoá theo tuổi'
-            }
-          >
-            <span className="material-icons-round text-sm">{showPersonalized ? 'person_off' : 'person'}</span>
-            {showPersonalized ? 'Tắt CNH' : 'Cá nhân hoá'}
-          </button>
+          {computedProfile?.birthYear ? (
+            <button
+              onClick={togglePersonalization}
+              className={`flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full shrink-0 w-full sm:w-auto transition-colors hover:opacity-80 ${
+                isPersonalized
+                  ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300'
+                  : 'bg-gray-100 dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark'
+              }`}
+              title={isPersonalized ? 'Tắt cá nhân hoá' : 'Bật cá nhân hoá theo tuổi của bạn'}
+            >
+              <span className="material-icons-round text-sm">person</span>
+              {isPersonalized ? 'Đã CNH' : 'Chưa CNH'}
+            </button>
+          ) : (
+            <span
+              className="flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full shrink-0 w-full sm:w-auto bg-gray-100 dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark"
+              title="Cập nhật ngày sinh để cá nhân hoá"
+            >
+              <span className="material-icons-round text-sm">person</span>
+              Chưa CNH
+            </span>
+          )}
         </div>
       </div>
 
       {/* Personal Score Card */}
-      {showPersonalized && personalScore && (
+      {isPersonalized && personalScore && (
         <div
           className={`rounded-2xl border px-5 py-4 ${
-            personalScore.actionScore >= 3
+            personalScore.actionScore >= 2
               ? 'bg-purple-50/50 dark:bg-purple-900/10 border-purple-200 dark:border-purple-800'
               : personalScore.actionScore < 0
                 ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800'
@@ -284,14 +266,14 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
           <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
             <span
               className={`material-icons-round text-xl mt-0.5 ${
-                personalScore.actionScore >= 3
+                personalScore.actionScore >= 2
                   ? 'text-purple-600 dark:text-purple-400'
                   : personalScore.actionScore < 0
                     ? 'text-orange-600 dark:text-orange-400'
                     : 'text-gray-500 dark:text-gray-400'
               }`}
             >
-              {personalScore.actionScore >= 3
+              {personalScore.actionScore >= 2
                 ? 'sentiment_very_satisfied'
                 : personalScore.actionScore < 0
                   ? 'sentiment_very_dissatisfied'
@@ -302,7 +284,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 Điểm cá nhân hoá:{' '}
                 <span
                   className={
-                    personalScore.actionScore >= 3
+                    personalScore.actionScore >= 2
                       ? 'text-purple-700 dark:text-purple-300'
                       : personalScore.actionScore < 0
                         ? 'text-orange-700 dark:text-orange-300'
@@ -358,7 +340,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
       )}
 
       {/* Personalized Dụng Sự */}
-      {showPersonalized && personalDungSu && (
+      {isPersonalized && personalDungSu && (
         <CollapsibleCard title="Dụng sự theo tuổi" defaultOpen={true} collapseOnMobile={true}>
           <div className="divide-y divide-border-light dark:divide-border-dark text-sm px-4 sm:px-6 py-3">
             {personalDungSu.recommended.length > 0 && (
@@ -621,22 +603,11 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 const currentScore = h.score;
                 const isWeak = currentScore < 40;
                 const isAuspiciousCurrent = currentScore >= 60;
-                const signedModifierTotal = getSignedModifierTotal(personalBreakdowns);
                 const positiveModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '+');
                 const negativeModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '-');
-                const scoreToneClass = showPersonalized
-                  ? currentScore >= 50
+                const scoreToneClass = currentScore >= 50
                     ? 'text-good dark:text-good-dark'
-                    : 'text-bad dark:text-bad-dark'
-                  : signedModifierTotal !== null
-                    ? signedModifierTotal > 0
-                      ? 'text-good dark:text-good-dark'
-                      : signedModifierTotal < 0
-                        ? 'text-bad dark:text-bad-dark'
-                        : 'text-text-primary-light dark:text-text-primary-dark'
-                    : isAuspiciousCurrent
-                      ? 'text-good dark:text-good-dark'
-                      : 'text-text-primary-light dark:text-text-primary-dark';
+                    : 'text-bad dark:text-bad-dark';
                 const normalizedHourDungSu = renderNormalizedDungSu(h.nghi, h.ky);
 
                 return (
@@ -689,7 +660,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                         <span className="font-bold text-crimson-600 dark:text-crimson-400 mr-1">Kỵ:</span>
                         <span>{normalizedHourDungSu.ky}</span>
                       </div>
-                      {showPersonalized && personalBreakdowns.length > 0 && (
+                      {isPersonalized && personalBreakdowns.length > 0 && (
                         <div className="space-y-0.5 mt-1">
                           {personalBreakdowns.map((b, i) => (
                             <div key={i} className={`text-xs font-normal ${getBreakdownToneClass(b)}`}>
@@ -701,7 +672,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                     </td>
                     <td className="px-2 sm:px-6 py-3 sm:py-4 text-right font-bold text-sm align-top flex flex-col items-end space-y-0.5 text-text-primary-light dark:text-text-primary-dark">
                       <div className={scoreToneClass}>{currentScore}%</div>
-                      {showPersonalized && (positiveBreakdowns.length > 0 || negativeBreakdowns.length > 0) && (
+                      {isPersonalized && (positiveBreakdowns.length > 0 || negativeBreakdowns.length > 0) && (
                         <div className="space-y-0.5 mt-1">
                           {positiveModifierTotal !== null && positiveModifierTotal > 0 && (
                             <div className="text-xs font-normal text-good dark:text-good-dark">

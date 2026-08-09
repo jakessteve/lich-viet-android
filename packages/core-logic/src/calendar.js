@@ -129,9 +129,12 @@ function getLeapMonthOffset(a11, timeZone) {
 
 export function getLunarDate(date, location = null, fallbackTimezoneOffset = 7.0) {
   let timezoneOffsetHours = fallbackTimezoneOffset;
-  if (location && (location.latitude !== undefined || location.countryCode)) {
+  if (location && ((location.latitude !== undefined || location.lat !== undefined) || location.countryCode)) {
     try {
-      const htzc = resolveVietnamHistoricalTimezone(date, location);
+      const htzc = resolveVietnamHistoricalTimezone({
+        timestamp: date.getTime(),
+        latitude: location.latitude ?? location.lat,
+      });
       timezoneOffsetHours = htzc.offsetHours;
     } catch (err) {
       if (typeof location.timezone === "number") {

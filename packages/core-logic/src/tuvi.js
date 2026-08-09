@@ -2000,6 +2000,7 @@ export function getBranchRelationship(branchA, branchB) {
 
   function getIdx(branch) {
     if (typeof branch === "number") return branch;
+    if (branch == null || typeof branch !== "string") return -1;
     let idx = CHI_NAMES.findIndex(n => n.toLowerCase() === branch.toLowerCase());
     if (idx === -1) {
       idx = CHI_NAMES_ENG.findIndex(n => n.toLowerCase() === branch.toLowerCase());
@@ -2011,7 +2012,7 @@ export function getBranchRelationship(branchA, branchB) {
   const idxB = getIdx(branchB);
 
   if (idxA === -1 || idxB === -1 || idxA < 0 || idxA > 11 || idxB < 0 || idxB > 11) {
-    throw new TypeError("Invalid branch parameters");
+    return "binh_hoa";
   }
 
   const phaPairs = ["0,9", "9,0", "1,4", "4,1", "2,11", "11,2", "3,6", "6,3", "5,8", "8,5", "7,10", "10,7"];

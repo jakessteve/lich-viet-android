@@ -10,6 +10,7 @@ export interface BirthDataInputProps {
     longitude: number;
     timezone: number;
     name?: string;
+    locationName?: string;
   };
   onChange: (value: BirthDataInputProps['value']) => void;
   showName?: boolean;

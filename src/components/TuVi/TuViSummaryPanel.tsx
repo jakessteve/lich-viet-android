@@ -317,21 +317,21 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <button
-                onClick={() => navigate('/app/chiem-tinh?tab=hop-la')}
+                onClick={() => navigate('/app/chiem-tinh/hop-la')}
                 className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 dark:text-rose-400 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 transition-colors"
               >
                 <span className="material-icons-round text-base">favorite</span>
                 Xem Hợp Lá Số
               </button>
               <button
-                onClick={() => navigate('/app/chiem-tinh?tab=tay-phuong')}
+                onClick={() => navigate('/app/chiem-tinh/tay-phuong')}
                 className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 transition-colors"
               >
                 <span className="material-icons-round text-base">public</span>
                 Lá số Tây Phương
               </button>
               <button
-                onClick={() => navigate('/app/chiem-tinh?tab=vedic')}
+                onClick={() => navigate('/app/chiem-tinh/vedic')}
                 className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-purple-600 bg-purple-50 hover:bg-purple-100 dark:text-purple-400 dark:bg-purple-900/20 dark:hover:bg-purple-900/40 transition-colors"
               >
                 <span className="material-icons-round text-base">bubble_chart</span>
