@@ -45,6 +45,28 @@ export const FEATURES = [
     iconColor: 'text-amber-600 dark:text-amber-400',
     tier: 'Cơ bản',
   },
+  {
+    id: 'ngay-tot',
+    icon: 'event_available',
+    title: 'Ngày Tốt',
+    desc: 'Tìm ngày giờ tốt cho hôn lễ, khai trương, xây dựng — dựa trên chấm điểm Đông-Tây-Ấn.',
+    highlight: '3 hệ chấm điểm',
+    glowColor: 'from-emerald-400/20 to-teal-600/10',
+    iconBg: 'bg-emerald-500/12 dark:bg-emerald-400/10',
+    iconColor: 'text-emerald-600 dark:text-emerald-400',
+    tier: 'Nâng cao',
+  },
+  {
+    id: 'chiem-tinh',
+    icon: 'public',
+    title: 'Chiêm Tinh',
+    desc: 'Chiêm tinh Tây phương, Vedic (Jyotish) và so sánh lá số hợp duyên — đa hệ, toàn diện.',
+    highlight: 'Đa hệ chiêm tinh',
+    glowColor: 'from-indigo-400/20 to-violet-600/10',
+    iconBg: 'bg-indigo-500/12 dark:bg-indigo-400/10',
+    iconColor: 'text-indigo-600 dark:text-indigo-400',
+    tier: 'Nâng cao',
+  },
 ];
 
 // ══════════════════════════════════════════════════════════

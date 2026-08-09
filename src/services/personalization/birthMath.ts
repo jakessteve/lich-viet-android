@@ -2,12 +2,7 @@ import type { CanChi } from '../../types/calendar';
 import type { TuViBirthLocation } from '../../types/tuvi';
 import { CAN, CHI } from '../../utils/constants';
 import { getCanChiDay, getCanChiYear, parseCanChi } from '../../utils/calendarEngine';
-import { getHourBranch, getHourCan, normalizeBirthTimeWithPolicy } from '../tuvi/timeNormalization';
-import {
-  getSwissEphemerisInstance,
-  getSwissTrueSolarCivilTimeForLocation,
-  type SwissGeoLocation,
-} from '../astronomy/swissEphemeris';
+import { normalizeBirthTimeWithPolicy } from '../tuvi/timeNormalization';
 
 export interface PersonalBirthDetails {
   birthMonth?: number | null;
@@ -61,18 +56,12 @@ function applyBirthLocationCorrection(date: Date, birthLocation?: TuViBirthLocat
     ? birthLocation.timezone
     : Math.max(-12, Math.min(14, Math.round(birthLocation.lng / 15)));
 
-  const swe = getSwissEphemerisInstance();
-  const corrected = swe
-    ? getSwissTrueSolarCivilTimeForLocation(swe, date, {
-        longitude: birthLocation.lng,
-        timezoneOffsetHours,
-      } as SwissGeoLocation)
-    : new Date(date.getTime() + 4 * (birthLocation.lng - timezoneOffsetHours * 15) * 60 * 1000);
+  const corrected = new Date(date.getTime() + 4 * (birthLocation.lng - timezoneOffsetHours * 15) * 60 * 1000);
 
   return normalizeBirthTimeWithPolicy(corrected, birthLocation).correctedDate;
 }
 
-function toChiPair(canChi: string): CanChi {
+export function toChiPair(canChi: string): CanChi {
   return parseCanChi(canChi);
 }
 
@@ -110,19 +99,27 @@ export function resolvePersonalBirthMoment(
   }
 
   const correctedDate = applyBirthLocationCorrection(civilBirthDate, birthDetails?.birthLocation);
-  const dayCanChi = toChiPair(getCanChiDay(correctedDate));
-  const hourBranch = getHourBranch(correctedDate.getHours());
-  const hourCanChi = {
-    can: CAN[getHourCan(CAN.indexOf(dayCanChi.can), hourBranch)],
-    chi: CHI[hourBranch],
-  } as CanChi;
+  
+  const dayCanChiStr = getCanChiDay(correctedDate);
+
+  const dayCanChi = parseCanChi(dayCanChiStr);
+
+  let hourCanChi: CanChi | undefined;
+  if (hasExactBirthTime) {
+    const h = correctedDate.getHours();
+    const isNextDay = h === 23;
+    const hourBranchIndex = isNextDay ? 0 : Math.floor((h + 1) / 2) % 12;
+    const dayCanIndex = CAN.indexOf(dayCanChi.can as any);
+    const hourCanIndex = ((dayCanIndex % 5) * 2 + hourBranchIndex) % 10;
+    hourCanChi = { can: CAN[hourCanIndex] as any, chi: CHI[hourBranchIndex] as any };
+  }
 
   return {
     correctedDate,
     yearCanChi,
     dayCanChi,
     hourCanChi,
-    hasExactBirthDate: true,
+    hasExactBirthDate,
     hasExactBirthTime,
   };
 }

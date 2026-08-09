@@ -204,6 +204,35 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
             </div>
           </div>
         </CollapsibleCard>
+
+        {/* Contextual Hints for New Features */}
+        {activeTab === 'ngay-tot' && (
+          <div className="surface-card p-4 rounded-2xl border border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-900/10">
+            <div className="flex items-start gap-3 text-sm text-text-primary-light dark:text-text-primary-dark">
+              <span className="material-icons-round text-emerald-600 dark:text-emerald-400 mt-0.5">info</span>
+              <div>
+                <span className="font-semibold block mb-1">Tra cứu Ngày Tốt</span>
+                <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                  Thuật toán tổng hợp chấm điểm từ Tử Vi, Lục Nhâm, và Chiêm Tinh Tây Phương.
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'chiem-tinh' && (
+          <div className="surface-card p-4 rounded-2xl border border-indigo-500/30 bg-indigo-50/50 dark:bg-indigo-900/10">
+            <div className="flex items-start gap-3 text-sm text-text-primary-light dark:text-text-primary-dark">
+              <span className="material-icons-round text-indigo-600 dark:text-indigo-400 mt-0.5">account_circle</span>
+              <div>
+                <span className="font-semibold block mb-1">Chiêm Tinh Học</span>
+                <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                  Đăng nhập để tự động điền lá số của bạn và xem luận giải chi tiết hơn.
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </aside>
   );

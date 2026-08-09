@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { TuViChart as TuViChartType, TuViCombination } from '../../types/tuvi';
 import { SegmentedControl, type SegmentedOption } from '../shared';
 
@@ -140,6 +141,7 @@ function getCombinationSummary(combinations: TuViCombination[]) {
 
 export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) => {
   const [activeTab, setActiveTab] = useState<SummaryTab>('overview');
+  const navigate = useNavigate();
 
   const palaceStats = useMemo(
     () =>
@@ -302,6 +304,39 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
                   </div>
                 ))
               )}
+            </div>
+          </div>
+
+          {/* Cross-Feature Workflow Links */}
+          <div className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4">
+            <div className="flex items-center gap-1.5 mb-3">
+              <span className="material-icons-round shrink-0 text-base text-indigo-500 dark:text-indigo-400">explore</span>
+              <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
+                Phân tích chuyên sâu
+              </h4>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <button
+                onClick={() => navigate('/app/chiem-tinh?tab=hop-la')}
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 dark:text-rose-400 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 transition-colors"
+              >
+                <span className="material-icons-round text-base">favorite</span>
+                Xem Hợp Lá Số
+              </button>
+              <button
+                onClick={() => navigate('/app/chiem-tinh?tab=tay-phuong')}
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 transition-colors"
+              >
+                <span className="material-icons-round text-base">public</span>
+                Lá số Tây Phương
+              </button>
+              <button
+                onClick={() => navigate('/app/chiem-tinh?tab=vedic')}
+                className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-purple-600 bg-purple-50 hover:bg-purple-100 dark:text-purple-400 dark:bg-purple-900/20 dark:hover:bg-purple-900/40 transition-colors"
+              >
+                <span className="material-icons-round text-base">bubble_chart</span>
+                Lá số Ấn Độ (Vedic)
+              </button>
             </div>
           </div>
         </div>

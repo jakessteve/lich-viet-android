@@ -61,6 +61,11 @@ export default defineConfig({
       '@lich-viet/core/tamThuc': path.resolve(__dirname, './packages/core/src/tamThuc/index.ts'),
       '@lich-viet/core': path.resolve(__dirname, './packages/core/src/index.ts'),
       '@lich-viet/types': path.resolve(__dirname, './packages/types/src/index.ts'),
+      '@omce/core-logic': path.resolve(__dirname, './packages/core-logic/src/index.js'),
+      '@omce/contracts': path.resolve(__dirname, './packages/contracts/src/index.js'),
+      '@omce/canonical-db': path.resolve(__dirname, './packages/canonical-db/src/index.js'),
+      '@omce/swisseph-wasm': path.resolve(__dirname, './packages/swisseph-wasm/src/index.js'),
+      '@omce/app-backend': path.resolve(__dirname, './packages/app-backend/src/index.js'),
     },
   },
   build: {

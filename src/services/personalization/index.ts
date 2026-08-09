@@ -1,7 +1,6 @@
 export {
   calculatePersonalDayScore,
   getYearChi,
-  getYearThaiTueType,
   isTamHop,
   type PersonalDayScore,
 } from './personalDayScore';

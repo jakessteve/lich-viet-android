@@ -19,6 +19,11 @@ export default defineConfig({
       { find: '@lich-viet/core', replacement: path.resolve(__dirname, 'packages/core/src/index.ts') },
       // App-level alias
       { find: '@', replacement: path.resolve(__dirname, 'src') },
+      { find: '@omce/core-logic', replacement: path.resolve(__dirname, 'packages/core-logic/src/index.js') },
+      { find: '@omce/contracts', replacement: path.resolve(__dirname, 'packages/contracts/src/index.js') },
+      { find: '@omce/canonical-db', replacement: path.resolve(__dirname, 'packages/canonical-db/src/index.js') },
+      { find: '@omce/swisseph-wasm', replacement: path.resolve(__dirname, 'packages/swisseph-wasm/src/index.js') },
+      { find: '@omce/app-backend', replacement: path.resolve(__dirname, 'packages/app-backend/src/index.js') },
     ],
   },
   test: {

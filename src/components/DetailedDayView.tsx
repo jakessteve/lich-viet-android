@@ -415,6 +415,25 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               </div>
             )}
           </div>
+          
+          <div className="px-4 sm:px-6 py-3 border-t border-border-light dark:border-border-dark text-right">
+            <button
+              onClick={() => {
+                const d = new Date(date);
+                const startStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                
+                const end = new Date(date);
+                end.setDate(end.getDate() + 7);
+                const endStr = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`;
+                
+                navigate(`/app/ngay-tot?start=${startStr}&end=${endStr}`);
+              }}
+              className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
+            >
+              Tìm ngày tốt quanh ngày này
+              <span className="material-icons-round text-base">arrow_forward</span>
+            </button>
+          </div>
         </CollapsibleCard>
       )}
 

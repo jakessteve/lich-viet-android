@@ -1,0 +1,167 @@
+import { ASTROLOGY_CONCEPT_ENTITIES } from "./astrology-concepts.js";
+import { CALCULATION_METHOD_ENTITIES } from "./calculation-knowledge.js";
+import { DUNG_SU_EVENT_ENTITIES } from "./dung-su-events.js";
+import { QMDJ_ENTITIES } from "./qmdj-entities.js";
+
+export const CANONICAL_ENTITIES = Object.freeze([
+  { entity_id: "sun", entity_type: "luminary" },
+  { entity_id: "moon", entity_type: "luminary" },
+  { entity_id: "mercury", entity_type: "planet" },
+  { entity_id: "venus", entity_type: "planet" },
+  { entity_id: "mars", entity_type: "planet" },
+  { entity_id: "jupiter", entity_type: "planet" },
+  { entity_id: "saturn", entity_type: "planet" },
+  { entity_id: "tiet_khi_boundary", entity_type: "temporal_marker" },
+  { entity_id: "rahu_kalam", entity_type: "constraint_window" },
+  { entity_id: "void_of_course_guard", entity_type: "constraint_guard" },
+  { entity_id: "nguyet_tuong", entity_type: "derived_marker" },
+  { entity_id: "tu_hoa_canh", entity_type: "star_override" },
+  { entity_id: "tu_hoa_nham", entity_type: "star_override" },
+  { entity_id: "kinh_duong", entity_type: "secondary_star" },
+  { entity_id: "da_la", entity_type: "secondary_star" },
+  { entity_id: "hoa_tinh", entity_type: "secondary_star" },
+  { entity_id: "linh_tinh", entity_type: "secondary_star" },
+  { entity_id: "ta_phu", entity_type: "secondary_star" },
+  { entity_id: "huu_bat", entity_type: "secondary_star" },
+  { entity_id: "van_xuong", entity_type: "secondary_star" },
+  { entity_id: "van_khuc", entity_type: "secondary_star" },
+  { entity_id: "thien_khoi", entity_type: "secondary_star" },
+  { entity_id: "thien_viet", entity_type: "secondary_star" },
+  { entity_id: "loc_ton", entity_type: "secondary_star" },
+  { entity_id: "dia_khong", entity_type: "secondary_star" },
+  { entity_id: "dia_kiep", entity_type: "secondary_star" },
+
+  // 14 Major Stars
+  { entity_id: "tu_vi", entity_type: "major_star" },
+  { entity_id: "thien_co", entity_type: "major_star" },
+  { entity_id: "thai_duong", entity_type: "major_star" },
+  { entity_id: "vu_khuc", entity_type: "major_star" },
+  { entity_id: "thien_dong", entity_type: "major_star" },
+  { entity_id: "liem_trinh", entity_type: "major_star" },
+  { entity_id: "thien_phu", entity_type: "major_star" },
+  { entity_id: "thai_am", entity_type: "major_star" },
+  { entity_id: "tham_lang", entity_type: "major_star" },
+  { entity_id: "cu_mon", entity_type: "major_star" },
+  { entity_id: "thien_tuong", entity_type: "major_star" },
+  { entity_id: "thien_luong", entity_type: "major_star" },
+  { entity_id: "that_sat", entity_type: "major_star" },
+  { entity_id: "pha_quan", entity_type: "major_star" },
+
+  // Tứ Hóa
+  { entity_id: "hoa_loc", entity_type: "secondary_star" },
+  { entity_id: "hoa_quyen", entity_type: "secondary_star" },
+  { entity_id: "hoa_khoa", entity_type: "secondary_star" },
+  { entity_id: "hoa_ky", entity_type: "secondary_star" },
+
+  // Vòng Thái Tuế
+  { entity_id: "thai_tue_star", entity_type: "secondary_star" },
+  { entity_id: "thieu_duong", entity_type: "secondary_star" },
+  { entity_id: "tang_mon", entity_type: "secondary_star" },
+  { entity_id: "thieu_am", entity_type: "secondary_star" },
+  { entity_id: "quan_phu_tue", entity_type: "secondary_star" },
+  { entity_id: "tu_phu_star", entity_type: "secondary_star" },
+  { entity_id: "tue_pha", entity_type: "secondary_star" },
+  { entity_id: "long_duc", entity_type: "secondary_star" },
+  { entity_id: "bach_ho", entity_type: "secondary_star" },
+  { entity_id: "phuc_duc", entity_type: "secondary_star" },
+  { entity_id: "dieu_khach", entity_type: "secondary_star" },
+  { entity_id: "truc_phu", entity_type: "secondary_star" },
+
+  // Vòng Bác Sĩ
+  { entity_id: "bac_si_star", entity_type: "secondary_star" },
+  { entity_id: "luc_si", entity_type: "secondary_star" },
+  { entity_id: "thanh_long", entity_type: "secondary_star" },
+  { entity_id: "tieu_hao_bacsi", entity_type: "secondary_star" },
+  { entity_id: "tuong_quan", entity_type: "secondary_star" },
+  { entity_id: "tau_thu", entity_type: "secondary_star" },
+  { entity_id: "phi_liem_star", entity_type: "secondary_star" },
+  { entity_id: "hy_than", entity_type: "secondary_star" },
+  { entity_id: "benh_phu", entity_type: "secondary_star" },
+  { entity_id: "dai_hao_bacsi", entity_type: "secondary_star" },
+  { entity_id: "phuc_binh", entity_type: "secondary_star" },
+  { entity_id: "quan_phu_bacsi", entity_type: "secondary_star" },
+
+  // Vòng Tràng Sinh
+  { entity_id: "trang_sinh", entity_type: "secondary_star" },
+  { entity_id: "moc_duc", entity_type: "secondary_star" },
+  { entity_id: "quan_doi", entity_type: "secondary_star" },
+  { entity_id: "lam_quan", entity_type: "secondary_star" },
+  { entity_id: "de_vuong", entity_type: "secondary_star" },
+  { entity_id: "suy", entity_type: "secondary_star" },
+  { entity_id: "benh", entity_type: "secondary_star" },
+  { entity_id: "tu_star", entity_type: "secondary_star" },
+  { entity_id: "mo", entity_type: "secondary_star" },
+  { entity_id: "tuyet", entity_type: "secondary_star" },
+  { entity_id: "thai", entity_type: "secondary_star" },
+  { entity_id: "duong", entity_type: "secondary_star" },
+
+  // Vòng Tướng Tinh
+  { entity_id: "tuong_tinh", entity_type: "secondary_star" },
+  { entity_id: "phan_an", entity_type: "secondary_star" },
+  { entity_id: "tue_dich", entity_type: "secondary_star" },
+  { entity_id: "tuc_than", entity_type: "secondary_star" },
+  { entity_id: "tai_sat", entity_type: "secondary_star" },
+  { entity_id: "thien_sat", entity_type: "secondary_star" },
+  { entity_id: "chi_boi", entity_type: "secondary_star" },
+  { entity_id: "ham_tri", entity_type: "secondary_star" },
+  { entity_id: "nguyet_sat", entity_type: "secondary_star" },
+  { entity_id: "vong_than", entity_type: "secondary_star" },
+
+  // Standalone Auxiliary Stars
+  { entity_id: "thien_ma", entity_type: "secondary_star" },
+  { entity_id: "dao_hoa", entity_type: "secondary_star" },
+  { entity_id: "hong_loan", entity_type: "secondary_star" },
+  { entity_id: "thien_hy", entity_type: "secondary_star" },
+  { entity_id: "thien_duc", entity_type: "secondary_star" },
+  { entity_id: "nguyet_duc", entity_type: "secondary_star" },
+  { entity_id: "tam_thai", entity_type: "secondary_star" },
+  { entity_id: "bat_toa", entity_type: "secondary_star" },
+  { entity_id: "an_quang", entity_type: "secondary_star" },
+  { entity_id: "thien_quy", entity_type: "secondary_star" },
+  { entity_id: "dai_phu", entity_type: "secondary_star" },
+  { entity_id: "phong_cao", entity_type: "secondary_star" },
+  { entity_id: "dau_quan", entity_type: "secondary_star" },
+  { entity_id: "thien_y", entity_type: "secondary_star" },
+  { entity_id: "hoa_cai", entity_type: "secondary_star" },
+  { entity_id: "thien_tru", entity_type: "secondary_star" },
+  { entity_id: "pha_toai", entity_type: "secondary_star" },
+  { entity_id: "phi_liem", entity_type: "secondary_star" },
+  { entity_id: "long_tri", entity_type: "secondary_star" },
+  { entity_id: "phuong_cac", entity_type: "secondary_star" },
+  { entity_id: "thien_khoc", entity_type: "secondary_star" },
+  { entity_id: "thien_hu", entity_type: "secondary_star" },
+  { entity_id: "thien_quan", entity_type: "secondary_star" },
+  { entity_id: "thien_phuc", entity_type: "secondary_star" },
+  { entity_id: "thien_khong", entity_type: "secondary_star" },
+  { entity_id: "thien_thuong", entity_type: "secondary_star" },
+  { entity_id: "thien_su", entity_type: "secondary_star" },
+  { entity_id: "kiep_sat", entity_type: "secondary_star" },
+  { entity_id: "giai_than", entity_type: "secondary_star" },
+  { entity_id: "thien_dieu", entity_type: "secondary_star" },
+  { entity_id: "thien_hinh", entity_type: "secondary_star" },
+  { entity_id: "am_sat", entity_type: "secondary_star" },
+  { entity_id: "thien_nguyet", entity_type: "secondary_star" },
+  { entity_id: "thien_vu", entity_type: "secondary_star" },
+  { entity_id: "thien_giai", entity_type: "secondary_star" },
+  { entity_id: "luu_ha", entity_type: "secondary_star" },
+  { entity_id: "duong_phu", entity_type: "secondary_star" },
+  { entity_id: "quoc_an", entity_type: "secondary_star" },
+  { entity_id: "thien_la", entity_type: "secondary_star" },
+  { entity_id: "dia_vong", entity_type: "secondary_star" },
+
+  // Dụng Sự Constraint Guards
+  { entity_id: "sat_su_nhat", entity_type: "constraint_guard" },
+  { entity_id: "cuu_kho_bat_cung", entity_type: "constraint_guard" },
+
+  // Dụng Sự activity/event vocabulary
+  ...DUNG_SU_EVENT_ENTITIES,
+
+  // Western and Indian astrology concept vocabulary
+  ...ASTROLOGY_CONCEPT_ENTITIES,
+
+  // Source-backed calculation method vocabulary
+  ...CALCULATION_METHOD_ENTITIES,
+
+  // Qi Men Dun Jia entities
+  ...QMDJ_ENTITIES
+]);

@@ -28,7 +28,12 @@
       "@/*": ["src/*"],
       "@lich-viet/core": ["packages/core/src/index.ts"],
       "@lich-viet/core/*": ["packages/core/src/*/index.ts"],
-      "@lich-viet/types": ["packages/types/src/index.ts"]
+      "@lich-viet/types": ["packages/types/src/index.ts"],
+      "@omce/core-logic": ["packages/core-logic/src/index.d.ts", "packages/core-logic/src/index.js"],
+      "@omce/contracts": ["packages/contracts/src/index.d.ts", "packages/contracts/src/index.js"],
+      "@omce/canonical-db": ["packages/canonical-db/src/index.d.ts", "packages/canonical-db/src/index.js"],
+      "@omce/swisseph-wasm": ["packages/swisseph-wasm/src/index.d.ts", "packages/swisseph-wasm/src/index.js"],
+      "@omce/app-backend": ["packages/app-backend/src/index.d.ts", "packages/app-backend/src/index.js"]
     }
   },
   "include": [

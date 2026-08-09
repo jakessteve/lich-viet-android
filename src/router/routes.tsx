@@ -19,6 +19,8 @@ const UpgradePage = React.lazy(() => import('../components/pages/UpgradePage'));
 const LoginPage = React.lazy(() => import('../components/pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('../components/pages/RegisterPage'));
 const TuViPage = React.lazy(() => import('../components/TuVi/TuViPage').then((m) => ({ default: m.TuViPage })));
+const ElectionPage = React.lazy(() => import('../components/Election/ElectionPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Ngày Tốt...</div> })));
+const AstrologyPage = React.lazy(() => import('../components/Astrology/AstrologyPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Chiêm Tinh...</div> })));
 
 // ══════════════════════════════════════════════════════════
 // Landing Route (standalone, no app chrome)
@@ -58,6 +60,18 @@ export function renderModuleRoutes() {
       <Route path="lich-dung-su" element={<Navigate to="/app/am-lich" replace />} />
       <Route path="acs" element={<Navigate to="/app/am-lich" replace />} />
       <Route
+        path="ngay-tot"
+        element={
+          <ErrorBoundary viewName="Ngày Tốt">
+            <Suspense fallback={<LoadingState />}>
+              <div className="animate-fade-scale">
+                <ElectionPage />
+              </div>
+            </Suspense>
+          </ErrorBoundary>
+        }
+      />
+      <Route
         path="gieo-que"
         element={
           <ErrorBoundary viewName="Gieo Quẻ — Mai Hoa & Tam Thức">
@@ -85,8 +99,19 @@ export function renderModuleRoutes() {
           </ErrorBoundary>
         }
       />
+      <Route
+        path="chiem-tinh"
+        element={
+          <ErrorBoundary viewName="Chiêm Tinh">
+            <div className="animate-fade-scale">
+              <Suspense fallback={<LoadingState />}>
+                <AstrologyPage />
+              </Suspense>
+            </div>
+          </ErrorBoundary>
+        }
+      />
       <Route path="bat-tu" element={<Navigate to="/app/am-lich" replace />} />
-      <Route path="chiem-tinh" element={<Navigate to="/app/am-lich" replace />} />
       <Route path="than-so-hoc" element={<Navigate to="/app/am-lich" replace />} />
       <Route path="hop-la" element={<Navigate to="/app/am-lich" replace />} />
 
@@ -146,7 +171,7 @@ export function renderLegacyRedirects() {
       <Route path="/gieo-que" element={<Navigate to="/app/gieo-que" replace />} />
       <Route path="/tu-vi" element={<Navigate to="/app/tu-vi" replace />} />
       <Route path="/bat-tu" element={<Navigate to="/app/am-lich" replace />} />
-      <Route path="/chiem-tinh" element={<Navigate to="/app/am-lich" replace />} />
+      <Route path="/chiem-tinh" element={<Navigate to="/app/chiem-tinh" replace />} />
       <Route path="/luc-nham" element={<Navigate to="/app/gieo-que?method=tam-thuc" replace />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </>

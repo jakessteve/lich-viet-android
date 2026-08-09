@@ -1,0 +1,20 @@
+{
+  "name": "@omce/app-backend",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "dependencies": {
+    "@omce/canonical-db": "0.0.0",
+    "@omce/contracts": "0.0.0",
+    "@omce/core-logic": "0.0.0",
+    "@omce/swisseph-wasm": "0.0.0"
+  }
+}

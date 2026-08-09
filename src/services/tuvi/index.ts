@@ -29,22 +29,10 @@ export {
 export { getTuViCatalogSummary, getTuViStarLayer } from './catalogLayers';
 
 // ── Time Normalization ────────────────────────────────────────
-export { normalizeBirthTime, getVietnamUtcOffset, getHourBranch, getHourCan, formatCanChi } from './timeNormalization';
+export { normalizeBirthTime, getVietnamUtcOffset } from './timeNormalization';
 
 // ── Star Placement ────────────────────────────────────────────
-export {
-  calculateMenhCungPosition,
-  calculateThanCungPosition,
-  calculateCuc,
-  calculateMenhCan,
-  placeTuViStar,
-  placeChinhTinh,
-  placePhuTinh,
-  calculateTuHoa,
-  calculatePalaceCans,
-  calculateHanContext,
-  generateChart,
-} from './starPlacement';
+export { generateChart, calculateHanContext } from './starPlacement';
 
 export { DEFAULT_TU_VI_SCHOOL, TU_VI_SCHOOL_PROFILES, resolveTuViSchoolProfile } from './schoolProfiles';
 export { buildTuViBirthContext } from './birthContext';

@@ -1,0 +1,22 @@
+{
+  "name": "@omce/swisseph-wasm",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    }
+  },
+  "scripts": {
+    "status": "node -e \"console.log('Swiss Ephemeris wasm wrapper pending implementation.')\""
+  },
+  "dependencies": {
+    "@omce/canonical-db": "0.0.0",
+    "@omce/contracts": "0.0.0",
+    "@omce/core-logic": "0.0.0"
+  }
+}

@@ -24,7 +24,7 @@ import banhToData from '../data/phase_1/banh_to_bach_ky.json';
 import { getNapAmIndex, checkNapAmCompatibility, getNapAmExceptionComment } from './canchiHelper';
 import { getYearlyStars } from './yearlyEngine';
 import { getExtraStars } from './extraStars';
-import { getSwissEphemerisInstance, getSwissLunarDateIfReady } from '../services/astronomy/swissEphemeris';
+import { getSwissEphemerisInstance } from '../services/astronomy/swissEphemeris';
 import type { SwissGeoLocation } from '../services/astronomy/swissEphemeris';
 import { getCivilDateForOffset } from './geo';
 import {
@@ -238,7 +238,7 @@ export function getLunarDate(
     return { ...cached };
   }
 
-  const swissLunarDate = getSwissLunarDateIfReady(normalized, 'south', undefined, location);
+  const swissLunarDate: any = undefined;
   if (swissLunarDate) {
     const precise = {
       day: swissLunarDate.day,
