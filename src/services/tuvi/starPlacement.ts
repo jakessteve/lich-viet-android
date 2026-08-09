@@ -1,14 +1,124 @@
 import type { TuViInput, TuViChart, TuViHanContext } from '../../types/tuvi';
 import { resolveTuViSchoolProfile } from './schoolProfiles';
 import { buildTuViBirthContext } from './birthContext';
-import { createTuViStarChart } from '@omce/core-logic';
-import { CHI } from '../../utils/constants';
+import {
+  createTuViStarChart,
+  calculateMenhCungPosition as omceMenhCungPosition,
+  calculateThanCungPosition as omceThanCungPosition,
+  calculateMenhCanIndex as omceMenhCanIndex,
+  calculateTuViCucNumber as omceCucNumber,
+  placeTuViStar as omcePlaceTuViStar,
+  placeChinhTinh as omcePlaceChinhTinh,
+  placePhuTinh as omcePlacePhuTinh,
+  calculateDaiHanAgeRanges,
+  calculateTieuHanPalaceIndex,
+  calculateNguyetHanPalaces,
+} from '@omce/core-logic';
+import { CAN, CHI } from '../../utils/constants';
 
-// We map OMCE's response directly to TuViChart
+export const calculateMenhCungPosition = (lunarMonth: number, birthHour: number): number => {
+  return omceMenhCungPosition(lunarMonth, birthHour);
+};
+
+export const calculateThanCungPosition = (menhPosition: number, lunarMonth: number, birthHour: number = 0): number => {
+  return omceThanCungPosition(menhPosition, lunarMonth, birthHour);
+};
+
+export const calculateMenhCan = (yearCanIndex: number, menhPalaceIndex: number): string => {
+  const canIndex = omceMenhCanIndex(yearCanIndex, menhPalaceIndex);
+  return CAN[canIndex] || CAN[0];
+};
+
+export const calculateCuc = (yearCanIndex: number, menhPalaceIndex: number): { name: string; number: number } => {
+  const num = omceCucNumber(yearCanIndex, menhPalaceIndex);
+  const names: Record<number, string> = {
+    2: 'Thủy Nhị Cục',
+    3: 'Mộc Tam Cục',
+    4: 'Kim Tứ Cục',
+    5: 'Thổ Ngũ Cục',
+    6: 'Hỏa Lục Cục',
+  };
+  return { name: names[num] || 'Thủy Nhị Cục', number: num };
+};
+
+export const placeTuViStar = (cucNumber: number, lunarDay: number): number => {
+  return omcePlaceTuViStar(cucNumber, lunarDay);
+};
+
+export const placeChinhTinh = (tuViPosition: number): Record<string, number> => {
+  return omcePlaceChinhTinh(tuViPosition);
+};
+
+export const placePhuTinh = (
+  yearCanIndexOrInput: any,
+  yearChiIndex?: number,
+  lunarMonth?: number,
+  lunarDay?: number,
+  birthHour?: number,
+  menhPosition?: number,
+  thanPosition?: number,
+  thuanNghich?: any,
+  school?: any,
+): Record<string, number> => {
+  if (typeof yearCanIndexOrInput === 'object' && yearCanIndexOrInput !== null) {
+    return omcePlacePhuTinh(yearCanIndexOrInput);
+  }
+  return omcePlacePhuTinh({
+    yearCanIndex: yearCanIndexOrInput,
+    yearChiIndex: yearChiIndex ?? 0,
+    lunarMonth: lunarMonth ?? 1,
+    lunarDay: lunarDay ?? 1,
+    birthHour: birthHour ?? 0,
+    menhPosition: menhPosition ?? 0,
+    thanPosition: thanPosition ?? 0,
+    thuanNghich: thuanNghich ?? 'Thuận',
+    school,
+  });
+};
+
+const TU_HOA_TABLE: Record<string, Record<string, string>> = {
+  Giáp: { Lộc: 'Liêm Trinh', Quyền: 'Phá Quân', Khoa: 'Vũ Khúc', Kỵ: 'Thái Dương' },
+  Ất: { Lộc: 'Thiên Cơ', Quyền: 'Thiên Lương', Khoa: 'Tử Vi', Kỵ: 'Thái Âm' },
+  Bính: { Lộc: 'Thiên Đồng', Quyền: 'Thiên Cơ', Khoa: 'Văn Xương', Kỵ: 'Liêm Trinh' },
+  Đinh: { Lộc: 'Thái Âm', Quyền: 'Thiên Đồng', Khoa: 'Thiên Cơ', Kỵ: 'Cự Môn' },
+  Mậu: { Lộc: 'Tham Lang', Quyền: 'Thái Âm', Khoa: 'Hữu Bật', Kỵ: 'Thiên Cơ' },
+  Kỷ: { Lộc: 'Vũ Khúc', Quyền: 'Tham Lang', Khoa: 'Thiên Lương', Kỵ: 'Văn Khúc' },
+  Canh: { Lộc: 'Thái Dương', Quyền: 'Vũ Khúc', Khoa: 'Thái Âm', Kỵ: 'Thiên Đồng' },
+  Tân: { Lộc: 'Cự Môn', Quyền: 'Thái Dương', Khoa: 'Văn Khúc', Kỵ: 'Văn Xương' },
+  Nhâm: { Lộc: 'Thiên Lương', Quyền: 'Tử Vi', Khoa: 'Tả Phụ', Kỵ: 'Vũ Khúc' },
+  Quý: { Lộc: 'Phá Quân', Quyền: 'Cự Môn', Khoa: 'Thái Âm', Kỵ: 'Tham Lang' },
+};
+
+const TRUNG_CHAU_TU_HOA: Record<string, Record<string, string>> = {
+  ...TU_HOA_TABLE,
+  Mậu: { Lộc: 'Tham Lang', Quyền: 'Thái Âm', Khoa: 'Thái Dương', Kỵ: 'Thiên Cơ' },
+};
+
+export const calculateTuHoa = (yearCanIndex: number, school?: string) => {
+  const canName = CAN[((yearCanIndex % 10) + 10) % 10];
+  const table = school === 'bac-phai' ? TRUNG_CHAU_TU_HOA : TU_HOA_TABLE;
+  const entry = table[canName] || TU_HOA_TABLE['Giáp'];
+  return {
+    Loc: { starName: entry['Lộc'], type: 'Lộc' },
+    Quyen: { starName: entry['Quyền'], type: 'Quyền' },
+    Khoa: { starName: entry['Khoa'], type: 'Khoa' },
+    Ky: { starName: entry['Kỵ'], type: 'Kỵ' },
+  };
+};
+
+export const calculatePalaceCans = (yearCanIndex: number): string[] => {
+  const cans: string[] = [];
+  for (let i = 0; i < 12; i++) {
+    const canIdx = (yearCanIndex * 2 + 2 + ((i - 2 + 12) % 12)) % 10;
+    cans.push(CAN[canIdx]);
+  }
+  return cans;
+};
+
 export function generateChart(input: TuViInput): TuViChart {
   const schoolProfile = resolveTuViSchoolProfile(input.school);
   const birthContext = buildTuViBirthContext(input, schoolProfile);
-  
+
   const omceResult = createTuViStarChart({
     yearCanIndex: birthContext.yearCanIndex,
     yearChiIndex: birthContext.yearChiIndex,
@@ -89,5 +199,65 @@ export function generateChart(input: TuViInput): TuViChart {
 }
 
 export function calculateHanContext(chart: TuViChart, viewYear: number, viewMonth: number): TuViHanContext {
-  return {} as any;
+  const birthYear = chart.lunarDate.year;
+  const viewAge = viewYear - birthYear + 1; // Tuổi mụ
+
+  const birthYearChi = chart.canChi.year.chi;
+  const gender = chart.input.gender;
+  const cucNumber = chart.centerInfo.cucNumber || 2;
+  const yearCan = chart.canChi.year.can;
+  const menhPalaceIndex = chart.palaces.findIndex((p) => p.name === 'Mệnh');
+
+  const daiHanRanges = calculateDaiHanAgeRanges({
+    cucNumber,
+    gender,
+    yearCan,
+    menhPalaceIndex: menhPalaceIndex >= 0 ? menhPalaceIndex : 0,
+  });
+
+  let daiHanPalaceIndex: number | null = null;
+  let daiHanPalaceName = '';
+  let daiHanAgeRange = '';
+
+  for (let i = 0; i < 12; i++) {
+    if (viewAge >= daiHanRanges[i].startAge && viewAge <= daiHanRanges[i].endAge) {
+      daiHanPalaceIndex = i;
+      daiHanPalaceName = chart.palaces[i]?.name || '';
+      daiHanAgeRange = daiHanRanges[i].rangeString;
+      break;
+    }
+  }
+
+  const tieuHanPalaceIndex = calculateTieuHanPalaceIndex({
+    birthYearChi,
+    gender,
+    viewYear,
+  });
+
+  const birthMonth = chart.lunarDate.month;
+  const birthHour = chart.input.birthHour ?? 0;
+  const nguyetHanPalaces = calculateNguyetHanPalaces({
+    tieuHanPalaceIndex,
+    birthMonth,
+    birthHour,
+  });
+
+  const nguyetHanMonthByPalace: Record<number, number> = {};
+  nguyetHanPalaces.forEach((palaceIdx, monthIndex) => {
+    nguyetHanMonthByPalace[palaceIdx] = monthIndex + 1;
+  });
+
+  const nguyetHanPalaceIndex = nguyetHanPalaces[(viewMonth - 1) % 12] ?? null;
+
+  return {
+    viewYear,
+    viewMonth,
+    viewAge,
+    daiHanPalaceIndex,
+    daiHanPalaceName,
+    daiHanAgeRange,
+    tieuHanPalaceIndex,
+    nguyetHanMonthByPalace,
+    nguyetHanPalaceIndex,
+  };
 }

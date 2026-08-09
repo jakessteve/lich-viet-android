@@ -2,6 +2,7 @@ import type { TuViInput } from '../../types/tuvi';
 import type { TuViSchoolProfile } from './schoolProfiles';
 import { resolveTuViBirthContext, getLunarDate } from '@omce/core-logic';
 import { CAN, CHI } from '../../utils/constants';
+import { getCanChiDay, parseCanChi } from '../../utils/calendarEngine';
 
 export function buildTuViBirthContext(input: TuViInput, schoolProfile: TuViSchoolProfile): any {
   // Use OMCE's core-logic for context resolution
@@ -22,9 +23,10 @@ export function buildTuViBirthContext(input: TuViInput, schoolProfile: TuViSchoo
   const monthCanIndex = (yearCanIndex * 2 + 2 + (lunar.month - 1)) % 10;
   const monthChiIndex = (lunar.month + 1) % 12;
 
-  const jd = Math.floor(omceContext.correctedDate.getTime() / 86400000 + 2440587.5);
-  const dayCanIndex = (jd + 9) % 10;
-  const dayChiIndex = (jd + 1) % 12;
+  const dayCanChiStr = getCanChiDay(omceContext.correctedDate);
+  const dayCanChi = parseCanChi(dayCanChiStr);
+  const dayCanIndex = CAN.indexOf(dayCanChi.can);
+  const dayChiIndex = CHI.indexOf(dayCanChi.chi);
 
   const h = omceContext.correctedDate.getHours();
   const isNextDay = h === 23;
