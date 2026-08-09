@@ -101,7 +101,7 @@ function fontFromStyle(style: CSSStyleDeclaration): string {
 }
 
 function drawTextNode(context: CanvasRenderingContext2D, node: Text, rootRect: DOMRect): void {
-  const text = node.textContent?.replace(/\s+/g, ' ').trim();
+  const text = node.textContent?.replace(/\s+/g, ' ')?.trim();
   const parent = node.parentElement;
   if (!text || !parent) return;
 

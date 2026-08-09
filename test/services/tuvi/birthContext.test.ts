@@ -153,4 +153,21 @@ describe('Tu Vi birth context', () => {
     expect(context.correctedDate.getDate()).toBe(13);
     expect(context.canChi.day).toEqual({ can: 'Ất', chi: 'Tỵ' });
   });
+
+  it('handles partial birthLocation with undefined locationName/countryName without throwing', () => {
+    const input = {
+      name: 'Partial location sample',
+      solarDate: new Date('1990-05-15T10:00:00.000Z'),
+      birthHour: 5,
+      gender: 'nam' as const,
+      birthLocation: {
+        lat: 10.8,
+        lng: 106.6,
+        timezone: 7,
+      } as any,
+      school: 'thien-luong' as const,
+    };
+
+    expect(() => buildTuViBirthContext(input, resolveTuViSchoolProfile('thien-luong'))).not.toThrow();
+  });
 });

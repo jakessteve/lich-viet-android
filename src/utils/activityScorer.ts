@@ -71,19 +71,20 @@ function getScoreLabel(pct: number): { label: string; colorClass: string } {
 
 /** Pre-compute a lowercase Set from a list of strings for O(1)-ish matching. */
 function buildLowerSet(list: string[]): Set<string> {
-  return new Set(list.map((s) => s.toLowerCase()));
+  return new Set((list || []).filter(Boolean).map((s) => s.toLowerCase()));
 }
 
 /** Check if an activity nameVi or alias appears in a pre-computed lowercase Set. */
 function activityInSet(activity: ActivityEntry, lowerSet: Set<string>): boolean {
-  const nameLC = activity.nameVi.toLowerCase();
+  if (!activity) return false;
+  const nameLC = (activity.nameVi || '').toLowerCase();
   for (const s of lowerSet) {
-    if (s.includes(nameLC)) return true;
+    if (nameLC && s.includes(nameLC)) return true;
   }
-  for (const alias of activity.aliases) {
-    const aliasLC = alias.toLowerCase();
+  for (const alias of activity.aliases || []) {
+    const aliasLC = (alias || '').toLowerCase();
     for (const s of lowerSet) {
-      if (s.includes(aliasLC) || aliasLC.includes(s)) return true;
+      if (aliasLC && (s.includes(aliasLC) || aliasLC.includes(s))) return true;
     }
   }
   return false;
@@ -457,15 +458,17 @@ function computeBestHours(activity: ActivityEntry, dayData: DayDetailsData): Hou
     const hourNghiStr = (h.nghi || []).join(' ').toLowerCase();
     const hourKyStr = (h.ky || []).join(' ').toLowerCase();
 
+    if (!activity) return { hourInfo: h, activityScore: Math.max(0, Math.min(100, score)) };
+    const nameLC = (activity.nameVi || '').toLowerCase();
     if (
-      activity.aliases.some((a) => hourNghiStr.includes(a.toLowerCase())) ||
-      hourNghiStr.includes(activity.nameVi.toLowerCase())
+      (activity.aliases || []).some((a) => a && hourNghiStr.includes(a.toLowerCase())) ||
+      (nameLC && hourNghiStr.includes(nameLC))
     ) {
       score += BEST_HOURS_SCORING.nghiBonus;
     }
     if (
-      activity.aliases.some((a) => hourKyStr.includes(a.toLowerCase())) ||
-      hourKyStr.includes(activity.nameVi.toLowerCase())
+      (activity.aliases || []).some((a) => a && hourKyStr.includes(a.toLowerCase())) ||
+      (nameLC && hourKyStr.includes(nameLC))
     ) {
       score += BEST_HOURS_SCORING.kyPenalty;
     }

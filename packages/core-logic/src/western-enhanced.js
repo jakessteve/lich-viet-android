@@ -304,7 +304,7 @@ export function computeDignity(body, tropicalLongitude) {
   const sign = ["aries", "taurus", "gemini", "cancer", "leo", "virgo",
                 "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"][signIndex];
 
-  const table = DIGNITY_TABLE[body.toLowerCase()];
+  const table = DIGNITY_TABLE[(body || '').toLowerCase()];
   if (!table) {
     return { sign, dignity: "peregrine", score: 0 };
   }
@@ -1418,7 +1418,7 @@ export const FIXED_STARS = Object.freeze({
 
 // Compute fixed star position with precession correction
 export function computeFixedStarPosition(starName, julianDay) {
-  const star = FIXED_STARS[starName.toLowerCase()];
+  const star = FIXED_STARS[(starName || '').toLowerCase()];
   if (!star) {
     return null;
   }
@@ -1622,11 +1622,11 @@ export function calculateWesternTransitAspects(natalPlanets, transitPlanets) {
   const majorBodies = ["sun", "moon", "mercury", "venus", "mars", "jupiter", "saturn"];
 
   for (const transitPlanet of transitPlanets) {
-    const tBody = transitPlanet.body.toLowerCase();
+    const tBody = (transitPlanet?.body || '').toLowerCase();
     if (!majorBodies.includes(tBody)) continue;
 
     for (const natalPlanet of natalPlanets) {
-      const nBody = natalPlanet.body.toLowerCase();
+      const nBody = (natalPlanet?.body || '').toLowerCase();
       if (!majorBodies.includes(nBody)) continue;
 
       const dist = angularDistance(transitPlanet.tropicalLongitude, natalPlanet.tropicalLongitude);

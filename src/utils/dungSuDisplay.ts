@@ -84,7 +84,7 @@ export function normalizeDungSuBuckets(suitable: string[], unsuitable: string[])
   const items = [...normalizeBucket(suitable, 'nghi', 0), ...normalizeBucket(unsuitable, 'ky', suitable.length)];
 
   for (const item of items) {
-    const key = item.label.toLowerCase();
+    const key = (item.label || '').toLowerCase();
     const existing = merged.get(key);
 
     if (!existing) {

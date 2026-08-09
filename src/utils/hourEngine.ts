@@ -225,7 +225,7 @@ export function getAllHours(
     //   2. Case-insensitive lookup against actionWeight keys
     //      (e.g. "giao dịch" from description must match "Giao dịch" key).
     const awKeys = Object.keys(aw);
-    const normalise = (s: string) => s.trim().toLowerCase();
+    const normalise = (s: string) => (s || '').trim().toLowerCase();
     const findAwKey = (activity: string) => awKeys.find((k) => normalise(k) === normalise(activity));
 
     const starSpecificKy = new Set<string>();

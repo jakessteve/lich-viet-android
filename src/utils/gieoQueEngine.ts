@@ -347,7 +347,7 @@ export function castHoaMai(input: GieoQueInput): GieoQueCastResult {
     contextChips: seed.contextChips,
     haoDetails,
     sourceRefs,
-    summary: `Thể ${the.name} (${the.element}), Dụng ${dung.name} (${dung.element}), quan hệ ${relationship.label.toLowerCase()}.`,
+    summary: `Thể ${the.name} (${the.element}), Dụng ${dung.name} (${dung.element}), quan hệ ${(relationship?.label || '').toLowerCase()}.`,
   };
 }
 

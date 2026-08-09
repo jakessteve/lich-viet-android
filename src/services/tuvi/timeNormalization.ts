@@ -88,8 +88,8 @@ function isVietnamBirthLocation(birthLocation?: TuViBirthLocation): boolean {
   const countryName = birthLocation.countryName?.trim()?.toLowerCase();
   if (countryName) return countryName.includes('vietnam') || countryName.includes('việt nam');
 
-  const locationName = birthLocation.locationName.trim().toLowerCase();
-  if (locationName.includes('vietnam') || locationName.includes('việt nam')) return true;
+  const locationName = birthLocation.locationName?.trim()?.toLowerCase();
+  if (locationName && (locationName.includes('vietnam') || locationName.includes('việt nam'))) return true;
 
   if (typeof birthLocation.lat === 'number' && typeof birthLocation.lng === 'number') {
     return birthLocation.lat >= 8.0 && birthLocation.lat <= 24.0 && birthLocation.lng >= 102.0 && birthLocation.lng <= 110.8;

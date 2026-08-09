@@ -102,8 +102,8 @@ export function generateDungSu(modifying: ModifyingLayerResult, _dayCanNguHanh: 
   const bachKyList = (dungSuData as unknown as DungSuData).bach_ky_list || [];
   const matchesBachSuHung = (s: StarData) =>
     s.name === CUU_KHO_BAT_CUNG_NAME ||
-    (s.unsuitable && s.unsuitable.some((u: string) => u.toLowerCase().includes('bách sự hung'))) ||
-    (s.description && s.description.toLowerCase().includes('bách sự hung'));
+    (s.unsuitable && s.unsuitable.some((u: string) => u && typeof u === 'string' && u.toLowerCase().includes('bách sự hung'))) ||
+    (s.description && typeof s.description === 'string' && s.description.toLowerCase().includes('bách sự hung'));
 
   const isBachSuHung = modifying.stars.some(matchesBachSuHung);
 
@@ -223,32 +223,32 @@ export function generateDungSu(modifying: ModifyingLayerResult, _dayCanNguHanh: 
 
   // Priority ranking for Global statements
   const hasGlobalBad = finalUnsuitable.some((s) =>
-    GLOBAL_BAD_LABELS.some((b) => s.toLowerCase().includes(b.toLowerCase())),
+    GLOBAL_BAD_LABELS.some((b) => s && b && s.toLowerCase().includes(b.toLowerCase())),
   );
   const hasGlobalGood = finalSuitable.some((s) =>
-    GLOBAL_GOOD_LABELS.some((g) => s.toLowerCase().includes(g.toLowerCase())),
+    GLOBAL_GOOD_LABELS.some((g) => s && g && s.toLowerCase().includes(g.toLowerCase())),
   );
 
   if (hasGlobalBad) {
     finalSuitable = finalSuitable.filter(
-      (s) => !GLOBAL_GOOD_LABELS.some((g) => s.toLowerCase().includes(g.toLowerCase())),
+      (s) => !GLOBAL_GOOD_LABELS.some((g) => s && g && s.toLowerCase().includes(g.toLowerCase())),
     );
   }
   if (hasGlobalGood && !hasGlobalBad) {
     finalUnsuitable = finalUnsuitable.filter(
-      (s) => !GLOBAL_BAD_LABELS.some((b) => s.toLowerCase().includes(b.toLowerCase())),
+      (s) => !GLOBAL_BAD_LABELS.some((b) => s && b && s.toLowerCase().includes(b.toLowerCase())),
     );
   }
 
   [...GLOBAL_GOOD_LABELS].reverse().forEach((g) => {
-    const matchMatch = finalSuitable.find((s) => s.toLowerCase().includes(g.toLowerCase()));
+    const matchMatch = finalSuitable.find((s) => s && g && s.toLowerCase().includes(g.toLowerCase()));
     if (matchMatch) {
       finalSuitable = [matchMatch, ...finalSuitable.filter((s) => s !== matchMatch)];
     }
   });
 
   [...GLOBAL_BAD_LABELS].reverse().forEach((b) => {
-    const matchMatch = finalUnsuitable.find((s) => s.toLowerCase().includes(b.toLowerCase()));
+    const matchMatch = finalUnsuitable.find((s) => s && b && s.toLowerCase().includes(b.toLowerCase()));
     if (matchMatch) {
       finalUnsuitable = [matchMatch, ...finalUnsuitable.filter((s) => s !== matchMatch)];
     }

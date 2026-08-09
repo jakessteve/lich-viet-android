@@ -706,12 +706,13 @@ export function getActivityById(id: string): ActivityEntry | undefined {
 
 const aliasIndex = new Map<string, string>();
 ACTIVITY_CATALOG.forEach((a) => {
-  aliasIndex.set(a.nameVi.toLowerCase(), a.id);
-  a.aliases.forEach((al) => aliasIndex.set(al.toLowerCase(), a.id));
+  aliasIndex.set((a.nameVi || '').toLowerCase(), a.id);
+  a.aliases.forEach((al) => aliasIndex.set((al || '').toLowerCase(), a.id));
 });
 
 /** Look up an activity ID by any of its names (case-insensitive). */
 export function findActivityByName(name: string): ActivityEntry | undefined {
+  if (!name || typeof name !== 'string') return undefined;
   const lower = name.toLowerCase().trim();
   const id = aliasIndex.get(lower);
   if (id) return CATALOG_BY_ID.get(id);
@@ -732,10 +733,12 @@ export function getActivitiesByCategory(category: ActivityCategory): ActivityEnt
 
 /** Search activities by keyword (matches nameVi and aliases). */
 export function searchActivities(query: string): ActivityEntry[] {
-  if (!query.trim()) return [];
+  if (!query || typeof query !== 'string' || !query.trim()) return [];
   const lower = query.toLowerCase().trim();
   return ACTIVITY_CATALOG.filter(
-    (a) => a.nameVi.toLowerCase().includes(lower) || a.aliases.some((al) => al.toLowerCase().includes(lower)),
+    (a) =>
+      (a.nameVi && a.nameVi.toLowerCase().includes(lower)) ||
+      a.aliases.some((al) => al && al.toLowerCase().includes(lower)),
   );
 }
 

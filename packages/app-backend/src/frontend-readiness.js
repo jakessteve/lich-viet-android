@@ -287,7 +287,7 @@ function createNatalContextOverlay(input = {}) {
 }
 
 function bodyByName(snapshot, bodyName) {
-  return snapshot.find((item) => item.body.toLowerCase() === bodyName.toLowerCase());
+  return snapshot.find((item) => (item?.body || '').toLowerCase() === (bodyName || '').toLowerCase());
 }
 
 function signForLongitude(longitude) {
@@ -406,8 +406,8 @@ function scoreWesternSynastry(natalPlanets, comparisonPlanets) {
       const aspect = MAJOR_ASPECTS.find((candidate) => Math.abs(distance - candidate.angle) <= candidate.orb);
       if (!aspect) continue;
 
-      const natalBody = natal.body.toLowerCase();
-      const comparisonBody = comparison.body.toLowerCase();
+      const natalBody = (natal?.body || '').toLowerCase();
+      const comparisonBody = (comparison?.body || '').toLowerCase();
       const bodyWeight = luminaryBodies.has(natalBody) || luminaryBodies.has(comparisonBody) ? 1.25 : 1;
       const scoreDelta = Number((aspectWeights[aspect.id] * bodyWeight).toFixed(3));
 

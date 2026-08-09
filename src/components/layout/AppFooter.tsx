@@ -6,7 +6,7 @@ import type { User } from '@/types/auth';
 export function getFooterActionLabel(user: User | null, isAuthenticated: boolean): string {
   if (!isAuthenticated || !user) return 'Nâng cấp';
 
-  if (user.accessTier === 'admin' || user.email.toLowerCase() === 'admin@lichviet.app') {
+  if (user.accessTier === 'admin' || user.email?.toLowerCase() === 'admin@lichviet.app') {
     return 'Admin';
   }
 

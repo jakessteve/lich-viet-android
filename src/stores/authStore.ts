@@ -65,7 +65,7 @@ function getSeededAdminUser(): StoredUser {
 }
 
 function ensureSeededAdmin(users: StoredUser[]): StoredUser[] {
-  const hasAdmin = users.some((entry) => entry.user.email.toLowerCase() === ADMIN_SEED_EMAIL);
+  const hasAdmin = users.some((entry) => entry.user?.email?.toLowerCase() === ADMIN_SEED_EMAIL);
   if (hasAdmin) return users;
 
   const next = [...users, getSeededAdminUser()];
@@ -190,10 +190,10 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     await new Promise((r) => setTimeout(r, 600));
 
     const users = getStoredUsers();
-    const identifier = credentials.email.toLowerCase();
+    const identifier = (credentials.email || '').toLowerCase();
     // Find user first, then hash with their salt
     const candidates = users.filter(
-      (u) => u.user.email.toLowerCase() === identifier || u.user.displayName?.toLowerCase() === identifier,
+      (u) => u.user?.email?.toLowerCase() === identifier || u.user?.displayName?.toLowerCase() === identifier,
     );
     let found: StoredUser | undefined;
     for (const c of candidates) {
@@ -225,7 +225,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     const users = getStoredUsers();
 
     // Check duplicate email
-    if (users.some((u) => u.user.email.toLowerCase() === data.email.toLowerCase())) {
+    if (users.some((u) => u.user?.email?.toLowerCase() === (data.email || '').toLowerCase())) {
       set({ isLoading: false });
       return { success: false, error: 'Email này đã được sử dụng.' };
     }

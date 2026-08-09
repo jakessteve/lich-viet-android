@@ -479,17 +479,17 @@ function isVietnamBirthLocation(birthLocation) {
     return false;
   }
 
-  const countryCode = birthLocation.countryCode?.trim().toUpperCase();
+  const countryCode = birthLocation.countryCode?.trim()?.toUpperCase();
   if (countryCode) {
     return countryCode === "VN";
   }
 
-  const countryName = birthLocation.countryName?.trim().toLowerCase();
+  const countryName = birthLocation.countryName?.trim()?.toLowerCase();
   if (countryName) {
     return countryName.includes("vietnam") || countryName.includes("việt nam");
   }
 
-  const locationName = birthLocation.locationName?.trim().toLowerCase();
+  const locationName = birthLocation.locationName?.trim()?.toLowerCase();
   if (locationName && (locationName.includes("vietnam") || locationName.includes("việt nam"))) {
     return true;
   }

@@ -37,8 +37,8 @@ function average(values) {
 }
 
 function getPlanet(snapshot, body) {
-  const normalizedBody = body.toLowerCase();
-  return snapshot.find((entry) => entry.body.toLowerCase() === normalizedBody);
+  const normalizedBody = (body || '').toLowerCase();
+  return snapshot.find((entry) => (entry?.body || '').toLowerCase() === normalizedBody);
 }
 
 function angularDistance(a, b) {

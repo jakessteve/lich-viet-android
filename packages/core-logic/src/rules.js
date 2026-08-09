@@ -115,7 +115,7 @@ export function evaluateVoidOfCourseGuard({
 
   assertFiniteNumber(orbDegrees, "orbDegrees");
 
-  const moon = planetarySnapshot.find((body) => body.body.toLowerCase() === "moon");
+  const moon = planetarySnapshot.find((body) => body?.body?.toLowerCase() === "moon");
 
   if (!moon) {
     throw new RangeError("planetarySnapshot must include a Moon entry");
@@ -127,7 +127,7 @@ export function evaluateVoidOfCourseGuard({
   let closestBody = null;
 
   for (const body of planetarySnapshot) {
-    if (body.body.toLowerCase() === "moon") {
+    if (body?.body?.toLowerCase() === "moon") {
       continue;
     }
 
