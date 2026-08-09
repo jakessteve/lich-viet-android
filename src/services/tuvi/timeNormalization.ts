@@ -82,10 +82,10 @@ function inferHistoricalRegion(date: Date, birthLocation?: TuViBirthLocation): H
 function isVietnamBirthLocation(birthLocation?: TuViBirthLocation): boolean {
   if (!birthLocation) return true;
 
-  const countryCode = birthLocation.countryCode?.trim().toUpperCase();
+  const countryCode = birthLocation.countryCode?.trim()?.toUpperCase();
   if (countryCode) return countryCode === 'VN';
 
-  const countryName = birthLocation.countryName?.trim().toLowerCase();
+  const countryName = birthLocation.countryName?.trim()?.toLowerCase();
   if (countryName) return countryName.includes('vietnam') || countryName.includes('việt nam');
 
   const locationName = birthLocation.locationName.trim().toLowerCase();
