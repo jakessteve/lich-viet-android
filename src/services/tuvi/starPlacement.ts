@@ -91,6 +91,8 @@ const TU_HOA_TABLE: Record<string, Record<string, string>> = {
 const TRUNG_CHAU_TU_HOA: Record<string, Record<string, string>> = {
   ...TU_HOA_TABLE,
   Mậu: { Lộc: 'Tham Lang', Quyền: 'Thái Âm', Khoa: 'Thái Dương', Kỵ: 'Thiên Cơ' },
+  Canh: { Lộc: 'Thái Dương', Quyền: 'Vũ Khúc', Khoa: 'Thiên Phủ', Kỵ: 'Thiên Đồng' },
+  Nhâm: { Lộc: 'Thiên Lương', Quyền: 'Tử Vi', Khoa: 'Thiên Phủ', Kỵ: 'Vũ Khúc' },
 };
 
 export const getTuHoaForCan = (canName: string, school?: string) => {
@@ -271,10 +273,10 @@ export function calculateHanContext(chart: TuViChart, viewYear: number, viewMont
     luuDieuByPalace[pos].push({ name, type, nguHanh, brightness });
   };
 
-  addLuuDieu(luuThaiTuePos, 'Lưu Thái Tuế');
-  addLuuDieu(luuLocTonPos, 'Lưu Lộc Tồn', 'luuDieu', 'Thổ');
-  addLuuDieu(luuKinhDuongPos, 'Lưu Kình Dương', 'luuDieu', 'Kim');
-  addLuuDieu(luuDaLaPos, 'Lưu Đà La', 'luuDieu', 'Kim');
+  addLuuDieu(luuThaiTuePos, 'Thái Tuế');
+  addLuuDieu(luuLocTonPos, 'Lộc Tồn', 'luuDieu', 'Thổ');
+  addLuuDieu(luuKinhDuongPos, 'Kình Dương', 'luuDieu', 'Kim');
+  addLuuDieu(luuDaLaPos, 'Đà La', 'luuDieu', 'Kim');
 
   return {
     viewYear,

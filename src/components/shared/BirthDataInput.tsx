@@ -11,6 +11,8 @@ export interface BirthDataInputProps {
     timezone: number;
     name?: string;
     locationName?: string;
+    countryCode?: string;
+    countryName?: string;
   };
   onChange: (value: BirthDataInputProps['value']) => void;
   showName?: boolean;
@@ -46,9 +48,9 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
 
     const normalizedHour = clampTimePart(hourStr, 23);
     const normalizedMinute = clampTimePart(minuteStr, 59);
-    
+
     const date = new Date(y, m - 1, d, normalizedHour, normalizedMinute);
-    
+
     setDayStr(String(date.getDate()));
     setMonthStr(String(date.getMonth() + 1));
     setYearStr(String(date.getFullYear()));
@@ -83,7 +85,6 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
       )}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {/* Date Row */}
         <div>
           <label className="label-standard mb-1.5 block">Dương lịch</label>
           <div className="flex gap-2">
@@ -99,9 +100,7 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitDate}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
-                  Ngày
-                </span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Ngày</span>
               </div>
             </div>
             <div className="relative flex-1">
@@ -116,9 +115,7 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitDate}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
-                  Tháng
-                </span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Tháng</span>
               </div>
             </div>
             <div className="relative flex-[1.5]">
@@ -133,15 +130,12 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitDate}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
-                  Năm
-                </span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Năm</span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Time Row */}
         <div>
           <label className="label-standard mb-1.5 block">Giờ sinh</label>
           <div className="flex gap-2">
@@ -157,9 +151,7 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitTime}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
-                  Giờ
-                </span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Giờ</span>
               </div>
             </div>
             <div className="flex items-center justify-center font-bold text-gray-400 pb-1">:</div>
@@ -175,26 +167,33 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitTime}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
-                  Phút
-                </span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Phút</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
-      {/* Location Row */}
+
       <div className="pt-2">
         <label className="label-standard mb-1.5 block">Nơi sinh</label>
         <TuViLocationPicker
-          value={{ locationName: '', lat: value.latitude, lng: value.longitude, timezone: value.timezone, countryCode: 'VN', countryName: 'Việt Nam' }}
+          value={{
+            locationName: value.locationName || '',
+            lat: value.latitude,
+            lng: value.longitude,
+            timezone: value.timezone,
+            countryCode: value.countryCode || 'VN',
+            countryName: value.countryName || 'Việt Nam',
+          }}
           onChange={(loc) => {
             onChange({
               ...value,
               latitude: loc.lat,
               longitude: loc.lng,
               timezone: loc.timezone,
+              locationName: loc.locationName,
+              countryCode: loc.countryCode,
+              countryName: loc.countryName,
             });
           }}
         />

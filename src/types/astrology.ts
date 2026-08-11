@@ -5,6 +5,9 @@ export interface WesternChartInput {
   latitude: number;
   longitude: number;
   timezone: number;
+  locationName?: string;
+  countryCode?: string;
+  countryName?: string;
 }
 
 export interface VedicChartInput extends WesternChartInput {

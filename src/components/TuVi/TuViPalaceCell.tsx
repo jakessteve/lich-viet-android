@@ -135,8 +135,6 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
       <div className="tuvi-palace-footer">
         {palace.rings && (
           <div className="tuvi-rings-row">
-            {palace.rings.thaiTue && <span className="tuvi-ring-label thai-tue">{palace.rings.thaiTue}</span>}
-            {palace.rings.bacSi && <span className="tuvi-ring-label bac-si">{palace.rings.bacSi}</span>}
             {palace.rings.truongSinh && <span className="tuvi-ring-label truong-sinh">{palace.rings.truongSinh}</span>}
           </div>
         )}

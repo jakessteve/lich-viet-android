@@ -1,6 +1,7 @@
 import React from 'react';
 import type { WesternChartResult, PlanetPosition, DignityResult, AspectResult } from '../../../services/astrology/westernCalculator';
 import { WesternInterpretationPanel } from './WesternInterpretationPanel';
+import { WesternWheelChart } from './WesternWheelChart';
 
 const BODY_LABELS: Record<string, string> = {
   sun: 'Mặt Trời',
@@ -100,6 +101,7 @@ export const WesternChartDisplay: React.FC<{ result: WesternChartResult }> = ({ 
 
   return (
     <div className="space-y-6 animate-fade-in-up">
+            <WesternWheelChart result={result} />
       <WesternInterpretationPanel result={result} />
       
       {/* Summary Cards */}

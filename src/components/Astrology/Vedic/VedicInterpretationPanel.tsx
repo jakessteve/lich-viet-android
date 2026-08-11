@@ -1,5 +1,6 @@
 import React from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
+import { VEDIC_INTERPRETATIONS } from '../../../services/astrology/interpretations';
 
 const SIGNS_SIDEREAL = [
   'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',
@@ -32,6 +33,12 @@ export const VedicInterpretationPanel: React.FC<{ result: WesternChartResult }> 
     saturn: 'Sao Thổ',
   };
 
+  const getInterpretation = (point: string, key: string, fallback: string) => {
+    return VEDIC_INTERPRETATIONS[point]?.[key] || fallback;
+  };
+
+  const moonSignName = moon ? SIGNS_SIDEREAL[Math.floor(moon.siderealLongitude / 30)] : '';
+
   return (
     <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
       <div className="card-header bg-purple-50/50 dark:bg-purple-900/10">
@@ -49,7 +56,7 @@ export const VedicInterpretationPanel: React.FC<{ result: WesternChartResult }> 
           <div>
             <h4 className="font-semibold text-sm">Lagna (Cung Mọc) ở {ascSign}</h4>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-              Điểm quan trọng nhất trong lá số Vệ Đà. Đại diện cho bản ngã, con đường cuộc đời, cơ thể vật lý và cách bạn tiếp cận thế giới.
+              {getInterpretation('lagna', ascSign, 'Điểm quan trọng nhất trong lá số Vệ Đà. Đại diện cho bản ngã, con đường cuộc đời, cơ thể vật lý và cách bạn tiếp cận thế giới.')}
             </p>
           </div>
         </div>
@@ -60,9 +67,9 @@ export const VedicInterpretationPanel: React.FC<{ result: WesternChartResult }> 
               ☽
             </div>
             <div>
-              <h4 className="font-semibold text-sm">Rasi (Mặt Trăng) ở {SIGNS_SIDEREAL[Math.floor(moon.siderealLongitude / 30)]}</h4>
+              <h4 className="font-semibold text-sm">Rasi (Mặt Trăng) ở {moonSignName}</h4>
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-                Đại diện cho tâm trí (Manas) và cảm xúc. Rasi là nền tảng để xem xét các vận hạn (Gochara) trong cuộc sống hàng ngày.
+                {getInterpretation('moon', moonSignName, 'Đại diện cho tâm trí (Manas) và cảm xúc. Rasi là nền tảng để xem xét các vận hạn (Gochara) trong cuộc sống hàng ngày.')}
               </p>
             </div>
           </div>
@@ -90,7 +97,7 @@ export const VedicInterpretationPanel: React.FC<{ result: WesternChartResult }> 
             <div>
               <h4 className="font-semibold text-sm">Atmakaraka: {BODY_LABELS[atmakaraka.body] || atmakaraka.body}</h4>
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-                Hành tinh có độ số cao nhất trong cung. Đại diện cho "chủ tinh linh hồn", chỉ ra khát vọng sâu sắc nhất và bài học nghiệp quả chính trong kiếp này.
+                {getInterpretation('atmakaraka', atmakaraka.body, 'Hành tinh có độ số cao nhất trong cung. Đại diện cho "chủ tinh linh hồn", chỉ ra khát vọng sâu sắc nhất và bài học nghiệp quả chính trong kiếp này.')}
               </p>
             </div>
           </div>

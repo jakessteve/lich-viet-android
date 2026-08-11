@@ -1,4 +1,4 @@
-import type { WesternChartResult, PlanetPosition, DignityResult, AspectResult } from './westernCalculator';
+import type { WesternChartResult, DignityResult, AspectResult } from './westernCalculator';
 
 const SIGNS = [
   'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',

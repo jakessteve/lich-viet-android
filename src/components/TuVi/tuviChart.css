@@ -513,22 +513,11 @@
   vector-effect: non-scaling-stroke;
 }
 
-.tuvi-connection-line.phi-tinh {
-  stroke-dasharray: none;
-  stroke-width: 1.5;
-}
-
-.tuvi-connection-line.phi-tinh-loc {
-  stroke: rgba(16, 185, 129, 0.7); /* Green for Lộc */
-}
-.tuvi-connection-line.phi-tinh-quyen {
-  stroke: rgba(139, 92, 246, 0.7); /* Purple for Quyền */
-}
-.tuvi-connection-line.phi-tinh-khoa {
-  stroke: rgba(59, 130, 246, 0.7); /* Blue for Khoa */
-}
-.tuvi-connection-line.phi-tinh-ky {
-  stroke: rgba(15, 23, 42, 0.7); /* Dark slate for Kỵ */
+.tuvi-triangle-line {
+  stroke: rgba(90, 90, 90, 0.4);
+  stroke-width: 1.0;
+  stroke-dasharray: 2 2;
+  vector-effect: non-scaling-stroke;
 }
 
 .tuvi-chart-legend {

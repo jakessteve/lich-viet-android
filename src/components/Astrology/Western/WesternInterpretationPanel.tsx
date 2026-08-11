@@ -1,5 +1,6 @@
 import React from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
+import { WESTERN_INTERPRETATIONS } from '../../../services/astrology/interpretations';
 
 const SIGNS = ['Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải', 'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp', 'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư'];
 
@@ -12,6 +13,10 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
   
   const mcIdx = Math.floor(((result.midheaven % 360) + 360) % 360 / 30);
   const mcSign = SIGNS[mcIdx];
+
+  const getInterpretation = (point: string, sign: string, fallback: string) => {
+    return WESTERN_INTERPRETATIONS[point]?.[sign] || fallback;
+  };
 
   return (
     <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
@@ -30,7 +35,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
             <div>
               <h4 className="font-semibold text-sm">Mặt Trời ở {sun.sign}</h4>
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-                Đại diện cho cái tôi, tính cách cốt lõi và ý chí nhận thức. Nó cho thấy sức sống, bản sắc và cách bạn thể hiện bản thân với thế giới.
+                {getInterpretation('sun', sun.sign, 'Đại diện cho cái tôi, tính cách cốt lõi và ý chí nhận thức. Nó cho thấy sức sống, bản sắc và cách bạn thể hiện bản thân với thế giới.')}
               </p>
             </div>
           </div>
@@ -44,7 +49,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
             <div>
               <h4 className="font-semibold text-sm">Mặt Trăng ở {moon.sign}</h4>
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-                Đại diện cho bản chất cảm xúc, tiềm thức và thế giới nội tâm. Nó cho thấy nhu cầu an toàn, thói quen và cách bạn phản ứng theo bản năng.
+                {getInterpretation('moon', moon.sign, 'Đại diện cho bản chất cảm xúc, tiềm thức và thế giới nội tâm. Nó cho thấy nhu cầu an toàn, thói quen và cách bạn phản ứng theo bản năng.')}
               </p>
             </div>
           </div>
@@ -57,7 +62,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
           <div>
             <h4 className="font-semibold text-sm">Cung Mọc (Ascendant) ở {ascSign}</h4>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-              Đại diện cho lớp mặt nạ bên ngoài, ấn tượng đầu tiên và cơ thể vật lý. Nó cho thấy cách bạn tiếp cận cuộc sống và cách người khác nhìn nhận bạn.
+              {getInterpretation('ascendant', ascSign, 'Đại diện cho lớp mặt nạ bên ngoài, ấn tượng đầu tiên và cơ thể vật lý. Nó cho thấy cách bạn tiếp cận cuộc sống và cách người khác nhìn nhận bạn.')}
             </p>
           </div>
         </div>
@@ -69,7 +74,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
           <div>
             <h4 className="font-semibold text-sm">Thiên Đỉnh (Midheaven) ở {mcSign}</h4>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-              Đại diện cho sự nghiệp, danh tiếng và mục tiêu cuộc sống. Nó cho thấy hình ảnh công chúng và những gì bạn phấn đấu đạt được trong xã hội.
+              {getInterpretation('midheaven', mcSign, 'Đại diện cho sự nghiệp, danh tiếng và mục tiêu cuộc sống. Nó cho thấy hình ảnh công chúng và những gì bạn phấn đấu đạt được trong xã hội.')}
             </p>
           </div>
         </div>

@@ -69,8 +69,9 @@ const SIGNS = [
 ];
 
 function getSign(longitude: number) {
-  const index = Math.floor(((longitude % 360) + 360) % 360 / 30);
-  return { sign: SIGNS[index], signIndex: index, degree: longitude % 30 };
+  const normalized = ((longitude % 360) + 360) % 360;
+  const index = Math.floor(normalized / 30);
+  return { sign: SIGNS[index], signIndex: index, degree: normalized % 30 };
 }
 
 function assignHouse(longitude: number, cusps: number[]): number {

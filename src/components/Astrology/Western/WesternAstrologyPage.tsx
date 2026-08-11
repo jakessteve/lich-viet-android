@@ -26,6 +26,9 @@ export const WesternAstrologyPage: React.FC = () => {
         latitude: profile.birthLocation?.lat ?? 21.0285,
         longitude: profile.birthLocation?.lng ?? 105.8542,
         timezone: profile.birthLocation?.timezone ?? 7,
+        locationName: profile.birthLocation?.locationName ?? undefined,
+        countryCode: profile.birthLocation?.countryCode ?? undefined,
+        countryName: profile.birthLocation?.countryName ?? undefined,
       });
       prefilled.current = true;
     }

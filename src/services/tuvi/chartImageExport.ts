@@ -23,6 +23,16 @@ function downloadBlob(blob: Blob, filename: string): void {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
+function downloadDataUrl(dataUrl: string, filename: string): void {
+  const link = document.createElement('a');
+  link.href = dataUrl;
+  link.download = filename;
+  link.rel = 'noopener';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
+
 function isVisible(element: Element, style = window.getComputedStyle(element)): boolean {
   const rect = element.getBoundingClientRect();
   return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) !== 0 && rect.width > 0 && rect.height > 0;
@@ -161,7 +171,7 @@ function drawExportHighlights(context: CanvasRenderingContext2D, root: HTMLEleme
   });
 }
 
-function createJpegBlobFromElement(element: HTMLElement, backgroundColor: string): Promise<Blob> {
+function renderChartToCanvas(element: HTMLElement, backgroundColor: string): HTMLCanvasElement {
   const rect = element.getBoundingClientRect();
   const width = Math.max(1, Math.ceil(rect.width));
   const height = Math.max(1, Math.ceil(rect.height));
@@ -172,7 +182,7 @@ function createJpegBlobFromElement(element: HTMLElement, backgroundColor: string
 
   const context = canvas.getContext('2d');
   if (!context) {
-    return Promise.reject(new Error('Canvas context is unavailable.'));
+    throw new Error('Canvas context is unavailable.');
   }
 
   context.scale(scale, scale);
@@ -191,6 +201,12 @@ function createJpegBlobFromElement(element: HTMLElement, backgroundColor: string
 
   drawExportHighlights(context, element, rect);
 
+  return canvas;
+}
+
+async function createJpegBlobFromElement(element: HTMLElement, backgroundColor: string): Promise<Blob> {
+  const canvas = renderChartToCanvas(element, backgroundColor);
+
   return new Promise<Blob>((resolve, reject) => {
     try {
       canvas.toBlob((blob) => {
@@ -206,6 +222,11 @@ function createJpegBlobFromElement(element: HTMLElement, backgroundColor: string
   });
 }
 
+async function createJpegDataUrlFromElement(element: HTMLElement, backgroundColor: string): Promise<string> {
+  const canvas = renderChartToCanvas(element, backgroundColor);
+  return canvas.toDataURL('image/jpeg', JPEG_QUALITY);
+}
+
 export async function downloadTuViChartAsImage(selector: string, filename: string): Promise<void> {
   const element = document.querySelector<HTMLElement>(selector);
   if (!element) {
@@ -213,8 +234,16 @@ export async function downloadTuViChartAsImage(selector: string, filename: strin
   }
 
   await waitForFonts();
-  const blob = await createJpegBlobFromElement(element, getChartBackground(element));
-  downloadBlob(blob, filename.replace(/\.(png|svg|webp)$/i, '.jpg'));
+  const backgroundColor = getChartBackground(element);
+  const safeFilename = filename.replace(/\.(png|svg|webp)$/i, '.jpg');
+
+  try {
+    const blob = await createJpegBlobFromElement(element, backgroundColor);
+    downloadBlob(blob, safeFilename);
+  } catch {
+    const dataUrl = await createJpegDataUrlFromElement(element, backgroundColor);
+    downloadDataUrl(dataUrl, safeFilename);
+  }
 }
 
 export function buildTuViImageFilename(name?: string): string {

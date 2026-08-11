@@ -3,7 +3,7 @@ import type { TuViChart as TuViChartType } from '../../types/tuvi';
 import { TuViPalaceCell } from './TuViPalaceCell';
 import { TuViCenterPanel } from './TuViCenterPanel';
 import { GRID_MAP } from './tuviChartLayout';
-import { getTuHoaForCan } from '../../services/tuvi/starPlacement';
+
 
 interface TuViChartProps {
   chart: TuViChartType;
@@ -43,32 +43,29 @@ const OPPOSITE_CHI: Record<number, number> = {
 };
 
 const MOBILE_BASE_WIDTH = 780;
-// Keep the mobile canvas tall enough for dense palaces that can reach 19 non-major labels.
 const MOBILE_BASE_HEIGHT = 1080;
+const DOUBLE_TAP_THRESHOLD_MS = 300;
 
 function getTamHopGroup(chiIndex: number): number[] {
   return [...(TAM_HOP_GROUPS.find((group) => group.includes(chiIndex)) ?? [])];
 }
 
-function getCellCenter(chiIndex: number): { x: number; y: number } | null {
-  const grid = GRID_MAP.find((cell) => cell.chiIndex === chiIndex);
+function getInnerAnchor(chiIndex: number): { x: number; y: number } | null {
+  const grid = GRID_MAP.find((c) => c.chiIndex === chiIndex);
   if (!grid) return null;
-  return {
-    x: ((grid.col + 0.5) / 4) * 100,
-    y: ((grid.row + 0.5) / 4) * 100,
-  };
-}
+  const cx = (grid.col + 0.5) * 25;
+  const cy = (grid.row + 0.5) * 25;
 
-function getTriangleLines(activeChiIndex: number): Array<{ x1: number; y1: number; x2: number; y2: number }> {
-  const group = getTamHopGroup(activeChiIndex);
-  const centers = group.map(getCellCenter);
-  if (centers.some((center) => center === null)) return [];
-  const [a, b, c] = centers as Array<{ x: number; y: number }>;
-  return [
-    { x1: a.x, y1: a.y, x2: b.x, y2: b.y },
-    { x1: b.x, y1: b.y, x2: c.x, y2: c.y },
-    { x1: c.x, y1: c.y, x2: a.x, y2: a.y },
-  ];
+  let x = cx;
+  let y = cy;
+
+  if (grid.row === 0) y = 25;
+  else if (grid.row === 3) y = 75;
+
+  if (grid.col === 0) x = 25;
+  else if (grid.col === 3) x = 75;
+
+  return { x, y };
 }
 
 export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex, onSelectPalace }) => {
@@ -80,51 +77,30 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
   const [isMobileViewport, setIsMobileViewport] = useState(() =>
     typeof window !== 'undefined' ? window.matchMedia('(max-width: 768px)').matches : false,
   );
+  const lastTapRef = useRef<number>(0);
 
-  // Build a map from Chi index → palace for quick lookup
   const palaceByChi = new Map<number, (typeof chart.palaces)[number]>();
   for (const palace of chart.palaces) {
     palaceByChi.set(palace.id, palace);
   }
-  const defaultPalace = chart.palaces.find((palace) => palace.isMenh);
-  const activePalaceIndex = selectedPalaceIndex ?? chart.hanContext?.daiHanPalaceIndex ?? defaultPalace?.id ?? null;
+  const activePalaceIndex = selectedPalaceIndex ?? null;
   const activeTamHop = activePalaceIndex === null ? [] : getTamHopGroup(activePalaceIndex);
   const activeOpposite = activePalaceIndex === null ? null : OPPOSITE_CHI[activePalaceIndex];
 
-  const phiTinhLines = useMemo(() => {
+  const tamHopLines = useMemo(() => {
     if (activePalaceIndex === null) return [];
-    const activePalace = palaceByChi.get(activePalaceIndex);
-    if (!activePalace) return [];
-    
-    const phiTinh = getTuHoaForCan(activePalace.can, chart.input.school);
-    const lines: Array<{ x1: number; y1: number; x2: number; y2: number; type: string }> = [];
-    const activeCenter = getCellCenter(activePalaceIndex);
-    if (!activeCenter) return lines;
 
-    const types: ('Loc' | 'Quyen' | 'Khoa' | 'Ky')[] = ['Loc', 'Quyen', 'Khoa', 'Ky'];
-    
-    for (const t of types) {
-      const starName = phiTinh[t].starName;
-      const targetPalace = chart.palaces.find(p => 
-        p.chinhTinh.some(s => s.name === starName) || 
-        p.phuTinh.some(s => s.name === starName) ||
-        p.satTinh.some(s => s.name === starName)
-      );
-      if (targetPalace) {
-        const targetCenter = getCellCenter(targetPalace.id);
-        if (targetCenter) {
-          lines.push({
-            x1: activeCenter.x,
-            y1: activeCenter.y,
-            x2: targetCenter.x,
-            y2: targetCenter.y,
-            type: t
-          });
-        }
-      }
-    }
-    return lines;
-  }, [activePalaceIndex, palaceByChi, chart.input.school, chart.palaces]);
+    const group = getTamHopGroup(activePalaceIndex);
+    const anchors = group.map(getInnerAnchor);
+    if (anchors.some((a) => a === null)) return [];
+    const [a, b, c] = anchors as Array<{ x: number; y: number }>;
+
+    return [
+      { x1: a.x, y1: a.y, x2: b.x, y2: b.y },
+      { x1: b.x, y1: b.y, x2: c.x, y2: c.y },
+      { x1: c.x, y1: c.y, x2: a.x, y2: a.y },
+    ];
+  }, [activePalaceIndex]);
 
   useEffect(() => {
     const media = window.matchMedia('(max-width: 768px)');
@@ -164,19 +140,20 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
     setMobileScale(Number.isFinite(nextScale) && nextScale > 0 ? nextScale : 1);
   }, [isMobileViewport, mobileZoomed]);
 
-  const handleMobileZoomToggle = useCallback(() => {
+  const toggleZoom = useCallback(() => {
     if (!isMobileViewport) return;
     setMobileZoomed((current) => !current);
   }, [isMobileViewport]);
 
-  const handleMobileZoomKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (!isMobileViewport || (event.key !== 'Enter' && event.key !== ' ')) return;
-      event.preventDefault();
-      setMobileZoomed((current) => !current);
-    },
-    [isMobileViewport],
-  );
+  const handleDoubleTap = useCallback(() => {
+    const now = Date.now();
+    if (now - lastTapRef.current < DOUBLE_TAP_THRESHOLD_MS) {
+      lastTapRef.current = 0;
+      toggleZoom();
+    } else {
+      lastTapRef.current = now;
+    }
+  }, [toggleZoom]);
 
   useEffect(() => {
     updateMobileScale();
@@ -252,24 +229,32 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
 
   return (
     <div className={`tuvi-chart-shell${isMobileViewport && mobileZoomed ? ' mobile-zoomed' : ''}`} ref={shellRef}>
+      {isMobileViewport && (
+        <div className="flex items-center justify-end gap-2 px-2 py-1">
+          <button
+            type="button"
+            onClick={toggleZoom}
+            className="surface-control inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-gold-light dark:hover:text-gold-dark transition-colors"
+            aria-label={mobileZoomed ? 'Thu nhỏ lá số' : 'Phóng to lá số'}
+          >
+            <span className="material-icons-round text-lg">
+              {mobileZoomed ? 'zoom_out_map' : 'zoom_in_map'}
+            </span>
+          </button>
+        </div>
+      )}
       <div
         className={`tuvi-chart-stage${isMobileViewport ? ' tuvi-chart-stage-mobile' : ''}`}
-        onClick={handleMobileZoomToggle}
-        onKeyDown={handleMobileZoomKeyDown}
-        role="button"
-        tabIndex={isMobileViewport ? 0 : -1}
-        aria-label={mobileZoomed ? 'Thu nhỏ lá số' : 'Phóng to lá số'}
-        aria-disabled={!isMobileViewport}
-        aria-pressed={mobileZoomed}
-        style={{ ...mobileStageStyle, cursor: isMobileViewport ? (mobileZoomed ? 'zoom-out' : 'zoom-in') : undefined }}
+        onClick={handleDoubleTap}
+        style={{ ...mobileStageStyle }}
       >
         <div className="tuvi-chart" data-tuvi-chart-export role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>
-          {phiTinhLines.length > 0 && (
+          {tamHopLines.length > 0 && (
             <svg className="tuvi-connection-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-              {phiTinhLines.map((line, index) => (
+              {tamHopLines.map((line, index) => (
                 <line
-                  key={`phi-${line.x1}-${line.y1}-${line.type}-${index}`}
-                  className={`tuvi-connection-line phi-tinh phi-tinh-${line.type.toLowerCase()}`}
+                  key={`tamhop-${index}`}
+                  className="tuvi-connection-line tuvi-triangle-line"
                   x1={line.x1}
                   y1={line.y1}
                   x2={line.x2}
