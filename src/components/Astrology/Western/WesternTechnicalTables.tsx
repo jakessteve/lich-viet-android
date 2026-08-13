@@ -113,48 +113,6 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
         </div>
       </div>
 
-      {/* Góc hợp */}
-      {result.aspects.length > 0 && (
-        <div className="glass-card overflow-hidden">
-          <div className="card-header">
-            <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-blue-500 dark:text-blue-400 text-base">share</span>
-              Các góc chiếu (Aspects)
-            </h3>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="border-b border-border-light/60 dark:border-border-dark/60 text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
-                  <th className="py-2 px-3">Hành Tinh 1</th>
-                  <th className="py-2 px-3 text-center">Góc Hợp</th>
-                  <th className="py-2 px-3 text-center">Hành Tinh 2</th>
-                  <th className="py-2 px-3 text-center">Sai số (Orb)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {result.aspects.filter(a => ASPECT_LABELS[a.type]).map((a, i) => (
-                  <tr key={i} className="border-b border-border-light/40 dark:border-border-dark/40">
-                    <td className="py-2 px-3 text-sm">
-                      <span className="mr-1.5 font-bold">{BODY_ICONS[a.planetA]}</span>
-                      {BODY_LABELS[a.planetA] || a.planetA}
-                    </td>
-                    <td className="py-2 px-3 text-sm text-center font-semibold text-blue-500">
-                      <span className="mr-1.5 font-bold text-lg leading-none">{ASPECT_ICONS[a.type]}</span>
-                      {ASPECT_LABELS[a.type]}
-                    </td>
-                    <td className="py-2 px-3 text-sm text-center">
-                      <span className="mr-1.5 font-bold">{BODY_ICONS[a.planetB]}</span>
-                      {BODY_LABELS[a.planetB] || a.planetB}
-                    </td>
-                    <td className="py-2 px-3 text-sm text-center font-mono">{a.orb.toFixed(2)}°</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
 
       {/* Diễn giải cơ bản */}
       <div className="glass-card overflow-hidden">

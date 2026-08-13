@@ -29,13 +29,8 @@ function getTabsForIntent(intent: FAQIntent | null | undefined, hasResult: boole
 
   if (!hasResult) return base;
 
-  // Intent-specific extra tabs
-  if (intent === 'chon-ngay-cuoi') {
-    base.push({ id: 'wedding', label: 'Lịch cưới', icon: 'favorite' });
-  }
-  if (intent === 'tang-le') {
-    base.push({ id: 'funeral', label: 'Hướng mộ', icon: 'explore' });
-  }
+  // Intent-specific extra tabs are currently not implemented
+  // Future: Add intent-specific views here when components are ready
 
   return base;
 }

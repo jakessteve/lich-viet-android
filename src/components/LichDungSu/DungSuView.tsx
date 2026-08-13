@@ -334,7 +334,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
           </div>
 
           {/* Bottom Half: Activity Picker (Contextually Hidden) */}
-          {selectedIntent === 'xem-ngay' && (
+          {selectedIntent && !['chon-ngay-cuoi', 'tang-le'].includes(selectedIntent) && (
             <div className="p-4 sm:p-5 animate-fade-scale">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
