@@ -273,10 +273,10 @@ export function calculateHanContext(chart: TuViChart, viewYear: number, viewMont
     luuDieuByPalace[pos].push({ name, type, nguHanh, brightness });
   };
 
-  addLuuDieu(luuThaiTuePos, 'Thái Tuế');
-  addLuuDieu(luuLocTonPos, 'Lộc Tồn', 'luuDieu', 'Thổ');
-  addLuuDieu(luuKinhDuongPos, 'Kình Dương', 'luuDieu', 'Kim');
-  addLuuDieu(luuDaLaPos, 'Đà La', 'luuDieu', 'Kim');
+  addLuuDieu(luuThaiTuePos, 'L. Thái Tuế');
+  addLuuDieu(luuLocTonPos, 'L. Lộc Tồn', 'luuDieu', 'Thổ');
+  addLuuDieu(luuKinhDuongPos, 'L. Kình Dương', 'luuDieu', 'Kim');
+  addLuuDieu(luuDaLaPos, 'L. Đà La', 'luuDieu', 'Kim');
 
   return {
     viewYear,

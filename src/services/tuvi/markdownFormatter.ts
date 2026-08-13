@@ -139,7 +139,7 @@ export function formatTuViChartAsMarkdown(chart: TuViChart, options?: Partial<Tu
 - Historical region: ${meta.historicalRegion ?? '—'}
 - Nguồn kiểm chứng: ${meta.sources?.join(', ') || '—'}`);
     if (meta.catalog) {
-      const layerText = meta.catalog.layers.map((layer) => `${layer.label}: ${layer.count}`).join(' · ');
+      const layerText = meta.catalog.layers?.map((layer) => `${layer.label}: ${layer.count}`).join(' · ') || '—';
       parts.push(`## Phân Tầng Danh Mục
 - Tổng sao đang mô hình hóa: ${meta.catalog.total}
 - Phân tầng: ${layerText}

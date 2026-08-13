@@ -56,7 +56,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   const monthOptions = useMemo(() => Array.from({ length: 12 }, (_, i) => i), []);
   const yearOptions = useMemo(() => Array.from({ length: 201 }, (_, i) => 1900 + i), []);
 
-  const { isCompact, isMedium } = useDeviceClass();
+  const { isCompact } = useDeviceClass();
   // isMobile equivalent logic: collapse on compact devices
   const shouldCollapse = collapseOnMobile && isCompact;
   const [isExpanded, setIsExpanded] = useState(!shouldCollapse);

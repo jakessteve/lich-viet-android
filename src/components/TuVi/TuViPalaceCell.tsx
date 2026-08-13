@@ -127,7 +127,7 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
         <div>
           {visiblePhuTinh.map((star) => renderStar(star))}
           {palace.tuHoa.map((tuHoa) => renderTuHoa(tuHoa))}
-          {hanContext?.luuDieuByPalace?.[palace.id]?.map((star) => renderStar(star as any, 'luu-dieu'))}
+          {hanContext?.luuDieuByPalace?.[palace.id]?.map((star) => renderStar(star, 'luu-dieu'))}
         </div>
         <div>{visibleSatTinh.map((star) => renderStar(star, 'sat'))}</div>
       </div>

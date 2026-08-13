@@ -577,3 +577,55 @@ export function computePorphyryCusps(observer: any): { system: string; cusps: nu
 export function computeDispositorTree(planets: any[]): any;
 export function detectChartShape(planets: any[]): any;
 export function computePartOfFortune(sunLongitude: number, moonLongitude: number, ascendantLongitude: number, isDayBirth?: boolean): number;
+export function computeTrueLunarPosition(julianDay: number): {
+  longitude: number;
+  latitude: number;
+  distanceKm: number;
+  distanceAU: number;
+};
+export function computeSolarReturn(
+  birthSunLongitude: number,
+  year: number,
+  startJulianDay: number
+): {
+  solarReturnJulianDay: number;
+  solarReturnLongitude: number;
+  birthLongitude: number;
+  orb: number;
+} | null;
+export function computeLunarReturn(
+  birthMoonLongitude: number,
+  startJulianDay: number
+): {
+  lunarReturnJulianDay: number;
+  lunarReturnLongitude: number;
+  birthLongitude: number;
+  orb: number;
+} | null;
+export function computeProgressedDate(birthJulianDay: number, ageYears: number): number;
+export function computeProgressedPlanets(
+  observer: any,
+  birthObserver: any,
+  ageYears: number
+): { progressedDate: number; progressedObserver: any; note: string };
+export function computeCompositeChart(
+  planetsA: Array<{ body: string; tropicalLongitude: number }>,
+  planetsB: Array<{ body: string; tropicalLongitude: number }>
+): Array<{ body: string; tropicalLongitude: number; midpointType: string }>;
+export function computeDavisonChart(
+  birthA: { julianDay: number; latitude: number; longitude: number },
+  birthB: { julianDay: number; latitude: number; longitude: number }
+): { julianDay: number; latitude: number; longitude: number; note: string };
+export function calculateSynastry(
+  profileA: any,
+  profileB: any,
+  westernSynastryData?: any,
+  vedicSynastryData?: any
+): {
+  combinedScore: number;
+  engines: {
+    tuVi: { score: number; insights: string[] };
+    western: { score: number; insights: string[] };
+    vedic: { score: number; insights: string[]; rawBreakdown: Record<string, number> };
+  };
+};

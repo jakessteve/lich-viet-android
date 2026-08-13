@@ -77,10 +77,6 @@ export default function InputForm({
   const tabInactiveClass =
     'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white';
 
-  const pillBaseClass = 'px-3 py-1.5 text-xs font-semibold rounded-full transition-all duration-200';
-  const pillActiveClass = 'bg-primary/10 text-primary dark:bg-primary-dark/20 dark:text-primary-dark';
-  const pillInactiveClass =
-    'bg-gray-100 text-gray-500 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-400 dark:hover:bg-white/10';
 
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-5">

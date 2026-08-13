@@ -88,14 +88,15 @@ function assignHouse(longitude: number, cusps: number[]): number {
   return 1;
 }
 
-export function calculateWesternChart(input: WesternChartInput): WesternChartResult {
-  const birthDate = input.birthDate instanceof Date ? input.birthDate : new Date(input.birthDate);
-  const julianDay = unixMsToJulianDay(birthDate.getTime());
-
+export function calculateWesternChartForJulianDay(
+  julianDay: number,
+  latitude: number,
+  longitude: number,
+): WesternChartResult {
   const observer = buildTopocentricObserver({
     julianDay,
-    latitude: input.latitude,
-    longitude: input.longitude,
+    latitude,
+    longitude,
     altitudeMeters: 0,
   });
 
@@ -160,13 +161,26 @@ export function calculateWesternChart(input: WesternChartInput): WesternChartRes
     ascendant,
     true,
   );
-  const { sign: pofSign, signIndex: pofSignIndex } = getSign(pof);
-
   const houses: HouseCusp[] = cuspsArray.map((cusp: number, index: number) => {
     const { sign, signIndex } = getSign(cusp);
     return { index: index + 1, longitude: cusp, sign, signIndex };
   });
 
+  return buildResult(planets, dignities, aspects, dispositorTree, chartShape, pof, ascendant, midheaven, houses);
+}
+
+function buildResult(
+  planets: PlanetPosition[],
+  dignities: DignityResult[],
+  aspects: AspectResult[],
+  dispositorTree: WesternChartResult['dispositorTree'],
+  chartShape: WesternChartResult['chartShape'],
+  pof: number,
+  ascendant: number,
+  midheaven: number,
+  houses: HouseCusp[],
+): WesternChartResult {
+  const { sign: pofSign, signIndex: pofSignIndex } = getSign(pof);
   return {
     planets,
     houses,
@@ -178,4 +192,10 @@ export function calculateWesternChart(input: WesternChartInput): WesternChartRes
     ascendant,
     midheaven,
   };
+}
+
+export function calculateWesternChart(input: WesternChartInput): WesternChartResult {
+  const birthDate = input.birthDate instanceof Date ? input.birthDate : new Date(input.birthDate);
+  const julianDay = unixMsToJulianDay(birthDate.getTime());
+  return calculateWesternChartForJulianDay(julianDay, input.latitude, input.longitude);
 }

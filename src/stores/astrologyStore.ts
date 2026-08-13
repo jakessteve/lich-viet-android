@@ -1,8 +1,47 @@
 import { create } from 'zustand';
+import {
+  generateUnifiedBirthProfile,
+  calculateSynastry as calculateSynastryCore,
+  unixMsToJulianDay,
+} from '@omce/core-logic';
 import type { VedicChartInput, SynastryInput, WesternChartInput } from '../types/astrology';
 import { calculateWesternChart, type WesternChartResult } from '../services/astrology/westernCalculator';
+import {
+  calculateSolarReturnChart,
+  calculateLunarReturnDates,
+  calculateLunarReturnChart,
+  calculateTransitReport,
+  calculateProgressedChart,
+  calculateCompositeResult,
+  calculateDavisonResult,
+  type ReturnChartResult,
+  type LunarReturnEntry,
+  type TransitReport,
+  type ProgressionResult,
+  type DavisonResult,
+} from '../services/astrology/predictiveCalculator';
 
 export type AstrologyTab = 'tay-phuong' | 'vedic' | 'hop-la';
+
+export interface SynastryEngineScores {
+  tuVi: { score: number; insights: string[] };
+  western: { score: number; insights: string[] };
+  vedic: { score: number; insights: string[]; rawBreakdown: Record<string, number> };
+}
+
+export interface SynastryResult {
+  combinedScore: number;
+  engines: SynastryEngineScores;
+}
+
+export interface ForecastResult {
+  year: number;
+  solarReturn: ReturnChartResult | null;
+  lunarReturns: LunarReturnEntry[];
+  selectedLunarReturn: ReturnChartResult | null;
+  transits: TransitReport;
+  progressions: ProgressionResult;
+}
 
 interface AstrologyState {
   activeSubTab: AstrologyTab;
@@ -13,7 +52,12 @@ interface AstrologyState {
 
   westernResult: WesternChartResult | null;
   vedicResult: WesternChartResult | null;
-  synastryResult: Record<string, unknown> | null;
+  synastryResult: SynastryResult | null;
+  compositeResult: WesternChartResult | null;
+  davisonResult: DavisonResult | null;
+
+  forecastYear: number;
+  forecastResult: ForecastResult | null;
 
   isCalculating: boolean;
   error: string | null;
@@ -28,6 +72,10 @@ interface AstrologyState {
 
   setSynastryInput: (partial: Partial<SynastryInput>) => void;
   calculateSynastry: () => Promise<void>;
+
+  setForecastYear: (year: number) => void;
+  calculateForecast: () => Promise<void>;
+  selectLunarReturn: (julianDay: number) => void;
 
   clearResults: () => void;
   clearError: () => void;
@@ -45,6 +93,17 @@ const getDefaultWesternInput = (): WesternChartInput => {
   };
 };
 
+const buildUnifiedProfile = (input: WesternChartInput, gender: string) => {
+  const birthDate = input.birthDate instanceof Date ? input.birthDate : new Date(input.birthDate);
+  return generateUnifiedBirthProfile({
+    birthTimestamp: birthDate.getTime(),
+    latitude: input.latitude,
+    longitude: input.longitude,
+    gender,
+    timezone: input.timezone ?? 7,
+  });
+};
+
 export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   activeSubTab: 'tay-phuong',
 
@@ -58,6 +117,11 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   westernResult: null,
   vedicResult: null,
   synastryResult: null,
+  compositeResult: null,
+  davisonResult: null,
+
+  forecastYear: new Date().getFullYear(),
+  forecastResult: null,
 
   isCalculating: false,
   error: null,
@@ -106,12 +170,64 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   calculateSynastry: async () => {
     set({ isCalculating: true, error: null });
     try {
-      set({ synastryResult: {}, isCalculating: false });
+      const { synastryInput } = get();
+      const profileA = buildUnifiedProfile(synastryInput.profileA, 'male');
+      const profileB = buildUnifiedProfile(synastryInput.profileB, 'female');
+      const result = calculateSynastryCore(profileA, profileB);
+      const compositeResult = calculateCompositeResult(synastryInput.profileA, synastryInput.profileB);
+      const davisonResult = calculateDavisonResult(synastryInput.profileA, synastryInput.profileB);
+      set({ synastryResult: result, compositeResult, davisonResult, isCalculating: false });
     } catch (e: unknown) {
       set({ error: e instanceof Error ? e.message : String(e), isCalculating: false });
     }
   },
 
-  clearResults: () => set({ westernResult: null, vedicResult: null, synastryResult: null }),
+  setForecastYear: (year) => set({ forecastYear: year, error: null }),
+
+  calculateForecast: async () => {
+    set({ isCalculating: true, error: null });
+    try {
+      const { westernInput, forecastYear } = get();
+      const now = new Date();
+      const solarReturn = calculateSolarReturnChart(westernInput, forecastYear);
+      const lunarReturns = calculateLunarReturnDates(westernInput, forecastYear);
+      const upcoming =
+        lunarReturns.find((entry) => entry.julianDay >= unixMsToJulianDay(now.getTime())) ??
+        lunarReturns[0] ??
+        null;
+      const selectedLunarReturn = upcoming
+        ? calculateLunarReturnChart(westernInput, upcoming.julianDay)
+        : null;
+      const transits = calculateTransitReport(westernInput, now);
+      const progressions = calculateProgressedChart(westernInput, now);
+      set({
+        forecastResult: { year: forecastYear, solarReturn, lunarReturns, selectedLunarReturn, transits, progressions },
+        isCalculating: false,
+      });
+    } catch (e: unknown) {
+      set({ error: e instanceof Error ? e.message : String(e), isCalculating: false });
+    }
+  },
+
+  selectLunarReturn: (julianDay) => {
+    const { westernInput, forecastResult } = get();
+    if (!forecastResult) return;
+    set({
+      forecastResult: {
+        ...forecastResult,
+        selectedLunarReturn: calculateLunarReturnChart(westernInput, julianDay),
+      },
+    });
+  },
+
+  clearResults: () =>
+    set({
+      westernResult: null,
+      vedicResult: null,
+      synastryResult: null,
+      compositeResult: null,
+      davisonResult: null,
+      forecastResult: null,
+    }),
   clearError: () => set({ error: null }),
 }));

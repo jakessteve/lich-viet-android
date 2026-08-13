@@ -124,9 +124,15 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
+import { MemoryRouter } from 'react-router-dom';
+
 describe('TuViSummaryPanel', () => {
   it('shows the overview details and switches to combinations', () => {
-    render(<TuViSummaryPanel chart={makeChart()} />);
+    render(
+      <MemoryRouter>
+        <TuViSummaryPanel chart={makeChart()} />
+      </MemoryRouter>
+    );
 
     expect(screen.getByText('Tổng quan cấu trúc và Cách cục')).toBeTruthy();
     expect(screen.getByText('Bố cục chính tinh')).toBeTruthy();
@@ -156,7 +162,11 @@ describe('TuViSummaryPanel', () => {
       },
     ];
 
-    render(<TuViSummaryPanel chart={chart} />);
+    render(
+      <MemoryRouter>
+        <TuViSummaryPanel chart={chart} />
+      </MemoryRouter>
+    );
 
     expect(errorSpy.mock.calls.some((call) => String(call[0]).includes('Encountered two children with the same key'))).toBe(false);
   });

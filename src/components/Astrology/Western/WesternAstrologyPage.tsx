@@ -1,14 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useAuthStore } from '@/stores/authStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
+import { SegmentedControl } from '../../shared';
 import { WesternChartView } from './WesternChartView';
+import { ForecastView } from './ForecastView';
 import { WesternMarkdownExport } from '../WesternMarkdownExport';
+
+const PAGE_TABS = [
+  { id: 'la-so', label: 'Lá Số Gốc', icon: 'person', shortLabel: 'Lá Số' },
+  { id: 'van-han', label: 'Vận Hạn', icon: 'wb_twilight', shortLabel: 'Vận Hạn' },
+] as const;
+
+type PageTab = (typeof PAGE_TABS)[number]['id'];
 
 export const WesternAstrologyPage: React.FC = () => {
   usePageTitle('Chiêm Tinh Tây Phương');
   const prefilled = useRef(false);
+  const [pageTab, setPageTab] = useState<PageTab>('la-so');
 
   const user = useAuthStore((s) => s.user);
   const setWesternInput = useAstrologyStore((s) => s.setWesternInput);
@@ -43,12 +53,21 @@ export const WesternAstrologyPage: React.FC = () => {
         </h2>
       </div>
 
-      <div className="flex justify-center gap-2">
-        <span className="px-4 py-1.5 rounded-xl bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 text-sm font-semibold">Tây Phương</span>
-      </div>
+      <SegmentedControl
+        options={PAGE_TABS}
+        value={pageTab}
+        onChange={setPageTab}
+        ariaLabel="Chế độ chiêm tinh tây phương"
+        tone="purple"
+      />
 
-      <WesternChartView />
-      <WesternMarkdownExport system="western" />
+      {pageTab === 'la-so' && (
+        <>
+          <WesternChartView />
+          <WesternMarkdownExport system="western" />
+        </>
+      )}
+      {pageTab === 'van-han' && <ForecastView />}
     </div>
   );
 };

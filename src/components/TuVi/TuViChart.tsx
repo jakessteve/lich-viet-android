@@ -246,6 +246,13 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
       <div
         className={`tuvi-chart-stage${isMobileViewport ? ' tuvi-chart-stage-mobile' : ''}`}
         onClick={handleDoubleTap}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleDoubleTap();
+          }
+        }}
+        role="presentation"
         style={{ ...mobileStageStyle }}
       >
         <div className="tuvi-chart" data-tuvi-chart-export role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>

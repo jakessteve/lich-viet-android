@@ -4,7 +4,8 @@ import {
   normalizeDegrees,
   convertTropicalToSidereal,
   computeSolarLongitude,
-  computeTopocentricPlanetarySnapshot
+  computeTopocentricPlanetarySnapshot,
+  computeTrueLunarPosition
 } from "./astronomy.js";
 
 const DEG_TO_RAD = Math.PI / 180;
@@ -563,6 +564,56 @@ export function computeSolarReturn(birthSunLongitude, year, startJulianDay) {
   return null;
 }
 
+// ===== LUNAR RETURN =====
+export function computeLunarReturn(birthMoonLongitude, startJulianDay) {
+  const target = normalizeDegrees(birthMoonLongitude);
+  const diffAt = (jd) =>
+    ((computeTrueLunarPosition(jd).longitude - target + 540) % 360) - 180;
+
+  let low = startJulianDay;
+  let lowDiff = diffAt(low);
+  let found = null;
+
+  for (let step = 0; step < 64; step++) {
+    const high = startJulianDay + (step + 1) * 0.5;
+    const highDiff = diffAt(high);
+
+    if (lowDiff <= 0 && highDiff > 0) {
+      found = [low, high];
+      break;
+    }
+
+    low = high;
+    lowDiff = highDiff;
+  }
+
+  if (!found) return null;
+
+  let [a, b] = found;
+  for (let iter = 0; iter < 50; iter++) {
+    const mid = (a + b) / 2;
+    const midDiff = diffAt(mid);
+    if (Math.abs(midDiff) < 0.0001) {
+      a = mid;
+      b = mid;
+      break;
+    }
+    if (midDiff <= 0) {
+      a = mid;
+    } else {
+      b = mid;
+    }
+  }
+
+  const jd = (a + b) / 2;
+  return {
+    lunarReturnJulianDay: round(jd),
+    lunarReturnLongitude: round(computeTrueLunarPosition(jd).longitude),
+    birthLongitude: round(target),
+    orb: round(Math.abs(diffAt(jd)))
+  };
+}
+
 // ===== MIDPOINTS =====
 export function computeMidpoint(lonA, lonB) {
   const a = normalizeDegrees(lonA);
@@ -696,12 +747,15 @@ export function computePorphyryCusps(observer) {
   const jdTT = julianDay + computeDeltaT(julianDay) / 86400;
   const T = computeJulianCentury(jdTT);
   
-  // Obliquity of ecliptic
-  const epsilon = (23.439291 - 0.0130042 * T) * DEG_TO_RAD;
+  // Apparent obliquity and sidereal time (including nutation)
+  const omega = (125.04452 - 1934.136261 * T) * DEG_TO_RAD;
+  const deltaEpsilon = 0.002556 * Math.cos(omega);
+  const deltaPsi = -0.00478 * Math.sin(omega);
+  const epsilon = (23.439291 - 0.0130042 * T + deltaEpsilon) * DEG_TO_RAD;
   
   // RAMC (Right Ascension of Midheaven)
   const GMST = normalizeDegrees(280.46061837 + 360.98564736629 * (julianDay - 2451545.0));
-  const RAMC = GMST + observer.longitude;
+  const RAMC = GMST + deltaPsi * Math.cos(epsilon) + observer.longitude;
   const RAMC_rad = RAMC * DEG_TO_RAD;
   
   // Calculate MC (House 10)
@@ -710,8 +764,8 @@ export function computePorphyryCusps(observer) {
   // Calculate Ascendant (House 1)
   const lat_rad = latitude * DEG_TO_RAD;
   const asc = normalizeDegrees(Math.atan2(
-    -Math.cos(RAMC_rad),
-    Math.sin(RAMC_rad) * Math.cos(epsilon) + Math.tan(lat_rad) * Math.sin(epsilon)
+    Math.cos(RAMC_rad),
+    -(Math.sin(RAMC_rad) * Math.cos(epsilon) + Math.tan(lat_rad) * Math.sin(epsilon))
   ) * RAD_TO_DEG);
   
   // Calculate IC (House 4) and Descendant (House 7)

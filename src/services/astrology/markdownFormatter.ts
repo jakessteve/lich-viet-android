@@ -25,7 +25,7 @@ const ASPECT_LABELS: Record<string, string> = {
   biquintile: 'Song Ngũ Phân (144°)',
 };
 
-const DIGNITY_LABELS: Record<string, string> = {
+const _DIGNITY_LABELS: Record<string, string> = {
   domicile: 'Cư (Domicile)', exaltation: 'Vượng (Exaltation)',
   detriment: 'Hãm (Detriment)', fall: 'Suy (Fall)',
 };

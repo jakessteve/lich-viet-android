@@ -18,6 +18,11 @@ export const VedicChartView: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm animate-fade-in">
+          {error}
+        </div>
+      )}
       <div className="glass-card">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2">

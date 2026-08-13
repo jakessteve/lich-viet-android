@@ -40,7 +40,7 @@ export const isTuongPha = (chi1: Chi, chi2: Chi): boolean => {
 export function calculatePersonalDayScore(
   userBirthYear: number,
   dayCanChi: string,
-  birthDetails?: any
+  _birthDetails?: unknown
 ): PersonalDayScore {
   const birthChi = getYearChi(userBirthYear);
   const dayChi = dayCanChi.split(' ')[1] as Chi;

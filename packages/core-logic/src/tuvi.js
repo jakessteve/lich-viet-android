@@ -1938,7 +1938,7 @@ export function createTuViStarChart(input) {
   const menhPalace = palaces[menhPalaceIndex];
   const menhCanIdx = CAN_LIST.indexOf(menhPalace.can);
   const menhChiIdx = CHI_LIST.indexOf(menhPalace.chi);
-  const napAmIdx = getNapAmIndex(menhCanIdx, menhChiIdx);
+  const napAmIdx = getNapAmIndex(yearCanIndex, yearChiIndex);
   const menhNapAm = NAP_AM_NAMES[napAmIdx] ?? "";
 
   const cucName = { 2: "Thủy Nhị Cục", 3: "Mộc Tam Cục", 4: "Kim Tứ Cục", 5: "Thổ Ngũ Cục", 6: "Hỏa Lục Cục" }[cucNumber] ?? "";

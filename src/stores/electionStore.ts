@@ -44,9 +44,7 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
   runScan: async () => {
     set({ isScanning: true, error: null });
     try {
-      const { input } = get();
-      // Use input somehow to bypass unused var warning in lint
-      console.log('Scanning for', input.activityType);
+      // Run actual OMCE service call here when wired in components/ElectionPage
       // Placeholder for actual OMCE service call which will be wired later in components/ElectionPage
       // For now, this is just scaffolding the store.
       set({ results: [], isScanning: false });

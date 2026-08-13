@@ -35,7 +35,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
     return getUserBirthProfile(user);
   }, [user]);
 
-  const hasBirthday = !!computedProfile?.birthYear;
+
 
   const dayChi = data.canChi?.day?.chi;
 

@@ -47,7 +47,13 @@ export const WesternChartView: React.FC = () => {
         </div>
       </div>
 
-      {result && !isCalculating && <WesternChartDisplay result={result} />}
+      {error && (
+        <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-xl text-sm animate-fade-in">
+          {error}
+        </div>
+      )}
+
+      {result && !isCalculating && !error && <WesternChartDisplay result={result} />}
     </div>
   );
 };

@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added (cherry-picked from chiemtinhlaso.com feature set)
+- **Synastry results**: Hợp Lá Số page now computes real compatibility scores via `calculateSynastry` (Tử Vi, Western aspects, Vedic Ashtakoot) instead of the placeholder
+- **Composite & Davison charts**: new tabs on the Hợp Lá Số page using existing `computeCompositeChart` / `computeDavisonChart` engines
+- **Vận Hạn tab** on Chiêm Tinh Tây Phương: Quá Cảnh (transits), Tiến Trình (secondary progressions)
+- **Solar Return (Mặt Trời Hồi Vị)** chart per year, wired from existing `computeSolarReturn` engine
+- **Lunar Return (Mặt Trăng Hồi Vị)**: new `computeLunarReturn` engine (Meeus-accurate bisection) + monthly return charts per year
+- Type declarations in `packages/core-logic/src/index.d.ts` for solar/lunar return, progressions, composite, Davison, and synastry APIs
+
 ## [3.0.0] - 2026-05-10
 
 ### Major Changes
