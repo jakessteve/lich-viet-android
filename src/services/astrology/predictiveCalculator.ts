@@ -262,6 +262,7 @@ function buildCompositeResult(
       house: assignHouse(p.tropicalLongitude),
       retrograde: false,
       nakshatra: '',
+      nakshatraIndex: 0,
       pada: 0,
       ra: 0,
       dec: 0,

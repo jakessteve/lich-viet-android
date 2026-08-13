@@ -1,6 +1,6 @@
 import React from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
-import { VEDIC_INTERPRETATIONS } from '../../../services/astrology/interpretations';
+import { getVedicSignInterpretation, getVedicAtmakarakaInterpretation, getVedicPlanetInSignInterpretation } from '../../../services/astrology/interpretations';
 
 const SIGNS_SIDEREAL = [
   'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',
@@ -34,7 +34,10 @@ export const VedicInterpretationPanel: React.FC<{ result: WesternChartResult }> 
   };
 
   const getInterpretation = (point: string, key: string, fallback: string) => {
-    return VEDIC_INTERPRETATIONS[point]?.[key] || fallback;
+    if (point === 'lagna') return getVedicSignInterpretation(key) || fallback;
+    if (point === 'moon') return getVedicPlanetInSignInterpretation('moon', key) || fallback;
+    if (point === 'atmakaraka') return getVedicAtmakarakaInterpretation(key) || fallback;
+    return fallback;
   };
 
   const moonSignName = moon ? SIGNS_SIDEREAL[Math.floor(moon.siderealLongitude / 30)] : '';

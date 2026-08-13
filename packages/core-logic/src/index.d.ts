@@ -567,6 +567,7 @@ export declare function sunLongitudeIndex(jdn: number, timeZone: number): number
 export declare function jdFromDate(dd: number, mm: number, yy: number): number;
 export declare function getBranchRelationship(branchA: number | string, branchB: number | string): string;
 export declare function computeNavamsha(siderealLongitude: number): string;
+export declare function computeVedicDignity(body: string, siderealLongitude: number): string;
 export declare function computeVimshottariDasha(moonSidereal: number, birthJulianDay: number, birthYear: number): any;
 export declare function computeAshtakoot(maleMoon: number, femaleMoon: number): any;
 

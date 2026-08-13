@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import { useAppStore } from '../../../stores/appStore';
+import { computeNavamsha } from '@omce/core-logic';
 
 const S = 360;
 const P = 8;
@@ -32,7 +33,7 @@ function col(d:boolean) {
 const xc = (c:number) => P + c * (C + G);
 const yc = (r:number) => P + r * (C + G);
 
-export const VedicSquareChart: React.FC<{ result: WesternChartResult }> = ({ result }) => {
+export const VedicSquareChart: React.FC<{ result: WesternChartResult, type: 'D1' | 'D9' }> = ({ result, type }) => {
   const dark = useAppStore((s) => s.isDark);
   const co = useMemo(() => col(dark), [dark]);
 
@@ -40,18 +41,30 @@ export const VedicSquareChart: React.FC<{ result: WesternChartResult }> = ({ res
     const m: Record<number,Array<{b:string;si:number}>> = {};
     for (let i=1;i<=12;i++) m[i]=[];
     let _mh=0,_mn='';
+    
     result.planets.filter(p=>SI[p.body]).forEach(p=>{
-      const h=p.house;
-      if(h>=1&&h<=12){
-        const si=Math.floor(((p.siderealLongitude%360)+360)%360/30);
-        m[h].push({b:p.body,si});
-        if(p.body==='moon'){_mh=h;_mn=p.nakshatra||'';}
+      let si = p.signIndex;
+      if (type === 'D9') {
+        const navamshaSign = computeNavamsha(p.siderealLongitude);
+        const SIGNS = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
+        si = SIGNS.indexOf(navamshaSign);
       }
+      
+      const houseIndex = si + 1; // South Indian charts always map sign 1 (Aries) to box 1 (top second from left)
+      m[houseIndex].push({b:p.body,si});
+      if(p.body==='moon'){_mh=houseIndex;_mn=p.nakshatra||'';}
     });
     return {hp:m,mh:_mh,mn:_mn};
-  },[result]);
+  },[result, type]);
 
-  const ai = Math.floor(((result.ascendant%360)+360)%360/30);
+  let ai = Math.floor(((result.ascendant%360)+360)%360/30);
+  if (type === 'D9') {
+    const navamshaSign = computeNavamsha(result.ascendant);
+    const SIGNS = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
+    ai = SIGNS.indexOf(navamshaSign);
+  }
+  
+  const ascendantHouseIndex = ai + 1;
 
   return (
     <div style={{display:'flex',justifyContent:'center'}} data-vedic-chart-export>
@@ -64,13 +77,16 @@ export const VedicSquareChart: React.FC<{ result: WesternChartResult }> = ({ res
         {HP.map((p,i)=>{
           const X=xc(p.c), Y=yc(p.r);
           const hx=X+C/2, hy=Y+C/2;
-          const hn=i+1;
+          const si=i; // In South Indian, box i corresponds to sign i (0=Aries, 1=Taurus...)
+          const hn=si+1;
           const planets=hp[hn]||[];
-          const si=result.houses.find(h=>h.index===hn)?.signIndex??0;
 
           return <g key={'h'+i}>
             <rect x={X} y={Y} width={C} height={C} fill={co.cb} stroke={co.ln} strokeWidth="1.2" strokeOpacity={0.65} rx="2"/>
-            <text x={X+7} y={Y+13} fontSize="9" fontWeight="800" fill={co.tx} opacity={0.4}>{hn}</text>
+            {/* Draw Ascendant marker if this sign is the ascendant */}
+            {ascendantHouseIndex === hn && (
+              <text x={X+7} y={Y+13} fontSize="9" fontWeight="800" fill={co.tx} opacity={0.6}>Asc</text>
+            )}
             <text x={X+C-6} y={Y+13} fontSize="8" fontWeight="700" fill={SZ[si]||co.tx} textAnchor="end" opacity={0.7}>{SN[si]}</text>
 
             {planets.map((pl,pi)=>{
@@ -84,10 +100,14 @@ export const VedicSquareChart: React.FC<{ result: WesternChartResult }> = ({ res
           </g>;
         })}
 
-        {/* center Ascendant */}
+        {/* center info */}
         <rect x={xc(1)} y={yc(1)} width={C*2+G} height={C*2+G} fill={co.ct} stroke={co.ln} strokeWidth="1.2" strokeOpacity={0.5} rx="2"/>
-        <text x={S/2} y={S/2-3} textAnchor="middle" dominantBaseline="central" fontSize="12" fontWeight="800" fill={co.tx} opacity={0.45}>Asc</text>
-        <text x={S/2} y={S/2+14} textAnchor="middle" dominantBaseline="central" fontSize="15" fontWeight="800" fill={SZ[ai]||'#7c3aed'}>{SN[ai]}</text>
+        <text x={S/2} y={S/2-10} textAnchor="middle" dominantBaseline="central" fontSize="12" fontWeight="800" fill={co.tx} opacity={0.45}>
+          {type === 'D1' ? 'D1 Rasi' : 'D9 Navamsha'}
+        </text>
+        <text x={S/2} y={S/2+10} textAnchor="middle" dominantBaseline="central" fontSize="10" fontWeight="600" fill={co.tx} opacity={0.6}>
+          {type === 'D1' ? 'Sinh đạo (Lá số chính)' : 'Tâm đạo (Phụ tinh)'}
+        </text>
       </svg>
     </div>
   );

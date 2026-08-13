@@ -2,6 +2,10 @@ import React from 'react';
 import type { WesternChartResult, PlanetPosition } from '../../../services/astrology/westernCalculator';
 import { VedicInterpretationPanel } from './VedicInterpretationPanel';
 import { VedicSquareChart } from './VedicSquareChart';
+import { VedicDiamondChart } from './VedicDiamondChart';
+import { VedicTechnicalTables } from './VedicTechnicalTables';
+import { useAstrologyStore } from '../../../stores/astrologyStore';
+import { useShallow } from 'zustand/react/shallow';
 
 const BODY_LABELS: Record<string, string> = {
   sun: 'Mặt Trời',
@@ -50,13 +54,75 @@ function VedicPlanetRow({ planet }: { planet: PlanetPosition }) {
 }
 
 export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ result }) => {
+  const { chartStyle, chartType, setChartStyle, setChartType } = useAstrologyStore(
+    useShallow((state) => ({
+      chartStyle: state.vedicChartStyle,
+      chartType: state.vedicChartType,
+      setChartStyle: state.setVedicChartStyle,
+      setChartType: state.setVedicChartType,
+    }))
+  );
+
   const ascSignIndex = Math.floor(((result.ascendant % 360) + 360) % 360 / 30);
   const ascDeg = Math.floor(result.ascendant % 30);
   const ascMin = Math.floor(((result.ascendant % 30) - ascDeg) * 60);
 
   return (
     <div className="space-y-6 animate-fade-in-up">
-            <VedicSquareChart result={result} />
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
+        <div className="bg-surface-light dark:bg-surface-dark p-1 rounded-xl flex items-center border border-border-light/60 dark:border-border-dark/60">
+          <button
+            onClick={() => setChartStyle('south')}
+            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              chartStyle === 'south'
+                ? 'bg-purple-500 text-white shadow-sm'
+                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
+            }`}
+          >
+            South (Square)
+          </button>
+          <button
+            onClick={() => setChartStyle('north')}
+            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              chartStyle === 'north'
+                ? 'bg-purple-500 text-white shadow-sm'
+                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
+            }`}
+          >
+            North (Diamond)
+          </button>
+        </div>
+
+        <div className="bg-surface-light dark:bg-surface-dark p-1 rounded-xl flex items-center border border-border-light/60 dark:border-border-dark/60">
+          <button
+            onClick={() => setChartType('D1')}
+            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              chartType === 'D1'
+                ? 'bg-purple-500 text-white shadow-sm'
+                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
+            }`}
+          >
+            D1 Rasi
+          </button>
+          <button
+            onClick={() => setChartType('D9')}
+            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              chartType === 'D9'
+                ? 'bg-purple-500 text-white shadow-sm'
+                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
+            }`}
+          >
+            D9 Navamsha
+          </button>
+        </div>
+      </div>
+
+      {chartStyle === 'south' ? (
+        <VedicSquareChart result={result} type={chartType} />
+      ) : (
+        <VedicDiamondChart result={result} type={chartType} />
+      )}
+      
       <VedicInterpretationPanel result={result} />
       
       {/* Summary Cards */}
@@ -112,6 +178,8 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
           </table>
         </div>
       </div>
+
+      <VedicTechnicalTables result={result} />
 
       {/* Houses */}
       <div className="glass-card overflow-hidden">

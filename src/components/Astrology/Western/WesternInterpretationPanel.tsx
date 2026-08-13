@@ -1,6 +1,6 @@
 import React from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
-import { WESTERN_INTERPRETATIONS } from '../../../services/astrology/interpretations';
+import { getPlanetInSignInterpretation, getSignInterpretation } from '../../../services/astrology/interpretations';
 
 const SIGNS = ['Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải', 'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp', 'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư'];
 
@@ -15,7 +15,9 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
   const mcSign = SIGNS[mcIdx];
 
   const getInterpretation = (point: string, sign: string, fallback: string) => {
-    return WESTERN_INTERPRETATIONS[point]?.[sign] || fallback;
+    if (point === 'ascendant') return getSignInterpretation(sign) || fallback;
+    // For midheaven, we don't have explicit interpretations yet, so it falls back
+    return getPlanetInSignInterpretation(point, sign) || fallback;
   };
 
   return (

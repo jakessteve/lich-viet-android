@@ -59,6 +59,9 @@ interface AstrologyState {
   forecastYear: number;
   forecastResult: ForecastResult | null;
 
+  vedicChartStyle: 'south' | 'north';
+  vedicChartType: 'D1' | 'D9';
+
   isCalculating: boolean;
   error: string | null;
 
@@ -69,6 +72,8 @@ interface AstrologyState {
 
   setVedicInput: (partial: Partial<VedicChartInput>) => void;
   calculateVedic: () => Promise<void>;
+  setVedicChartStyle: (style: 'south' | 'north') => void;
+  setVedicChartType: (type: 'D1' | 'D9') => void;
 
   setSynastryInput: (partial: Partial<SynastryInput>) => void;
   calculateSynastry: () => Promise<void>;
@@ -123,10 +128,16 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   forecastYear: new Date().getFullYear(),
   forecastResult: null,
 
+  vedicChartStyle: 'south',
+  vedicChartType: 'D1',
+
   isCalculating: false,
   error: null,
 
   setSubTab: (tab) => set({ activeSubTab: tab }),
+
+  setVedicChartStyle: (style) => set({ vedicChartStyle: style }),
+  setVedicChartType: (type) => set({ vedicChartType: type }),
 
   setWesternInput: (partial) =>
     set((state) => ({ westernInput: { ...state.westernInput, ...partial }, error: null })),

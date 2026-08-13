@@ -19,6 +19,7 @@ export interface PlanetPosition {
   house: number;
   retrograde: boolean;
   nakshatra: string;
+  nakshatraIndex: number;
   pada: number;
   ra: number;
   dec: number;
@@ -130,6 +131,7 @@ export function calculateWesternChartForJulianDay(
       house,
       retrograde: false,
       nakshatra: nakshatra?.name || '',
+      nakshatraIndex: nakshatra?.index ?? -1,
       pada: nakshatra?.pada ?? 0,
       ra: p.equatorial?.rightAscension ?? 0,
       dec: p.equatorial?.declination ?? 0,
