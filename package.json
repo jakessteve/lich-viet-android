@@ -45,7 +45,9 @@
   "type": "module",
   "dependencies": {
     "@capacitor/android": "^8.3.4",
+    "@capacitor/clipboard": "^8.0.1",
     "@capacitor/core": "^8.3.4",
+    "@capacitor/filesystem": "^8.1.2",
     "@dqcai/vn-lunar": "^1.0.1",
     "@swisseph/browser": "^1.1.1",
     "@swisseph/core": "^1.1.3",

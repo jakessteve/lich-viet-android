@@ -1,0 +1,56 @@
+feature: western-natal-mobile-ui
+date: 2026-08-14
+status: converged
+
+requirements:
+  responsive_chart:
+    status: pass
+    evidence:
+      - "360px and 412px light/dark browser captures show the complete outer circle."
+      - "Fit mode page overflow and chart viewport overflow are both 0px."
+      - "Zoom levels are 100%, 125%, 150%, and 200%; content is pannable above fit."
+  theme:
+    status: pass
+    evidence:
+      - "The live SVG receives the selected application light/dark palette without recalculation."
+  technical_data:
+    status: pass
+    evidence:
+      - "The top-level technical section is collapsed by default."
+      - "Objects, houses, angles, aspects, and metadata remain available through nested disclosures."
+      - "Aspect preview shows 12 entries before explicit expansion."
+  download_ui:
+    status: pass
+    evidence:
+      - "One Western chart trigger opens SVG and PNG choices."
+      - "Initial focus, Escape, outside-click, focus return, and saving state are covered by tests."
+  regression:
+    status: pass
+    evidence:
+      - "11 Western files: 30 tests passed."
+      - "TypeScript typecheck passed."
+      - "Scoped ESLint passed with 0 warnings and 0 errors."
+      - "Vite production build passed with the pre-existing chunk-size advisory only."
+  oracle:
+    status: approved
+    confidence: 0.97
+    blockers: []
+    minimalism_score: 88
+  android_apk:
+    status: pass
+    path: android/app/build/outputs/apk/debug/app-debug.apk
+    sha256: 73ced85c04de74fe5edcfc108fc996cbba29428218dda72570141382ce1cfc0a
+    size_bytes: 10342377
+    evidence:
+      - "Gradle clean assembleDebug completed successfully with 160 actionable tasks."
+      - "APK contains the latest Western UI markers, Swiss WASM, and exactly three canonical ephemeris files."
+      - "No duplicate assets/public/ephemeris/*.se1 files are present."
+
+out_of_scope_confirmed:
+  - "No calculation, Vedic, or Tu Vi behavior was changed for this UI repair."
+  - "No dependency was added."
+  - "The APK is a debug build, not a signed release artifact."
+
+residual_risks:
+  - "No Android device was attached, so physical touch gestures and native file opening were not exercised in this run."
+  - "The production bundle retains the repository's existing chunk-size advisory."

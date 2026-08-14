@@ -24,7 +24,7 @@ export default defineConfig({
     }),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icons/*.png', 'fonts/**/*', 'swisseph.wasm'],
+      includeAssets: ['icons/*.png', 'fonts/**/*', 'swisseph.wasm', 'ephe/*.se1'],
       manifest: {
         name: 'Lịch Việt — Âm Lịch & Phong Thủy',
         short_name: 'Lịch Việt',
@@ -43,7 +43,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,wasm}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,wasm,se1}'],
         navigateFallback: '/index.html',
       },
     }),

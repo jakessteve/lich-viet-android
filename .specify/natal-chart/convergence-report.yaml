@@ -1,0 +1,68 @@
+feature: natal-chart
+status: converged_with_external_reference_limit
+generated: 2026-08-14
+scope:
+  implementation_root: natal_chart
+  governance_root: .specify/natal-chart
+  application_integration: out_of_scope
+requirements:
+  calculation_contract:
+    status: pass
+    evidence: 20 ordered objects, file-backed Swiss flags and speeds, strict timezone and epoch validation, Placidus and Whole Sign houses, four primary angles, horizon-based Part of Fortune, and frozen Hanoi values pass the full suite
+  aspect_contract:
+    status: pass
+    evidence: exact 11-aspect configuration, signed instantaneous motion state, endpoint/style validation, eligibility, strength, and serialized renderer fields pass adversarial tests
+  layout_contract:
+    status: pass
+    evidence: cyclic closing seam and 45-degree displacement budget pass at 1180 and 360; impossible layouts raise LayoutError
+  svg_contract:
+    status: pass
+    evidence: 11 named layers, 360 degree ticks, 360 half-degree or 30-minute subdivision ticks, 12 sign sectors and labels, 12 house sectors cusps and numbers, 20 complete object labels and leaders, four complete angle labels, and 91 aspect lines
+  json_contract:
+    status: pass
+    evidence: validated render settings and aggregate invariants produce byte-identical SVG after canonical JSON reload
+  api_cli_contract:
+    status: pass
+    evidence: public API, module CLI, safe parent creation, nonzero concise failures, non-regular target refusal, and handled two-file rollback pass
+  documentation_contract:
+    status: pass
+    evidence: README covers setup, dependencies, API, CLI, settings, localization, output, troubleshooting, validation, licensing, and reference limits
+validation:
+  natal_tests: 160 passed
+  canonical_generation_seconds: 0.1464
+  canonical_svg_sha256: 41552e5af8baf6013f87c4a723a888bde26ce68067b08c44c77c4612da7245be
+  canonical_json_sha256: b38ac4dad60e8ee6c0898b4d25835963a3b5c173eea849e3afb036997b1c2c68
+  xmllint: pass
+  raster_1180: pass
+  raster_360: pass_with_inspection_scale_text
+  visual_oracle: approved
+  calculation_oracle: approved
+  implementation_security_oracle: approved
+  hallucination_scope_oracle: approved
+  minimalism_score: 89
+repository_gates:
+  project_regression: unavailable_no_native_entrypoint
+  typecheck: pass
+  production_build: pass
+  lint: fail_unrelated_existing_62_errors_30_warnings
+  application_tests: fail_unrelated_existing_suites_and_nonterminating_workers
+external_blockers:
+  reference_position_accuracy:
+    status: blocked
+    reason: complete reference birth date time location timezone and house system are absent
+    handling: no input inference or sample retuning; exact positional match is not claimed
+residual_risks:
+  - fine text at 360 pixels is structurally present but not comfortable reading size
+  - collision proof uses declared deterministic bounding boxes plus raster inspection rather than font-outline metrics
+  - handled CLI write and publish failures roll back; power loss SIGKILL and concurrent writers are not transactional guarantees
+  - local font shapes and the intentionally complete 91-aspect web differ from the proprietary reference
+  - stale legacy final_chart and test_chart artifacts predate this task and are not canonical deliverables
+scope_audit:
+  status: pass
+  evidence: task changes are confined to natal_chart and .specify; unrelated dirty Android React package and test_vertex.py files were preserved
+canonical_deliverables:
+  - natal_chart/natal_chart.svg
+  - natal_chart/natal_chart.json
+  - natal_chart/README.md
+  - natal_chart/requirements.txt
+verdict: approved_for_handoff

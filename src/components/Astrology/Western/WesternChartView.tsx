@@ -2,7 +2,7 @@ import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { BirthDataInput, ActionButton } from '../../shared';
-import { WesternChartDisplay } from './WesternChartDisplay';
+import { WesternNatalChartDisplay } from './WesternNatalChartDisplay';
 
 export const WesternChartView: React.FC = () => {
   const { input, setInput, runCalc, isCalculating, error, result } = useAstrologyStore(
@@ -12,7 +12,7 @@ export const WesternChartView: React.FC = () => {
       runCalc: state.calculateWestern,
       isCalculating: state.isCalculating,
       error: state.error,
-      result: state.westernResult,
+      result: state.westernNatalResult,
     }))
   );
 
@@ -53,7 +53,7 @@ export const WesternChartView: React.FC = () => {
         </div>
       )}
 
-      {result && !isCalculating && !error && <WesternChartDisplay result={result} />}
+      {result && !isCalculating && !error && <WesternNatalChartDisplay />}
     </div>
   );
 };

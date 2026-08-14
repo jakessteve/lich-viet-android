@@ -1,0 +1,66 @@
+feature: natal-chart
+status: pass_after_oracle_changes
+artifacts:
+  constitution: .specify/constitution.md
+  spec: .specify/natal-chart/spec.md
+  plan: .specify/natal-chart/plan.md
+  tasks: .specify/natal-chart/tasks.md
+  harness: .specify/natal-chart/harness-activation.yaml
+checks:
+  requirements_to_plan:
+    status: pass
+    evidence: all FR and NFR groups map to phases including flags fixture aspect table and visual counts
+  plan_to_tasks:
+    status: pass
+    evidence: three implementation phases map to T1 T2 and T3 groups with phase Oracle and final validation gates
+  traceability:
+    status: pass
+    evidence: tasks contains complete FR and NFR mappings
+  file_ownership:
+    status: pass
+    evidence: one writer owns allowlisted natal_chart source tests docs requirements and canonical outputs; app paths venv caches and ephemeris binaries are frozen
+  out_of_scope:
+    status: pass
+    evidence: every artifact excludes app integration new frameworks inferred birth data deployment and publishing
+  verification_commands:
+    status: pass
+    evidence: artifacts contain copy-pasteable pytest CLI XML raster project-regression and repository commands
+  ambiguity:
+    status: pass_with_external_limit
+    evidence: aspect behavior synthetic points epoch limits imports and visual counts are explicit; missing full reference birth data remains an external validation blocker
+  simplicity:
+    status: pass
+    evidence: retain the current low-level dependency and standard-library SVG instead of adding a framework
+oracle_review:
+  status: approved_with_changes_applied
+  confidence: 0.94
+  findings:
+    - aligned dependency declarations without authorizing installation
+    - added Swiss speed and return flags epoch range frozen fixture retrogrades and horizon sect
+    - added exact 11-aspect contract and deterministic tie breaking
+    - added objective visual matrix package-relative imports frozen assets and phase Oracle gates
+    - reconciled standalone asteroid and True Node scope with the older draft accuracy plan
+phase_reviews:
+  phase_1:
+    status: approved
+    evidence: 42 focused calculation tests passed; fresh endpoint and concurrency probes passed
+    confidence: 0.99
+  phase_2:
+    status: approved
+    evidence: 61 focused aspect and layout tests plus 103 full tests passed; fixed-step mutation produced 6 mismatches; seam and displacement boundary probes passed
+    confidence: 0.99
+  phase_3:
+    status: approved
+    evidence: 160 full natal tests passed; canonical JSON reproduces SVG byte-identically; XML, finite coordinates, structural counts, pair-safe CLI, 1180 and 360 raster, localization, security, and visual reviews passed
+    confidence: 0.995
+out_of_scope:
+  - React and Android integration
+  - proprietary code reconstruction
+  - dependency-framework migration
+  - deployment commit or push
+verify:
+  - test -f .specify/natal-chart/spec.md
+  - test -f .specify/natal-chart/plan.md
+  - test -f .specify/natal-chart/tasks.md
+done_when:
+  - oracle_review.status records applied approval changes

@@ -1,0 +1,33 @@
+feature: western-natal-ui
+scope_locked: true
+classification:
+  size: medium
+  domains: [frontend, responsive-ui, accessibility, export, android-build]
+roles:
+  intake: pm
+  implementation: root
+  plan_review: oracle
+  final_review: oracle
+skills:
+  - codegraph-explorer
+  - design-review
+  - frontend_qc
+  - oracle-review
+  - verification-before-completion
+tools:
+  - codex_knowledge project context
+  - codegraph facade
+  - Vitest and Testing Library
+  - Playwright with system Google Chrome
+  - Capacitor and Gradle
+constraints:
+  writer_count: 1
+  preserve_unrelated_changes: true
+  dependency_changes: prohibited
+  destructive_actions: prohibited
+verify:
+  - focused Western UI tests
+  - npm run typecheck
+  - npm run build
+  - mobile visual screenshot review
+  - clean APK archive inspection

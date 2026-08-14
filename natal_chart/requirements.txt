@@ -1,0 +1,4 @@
+pyswisseph==2.10.3.2
+pytz==2026.3.post1
+pydantic==2.13.4
+pytest==9.1.1

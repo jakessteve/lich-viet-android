@@ -7,6 +7,10 @@ import {
 import type { VedicChartInput, SynastryInput, WesternChartInput } from '../types/astrology';
 import { calculateWesternChart, type WesternChartResult } from '../services/astrology/westernCalculator';
 import {
+  calculateSwissNatalChart,
+  type SwissNatalChartResult,
+} from '../services/astrology/swissNatalChart';
+import {
   calculateSolarReturnChart,
   calculateLunarReturnDates,
   calculateLunarReturnChart,
@@ -51,6 +55,7 @@ interface AstrologyState {
   synastryInput: SynastryInput;
 
   westernResult: WesternChartResult | null;
+  westernNatalResult: SwissNatalChartResult | null;
   vedicResult: WesternChartResult | null;
   synastryResult: SynastryResult | null;
   compositeResult: WesternChartResult | null;
@@ -120,6 +125,7 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   },
 
   westernResult: null,
+  westernNatalResult: null,
   vedicResult: null,
   synastryResult: null,
   compositeResult: null,
@@ -140,14 +146,19 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   setVedicChartType: (type) => set({ vedicChartType: type }),
 
   setWesternInput: (partial) =>
-    set((state) => ({ westernInput: { ...state.westernInput, ...partial }, error: null })),
+    set((state) => ({
+      westernInput: { ...state.westernInput, ...partial },
+      westernResult: null,
+      westernNatalResult: null,
+      error: null,
+    })),
     
   calculateWestern: async () => {
-    set({ isCalculating: true, error: null });
+    set({ isCalculating: true, error: null, westernResult: null, westernNatalResult: null });
     try {
       const { westernInput } = get();
-      const result = calculateWesternChart(westernInput);
-      set({ westernResult: result, isCalculating: false });
+      const result = await calculateSwissNatalChart(westernInput);
+      set({ westernNatalResult: result, westernResult: result.legacyResult, isCalculating: false });
     } catch (e: unknown) {
       set({ error: e instanceof Error ? e.message : String(e), isCalculating: false });
     }
@@ -234,6 +245,7 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
   clearResults: () =>
     set({
       westernResult: null,
+      westernNatalResult: null,
       vedicResult: null,
       synastryResult: null,
       compositeResult: null,

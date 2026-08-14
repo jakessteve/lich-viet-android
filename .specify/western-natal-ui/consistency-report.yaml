@@ -1,0 +1,22 @@
+feature: western-natal-ui
+status: pass_after_oracle_changes
+checked_at: 2026-08-14
+requirements:
+  responsive_full_chart:
+    plan_steps: [1, 2]
+    tasks: [responsive_svg, zoom_controls]
+  compact_technical_data:
+    plan_steps: [3]
+    tasks: [technical_explorer]
+  single_download_menu:
+    plan_steps: [4]
+    tasks: [download_menu]
+  oracle_and_apk:
+    plan_steps: [5]
+    tasks: [oracle_review, apk_build]
+out_of_scope_consistent: true
+unmapped_requirements: []
+unmapped_tasks: []
+oracle_plan_gate:
+  verdict: approved_after_required_changes
+  confidence: 0.98

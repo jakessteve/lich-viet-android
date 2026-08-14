@@ -1,4 +1,6 @@
-import { toJpeg } from 'html-to-image';
+import { toSvg } from 'html-to-image';
+import { Capacitor } from '@capacitor/core';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 
 function downloadDataUrl(dataUrl: string, filename: string): void {
   const link = document.createElement('a');
@@ -8,6 +10,32 @@ function downloadDataUrl(dataUrl: string, filename: string): void {
   document.body.appendChild(link);
   link.click();
   link.remove();
+}
+
+async function saveToDocuments(dataUrl: string, filename: string): Promise<void> {
+  const res = await fetch(dataUrl);
+  const blob = await res.blob();
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+
+  await new Promise<void>((resolve, reject) => {
+    reader.onloadend = async () => {
+      try {
+        const base64data = reader.result as string;
+        const base64 = base64data.split(',')[1];
+        await Filesystem.writeFile({
+          path: filename,
+          data: base64,
+          directory: Directory.Documents
+        });
+        window.alert(`Đã lưu ảnh vào thư mục Documents/${filename}`);
+        resolve();
+      } catch (e) {
+        reject(e);
+      }
+    };
+    reader.onerror = reject;
+  });
 }
 
 export async function downloadChartAsImage(
@@ -27,8 +55,13 @@ export async function downloadChartAsImage(
   try {
     // We capture the whole container which includes the background and paddings.
     // We don't force a white background so that dark theme backgrounds are preserved.
-    const dataUrl = await toJpeg(container, { quality: 0.94, pixelRatio: 2 });
-    downloadDataUrl(dataUrl, filename);
+    const safeFilename = filename.replace(/\.(png|jpg|jpeg|webp)$/i, '.svg');
+    const dataUrl = await toSvg(container);
+    if (Capacitor.isNativePlatform()) {
+      await saveToDocuments(dataUrl, safeFilename);
+    } else {
+      downloadDataUrl(dataUrl, safeFilename);
+    }
   } catch (error) {
     console.error('html-to-image failed:', error);
     throw new Error('Failed to create image');
@@ -43,5 +76,5 @@ export function buildChartImageFilename(prefix: string, name?: string): string {
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
 
-  return `${prefix}-${safeName || 'chart'}.jpg`;
+  return `${prefix}-${safeName || 'chart'}.svg`;
 }

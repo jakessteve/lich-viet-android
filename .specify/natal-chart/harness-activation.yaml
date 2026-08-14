@@ -1,0 +1,50 @@
+feature: natal-chart
+scope_locked: true
+classification:
+  size: large
+  domains: [astronomical-calculation, data-contract, svg-rendering, cli, tests, docs]
+roles:
+  intake: pm
+  architecture_review: oracle
+  implementation: backend-worker
+  visual_review: user-tester
+  final_review: oracle
+skills:
+  - codegraph-explorer
+  - e2e_testing
+  - regression-strategy
+  - verification-before-completion
+  - implementation-review
+rules:
+  - .agent/rules/anti-patterns.md
+  - .agent/rules/engineering-mindset.md
+  - .agent/rules/execution-protocol.md
+  - .agent/rules/routing.md
+  - .agent/rules/spawn-governance.md
+workflows: []
+tools:
+  - codex_knowledge project context
+  - codegraph facade
+  - Context7 and primary-source web research
+  - pytest and real Python module CLI
+  - XML parser and rsvg-convert visual proof
+constraints:
+  writer_count: 1
+  write_scope: natal_chart package source tests README requirements and canonical outputs
+  frozen_paths: [src/, packages/, android/, scripts/, test/]
+  frozen_natal_assets: [natal_chart/venv/, natal_chart/__pycache__/, natal_chart/.pytest_cache/, natal_chart/ephe/]
+  dependency_changes: version declarations for existing natal_chart packages and pytest declaration only; no installation or new framework
+  destructive_actions: prohibited
+  reference_birth_input: unavailable
+verify:
+  - project-regression assert-fresh /home/heocop/Projects/lich-viet-android
+  - natal_chart/venv/bin/python -m pytest natal_chart/tests -q
+  - natal_chart/venv/bin/python -m natal_chart --help
+  - project-regression run /home/heocop/Projects/lich-viet-android
+  - project-regression status /home/heocop/Projects/lich-viet-android
+done_when:
+  - approved plan exists
+  - one writer completes implementation
+  - oracle reviews each implementation phase
+  - independent validation and final review pass or report explicit blockers
+
