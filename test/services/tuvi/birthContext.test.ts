@@ -164,7 +164,7 @@ describe('Tu Vi birth context', () => {
         lat: 10.8,
         lng: 106.6,
         timezone: 7,
-      } as any,
+      } as unknown as import('../../src/types/tuvi').TuViBirthLocation,
       school: 'thien-luong' as const,
     };
 

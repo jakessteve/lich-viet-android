@@ -3,21 +3,21 @@
 All notable changes to this project will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
-## [Unreleased]
+## [3.1.0] - 2026-08-14
 
 ### Added
-- Agent framework token burn rate optimization (50% reduction target)
-- Model routing enforcement via `-ModelTier` parameter
-- `AGENTS-LITE.md` for lightweight CLI worker context
-- Documentation restructure into `/docs/{tech,biz,log}/`
+- Comprehensive test suite stabilization: 59 test suites / 463 tests passing (100% green).
+- Full historical Vietnam timezone period resolution (1906–present).
+- Swiss Ephemeris WASM true-solar time correction layer.
+- Restored Western wheel SVG geometry and Vedic D9 Navamsha calculations.
+- Clean production Vite build and service worker precaching.
+- Complete dark mode theme support for the 4×4 Tử Vi chart table (`--tuvi-paper`, `--tuvi-ink`, `--tuvi-muted`, theme-aware Ngũ Hành star colors, and overlay popups).
+- Contextual profile link in Astrology sidebar when logged in.
+
+### Fixed
+- Landing page rapid scroll flicker & element dropout resolved via isolated count-up state, accurate `useInView` viewport detection, React `useId()`-scoped SVG def IDs, and GPU-backed glass card styling.
+- Astrology sidebar login banner persistence fixed to dynamically reflect user authentication state.
 
 ### Changed
-- Model routing: 3-model setup (Gemini High, Opus, Sonnet)
-- Swarm execution: max 4 workers, mandatory batching
-- Mechanical task timeout: 60s with no retry
-
-### Removed
-- La bàn Phong Thủy surface, compass sensor hook, Flying Star/Lou Pan helpers, and related tests/exports
-- Emoji/icon characters from all framework files (~1,467 icons)
-- Advisory-only model routing disclaimers
-- `GEMINI-L/Fast`, `OPUS/Fast`, `SONNET/Plan` model codes
+- ESLint flat configuration optimized for mixed TypeScript and module environments (0 errors).
+- Architecture, UI/UX, and Function reference documents synchronized to 3.1.0 standards.

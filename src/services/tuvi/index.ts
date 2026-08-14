@@ -32,7 +32,19 @@ export { getTuViCatalogSummary, getTuViStarLayer } from './catalogLayers';
 export { normalizeBirthTime, getVietnamUtcOffset } from './timeNormalization';
 
 // ── Star Placement ────────────────────────────────────────────
-export { generateChart, calculateHanContext } from './starPlacement';
+export {
+  generateChart,
+  calculateHanContext,
+  calculateMenhCungPosition,
+  calculateThanCungPosition,
+  calculateMenhCan,
+  calculateCuc,
+  placeTuViStar,
+  placeChinhTinh,
+  placePhuTinh,
+  calculateTuHoa,
+  calculatePalaceCans,
+} from './starPlacement';
 
 export { DEFAULT_TU_VI_SCHOOL, TU_VI_SCHOOL_PROFILES, resolveTuViSchoolProfile } from './schoolProfiles';
 export { buildTuViBirthContext } from './birthContext';

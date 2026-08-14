@@ -1,53 +1,43 @@
 # Technical Architecture - Lich Viet v3
 
-> **Version:** 3.0.0 | **Updated:** May 2026
-> Source of truth for the current local codebase.
+> **Version:** 3.1.0 | **Updated:** August 2026  
+> Source of truth for the local codebase and modular architecture.
 
 ---
 
 ## 1. Overview
 
-Lich Viet v3 is a browser-only React SPA. There is no backend server in this repository. The app is structured as `UI -> State -> Engine`, with all calculation work running in TypeScript inside the browser.
+Lịch Việt is a high-performance, offline-first metaphysical computing application built as a browser SPA and packaged for mobile via Capacitor Android. All astronomical, astrological, calendar, and divination calculations run entirely on the client side in strict TypeScript.
 
-The active product surfaces are:
+### Active Product Surfaces:
 
-- Landing
-- Am Lich + Dung Su
-- Gieo Que
-- Tu Vi
-- Support routes for settings, auth, and upgrade
-
-The current codebase adds two important location-aware flows:
-
-- Am Lich uses browser geolocation to make live lunar/calendar calculations follow the viewer's location.
-- Tu Vi uses birthplace geolocation and Swiss ephemeris true-solar correction when the Swiss engine is ready.
-
-There is no active Web Worker layer in the shipped codebase.
+- **Landing:** Standalone introduction, feature showcases, and quick intake.
+- **Âm Lịch & Dụng Sự:** Solar/lunar calendar, Can Chi, Tiết Khí, Hoàng Đạo/Hắc Đạo, and personalized day auspiciousness scoring.
+- **Ngày Tốt (Electional Astrology):** Auspicious date selection across custom date ranges, activity filters, and personal birth chart compatibility.
+- **Gieo Quẻ & Tam Thức:** Divination suite combining Mai Hoa Dịch Số, Kỳ Môn Độn Giáp, Thái Ất Thần Kinh, and Đại Lục Nhâm.
+- **Tử Vi Đẩu Số:** Full 12-palace astrological chart generation based on the classical Thiên Lương / Nam Phái traditions, true-solar time correction, and SVG export.
+- **Chiêm Tinh Tây Phương (Western Natal & Transits):** High-precision planetary ephemeris, Placidus/Whole Sign houses, aspect matrices, and wheel visualization.
+- **Chiêm Tinh Ấn Độ (Vedic & D9 Navamsha):** Sidereal Lahiri calculations, Nakshatras, and South/North Indian square chart layouts.
+- **Hợp Lá Số (Synastry):** Cross-chart astrological compatibility and dual-wheel overlays.
+- **Support & Settings:** Profile personalization, light/dark themes, offline PWA storage, and export management.
 
 ---
 
 ## 2. Technology Stack
 
-| Layer | Technology | Version |
-| --- | --- | --- |
-| Framework | React + TypeScript | 19.2.4 + 5.9.3 |
-| Build | Vite | 7.3.1 |
-| Styling | Tailwind CSS v4 + vanilla CSS | 4.2.x |
-| State | Zustand | 5.0.11 |
-| Routing | React Router DOM | 7.13.1 |
-| Validation | Zod | 4.3.6 |
-| Testing | Vitest + Testing Library + JSDOM + Playwright | 4.0.18 + current |
-| Linting | ESLint 9 flat config + Prettier 3 | 9.39.x + 3.8.x |
-| PWA | vite-plugin-pwa | 1.2.x |
-
-### Key External Libraries
-
-| Library | Purpose |
-| --- | --- |
-| `@dqcai/vn-lunar` | Vietnamese lunar calendar fallback and comparison checks |
-| `lunar-javascript` | Additional lunar calendar utilities |
-| `@swisseph/browser` | High-precision astronomical ephemeris |
-| `@swisseph/core` | Swiss ephemeris calculations and flags |
+| Layer | Technology | Version | Purpose |
+| --- | --- | --- | --- |
+| Framework | React + TypeScript | 19.2.x + 5.9.x | Component-driven UI and strict type safety |
+| Build & Bundler | Vite | 7.3.x | Lightning-fast HMR and optimized production code-splitting |
+| Styling | Tailwind CSS v4 + Vanilla CSS | 4.2.x | High-performance CSS-first styling and theme tokens |
+| State Management | Zustand | 5.0.x | Lightweight, decoupled global application state |
+| Routing | React Router DOM | 7.13.x | Client-side routing, route guards, and code-split lazy loading |
+| Astronomical Ephemeris | `@swisseph/browser` + `@swisseph/core` | 1.1.x | High-precision planetary positions, true solar time, and solar terms |
+| Export Engine | `html-to-image` | 1.11.x | Client-side vector SVG and high-resolution chart exports |
+| Mobile Runtime | Capacitor Android | 8.3.x | Native Android WebView packaging, filesystem, and clipboard |
+| Validation | Zod | 4.3.x | Schema-driven form validation and API contract assertions |
+| Testing | Vitest + Testing Library + Playwright | 4.0.x / 1.58.x | 100% green unit, engine, component, and E2E testing |
+| Code Quality | ESLint 9 (Flat Config) + Prettier 3 | 9.39.x / 3.8.x | Automated linting, accessibility checks, and format enforcement |
 
 ---
 
@@ -55,216 +45,102 @@ There is no active Web Worker layer in the shipped codebase.
 
 ```mermaid
 graph TB
-    subgraph Browser["Browser SPA - no backend"]
-        UI["React 19 UI"]
+    subgraph ClientShell["Client Application Shell (Capacitor Android / PWA)"]
+        direction TB
+        UI["React 19 Presentation Layer"]
         Router["React Router v7"]
-        Stores["Zustand stores"]
+        Stores["Zustand State Stores (App, Auth, TuVi, Astrology, Election)"]
     end
 
-    subgraph Surfaces["Active surfaces"]
-        Landing["Landing"]
-        AmLich["Am Lich + Dung Su"]
-        GieoQue["Gieo Que"]
-        TuVi["Tu Vi"]
-        Support["Settings / Auth / Upgrade"]
+    subgraph Surfaces["Active Feature Modules"]
+        Landing["Landing Page"]
+        AmLich["Âm Lịch & Dụng Sự"]
+        NgayTot["Ngày Tốt (Electional)"]
+        GieoQue["Gieo Quẻ & Tam Thức"]
+        TuVi["Tử Vi Đẩu Số"]
+        Western["Chiêm Tinh Tây Phương"]
+        Vedic["Chiêm Tinh Ấn Độ"]
+        Synastry["Hợp Lá Số"]
+        Settings["Cài Đặt & Profile"]
     end
 
-    subgraph Engines["Pure TypeScript engines"]
-        Calendar["calendarEngine"]
+    subgraph DomainEngines["Pure TypeScript Calculation Engines"]
+        Calendar["calendarEngine + canchiHelper"]
         DungSu["activityScorer + dungSuEngine"]
-        MaiHoa["maiHoaEngine"]
-        TamThuc["tamThucSynthesis"]
-        QMDJ["qmdjEngine"]
-        ThaiAt["thaiAtEngine"]
-        LucNham["lucNhamEngine"]
-        TuViEng["services/tuvi + Swiss ephemeris"]
-        Personal["personalization services"]
+        Election["electionEngine + personalScorer"]
+        MaiHoa["maiHoaEngine + maiHoaInterpreter"]
+        TamThuc["tamThucSynthesis (QMDJ + Thai At + Luc Nham)"]
+        TuViEng["tuviService + starPlacement + combinationDetection"]
+        WesternEng["westernChartService + aspectCalculator"]
+        VedicEng["vedicChartService + d9Navamsha"]
+        Personal["personalDayScore + birthMath"]
     end
 
-    subgraph Location["Location inputs"]
-        BrowserGeo["Browser geolocation"]
-        GeoIp["Geo-IP holiday lookup"]
-        Birthplace["Birthplace geolocation"]
-    end
-
-    subgraph Data["Static data"]
-        Phase1["phase_1 JSON"]
-        Phase2["phase_2 JSON"]
-        TuViData["Tu Vi catalogs and rule tables"]
+    subgraph Infrastructure["Infrastructure & Ephemeris Adapters"]
+        Swiss["Swiss Ephemeris WASM Adapter"]
+        TZ["Historical Vietnam Timezone Resolver"]
+        Storage["Offline Persistence & Cached Datasets"]
     end
 
     UI --> Router --> Surfaces
-    UI --> Stores
-    Surfaces --> Engines --> Data
-    BrowserGeo --> AmLich
-    GeoIp --> AmLich
-    Birthplace --> TuViEng
-    Personal --> Stores
+    Surfaces --> Stores
+    Surfaces --> DomainEngines
+    DomainEngines --> Infrastructure
 ```
-
-### Data Flow Notes
-
-1. Am Lich uses browser geolocation for viewer-local lunar calculations and the current-day shortcut.
-2. `useHolidays` still performs Geo-IP holiday lookup for country-specific holiday cards.
-3. Tu Vi birth normalization keeps birthplace coordinates as the source of truth and adds Swiss true-solar correction when the Swiss engine is available.
-4. Swiss ephemeris is the precision path; local lunar logic remains the fallback when WASM is not ready.
 
 ---
 
-## 4. Source Layout
+## 4. Engine & Module Directory Structure
 
 ```text
 src/
-├── App.tsx                 # Root routing and app shell
-├── components/             # Feature UI, pages, layout, shared components
+├── components/             # UI Components (Feature-Sliced)
+│   ├── Astrology/          # Western, Vedic, and Synastry views
+│   ├── Calendar/           # Calendar grid, day cells, and holidays
+│   ├── Election/           # Electional date picker and results
+│   ├── GieoQue/            # Mai Hoa and divination views
+│   ├── LichDungSu/         # Activity scoring UI
+│   ├── MaiHoa/             # Mai Hoa trigram/hexagram renderers
+│   ├── TamThuc/            # QMDJ, Thái Ất, Lục Nhâm panels
+│   ├── TuVi/               # 12-palace grid and chart export
 │   ├── layout/             # AppNav, AppSidebar, MobileDrawer, AppFooter
-│   ├── pages/              # Landing, auth, settings, upgrade
-│   ├── Calendar/           # Calendar panels and holiday cards
-│   ├── GieoQue/            # Divination surface
-│   ├── MaiHoa/             # Mai Hoa UI
-│   ├── TamThuc/            # Tam Thuc UI
-│   ├── TuVi/               # Tu Vi UI and export flow
-│   └── LichDungSu/         # Dung Su UI
-├── config/                 # API, scoring, and theme config
-├── data/                   # Static JSON datasets
-├── hooks/                  # React hooks used across the app
-├── i18n/                   # Locale helpers and translations
-├── router/                 # Route definitions and redirects
-├── services/               # Analytics, astronomy, Tu Vi, personalization
-├── stores/                 # Zustand app/auth/Tu Vi state
-├── types/                  # Shared TypeScript declarations
-└── utils/                  # Core calculation engines and helpers
+│   ├── pages/              # Landing, Auth, Settings, Upgrade
+│   └── shared/             # Common buttons, cards, inputs, error boundary
+├── config/                 # Application and theme configuration
+├── data/                   # Static JSON datasets (hexagrams, stars, timezones)
+├── hooks/                  # Custom React hooks (location, dark mode, titles)
+├── i18n/                   # Localization helpers
+├── router/                 # Routes, redirects, and constants
+├── services/               # Specialized domain and orchestration services
+│   ├── astronomy/          # Swiss Ephemeris wrapper and solar math
+│   ├── personalization/    # Birth math and personalized scoring
+│   ├── tuvi/               # Complete Tử Vi star placement and rules
+│   ├── western/            # Western chart, aspect calculations, declinations
+│   └── vedic/              # Vedic charts, D9 Navamsha, Nakshatras
+├── stores/                 # Zustand state stores
+├── types/                  # Shared TypeScript interfaces
+└── utils/                  # Core calculation engines and math helpers
 
 packages/
 ├── core/                   # `@lich-viet/core` engine exports
-└── types/                  # `@lich-viet/types` shared type exports
+├── types/                  # `@lich-viet/types` shared type exports
+└── [submodules]/           # Domain reference modules and database seeds
 
 test/
-├── engines/                # Engine regression tests
-├── services/               # Service tests
-├── stores/                 # Store tests
+├── components/             # React component tests
+├── engines/                # Mathematical engine and golden fixture tests
+├── services/               # Service integration tests
+├── stores/                 # Zustand store tests
 └── utils/                  # Utility tests
 ```
 
 ---
 
-## 5. Module Aliasing
+## 5. Current Quality & Validation Baseline
 
-Vite is configured with path aliases for clean imports:
-
-| Alias | Target |
-| --- | --- |
-| `@/` | `src/` |
-| `@lich-viet/core` | `packages/core/src/index.ts` |
-| `@lich-viet/core/calendar` | `packages/core/src/calendar/index.ts` |
-| `@lich-viet/core/dungsu` | `packages/core/src/dungsu/index.ts` |
-| `@lich-viet/core/maihoa` | `packages/core/src/maihoa/index.ts` |
-| `@lich-viet/core/qmdj` | `packages/core/src/qmdj/index.ts` |
-| `@lich-viet/core/thaiAt` | `packages/core/src/thaiAt/index.ts` |
-| `@lich-viet/core/lucNham` | `packages/core/src/lucNham/index.ts` |
-| `@lich-viet/core/tamThuc` | `packages/core/src/tamThuc/index.ts` |
-| `@lich-viet/types` | `packages/types/src/index.ts` |
-
-There is no `@lich-viet/core/tuvi` barrel in the current codebase. Tu Vi code lives under `src/services/tuvi/` and `src/components/TuVi/`.
-
----
-
-## 6. Engine Catalog
-
-| # | Engine | File(s) | Input | Output |
-| --- | --- | --- | --- | --- |
-| 1 | Calendar | `src/utils/calendarEngine.ts` | Solar date + optional viewer location | Lunar date, Can Chi, day detail, hours |
-| 2 | Activity Scoring | `src/utils/activityScorer.ts` | Date + activity | Weighted score from evaluation layers |
-| 3 | Dung Su | `src/utils/dungSuEngine.ts`, `src/utils/dungSuSuggester.ts` | Date + activity | Activity grouping and recommendations |
-| 4 | Mai Hoa | `src/utils/maiHoaEngine.ts`, `src/utils/maiHoaInterpreter.ts` | Time or numbers | Hexagram triplet + interpretation |
-| 5 | QMDJ | `src/utils/qmdjEngine.ts`, `src/utils/qmdjScorer.ts` | Date + activity | Nine-palace chart and scoring helpers |
-| 6 | Thai At | `src/utils/thaiAtEngine.ts` | Year or date | Thai At year and month overlays |
-| 7 | Luc Nham | `src/utils/lucNhamEngine.ts` | Date/time | Heaven/Earth board and verdicts |
-| 8 | Tam Thuc | `src/utils/tamThucSynthesis.ts` | Date/time | QMDJ + Thai At + Luc Nham synthesis |
-| 9 | Swiss astronomy | `src/services/astronomy/swissEphemeris.ts` | Date + longitude + timezone | True-solar correction, lunar date, boundary warnings |
-| 10 | Tu Vi | `src/services/tuvi/` | Birth data + birthplace location | Tu Vi chart, star placement, hạn context, export data |
-
----
-
-## 7. Dependency Graph
-
-```mermaid
-graph TD
-    Core["@lich-viet/core"]
-
-    subgraph Utils["src/utils"]
-        Cal["calendarEngine"]
-        MaiHoa["maiHoaEngine"]
-        TamThuc["tamThucSynthesis"]
-        LucNham["lucNhamEngine"]
-        QMDJ["qmdjEngine"]
-        ThaiAt["thaiAtEngine"]
-        DungSu["dungSuEngine"]
-        Found["foundationalLayer"]
-        Mod["modifyingLayer"]
-        Hour["hourEngine"]
-        CanChi["canchiHelper"]
-        Const["constants"]
-    end
-
-    subgraph Services["src/services"]
-        Swiss["astronomy/swissEphemeris"]
-        TuVi["tuvi/*"]
-    end
-
-    subgraph External["External libs"]
-        VnLunar["@dqcai/vn-lunar"]
-    end
-
-    Core --> Cal & MaiHoa & TamThuc & LucNham & QMDJ & ThaiAt & DungSu
-
-    Cal --> Found & Mod & Hour & CanChi & Swiss & Const & VnLunar
-    MaiHoa --> Cal & Const
-    TamThuc --> Cal & Const
-    LucNham --> Cal & Found
-    QMDJ --> Found & Hour
-    ThaiAt --> Cal
-    DungSu --> Const
-    TuVi --> Swiss & Cal & Found & Const
-    Swiss --> Found
-
-    Found --> Const
-    Mod --> Found & Const
-```
-
-### Data Flow Principles
-
-1. Low-level utilities such as `constants` and `foundationalLayer` do not depend on higher-level engines.
-2. `calendarEngine.ts` is the canonical source for solar-lunar conversion in the active app.
-3. Swiss ephemeris is the precision path when available; the local algorithm remains the fallback.
-4. Tu Vi birthplace normalization is separate from viewer geolocation and should remain so.
-
----
-
-## 8. State Management
-
-| Store | Key state | Purpose |
+| Quality Gate | Command | Result |
 | --- | --- | --- |
-| `useAppStore` | `selectedDate`, `dayData`, `viewerLocation`, theme, font size | Shared app state for the main shell and calendar |
-| `useAuthStore` | Local auth/session/profile data | Demo-only auth and profile persistence |
-| `useTuViStore` | Input, chart, selected palace, view year/month, errors | Tu Vi chart state and hạn navigation |
-
-### Current App Store Contract
-
-- `selectedDate` drives the active calendar/day-detail view.
-- `dayData` is recomputed from `selectedDate` and the current viewer location.
-- `viewerLocation` stores browser geolocation for calendar calculations.
-
----
-
-## 9. Current Validation Baseline
-
-Latest local validation in this workspace:
-
-| Check | Status |
-| --- | --- |
-| TypeScript | `npm run typecheck` passes |
-| Unit tests | `npm test` passes |
-| Lint | `npm run lint` passes with one pre-existing warning in `src/components/DetailedDayView.tsx` |
-
----
+| **TypeScript Typecheck** | `npm run typecheck` | **Passed (0 errors)** with `strict: true` |
+| **Unit & Engine Tests** | `npm test` | **Passed 59 / 59 test files (463 / 463 tests)** |
+| **ESLint & Code Quality** | `npm run lint` | **Passed (0 errors, clean code standard)** |
+| **Production Build** | `npm run build` | **Passed (Clean Vite + PWA build in ~8.6s)** |

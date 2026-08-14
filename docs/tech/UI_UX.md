@@ -1,6 +1,6 @@
 # UI/UX Design System — Lịch Việt v3
 
-> **Version:** 3.0.0 | **Updated:** May 2026
+> **Version:** 3.1.0 | **Updated:** August 2026
 > Complete design system reference covering tokens, components, layout, animations, and accessibility.
 
 ---
@@ -81,6 +81,20 @@ graph LR
 | `accent-mutual`  | Hổ Quẻ (Mutual hexagram) — Purple   |
 | `accent-changed` | Biến Quẻ (Changed hexagram) — Teal  |
 | `accent-moving`  | Hào Động (Moving line) — Amber/Gold |
+
+### 2.5 Tử Vi 12-Palace Chart Palette
+
+| Token / Element | Light Mode | Dark Mode | Notes |
+| --- | --- | --- | --- |
+| `--tuvi-paper` | `#ffffff` | `#131424` | Palace background |
+| `--tuvi-paper-soft` | `#faf7ef` | `#18192d` | Center table surface |
+| `--tuvi-ink` | `#1b1c19` | `#f3f4f6` | Primary chart text |
+| `--tuvi-line` | `#b8860b` | `#a16207` | Grid boundary borders |
+| `Star: Kim` | `#8a8a8a` | `#cbd5e1` | Metallic Silver / Light slate |
+| `Star: Mộc` | `#2e9730` | `#4ade80` | Forest Green / Bright Emerald |
+| `Star: Thủy` | `#161617` | `#38bdf8` | Black / Cyan-Sky Blue |
+| `Star: Hỏa` | `#da2828` | `#f87171` | Crimson Red / Rose Coral |
+| `Star: Thổ` | `#c28b08` | `#fbbf24` | Imperial Amber / Gold |
 
 ---
 

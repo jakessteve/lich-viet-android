@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useAuthStore } from '@/stores/authStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
@@ -17,6 +18,7 @@ type PageTab = (typeof PAGE_TABS)[number]['id'];
 
 export const WesternAstrologyPage: React.FC = () => {
   usePageTitle('Chiêm Tinh Tây Phương');
+  const navigate = useNavigate();
   const prefilled = useRef(false);
   const [pageTab, setPageTab] = useState<PageTab>('la-so');
 
@@ -58,7 +60,7 @@ export const WesternAstrologyPage: React.FC = () => {
         value={pageTab}
         onChange={setPageTab}
         ariaLabel="Chế độ chiêm tinh tây phương"
-        tone="purple"
+        tone="indigo"
       />
 
       {pageTab === 'la-so' && (
@@ -68,6 +70,36 @@ export const WesternAstrologyPage: React.FC = () => {
         </>
       )}
       {pageTab === 'van-han' && <ForecastView />}
+
+      <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm">
+        <span className="text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-1 font-medium">
+          <span className="material-icons-round text-base text-amber-500">sync_alt</span>
+          Xem cùng thời điểm sinh ở hệ thống khác:
+        </span>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => navigate('/app/tu-vi')}
+            className="px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+          >
+            <span className="material-icons-round text-sm">auto_awesome</span>
+            Lá Số Tử Vi
+          </button>
+          <button
+            onClick={() => navigate('/app/chiem-tinh/vedic')}
+            className="px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+          >
+            <span className="material-icons-round text-sm">bubble_chart</span>
+            Chiêm Tinh Ấn Độ
+          </button>
+          <button
+            onClick={() => navigate('/app/chiem-tinh/hop-la')}
+            className="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+          >
+            <span className="material-icons-round text-sm">favorite</span>
+            Hợp Lá Số
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

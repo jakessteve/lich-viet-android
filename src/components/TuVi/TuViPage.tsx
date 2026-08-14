@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useShallow } from 'zustand/react/shallow';
 import { useTuViStore } from '../../stores/tuviStore';
@@ -20,6 +21,7 @@ const SCHOOL_OPTIONS: readonly SegmentedOption<TuViSchool>[] = [
 
 export const TuViPage: React.FC = () => {
   usePageTitle('Tử Vi');
+  const navigate = useNavigate();
   const {
     chart,
     selectedPalaceIndex,
@@ -189,6 +191,38 @@ export const TuViPage: React.FC = () => {
       {chart && <TuViMarkdownExport />}
 
       {chart && <TuViSummaryPanel chart={chart} />}
+
+      {chart && (
+        <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm">
+          <span className="text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-1 font-medium">
+            <span className="material-icons-round text-base text-indigo-500">sync_alt</span>
+            Khám phá đa hệ cho lá số này:
+          </span>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={() => navigate('/app/chiem-tinh/tay-phuong')}
+              className="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+            >
+              <span className="material-icons-round text-sm">auto_graph</span>
+              Chiêm Tinh Tây Phương
+            </button>
+            <button
+              onClick={() => navigate('/app/chiem-tinh/vedic')}
+              className="px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+            >
+              <span className="material-icons-round text-sm">bubble_chart</span>
+              Chiêm Tinh Ấn Độ
+            </button>
+            <button
+              onClick={() => navigate('/app/chiem-tinh/hop-la')}
+              className="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+            >
+              <span className="material-icons-round text-sm">favorite</span>
+              Hợp Lá Số
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

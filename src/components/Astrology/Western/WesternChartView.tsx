@@ -31,7 +31,7 @@ export const WesternChartView: React.FC = () => {
             onChange={setInput}
             showName={false}
           />
-          <div className="pt-2">
+          <div className="pt-2 flex flex-col sm:flex-row gap-2">
             <ActionButton
               onClick={() => {
                 void runCalc();
@@ -39,10 +39,32 @@ export const WesternChartView: React.FC = () => {
               disabled={isCalculating}
               icon={isCalculating ? "hourglass_empty" : "auto_graph"}
               variant="primary"
-              className="w-full h-12 bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="flex-1 h-12 bg-indigo-600 hover:bg-indigo-700 text-white"
             >
-              Lập Lá Số Tây Phương
+              Lập Lá Số Gốc
             </ActionButton>
+            <ActionButton
+              onClick={() => {
+                const now = new Date();
+                setInput({
+                  ...input,
+                  birthDate: now,
+                  birthHour: now.getHours(),
+                  birthMinute: now.getMinutes(),
+                });
+                setTimeout(() => void runCalc(), 50);
+              }}
+              disabled={isCalculating}
+              icon="wb_sunny"
+              variant="secondary"
+              className="h-12 border-indigo-500/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/30"
+            >
+              Bầu Trời Hiện Tại
+            </ActionButton>
+          </div>
+          <div className="flex items-center justify-between text-[11px] text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/40 dark:border-border-dark/40">
+            <span>Độ chính xác cao: <strong>Swiss Ephemeris (WASM)</strong></span>
+            <span>Hệ thống: <strong>Placidus · True Node</strong></span>
           </div>
         </div>
       </div>

@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { WesternChartResult, PlanetPosition } from '../../../services/astrology/westernCalculator';
 import { VedicInterpretationPanel } from './VedicInterpretationPanel';
 import { VedicSquareChart } from './VedicSquareChart';
 import { VedicDiamondChart } from './VedicDiamondChart';
 import { VedicTechnicalTables } from './VedicTechnicalTables';
+import { VimshottariDashaTimeline } from './VimshottariDashaTimeline';
+import { VedicYogasCard } from './VedicYogasCard';
+import { calculateVedicDashaTimeline } from '../../../services/astrology/vedicDasha';
+import { detectVedicYogasAndDoshas } from '../../../services/astrology/vedicYogas';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { useShallow } from 'zustand/react/shallow';
+import { SegmentedControl } from '../../shared';
+
+const STYLE_OPTIONS = [
+  { id: 'south', label: 'Nam Ấn (Vuông)', icon: 'grid_view', shortLabel: 'Nam Ấn' },
+  { id: 'north', label: 'Bắc Ấn (Kim Cương)', icon: 'crop_square', shortLabel: 'Bắc Ấn' },
+] as const;
+
+const TYPE_OPTIONS = [
+  { id: 'D1', label: 'D1 Rasi (Bản Mệnh)', icon: 'auto_graph', shortLabel: 'D1 Rasi' },
+  { id: 'D9', label: 'D9 Navamsha (Hậu Vận)', icon: 'favorite', shortLabel: 'D9 Navamsha' },
+] as const;
 
 const BODY_LABELS: Record<string, string> = {
   sun: 'Mặt Trời',
@@ -54,14 +69,33 @@ function VedicPlanetRow({ planet }: { planet: PlanetPosition }) {
 }
 
 export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ result }) => {
-  const { chartStyle, chartType, setChartStyle, setChartType } = useAstrologyStore(
+  const { chartStyle, chartType, setChartStyle, setChartType, vedicInput } = useAstrologyStore(
     useShallow((state) => ({
       chartStyle: state.vedicChartStyle,
       chartType: state.vedicChartType,
       setChartStyle: state.setVedicChartStyle,
       setChartType: state.setVedicChartType,
+      vedicInput: state.vedicInput,
     }))
   );
+
+  const moon = result.planets.find((p) => p.body === 'moon');
+  const birthYear = vedicInput.birthDate instanceof Date ? vedicInput.birthDate.getFullYear() : new Date(vedicInput.birthDate).getFullYear();
+
+  const dashaTimeline = useMemo(() => {
+    if (!moon) return null;
+    return calculateVedicDashaTimeline(moon.siderealLongitude, birthYear || 2000);
+  }, [moon, birthYear]);
+
+  const yogasAndDoshas = useMemo(() => {
+    const positions = result.planets.map((p) => ({
+      body: p.body,
+      siderealLongitude: p.siderealLongitude,
+      house: p.house,
+      signIndex: p.signIndex,
+    }));
+    return detectVedicYogasAndDoshas(positions, result.ascendant);
+  }, [result]);
 
   const ascSignIndex = Math.floor(((result.ascendant % 360) + 360) % 360 / 30);
   const ascDeg = Math.floor(result.ascendant % 30);
@@ -69,52 +103,21 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
 
   return (
     <div className="space-y-6 animate-fade-in-up">
-      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-4">
-        <div className="bg-surface-light dark:bg-surface-dark p-1 rounded-xl flex items-center border border-border-light/60 dark:border-border-dark/60">
-          <button
-            onClick={() => setChartStyle('south')}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              chartStyle === 'south'
-                ? 'bg-purple-500 text-white shadow-sm'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
-            }`}
-          >
-            South (Square)
-          </button>
-          <button
-            onClick={() => setChartStyle('north')}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              chartStyle === 'north'
-                ? 'bg-purple-500 text-white shadow-sm'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
-            }`}
-          >
-            North (Diamond)
-          </button>
-        </div>
-
-        <div className="bg-surface-light dark:bg-surface-dark p-1 rounded-xl flex items-center border border-border-light/60 dark:border-border-dark/60">
-          <button
-            onClick={() => setChartType('D1')}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              chartType === 'D1'
-                ? 'bg-purple-500 text-white shadow-sm'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
-            }`}
-          >
-            D1 Rasi
-          </button>
-          <button
-            onClick={() => setChartType('D9')}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-              chartType === 'D9'
-                ? 'bg-purple-500 text-white shadow-sm'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark'
-            }`}
-          >
-            D9 Navamsha
-          </button>
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+        <SegmentedControl
+          options={STYLE_OPTIONS}
+          value={chartStyle}
+          onChange={setChartStyle}
+          ariaLabel="Kiểu biểu đồ Vệ Đà"
+          tone="purple"
+        />
+        <SegmentedControl
+          options={TYPE_OPTIONS}
+          value={chartType}
+          onChange={setChartType}
+          ariaLabel="Loại lá số Vệ Đà"
+          tone="purple"
+        />
       </div>
 
       {chartStyle === 'south' ? (
@@ -122,20 +125,18 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       ) : (
         <VedicDiamondChart result={result} type={chartType} />
       )}
-      
-      <VedicInterpretationPanel result={result} />
-      
+
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Lagna</p>
+          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Lagna (Cung Mọc)</p>
           <p className="text-sm font-bold">{ascDeg}°{ascMin.toString().padStart(2, '0')}&apos; {SIGNS_SIDEREAL[ascSignIndex]}</p>
         </div>
-        {result.planets.find((p) => p.body === 'moon') && (
+        {moon && (
           <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Mặt Trăng</p>
+            <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Mặt Trăng (Rasi)</p>
             <p className="text-sm font-bold">
-              {result.planets.find((p) => p.body === 'moon')!.nakshatra || '—'}
+              {moon.nakshatra || '—'}
             </p>
           </div>
         )}
@@ -148,6 +149,12 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
           <p className="text-sm font-bold">{result.aspects.length}</p>
         </div>
       </div>
+
+      {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
+
+      {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas} />}
+
+      <VedicInterpretationPanel result={result} />
 
       {/* Sidereal Planets Table */}
       <div className="glass-card overflow-hidden">

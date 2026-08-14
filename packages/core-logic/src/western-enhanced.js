@@ -1466,8 +1466,7 @@ export const FIXED_STARS = Object.freeze({
   regulus: { ra: 152.0930, dec: 11.9672, magnitude: 1.35, name: "Regulus" },
   sirius: { ra: 101.2875, dec: -16.7161, magnitude: -1.46, name: "Sirius" },
   spica: { ra: 201.2983, dec: -11.1614, magnitude: 0.97, name: "Spica" },
-  vega: { ra: 279.2347, dec: 38.7837, magnitude: 0.03, name: "Vega" },
-  aldebaran: { ra: 68.9816, dec: 16.5093, magnitude: 0.85, name: "Aldebaran" }
+  vega: { ra: 279.2347, dec: 38.7837, magnitude: 0.03, name: "Vega" }
 });
 
 // Compute fixed star position with precession correction

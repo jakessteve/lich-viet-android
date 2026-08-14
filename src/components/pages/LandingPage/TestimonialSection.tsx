@@ -62,18 +62,19 @@ const TestimonialSection: React.FC = () => {
         </div>
 
         {/* Testimonial Card */}
-        <div className="relative min-h-[160px]">
+        <div className="relative min-h-[220px] sm:min-h-[190px]">
           {TESTIMONIALS.map((t, i) => (
             <div
               key={i}
-              className={`glass-card-strong p-6 sm:p-8 text-center transition-all duration-500 absolute inset-0 ${
+              className={`glass-card-strong p-6 sm:p-8 text-center transition-all duration-500 absolute inset-0 flex flex-col justify-center items-center ${
                 i === active
-                  ? 'opacity-100 translate-y-0 pointer-events-auto'
-                  : 'opacity-0 translate-y-4 pointer-events-none'
+                  ? 'opacity-100 translate-y-0 pointer-events-auto z-10'
+                  : 'opacity-0 translate-y-2 pointer-events-none z-0'
               }`}
+              style={{ willChange: 'opacity, transform' }}
             >
-              <span className="text-4xl mb-4 block">{t.avatar}</span>
-              <p className="text-sm sm:text-base text-text-primary-light dark:text-text-primary-dark leading-relaxed mb-4 italic">
+              <span className="text-3xl sm:text-4xl mb-3 block">{t.avatar}</span>
+              <p className="text-sm sm:text-base text-text-primary-light dark:text-text-primary-dark leading-relaxed mb-3 italic">
                 "{t.quote}"
               </p>
               <div>

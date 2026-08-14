@@ -14,6 +14,9 @@ import type {
   PlanetPosition,
   WesternChartResult,
 } from './westernCalculator';
+import { detectAspectPatterns, type AspectPattern } from './aspectPatterns';
+import { calculateElementModalityBalance, type ElementModalityBalanceResult } from './elementBalance';
+import { calculateBirthMoonPhase, type MoonPhaseResult } from './moonPhase';
 
 export type SwissNatalObjectCategory =
   | 'planet'
@@ -22,6 +25,29 @@ export type SwissNatalObjectCategory =
   | 'asteroid'
   | 'arabic_part'
   | 'angle';
+
+export type EssentialDignityType = 'domicile' | 'exaltation' | 'detriment' | 'fall' | 'peregrine';
+
+export interface EssentialDignityInfo {
+  type: EssentialDignityType;
+  labelVi: string;
+  symbol: string;
+  badgeClass: string;
+  score: number;
+}
+
+export interface SwissHouseRuler {
+  houseNumber: number;
+  sign: string;
+  signVi: string;
+  degree: number;
+  minute: number;
+  traditionalRulerId: string;
+  traditionalRulerVi: string;
+  traditionalRulerSymbol: string;
+  rulerHouse?: number;
+  rulerSignVi?: string;
+}
 
 export interface SwissNatalObjectSchemaEntry {
   id: string;
@@ -32,6 +58,110 @@ export interface SwissNatalObjectSchemaEntry {
   isAngle: boolean;
   swissBody?: CelestialBody;
   legacyBody: string;
+}
+
+export interface SwissNatalObject {
+  id: string;
+  name: string;
+  nameVi: string;
+  symbol: string;
+  category: SwissNatalObjectCategory;
+  isAngle: boolean;
+  longitude: number;
+  latitude: number;
+  distance: number | null;
+  speed: number | null;
+  latitudeSpeed: number | null;
+  distanceSpeed: number | null;
+  rightAscension: number | null;
+  declination: number | null;
+  sign: string;
+  signVi: string;
+  degree: number;
+  minute: number;
+  retrograde: boolean | null;
+  house: number;
+  dignity?: EssentialDignityInfo;
+}
+
+export interface SwissNatalHouse {
+  number: number;
+  longitude: number;
+  sign: string;
+  signVi: string;
+  degree: number;
+  minute: number;
+}
+
+export interface SwissNatalAngle {
+  id: string;
+  name: string;
+  nameVi: string;
+  symbol: string;
+  longitude: number;
+  sign: string;
+  signVi: string;
+  degree: number;
+  minute: number;
+  isAngle: true;
+}
+
+export type SwissNatalAngleName = 'Ascendant' | 'Descendant' | 'Midheaven' | 'Imum Coeli';
+
+export interface SwissNatalAspect {
+  id: string;
+  name: string;
+  objectAId: string;
+  objectAName: string;
+  objectBId: string;
+  objectBName: string;
+  separation: number;
+  exactAngle: number;
+  allowedOrb: number;
+  orbDifference: number;
+  state: 'applying' | 'separating' | 'unknown';
+  strength: number;
+  color: string;
+  opacity: number;
+  width: number;
+  dashPattern: string;
+  layer: number;
+}
+
+export interface SwissNatalChartResult {
+  birth: {
+    utc: string;
+    julianDayUt: number;
+    latitude: number;
+    longitude: number;
+    fixedUtcOffsetHours: number;
+    locationName?: string;
+    houseSystem: 'placidus';
+  };
+  metadata: {
+    engine: '@swisseph/browser';
+    version: string;
+    ephemeris: 'Swiss Ephemeris files';
+    fixedUtcOffsetHours: number;
+    requestedFlags: number;
+    returnedFlags: Record<string, number>;
+    requestedEquatorialFlags: number;
+    returnedEquatorialFlags: Record<string, number>;
+    objectPolicyVersion: 'western-natal-20-v1';
+    aspectPolicyVersion: 'western-aspects-11-v1';
+    timePolicy: 'fixed-utc-offset-v1';
+    partOfFortuneAltitudePolicy: 'geocentric-equatorial-altitude-v1';
+    partOfFortuneSolarAltitudeDeg: number;
+  };
+  objects: SwissNatalObject[];
+  houses: SwissNatalHouse[];
+  angles: Record<SwissNatalAngleName, SwissNatalAngle>;
+  aspects: SwissNatalAspect[];
+  aspectPatterns: AspectPattern[];
+  elementBalance: ElementModalityBalanceResult;
+  moonPhase: MoonPhaseResult;
+  houseRulers: SwissHouseRuler[];
+  legacyResult: WesternChartResult;
 }
 
 export const REQUIRED_OBJECT_SCHEMA: readonly SwissNatalObjectSchemaEntry[] = [
@@ -126,105 +256,6 @@ export interface SwissHouseResult {
   coAscendant2: number;
   polarAscendant: number;
   houseSystem: HouseSystem;
-}
-
-export interface SwissNatalObject {
-  id: string;
-  name: string;
-  nameVi: string;
-  symbol: string;
-  category: SwissNatalObjectCategory;
-  isAngle: boolean;
-  longitude: number;
-  latitude: number;
-  distance: number | null;
-  speed: number | null;
-  latitudeSpeed: number | null;
-  distanceSpeed: number | null;
-  rightAscension: number | null;
-  declination: number | null;
-  sign: string;
-  signVi: string;
-  degree: number;
-  minute: number;
-  retrograde: boolean | null;
-  house: number;
-}
-
-export interface SwissNatalHouse {
-  number: number;
-  longitude: number;
-  sign: string;
-  signVi: string;
-  degree: number;
-  minute: number;
-}
-
-export interface SwissNatalAngle {
-  id: string;
-  name: string;
-  nameVi: string;
-  symbol: string;
-  longitude: number;
-  sign: string;
-  signVi: string;
-  degree: number;
-  minute: number;
-  isAngle: true;
-}
-
-export type SwissNatalAngleName = 'Ascendant' | 'Descendant' | 'Midheaven' | 'Imum Coeli';
-
-export interface SwissNatalAspect {
-  id: string;
-  name: string;
-  objectAId: string;
-  objectAName: string;
-  objectBId: string;
-  objectBName: string;
-  separation: number;
-  exactAngle: number;
-  allowedOrb: number;
-  orbDifference: number;
-  state: 'applying' | 'separating' | 'unknown';
-  strength: number;
-  color: string;
-  opacity: number;
-  width: number;
-  dashPattern: string;
-  layer: number;
-}
-
-export interface SwissNatalChartResult {
-  birth: {
-    utc: string;
-    julianDayUt: number;
-    latitude: number;
-    longitude: number;
-    fixedUtcOffsetHours: number;
-    locationName?: string;
-    houseSystem: 'placidus';
-  };
-  metadata: {
-    engine: '@swisseph/browser';
-    version: string;
-    ephemeris: 'Swiss Ephemeris files';
-    fixedUtcOffsetHours: number;
-    requestedFlags: number;
-    returnedFlags: Record<string, number>;
-    requestedEquatorialFlags: number;
-    returnedEquatorialFlags: Record<string, number>;
-    objectPolicyVersion: 'western-natal-20-v1';
-    aspectPolicyVersion: 'western-aspects-11-v1';
-    timePolicy: 'fixed-utc-offset-v1';
-    partOfFortuneAltitudePolicy: 'geocentric-equatorial-altitude-v1';
-    partOfFortuneSolarAltitudeDeg: number;
-  };
-  objects: SwissNatalObject[];
-  houses: SwissNatalHouse[];
-  angles: Record<SwissNatalAngleName, SwissNatalAngle>;
-  aspects: SwissNatalAspect[];
-  legacyResult: WesternChartResult;
 }
 
 export interface CalculateSwissNatalOptions {
@@ -654,10 +685,58 @@ export async function calculateSwissNatalChart(
     longitudeSpeed: Number.NaN,
   }, cusps, false));
 
+  const DIGNITIES: Record<string, { domicile: number[]; exaltation: number[]; detriment: number[]; fall: number[] }> = {
+    'planet:sun': { domicile: [4], exaltation: [0], detriment: [10], fall: [6] },
+    'planet:moon': { domicile: [3], exaltation: [1], detriment: [9], fall: [7] },
+    'planet:mercury': { domicile: [2, 5], exaltation: [5], detriment: [8, 11], fall: [11] },
+    'planet:venus': { domicile: [1, 6], exaltation: [11], detriment: [7, 0], fall: [5] },
+    'planet:mars': { domicile: [0, 7], exaltation: [9], detriment: [6, 1], fall: [3] },
+    'planet:jupiter': { domicile: [8, 11], exaltation: [3], detriment: [2, 5], fall: [9] },
+    'planet:saturn': { domicile: [9, 10], exaltation: [6], detriment: [3, 4], fall: [0] },
+    'planet:uranus': { domicile: [10], exaltation: [7], detriment: [4], fall: [1] },
+    'planet:neptune': { domicile: [11], exaltation: [3, 8], detriment: [5], fall: [2] },
+    'planet:pluto': { domicile: [7], exaltation: [4], detriment: [1], fall: [10] },
+  };
+
+  function getEssentialDignity(objectId: string, signIndex: number): EssentialDignityInfo | undefined {
+    const d = DIGNITIES[objectId];
+    if (!d) return undefined;
+    if (d.domicile.includes(signIndex)) {
+      return { type: 'domicile', labelVi: 'Chính vị (Ruler)', symbol: '🌟', badgeClass: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30', score: 5 };
+    }
+    if (d.exaltation.includes(signIndex)) {
+      return { type: 'exaltation', labelVi: 'Đắc địa (Exalted)', symbol: '👑', badgeClass: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/30', score: 4 };
+    }
+    if (d.detriment.includes(signIndex)) {
+      return { type: 'detriment', labelVi: 'Nghịch vị (Detriment)', symbol: '⚠️', badgeClass: 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30', score: -5 };
+    }
+    if (d.fall.includes(signIndex)) {
+      return { type: 'fall', labelVi: 'Suy vị (Fall)', symbol: '🔻', badgeClass: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30', score: -4 };
+    }
+    return { type: 'peregrine', labelVi: 'Bình hòa', symbol: '○', badgeClass: 'bg-surface-container text-text-secondary-light dark:text-text-secondary-dark border-transparent', score: 0 };
+  }
+
+  const TRADITIONAL_RULERS_BY_SIGN: Array<{ id: string; nameVi: string; symbol: string }> = [
+    { id: 'planet:mars', nameVi: 'Sao Hỏa', symbol: '♂' },
+    { id: 'planet:venus', nameVi: 'Sao Kim', symbol: '♀' },
+    { id: 'planet:mercury', nameVi: 'Sao Thủy', symbol: '☿' },
+    { id: 'planet:moon', nameVi: 'Mặt Trăng', symbol: '☽' },
+    { id: 'planet:sun', nameVi: 'Mặt Trời', symbol: '☉' },
+    { id: 'planet:mercury', nameVi: 'Sao Thủy', symbol: '☿' },
+    { id: 'planet:venus', nameVi: 'Sao Kim', symbol: '♀' },
+    { id: 'planet:mars', nameVi: 'Sao Hỏa', symbol: '♂' },
+    { id: 'planet:jupiter', nameVi: 'Sao Mộc', symbol: '♃' },
+    { id: 'planet:saturn', nameVi: 'Sao Thổ', symbol: '♄' },
+    { id: 'planet:saturn', nameVi: 'Sao Thổ', symbol: '♄' },
+    { id: 'planet:jupiter', nameVi: 'Sao Mộc', symbol: '♃' },
+  ];
+
   const objects = REQUIRED_OBJECT_SCHEMA.map((schema) => {
     const object = calculatedById.get(schema.id);
     if (!object) throw new Error(`${schema.name}: required Western natal object is missing`);
-    return object;
+    const signIdx = SIGN_NAMES.indexOf(object.sign as (typeof SIGN_NAMES)[number]);
+    const dignity = getEssentialDignity(object.id, signIdx);
+    return { ...object, dignity };
   });
   const houses: SwissNatalHouse[] = cusps.map((longitude, index) => {
     const zodiac = zodiacPosition(longitude);
@@ -670,6 +749,49 @@ export async function calculateSwissNatalChart(
     'Imum Coeli': makeAngle('angle:imum-coeli', 'Imum Coeli', 'Thiên Đế', 'IC', houseData.mc + 180),
   };
   const aspects = calculateAspects(objects);
+
+  // Additional Astrological Metrics (Aspect Patterns, Elements/Modalities, Moon Phase, House Rulers)
+  const patternPlanets = objects
+    .filter((o) => o.category === 'planet' || o.id.includes('node') || o.id.includes('chiron'))
+    .map((o) => ({
+      id: o.id,
+      name: o.name,
+      nameVi: o.nameVi,
+      symbol: o.symbol,
+      longitude: o.longitude,
+      signVi: o.signVi,
+      house: o.house,
+    }));
+  const aspectPatterns = detectAspectPatterns(patternPlanets);
+
+  const balancePoints = [
+    ...objects.filter((o) => o.category === 'planet').map((o) => ({ id: o.id, nameVi: o.nameVi, symbol: o.symbol, longitude: o.longitude })),
+    { id: 'angle:ascendant', nameVi: 'Cung Mọc', symbol: 'ASC', longitude: angles.Ascendant.longitude },
+    { id: 'angle:midheaven', nameVi: 'Thiên Đỉnh', symbol: 'MC', longitude: angles.Midheaven.longitude },
+  ];
+  const elementBalance = calculateElementModalityBalance(balancePoints);
+
+  const moonPhase = calculateBirthMoonPhase(sun.longitude, moon.longitude);
+
+  const objectById = new Map(objects.map((o) => [o.id, o]));
+  const houseRulers: SwissHouseRuler[] = houses.map((h) => {
+    const signIdx = SIGN_NAMES.indexOf(h.sign as (typeof SIGN_NAMES)[number]);
+    const rulerInfo = TRADITIONAL_RULERS_BY_SIGN[signIdx] ?? TRADITIONAL_RULERS_BY_SIGN[0];
+    const rulerObj = objectById.get(rulerInfo.id);
+    return {
+      houseNumber: h.number,
+      sign: h.sign,
+      signVi: h.signVi,
+      degree: h.degree,
+      minute: h.minute,
+      traditionalRulerId: rulerInfo.id,
+      traditionalRulerVi: rulerInfo.nameVi,
+      traditionalRulerSymbol: rulerInfo.symbol,
+      rulerHouse: rulerObj?.house,
+      rulerSignVi: rulerObj?.signVi,
+    };
+  });
+
   return {
     birth: {
       utc: utc.toISOString(),
@@ -699,6 +821,10 @@ export async function calculateSwissNatalChart(
     houses,
     angles,
     aspects,
+    aspectPatterns,
+    elementBalance,
+    moonPhase,
+    houseRulers,
     legacyResult: buildLegacyResult(objects, houses, aspects, angles.Ascendant.longitude, angles.Midheaven.longitude),
   };
 }

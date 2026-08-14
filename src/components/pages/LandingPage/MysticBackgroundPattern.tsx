@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 
 type MysticBackgroundVariant = 'luoshu' | 'dipper' | 'four-symbols';
 
@@ -8,16 +8,22 @@ interface MysticBackgroundPatternProps {
 }
 
 export default function MysticBackgroundPattern({ variant, className = '' }: MysticBackgroundPatternProps) {
+  const rawId = useId();
+  const patternId = rawId.replace(/[^a-zA-Z0-9_-]/g, '');
+  const mysticGoldId = `mysticGold-${patternId}`;
+  const softGoldId = `softGold-${patternId}`;
+  const mysticGoldUrl = `url(#${mysticGoldId})`;
+
   // Common gradients
   const defs = (
     <defs>
-      <linearGradient id="mysticGold" x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">
+      <linearGradient id={mysticGoldId} x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">
         <stop stopColor="#d4a843" stopOpacity="0.8" />
         <stop offset="0.5" stopColor="#8c6a1d" stopOpacity="0.3" />
         <stop offset="1" stopColor="#d4a843" stopOpacity="0.8" />
       </linearGradient>
 
-      <linearGradient id="softGold" x1="0" y1="800" x2="800" y2="0" gradientUnits="userSpaceOnUse">
+      <linearGradient id={softGoldId} x1="0" y1="800" x2="800" y2="0" gradientUnits="userSpaceOnUse">
         <stop stopColor="#d4a843" stopOpacity="0.4" />
         <stop offset="1" stopColor="#d4a843" stopOpacity="0.1" />
       </linearGradient>
@@ -47,16 +53,16 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
             cx="400"
             cy="400"
             r="340"
-            stroke="url(#mysticGold)"
+            stroke={mysticGoldUrl}
             strokeWidth="0.5"
             strokeDasharray="5 15"
             opacity="0.3"
           />
-          <circle cx="400" cy="400" r="320" stroke="url(#mysticGold)" strokeWidth="1" opacity="0.2" />
-          <circle cx="400" cy="400" r="226" stroke="url(#mysticGold)" strokeWidth="1" opacity="0.1" />
+          <circle cx="400" cy="400" r="320" stroke={mysticGoldUrl} strokeWidth="1" opacity="0.2" />
+          <circle cx="400" cy="400" r="226" stroke={mysticGoldUrl} strokeWidth="1" opacity="0.1" />
 
           {/* Symmetrical Web Connections */}
-          <g stroke="url(#mysticGold)" strokeWidth="1.5" opacity="0.4">
+          <g stroke={mysticGoldUrl} strokeWidth="1.5" opacity="0.4">
             {/* Horizontals */}
             <line x1={400 - offset} y1={400 - offset} x2={400 + offset} y2={400 - offset} />
             <line x1={400 - offset} y1={400} x2={400 + offset} y2={400} />
@@ -73,8 +79,8 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
           {/* Luoshu Nodes */}
           {nodes.map(([x, y], i) => (
             <g key={i}>
-              <circle cx={x} cy={y} r="32" fill="url(#mysticGold)" opacity="0.05" />
-              <circle cx={x} cy={y} r="24" stroke="url(#mysticGold)" strokeWidth="1" opacity="0.4" />
+              <circle cx={x} cy={y} r="32" fill={mysticGoldUrl} opacity="0.05" />
+              <circle cx={x} cy={y} r="24" stroke={mysticGoldUrl} strokeWidth="1" opacity="0.4" />
               <circle cx={x} cy={y} r="6" fill="#d4a843" opacity="0.9" />
             </g>
           ))}
@@ -94,12 +100,12 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
           cx="400"
           cy="400"
           r="360"
-          stroke="url(#mysticGold)"
+          stroke={mysticGoldUrl}
           strokeWidth="1"
           strokeDasharray="3 9"
           opacity="0.3"
         />
-        <circle cx="400" cy="400" r="200" stroke="url(#mysticGold)" strokeWidth="0.5" opacity="0.15" />
+        <circle cx="400" cy="400" r="200" stroke={mysticGoldUrl} strokeWidth="0.5" opacity="0.15" />
 
         {/* The Pole Star (Tử Vi) - Fixed or counter-rotating */}
         <circle cx="400" cy="400" r="6" fill="#ffffff" opacity="0.8" />
@@ -110,7 +116,7 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
           {/* Thick connecting light beams */}
           <path
             d="M 240 280 L 320 220 L 380 260 L 410 340 L 490 420 L 570 460 L 650 430"
-            stroke="url(#mysticGold)"
+            stroke={mysticGoldUrl}
             strokeWidth="3"
             fill="none"
             opacity="0.6"
@@ -118,7 +124,7 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
           />
           <path
             d="M 410 340 L 240 280"
-            stroke="url(#mysticGold)"
+            stroke={mysticGoldUrl}
             strokeWidth="3"
             fill="none"
             opacity="0.4"
@@ -136,8 +142,8 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
             [650, 430],
           ].map(([x, y], i) => (
             <g key={i}>
-              <circle cx={x} cy={y} r="45" fill="url(#mysticGold)" opacity="0.04" />
-              <circle cx={x} cy={y} r="14" fill="url(#mysticGold)" opacity="0.2" />
+              <circle cx={x} cy={y} r="45" fill={mysticGoldUrl} opacity="0.04" />
+              <circle cx={x} cy={y} r="14" fill={mysticGoldUrl} opacity="0.2" />
               <circle cx={x} cy={y} r="5" fill="#d4a843" opacity="0.9" />
             </g>
           ))}
@@ -165,23 +171,23 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
         {defs}
         <g style={{ animation: 'spin 140s linear infinite reverse', transformOrigin: 'center' }}>
           {/* Massive boundary rings representing Earth and Heaven */}
-          <circle cx="400" cy="400" r="370" stroke="url(#mysticGold)" strokeWidth="2" opacity="0.4" />
+          <circle cx="400" cy="400" r="370" stroke={mysticGoldUrl} strokeWidth="2" opacity="0.4" />
           <circle
             cx="400"
             cy="400"
             r="350"
-            stroke="url(#mysticGold)"
+            stroke={mysticGoldUrl}
             strokeWidth="1"
             strokeDasharray="10 10"
             opacity="0.3"
           />
-          <circle cx="400" cy="400" r="140" stroke="url(#mysticGold)" strokeWidth="3" opacity="0.5" />
+          <circle cx="400" cy="400" r="140" stroke={mysticGoldUrl} strokeWidth="3" opacity="0.5" />
 
           {/* Inner Taiji representation Aura */}
-          <circle cx="400" cy="400" r="80" fill="url(#mysticGold)" opacity="0.05" />
+          <circle cx="400" cy="400" r="80" fill={mysticGoldUrl} opacity="0.05" />
           <path
             d="M 400 320 A 40 40 0 0 0 400 400 A 40 40 0 0 1 400 480 A 80 80 0 0 1 400 320"
-            fill="url(#mysticGold)"
+            fill={mysticGoldUrl}
             opacity="0.1"
           />
 
@@ -192,19 +198,19 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
               <path
                 d="M 370 60 L 430 60 L 450 110 L 400 130 L 350 110 Z"
                 fill="none"
-                stroke="url(#mysticGold)"
+                stroke={mysticGoldUrl}
                 strokeWidth="2"
                 opacity="0.7"
               />
               <path
                 d="M 350 140 Q 400 170 450 140"
                 fill="none"
-                stroke="url(#mysticGold)"
+                stroke={mysticGoldUrl}
                 strokeWidth="1.5"
                 opacity="0.4"
               />
               <circle cx="400" cy="95" r="8" fill="#d4a843" opacity="0.9" />
-              <circle cx="400" cy="95" r="20" stroke="url(#mysticGold)" strokeWidth="1" fill="none" opacity="0.3" />
+              <circle cx="400" cy="95" r="20" stroke={mysticGoldUrl} strokeWidth="1" fill="none" opacity="0.3" />
 
               {/* Connecting energy lines to center */}
               <line
@@ -212,7 +218,7 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
                 y1="140"
                 x2="400"
                 y2="260"
-                stroke="url(#mysticGold)"
+                stroke={mysticGoldUrl}
                 strokeWidth="1"
                 opacity="0.3"
                 strokeDasharray="3 6"
@@ -229,7 +235,7 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
                 y1="150"
                 x2="400"
                 y2="350"
-                stroke="url(#mysticGold)"
+                stroke={mysticGoldUrl}
                 strokeWidth="0.5"
                 transform={`rotate(${angle} 400 400)`}
               />
@@ -241,7 +247,11 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
   };
 
   return (
-    <div className={`pointer-events-none select-none ${className}`} aria-hidden="true">
+    <div
+      className={`pointer-events-none select-none ${className}`}
+      style={{ contain: 'strict' }}
+      aria-hidden="true"
+    >
       {variant === 'luoshu' && renderLuoshu()}
       {variant === 'dipper' && renderDipper()}
       {variant === 'four-symbols' && renderFourSymbols()}

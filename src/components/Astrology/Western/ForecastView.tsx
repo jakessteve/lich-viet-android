@@ -79,13 +79,13 @@ export const ForecastView: React.FC = () => {
           </h3>
         </div>
         <div className="p-4 sm:p-5 space-y-4">
-          <div className="flex gap-2">
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
             {years.map((year) => (
               <button
                 key={year}
                 type="button"
                 onClick={() => setYearStr(String(year))}
-                className={`flex-1 py-2 rounded-xl text-sm font-semibold transition-all ${
+                className={`flex-1 min-w-[56px] py-2 px-3 rounded-xl text-sm font-semibold transition-all shrink-0 sm:shrink ${
                   yearStr === String(year)
                     ? 'bg-indigo-600 text-white shadow-md'
                     : 'bg-surface-subtle-light dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark hover:bg-indigo-50 dark:hover:bg-white/15'

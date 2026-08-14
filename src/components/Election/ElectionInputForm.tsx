@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow';
 import { useElectionStore } from '../../stores/electionStore';
 import { ActionButton, SegmentedControl, type SegmentedOption } from '../shared';
-import type { ElectionActivityType } from '../../types/election';
+import type { ElectionActivityType, ElectionInput } from '../../types/election';
 
 const ACTIVITY_OPTIONS: readonly SegmentedOption<ElectionActivityType>[] = [
   { id: 'cuoi-hoi', label: 'Cưới hỏi', icon: 'favorite' },
@@ -14,6 +15,8 @@ const ACTIVITY_OPTIONS: readonly SegmentedOption<ElectionActivityType>[] = [
 ];
 
 export const ElectionInputForm: React.FC = () => {
+  const location = useLocation();
+  const initializedFromUrl = useRef(false);
   const { input, setInput, runScan, isScanning } = useElectionStore(
     useShallow((state) => ({
       input: state.input,
@@ -26,6 +29,41 @@ export const ElectionInputForm: React.FC = () => {
   // Local state for dates
   const [startStr, setStartStr] = useState('');
   const [endStr, setEndStr] = useState('');
+
+  // Handle URL query parameters for seamless deep linking from Am Lich
+  useEffect(() => {
+    if (initializedFromUrl.current) return;
+    const params = new URLSearchParams(location.search);
+    const startParam = params.get('start') || params.get('from');
+    const endParam = params.get('end') || params.get('to');
+    const actParam = params.get('activity') as ElectionActivityType | null;
+
+    if (startParam || endParam || actParam) {
+      const nextUpdates: Partial<ElectionInput> = {};
+      if (startParam) {
+        const d = new Date(startParam);
+        if (!isNaN(d.getTime())) {
+          d.setHours(0, 0, 0, 0);
+          nextUpdates.startDate = d;
+        }
+      }
+      if (endParam) {
+        const d = new Date(endParam);
+        if (!isNaN(d.getTime())) {
+          d.setHours(23, 59, 59, 999);
+          nextUpdates.endDate = d;
+        }
+      }
+      if (actParam && ACTIVITY_OPTIONS.some((opt) => opt.id === actParam)) {
+        nextUpdates.activityType = actParam;
+      }
+      setInput(nextUpdates);
+      initializedFromUrl.current = true;
+      setTimeout(() => {
+        void runScan();
+      }, 100);
+    }
+  }, [location.search, setInput, runScan]);
 
   useEffect(() => {
     // Format YYYY-MM-DD for date input

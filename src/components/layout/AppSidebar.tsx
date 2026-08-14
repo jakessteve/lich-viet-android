@@ -1,5 +1,6 @@
 import React, { useCallback, startTransition } from 'react';
 import { useAppStore } from '@/stores/appStore';
+import { useAuthStore } from '@/stores/authStore';
 import { useHolidays } from '@/hooks/useHolidays';
 import MonthCalendar from '../MonthCalendar';
 import HolidaysCard from '../Calendar/HolidaysCard';
@@ -18,6 +19,8 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
   const isDark = useAppStore((s) => s.isDark);
   const setSelectedDate = useAppStore((s) => s.setSelectedDate);
   const isPersonalized = useAppStore((s) => s.isPersonalized);
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   // P2-11: Wrap date changes in startTransition to keep UI responsive
   const onSelectDate = useCallback(
@@ -225,11 +228,15 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
         {String(activeTab).startsWith('chiem-tinh') && (
           <div className="surface-card p-4 rounded-2xl border border-indigo-500/30 bg-indigo-50/50 dark:bg-indigo-900/10">
             <div className="flex items-start gap-3 text-sm text-text-primary-light dark:text-text-primary-dark">
-              <span className="material-icons-round text-indigo-600 dark:text-indigo-400 mt-0.5">account_circle</span>
+              <span className="material-icons-round text-indigo-600 dark:text-indigo-400 mt-0.5">
+                {isAuthenticated ? 'verified_user' : 'account_circle'}
+              </span>
               <div>
                 <span className="font-semibold block mb-1">Chiêm Tinh Học</span>
                 <span className="text-text-secondary-light dark:text-text-secondary-dark">
-                  Đăng nhập để tự động điền lá số của bạn và xem luận giải chi tiết hơn.
+                  {isAuthenticated
+                    ? `Đã liên kết hồ sơ của ${user?.displayName || user?.email?.split('@')[0] || 'bạn'}. Tự động đồng bộ tọa độ & giờ sinh chuẩn xác.`
+                    : 'Đăng nhập để tự động điền lá số của bạn và xem luận giải chi tiết hơn.'}
                 </span>
               </div>
             </div>

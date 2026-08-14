@@ -72,9 +72,17 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
             <ul className="divide-y divide-border-light/40 dark:divide-border-dark/40">
               {result.objects.map((object) => (
                 <li key={object.id} data-technical-object={object.id} className="p-3 sm:p-4">
-                  <div className="mb-2 flex items-start justify-between gap-3">
+                  <div className="mb-2 flex items-start justify-between gap-3 flex-wrap">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-bold text-text-primary-light dark:text-text-primary-dark">{object.symbol} {object.nameVi}</p>
+                      <p className="truncate text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
+                        <span>{object.symbol}</span>
+                        <span>{object.nameVi}</span>
+                        {object.dignity && object.dignity.type !== 'peregrine' && (
+                          <span className={`rounded-md border px-1.5 py-0.2 text-[10px] font-medium ${object.dignity.badgeClass}`}>
+                            {object.dignity.symbol} {object.dignity.labelVi}
+                          </span>
+                        )}
+                      </p>
                       <code className="block truncate text-[10px] text-text-secondary-light dark:text-text-secondary-dark">{object.id}</code>
                     </div>
                     <span className="shrink-0 rounded-lg bg-indigo-500/10 px-2 py-1 font-semibold text-indigo-700 dark:text-indigo-300">
@@ -96,14 +104,27 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
             </ul>
           </Section>
 
-          <Section title="12 đỉnh nhà" count={result.houses.length}>
+          <Section title="12 đỉnh nhà & Chủ quản (House Rulers)" count={result.houses.length}>
             <div className="grid gap-px bg-border-light/40 sm:grid-cols-2 lg:grid-cols-3 dark:bg-border-dark/40">
-              {result.houses.map((house) => (
-                <div key={house.number} data-technical-house={house.number} className="flex items-center justify-between gap-3 bg-surface-container-lowest px-4 py-3">
-                  <strong>Nhà {house.number}</strong>
-                  <span className="text-right text-text-secondary-light dark:text-text-secondary-dark">{house.signVi} {house.degree}°{house.minute.toString().padStart(2, '0')}′<br /><span className="text-[10px]">{house.longitude.toFixed(6)}°</span></span>
-                </div>
-              ))}
+              {result.houses.map((house) => {
+                const ruler = result.houseRulers?.find((r) => r.houseNumber === house.number);
+                return (
+                  <div key={house.number} data-technical-house={house.number} className="flex flex-col justify-between gap-2 bg-surface-container-lowest px-4 py-3">
+                    <div className="flex items-center justify-between gap-2">
+                      <strong className="text-sm">Nhà {house.number}</strong>
+                      <span className="text-right font-medium text-text-primary-light dark:text-text-primary-dark">
+                        {house.signVi} {house.degree}°{house.minute.toString().padStart(2, '0')}′
+                      </span>
+                    </div>
+                    {ruler && (
+                      <div className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark border-t border-border-light/30 pt-1.5 dark:border-border-dark/30 flex items-center justify-between">
+                        <span>Chủ tinh: <strong className="text-text-primary-light dark:text-text-primary-dark">{ruler.traditionalRulerVi} {ruler.traditionalRulerSymbol}</strong></span>
+                        {ruler.rulerHouse && <span>(tại Nhà {ruler.rulerHouse})</span>}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </Section>
 

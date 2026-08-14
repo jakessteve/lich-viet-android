@@ -79,40 +79,126 @@ export default function MobileDrawer() {
           </button>
         </div>
         {/* Nav links */}
-        <nav className="flex-1 py-2 px-2 overflow-y-auto" aria-label="Điều hướng chính">
-          {NAV_LINKS.map((link, index) => (
-            <button
-              key={link.id}
-              onClick={() => {
-                if (link.enabled) handleTabChange(link.id);
-              }}
-              className={`w-full flex items-start gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
-                activeTab === link.id && !isFullPage
-                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark'
-                  : link.enabled
-                    ? 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                    : 'text-gray-400 dark:text-gray-600 cursor-default'
-              }`}
-              style={{ animationDelay: `${index * 50 + 100}ms` }}
-              disabled={!link.enabled}
-              aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
-            >
-              <span
-                className={`material-icons-round text-xl mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
+        <nav className="flex-1 py-2 px-2 overflow-y-auto space-y-3" aria-label="Điều hướng chính">
+          {/* Group 1: Lịch & Dụng Sự */}
+          <div>
+            <span className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark opacity-60 block">
+              Lịch & Dụng Sự
+            </span>
+            {NAV_LINKS.filter((l) => ['am-lich', 'ngay-tot'].includes(l.id)).map((link, index) => (
+              <button
+                key={link.id}
+                onClick={() => {
+                  if (link.enabled) handleTabChange(link.id);
+                }}
+                className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
+                  activeTab === link.id && !isFullPage
+                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                    : link.enabled
+                      ? 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                      : 'text-gray-400 dark:text-gray-600 cursor-default'
+                }`}
+                style={{ animationDelay: `${index * 40 + 50}ms` }}
+                disabled={!link.enabled}
+                aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
               >
-                {link.icon}
-              </span>
-              <div className="flex-1 min-w-0">
-                <span className="text-sm font-medium block">{link.label}</span>
-                <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
-                  {link.desc}
+                <span
+                  className={`material-icons-round text-xl mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
+                >
+                  {link.icon}
                 </span>
-              </div>
-              {activeTab === link.id && !isFullPage && (
-                <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
-              )}
-            </button>
-          ))}
+                <div className="flex-1 min-w-0">
+                  <span className="text-sm font-medium block">{link.label}</span>
+                  <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
+                    {link.desc}
+                  </span>
+                </div>
+                {activeTab === link.id && !isFullPage && (
+                  <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Group 2: Bói Toán & Kinh Dịch */}
+          <div>
+            <span className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark opacity-60 block">
+              Bói Toán & Tam Thức
+            </span>
+            {NAV_LINKS.filter((l) => ['gieo-que'].includes(l.id)).map((link, index) => (
+              <button
+                key={link.id}
+                onClick={() => {
+                  if (link.enabled) handleTabChange(link.id);
+                }}
+                className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
+                  activeTab === link.id && !isFullPage
+                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                    : link.enabled
+                      ? 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                      : 'text-gray-400 dark:text-gray-600 cursor-default'
+                }`}
+                style={{ animationDelay: `${index * 40 + 90}ms` }}
+                disabled={!link.enabled}
+                aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
+              >
+                <span
+                  className={`material-icons-round text-xl mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
+                >
+                  {link.icon}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <span className="text-sm font-medium block">{link.label}</span>
+                  <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
+                    {link.desc}
+                  </span>
+                </div>
+                {activeTab === link.id && !isFullPage && (
+                  <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Group 3: Chiêm Tinh & Lá Số */}
+          <div>
+            <span className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark opacity-60 block">
+              Chiêm Tinh & Lá Số
+            </span>
+            {NAV_LINKS.filter((l) => ['tu-vi', 'chiem-tinh-tay-phuong', 'chiem-tinh-vedic', 'chiem-tinh-hop-la'].includes(l.id)).map((link, index) => (
+              <button
+                key={link.id}
+                onClick={() => {
+                  if (link.enabled) handleTabChange(link.id);
+                }}
+                className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
+                  activeTab === link.id && !isFullPage
+                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                    : link.enabled
+                      ? 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                      : 'text-gray-400 dark:text-gray-600 cursor-default'
+                }`}
+                style={{ animationDelay: `${index * 40 + 130}ms` }}
+                disabled={!link.enabled}
+                aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
+              >
+                <span
+                  className={`material-icons-round text-xl mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
+                >
+                  {link.icon}
+                </span>
+                <div className="flex-1 min-w-0">
+                  <span className="text-sm font-medium block">{link.label}</span>
+                  <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
+                    {link.desc}
+                  </span>
+                </div>
+                {activeTab === link.id && !isFullPage && (
+                  <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                )}
+              </button>
+            ))}
+          </div>
 
           {/* Divider */}
           <div className="border-t border-border-light/50 dark:border-border-dark/50 my-2 mx-4" />
@@ -127,9 +213,9 @@ export default function MobileDrawer() {
                 navigate(link.path);
                 setIsOpen(false);
               }}
-              className={`w-full flex items-start gap-3 px-4 py-3 rounded-xl text-left transition-all duration-200 mb-0.5 ${
+              className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 ${
                 location.pathname === link.path
-                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark'
+                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
                   : 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
               }`}
             >

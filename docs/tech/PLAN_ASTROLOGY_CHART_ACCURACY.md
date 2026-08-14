@@ -1,6 +1,6 @@
-# PLAN: Western & Vedic Chart Accuracy (DRAFT — pending Oracle review)
+# PLAN: Western & Vedic Chart Accuracy
 
-Status: DRAFT — do not implement until approved
+Status: COMPLETED & MERGED (v3.1.0)
 Reference: https://chiemtinhlaso.com (feature reference only, no content copied)
 
 ## 1. Problem Statement

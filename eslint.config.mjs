@@ -16,6 +16,7 @@ export default tseslint.config(
       'public/**',
       '*.config.*',
       'scripts/**',
+      '**/*.json',
       'src/packages/**', // vendored bundles (iztro, circular-natal-horoscope, vn-lunar)
     ],
   },
@@ -104,6 +105,34 @@ export default tseslint.config(
       }],
       'no-console': ['warn', { allow: ['warn', 'error', 'debug'] }],
       'prefer-const': 'error',
+    },
+  },
+
+  // Package & scripts environment configuration
+  {
+    files: ['packages/**/*.js', 'packages/**/*.d.ts', 'packages/**/*.json', 'scripts/**/*.js', 'scripts/**/*.cjs', 'scripts/**/*.ts'],
+    languageOptions: {
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+        URL: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        Buffer: 'readonly',
+        __dirname: 'readonly',
+        __filename: 'readonly',
+        module: 'readonly',
+        require: 'readonly',
+        exports: 'readonly',
+      },
+    },
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
+      'no-undef': 'off',
     },
   },
 );

@@ -1,127 +1,75 @@
 # User Flow Reference - Lich Viet v3
 
-> **Version:** 3.0.0 | **Updated:** May 2026
-> Current navigation and user-flow reference for the active v3 app.
+> **Version:** 3.1.0 | **Updated:** August 2026  
+> Navigation architecture and user journey specifications.
 
 ---
 
-## 1. Route Map
+## 1. Application Navigation Hierarchy
 
 ```mermaid
 flowchart TD
-    HOME["/"] --> LANDING["LandingPage"]
+    HOME["/"] --> LANDING["Landing Page"]
     HOME --> APP["/app"]
-    APP --> AMLICH["/app/am-lich"]
-    APP --> GIEOQUE["/app/gieo-que"]
-    APP --> TUVI["/app/tu-vi"]
-    APP --> SETTINGS["/app/cai-dat"]
-    APP --> LOGIN["/app/dang-nhap"]
-    APP --> REGISTER["/app/dang-ky"]
-    APP --> UPGRADE["/app/nang-cap"]
+    
+    APP --> AMLICH["/app/am-lich (Âm Lịch & Dụng Sự)"]
+    APP --> NGAYTOT["/app/ngay-tot (Ngày Tốt)"]
+    APP --> GIEOQUE["/app/gieo-que (Gieo Quẻ & Tam Thức)"]
+    APP --> TUVI["/app/tu-vi (Tử Vi Đẩu Số)"]
+    APP --> WESTERN["/app/chiem-tinh/tay-phuong (Chiêm Tinh Tây Phương)"]
+    APP --> VEDIC["/app/chiem-tinh/vedic (Chiêm Tinh Ấn Độ)"]
+    APP --> SYNASTRY["/app/chiem-tinh/hop-la (Hợp Lá Số)"]
+    APP --> SETTINGS["/app/cai-dat (Cài Đặt & Profile)"]
+    APP --> LOGIN["/app/dang-nhap (Đăng Nhập)"]
+    APP --> REGISTER["/app/dang-ky (Đăng Ký)"]
+    APP --> UPGRADE["/app/nang-cap (Nâng Cấp)"]
 
-    AMLICH --> CALENDAR["Calendar + Dung Su"]
-    GIEOQUE --> MAIHOA["Mai Hoa"]
-    GIEOQUE --> TAMTHUC["Tam Thuc"]
-    TUVI --> CHART["Tu Vi chart + hometown normalization"]
-    SETTINGS --> PROFILE["Local profile + preferences"]
+    AMLICH --> CALENDAR["Lịch Tháng & Lịch Ngày"]
+    AMLICH --> DUNGSU["Đánh Giá Dụng Sự & Giờ Hoàng Đạo"]
+    GIEOQUE --> MAIHOA["Mai Hoa Dịch Số"]
+    GIEOQUE --> TAMTHUC["Kỳ Môn / Thái Ất / Lục Nhâm"]
+    TUVI --> TUVIGRAPH["Lá Số 12 Cung & An Sao"]
+    WESTERN --> WESTERNWHEEL["Biểu Đồ Tròn & Bảng Góc Chiếu"]
+    VEDIC --> VEDICSQUARE["Lá Số Rasi & D9 Navamsha"]
+    SYNASTRY --> DUALCHART["So Sánh Tương Hợp Cặp Đôi"]
 ```
 
-| Route | Status | Destination |
-| --- | --- | --- |
-| `/` | Active | Landing |
-| `/app/am-lich` | Active | Calendar, Dung Su, holidays, and personalization panels |
-| `/app/gieo-que` | Active | Mai Hoa and Tam Thuc |
-| `/app/tu-vi` | Active | Tu Vi charting |
-| `/app/cai-dat` | Active | Settings |
-| `/app/dang-nhap` | Active | Demo login |
-| `/app/dang-ky` | Active | Demo registration |
-| `/app/nang-cap` | Placeholder | Coming-soon pricing / upgrade |
+---
 
-Removed legacy routes redirect to active v3 pages. Tu Vi is no longer a removed surface.
+## 2. Primary User Journeys
+
+### A. Âm Lịch & Dụng Sự (`/app/am-lich`)
+1. **Intake & Location Detection:** Automatically requests viewer geolocation to align lunar month transitions and solar terms with local civil time.
+2. **Month Overview:** Full grid view showing solar/lunar dates, solar terms (Tiết Khí), and holiday badges.
+3. **Day Detail & Auspicious Guidance:** Displays Can Chi for Year/Month/Day/Hour, Auspicious Hours (Giờ Hoàng Đạo), and specific activity scores (Xuất hành, Khai trương, Động thổ, Cưới hỏi).
+4. **Personalized Overlay:** If the user's birth year is saved, applies personalized harmony/conflict scores (Tam Hợp, Lục Xung, Thái Tuế).
+
+### B. Ngày Tốt / Auspicious Date Search (`/app/ngay-tot`)
+1. **Filter Selection:** User selects target activity (e.g. Khai trương, Cưới hỏi, Mua xe) and search date window.
+2. **Evaluation & Ranking:** Scans all dates in range against activity rules, 28 mansions, and 12 Directing Officers.
+3. **Personalized Ranking:** Factors in the user's birth data to surface the most auspicious dates with zero conflict.
+
+### C. Gieo Quẻ & Tam Thức (`/app/gieo-que`)
+1. **Mai Hoa Divination:**
+   - **Time-based casting:** Instantly generates Initial, Mutual, and Transformed hexagrams based on current or custom time.
+   - **Number-based casting:** Accepts two user-entered numbers to derive upper/lower trigrams and changing lines.
+2. **Tam Thức Suite:**
+   - Single tabbed interface toggling between **Kỳ Môn Độn Giáp** (9-palace board), **Thái Ất Thần Kinh** (cyclical fortune), and **Đại Lục Nhâm** (Heaven/Earth plates & 4 Lessons).
+
+### D. Tử Vi Đẩu Số (`/app/tu-vi`)
+1. **Birth Data Entry:** Name, solar birth date, birth hour, gender, and birthplace.
+2. **Astronomical Normalization:** Applies historical Vietnam timezone corrections (1906–present) and true-solar time correction via Swiss Ephemeris.
+3. **Chart Exploration:** Interactive 12-palace chart with main stars, auxiliary rings, brightness indicators, and Hạn timeline.
+4. **Export:** High-resolution SVG and vector image generation via `html-to-image`.
+
+### E. Western & Vedic Astrology (`/app/chiem-tinh/*`)
+1. **Western Natal Chart:** Interactive SVG chart wheel showing planetary longitudes, house cusps (Placidus default), and aspect lines.
+2. **Vedic Astrology:** North and South Indian square chart layouts with sidereal Lahiri ayanamsha, Nakshatra lords, and D9 Navamsha.
+3. **Synastry:** Dual chart overlay comparing two birth charts with composite aspect matrices and relationship harmony indices.
 
 ---
 
-## 2. Primary Flows
+## 3. Storage & Offline Protocol
 
-### Landing
-
-1. User lands on `/`.
-2. User sees the current product positioning and may enter birthday/date data.
-3. Primary app entry routes to `/app/am-lich`.
-4. Landing page birthday flows can seed Tu Vi or related date-aware journeys.
-
-### Am Lich
-
-1. User opens `/app/am-lich`.
-2. Sidebar calendar controls the selected date.
-3. If browser location is granted, the calendar uses viewer geolocation for lunar calculations and the current-day shortcut.
-4. The page shows lunar date details, auspicious hours, activity guidance, holidays, and related panels.
-5. Holiday cards still use Geo-IP lookup to determine whether to add local-country holidays.
-6. Authenticated users with birthday data can see personalization signals.
-
-### Gieo Que
-
-1. User opens `/app/gieo-que`.
-2. User chooses Mai Hoa or Tam Thuc.
-3. Mai Hoa supports time-based and number-based divination.
-4. Tam Thuc synthesizes QMDJ, Luc Nham, and Thai At from the selected time.
-
-### Tu Vi
-
-1. User opens `/app/tu-vi`.
-2. User enters birth date, birth time, gender, and birthplace.
-3. Birthplace coordinates and timezone are normalized in the Tu Vi birth context.
-4. When Swiss ephemeris is available, true-solar correction is applied using birthplace longitude.
-5. The page renders chart data, hạn controls, palace selection, and export helpers.
-
-### Settings
-
-1. User opens `/app/cai-dat`.
-2. User adjusts theme, font size, profile data, and local demo-account settings.
-3. Settings persist in localStorage.
-
----
-
-## 3. Authentication Boundary
-
-Auth is demo-only and stored in browser localStorage. It supports:
-
-| Flow | Notes |
-| --- | --- |
-| Register | Creates a local browser account |
-| Login | Checks local browser account credentials |
-| Social login | Simulated locally |
-| Profile update | Updates local user profile data |
-| Change password | Uses salted SHA-256 hashes for local demo credentials |
-
-A seeded demo admin account is created for local testing, but there is no active admin route, no production session layer, and no live 2FA flow.
-
----
-
-## 4. Legacy Redirects
-
-| Removed surface | Current behavior |
-| --- | --- |
-| `/tu-vi` | Redirects to `/app/tu-vi` |
-| `/am-lich` | Redirects to `/app/am-lich` |
-| `/gieo-que` | Redirects to `/app/gieo-que` |
-| `/lich-dung-su` | Redirects to `/app/am-lich` |
-| `/bat-tu` | Redirects to `/app/am-lich` |
-| `/chiem-tinh` | Redirects to `/app/am-lich` |
-| `/than-so-hoc` | Redirects to `/app/am-lich` |
-| `/hop-la` | Redirects to `/app/am-lich` |
-| `/luc-nham` | Redirects to `/app/gieo-que?method=tam-thuc` |
-
-Removed business features such as premium gating, credits, PDF export, onboarding tours, and widget pages are still absent from the active app.
-
----
-
-## 5. Validation Baseline
-
-Current local validation:
-
-| Check | Status |
-| --- | --- |
-| `npm run typecheck` | Pass |
-| `npm run lint` | Pass with one pre-existing warning in `src/components/DetailedDayView.tsx` |
-| `npm test` | Pass |
+- **Zero-Backend Guarantee:** All profile data, preferences, and custom charts remain securely inside the client browser (`localStorage` and IndexedDB).
+- **Service Worker Precaching:** All application assets, fonts, and Swiss Ephemeris WASM files are precached for offline functionality.

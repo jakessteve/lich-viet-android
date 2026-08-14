@@ -71,7 +71,7 @@ function AppLayout() {
     location.pathname === '/app/dang-ky';
 
   return (
-    <div className="min-h-screen flex flex-col bg-background-light dark:bg-background-dark font-sans text-text-primary-light dark:text-text-primary-dark transition-colors duration-300 antialiased relative">
+    <div className="min-h-screen flex flex-col bg-background-light dark:bg-background-dark font-sans text-text-primary-light dark:text-text-primary-dark transition-colors duration-200 ease-out antialiased relative">
       {/* Skip-to-content link */}
       <a
         href="#main-content"

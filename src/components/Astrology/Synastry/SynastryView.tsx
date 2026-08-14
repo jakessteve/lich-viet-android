@@ -1,10 +1,14 @@
 import React from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
+import { useAuthStore } from '../../../stores/authStore';
+import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import { BirthDataInput, ActionButton } from '../../shared';
 import { SynastryResultView } from './SynastryResultView';
 
 export const SynastryView: React.FC = () => {
+  const user = useAuthStore((s) => s.user);
+  const prefilled = React.useRef(false);
   const { input, setInput, runCalc, isCalculating, error, result } = useAstrologyStore(
     useShallow((state) => ({
       input: state.synastryInput,
@@ -15,6 +19,33 @@ export const SynastryView: React.FC = () => {
       result: state.synastryResult,
     }))
   );
+
+  React.useEffect(() => {
+    if (prefilled.current || !user) return;
+    const profile = getUserBirthProfile(user);
+    if (profile?.birthYear && profile?.birthMonth && profile?.birthDay) {
+      const birthDate = new Date(
+        profile.birthYear,
+        profile.birthMonth - 1,
+        profile.birthDay,
+        profile.birthHour ?? 12,
+        profile.birthMinute ?? 0,
+      );
+      setInput({
+        profileA: {
+          name: user.displayName || 'Bản thân',
+          birthDate,
+          birthHour: profile.birthHour ?? 12,
+          birthMinute: profile.birthMinute ?? 0,
+          latitude: profile.birthLocation?.lat ?? 21.0285,
+          longitude: profile.birthLocation?.lng ?? 105.8542,
+          timezone: profile.birthLocation?.timezone ?? 7,
+          locationName: profile.birthLocation?.locationName ?? 'Hà Nội',
+        },
+      });
+      prefilled.current = true;
+    }
+  }, [user, setInput]);
 
   return (
     <div className="space-y-6">

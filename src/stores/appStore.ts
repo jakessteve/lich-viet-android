@@ -77,14 +77,29 @@ function clampDate(date: Date): Date {
 // Side Effects — kept outside Zustand for purity
 // ══════════════════════════════════════════════════════════
 
-function applyDarkMode(isDark: boolean): void {
-  if (isDark) {
-    document.documentElement.classList.add('dark');
-    localStorage.theme = 'dark';
-  } else {
-    document.documentElement.classList.remove('dark');
-    localStorage.theme = 'light';
+export function executeThemeTransition(apply: () => void): void {
+  if (typeof document === 'undefined') {
+    apply();
+    return;
   }
+  const root = document.documentElement;
+  root.classList.add('theme-transitioning');
+  apply();
+  window.setTimeout(() => {
+    root.classList.remove('theme-transitioning');
+  }, 220);
+}
+
+function applyDarkMode(isDark: boolean): void {
+  executeThemeTransition(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+    }
+  });
 }
 
 function applyFontSize(fontSize: FontSizeLevel): void {

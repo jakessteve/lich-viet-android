@@ -109,9 +109,9 @@ export function resolvePersonalBirthMoment(
     const h = correctedDate.getHours();
     const isNextDay = h === 23;
     const hourBranchIndex = isNextDay ? 0 : Math.floor((h + 1) / 2) % 12;
-    const dayCanIndex = CAN.indexOf(dayCanChi.can as any);
+    const dayCanIndex = CAN.indexOf(dayCanChi.can);
     const hourCanIndex = ((dayCanIndex % 5) * 2 + hourBranchIndex) % 10;
-    hourCanChi = { can: CAN[hourCanIndex] as any, chi: CHI[hourBranchIndex] as any };
+    hourCanChi = { can: CAN[hourCanIndex], chi: CHI[hourBranchIndex] };
   }
 
   return {

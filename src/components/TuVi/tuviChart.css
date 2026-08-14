@@ -36,6 +36,17 @@
   line-height: 1.2;
 }
 
+.dark .tuvi-chart {
+  --tuvi-line: #a16207;
+  --tuvi-paper: #131424;
+  --tuvi-paper-soft: #18192d;
+  --tuvi-ink: #f3f4f6;
+  --tuvi-muted: #9ca3af;
+  --tuvi-red: #f87171;
+  background: var(--tuvi-line);
+  border-color: var(--tuvi-line);
+}
+
 .tuvi-chart > div {
   min-width: 0;
   position: relative;
@@ -68,8 +79,16 @@
     box-shadow 0.18s ease;
 }
 
+.dark .tuvi-palace {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
 .tuvi-palace:hover {
   background: #fcfaf3;
+}
+
+.dark .tuvi-palace:hover {
+  background: #1c1d35;
 }
 
 .tuvi-palace.selected {
@@ -78,10 +97,20 @@
   z-index: 4;
 }
 
+.dark .tuvi-palace.selected {
+  background: #25223d;
+  box-shadow: inset 0 0 0 2px rgba(234, 179, 8, 0.75);
+}
+
 .tuvi-palace.trine {
   background: #fffdf4;
   box-shadow: inset 0 0 0 1px rgba(184, 134, 11, 0.35);
   z-index: 3;
+}
+
+.dark .tuvi-palace.trine {
+  background: #1c1d35;
+  box-shadow: inset 0 0 0 1px rgba(234, 179, 8, 0.45);
 }
 
 .tuvi-palace.opposite {
@@ -89,8 +118,17 @@
   box-shadow: inset 0 0 0 1px rgba(185, 28, 28, 0.32);
 }
 
+.dark .tuvi-palace.opposite {
+  background: #291724;
+  box-shadow: inset 0 0 0 1px rgba(248, 113, 113, 0.4);
+}
+
 .tuvi-palace.nguyet-han-active {
   background: #fffbe8;
+}
+
+.dark .tuvi-palace.nguyet-han-active {
+  background: #25243d;
 }
 
 .tuvi-palace-header {
@@ -787,4 +825,115 @@
 .tuvi-detail-section li {
   font-size: 0.85rem;
   font-weight: 500;
+}
+
+/* ── Dark Mode Theme Adaptations for Tử Vi ──────────────────── */
+
+.dark .tuvi-can-chi {
+  color: #fbbf24;
+}
+
+.dark .tuvi-chinh-tinh small,
+.dark .tuvi-phu-tinh-grid small {
+  color: #9ca3af;
+}
+
+.dark .tuvi-empty-star {
+  color: #6b7280;
+}
+
+.dark .tuvi-branch-label {
+  color: #e5e7eb;
+}
+
+.dark .tuvi-nguyet-han {
+  color: #e5e7eb;
+}
+
+.dark .tuvi-nguyet-han.active {
+  color: #f87171;
+}
+
+.dark .tuvi-center-title {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .tuvi-center-title p {
+  color: #9ca3af;
+}
+
+.dark .tuvi-center-label {
+  color: #cbd5e1;
+}
+
+.dark .tuvi-khong-badge {
+  border-color: #374151;
+  background: #374151;
+  color: #f3f4f6;
+}
+
+.dark .tuvi-tu-hoa.loc {
+  color: #4ade80;
+}
+.dark .tuvi-tu-hoa.quyen {
+  color: #c084fc;
+}
+.dark .tuvi-tu-hoa.khoa {
+  color: #60a5fa;
+}
+.dark .tuvi-tu-hoa.ky {
+  color: #f87171;
+}
+
+.dark .tuvi-ring-label.thai-tue { color: #f472b6; }
+.dark .tuvi-ring-label.bac-si { color: #93c5fd; }
+.dark .tuvi-ring-label.truong-sinh { color: #fbbf24; }
+
+.dark .tuvi-connection-line,
+.dark .tuvi-triangle-line {
+  stroke: rgba(234, 179, 8, 0.5);
+}
+
+/* Star color overrides on dark backgrounds for high readability */
+.dark .tuvi-star.star-thủy,
+.dark .tuvi-star.star-thuy {
+  color: #38bdf8 !important;
+}
+.dark .tuvi-star.star-kim {
+  color: #cbd5e1 !important;
+}
+.dark .tuvi-star.star-mộc,
+.dark .tuvi-star.star-moc {
+  color: #4ade80 !important;
+}
+.dark .tuvi-star.star-hỏa,
+.dark .tuvi-star.star-hoa {
+  color: #f87171 !important;
+}
+.dark .tuvi-star.star-thổ,
+.dark .tuvi-star.star-tho {
+  color: #fbbf24 !important;
+}
+
+.dark .tuvi-palace-detail-panel {
+  background: #1a1b2e;
+  color: #f3f4f6;
+}
+
+.dark .tuvi-detail-header {
+  background: #141526;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .tuvi-detail-header h2 {
+  color: #f3f4f6;
+}
+
+.dark .tuvi-detail-close-btn {
+  color: #94a3b8;
+}
+
+.dark .tuvi-detail-section h3 {
+  color: #cbd5e1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }

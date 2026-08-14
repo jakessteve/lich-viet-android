@@ -72,7 +72,7 @@ export const SynastryResultView: React.FC = () => {
         value={tab}
         onChange={setTab}
         ariaLabel="Kết quả hợp lá số"
-        tone="purple"
+        tone="emerald"
       />
 
       {tab === 'synastry' && (
@@ -119,6 +119,55 @@ export const SynastryResultView: React.FC = () => {
               );
             })}
           </div>
+
+          {/* Ashtakoot 8 Gunas Breakdown */}
+          {synastryResult.engines.vedic.rawBreakdown && Object.keys(synastryResult.engines.vedic.rawBreakdown).length > 0 && (
+            <div className="surface-card p-4 sm:p-5 rounded-2xl border border-border-light/60 dark:border-border-dark/60 space-y-3">
+              <div className="flex items-center justify-between border-b border-border-light/40 pb-2.5 dark:border-border-dark/40">
+                <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+                  <span className="material-icons-round text-base text-emerald-500">star_half</span>
+                  Bảng Chi Tiết 8 Tiêu Chí Hòa Hợp (Ashtakoot Guna Milan)
+                </h4>
+                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
+                  {Object.values(synastryResult.engines.vedic.rawBreakdown).reduce((a, b) => (typeof b === 'number' ? a + b : a), 0)}/36 điểm
+                </span>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                {[
+                  { key: 'varna', nameVi: 'Tâm Hồn (Varna)', max: 1, desc: 'Vị thế tâm hồn & cái tôi' },
+                  { key: 'vashya', nameVi: 'Sức Hút (Vashya)', max: 2, desc: 'Sự thu hút & gắn bó' },
+                  { key: 'tara', nameVi: 'Vận May (Tara)', max: 3, desc: 'May mắn & tương hỗ' },
+                  { key: 'yoni', nameVi: 'Hòa Hợp Thể Xác (Yoni)', max: 4, desc: 'Tương hợp sinh lý & cảm xúc' },
+                  { key: 'grahaMaitri', nameVi: 'Tình Bạn (Graha Maitri)', max: 5, desc: 'Đồng điệu tư duy sống' },
+                  { key: 'gana', nameVi: 'Khí Chất (Gana)', max: 6, desc: 'Hòa hợp tính cách' },
+                  { key: 'bhakoot', nameVi: 'Gia Đạo (Bhakoot)', max: 7, desc: 'Hạnh phúc gia đình & tài lộc' },
+                  { key: 'nadi', nameVi: 'Sức Khỏe & Con Cái (Nadi)', max: 8, desc: 'Sức khỏe thể chất & hậu duệ' },
+                ].map((koota) => {
+                  const score = synastryResult.engines.vedic.rawBreakdown[koota.key] ?? 0;
+                  const ratio = score / koota.max;
+                  const isPerfect = ratio === 1;
+                  return (
+                    <div
+                      key={koota.key}
+                      className="rounded-xl border border-border-light/40 bg-surface-container-lowest/50 p-2.5 dark:border-border-dark/40 flex flex-col justify-between space-y-1.5"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                          {koota.nameVi}
+                        </span>
+                        <span className={`text-xs font-bold ${isPerfect ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}>
+                          {score}/{koota.max}
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark leading-tight">
+                        {koota.desc}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       )}
 

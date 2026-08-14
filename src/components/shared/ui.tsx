@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Tone = 'gold' | 'purple';
+type Tone = 'gold' | 'purple' | 'indigo' | 'emerald';
 
 function cx(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(' ');
@@ -25,6 +25,8 @@ interface SegmentedControlProps<T extends string> {
 const activeTone: Record<Tone, string> = {
   gold: 'bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white shadow-md shadow-gold/20',
   purple: 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/20',
+  indigo: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/20',
+  emerald: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/20',
 };
 
 export function SegmentedControl<T extends string>({
@@ -48,7 +50,7 @@ export function SegmentedControl<T extends string>({
             aria-current={active ? 'page' : undefined}
             onClick={() => onChange(option.id)}
             className={cx(
-              'flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 min-h-11',
+              'flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 min-h-11 active:scale-[0.98]',
               active
                 ? activeTone[tone]
                 : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-white/5',

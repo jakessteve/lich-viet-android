@@ -1,6 +1,6 @@
 import React from 'react';
 import type { TuViHanContext, TuViPalace } from '../../types/tuvi';
-import { getStarColor, getStarBrightnessMarker } from '../../services/tuvi/starGrouping';
+import { getStarColor, getStarBrightnessMarker, getNguHanhElement } from '../../services/tuvi/starGrouping';
 import { BRIGHTNESS_MARKERS } from '../../services/tuvi/constants';
 import { getKhongLabel } from './tuviChartLayout';
 
@@ -58,8 +58,10 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
   const renderStar = (star: (typeof palace.chinhTinh)[number], className = '') => {
     const color = getStarColor(star);
     const marker = getStarBrightnessMarker(star);
+    const element = getNguHanhElement(star.nguHanh);
+    const starClass = [className, 'tuvi-star', `star-${element.toLowerCase()}`].filter(Boolean).join(' ');
     return (
-      <span key={star.name} className={className} style={{ color }} title={`${star.name} ${star.nguHanh} • ${star.brightness}`}>
+      <span key={star.name} className={starClass} style={{ color }} title={`${star.name} ${star.nguHanh} • ${star.brightness}`}>
         {star.name}
         {marker && <small>{marker}</small>}
       </span>

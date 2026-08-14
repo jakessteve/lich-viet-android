@@ -122,6 +122,11 @@ export function useInView(threshold = 0.25) {
     const element = ref.current;
     if (!element) return;
 
+    if (typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      return () => {};
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -132,7 +137,8 @@ export function useInView(threshold = 0.25) {
       { threshold },
     );
 
-    if (element.checkVisibility?.() || element.getBoundingClientRect().top < window.innerHeight) {
+    const rect = element.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
       setInView(true);
       return () => {};
     }

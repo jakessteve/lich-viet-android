@@ -17,7 +17,8 @@ import { NAP_AM_MAPPING } from '@lich-viet/core';
 import CosmicWeatherCard from './LandingPage/CosmicWeatherCard';
 import HeroBirthdayInput from './LandingPage/HeroBirthdayInput';
 import TestimonialSection from './LandingPage/TestimonialSection';
-import { FEATURES, getMoonPhaseName, useCountUp, useInView } from './LandingPage/landingPageData';
+import StatsSection from './LandingPage/StatsSection';
+import { FEATURES, getMoonPhaseName } from './LandingPage/landingPageData';
 import MoonPhaseSVG from './LandingPage/MoonPhaseSVG';
 import HeroAuspiciousArt from './LandingPage/HeroAuspiciousArt';
 import MysticBackgroundPattern from './LandingPage/MysticBackgroundPattern';
@@ -52,12 +53,12 @@ const TRUST_VALUES = [
 // story cards, emotional trust, pricing cards, and SEO footer
 // ══════════════════════════════════════════════════════════
 
+import { useAppStore } from '@/stores/appStore';
+
 export default function LandingPage() {
   usePageTitle('Tra cứu Âm Lịch, Gieo Quẻ & Tử Vi');
   const navigate = useNavigate();
-  const [isDark, setIsDark] = useState(() =>
-    typeof document !== 'undefined' && document.documentElement.classList.contains('dark'),
-  );
+  const { isDark, toggleDarkMode } = useAppStore();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const userMenuRef = useRef<HTMLDivElement>(null);
   const { user, isAuthenticated, logout } = useAuthStore();
@@ -81,12 +82,6 @@ export default function LandingPage() {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
-
-  const toggleDark = () => {
-    const isNowDark = document.documentElement.classList.toggle('dark');
-    localStorage.theme = isNowDark ? 'dark' : 'light';
-    setIsDark(isNowDark);
-  };
 
   // ── Live "Today" data from calendarEngine ──
   const today = useMemo(() => {
@@ -121,39 +116,6 @@ export default function LandingPage() {
   }, []);
 
   const isGoodDay = today.quality === 'Good';
-  const statsSection = useInView(0.3);
-  const lookupCount = useCountUp(12480, 1800, statsSection.inView);
-  const dataCount = useCountUp(85000, 2000, statsSection.inView);
-  const toolsCount = useCountUp(3, 1200, statsSection.inView);
-  const stats = useMemo(
-    () => [
-      {
-        value: lookupCount.toLocaleString('vi-VN'),
-        suffix: '+',
-        label: 'Lượt tra cứu',
-        icon: 'search',
-        iconTint: 'text-blue-500/60 dark:text-blue-400/50',
-        accentColor: 'text-blue-500 dark:text-blue-400',
-      },
-      {
-        value: dataCount.toLocaleString('vi-VN'),
-        suffix: '+',
-        label: 'Dữ liệu thiên văn',
-        icon: 'database',
-        iconTint: 'text-teal-500/60 dark:text-teal-400/50',
-        accentColor: 'text-teal-500 dark:text-teal-400',
-      },
-      {
-        value: toolsCount.toLocaleString('vi-VN'),
-        suffix: ' công cụ',
-        label: 'Đang hoạt động',
-        icon: 'auto_awesome',
-        iconTint: 'text-purple-500/60 dark:text-purple-400/50',
-        accentColor: 'text-purple-500 dark:text-purple-400',
-      },
-    ],
-    [dataCount, lookupCount, toolsCount],
-  );
   const qualityLabel = isGoodDay ? 'Ngày Hoàng Đạo' : today.quality === 'Bad' ? 'Ngày Hắc Đạo' : 'Ngày Bình Thường';
   const qualityIcon = isGoodDay ? 'verified' : today.quality === 'Bad' ? 'dangerous' : 'info';
   const qualityColor = isGoodDay
@@ -163,7 +125,7 @@ export default function LandingPage() {
       : 'text-amber-500 dark:text-amber-400 bg-amber-500/8 dark:bg-amber-400/8 border-amber-500/15 dark:border-amber-400/15';
 
   return (
-    <div className="min-h-screen transition-colors duration-300 overflow-x-hidden relative">
+    <div className="min-h-screen transition-colors duration-200 ease-out overflow-x-hidden relative">
       {/* ──── Base Global Background ──── */}
       <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
         <div className="hidden dark:block absolute inset-0 bg-gradient-to-b from-mystery-deep via-[#0f0a24] to-mystery-deep" />
@@ -185,7 +147,7 @@ export default function LandingPage() {
             backgroundSize: '46px 46px, 78px 78px, 112px 112px',
           }}
         />
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 pointer-events-none" style={{ contain: 'strict' }}>
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
@@ -196,6 +158,8 @@ export default function LandingPage() {
                 top: `${90 - i * 60}px`,
                 right: `${-180 - i * 95}px`,
                 animation: `spin ${120 + i * 28}s linear infinite ${i % 2 ? 'reverse' : ''}`,
+                willChange: 'transform',
+                contain: 'strict',
               }}
             />
           ))}
@@ -210,7 +174,7 @@ export default function LandingPage() {
           </h1>
           <div className="flex items-center gap-2">
             <IconButton
-              onClick={toggleDark}
+              onClick={toggleDarkMode}
               className="rounded-full text-gray-400 dark:text-gray-500"
               icon={isDark ? 'light_mode' : 'dark_mode'}
               label="Chuyển chế độ sáng/tối"
@@ -347,7 +311,7 @@ export default function LandingPage() {
           {/* ── Asymmetric headline block ── */}
           <div className="text-left max-w-3xl mb-16 relative z-10">
             {/* Authority badge */}
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-low dark:bg-gold-dark/6 mb-5 backdrop-blur-sm animate-fade-in-up">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-low dark:bg-gold-dark/6 mb-5 backdrop-blur-sm">
               <span className="material-icons-round text-xs text-gold dark:text-gold-dark">science</span>
               <span className="text-xs sm:text-xs font-medium text-gold dark:text-gold-dark tracking-wide">
                 Tính toán thiên văn chính xác
@@ -355,7 +319,7 @@ export default function LandingPage() {
             </div>
 
             {/* Hook headline — benefit-driven, more breathing room */}
-            <h2 className="text-5xl sm:text-6xl lg:text-[4.5rem] font-serif font-bold leading-[1.1] tracking-tight mb-6 animate-fade-in-up animate-delay-1">
+            <h2 className="text-5xl sm:text-6xl lg:text-[4.5rem] font-serif font-bold leading-[1.1] tracking-tight mb-6">
               <span className="bg-clip-text text-transparent bg-gradient-to-br from-text-primary-light to-text-secondary-light dark:from-white dark:to-gray-400">
                 Khám phá
               </span>
@@ -365,7 +329,7 @@ export default function LandingPage() {
               </span>
             </h2>
 
-            <p className="text-base sm:text-lg text-text-secondary-light dark:text-text-secondary-dark leading-relaxed mb-8 max-w-xl animate-fade-in-up animate-delay-2">
+            <p className="text-base sm:text-lg text-text-secondary-light dark:text-text-secondary-dark leading-relaxed mb-8 max-w-xl">
               3 công cụ cốt lõi trong một ứng dụng.
               <br className="hidden sm:block" />
               Âm Lịch có tab Dụng Sự, cùng Gieo Quẻ và Tử Vi —{' '}
@@ -375,7 +339,7 @@ export default function LandingPage() {
             </p>
 
             {/* CTA buttons */}
-            <div className="flex flex-wrap items-center justify-start gap-4 animate-fade-in-up animate-delay-3">
+            <div className="flex flex-wrap items-center justify-start gap-4">
               <ActionButton
                 onClick={() => navigate('/app/am-lich')}
                 className="px-5 py-3 font-medium"
@@ -397,7 +361,7 @@ export default function LandingPage() {
           {/* ══════════════════════════════════════════════════════
                Symmetric 3-card grid: Today | Birthday | Cosmic
              ══════════════════════════════════════════════════════ */}
-          <div id="cosmic-section" className="grid grid-cols-1 md:grid-cols-3 gap-4 animate-fade-in-up animate-delay-5">
+          <div id="cosmic-section" className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* ── Card 1: Today's Details ── */}
             <button
               onClick={() => navigate('/app/am-lich')}
@@ -476,7 +440,7 @@ export default function LandingPage() {
           </div>
 
           {/* Scroll indicator */}
-          <div className="flex justify-center mt-12 animate-fade-in-up animate-delay-6">
+          <div className="flex justify-center mt-12">
             <button
               onClick={() => document.getElementById('stats-section')?.scrollIntoView({ behavior: 'smooth' })}
               className="flex flex-col items-center gap-1 text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-gold dark:hover:text-gold-dark transition-colors"
@@ -490,26 +454,9 @@ export default function LandingPage() {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-           §3 STATS — Trust counters
+           §3 STATS — Trust counters (isolated render)
          ════════════════════════════════════════════════════════ */}
-      <section id="stats-section" ref={statsSection.ref} className="py-10 px-5 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {stats.map((s) => (
-              <div key={s.label} className="text-center py-6 px-4 glass-card glass-noise">
-                <span className={`material-icons-round text-lg ${s.iconTint} mb-1.5 block`}>{s.icon}</span>
-                <p className="text-2xl sm:text-3xl font-bold tabular-nums">
-                  {s.value}
-                  <span className={s.accentColor}>{s.suffix}</span>
-                </p>
-                <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark font-medium uppercase tracking-wider mt-1">
-                  {s.label}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <StatsSection />
 
       {/* ════════════════════════════════════════════════════════
            §4 FEATURES — Story cards (benefit-first with tiers)

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useAuthStore } from '@/stores/authStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
@@ -8,6 +9,7 @@ import { WesternMarkdownExport } from '../WesternMarkdownExport';
 
 export const VedicAstrologyPage: React.FC = () => {
   usePageTitle('Chiêm Tinh Ấn Độ');
+  const navigate = useNavigate();
   const prefilled = useRef(false);
 
   const user = useAuthStore((s) => s.user);
@@ -50,6 +52,36 @@ export const VedicAstrologyPage: React.FC = () => {
 
       <VedicChartView />
       <WesternMarkdownExport system="vedic" />
+
+      <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm">
+        <span className="text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-1 font-medium">
+          <span className="material-icons-round text-base text-amber-500">sync_alt</span>
+          Xem cùng thời điểm sinh ở hệ thống khác:
+        </span>
+        <div className="flex flex-wrap gap-2">
+          <button
+            onClick={() => navigate('/app/tu-vi')}
+            className="px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+          >
+            <span className="material-icons-round text-sm">auto_awesome</span>
+            Lá Số Tử Vi
+          </button>
+          <button
+            onClick={() => navigate('/app/chiem-tinh/tay-phuong')}
+            className="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+          >
+            <span className="material-icons-round text-sm">auto_graph</span>
+            Chiêm Tinh Tây Phương
+          </button>
+          <button
+            onClick={() => navigate('/app/chiem-tinh/hop-la')}
+            className="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+          >
+            <span className="material-icons-round text-sm">favorite</span>
+            Hợp Lá Số
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

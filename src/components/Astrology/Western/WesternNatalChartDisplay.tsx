@@ -2,6 +2,10 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useAppStore } from '@/stores/appStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
 import { renderWesternNatalSvg } from '@/services/astrology/westernNatalExport';
+import { MoonPhaseBadge } from './MoonPhaseBadge';
+import { ElementBalanceCard } from './ElementBalanceCard';
+import { AspectPatternsCard } from './AspectPatternsCard';
+import { WesternSimplifiedExplanation } from './WesternSimplifiedExplanation';
 import { WesternNatalTechnicalDisplay } from './WesternNatalTechnicalDisplay';
 
 const ZOOM_LEVELS = [1, 1.25, 1.5, 2] as const;
@@ -48,7 +52,7 @@ export const WesternNatalChartDisplay: React.FC = () => {
   if (!result) return null;
 
   return (
-    <section className="space-y-4 animate-fade-in-up" aria-label="Lá số chiêm tinh Tây phương">
+    <section className="space-y-5 animate-fade-in-up" aria-label="Lá số chiêm tinh Tây phương">
       <div className="surface-card overflow-hidden rounded-2xl border border-border-light/60 shadow-sm dark:border-border-dark/60">
         <header className="flex items-center justify-between gap-3 border-b border-border-light/50 px-3 py-2.5 dark:border-border-dark/50 sm:px-4">
           <div className="min-w-0">
@@ -117,9 +121,26 @@ export const WesternNatalChartDisplay: React.FC = () => {
         </div>
       </div>
       <p className="sr-only" aria-live="polite">Mức thu phóng {Math.round(zoom * 100)}%</p>
+
+      {/* Moon Phase Badge */}
+      {result.moonPhase && <MoonPhaseBadge moonPhase={result.moonPhase} />}
+
+      {/* Element & Modality Balance Card */}
+      {result.elementBalance && <ElementBalanceCard balance={result.elementBalance} />}
+
+      {/* Special Aspect Patterns Card */}
+      {result.aspectPatterns && result.aspectPatterns.length > 0 && (
+        <AspectPatternsCard patterns={result.aspectPatterns} />
+      )}
+
+      {/* Simplified Interpretations (The Big Three, Personal Drivers, Karma/Growth, Life Spheres) */}
+      <WesternSimplifiedExplanation result={result} />
+
+      {/* Deep Technical Data Accordion */}
       <WesternNatalTechnicalDisplay result={result} />
     </section>
   );
 };
 
 export default WesternNatalChartDisplay;
+
