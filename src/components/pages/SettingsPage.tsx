@@ -1,6 +1,7 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
+import { Capacitor } from '@capacitor/core';
 import { useAppStore } from '../../stores/appStore';
 import { useAuthStore } from '../../stores/authStore';
 import { useTuViStore } from '@/stores/tuviStore';
@@ -1033,7 +1034,7 @@ export default function SettingsPage() {
               Lịch Việt v3.0.0 · MIT
             </p>
             <button
-              onClick={() => navigate('/')}
+              onClick={() => navigate(Capacitor.isNativePlatform() ? '/app/am-lich' : '/')}
               className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
               aria-label="Trang chủ"
             >

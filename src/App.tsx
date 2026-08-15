@@ -7,7 +7,7 @@ import AppFooter from './components/layout/AppFooter';
 import AppSidebar from './components/layout/AppSidebar';
 import ScrollToTopButton from './components/shared/ScrollToTopButton';
 import { ROUTE_TO_TAB, type ActiveTab } from './router/constants';
-import { LandingRoute, renderModuleRoutes, renderLegacyRedirects } from './router/routes';
+import { LandingRoute, renderModuleRoutes, renderLegacyRedirects, saveCurrentRoute } from './router/routes';
 import { analytics } from './services/analyticsService';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
@@ -37,13 +37,27 @@ function AppLayout() {
       }
     };
 
+    const flushRoute = () => {
+      saveCurrentRoute(window.location.pathname, window.location.search);
+    };
+
     window.addEventListener('storage', handleStorage);
-    return () => window.removeEventListener('storage', handleStorage);
+    document.addEventListener('visibilitychange', flushRoute);
+    window.addEventListener('pagehide', flushRoute);
+    window.addEventListener('beforeunload', flushRoute);
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      document.removeEventListener('visibilitychange', flushRoute);
+      window.removeEventListener('pagehide', flushRoute);
+      window.removeEventListener('beforeunload', flushRoute);
+    };
   }, []);
 
-  // Track page view on route change
+  // Track page view and persist route on route change
   useEffect(() => {
     analytics.trackPageView(location.pathname + location.search);
+    saveCurrentRoute(location.pathname, location.search);
   }, [location.pathname, location.search]);
 
   useEffect(() => {

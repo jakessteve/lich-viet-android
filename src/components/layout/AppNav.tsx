@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Capacitor } from '@capacitor/core';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 import { NAV_LINKS, ROUTE_TO_TAB, TAB_TO_ROUTE, type ActiveTab } from '@/router/constants';
@@ -15,12 +16,17 @@ export default function AppNav() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuthStore();
+  const isNative = Capacitor.isNativePlatform();
 
   const activeTab: ActiveTab = ROUTE_TO_TAB[location.pathname] || 'am-lich';
   const isFullPage = location.pathname === '/app/cai-dat';
 
   const handleTabChange = (tabId: ActiveTab) => {
     navigate(TAB_TO_ROUTE[tabId]);
+  };
+
+  const handleHomeClick = () => {
+    navigate(isNative ? '/app/am-lich' : '/');
   };
 
   // Close menu on click outside
@@ -61,7 +67,7 @@ export default function AppNav() {
           {/* Logo */}
           <button
             id="tour-logo"
-            onClick={() => navigate('/')}
+            onClick={handleHomeClick}
             className="text-lg sm:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold via-gold-light to-amber-600 dark:from-gold-dark dark:via-amber-400 dark:to-yellow-300 tracking-tight hover:opacity-80 transition-opacity whitespace-nowrap"
           >
             LỊCH VIỆT
@@ -225,7 +231,7 @@ export default function AppNav() {
                       {[
                         { icon: 'settings', label: 'Cài đặt', action: () => navigate('/app/cai-dat') },
                         { icon: 'help_outline', label: 'Trợ giúp', action: () => {} },
-                        { icon: 'info', label: 'Giới thiệu', action: () => navigate('/') },
+                        { icon: 'info', label: 'Giới thiệu', action: handleHomeClick },
                       ].map((item, idx) => (
                         <button
                           key={idx}
@@ -281,7 +287,7 @@ export default function AppNav() {
                       <div className="border-t border-border-light/50 dark:border-border-dark/30 mt-1 pt-1">
                         {[
                           { icon: 'settings', label: 'Cài đặt', action: () => navigate('/app/cai-dat') },
-                          { icon: 'info', label: 'Giới thiệu', action: () => navigate('/') },
+                          { icon: 'info', label: 'Giới thiệu', action: handleHomeClick },
                         ].map((item, idx) => (
                           <button
                             key={idx}

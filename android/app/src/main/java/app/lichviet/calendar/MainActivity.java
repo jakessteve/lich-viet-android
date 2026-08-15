@@ -12,9 +12,11 @@ public class MainActivity extends BridgeActivity {
         super.onCreate(savedInstanceState);
 
         WebView webView = getBridge().getWebView();
-        webView.clearCache(true);
-        webView.clearHistory();
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        webView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+        if (webView != null) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+            WebSettings settings = webView.getSettings();
+            settings.setDomStorageEnabled(true);
+            settings.setDatabaseEnabled(true);
+        }
     }
 }

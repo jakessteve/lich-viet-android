@@ -83,4 +83,81 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
     expect(result.tuanTrietAnalysisVi).toContain('Triệt Không');
     expect(result.tuanTrietAnalysisVi).toContain('30 tuổi');
   });
+
+  it('generates rich, personalized Tam Phương Tứ Chính analysis including projecting stars and Tứ Hóa', () => {
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) =>
+      makeTestPalace({ id: i, name: `Cung ${i}` })
+    );
+
+    // Mệnh at palace 0 (Tý)
+    const menhPalace = makeTestPalace({
+      id: 0,
+      name: 'Mệnh',
+      chi: 'Tý',
+      isMenh: true,
+      chinhTinh: [{ name: 'Tử Vi', type: 'chinhTinh', nguHanh: 'Âm Thổ', brightness: 'Miếu' }],
+    });
+    allPalaces[0] = menhPalace;
+
+    // Tam Hợp: Quan Lộc at 4 (Thìn), Tài Bạch at 8 (Thân)
+    allPalaces[4] = makeTestPalace({
+      id: 4,
+      name: 'Quan Lộc',
+      chi: 'Thìn',
+      chinhTinh: [{ name: 'Liêm Trinh', type: 'chinhTinh', nguHanh: 'Hỏa', brightness: 'Vượng' }],
+      tuHoa: [{ type: 'Quyền', starName: 'Liêm Trinh', sourceCan: 'Giáp' }],
+    });
+    allPalaces[8] = makeTestPalace({
+      id: 8,
+      name: 'Tài Bạch',
+      chi: 'Thân',
+      chinhTinh: [{ name: 'Vũ Khúc', type: 'chinhTinh', nguHanh: 'Kim', brightness: 'Miếu' }],
+      tuHoa: [{ type: 'Lộc', starName: 'Vũ Khúc', sourceCan: 'Giáp' }],
+    });
+
+    // Đối cung: Thiên Di at 6 (Ngọ)
+    allPalaces[6] = makeTestPalace({
+      id: 6,
+      name: 'Thiên Di',
+      chi: 'Ngọ',
+      chinhTinh: [{ name: 'Tham Lang', type: 'chinhTinh', nguHanh: 'Thủy', brightness: 'Hãm' }],
+      satTinh: [{ name: 'Kình Dương', type: 'satTinh', nguHanh: 'Kim', brightness: 'Hãm' }],
+    });
+
+    const result = interpretPalace(menhPalace, allPalaces);
+
+    // Tam Phương Tứ Chính analysis checks
+    expect(result.tamPhuongTuChinhVi).toContain('Quan Lộc');
+    expect(result.tamPhuongTuChinhVi).toContain('Tài Bạch');
+    expect(result.tamPhuongTuChinhVi).toContain('Thiên Di');
+    expect(result.tamPhuongTuChinhVi).toContain('Liêm Trinh');
+    expect(result.tamPhuongTuChinhVi).toContain('Vũ Khúc');
+    expect(result.tamPhuongTuChinhVi).toContain('Hóa Lộc');
+    expect(result.tamPhuongTuChinhVi).toContain('Hóa Quyền');
+
+    // Actionable guidance checks
+    expect(result.actionableGuidanceVi).toContain('lãnh đạo');
+  });
+
+  it('generates personalized actionable guidance with risk mitigation when sát tinh are present', () => {
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) =>
+      makeTestPalace({ id: i, name: `Cung ${i}` })
+    );
+
+    const taiBachPalace = makeTestPalace({
+      id: 8,
+      name: 'Tài Bạch',
+      chi: 'Thân',
+      chinhTinh: [{ name: 'Vũ Khúc', type: 'chinhTinh', nguHanh: 'Kim', brightness: 'Miếu' }],
+      satTinh: [{ name: 'Địa Không', type: 'satTinh', nguHanh: 'Hỏa', brightness: 'Hãm' }],
+      tuHoa: [{ type: 'Lộc', starName: 'Vũ Khúc', sourceCan: 'Giáp' }],
+    });
+    allPalaces[8] = taiBachPalace;
+
+    const result = interpretPalace(taiBachPalace, allPalaces);
+
+    expect(result.actionableGuidanceVi).toContain('tài lộc');
+    expect(result.actionableGuidanceVi).toContain('Địa Không' || 'kỷ luật tài chính');
+    expect(result.actionableGuidanceVi).toContain('dự phòng');
+  });
 });

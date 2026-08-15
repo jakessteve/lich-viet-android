@@ -120,6 +120,286 @@ const STAR_CORE_TRAITS: Record<string, { nature: string; brightGift: string; dim
 };
 
 /**
+ * Extracts and analyzes Tam Phương Tứ Chính (Trine & Opposition) for a given palace.
+ * Generates an individualized, human-oriented synthesis of projecting major stars,
+ * key auxiliaries, Tứ Hóa transformations, and malefic pressures.
+ */
+function buildTamPhuongTuChinhInterpretation(
+  palace: TuViPalace,
+  allPalaces: TuViPalace[]
+): string {
+  const tamHopIndices = detectTamHopPalaces(palace.id);
+  const doiCungIdx = detectDoiCung(palace.id);
+  const tamHopPalaces = tamHopIndices.map((i) => allPalaces[i]).filter((p): p is TuViPalace => Boolean(p));
+  const doiCungPalace = allPalaces[doiCungIdx];
+
+  // 1. Structure definition
+  const tamHopLabels = tamHopPalaces.map((p) => `${p.name} (${p.chi})`).join(' và ');
+  const doiCungLabel = doiCungPalace ? `${doiCungPalace.name} (${doiCungPalace.chi})` : '';
+
+  const sections: string[] = [];
+
+  // Network overview
+  sections.push(
+    `Thế chân vạc Tam Phương Tứ Chính hội tụ từ hai cung Tam Hợp [${tamHopLabels}] cùng cung Xung Chiếu trực diện [${doiCungLabel}], tạo nên mạng lưới tương tác đa chiều cho cung ${palace.name} (${palace.chi}).`
+  );
+
+  // 2. Major Stars & Projection
+  const tamHopStars = tamHopPalaces.flatMap((p) =>
+    p.chinhTinh.map((s) => `${s.name} (${s.brightness}) tại ${p.name}`)
+  );
+  const doiCungStars = doiCungPalace
+    ? doiCungPalace.chinhTinh.map((s) => `${s.name} (${s.brightness}) tại ${doiCungPalace.name}`)
+    : [];
+
+  if (palace.chinhTinh.length === 0) {
+    // Vô chính diệu
+    if (doiCungStars.length > 0) {
+      sections.push(
+        `Do Bản Cung Vô Chính Diệu, cung vị mượn trọn vẹn nguồn năng lượng xung chiếu từ đối cung ${doiCungLabel} với ${doiCungStars.join(', ')}, kết hợp cùng nguồn lực tam hợp từ ${tamHopLabels} (${tamHopStars.join(', ') || 'các cát tinh hội tụ'}). Điều này giúp đương số có khả năng thích ứng linh hoạt, khéo xoay chuyển theo ngoại cảnh nhưng cần xây dựng nội lực tự thân vững vàng.`
+      );
+    } else {
+      sections.push(
+        `Bản Cung Vô Chính Diệu và đối cung không có chính tinh đắc cách, sự phát triển phụ thuộc chủ yếu vào sự kết hợp giữa các cát tinh tam hợp và khả năng thích ứng mềm dẻo của đương số.`
+      );
+    }
+  } else {
+    // Normal palace with major stars
+    const allProjectingMajor = [...tamHopStars, ...doiCungStars];
+    if (allProjectingMajor.length > 0) {
+      // Check classic patterns across the 4 palaces
+      const allFourPalaces = [palace, ...tamHopPalaces, doiCungPalace].filter(Boolean) as TuViPalace[];
+      const allFourChinhTinh = allFourPalaces.flatMap((p) => p.chinhTinh.map((s) => s.name));
+      const hasSatPhaTham = ['Thất Sát', 'Phá Quân', 'Tham Lang'].some((n) => allFourChinhTinh.includes(n));
+      const hasTuPhuVuTuong = ['Tử Vi', 'Thiên Phủ', 'Vũ Khúc', 'Thiên Tướng'].some((n) => allFourChinhTinh.includes(n));
+      const hasCoNguyetDongLuong = ['Thiên Cơ', 'Thái Âm', 'Thiên Đồng', 'Thiên Lương'].some((n) => allFourChinhTinh.includes(n));
+      const hasCuNhat = ['Cự Môn', 'Thái Dương'].some((n) => allFourChinhTinh.includes(n));
+
+      let synergyNote = '';
+      if (hasTuPhuVuTuong && hasSatPhaTham) {
+        synergyNote = 'Sự kết hợp giữa uy quyền quản trị và tinh thần dám nghĩ dám làm tạo nên thế cân bằng giữa ổn định và đột phá.';
+      } else if (hasSatPhaTham) {
+        synergyNote = 'Khí thế Sát Phá Tham hội tụ thúc đẩy tinh thần tiên phong, sẵn sàng dấn thân vào thử thách để tạo lập thành tựu.';
+      } else if (hasTuPhuVuTuong) {
+        synergyNote = 'Thế trận Tử Phủ Vũ Tướng củng cố nền tảng tổ chức vững vàng, tư duy quản lý tài chính và tinh thần trách nhiệm cao.';
+      } else if (hasCoNguyetDongLuong) {
+        synergyNote = 'Bộ Cơ Nguyệt Đồng Lương tăng cường tư duy chiến lược, năng lực tham mưu mưu lược và tính tình nhân hậu, bền bỉ.';
+      } else if (hasCuNhat) {
+        synergyNote = 'Thế Cự Nhật mở rộng tầm nhìn đối ngoại, gia tăng khả năng biện luận, truyền cảm hứng và xây dựng uy tín cá nhân.';
+      }
+
+      sections.push(
+        `Các chính tinh hội chiếu gồm: ${allProjectingMajor.join('; ')}. ${synergyNote}`
+      );
+    }
+  }
+
+  // 3. Tứ Hóa projecting from Tam Hợp & Đối Cung
+  const projectingTuHoa: string[] = [];
+  tamHopPalaces.forEach((p) => {
+    p.tuHoa.forEach((th) => {
+      projectingTuHoa.push(`Hóa ${th.type} (${th.starName}) tại ${p.name}`);
+    });
+  });
+  if (doiCungPalace) {
+    doiCungPalace.tuHoa.forEach((th) => {
+      projectingTuHoa.push(`Hóa ${th.type} (${th.starName}) xung chiếu từ ${doiCungPalace.name}`);
+    });
+  }
+
+  if (projectingTuHoa.length > 0) {
+    const thInterpretations: string[] = [];
+    if (projectingTuHoa.some((t) => t.includes('Hóa Lộc'))) {
+      thInterpretations.push('Hóa Lộc mang lại vận may tài lộc và cơ hội hợp tác thuận lợi từ bên ngoài');
+    }
+    if (projectingTuHoa.some((t) => t.includes('Hóa Quyền'))) {
+      thInterpretations.push('Hóa Quyền gia tăng quyền chủ động, vị thế dẫn dắt và tiếng nói uy tín');
+    }
+    if (projectingTuHoa.some((t) => t.includes('Hóa Khoa'))) {
+      thInterpretations.push('Hóa Khoa tăng cường danh tiếng, học vấn uyên bác và khả năng cứu giải tai ương');
+    }
+    if (projectingTuHoa.some((t) => t.includes('Hóa Kỵ'))) {
+      thInterpretations.push('Hóa Kỵ cảnh báo những khúc mắc tâm lý, áp lực cạnh tranh hoặc thị phi cần hóa giải bằng sự bình tĩnh');
+    }
+    sections.push(
+      `Tứ Hóa hội tụ: ${projectingTuHoa.join(', ')}. Tác động: ${thInterpretations.join('; ')}.`
+    );
+  }
+
+  // 4. Auxiliaries & Malefics in Tam Hợp & Đối Cung
+  const projectingGood: string[] = [];
+  const projectingBad: string[] = [];
+  const relatedPalaces = [...tamHopPalaces, doiCungPalace].filter(Boolean) as TuViPalace[];
+
+  relatedPalaces.forEach((p) => {
+    p.phuTinh.forEach((s) => {
+      if (['Tả Phụ', 'Hữu Bật', 'Văn Xương', 'Văn Khúc', 'Thiên Khôi', 'Thiên Việt', 'Lộc Tồn', 'Thiên Mã', 'Đào Hoa', 'Hồng Loan'].includes(s.name)) {
+        projectingGood.push(`${s.name} (${p.name})`);
+      }
+    });
+    p.satTinh.forEach((s) => {
+      if (['Kình Dương', 'Đà La', 'Hỏa Tinh', 'Linh Tinh', 'Địa Không', 'Địa Kiếp'].includes(s.name)) {
+        projectingBad.push(`${s.name} (${p.name})`);
+      }
+    });
+  });
+
+  if (projectingGood.length > 0 && projectingBad.length > 0) {
+    sections.push(
+      `Cát tinh hội chiếu (${projectingGood.slice(0, 4).join(', ')}) đan xen cùng sát tinh áp lực (${projectingBad.slice(0, 4).join(', ')}), tạo nên môi trường có cả trợ lực lẫn thử thách, giúp đương số không ngừng trui rèn bản lĩnh để trưởng thành.`
+    );
+  } else if (projectingGood.length > 0) {
+    sections.push(
+      `Hội tụ nhiều cát tinh nâng đỡ (${projectingGood.slice(0, 5).join(', ')}), đem lại nguồn trợ duyên quý báu từ đồng nghiệp, quý nhân và hoàn cảnh xung quanh.`
+    );
+  } else if (projectingBad.length > 0) {
+    sections.push(
+      `Có sự hiện diện của sát tinh hội chiếu (${projectingBad.slice(0, 4).join(', ')}), nhắc nhở đương số luôn giữ sự cẩn trọng, kiềm chế tính nóng nảy và phòng ngừa rủi ro bất ngờ.`
+    );
+  }
+
+  return sections.join(' ');
+}
+
+/**
+ * Builds personalized, human-oriented actionable guidance for a palace,
+ * synthesizing the native's star archetype, Tứ Hóa, auxiliaries, malefics,
+ * and Tuần/Triệt timing into clear, empathetic life advice.
+ */
+function buildActionableGuidance(
+  palace: TuViPalace,
+  allPalaces: TuViPalace[],
+  centerInfo?: TuViCenterInfo
+): string {
+  const domain = PALACE_DOMAIN_THEMES[palace.name] ?? { role: palace.name, focus: 'Các phương diện đời sống' };
+  const points: string[] = [];
+
+  // 1. Core Archetype Strategy
+  const chinhTinhNames = palace.chinhTinh.map((s) => s.name);
+  if (chinhTinhNames.length === 0) {
+    const doiCung = allPalaces[detectDoiCung(palace.id)];
+    const doiCungStarNames = doiCung ? doiCung.chinhTinh.map((s) => s.name).join(', ') : '';
+    points.push(
+      `Với vị thế Vô Chính Diệu mượn lực từ đối cung ${doiCung?.name ?? ''} (${doiCungStarNames || 'ngoại cảnh'}), hãy duy trì sự linh hoạt, khéo léo thích nghi với thời cuộc nhưng cần giữ vững định hướng cốt lõi của bản thân.`
+    );
+  } else {
+    // Tailored guidance based on primary major stars
+    if (chinhTinhNames.some((n) => ['Tử Vi', 'Thiên Phủ', 'Thiên Tướng', 'Vũ Khúc'].includes(n))) {
+      const mainLeadStar = chinhTinhNames.find((n) => ['Tử Vi', 'Thiên Phủ', 'Thiên Tướng', 'Vũ Khúc'].includes(n));
+      points.push(
+        `Phát huy khí chất lãnh đạo và tư duy quản trị của ${mainLeadStar || 'bản cung'}: giữ phong thái điềm đạm, tư duy bao quát và quản trị nguồn lực cẩn trọng. Luôn lắng nghe ý kiến đóng góp từ tập thể để hoàn thiện quyết sách.`
+      );
+    } else if (chinhTinhNames.some((n) => ['Thất Sát', 'Phá Quân', 'Tham Lang'].includes(n))) {
+      const mainPioneerStar = chinhTinhNames.find((n) => ['Thất Sát', 'Phá Quân', 'Tham Lang'].includes(n));
+      points.push(
+        `Phát huy tinh thần tiên phong đột phá của ${mainPioneerStar || 'bản cung'}: dũng cảm nắm bắt cơ hội đổi mới, dấn thân vào các mục tiêu lớn. Luôn chuẩn bị phương án dự phòng và kiên nhẫn tích lũy thay vì hành động theo cảm hứng nhất thời.`
+      );
+    } else if (chinhTinhNames.some((n) => ['Thiên Cơ', 'Thái Âm', 'Thiên Đồng', 'Thiên Lương'].includes(n))) {
+      const mainStrategyStar = chinhTinhNames.find((n) => ['Thiên Cơ', 'Thái Âm', 'Thiên Đồng', 'Thiên Lương'].includes(n));
+      points.push(
+        `Phát huy sở trường mưu lược và chuyên môn sâu của ${mainStrategyStar || 'bản cung'}: tận dụng tư duy chiến lược và sự khéo léo trong ứng xử. Chú trọng xây dựng uy tín bền vững, làm việc thiện lành và giữ tâm thế an hòa.`
+      );
+    } else if (chinhTinhNames.some((n) => ['Cự Môn', 'Thái Dương'].includes(n))) {
+      const mainSpeechStar = chinhTinhNames.find((n) => ['Cự Môn', 'Thái Dương'].includes(n));
+      points.push(
+        `Khai thác năng lực truyền thông và danh tiếng của ${mainSpeechStar || 'bản cung'}: giao tiếp chân thành, truyền cảm hứng và mở rộng quan hệ đối ngoại. Cẩn trọng trong phát ngôn để tránh những hiểu lầm không đáng có.`
+      );
+    } else if (chinhTinhNames.includes('Liêm Trinh')) {
+      points.push(
+        `Phát huy nguyên tắc kỷ luật cao và sự sắc sảo của Liêm Trinh: giữ sự minh bạch trong công việc, đồng thời rèn luyện sự mềm dẻo, linh hoạt để xử lý hài hòa các mối quan hệ xã hội.`
+      );
+    }
+  }
+
+  // 2. Leveraging Tứ Hóa & Auspicious Catalysts
+  const hasLoc = palace.tuHoa.some((th) => th.type === 'Lộc') || palace.phuTinh.some((s) => s.name === 'Lộc Tồn');
+  const hasQuyen = palace.tuHoa.some((th) => th.type === 'Quyền');
+  const hasKhoa = palace.tuHoa.some((th) => th.type === 'Khoa') || palace.phuTinh.some((s) => ['Văn Xương', 'Văn Khúc'].includes(s.name));
+  const hasTroLuc = palace.phuTinh.some((s) => ['Tả Phụ', 'Hữu Bật', 'Thiên Khôi', 'Thiên Việt'].includes(s.name));
+
+  if (hasLoc) {
+    points.push(
+      `Đòn bẩy tài lộc đang rộng mở trong lĩnh vực ${domain.role.toLowerCase()}: hãy chủ động nắm bắt thời cơ, tái đầu tư vào năng lực và phân bổ dòng vốn minh bạch.`
+    );
+  }
+  if (hasQuyen) {
+    points.push(
+      `Tự tin nhận trọng trách dẫn dắt, đề xuất các sáng kiến cải tiến và khẳng định năng lực tự chủ trong môi trường làm việc.`
+    );
+  }
+  if (hasKhoa) {
+    points.push(
+      `Chú trọng nâng cao học vấn, tích lũy bằng cấp, chứng chỉ chuyên môn và xây dựng thương hiệu cá nhân uy tín, chuẩn mực.`
+    );
+  }
+  if (hasTroLuc && !hasQuyen && !hasLoc) {
+    points.push(
+      `Tích cực mở rộng mạng lưới quan hệ, tìm kiếm sự cố vấn từ người đi trước và tận dụng sức mạnh đồng đội để cùng tiến xa.`
+    );
+  }
+
+  // 3. Risk Mitigation & Overcoming Malefics
+  const satTinhNames = palace.satTinh.map((s) => s.name);
+  const hasKy = palace.tuHoa.some((th) => th.type === 'Kỵ');
+
+  if (satTinhNames.some((n) => ['Kình Dương', 'Đà La'].includes(n))) {
+    const kienStar = satTinhNames.find((n) => ['Kình Dương', 'Đà La'].includes(n));
+    points.push(
+      `Hóa giải áp lực từ ${kienStar}: cẩn trọng trước các tranh chấp hay bất đồng ý kiến; hãy rà soát kỹ lưỡng giấy tờ, hợp đồng và lấy sự kiên nhẫn làm kim chỉ nam giải quyết vấn đề.`
+    );
+  }
+  if (satTinhNames.some((n) => ['Hỏa Tinh', 'Linh Tinh'].includes(n))) {
+    const hoaStar = satTinhNames.find((n) => ['Hỏa Tinh', 'Linh Tinh'].includes(n));
+    points.push(
+      `Tiết chế ảnh hưởng nóng vội của ${hoaStar}: kiềm chế cảm xúc, tránh đưa ra các quyết định quan trọng khi tâm trạng đang kích động; giữ thói quen kiểm tra kép trước khi hành động.`
+    );
+  }
+  if (satTinhNames.some((n) => ['Địa Không', 'Địa Kiếp'].includes(n))) {
+    const khongStar = satTinhNames.find((n) => ['Địa Không', 'Địa Kiếp'].includes(n));
+    points.push(
+      `Phòng ngừa rủi ro biến động từ ${khongStar}: thiết lập kỷ luật tài chính nghiêm ngặt, tránh các hình thức đầu cơ rủi ro cao và luôn duy trì quỹ dự phòng an toàn.`
+    );
+  }
+  if (hasKy) {
+    points.push(
+      `Hóa giải Hóa Kỵ: học cách lắng nghe đa chiều, giữ sự minh bạch trong mọi cam kết và dĩ hòa vi quý để hóa giải thị phi, khúc mắc nội tâm.`
+    );
+  }
+
+  // 4. Timing & Tuần / Triệt Rhythm
+  if (palace.hasTriet && palace.hasTuan) {
+    points.push(
+      `Với thế ngộ cả Tuần lẫn Triệt, hãy xem những thăng trầm thời trẻ như vốn sống tôi luyện bản lĩnh; thành quả vững bền sẽ thực sự nở rộ từ trung vận trở đi.`
+    );
+  } else if (palace.hasTriet) {
+    points.push(
+      `Giai đoạn tiền vận (trước 30 tuổi) hãy tập trung học hỏi và tích lũy nội lực; đừng nản lòng trước những khúc quanh ban đầu vì vận trình sẽ ngày càng sáng rõ sau độ tuổi này.`
+    );
+  } else if (palace.hasTuan) {
+    points.push(
+      `Giữ vững phương châm "chậm mà chắc", kiên trì tích lũy từng bước và gìn giữ thành quả, hạn chế sự thay đổi đột ngột thiếu cơ sở vững vàng.`
+    );
+  }
+
+  // Domain-specific final wrap-up if points are sparse
+  if (points.length < 2) {
+    if (palace.isMenh) {
+      points.push('Tập trung xây dựng hệ giá trị cá nhân vững vàng, rèn luyện tính kiên định và phát huy tối đa tư chất bẩm sinh.');
+    } else if (palace.name === 'Quan Lộc') {
+      points.push('Chủ động nâng cao kỹ năng chuyên môn, xây dựng phong thái làm việc chuyên nghiệp và nắm bắt thời cơ thăng tiến.');
+    } else if (palace.name === 'Tài Bạch') {
+      points.push('Thiết lập kỷ luật quản lý tài chính, phân bổ dòng tiền thông minh và tránh đầu tư mạo hiểm khi chưa đủ dữ liệu.');
+    } else if (palace.name === 'Phúc Đức') {
+      points.push('Chăm sóc đời sống tinh thần, duy trì các thói quen lành mạnh, làm việc thiện và giữ gìn sự gắn kết gia tộc.');
+    } else {
+      points.push(`Xây dựng sự thấu hiểu, chân thành và hòa hợp trong các mối quan hệ liên quan đến ${domain.role.toLowerCase()}.`);
+    }
+  }
+
+  return points.join(' ');
+}
+
+/**
  * Generates rich, contextual, multi-layered interpretation for a single palace.
  */
 export function interpretPalace(
@@ -186,13 +466,8 @@ export function interpretPalace(
     tuanTrietAnalysisVi = 'Cung vị ngộ Tuần Không: Giữ nhịp êm ả, kiềm tỏa sự hung hãn của sát tinh hoặc bao bọc duy trì thế ổn định lâu dài.';
   }
 
-  // 5. Tam Phương Tứ Chính
-  const tamHopIndices = detectTamHopPalaces(palace.id);
-  const doiCungIdx = detectDoiCung(palace.id);
-  const tamHopPalaces = tamHopIndices.map((i) => allPalaces[i]).filter(Boolean);
-  const doiCungPalace = allPalaces[doiCungIdx];
-  const relatedNames = [...tamHopPalaces.map((p) => p.name), doiCungPalace?.name].filter(Boolean);
-  const tamPhuongTuChinhVi = `Thế tam hợp và đối cung hội chiếu từ [${relatedNames.join(', ')}] tạo thành mạng lưới hỗ trợ qua lại chặt chẽ cho cung vị này.`;
+  // 5. Tam Phương Tứ Chính (Personalized & Deep Synthesis)
+  const tamPhuongTuChinhVi = buildTamPhuongTuChinhInterpretation(palace, allPalaces);
 
   // 6. Blended Cách Cục (Combination)
   let cachCucAnalysisVi: PalaceInterpretationResult['cachCucAnalysisVi'];
@@ -221,19 +496,8 @@ export function interpretPalace(
     // Graceful fallback if combination detection fails
   }
 
-  // 7. Actionable guidance
-  let actionableGuidanceVi = '';
-  if (palace.isMenh) {
-    actionableGuidanceVi = `Tập trung phát huy tối đa tư chất cốt lõi của ${palace.chinhTinh.map((s) => s.name).join(', ') || 'Bản Cung'}, rèn luyện tính kiên định và xây dựng hệ giá trị cá nhân vững vàng.`;
-  } else if (palace.name === 'Quan Lộc') {
-    actionableGuidanceVi = 'Chủ động nâng cao kỹ năng chuyên môn, xây dựng phong thái lãnh đạo trách nhiệm và tận dụng các cơ hội công danh.';
-  } else if (palace.name === 'Tài Bạch') {
-    actionableGuidanceVi = 'Thiết lập kỷ luật quản lý tài chính, phân bổ dòng tiền thông minh và tránh đầu tư mạo hiểm khi chưa đủ dữ liệu.';
-  } else if (palace.name === 'Phúc Đức') {
-    actionableGuidanceVi = 'Chăm sóc đời sống tinh thần, duy trì các thói quen lành mạnh, làm việc thiện và giữ gìn sự gắn kết gia tộc.';
-  } else {
-    actionableGuidanceVi = `Phát triển sự hòa hợp và thấu hiểu trong các mối quan hệ liên quan đến ${domain.role.toLowerCase()}.`;
-  }
+  // 7. Actionable Guidance (Personalized, Human-Oriented & Empathetic)
+  const actionableGuidanceVi = buildActionableGuidance(palace, allPalaces, centerInfo);
 
   return {
     palaceId: palace.id,

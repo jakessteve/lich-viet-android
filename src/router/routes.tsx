@@ -7,8 +7,34 @@
 
 import React, { Suspense } from 'react';
 import { Route, Navigate } from 'react-router-dom';
+import { Capacitor } from '@capacitor/core';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import LoadingState from '../components/shared/LoadingState';
+
+export const LAST_ACTIVE_ROUTE_KEY = 'lichviet_last_active_route';
+
+export function getSavedRoute(): string {
+  try {
+    const saved = localStorage.getItem(LAST_ACTIVE_ROUTE_KEY);
+    if (saved && saved.startsWith('/app') && saved !== '/app' && saved !== '/app/') {
+      return saved;
+    }
+  } catch {
+    // ignore
+  }
+  return '/app/am-lich';
+}
+
+export function saveCurrentRoute(pathname: string, search: string = ''): void {
+  try {
+    const fullPath = pathname + (search || '');
+    if (pathname.startsWith('/app') && pathname !== '/app' && pathname !== '/app/') {
+      localStorage.setItem(LAST_ACTIVE_ROUTE_KEY, fullPath);
+    }
+  } catch {
+    // ignore
+  }
+}
 
 // Lazy-load pages
 const LandingPage = React.lazy(() => import('../components/pages/LandingPage'));
@@ -29,6 +55,14 @@ const SynastryPage = React.lazy(() => import('../components/Astrology/Synastry/S
 // ══════════════════════════════════════════════════════════
 
 export function LandingRoute() {
+  const isNative = Capacitor.isNativePlatform();
+
+  // On native Android/iOS app, always keep/restore current in-app route instead of showing web marketing landing page
+  if (isNative) {
+    const targetRoute = getSavedRoute();
+    return <Navigate to={targetRoute} replace />;
+  }
+
   return (
     <Suspense fallback={<LoadingState />}>
       <LandingPage />
@@ -194,6 +228,9 @@ export function renderModuleRoutes() {
 // ══════════════════════════════════════════════════════════
 
 export function renderLegacyRedirects() {
+  const isNative = Capacitor.isNativePlatform();
+  const fallback = isNative ? getSavedRoute() : '/';
+
   return (
     <>
       <Route path="/am-lich" element={<Navigate to="/app/am-lich" replace />} />
@@ -203,7 +240,7 @@ export function renderLegacyRedirects() {
       <Route path="/bat-tu" element={<Navigate to="/app/am-lich" replace />} />
       <Route path="/chiem-tinh" element={<Navigate to="/app/chiem-tinh" replace />} />
       <Route path="/luc-nham" element={<Navigate to="/app/gieo-que?method=tam-thuc" replace />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to={fallback} replace />} />
     </>
   );
 }

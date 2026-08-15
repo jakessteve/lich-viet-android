@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [3.1.1] - 2026-08-15
+
+### Added
+- **Personalized Tử Vi Palace Interpretation Engine (SCTE)**:
+  - Deep, individualized **Tam Phương Tứ Chính & Hội Chiếu** analysis extracting exact projecting major stars (with brightness), classic star synergies (*Sát Phá Tham*, *Tử Phủ Vũ Tướng*, *Cơ Nguyệt Đồng Lương*, *Cự Nhật*), Tứ Hóa transformations, and auxiliary/malefic balance.
+  - Contextual **Cung Vô Chính Diệu** interpretation analyzing borrowed forces from opposing palaces and trine support.
+  - Empathetic, human-oriented **Định hướng & Lời Khuyên Hành động** with star-specific leadership/strategy guidance, Tứ Hóa catalysts, risk mitigation for specific malefic stars, and Tuần/Triệt timing advice.
+- Extended unit test suite: 68 test files / 501 tests passing (100% green).
+- Rebuilt fresh Android APK (`app-debug.apk`, 10.9MB).
+
+### Changed
+- Integrated Tam Phương Tứ Chính analysis into both normal card view and Mobile Zoom Drawer reading sheet.
+
 ## [3.1.0] - 2026-08-14
 
 ### Added

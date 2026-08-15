@@ -137,6 +137,14 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                 <p>{majorStarsAnalysisVi}</p>
               </div>
 
+              <div className="rounded-xl bg-indigo-500/10 border border-indigo-500/20 p-3 space-y-1">
+                <div className="font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+                  <span className="material-icons-round text-sm">hub</span>
+                  Tam Phương Tứ Chính & Hội Chiếu
+                </div>
+                <p>{tamPhuongTuChinhVi}</p>
+              </div>
+
               {tuHoaAnalysisVi.length > 0 && (
                 <div className="rounded-xl bg-purple-500/10 border border-purple-500/20 p-3 space-y-1">
                   <div className="font-bold text-purple-700 dark:text-purple-300 flex items-center gap-1.5">

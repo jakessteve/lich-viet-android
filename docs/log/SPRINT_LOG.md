@@ -60,31 +60,28 @@ Record of sprint reviews and progress summaries.
 
 ---
 
-### Sprint 2 — 2026-08-14
+### Sprint 3 — 2026-08-15
 
-**Goal**: Userflow Optimization, Landing Page Scroll Performance, Dark Mode Adaptation, and Fresh Android APK Release.
+**Goal**: Deep Personalization of Tử Vi Palace Interpretation Engine (SCTE), Tam Phương Tứ Chính multi-directional analysis, Actionable Guidance humanization, and fresh APK packaging.
 
 **Completed**:
-- Connected Synastry profile auto-seeding from authenticated user store.
-- Deep-linked 14-day auspicious date searches from Day Detail to `/app/ngay-tot`.
-- Added cross-module exploration bars across Tử Vi, Western Astrology, and Vedic Astrology.
-- Categorized mobile navigation drawer into 3 clear thematic groups.
-- Resolved landing page rapid scroll flicker by extracting 60fps count-up state to isolated leaf component, fixing `useInView` viewport detection, and scoping SVG linearGradient IDs with `useId()`.
-- Implemented full dynamic Dark Mode theme support for the 4×4 Tử Vi table with theme-aware Ngũ Hành star colors.
-- Corrected Astrology sidebar login banner persistence to reflect active user profile.
-- Built fresh production APK (`app-debug.apk`, 10MB, v3.1.0).
+- Implemented `buildTamPhuongTuChinhInterpretation` in `src/services/tuvi/palaceInterpretation.ts` extracting projecting major stars, Tứ Hóa transformations, classical 4-palace synergies, and auxiliary/malefic balance.
+- Implemented `buildActionableGuidance` applying `humanize-text` principles for warm, actionable, and grounded life direction tailored to each native's star placements and timing.
+- Synchronized reading experience across standard inline card view and Mobile Zoom sheet in `src/components/TuVi/TuViPalaceInlineDetail.tsx`.
+- Extended test coverage to 68 test files and 501 tests (100% green).
+- Rebuilt and validated fresh Android APK (`app-debug.apk`, 10.9MB).
 
 **Metrics**:
 | Metric | Value |
 |---|---|
-| Test Suites Passing | 59 / 59 (100%) |
-| Tests Passing | 463 / 463 (100%) |
+| Test Suites Passing | 68 / 68 (100%) |
+| Tests Passing | 501 / 501 (100%) |
 | TypeScript Typecheck | 0 errors |
 | ESLint Static Analysis | 0 errors |
 | Android Build Status | SUCCESSFUL (154 tasks) |
-| APK Artifact Size | 10 MB |
+| APK Artifact Size | 10.9 MB |
 
 **Retrospective**:
-- What went well: Systematic root-cause diagnosis of compositor raster drops; zero regressions on existing 463 unit tests.
-- What to improve: Ensure all visual components undergo dark mode contrast audit during initial implementation.
-- Action items: Monitor real-device gesture performance on foldable devices.
+- What went well: Fast, non-breaking upgrade to SCTE engine; high test fidelity and comprehensive test coverage.
+- What to improve: Keep expanding combination synthesis depth for edge-case star clusters.
+- Action items: Continue progressive refinement of divination and astrology engines.
