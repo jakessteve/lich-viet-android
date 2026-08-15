@@ -113,4 +113,37 @@ describe('daiHanInterpretation engine (calculation-grounded)', () => {
     }
   });
 
+  it('correctly differentiates VCD notes for Tuần only, Triệt only, and Both', () => {
+    const chart = generateChart(baseInput);
+
+    const vcdTuanPalace = {
+      ...chart.palaces[0],
+      chinhTinh: [],
+      hasTuan: true,
+      hasTriet: false,
+    };
+    const resTuan = interpretDaiHan(vcdTuanPalace, chart, false);
+    expect(resTuan.starStructure.vcdSpecialNote).toContain('Tuần Không');
+    expect(resTuan.starStructure.vcdSpecialNote).not.toContain('Triệt Không');
+
+    const vcdTrietPalace = {
+      ...chart.palaces[0],
+      chinhTinh: [],
+      hasTuan: false,
+      hasTriet: true,
+    };
+    const resTriet = interpretDaiHan(vcdTrietPalace, chart, false);
+    expect(resTriet.starStructure.vcdSpecialNote).toContain('Triệt Không');
+    expect(resTriet.starStructure.vcdSpecialNote).not.toContain('Tuần Không');
+
+    const vcdBothPalace = {
+      ...chart.palaces[0],
+      chinhTinh: [],
+      hasTuan: true,
+      hasTriet: true,
+    };
+    const resBoth = interpretDaiHan(vcdBothPalace, chart, false);
+    expect(resBoth.starStructure.vcdSpecialNote).toContain('cả Tuần lẫn Triệt');
+  });
 });
+

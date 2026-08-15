@@ -69,19 +69,45 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
 
   it('correctly reports Tuần / Triệt influence', () => {
     const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
+    
+    // 1. Triệt only
     const quanPalace = makeTestPalace({
       id: 4,
       name: 'Quan Lộc',
       hasTriet: true,
+      hasTuan: false,
       chinhTinh: [{ name: 'Thất Sát', type: 'chinhTinh', nguHanh: 'Dương Kim', brightness: 'Miếu' }],
     });
     allPalaces[4] = quanPalace;
+    const resultTriet = interpretPalace(quanPalace, allPalaces);
+    expect(resultTriet.tuanTrietAnalysisVi).toBeDefined();
+    expect(resultTriet.tuanTrietAnalysisVi).toContain('Triệt Không');
+    expect(resultTriet.tuanTrietAnalysisVi).not.toContain('Tuần');
 
-    const result = interpretPalace(quanPalace, allPalaces);
+    // 2. Tuần only
+    const tuanPalace = makeTestPalace({
+      id: 2,
+      name: 'Phúc Đức',
+      hasTuan: true,
+      hasTriet: false,
+    });
+    allPalaces[2] = tuanPalace;
+    const resultTuan = interpretPalace(tuanPalace, allPalaces);
+    expect(resultTuan.tuanTrietAnalysisVi).toBeDefined();
+    expect(resultTuan.tuanTrietAnalysisVi).toContain('Tuần Không');
+    expect(resultTuan.tuanTrietAnalysisVi).not.toContain('Triệt');
 
-    expect(result.tuanTrietAnalysisVi).toBeDefined();
-    expect(result.tuanTrietAnalysisVi).toContain('Triệt Không');
-    expect(result.tuanTrietAnalysisVi).toContain('30 tuổi');
+    // 3. Both Tuần and Triệt
+    const bothPalace = makeTestPalace({
+      id: 6,
+      name: 'Thiên Di',
+      hasTuan: true,
+      hasTriet: true,
+    });
+    allPalaces[6] = bothPalace;
+    const resultBoth = interpretPalace(bothPalace, allPalaces);
+    expect(resultBoth.tuanTrietAnalysisVi).toBeDefined();
+    expect(resultBoth.tuanTrietAnalysisVi).toContain('Đồng cung Tuần và Triệt');
   });
 
   it('generates rich, personalized Tam Phương Tứ Chính analysis including projecting stars and Tứ Hóa', () => {

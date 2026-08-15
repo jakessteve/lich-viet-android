@@ -545,8 +545,12 @@ export function interpretDaiHan(
 
   if (isVoChinhDieu) {
     clusterType = 'vo_chinh_dieu';
-    if (palace.hasTuan || palace.hasTriet) {
-      vcdSpecialNote = 'Cung Vô Chính Diệu đắc Tuần/Triệt che chở: Biến thế yếu thành thế mạnh, bảo toàn năng lượng và tạo đột phá bất ngờ.';
+    if (palace.hasTuan && palace.hasTriet) {
+      vcdSpecialNote = 'Cung Vô Chính Diệu đắc cả Tuần lẫn Triệt: Tiền vận tôi luyện gian nan, hậu vận chuyển mình thành nội lực sâu sắc và đột phá mạnh mẽ.';
+    } else if (palace.hasTriet) {
+      vcdSpecialNote = 'Cung Vô Chính Diệu đắc Triệt Không: Biến thế yếu thành thế mạnh, phá cách giải phóng tiềm năng tiền vận và tạo đột phá bất ngờ.';
+    } else if (palace.hasTuan) {
+      vcdSpecialNote = 'Cung Vô Chính Diệu đắc Tuần Không: Bảo toàn năng lượng, giữ thế bình ổn êm ả và giảm hung tính của sát tinh đi qua.';
     } else if (tamPhuongTuChinh.projectingMajorStars.length > 0) {
       vcdSpecialNote = `Cung Vô Chính Diệu mượn trọn năng lượng đối cung và tam hợp (${tamPhuongTuChinh.projectingMajorStars.slice(0, 3).join(', ')}): Uyển chuyển thích ứng với thời thế.`;
     }

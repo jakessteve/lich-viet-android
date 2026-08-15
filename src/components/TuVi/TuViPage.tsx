@@ -75,12 +75,22 @@ export const TuViPage: React.FC = () => {
     ? `Bản mệnh hội tụ khí chất của ${menhStars}, nổi bật với tư duy độc lập, ý chí quyết đoán và năng lực dẫn dắt công việc xuất sắc.`
     : `Bản mệnh Vô Chính Diệu mượn lực đối cung, sở hữu sự linh hoạt tuyệt vời, khả năng thích ứng cao và khéo léo nắm bắt thời cơ.`;
 
-  const knotTitle = menhPalace?.hasTriet
-    ? 'Thử Thách Tiền Vận (Ngộ Triệt)'
-    : 'Áp Lực Hoàn Hảo & Trách Nhiệm';
-  const knotDesc = menhPalace?.hasTriet
-    ? 'Giai đoạn trước 30 tuổi cần kiên nhẫn tích lũy nội lực, tránh nóng vội đốt cháy giai đoạn.'
-    : 'Cần học cách thả lỏng, ủy quyền công việc và tránh tự tạo áp lực quá tải cho bản thân.';
+  const knotTitle =
+    menhPalace?.hasTriet && menhPalace?.hasTuan
+      ? 'Thử Thách Tiền Vận (Ngộ Tuần - Triệt)'
+      : menhPalace?.hasTriet
+        ? 'Thử Thách Tiền Vận (Ngộ Triệt)'
+        : menhPalace?.hasTuan
+          ? 'Vận Trình Bình Ổn (Ngộ Tuần)'
+          : 'Áp Lực Hoàn Hảo & Trách Nhiệm';
+  const knotDesc =
+    menhPalace?.hasTriet && menhPalace?.hasTuan
+      ? 'Giai đoạn tiền vận gặp nhiều thăng trầm thử thách nhưng hậu vận tôi luyện nội lực vững vàng.'
+      : menhPalace?.hasTriet
+        ? 'Giai đoạn trước 30 tuổi cần kiên nhẫn tích lũy nội lực, tránh nóng vội đốt cháy giai đoạn.'
+        : menhPalace?.hasTuan
+          ? 'Giữ phương châm chậm mà chắc, kiên trì tích lũy từng bước và bảo toàn thành quả.'
+          : 'Cần học cách thả lỏng, ủy quyền công việc và tránh tự tạo áp lực quá tải cho bản thân.';
 
   return (
     <div className="space-y-6">

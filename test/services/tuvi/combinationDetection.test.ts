@@ -479,5 +479,62 @@ describe('detectCombinations', () => {
     expect(tuPhu?.contextualDetails?.careerAndLifeGuidance).toContain('Mệnh/Thân');
     expect(tuPhu?.contextualDetails?.dynamicSynthesisVi).toBeDefined();
   });
+
+  it('correctly isolates Tuần and Triệt across different palaces in a combination without false overlap', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    // Sát Phá Tham across Mệnh (0), Quan Lộc (4), Tài Bạch (8)
+    // Mệnh has only Tuần, Quan Lộc has only Triệt
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      hasTuan: true,
+      hasTriet: false,
+      chinhTinh: [makeStar('Thất Sát', 'chinhTinh', 'Miếu')],
+    });
+    palaces[4] = makePalace({
+      id: 4,
+      name: 'Quan Lộc',
+      hasTuan: false,
+      hasTriet: true,
+      chinhTinh: [makeStar('Phá Quân', 'chinhTinh', 'Miếu')],
+    });
+    palaces[8] = makePalace({
+      id: 8,
+      name: 'Tài Bạch',
+      hasTuan: false,
+      hasTriet: false,
+      chinhTinh: [makeStar('Tham Lang', 'chinhTinh', 'Miếu')],
+    });
+
+    const results = detectCombinations(palaces);
+    const satPhaTham = results.find((r) => r.name === 'Sát Phá Lang');
+    expect(satPhaTham).toBeDefined();
+    const tuanTrietImpact = satPhaTham?.contextualDetails?.tuanTrietImpact;
+    expect(tuanTrietImpact).toBeDefined();
+    // Primary palace is Mệnh, which has only Tuần
+    expect(tuanTrietImpact).toContain('Cung Mệnh có Tuần Không');
+    expect(tuanTrietImpact).not.toContain('Cung Mệnh ngộ cả Tuần lẫn Triệt');
+    expect(tuanTrietImpact).toContain('Cung Quan Lộc ngộ Triệt');
+  });
+
+  it('correctly handles single palace that has both Tuần and Triệt', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      hasTuan: true,
+      hasTriet: true,
+      chinhTinh: [makeStar('Tử Vi', 'chinhTinh', 'Miếu'), makeStar('Thiên Phủ', 'chinhTinh', 'Miếu')],
+    });
+
+    const results = detectCombinations(palaces);
+    const tuPhu = results.find((r) => r.name.includes('Tử Phủ') || r.involvedStars.includes('Tử Vi'));
+    expect(tuPhu).toBeDefined();
+    const impact = tuPhu?.contextualDetails?.tuanTrietImpact;
+    expect(impact).toContain('Cung Mệnh ngộ cả Tuần lẫn Triệt');
+  });
 });
+
 

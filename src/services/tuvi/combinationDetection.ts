@@ -335,14 +335,28 @@ function buildContextualCombinationDetails(
 
   // Tuần Triệt impact
   let tuanTrietImpact: string | undefined;
-  const hasTriet = involvedPalaceObjs.some((p) => p.hasTriet);
-  const hasTuan = involvedPalaceObjs.some((p) => p.hasTuan);
-  if (hasTriet && hasTuan) {
-    tuanTrietImpact = 'Cung vị chịu ảnh hưởng của cả Tuần lẫn Triệt: Gặp nhiều thử thách, thăng trầm tiền vận nhưng tạo nên nội lực sâu sắc và hậu vận ổn định.';
-  } else if (hasTriet) {
-    tuanTrietImpact = 'Cung vị có Triệt Không: Thử thách và tôi luyện ý chí ở giai đoạn tiền vận (trước 30 tuổi), sau đó sẽ dần bộc phát sức mạnh.';
-  } else if (hasTuan) {
-    tuanTrietImpact = 'Cung vị có Tuần Không: Giữ cho năng lượng cách cục được điều tiết êm ả, giảm bớt sự bộc phát thái quá và duy trì thế bền bỉ.';
+  const primaryPalaceForTuanTriet = primaryPalace ?? involvedPalaceObjs[0];
+  if (primaryPalaceForTuanTriet) {
+    if (primaryPalaceForTuanTriet.hasTriet && primaryPalaceForTuanTriet.hasTuan) {
+      tuanTrietImpact = `Cung ${primaryPalaceForTuanTriet.name} ngộ cả Tuần lẫn Triệt: Gặp nhiều thử thách, thăng trầm tiền vận nhưng tạo nên nội lực sâu sắc và hậu vận ổn định.`;
+    } else if (primaryPalaceForTuanTriet.hasTriet) {
+      tuanTrietImpact = `Cung ${primaryPalaceForTuanTriet.name} có Triệt Không: Thử thách và tôi luyện ý chí ở giai đoạn tiền vận (trước 30 tuổi), sau đó sẽ dần bộc phát sức mạnh.`;
+    } else if (primaryPalaceForTuanTriet.hasTuan) {
+      tuanTrietImpact = `Cung ${primaryPalaceForTuanTriet.name} có Tuần Không: Giữ cho năng lượng cách cục được điều tiết êm ả, giảm bớt sự bộc phát thái quá và duy trì thế bền bỉ.`;
+    }
+
+    const otherPalacesWithKhong = involvedPalaceObjs
+      .filter((p) => p.id !== primaryPalaceForTuanTriet.id && (p.hasTuan || p.hasTriet))
+      .map((p) => {
+        if (p.hasTuan && p.hasTriet) return `Cung ${p.name} cũng ngộ Tuần - Triệt`;
+        if (p.hasTriet) return `Cung ${p.name} ngộ Triệt`;
+        return `Cung ${p.name} ngộ Tuần`;
+      });
+
+    if (otherPalacesWithKhong.length > 0) {
+      const secondaryNote = `(${otherPalacesWithKhong.join('; ')}).`;
+      tuanTrietImpact = tuanTrietImpact ? `${tuanTrietImpact} ${secondaryNote}` : secondaryNote;
+    }
   }
 
   // Career and life guidance
