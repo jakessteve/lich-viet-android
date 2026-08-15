@@ -137,7 +137,7 @@ describe('TuViSummaryPanel', () => {
     expect(screen.getByText('Tổng quan cấu trúc và Cách cục')).toBeTruthy();
     expect(screen.getByText('Bố cục chính tinh')).toBeTruthy();
     expect(screen.getByText('Tứ Hóa hiện diện')).toBeTruthy();
-    expect(screen.getByText(/Cách cục vô cùng mạnh mẽ/i)).toBeTruthy();
+    expect(screen.getByText(/Tổng Hợp Cách Cục/i)).toBeTruthy();
 
     fireEvent.click(screen.getByRole('tab', { name: /Cách cục/ }));
 

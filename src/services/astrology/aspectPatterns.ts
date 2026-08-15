@@ -153,65 +153,83 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
     }
   }
 
-  // Generate multi-layered personalized synthesis
-  const planetNames = pattern.planets.map((p) => `${p.nameVi} (${p.signVi}${p.house ? ` - Nhà ${p.house}` : ''})`).join(', ');
+  // Generate multi-layered deeply personalized synthesis
+  const planetDetails = pattern.planets.map((p) => `${p.nameVi} (${p.signVi}${p.house ? ` - Nhà ${p.house}` : ''})`).join(', ');
   const houseSummary = houses.length > 0 ? `tại các Nhà [${houses.join(', ')}]` : '';
 
   switch (pattern.type) {
     case 't_square': {
-      const apexName = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'hành tinh đỉnh';
+      const oppPlanets = pattern.planets.filter((p) => p.id !== apex?.id);
+      const p1 = oppPlanets[0];
+      const p2 = oppPlanets[1];
+      const p1Desc = p1 ? `${p1.nameVi} (${p1.signVi}${p1.house ? ` - Nhà ${p1.house}` : ''})` : '';
+      const p2Desc = p2 ? `${p2.nameVi} (${p2.signVi}${p2.house ? ` - Nhà ${p2.house}` : ''})` : '';
+      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'hành tinh đỉnh';
+
+      const p1Theme = p1?.house ? HOUSE_THEMES_VI[p1.house]?.domain : 'nội lực';
+      const p2Theme = p2?.house ? HOUSE_THEMES_VI[p2.house]?.domain : 'môi trường bên ngoài';
+      const apexTheme = apex?.house ? HOUSE_THEMES_VI[apex.house]?.domain : 'trọng tâm hành động';
+
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Áp lực và mâu thuẫn trực tiếp giữa các trục đời sống ${houseSummary}, dồn toàn bộ sức ép tâm lý vào điểm đỉnh ${apexName}.`,
-        uniqueGiftVi: `Nguồn động lực thép, khả năng chịu áp lực phi thường và tham vọng vượt ngưỡng để đạt được thành tựu lớn.`,
-        actionableAdviceVi: pattern.resolutionPoint?.adviceVi ?? `Chuyển hóa căng thẳng thành hành động kiên trì có chiến lược, tránh phản ứng bộc phát thái quá.`,
+        coreChallengeVi: `Áp lực và trục đối kháng giữa ${p1Desc} và ${p2Desc} tạo ra sự giằng xé giữa ${p1Theme} và ${p2Theme}, dồn toàn bộ sức ép góc vuông (90°) lên đỉnh ${apexDesc}.`,
+        uniqueGiftVi: `Nguồn động lực thép và ý chí chịu áp lực phi thường: Khi thuần phục được năng lượng tại ${apexDesc}, bạn sẽ bứt phá ngoạn mục và dẫn đầu trong phương diện ${apexTheme}.`,
+        actionableAdviceVi: pattern.resolutionPoint?.adviceVi ?? `Giải phóng xung đột bằng cách rèn luyện phẩm chất của cung đối trọng và tạo khoảng nghỉ tĩnh tâm.`,
       };
       break;
     }
     case 'grand_trine': {
+      const pList = pattern.planets.map((p) => `${p.nameVi} (${p.signVi}${p.house ? ` - Nhà ${p.house}` : ''})`).join(' · ');
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Dễ rơi vào vùng an toàn hoặc thiếu áp lực thôi thúc, khiến tiềm năng lớn có nguy cơ bị trì trệ nếu không tự đặt mục tiêu.`,
-        uniqueGiftVi: `Dòng chảy may mắn bẩm sinh, tài năng thiên phú và sự hòa hợp sâu sắc trong các lĩnh vực ${houseSummary}.`,
-        actionableAdviceVi: `Chủ động thiết lập kỷ luật cá nhân và tìm kiếm thử thách thực tế để đánh thức và tận dụng triệt để thiên phú này.`,
+        coreChallengeVi: `Dòng chảy quá êm ả giữa [${pList}] có thể ru ngủ ý chí, khiến bạn dễ bằng lòng với vùng an toàn nếu không tự đặt ra các thách thức lớn hơn.`,
+        uniqueGiftVi: `Thiên phú tự nhiên và phúc duyên lớn thuộc nguyên tố ${pattern.elementOrModality ?? 'hòa hợp'}, giúp kết nối liền mạch tài năng bẩm sinh qua các trục ${houseSummary}.`,
+        actionableAdviceVi: `Chủ động thiết lập kỷ luật và dự án thực tế để chuyển hóa vận may tự nhiên thành thành tựu bền vững suốt đời.`,
       };
       break;
     }
     case 'kite': {
+      const trinePlanets = pattern.planets.filter((p) => p.id !== apex?.id);
+      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'mũi tên hành động';
+      const apexTheme = apex?.house ? HOUSE_THEMES_VI[apex.house]?.domain : 'trọng tâm khai phóng';
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Cần phối hợp nhịp nhàng giữa sự an nhàn tự nhiên của Tam Hợp Lớn và điểm mũi tên hành động tại ${apex?.nameVi ?? 'đỉnh'}.`,
-        uniqueGiftVi: `Cấu trúc lý tưởng biến tài năng thiên bẩm thành kết quả xuất chúng ngoài đời thực một cách bền vững.`,
-        actionableAdviceVi: `Dồn tâm sức vào lĩnh vực của ${apex?.nameVi ?? 'hành tinh đỉnh'}${apex?.house ? ` (Nhà ${apex.house})` : ''} để tạo đột phá sự nghiệp và xã hội.`,
+        coreChallengeVi: `Cần điều phối áp lực từ trục đối đỉnh để mũi nhọn ${apexDesc} không bị quá tải hay bộc phát nóng vội.`,
+        uniqueGiftVi: `Cấu trúc lý tưởng bậc nhất: Tam Hợp Lớn cung cấp nội lực dồi dào, trong khi ${apexDesc} đóng vai trò mũi tên hành động biến thiên phú thành thành tựu hữu hình tại ${apexTheme}.`,
+        actionableAdviceVi: `Tập trung cao độ nguồn lực vào lĩnh vực ${apexTheme} để dẫn dắt toàn bộ thế cục cuộc đời vươn tới đỉnh cao.`,
       };
       break;
     }
     case 'grand_cross': {
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Căng thẳng 4 chiều bao trùm các phương diện cốt lõi cuộc sống ${houseSummary}, đòi hỏi sự cân bằng năng lượng liên tục.`,
-        uniqueGiftVi: `Sức bền vô hạn, năng lực lãnh đạo trong khủng hoảng và ý chí bất khuất trước mọi nghịch cảnh cuộc đời.`,
-        actionableAdviceVi: `Học cách phân bổ thời gian thông minh, không ôm đồm mọi thứ và học cách buông bỏ những điều ngoài tầm kiểm soát.`,
+        coreChallengeVi: `Căng thẳng 4 chiều bao trùm các trục đời sống cốt lõi ${houseSummary} (${pattern.elementOrModality ?? 'Thống Lĩnh/Kiên Định'}), đòi hỏi sự linh hoạt và cân bằng năng lượng liên tục.`,
+        uniqueGiftVi: `Bản lĩnh kim cương, sức bền vô hạn trước nghịch cảnh và năng lực quản trị khủng hoảng xuất sắc hiếm ai sánh kịp.`,
+        actionableAdviceVi: `Học cách phân quyền, không ôm đồm toàn bộ trách nhiệm và duy trì sự tĩnh tại nội tâm trước các biến cố bên ngoài.`,
       };
       break;
     }
     case 'stellium': {
+      const signName = pattern.planets[0]?.signVi ?? 'Bản Cung';
+      const primaryHouse = pattern.planets[0]?.house;
+      const houseTheme = primaryHouse ? HOUSE_THEMES_VI[primaryHouse]?.domain : 'phương diện cuộc sống';
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Sự tập trung năng lượng quá mức tại một điểm khiến các lĩnh vực đối diện đôi khi bị lơ là hoặc thiếu cân bằng.`,
-        uniqueGiftVi: `Tài năng chuyên sâu xuất chúng, đam mê cháy bỏng và sức mạnh tập trung vô song trong lĩnh vực ${houseSummary}.`,
-        actionableAdviceVi: `Phát huy thế mạnh chuyên môn tối đa nhưng luôn có ý thức kết nối và bồi đắp các khía cạnh đối lập trong cuộc sống.`,
+        coreChallengeVi: `Tụ điểm năng lượng cực lớn tại cung ${signName} (${houseSummary}) khiến bạn dễ bị ám ảnh, dồn toàn bộ tâm trí vào ${houseTheme} mà xao nhãng các góc khác của cuộc đời.`,
+        uniqueGiftVi: `Sức mạnh tập trung phi thường, tài năng chuyên biệt xuất chúng và sự nhạy bén vượt trội trong lĩnh vực ${houseTheme}.`,
+        actionableAdviceVi: `Tận dụng tối đa sự thấu hiểu sâu sắc trong lĩnh vực ${houseTheme}, đồng thời chủ động bồi đắp cung đối xứng để duy trì sự cân bằng dài lâu.`,
       };
       break;
     }
     case 'yod': {
+      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'ngón tay của số phận';
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Cảm giác bất định và thường xuyên phải điều chỉnh hướng đi cuộc đời khi năng lượng hội tụ vào ${apex?.nameVi ?? 'đỉnh'}.`,
-        uniqueGiftVi: `Trực giác tâm linh nhạy bén, sứ mệnh cuộc đời sâu sắc và năng lực khai mở những chân trời mới độc đáo.`,
-        actionableAdviceVi: pattern.resolutionPoint?.adviceVi ?? `Lắng nghe trực giác bên trong và kiên nhẫn với các bước ngoặt mang tính định mệnh.`,
+        coreChallengeVi: `Cảm giác bất định và những bước ngoặt mang tính định mệnh buộc bạn phải liên tục thanh lọc và tái định hình bản thân tại ${apexDesc}.`,
+        uniqueGiftVi: `Trực giác tâm linh thấu thị và năng lực giải quyết các bài toán phức tạp bằng góc nhìn vượt ra ngoài khuôn khổ thông thường.`,
+        actionableAdviceVi: pattern.resolutionPoint?.adviceVi ?? `Lắng nghe trực giác bên trong và bình thản đón nhận những bước ngoặt tái sinh của cuộc đời.`,
       };
       break;
     }
     case 'mystic_rectangle': {
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Phải giải quyết những mâu thuẫn nội tâm đối lập trước khi đạt được sự thông suốt và hài hòa.`,
-        uniqueGiftVi: `Khả năng chuyển hóa xung đột thành sáng tạo, tư duy cân bằng tuyệt hảo và trực giác xử lý khủng hoảng nhạy bén.`,
-        actionableAdviceVi: `Tận dụng các góc tam hợp và lục hợp hỗ trợ để hóa giải các trục đối kháng trong quan hệ và công việc.`,
+        coreChallengeVi: `Phải giải quyết những mâu thuẫn đối lập giữa hai trục ${houseSummary} trước khi khai mở được sự đồng điệu trọn vẹn.`,
+        uniqueGiftVi: `Năng lực tích hợp xung đột thành sức mạnh sáng tạo, tư duy cân bằng hoàn hảo và sự bình tĩnh hiếm có khi đối diện thử thách.`,
+        actionableAdviceVi: `Dùng các góc tam hợp và lục hợp làm cầu nối để hòa giải những bất đồng trong công việc và cuộc sống.`,
       };
       break;
     }

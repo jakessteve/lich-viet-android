@@ -1,12 +1,12 @@
 /**
  * Story Card 9:16 Export Modal — Lịch Việt v3
  *
- * Generates an aesthetic 9:16 mobile story card (1080x1920 format) summarizing
- * the native's core archetype and superpower with gold accents and glassmorphism.
+ * Generates a clean, aesthetic 9:16 mobile summary image (1080x1920 format)
+ * with robust timeout protection to ensure the Android WebView never freezes.
  */
 
 import React, { useRef, useState } from 'react';
-import { toPng } from 'html-to-image';
+import { toPng, toJpeg } from 'html-to-image';
 import { sanitizePlainText } from '@/utils/security';
 
 interface StoryCardExportModalProps {
@@ -35,35 +35,47 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
   const cardRef = useRef<HTMLDivElement>(null);
   const [isExporting, setIsExporting] = useState(false);
   const [exportedImageUrl, setExportedImageUrl] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const safeName = sanitizePlainText(name, 40) || 'Bản Thân';
 
-  const handleGenerateImage = async () => {
-    if (!cardRef.current) return;
-    setIsExporting(true);
-    try {
-      const dataUrl = await toPng(cardRef.current, {
-        quality: 0.95,
-        pixelRatio: 2,
-      });
-      setExportedImageUrl(dataUrl);
+  const generateImagePromise = async (): Promise<string> => {
+    if (!cardRef.current) throw new Error('Không tìm thấy khung ảnh');
 
-      // Trigger Web Share if available
-      if (navigator.share && navigator.canShare) {
-        const blob = await (await fetch(dataUrl)).blob();
-        const file = new File([blob], `${safeName}_ban_menh_story.png`, { type: 'image/png' });
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            title: `Bản Mệnh 30 Giây — ${safeName}`,
-            text: `Khám phá tiềm năng bản mệnh trên Lịch Việt!`,
-            files: [file],
-          });
-        }
+    // Run toPng with 3.5s timeout safety
+    const timeoutPromise = new Promise<never>((_, reject) =>
+      setTimeout(() => reject(new Error('Quá thời gian tạo ảnh, vui lòng thử lại')), 3500)
+    );
+
+    const renderPromise = (async () => {
+      try {
+        return await toPng(cardRef.current!, {
+          quality: 0.95,
+          pixelRatio: 2,
+          cacheBust: true,
+        });
+      } catch {
+        // Fallback to JPEG if PNG fails
+        return await toJpeg(cardRef.current!, {
+          quality: 0.9,
+          pixelRatio: 1.5,
+        });
       }
-    } catch {
-      // Fallback
+    })();
+
+    return Promise.race([renderPromise, timeoutPromise]);
+  };
+
+  const handleGenerateImage = async () => {
+    setIsExporting(true);
+    setErrorMessage(null);
+    try {
+      const dataUrl = await generateImagePromise();
+      setExportedImageUrl(dataUrl);
+    } catch (err: unknown) {
+      setErrorMessage(err instanceof Error ? err.message : 'Không thể tạo ảnh, vui lòng thử lại');
     } finally {
       setIsExporting(false);
     }
@@ -72,20 +84,43 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
   const handleDownload = () => {
     if (!exportedImageUrl) return;
     const link = document.createElement('a');
-    link.download = `${safeName}_ban_menh_story.png`;
+    link.download = `${safeName}_ban_menh_9x16.png`;
     link.href = exportedImageUrl;
     link.click();
   };
 
+  const handleShare = async () => {
+    if (!exportedImageUrl) return;
+    try {
+      if (navigator.share && navigator.canShare) {
+        const response = await fetch(exportedImageUrl);
+        const blob = await response.blob();
+        const file = new File([blob], `${safeName}_ban_menh.png`, { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: `Bản Mệnh — ${safeName}`,
+            text: `Khám phá tiềm năng bản sắc cốt lõi trên Lịch Việt!`,
+            files: [file],
+          });
+          return;
+        }
+      }
+      // Fallback: download if web share is unavailable
+      handleDownload();
+    } catch {
+      handleDownload();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md overflow-y-auto">
       <div className="relative w-full max-w-sm rounded-3xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 p-4 sm:p-5 shadow-2xl space-y-4 animate-scale-in">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="material-icons-round text-amber-500 text-lg">auto_awesome</span>
             <h3 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
-              Thẻ Bài Story 9:16
+              Ảnh Tổng Quan Bản Mệnh (9:16)
             </h3>
           </div>
           <button
@@ -96,6 +131,12 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
             <span className="material-icons-round text-base">close</span>
           </button>
         </div>
+
+        {errorMessage && (
+          <div className="p-2.5 rounded-xl bg-red-50 dark:bg-red-900/20 text-xs text-red-600 dark:text-red-400">
+            {errorMessage}
+          </div>
+        )}
 
         {/* 9:16 Preview Card Container */}
         <div className="flex justify-center overflow-hidden rounded-2xl border border-gold/30 bg-[#0a0a1a] shadow-inner">
@@ -110,7 +151,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
             {/* Card Header */}
             <div className="space-y-1 text-center relative z-10">
               <div className="text-[9px] font-bold uppercase tracking-[0.25em] text-amber-400">
-                ✦ LỊCH VIỆT · BẢN MỆNH 30 GIÂY ✦
+                ✦ LỊCH VIỆT · TỔNG QUAN BẢN MỆNH ✦
               </div>
               <h2 className="text-lg font-extrabold text-white tracking-wide pt-1">
                 {safeName}
@@ -136,20 +177,20 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
               </div>
             </div>
 
-            {/* Superpower Highlight */}
+            {/* Core Trait Highlight */}
             <div className="rounded-xl bg-gradient-to-br from-amber-500/10 to-purple-500/10 border border-amber-500/30 p-3 text-center space-y-1 relative z-10">
               <div className="text-[9px] font-bold uppercase tracking-wider text-amber-400">
-                👑 SIÊU NĂNG LỰC BẢN MỆNH
+                🌟 BẢN SẮC CỐT LÕI
               </div>
               <p className="text-[11px] leading-relaxed font-medium text-gray-100">
                 {superpower}
               </p>
             </div>
 
-            {/* 2026 Compass */}
+            {/* 2026 Action Focus */}
             <div className="text-center space-y-0.5 relative z-10">
               <div className="text-[9px] font-bold uppercase tracking-wider text-sky-400">
-                🚀 KIM CHỈ NAM NĂM 2026
+                🚀 ĐỊNH HƯỚNG TRỌNG TÂM 2026
               </div>
               <p className="text-[10px] leading-relaxed text-gray-300">
                 {actionCompass}
@@ -175,17 +216,25 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
               <span className="material-icons-round text-base">
                 {isExporting ? 'hourglass_top' : 'photo_camera'}
               </span>
-              {isExporting ? 'Đang tạo ảnh...' : 'Tạo Ảnh & Chia Sẻ'}
+              {isExporting ? 'Đang tạo ảnh...' : 'Tạo Ảnh Bản Mệnh'}
             </button>
           ) : (
             <>
               <button
                 type="button"
                 onClick={handleDownload}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/25 hover:bg-emerald-500 transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/25 hover:bg-emerald-500 transition-colors"
               >
                 <span className="material-icons-round text-base">download</span>
-                Lưu Ảnh HD
+                Lưu Ảnh Về Máy
+              </button>
+              <button
+                type="button"
+                onClick={handleShare}
+                className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 px-3 py-2.5 text-xs font-bold text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-500 transition-colors"
+              >
+                <span className="material-icons-round text-base">share</span>
+                Chia Sẻ
               </button>
               <button
                 type="button"

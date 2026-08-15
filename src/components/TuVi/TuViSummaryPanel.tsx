@@ -265,44 +265,46 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
           </div>
 
           <div className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4">
-            <div className="flex items-center gap-1.5">
-              <span className="material-icons-round shrink-0 text-base text-gold-light dark:text-gold-dark">star</span>
-              <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
-                Cách cục nổi bật
-              </h4>
+            <div className="flex items-center justify-between gap-1.5">
+              <div className="flex items-center gap-1.5">
+                <span className="material-icons-round shrink-0 text-base text-gold-light dark:text-gold-dark">auto_awesome</span>
+                <h4 className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
+                  Tổng Hợp Cách Cục ({summary.combinations.length})
+                </h4>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveTab('combinations')}
+                className="text-xs font-bold text-gold-light dark:text-gold-dark hover:underline flex items-center gap-0.5"
+              >
+                Tra cứu chi tiết
+                <span className="material-icons-round text-sm">chevron_right</span>
+              </button>
             </div>
-            <div className="mt-3 flex flex-col gap-2">
+            <div className="mt-3 flex flex-wrap gap-2">
               {summary.combinations.length === 0 ? (
                 <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                  Chưa phát hiện Cách cục theo thư viện hiện tại.
+                  Chưa phát hiện Cách cục đặc thù.
                 </p>
               ) : (
-                summary.combinations.slice(0, 6).map((combination, index) => (
+                summary.combinations.slice(0, 5).map((combination, index) => (
                   <div
                     key={getCombinationRenderKey(combination, index)}
-                    className="rounded-2xl border border-border-light/60 bg-surface-container-low px-3 py-2 dark:border-border-dark/60 dark:bg-white/5"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-border-light/60 bg-surface-container-low px-3 py-1.5 text-xs dark:border-border-dark/60 dark:bg-white/5"
                   >
-                    <div className="flex flex-wrap items-start justify-between gap-2">
-                      <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                        {combination.name}
-                      </span>
-                      <div className="flex flex-wrap gap-2">
-                        <Badge className={COMBINATION_CATEGORY_CLASS[combination.category]}>
-                          {COMBINATION_CATEGORY_LABEL[combination.category]}
-                        </Badge>
-                        <Badge className={PURITY_CLASS[combination.purity]}>{PURITY_LABEL[combination.purity]}</Badge>
-                        {combination.rarity ? <Badge className={RARITY_CLASS}>Hiếm {combination.rarity}/5</Badge> : null}
-                      </div>
-                    </div>
-                    {combination.description && (
-                      <p className="mt-1 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
-                        {combination.description}
-                      </p>
-                    )}
+                    <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                      {combination.name}
+                    </span>
+                    <Badge className={COMBINATION_CATEGORY_CLASS[combination.category]}>
+                      {COMBINATION_CATEGORY_LABEL[combination.category]}
+                    </Badge>
                   </div>
                 ))
               )}
             </div>
+            <p className="mt-2.5 text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
+              💡 <em>Phân tích tác động chi tiết của từng cách cục được nhúng liền mạch trong phần luận giải Cung vị tương ứng phía trên.</em>
+            </p>
           </div>
         </div>
       )}

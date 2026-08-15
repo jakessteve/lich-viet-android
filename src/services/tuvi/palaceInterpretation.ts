@@ -7,7 +7,7 @@
  */
 
 import type { TuViPalace, TuViStar, TuViCenterInfo } from '../../types/tuvi';
-import { detectTamHopPalaces, detectDoiCung } from './combinationDetection';
+import { detectTamHopPalaces, detectDoiCung, detectCombinations } from './combinationDetection';
 
 export interface PalaceInterpretationResult {
   palaceId: number;
@@ -17,6 +17,12 @@ export interface PalaceInterpretationResult {
   isThan: boolean;
   coreThemeVi: string;
   majorStarsAnalysisVi: string;
+  cachCucAnalysisVi?: {
+    name: string;
+    purity: string;
+    description: string;
+    synthesisVi: string;
+  };
   tuHoaAnalysisVi: string[];
   auxiliaryAndMaleficVi: string;
   tuanTrietAnalysisVi?: string;
@@ -188,7 +194,34 @@ export function interpretPalace(
   const relatedNames = [...tamHopPalaces.map((p) => p.name), doiCungPalace?.name].filter(Boolean);
   const tamPhuongTuChinhVi = `Thế tam hợp và đối cung hội chiếu từ [${relatedNames.join(', ')}] tạo thành mạng lưới hỗ trợ qua lại chặt chẽ cho cung vị này.`;
 
-  // 6. Actionable guidance
+  // 6. Blended Cách Cục (Combination)
+  let cachCucAnalysisVi: PalaceInterpretationResult['cachCucAnalysisVi'];
+  try {
+    const combinations = detectCombinations(allPalaces);
+    const relevantComb = combinations.find((c) =>
+      c.involvedCung.includes(palace.name) || (palace.isMenh && c.involvedCung.includes('Mệnh'))
+    );
+    if (relevantComb) {
+      const purityLabel =
+        relevantComb.purity === 'thuần'
+          ? 'Thuần Cách (Đắc địa toàn vẹn)'
+          : relevantComb.purity === 'bán'
+          ? 'Bán Cách (Hội hợp tương đối)'
+          : 'Phá Cách (Gặp thử thách tôi luyện)';
+      cachCucAnalysisVi = {
+        name: relevantComb.name,
+        purity: purityLabel,
+        description: relevantComb.description || relevantComb.note,
+        synthesisVi:
+          relevantComb.contextualDetails?.dynamicSynthesisVi ||
+          `${relevantComb.nameHanViet}: ${relevantComb.detectionReason}. ${relevantComb.note}`,
+      };
+    }
+  } catch {
+    // Graceful fallback if combination detection fails
+  }
+
+  // 7. Actionable guidance
   let actionableGuidanceVi = '';
   if (palace.isMenh) {
     actionableGuidanceVi = `Tập trung phát huy tối đa tư chất cốt lõi của ${palace.chinhTinh.map((s) => s.name).join(', ') || 'Bản Cung'}, rèn luyện tính kiên định và xây dựng hệ giá trị cá nhân vững vàng.`;
@@ -210,6 +243,7 @@ export function interpretPalace(
     isThan: palace.isThan,
     coreThemeVi: `${domain.role} — ${domain.focus}.`,
     majorStarsAnalysisVi,
+    cachCucAnalysisVi,
     tuHoaAnalysisVi,
     auxiliaryAndMaleficVi,
     tuanTrietAnalysisVi,

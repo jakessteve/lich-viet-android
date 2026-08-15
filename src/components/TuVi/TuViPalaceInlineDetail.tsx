@@ -33,6 +33,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
     isThan,
     coreThemeVi,
     majorStarsAnalysisVi,
+    cachCucAnalysisVi,
     tuHoaAnalysisVi,
     auxiliaryAndMaleficVi,
     tuanTrietAnalysisVi,
@@ -58,12 +59,14 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                   <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark truncate">
                     {roleBadge} ({palaceBranch})
                   </span>
-                  <span className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold-light dark:text-gold-dark">
-                    Đang xem
-                  </span>
+                  {cachCucAnalysisVi && (
+                    <span className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold-light dark:text-gold-dark truncate">
+                      {cachCucAnalysisVi.name}
+                    </span>
+                  )}
                 </div>
                 <p className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark truncate">
-                  {majorStarsAnalysisVi.slice(0, 50)}...
+                  {cachCucAnalysisVi?.description || majorStarsAnalysisVi.slice(0, 50)}
                 </p>
               </div>
             </div>
@@ -109,7 +112,24 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
             </div>
 
             <div className="flex-1 overflow-y-auto p-4 space-y-3.5 text-xs text-text-primary-light dark:text-text-primary-dark leading-relaxed">
-              <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 space-y-1">
+              {/* Blended Cách Cục */}
+              {cachCucAnalysisVi && (
+                <div className="rounded-xl bg-amber-500/10 border border-gold/30 p-3 space-y-1">
+                  <div className="font-bold text-gold-light dark:text-gold-dark flex items-center justify-between">
+                    <span className="flex items-center gap-1.5">
+                      <span className="material-icons-round text-sm">account_balance</span>
+                      Cách Cục: {cachCucAnalysisVi.name}
+                    </span>
+                    <span className="text-[10px] font-semibold text-text-secondary-light dark:text-text-secondary-dark">
+                      {cachCucAnalysisVi.purity}
+                    </span>
+                  </div>
+                  <p className="font-medium text-text-primary-light dark:text-text-primary-dark">{cachCucAnalysisVi.description}</p>
+                  <p className="text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/20">{cachCucAnalysisVi.synthesisVi}</p>
+                </div>
+              )}
+
+              <div className="rounded-xl bg-amber-500/5 dark:bg-amber-500/[0.03] border border-amber-500/20 p-3 space-y-1">
                 <div className="font-bold text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
                   <span className="material-icons-round text-sm">stars</span>
                   Chính Tinh & Cốt Cách
@@ -179,6 +199,29 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
           <span className="material-icons-round text-base">close</span>
         </button>
       </div>
+
+      {/* Blended Cách Cục Highlight if present */}
+      {cachCucAnalysisVi && (
+        <div className="rounded-2xl bg-gradient-to-r from-amber-500/10 via-gold/10 to-amber-500/10 border border-gold/40 p-4 space-y-2">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <div className="flex items-center gap-2">
+              <span className="material-icons-round text-amber-500 text-base">account_balance</span>
+              <h4 className="text-sm font-bold text-gold-light dark:text-gold-dark">
+                Cách Cục Tọa Thủ: {cachCucAnalysisVi.name}
+              </h4>
+            </div>
+            <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold-light dark:text-gold-dark">
+              {cachCucAnalysisVi.purity}
+            </span>
+          </div>
+          <p className="text-xs font-semibold text-text-primary-light dark:text-text-primary-dark">
+            {cachCucAnalysisVi.description}
+          </p>
+          <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/30 dark:border-border-dark/30">
+            {cachCucAnalysisVi.synthesisVi}
+          </p>
+        </div>
+      )}
 
       {/* Content Grid */}
       <div className="grid gap-3 sm:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
