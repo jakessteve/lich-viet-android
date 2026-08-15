@@ -135,7 +135,7 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
         <form onSubmit={handleSubmit} className="glass-card-strong glass-shimmer glass-noise p-5 flex flex-col flex-1">
           <div className="flex items-center gap-2 mb-3">
             <span className="material-icons-round text-base text-gold dark:text-gold-dark">auto_awesome</span>
-            <span className="text-xs font-bold uppercase tracking-[0.15em] text-text-secondary-light/60 dark:text-text-secondary-dark/60">
+            <span className="label-standard text-text-secondary-light/70 dark:text-text-secondary-dark/70">
               Khám phá nhanh
             </span>
           </div>
@@ -220,7 +220,7 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
             <div className="flex items-center gap-2">
               <span className="material-icons-round text-3xl text-gold dark:text-gold-dark">auto_awesome</span>
               <div>
-                <p className="text-xs font-bold uppercase tracking-wider text-text-secondary-light/60 dark:text-text-secondary-dark/60">
+                <p className="label-standard text-text-secondary-light/70 dark:text-text-secondary-dark/70">
                   Lá số Tử Vi
                 </p>
                 <p className="text-lg font-bold tracking-tight">{result.centerInfo.canChiYear}</p>
@@ -242,7 +242,7 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
                 key={item.label}
                 className="p-2.5 rounded-xl bg-surface-subtle-light/50 dark:bg-white/[0.025] border border-border-light/10 dark:border-border-dark/10"
               >
-                <p className="text-[10px] uppercase tracking-widest text-text-secondary-light/60 dark:text-text-secondary-dark/60 font-bold mb-0.5">
+                <p className="label-standard text-text-secondary-light/70 dark:text-text-secondary-dark/70 mb-0.5">
                   {item.label}
                 </p>
                 <p className="text-xs font-semibold text-text-primary-light dark:text-text-primary-dark leading-snug">

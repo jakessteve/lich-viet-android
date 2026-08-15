@@ -5,6 +5,7 @@ import AppNav from './components/layout/AppNav';
 import MobileDrawer from './components/layout/MobileDrawer';
 import AppFooter from './components/layout/AppFooter';
 import AppSidebar from './components/layout/AppSidebar';
+import ScrollToTopButton from './components/shared/ScrollToTopButton';
 import { ROUTE_TO_TAB, type ActiveTab } from './router/constants';
 import { LandingRoute, renderModuleRoutes, renderLegacyRedirects } from './router/routes';
 import { analytics } from './services/analyticsService';
@@ -122,6 +123,7 @@ function AppLayout() {
       </main>
 
       <AppFooter />
+      <ScrollToTopButton />
     </div>
   );
 }

@@ -107,6 +107,9 @@ export const HexagramsSchema = z.array(
     thoanTu: z.object({
       original: nonEmptyString,
       meaning: nonEmptyString,
+      hanViet: nonEmptyString.optional(),
+      humanInterpretation: nonEmptyString.optional(),
+      application: nonEmptyString.optional(),
     }),
     haoTexts: z.array(
       z.object({

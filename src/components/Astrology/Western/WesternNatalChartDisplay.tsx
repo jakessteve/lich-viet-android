@@ -7,6 +7,7 @@ import { ElementBalanceCard } from './ElementBalanceCard';
 import { AspectPatternsCard } from './AspectPatternsCard';
 import { WesternSimplifiedExplanation } from './WesternSimplifiedExplanation';
 import { WesternNatalTechnicalDisplay } from './WesternNatalTechnicalDisplay';
+import { WesternMarkdownExport } from '../WesternMarkdownExport';
 
 const ZOOM_LEVELS = [1, 1.25, 1.5, 2] as const;
 
@@ -121,6 +122,9 @@ export const WesternNatalChartDisplay: React.FC = () => {
         </div>
       </div>
       <p className="sr-only" aria-live="polite">Mức thu phóng {Math.round(zoom * 100)}%</p>
+
+      {/* Action buttons immediately below chart */}
+      <WesternMarkdownExport system="western" />
 
       {/* Moon Phase Badge */}
       {result.moonPhase && <MoonPhaseBadge moonPhase={result.moonPhase} />}

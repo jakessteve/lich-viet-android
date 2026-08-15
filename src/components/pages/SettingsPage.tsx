@@ -129,6 +129,8 @@ export default function SettingsPage() {
   const toggleDarkMode = useAppStore((s) => s.toggleDarkMode);
   const fontSize = useAppStore((s) => s.fontSize);
   const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
+  const showScrollToTopButton = useAppStore((s) => s.showScrollToTopButton);
+  const setShowScrollToTopButton = useAppStore((s) => s.setShowScrollToTopButton);
   const { user, isAuthenticated, logout, updateProfile, changePassword } = useAuthStore();
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [showSaveToast, setShowSaveToast] = useState(false);
@@ -405,6 +407,17 @@ export default function SettingsPage() {
                     </button>
                   ))}
                 </div>
+              </SettingRow>
+              <SettingRow
+                icon="arrow_upward"
+                label="Nút cuộn lên đầu trang"
+                description="Hiển thị nút nổi hỗ trợ cuộn nhanh khi trang có nội dung dài"
+              >
+                <Toggle
+                  id="toggle-scroll-to-top"
+                  checked={showScrollToTopButton}
+                  onChange={() => setShowScrollToTopButton(!showScrollToTopButton)}
+                />
               </SettingRow>
             </SectionCard>
           )}

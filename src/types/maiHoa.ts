@@ -100,6 +100,22 @@ export interface MovingLinePrediction {
 }
 
 /**
+ * Thoán Từ (Judgment) by Văn Vương — original Chinese, Hán Việt quote, and Vietnamese meaning.
+ */
+export interface ThoanTu {
+  /** Original Chinese characters, e.g. "履虎尾, 不咥人, 亨." */
+  readonly original: string;
+  /** Scholarly Hán Việt quote from academic sources, e.g. "Lý hổ vỹ, hổ bất điệt nhân, hanh" */
+  readonly hanViet?: string;
+  /** Modern Vietnamese translation */
+  readonly meaning: string;
+  /** Human-readable interpretation of the hexagram's deeper wisdom */
+  readonly humanInterpretation?: string;
+  /** Practical advice / real-world application */
+  readonly application?: string;
+}
+
+/**
  * A single Hexagram (Quẻ Kép) from the 64 Hexagrams.
  */
 export interface Hexagram {
@@ -123,11 +139,8 @@ export interface Hexagram {
   readonly diagram?: string;
   /** Brief interpretation keywords, e.g. "Tư dã. Chọn lọc." */
   readonly briefExplanation?: string;
-  /** Thoán Từ (Judgment) by Văn Vương — original Chinese + Vietnamese meaning */
-  readonly thoanTu?: {
-    readonly original: string;
-    readonly meaning: string;
-  };
+  /** Thoán Từ (Judgment) by Văn Vương — original Chinese, Hán Việt recitation + Vietnamese meaning */
+  readonly thoanTu?: ThoanTu;
   /** Overall scholarly commentary (e.g. Nguyễn Hiến Lê) */
   readonly commentary?: string;
   /** Lời Triệu — Prophecy phrase (e.g. "Khô tỉnh sinh tuyền") */
@@ -348,7 +361,7 @@ export interface DivineReadingSummary {
   /** Brief explanation keywords */
   readonly briefExplanation?: string;
   /** Thoán Từ (Judgment) by Văn Vương */
-  readonly thoanTu?: { readonly original: string; readonly meaning: string };
+  readonly thoanTu?: ThoanTu;
   /** All 6 Hào Từ classical texts (not just the moving line) */
   readonly allHaoTexts?: readonly HaoText[];
   /** Overall scholarly commentary */

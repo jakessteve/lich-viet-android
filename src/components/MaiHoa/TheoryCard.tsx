@@ -406,12 +406,37 @@ export default function TheoryCard({
 
               {summary.thoanTu && (
                 <div className="card-quote">
-                  <span className="label-standard text-accent-moving dark:text-accent-moving-dark block mb-1.5">
-                    Thoán Từ (Văn Vương)
-                  </span>
-                  <p className="text-sm font-medium text-text-primary-light dark:text-text-primary-dark leading-relaxed">
-                    &ldquo;{summary.thoanTu.meaning}&rdquo;
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className="material-icons-round text-sm text-accent-moving dark:text-accent-moving-dark">
+                      menu_book
+                    </span>
+                    <span className="label-standard text-accent-moving dark:text-accent-moving-dark">
+                      Khẩu Quyết Thoán Từ (Văn Vương)
+                    </span>
+                  </div>
+                  {summary.thoanTu.hanViet && (
+                    <p className="text-sm sm:text-base font-bold text-amber-900 dark:text-amber-200 tracking-tight mb-1">
+                      &ldquo;{summary.thoanTu.hanViet}&rdquo;
+                    </p>
+                  )}
+                  <p className="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
+                    <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">Dịch nghĩa: </span>
+                    {summary.thoanTu.meaning}
                   </p>
+                  {summary.thoanTu.humanInterpretation && (
+                    <p className="text-sm mt-2 text-text-primary-light dark:text-text-primary-dark leading-relaxed">
+                      <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">Luận giải bản chất: </span>
+                      {summary.thoanTu.humanInterpretation}
+                    </p>
+                  )}
+                  {summary.thoanTu.application && (
+                    <div className="mt-2.5 pt-2 border-t border-amber-200/50 dark:border-amber-700/30">
+                      <p className="text-xs sm:text-sm text-amber-800 dark:text-amber-300 font-medium leading-relaxed">
+                        <span className="font-bold">Ứng dụng thực tiễn: </span>
+                        {summary.thoanTu.application}
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
 

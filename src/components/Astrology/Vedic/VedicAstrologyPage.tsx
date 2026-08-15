@@ -5,7 +5,6 @@ import { useAuthStore } from '@/stores/authStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import { VedicChartView } from './VedicChartView';
-import { WesternMarkdownExport } from '../WesternMarkdownExport';
 
 export const VedicAstrologyPage: React.FC = () => {
   usePageTitle('Chiêm Tinh Ấn Độ');
@@ -51,7 +50,6 @@ export const VedicAstrologyPage: React.FC = () => {
       </div>
 
       <VedicChartView />
-      <WesternMarkdownExport system="vedic" />
 
       <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm">
         <span className="text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-1 font-medium">

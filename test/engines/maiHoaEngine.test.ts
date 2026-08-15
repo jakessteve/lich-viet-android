@@ -194,4 +194,21 @@ describe('maiHoaEngine', () => {
       expect(context.query).toBe('Test query');
     });
   });
+
+  describe('Academic Thoan Tu & Structured Human Explanation', () => {
+    it('has academic Hán Việt quotes and human applications for hexagrams', async () => {
+      const hexagramsMap = await ensureHexagramsLoaded();
+      // Test Hexagram 10: Thiên Trạch Lý
+      const lyHex = Array.from(hexagramsMap.values()).find((h) => h.id === 10);
+      expect(lyHex).toBeDefined();
+      expect(lyHex?.thoanTu?.hanViet).toBe('Lý: Lý hổ vỹ, hổ bất điệt nhân, hanh.');
+      expect(lyHex?.thoanTu?.humanInterpretation).toContain('lễ nghĩa');
+      expect(lyHex?.thoanTu?.application).toBeDefined();
+
+      // Test Hexagram 1: Thuần Càn
+      const canHex = Array.from(hexagramsMap.values()).find((h) => h.id === 1);
+      expect(canHex).toBeDefined();
+      expect(canHex?.thoanTu?.hanViet).toBe('Càn: Nguyên, hanh, lợi, trinh.');
+    });
+  });
 });

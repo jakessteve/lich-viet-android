@@ -98,14 +98,14 @@ export default function HexagramCard({
       {/* ── Card Body: Centered Content ───────────────── */}
       <div className="flex flex-col items-center gap-1 sm:gap-2 p-1.5 sm:p-4 md:p-5 flex-1">
         {/* Label badge */}
-        <span className={`text-[10px] sm:text-[10px] uppercase tracking-widest font-bold ${accentClass}`}>{label}</span>
+        <span className={`label-standard ${accentClass}`}>{label}</span>
 
         {/* Hexagram Name */}
-        <h4 className="text-xs sm:text-base md:text-lg font-bold text-text-primary-light dark:text-text-primary-dark text-center leading-tight">
+        <h4 className="text-sm sm:text-base md:text-lg font-bold text-text-primary-light dark:text-text-primary-dark text-center leading-tight">
           {hexagram.name}
         </h4>
         {hexagram.fullChineseName && (
-          <span className="text-[10px] sm:text-xs font-medium tracking-wide opacity-80 text-text-secondary-light dark:text-text-secondary-dark">
+          <span className="text-xs font-medium tracking-wide opacity-80 text-text-secondary-light dark:text-text-secondary-dark">
             {hexagram.fullChineseName}
           </span>
         )}

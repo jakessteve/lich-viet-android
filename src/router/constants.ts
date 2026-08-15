@@ -38,7 +38,7 @@ export const NAV_LINKS: NavLink[] = [
   { id: 'ngay-tot', label: 'Ngày Tốt', icon: 'event_available', desc: 'Chọn ngày giờ tốt', enabled: true },
   { id: 'gieo-que', label: 'Gieo quẻ', icon: 'casino', desc: 'Mai Hoa & Tam Thức', enabled: true },
   { id: 'tu-vi', label: 'Tử Vi', icon: 'auto_awesome', desc: 'Tử Vi Đẩu Số', enabled: true },
-  { id: 'chiem-tinh-tay-phuong', label: 'C.Tây Phương', icon: 'auto_graph', desc: 'Chiêm tinh phương Tây', enabled: true },
   { id: 'chiem-tinh-vedic', label: 'C.Ấn Độ', icon: 'bubble_chart', desc: 'Chiêm tinh Vedic', enabled: true },
+  { id: 'chiem-tinh-tay-phuong', label: 'C.Tây Phương', icon: 'auto_graph', desc: 'Chiêm tinh phương Tây', enabled: true },
   { id: 'chiem-tinh-hop-la', label: 'Hợp Lá Số', icon: 'favorite', desc: 'Xem hợp nhau', enabled: true },
 ];

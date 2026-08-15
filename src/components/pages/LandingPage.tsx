@@ -126,18 +126,13 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen transition-colors duration-200 ease-out overflow-x-hidden relative">
-      {/* ──── Base Global Background ──── */}
-      <div className="fixed inset-0 pointer-events-none z-0" aria-hidden="true">
-        <div className="hidden dark:block absolute inset-0 bg-gradient-to-b from-mystery-deep via-[#0f0a24] to-mystery-deep" />
-      </div>
-
       {/* ──── Subtle hero texture from the legacy landing page ──── */}
       <div
         className="absolute top-0 left-0 right-0 h-[1180px] pointer-events-none z-0 overflow-hidden"
         aria-hidden="true"
       >
         <div
-          className="absolute inset-0 opacity-[0.35] dark:opacity-[0.16]"
+          className="absolute inset-0 opacity-[0.35] dark:opacity-[0.16] transition-opacity duration-300 ease-out"
           style={{
             backgroundImage: `
               radial-gradient(circle at 20% 30%, rgba(212,168,67,0.35) 1px, transparent 1px),
@@ -151,7 +146,7 @@ export default function LandingPage() {
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
-              className="absolute rounded-full border border-gold/10 dark:border-gold-dark/10"
+              className="absolute rounded-full border border-gold/10 dark:border-gold-dark/10 transition-colors duration-300 ease-out"
               style={{
                 width: `${420 + i * 220}px`,
                 height: `${420 + i * 220}px`,
@@ -303,7 +298,7 @@ export default function LandingPage() {
         </div>
 
         {/* Auspicious Art Background (Scaled to 90% of original massive size) */}
-        <div className="absolute top-6 right-[-55%] h-[520px] w-[520px] opacity-[0.22] dark:opacity-[0.24] pointer-events-none z-[1] sm:top-0 sm:right-[-20%] sm:h-[720px] sm:w-[720px] sm:opacity-[0.6] md:right-[-10%] lg:right-[0%] lg:h-[900px] lg:w-[900px] lg:opacity-[0.8] lg:dark:opacity-[0.7]">
+        <div className="absolute top-6 right-[-55%] h-[520px] w-[520px] opacity-[0.22] dark:opacity-[0.24] pointer-events-none z-[1] sm:top-0 sm:right-[-20%] sm:h-[720px] sm:w-[720px] sm:opacity-[0.6] md:right-[-10%] lg:right-[0%] lg:h-[900px] lg:w-[900px] lg:opacity-[0.8] lg:dark:opacity-[0.7] transition-opacity duration-300 ease-out">
           <HeroAuspiciousArt />
         </div>
 

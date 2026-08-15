@@ -7,7 +7,6 @@ import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import { SegmentedControl } from '../../shared';
 import { WesternChartView } from './WesternChartView';
 import { ForecastView } from './ForecastView';
-import { WesternMarkdownExport } from '../WesternMarkdownExport';
 
 const PAGE_TABS = [
   { id: 'la-so', label: 'Lá Số Gốc', icon: 'person', shortLabel: 'Lá Số' },
@@ -63,12 +62,7 @@ export const WesternAstrologyPage: React.FC = () => {
         tone="indigo"
       />
 
-      {pageTab === 'la-so' && (
-        <>
-          <WesternChartView />
-          <WesternMarkdownExport system="western" />
-        </>
-      )}
+      {pageTab === 'la-so' && <WesternChartView />}
       {pageTab === 'van-han' && <ForecastView />}
 
       <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm">

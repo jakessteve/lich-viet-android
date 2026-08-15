@@ -11,6 +11,7 @@ import { detectVedicYogasAndDoshas } from '../../../services/astrology/vedicYoga
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { useShallow } from 'zustand/react/shallow';
 import { SegmentedControl } from '../../shared';
+import { WesternMarkdownExport } from '../WesternMarkdownExport';
 
 const STYLE_OPTIONS = [
   { id: 'south', label: 'Nam Ấn (Vuông)', icon: 'grid_view', shortLabel: 'Nam Ấn' },
@@ -125,6 +126,9 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       ) : (
         <VedicDiamondChart result={result} type={chartType} />
       )}
+
+      {/* Action buttons immediately below chart */}
+      <WesternMarkdownExport system="vedic" />
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

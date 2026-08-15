@@ -104,7 +104,8 @@ const getDefaultWesternInput = (): WesternChartInput => {
 };
 
 const buildUnifiedProfile = (input: WesternChartInput, gender: string) => {
-  const birthDate = input.birthDate instanceof Date ? input.birthDate : new Date(input.birthDate);
+  const birthDate = input.birthDate instanceof Date ? new Date(input.birthDate.getTime()) : new Date(input.birthDate);
+  birthDate.setHours(input.birthHour ?? 12, input.birthMinute ?? 0, 0, 0);
   return generateUnifiedBirthProfile({
     birthTimestamp: birthDate.getTime(),
     latitude: input.latitude,

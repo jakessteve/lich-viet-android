@@ -124,13 +124,12 @@ export const TuViInputForm: React.FC = () => {
     const nextInput = buildTuViInputFromUser(user, input);
     if (nextInput) {
       setInput(nextInput);
-      calculateChart(nextInput);
     } else if (user.displayName && !input.name) {
       setInput({ name: user.displayName });
     }
 
     didPrefill.current = true;
-  }, [calculateChart, input, setInput, user, userBirthProfile]);
+  }, [input, setInput, user, userBirthProfile]);
 
   const labelBase =
     'block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-2 tracking-wide';

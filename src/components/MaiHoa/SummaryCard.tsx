@@ -196,6 +196,37 @@ export default function SummaryCard({
             </div>
           </div>
 
+          {/* ── Thoán Từ Classical Quote (Academic Foundation) ─── */}
+          {summary.thoanTu && (
+            <div className="card-quote">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <span className="material-icons-round text-sm text-accent-moving dark:text-accent-moving-dark">
+                  menu_book
+                </span>
+                <span className="label-standard text-accent-moving dark:text-accent-moving-dark">
+                  Khẩu Quyết Thoán Từ (Văn Vương)
+                </span>
+              </div>
+              {summary.thoanTu.hanViet && (
+                <p className="text-sm sm:text-base font-bold text-amber-900 dark:text-amber-200 tracking-tight mb-1">
+                  &ldquo;{summary.thoanTu.hanViet}&rdquo;
+                </p>
+              )}
+              <p className="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
+                <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">Dịch nghĩa: </span>
+                {summary.thoanTu.meaning}
+              </p>
+              {summary.thoanTu.application && (
+                <div className="mt-2 pt-2 border-t border-amber-200/50 dark:border-amber-700/30">
+                  <p className="text-xs sm:text-sm text-amber-800 dark:text-amber-300 font-medium leading-relaxed">
+                    <span className="font-bold">Ứng dụng thực tiễn: </span>
+                    {summary.thoanTu.application}
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* ── Detail Rows ───────────────────────── */}
           <div className="space-y-3">
             <DetailRow icon="sync_alt" heading="Quan hệ Ngũ Hành">
@@ -210,15 +241,15 @@ export default function SummaryCard({
               </p>
             </DetailRow>
 
-            <DetailRow icon="menu_book" heading="Ý nghĩa quẻ">
-              <p className="text-sm text-text-primary-light dark:text-text-primary-dark font-medium">
+            <DetailRow icon="psychology" heading="Ý nghĩa quẻ">
+              <p className="text-sm text-text-primary-light dark:text-text-primary-dark font-semibold">
                 {summary.hexagramMeaning.name}
                 {summary.fullChineseName && (
                   <span className="ml-1.5 text-xs opacity-75 font-normal">({summary.fullChineseName})</span>
                 )}
               </p>
-              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
-                {summary.hexagramMeaning.image}
+              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5 italic">
+                "{summary.hexagramMeaning.image}"
               </p>
               <p className="text-sm text-text-primary-light dark:text-text-primary-dark mt-1">
                 {summary.hexagramMeaning.meaning}
@@ -235,7 +266,7 @@ export default function SummaryCard({
                     payments
                   </span>
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-600/80 dark:text-emerald-400/80 block">
+                    <span className="label-standard text-emerald-600/80 dark:text-emerald-400/80 block">
                       Tài lộc
                     </span>
                     <span className="text-xs text-text-primary-light dark:text-text-primary-dark">
@@ -248,7 +279,7 @@ export default function SummaryCard({
                 <div className="flex items-start gap-2 p-2.5 rounded-lg bg-blue-50/50 dark:bg-blue-900/15 border border-blue-100/50 dark:border-blue-800/30">
                   <span className="material-icons-round text-xs text-blue-500 dark:text-blue-400 mt-0.5">work</span>
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-blue-600/80 dark:text-blue-400/80 block">
+                    <span className="label-standard text-blue-600/80 dark:text-blue-400/80 block">
                       Sự nghiệp
                     </span>
                     <span className="text-xs text-text-primary-light dark:text-text-primary-dark">
@@ -261,7 +292,7 @@ export default function SummaryCard({
                 <div className="flex items-start gap-2 p-2.5 rounded-lg bg-pink-50/50 dark:bg-pink-900/15 border border-pink-100/50 dark:border-pink-800/30">
                   <span className="material-icons-round text-xs text-pink-500 dark:text-pink-400 mt-0.5">favorite</span>
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-pink-600/80 dark:text-pink-400/80 block">
+                    <span className="label-standard text-pink-600/80 dark:text-pink-400/80 block">
                       Tình yêu
                     </span>
                     <span className="text-xs text-text-primary-light dark:text-text-primary-dark">
@@ -275,7 +306,7 @@ export default function SummaryCard({
 
           {/* ── Full Explanation ────────────────────── */}
           <div className="bg-gray-50/80 dark:bg-white/5 rounded-xl p-4 border border-border-light/30 dark:border-border-dark/30">
-            <span className="label-standard block mb-2">Tổng kết</span>
+            <span className="label-standard block mb-2">Tổng kết luận giải</span>
             <p className="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed whitespace-pre-line">
               {summary.detailedExplanation}
             </p>

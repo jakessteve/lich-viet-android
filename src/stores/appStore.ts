@@ -39,6 +39,8 @@ interface AppState {
   fontSize: FontSizeLevel;
   /** Whether personalization is active (toggle by user) */
   isPersonalized: boolean;
+  /** Whether the floating jump to top button is enabled */
+  showScrollToTopButton: boolean;
 }
 
 interface AppActions {
@@ -54,6 +56,8 @@ interface AppActions {
   setFontSizeLevel: (level: FontSizeLevel) => void;
   /** Toggle personalization on/off */
   togglePersonalization: () => void;
+  /** Set floating jump to top button visibility */
+  setShowScrollToTopButton: (enabled: boolean) => void;
 }
 
 type AppStore = AppState & AppActions;
@@ -82,12 +86,25 @@ export function executeThemeTransition(apply: () => void): void {
     apply();
     return;
   }
+
+  // Use View Transitions API if supported for silky-smooth GPU crossfade
+  const doc = document as unknown as {
+    startViewTransition?: (cb: () => void) => { ready: Promise<void>; finished: Promise<void> };
+  };
+  if (typeof doc.startViewTransition === 'function') {
+    doc.startViewTransition(() => {
+      apply();
+    });
+    return;
+  }
+
+  // Fallback for environments without View Transitions
   const root = document.documentElement;
   root.classList.add('theme-transitioning');
   apply();
   window.setTimeout(() => {
     root.classList.remove('theme-transitioning');
-  }, 220);
+  }, 230);
 }
 
 function applyDarkMode(isDark: boolean): void {
@@ -128,6 +145,12 @@ function getInitialFontSize(): FontSizeLevel {
   return level;
 }
 
+function getInitialScrollToTop(): boolean {
+  if (typeof window === 'undefined') return true;
+  const saved = localStorage.getItem('showScrollToTopButton');
+  return saved === null ? true : saved === 'true';
+}
+
 // ══════════════════════════════════════════════════════════
 // Zustand Store
 // ══════════════════════════════════════════════════════════
@@ -142,6 +165,7 @@ export const useAppStore = create<AppStore>()((set) => ({
   isDark: getInitialDarkMode(),
   isPersonalized: false,
   fontSize: getInitialFontSize(),
+  showScrollToTopButton: getInitialScrollToTop(),
 
   // Actions
   setSelectedDate: (date: Date) => {
@@ -203,5 +227,12 @@ export const useAppStore = create<AppStore>()((set) => ({
       properties: { font_size: level },
     });
     set({ fontSize: level });
+  },
+
+  setShowScrollToTopButton: (enabled: boolean) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('showScrollToTopButton', String(enabled));
+    }
+    set({ showScrollToTopButton: enabled });
   },
 }));

@@ -113,11 +113,11 @@ export default function AppNav() {
           {/* Dark mode toggle */}
           <button
             id="tour-theme-toggle"
-            className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 btn-interact transition-all duration-300 ${darkModeFlash ? 'scale-110 rotate-180' : ''}`}
+            className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${darkModeFlash ? 'scale-110 rotate-180' : ''}`}
             onClick={() => {
               toggleDarkMode();
               setDarkModeFlash(true);
-              setTimeout(() => setDarkModeFlash(false), 400);
+              setTimeout(() => setDarkModeFlash(false), 300);
             }}
             aria-label="Chuyển chế độ sáng/tối"
           >

@@ -48,7 +48,7 @@ const CosmicWeatherCard: React.FC<CosmicWeatherCardProps> = ({ navigate, today }
     >
       {/* Header */}
       <div className="flex items-center justify-between w-full mb-5">
-        <span className="text-xs font-bold uppercase tracking-[0.15em] text-text-secondary-light/60 dark:text-text-secondary-dark/60">
+        <span className="label-standard text-text-secondary-light/70 dark:text-text-secondary-dark/70">
           Vận Khí Vũ Trụ
         </span>
         <span className="material-icons-round text-sm text-text-secondary-light/60 dark:text-text-secondary-dark/60 group-hover:text-gold dark:group-hover:text-gold-dark transition-colors">

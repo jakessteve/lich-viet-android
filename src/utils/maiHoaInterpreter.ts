@@ -364,7 +364,8 @@ export function getCategoryPredictions(hexagram: Hexagram): HexagramCategoryPred
 // ── Orchestrator: Full Interpretation ─────────────────────────
 
 /**
- * Builds a detailed Vietnamese explanation combining all interpretation factors.
+ * Builds a structured academic Vietnamese explanation starting with the Hán Việt quote,
+ * modern translation, human-readable interpretation, and practical application.
  */
 function buildDetailedExplanation(
   assessment: TheDungAssessment,
@@ -372,30 +373,50 @@ function buildDetailedExplanation(
   theElement: NguHanh,
   dungElement: NguHanh,
   season: Season,
-  hexagramName: string,
+  hexagram: Hexagram,
 ): string {
-  const parts: string[] = [
-    `Quẻ ${hexagramName}:`,
-    `Thể thuộc hành ${theElement}, Dụng thuộc hành ${dungElement}.`,
-    `Mối quan hệ: ${assessment.relationship} — ${assessment.meaning}`,
-    `Ảnh hưởng thời gian: Hành ${theElement} trong mùa ${season} đang ở trạng thái ${strength}.`,
-  ];
+  const parts: string[] = [];
 
-  // Combine strength and relation for overall interpretation
-
-  if (assessment.verdict === 'Cát' && STRONG_STRENGTHS.includes(strength)) {
-    parts.push('Tổng kết: Rất tốt lành. Thể được sinh trợ và đang vượng khí.');
-  } else if (assessment.verdict === 'Cát' && WEAK_STRENGTHS.includes(strength)) {
-    parts.push('Tổng kết: Tuy quẻ tốt nhưng Thể đang suy yếu, cần thận trọng thời điểm.');
-  } else if (assessment.verdict === 'Hung' && STRONG_STRENGTHS.includes(strength)) {
-    parts.push('Tổng kết: Quẻ không thuận lợi nhưng Thể đang vượng, có thể giảm nhẹ hung khí.');
-  } else if (assessment.verdict === 'Hung' && WEAK_STRENGTHS.includes(strength)) {
-    parts.push('Tổng kết: Rất bất lợi. Quẻ hung và Thể đang suy kiệt, nên hoãn lại.');
-  } else {
-    parts.push('Tổng kết: Trung bình, cần xem xét thêm các yếu tố khác.');
+  // 1. Khẩu Quyết Thoán Từ (Hán Việt Quote) & Dịch Nghĩa Hiện Đại
+  if (hexagram.thoanTu?.hanViet) {
+    parts.push(`【Khẩu Quyết Thoán Từ】: "${hexagram.thoanTu.hanViet}"`);
+    if (hexagram.thoanTu.meaning) {
+      parts.push(`→ Dịch nghĩa: ${hexagram.thoanTu.meaning}`);
+    }
+  } else if (hexagram.thoanTu?.meaning) {
+    parts.push(`【Thoán Từ】: ${hexagram.thoanTu.meaning}`);
   }
 
-  return parts.join(' ');
+  // 2. Luận Giải Tượng Quẻ & Bối Cảnh Nhân Văn
+  if (hexagram.thoanTu?.humanInterpretation) {
+    parts.push(`\n【Luận Giải Tượng Quẻ & Bản Chất】:\n${hexagram.thoanTu.humanInterpretation}`);
+  } else if (hexagram.meaning) {
+    parts.push(`\n【Ý Nghĩa Quẻ】:\n${hexagram.meaning}`);
+  }
+
+  // 3. Tương Tác Thể - Dụng & Thời Vận
+  parts.push(`\n【Tương Tác Thể - Dụng & Thời Vận】:`);
+  parts.push(`• Cục diện: Thể (${theElement}) gặp Dụng (${dungElement}) tạo thành "${assessment.relationship}" — ${assessment.meaning}`);
+  parts.push(`• Thời vận: Hành ${theElement} trong mùa ${season} ở trạng thái "${strength}" (${STRENGTH_DESCRIPTIONS[strength]}).`);
+
+  if (assessment.verdict === 'Cát' && STRONG_STRENGTHS.includes(strength)) {
+    parts.push(`→ Tổng kết: Đại Cát. Thể được sinh trợ và đắc thời vượng khí, mưu sự đại thành.`);
+  } else if (assessment.verdict === 'Cát' && WEAK_STRENGTHS.includes(strength)) {
+    parts.push(`→ Tổng kết: Thứ Cát. Tượng quẻ tốt nhưng Thể tạm thời suy yếu, cần kiên nhẫn tích lũy.`);
+  } else if (assessment.verdict === 'Hung' && STRONG_STRENGTHS.includes(strength)) {
+    parts.push(`→ Tổng kết: Bình hòa / Cẩn trọng. Tương tác có trắc trở nhưng Thể đang vượng, đủ sức hóa giải.`);
+  } else if (assessment.verdict === 'Hung' && WEAK_STRENGTHS.includes(strength)) {
+    parts.push(`→ Tổng kết: Bất lợi. Cục diện xung khắc và Thể suy kiệt, nên tạm hoãn hành động liều lĩnh.`);
+  } else {
+    parts.push(`→ Tổng kết: Bình ổn. Mọi việc tùy thuộc vào sự khéo léo và nỗ lực của bản thân.`);
+  }
+
+  // 4. Lời Khuyên Ứng Dụng Thực Tiễn
+  if (hexagram.thoanTu?.application) {
+    parts.push(`\n【Lời Khuyên Ứng Dụng Thực Tiễn】:\n${hexagram.thoanTu.application}`);
+  }
+
+  return parts.join('\n');
 }
 
 /**
@@ -486,7 +507,7 @@ export function interpretDivination(result: DivinationResult, lunarMonth: number
     theElement,
     dungElement,
     season,
-    result.mainHexagram.name,
+    result.mainHexagram,
   );
 
   // Extended content (optional — only present for hexagrams with rich data)
