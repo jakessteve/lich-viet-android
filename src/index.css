@@ -862,6 +862,36 @@ html.theme-transitioning h6 {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   CELESTIAL MICRO-ANIMATIONS & INTERACTION REFINEMENTS
+   ═══════════════════════════════════════════════════════════ */
+@keyframes celestial-pulse {
+  0% { transform: scale(0.95); opacity: 0.85; }
+  100% { transform: scale(1.08); opacity: 0; }
+}
+
+@keyframes celestial-glow-breathe {
+  0%, 100% { box-shadow: 0 0 8px rgba(212, 168, 67, 0.15); }
+  50% { box-shadow: 0 0 18px rgba(212, 168, 67, 0.4); }
+}
+
+@keyframes card-sheen {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(200%) rotate(45deg); }
+}
+
+.animate-celestial-pulse {
+  animation: celestial-pulse 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-glow-breathe {
+  animation: celestial-glow-breathe 3s ease-in-out infinite;
+}
+
+.animate-stagger-item {
+  animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ═══════════════════════════════════════════════════════════
    ACCESSIBILITY: Reduced Motion
    ═══════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
@@ -881,6 +911,9 @@ html.theme-transitioning h6 {
   .animate-bounce,
   .animate-spin,
   .animate-glow-pulse,
+  .animate-celestial-pulse,
+  .animate-glow-breathe,
+  .animate-stagger-item,
   .loading-shimmer,
   .animate-shimmer,
   .glass-shimmer::after {
@@ -895,3 +928,4 @@ html.theme-transitioning h6 {
     transform: none !important;
   }
 }
+

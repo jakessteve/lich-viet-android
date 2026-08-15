@@ -9,6 +9,7 @@ interface TuViChartProps {
   chart: TuViChartType;
   selectedPalaceIndex: number | null;
   onSelectPalace: (index: number | null) => void;
+  onZoomChange?: (zoomed: boolean) => void;
 }
 
 /**
@@ -68,7 +69,12 @@ function getInnerAnchor(chiIndex: number): { x: number; y: number } | null {
   return { x, y };
 }
 
-export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex, onSelectPalace }) => {
+export const TuViChart: React.FC<TuViChartProps> = ({
+  chart,
+  selectedPalaceIndex,
+  onSelectPalace,
+  onZoomChange,
+}) => {
   const shellRef = useRef<HTMLDivElement>(null);
   const chartLegendRef = useRef<HTMLDivElement>(null);
   const brightnessLegendRef = useRef<HTMLDivElement>(null);
@@ -78,6 +84,10 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
     typeof window !== 'undefined' ? window.matchMedia('(max-width: 768px)').matches : false,
   );
   const lastTapRef = useRef<number>(0);
+
+  useEffect(() => {
+    onZoomChange?.(mobileZoomed);
+  }, [mobileZoomed, onZoomChange]);
 
   const palaceByChi = new Map<number, (typeof chart.palaces)[number]>();
   for (const palace of chart.palaces) {

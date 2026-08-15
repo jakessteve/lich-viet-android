@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useShallow } from 'zustand/react/shallow';
@@ -8,6 +8,10 @@ import { TuViChart } from './TuViChart';
 import { TuViSummaryPanel } from './TuViSummaryPanel';
 import { TuViMarkdownExport } from './TuViMarkdownExport';
 import { IconButton, SegmentedControl, type SegmentedOption } from '../shared';
+import { TuViPalaceInlineDetail } from './TuViPalaceInlineDetail';
+import { ExecutiveSnapshotCards } from '../shared/ExecutiveSnapshotCards';
+import { StoryCardExportModal } from '../shared/StoryCardExportModal';
+import { interpretPalace } from '@/services/tuvi/palaceInterpretation';
 import type { TuViSchool } from '../../types/tuvi';
 import './tuviChart.css';
 import { getDatePartsInTimeZone, VIETNAM_TIME_ZONE } from '@/services/tuvi/timeNormalization';
@@ -51,6 +55,33 @@ export const TuViPage: React.FC = () => {
   const currentYear = now.year;
   const currentMonth = now.month;
 
+  const [showStoryModal, setShowStoryModal] = useState(false);
+  const [isChartZoomed, setIsChartZoomed] = useState(false);
+  const snapshotRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (chart) {
+      const timer = setTimeout(() => {
+        snapshotRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [chart]);
+
+  // Derive executive snapshot traits from chart
+  const menhPalace = chart?.palaces.find((p) => p.isMenh);
+  const menhStars = menhPalace?.chinhTinh.map((s) => s.name).join(', ') || 'Vô Chính Diệu';
+  const superpowerDesc = menhPalace?.chinhTinh.length
+    ? `Bản mệnh hội tụ khí chất của ${menhStars}, nổi bật với tư duy độc lập, ý chí quyết đoán và năng lực dẫn dắt công việc xuất sắc.`
+    : `Bản mệnh Vô Chính Diệu mượn lực đối cung, sở hữu sự linh hoạt tuyệt vời, khả năng thích ứng cao và khéo léo nắm bắt thời cơ.`;
+
+  const knotTitle = menhPalace?.hasTriet
+    ? 'Thử Thách Tiền Vận (Ngộ Triệt)'
+    : 'Áp Lực Hoàn Hảo & Trách Nhiệm';
+  const knotDesc = menhPalace?.hasTriet
+    ? 'Giai đoạn trước 30 tuổi cần kiên nhẫn tích lũy nội lực, tránh nóng vội đốt cháy giai đoạn.'
+    : 'Cần học cách thả lỏng, ủy quyền công việc và tránh tự tạo áp lực quá tải cho bản thân.';
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -60,6 +91,37 @@ export const TuViPage: React.FC = () => {
           Tử Vi Đẩu Số
         </h2>
       </div>
+
+      {/* 30-Second Executive Snapshot Cards */}
+      {chart && (
+        <div ref={snapshotRef} className="animate-fade-scale scroll-mt-4">
+          <ExecutiveSnapshotCards
+            name={input.name || 'Bản Thân'}
+            superpowerTitle={`Cung Mệnh ${menhStars} (${chart.centerInfo.menhNapAm})`}
+            superpowerDesc={superpowerDesc}
+            knotTitle={knotTitle}
+            knotDesc={knotDesc}
+            year2026CompassTitle={`Năm Bính Ngọ ${currentYear}`}
+            year2026CompassDesc={`Tập trung mở rộng đối tác, củng cố vị thế chuyên môn và giữ vững kỷ luật tài chính trong năm ${currentYear}.`}
+            onOpenStoryExport={() => setShowStoryModal(true)}
+          />
+        </div>
+      )}
+
+      {/* Story 9:16 Modal */}
+      {chart && (
+        <StoryCardExportModal
+          isOpen={showStoryModal}
+          onClose={() => setShowStoryModal(false)}
+          name={input.name || 'Bản Thân'}
+          solarDate={chart.centerInfo.duongLich}
+          tuViArchetype={`Mệnh ${menhStars} (${chart.centerInfo.cuc})`}
+          westernArchetype="Chiêm Tinh Tây Phương"
+          vedicArchetype="Chiêm Tinh Vệ Đà"
+          superpower={superpowerDesc}
+          actionCompass={`Năm ${currentYear}: Tận dụng tối đa năng lực lãnh đạo và bản lĩnh tự chủ để bứt phá sự nghiệp.`}
+        />
+      )}
 
       {/* Input Form */}
       <div className="glass-card">
@@ -184,9 +246,28 @@ export const TuViPage: React.FC = () => {
 
       {chart && (
         <div className="animate-fade-scale">
-          <TuViChart chart={chart} selectedPalaceIndex={selectedPalaceIndex} onSelectPalace={selectPalace} />
+          <TuViChart
+            chart={chart}
+            selectedPalaceIndex={selectedPalaceIndex}
+            onSelectPalace={selectPalace}
+            onZoomChange={setIsChartZoomed}
+          />
         </div>
       )}
+
+      {/* Hybrid Palace Detail (Inline when fit, Compact HUD when zoomed) */}
+      {chart && selectedPalaceIndex !== null && chart.palaces[selectedPalaceIndex] && (() => {
+        const palace = chart.palaces[selectedPalaceIndex];
+        const interpretation = interpretPalace(palace, chart.palaces, chart.centerInfo);
+
+        return (
+          <TuViPalaceInlineDetail
+            interpretation={interpretation}
+            onClose={() => selectPalace(null as unknown as number)}
+            isZoomed={isChartZoomed}
+          />
+        );
+      })()}
 
       {chart && <TuViMarkdownExport />}
 

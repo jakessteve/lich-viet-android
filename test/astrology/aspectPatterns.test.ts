@@ -56,4 +56,39 @@ describe('detectAspectPatterns', () => {
     expect(yod.nameVi).toContain('Ngón Tay Thượng Đế');
     expect(yod.apexPlanet?.id).toBe('planet:saturn');
   });
+
+  it('generates rich dynamic contextual synthesis with houses and resolution point for T-Square', () => {
+    const planets: AspectPatternPlanet[] = [
+      { id: 'planet:sun', name: 'Sun', nameVi: 'Mặt Trời', symbol: '☉', longitude: 0, signVi: 'Bạch Dương', house: 1 },
+      { id: 'planet:moon', name: 'Moon', nameVi: 'Mặt Trăng', symbol: '☽', longitude: 180, signVi: 'Thiên Bình', house: 7 },
+      { id: 'planet:mars', name: 'Mars', nameVi: 'Sao Hỏa', symbol: '♂', longitude: 90, signVi: 'Cự Giải', house: 10 },
+    ];
+
+    const patterns = detectAspectPatterns(planets);
+    const ts = patterns.find((p) => p.type === 't_square')!;
+
+    expect(ts).toBeDefined();
+    expect(ts.activatedHouses).toEqual([1, 7, 10]);
+    expect(ts.lifeAreasVi).toHaveLength(3);
+    expect(ts.lifeAreasVi?.[0]).toContain('Nhà 1');
+
+    // Apex analysis
+    expect(ts.apexDetails).toBeDefined();
+    expect(ts.apexDetails?.planetName).toBe('Sao Hỏa');
+    expect(ts.apexDetails?.house).toBe(10);
+    expect(ts.apexDetails?.focusAreaVi).toContain('Sự nghiệp');
+
+    // Resolution Point (Empty Leg) opposite House 10 (Cancer) -> House 4 (Capricorn)
+    expect(ts.resolutionPoint).toBeDefined();
+    expect(ts.resolutionPoint?.oppositeSignVi).toBe('Ma Kết');
+    expect(ts.resolutionPoint?.oppositeHouse).toBe(4);
+    expect(ts.resolutionPoint?.adviceVi).toContain('Nhà 4');
+
+    // 3-layer personalized synthesis
+    expect(ts.personalizedSynthesis).toBeDefined();
+    expect(ts.personalizedSynthesis?.coreChallengeVi).toContain('Áp lực');
+    expect(ts.personalizedSynthesis?.uniqueGiftVi).toContain('động lực');
+    expect(ts.personalizedSynthesis?.actionableAdviceVi).toBeDefined();
+  });
 });
+

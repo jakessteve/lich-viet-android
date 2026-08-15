@@ -297,6 +297,82 @@ function hasAllStars(haystack: string[], needles: string[]): boolean {
   return needles.every((n) => set.has(n));
 }
 
+function buildContextualCombinationDetails(
+  def: CombinationDefinition,
+  involvedCung: string[],
+  involvedStars: string[],
+  purity: CombinationPurity,
+  palaces: TuViPalace[]
+): TuViCombination['contextualDetails'] {
+  const involvedPalaceObjs = palaces.filter((p) => involvedCung.includes(p.name));
+  const isMenhThanInvolved = involvedPalaceObjs.some((p) => p.isMenh || p.isThan);
+
+  // Primary Palace
+  const menhPalace = involvedPalaceObjs.find((p) => p.isMenh);
+  const thanPalace = involvedPalaceObjs.find((p) => p.isThan);
+  const quanPalace = involvedPalaceObjs.find((p) => p.name === 'Quan Lộc');
+  const taiPalace = involvedPalaceObjs.find((p) => p.name === 'Tài Bạch');
+  const primaryPalace = menhPalace ?? thanPalace ?? quanPalace ?? taiPalace ?? involvedPalaceObjs[0];
+  const primaryPalaceName = primaryPalace ? primaryPalace.name : involvedCung[0] ?? 'Bản Cung';
+
+  // Tứ Hóa effects
+  const tuHoaEffects: string[] = [];
+  involvedPalaceObjs.forEach((p) => {
+    p.tuHoa.forEach((th) => {
+      if (involvedStars.includes(th.starName)) {
+        if (th.type === 'Lộc') {
+          tuHoaEffects.push(`Hóa Lộc tại ${th.starName} (Cung ${p.name}): Kích hoạt tài vận dồi dào, cơ hội sinh lời và sự trợ lực từ quý nhân.`);
+        } else if (th.type === 'Quyền') {
+          tuHoaEffects.push(`Hóa Quyền tại ${th.starName} (Cung ${p.name}): Tăng cường uy quyền, năng lực quản trị, sự quyết đoán và vai trò dẫn dắt.`);
+        } else if (th.type === 'Khoa') {
+          tuHoaEffects.push(`Hóa Khoa tại ${th.starName} (Cung ${p.name}): Mang lại danh tiếng, học vấn thông tuệ, khả năng giải cứu hung họa và sự kính trọng xã hội.`);
+        } else if (th.type === 'Kỵ') {
+          tuHoaEffects.push(`Hóa Kỵ tại ${th.starName} (Cung ${p.name}): Cảnh báo những biến động tâm lý, trở ngại hoặc đàm tiếu thị phi cần sự cẩn trọng.`);
+        }
+      }
+    });
+  });
+
+  // Tuần Triệt impact
+  let tuanTrietImpact: string | undefined;
+  const hasTriet = involvedPalaceObjs.some((p) => p.hasTriet);
+  const hasTuan = involvedPalaceObjs.some((p) => p.hasTuan);
+  if (hasTriet && hasTuan) {
+    tuanTrietImpact = 'Cung vị chịu ảnh hưởng của cả Tuần lẫn Triệt: Gặp nhiều thử thách, thăng trầm tiền vận nhưng tạo nên nội lực sâu sắc và hậu vận ổn định.';
+  } else if (hasTriet) {
+    tuanTrietImpact = 'Cung vị có Triệt Không: Thử thách và tôi luyện ý chí ở giai đoạn tiền vận (trước 30 tuổi), sau đó sẽ dần bộc phát sức mạnh.';
+  } else if (hasTuan) {
+    tuanTrietImpact = 'Cung vị có Tuần Không: Giữ cho năng lượng cách cục được điều tiết êm ả, giảm bớt sự bộc phát thái quá và duy trì thế bền bỉ.';
+  }
+
+  // Career and life guidance
+  let careerAndLifeGuidance = '';
+  if (isMenhThanInvolved) {
+    careerAndLifeGuidance = `Cách cục nằm tại trục Mệnh/Thân định hình phong cách sống, bản lĩnh cá nhân và năng lực cốt lõi. Nên kiên trì phát huy thế mạnh của ${involvedStars.join(', ')} trong lĩnh vực sở trường.`;
+  } else if (primaryPalaceName === 'Quan Lộc') {
+    careerAndLifeGuidance = `Cách cục hội tụ tại Cung Quan Lộc hỗ trợ mạnh mẽ cho sự nghiệp, khả năng thăng tiến và khẳng định chuyên môn trong công việc.`;
+  } else if (primaryPalaceName === 'Tài Bạch') {
+    careerAndLifeGuidance = `Cách cục hội tụ tại Cung Tài Bạch mở ra các cơ hội tích lũy tài chính, đầu tư và quản trị dòng tiền hiệu quả.`;
+  } else if (primaryPalaceName === 'Thiên Di') {
+    careerAndLifeGuidance = `Cách cục tại Cung Thiên Di cho thấy môi trường đối ngoại, xuất ngoại hoặc công tác xa là đòn bẩy lớn nhất để phát triển.`;
+  } else {
+    careerAndLifeGuidance = `Cách cục tại Cung ${primaryPalaceName} tạo nên thế tương trợ quan trọng giữa các mối quan hệ và nền tảng cuộc sống của đương số.`;
+  }
+
+  // Dynamic Synthesis
+  const purityLabel = purity === 'thuần' ? 'cách cục thuần túy, đắc lực' : purity === 'bán' ? 'cách cục có sự hòa lẫn cát hung' : 'cách cục bị sát tinh phân tán, cần tôi luyện vượt khó';
+  const dynamicSynthesisVi = `Cách cục ${def.name} (${def.nameHanViet}) định hình tại Cung ${involvedCung.join(', ')} (${purityLabel}). ${tuHoaEffects.length > 0 ? tuHoaEffects.join(' ') : ''} ${tuanTrietImpact ?? ''}`;
+
+  return {
+    primaryPalaceName,
+    isMenhThanInvolved,
+    tuHoaEffects,
+    tuanTrietImpact,
+    careerAndLifeGuidance,
+    dynamicSynthesisVi,
+  };
+}
+
 function createCombination(
   def: CombinationDefinition,
   involvedCung: string[],
@@ -319,6 +395,7 @@ function createCombination(
     description: def.description,
     category: def.category,
     sourcePatternId: def.id,
+    contextualDetails: buildContextualCombinationDetails(def, involvedCung, involvedStars, purity, palaces),
   };
   combo.strength = calculateCombinationStrength(combo, palaces);
   return combo;

@@ -311,6 +311,15 @@ export interface TuViCombination {
   category: CombinationCategory;
   /** Optional source key when the pattern is mirrored from a larger library */
   sourcePatternId?: string;
+  /** Enhanced contextual synthesis specific to native's palaces, Tứ Hóa, Tuần Triệt, and Mệnh-Cục */
+  contextualDetails?: {
+    primaryPalaceName: string;
+    isMenhThanInvolved: boolean;
+    tuHoaEffects: string[];
+    tuanTrietImpact?: string;
+    careerAndLifeGuidance: string;
+    dynamicSynthesisVi: string;
+  };
 }
 
 // ── Mệnh-Cục Relation ─────────────────────────────────────

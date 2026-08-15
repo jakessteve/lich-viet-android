@@ -195,6 +195,45 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
       {/* Tab Content: The Big Three & Angles */}
       {activeTab === 'big-three' && (
         <div className="space-y-3">
+          {/* Holistic Core Triad Dynamic Synthesis Card */}
+          {sun && moon && asc && (
+            <div className="surface-card rounded-2xl border border-indigo-500/30 bg-gradient-to-br from-indigo-500/5 via-surface-container-lowest to-purple-500/5 p-4 sm:p-5 dark:border-indigo-500/20 shadow-sm space-y-3">
+              <div className="flex items-center justify-between gap-2 border-b border-border-light/40 pb-2.5 dark:border-border-dark/40">
+                <div className="flex items-center gap-2">
+                  <span className="material-icons-round text-lg text-indigo-500">psychology</span>
+                  <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+                    Bức Tranh Tổng Hợp Tam Trụ Bản Mệnh (Core Triad Dynamic)
+                  </h4>
+                </div>
+                <span className="rounded-full bg-indigo-500/15 px-2.5 py-0.5 text-[10px] font-bold text-indigo-700 dark:text-indigo-300">
+                  Tổng Hợp Cá Nhân Hóa
+                </span>
+              </div>
+
+              <div className="space-y-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+                <p>
+                  <strong className="font-semibold text-indigo-600 dark:text-indigo-400">Sự hòa hợp Thân - Tâm - Trí:</strong> Ý chí và cái tôi cốt lõi của bạn mang khí chất <span className="font-bold">{sun.signVi}</span> (Nhà {sun.house}), được nuôi dưỡng bởi thế giới cảm xúc tiềm thức <span className="font-bold">{moon.signVi}</span> (Nhà {moon.house}), và thể hiện ra thế giới bên ngoài qua lăng kính phong thái <span className="font-bold">{asc.signVi}</span>.
+                </p>
+
+                {(() => {
+                  const chartRuler = result.houseRulers?.find((r) => r.houseNumber === 1);
+                  if (!chartRuler) return null;
+                  return (
+                    <div className="rounded-xl bg-surface-container-low/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
+                      <span className="font-bold text-indigo-600 dark:text-indigo-400">✦ Chủ Tinh Cung Mọc (Chart Ruler):</span>{' '}
+                      <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                        {chartRuler.traditionalRulerVi} ({chartRuler.traditionalRulerSymbol})
+                      </span>
+                      {chartRuler.rulerHouse && (
+                        <span> tọa thủ tại <strong className="text-text-primary-light dark:text-text-primary-dark">Nhà {chartRuler.rulerHouse}</strong> ({chartRuler.rulerSignVi ?? ''})</span>
+                      )}. Đây chính là "kim chỉ nam" dẫn lối cho hành trình phát triển cá nhân và các bước ngoặt lớn trong cuộc đời bạn.
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+
           {renderPlanetCard(
             sun,
             'Cái Tôi, Bản Sắc & Mục Tiêu Cốt Lõi',

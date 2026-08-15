@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { BirthDataInput, ActionButton } from '../../shared';
+import { ExecutiveSnapshotCards } from '../../shared/ExecutiveSnapshotCards';
+import { StoryCardExportModal } from '../../shared/StoryCardExportModal';
 import { WesternNatalChartDisplay } from './WesternNatalChartDisplay';
 
 export const WesternChartView: React.FC = () => {
@@ -16,8 +18,58 @@ export const WesternChartView: React.FC = () => {
     }))
   );
 
+  const [showStoryModal, setShowStoryModal] = useState(false);
+  const snapshotRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (result && !isCalculating) {
+      const timer = setTimeout(() => {
+        snapshotRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [result, isCalculating]);
+
+  const sunObj = result?.objects?.find((o) => o.id === 'planet:sun');
+  const moonObj = result?.objects?.find((o) => o.id === 'planet:moon');
+  const sunSign = sunObj?.signVi || sunObj?.sign || 'Bạch Dương';
+  const moonSign = moonObj?.signVi || moonObj?.sign || 'Bảo Bình';
+  const ascSign = result?.angles?.Ascendant?.signVi || result?.angles?.Ascendant?.sign || 'Sư Tử';
+  const currentYear = new Date().getFullYear();
+
   return (
     <div className="space-y-6">
+      {/* 30-Second Executive Snapshot Cards */}
+      {result && !isCalculating && (
+        <div ref={snapshotRef} className="animate-fade-scale scroll-mt-4">
+          <ExecutiveSnapshotCards
+            name={input.locationName ? `Lá Số (${input.locationName})` : 'Bản Thân'}
+            superpowerTitle={`Mặt Trời ${sunSign} · Cung Mọc ${ascSign}`}
+            superpowerDesc={`Sự kết hợp giữa lý tưởng ${sunSign} và khí chất ${ascSign} tạo nên bản sắc độc lập, phong thái tự tin và năng lực sáng tạo vượt trội.`}
+            knotTitle={`Cảm Xúc & Nhu Cầu Nội Tâm (Mặt Trăng ${moonSign})`}
+            knotDesc={`Cần chú ý lắng nghe thế giới nội tâm của Mặt Trăng ${moonSign}, tránh kìm nén cảm xúc để giữ sự cân bằng Thân - Tâm.`}
+            year2026CompassTitle={`Năm Bính Ngọ ${currentYear}`}
+            year2026CompassDesc={`Năm thuận lợi cho việc bứt phá năng lực chuyên môn, mở rộng giao thiệp xã hội và thiết lập các mục tiêu lớn.`}
+            onOpenStoryExport={() => setShowStoryModal(true)}
+          />
+        </div>
+      )}
+
+      {/* Story 9:16 Modal */}
+      {result && (
+        <StoryCardExportModal
+          isOpen={showStoryModal}
+          onClose={() => setShowStoryModal(false)}
+          name="Bản Thân"
+          solarDate={input.birthDate ? input.birthDate.toLocaleDateString('vi-VN') : '1995-05-15'}
+          westernArchetype={`Mặt Trời ${sunSign} · Cung Mọc ${ascSign}`}
+          tuViArchetype="Tử Vi Đẩu Số"
+          vedicArchetype="Chiêm Tinh Vệ Đà"
+          superpower={`Bản mệnh nổi bật với tư duy độc lập của ${sunSign} và phong thái ${ascSign}.`}
+          actionCompass={`Năm ${currentYear}: Tận dụng tối đa năng lực lãnh đạo và tư duy đổi mới để kiến tạo thành công.`}
+        />
+      )}
+
       <div className="glass-card">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2">

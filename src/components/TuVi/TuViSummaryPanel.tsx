@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import type { TuViChart as TuViChartType, TuViCombination } from '../../types/tuvi';
 import { SegmentedControl, type SegmentedOption } from '../shared';
 
@@ -141,7 +140,6 @@ function getCombinationSummary(combinations: TuViCombination[]) {
 
 export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) => {
   const [activeTab, setActiveTab] = useState<SummaryTab>('overview');
-  const navigate = useNavigate();
 
   const palaceStats = useMemo(
     () =>
@@ -306,39 +304,6 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
               )}
             </div>
           </div>
-
-          {/* Cross-Feature Workflow Links */}
-          <div className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 p-4">
-            <div className="flex items-center gap-1.5 mb-3">
-              <span className="material-icons-round shrink-0 text-base text-indigo-500 dark:text-indigo-400">explore</span>
-              <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
-                Phân tích chuyên sâu
-              </h4>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <button
-                onClick={() => navigate('/app/chiem-tinh/hop-la')}
-                className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-rose-600 bg-rose-50 hover:bg-rose-100 dark:text-rose-400 dark:bg-rose-900/20 dark:hover:bg-rose-900/40 transition-colors"
-              >
-                <span className="material-icons-round text-base">favorite</span>
-                Xem Hợp Lá Số
-              </button>
-              <button
-                onClick={() => navigate('/app/chiem-tinh/tay-phuong')}
-                className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-indigo-600 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 transition-colors"
-              >
-                <span className="material-icons-round text-base">public</span>
-                Lá số Tây Phương
-              </button>
-              <button
-                onClick={() => navigate('/app/chiem-tinh/vedic')}
-                className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold text-purple-600 bg-purple-50 hover:bg-purple-100 dark:text-purple-400 dark:bg-purple-900/20 dark:hover:bg-purple-900/40 transition-colors"
-              >
-                <span className="material-icons-round text-base">bubble_chart</span>
-                Lá số Ấn Độ (Vedic)
-              </button>
-            </div>
-          </div>
         </div>
       )}
 
@@ -407,8 +372,38 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = ({ chart }) 
                     </div>
                   </div>
 
-                  <p className="mt-3 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                    {combination.detectionReason}
+                  {/* Contextual Dynamic Synthesis for this specific chart */}
+                  {combination.contextualDetails && (
+                    <div className="mt-3 space-y-2 rounded-xl bg-surface-container-low/70 p-3 border border-border-light/40 dark:border-border-dark/40 dark:bg-white/[0.03]">
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-gold-light dark:text-gold-dark">
+                        <span className="material-icons-round text-sm">psychology</span>
+                        Luận giải cá nhân hóa theo lá số:
+                      </div>
+
+                      <p className="text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+                        {combination.contextualDetails.dynamicSynthesisVi}
+                      </p>
+
+                      {combination.contextualDetails.tuHoaEffects.length > 0 && (
+                        <div className="space-y-1 pt-1 border-t border-border-light/30 dark:border-border-dark/30">
+                          {combination.contextualDetails.tuHoaEffects.map((eff, i) => (
+                            <p key={i} className="text-[11px] text-indigo-700 dark:text-indigo-300">
+                              ✦ {eff}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+
+                      {combination.contextualDetails.careerAndLifeGuidance && (
+                        <p className="text-[11px] text-emerald-700 dark:text-emerald-300 pt-1">
+                          ☞ <span className="font-semibold">Định hướng:</span> {combination.contextualDetails.careerAndLifeGuidance}
+                        </p>
+                      )}
+                    </div>
+                  )}
+
+                  <p className="mt-2 text-xs text-text-secondary-light/80 dark:text-text-secondary-dark/80">
+                    Căn cứ: {combination.detectionReason}
                   </p>
                 </article>
               ))}

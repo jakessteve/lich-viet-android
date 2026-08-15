@@ -456,4 +456,28 @@ describe('detectCombinations', () => {
     const results = detectCombinations(palaces);
     expect(results).toEqual([]);
   });
+
+  it('generates rich contextual synthesis with Tứ Hóa and Tuần/Triệt impact', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      hasTriet: true,
+      chinhTinh: [makeStar('Tử Vi', 'chinhTinh', 'Miếu'), makeStar('Thiên Phủ', 'chinhTinh', 'Miếu')],
+      tuHoa: [{ type: 'Lộc', starName: 'Tử Vi' }],
+    });
+
+    const results = detectCombinations(palaces);
+    const tuPhu = results.find((r) => r.name.includes('Tử Phủ') || r.involvedStars.includes('Tử Vi'));
+    expect(tuPhu).toBeDefined();
+    expect(tuPhu?.contextualDetails).toBeDefined();
+    expect(tuPhu?.contextualDetails?.isMenhThanInvolved).toBe(true);
+    expect(tuPhu?.contextualDetails?.primaryPalaceName).toBe('Mệnh');
+    expect(tuPhu?.contextualDetails?.tuHoaEffects.some((e) => e.includes('Hóa Lộc'))).toBe(true);
+    expect(tuPhu?.contextualDetails?.tuanTrietImpact).toContain('Triệt');
+    expect(tuPhu?.contextualDetails?.careerAndLifeGuidance).toContain('Mệnh/Thân');
+    expect(tuPhu?.contextualDetails?.dynamicSynthesisVi).toBeDefined();
+  });
 });
+
