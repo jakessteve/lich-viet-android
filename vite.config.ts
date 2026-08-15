@@ -87,6 +87,18 @@ export default defineConfig({
           // Data & Interpretation Domain Splitting
           if (id.includes('/src/data/qmdj/') || id.includes('/services/qmdj/')) return 'data-qmdj';
           if (id.includes('/src/data/lucNham/') || id.includes('/services/lucNham/')) return 'data-lucnham';
+          if (id.includes('/components/Astrology/Western') || id.includes('/services/astrology/western') || id.includes('/services/astrology/swissNatal')) {
+            return 'astrology-western';
+          }
+          if (id.includes('/components/Astrology/Vedic') || id.includes('/services/astrology/vedic') || id.includes('/services/vedic/')) {
+            return 'astrology-vedic';
+          }
+          if (id.includes('/components/Astrology/Synastry') || id.includes('/services/synastry/')) {
+            return 'astrology-synastry';
+          }
+          if (id.includes('/services/tuvi/daiHanInterpretation') || id.includes('/services/tuvi/palaceInterpretation')) {
+            return 'tuvi-interpretations';
+          }
         },
       },
     },

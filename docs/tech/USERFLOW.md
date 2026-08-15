@@ -69,7 +69,20 @@ flowchart TD
 
 ---
 
-## 3. Storage & Offline Protocol
+## 3. Mobile Navigation Patterns
+
+- **Bottom Tab Bar (`<MobileTabBar>`):** Persistent on mobile viewports (< 768px) with safe-area padding. Enables instant 1-tap switching between primary features:
+  1. Âm Lịch (`/app/am-lich`)
+  2. Ngày Tốt (`/app/ngay-tot`)
+  3. Tử Vi (`/app/tu-vi`)
+  4. Chiêm Tinh (`/app/chiem-tinh`)
+  5. Gieo Quẻ (`/app/gieo-que`)
+- **App Navigation & Quick Drawer (`<AppNav>`, `<MobileDrawer>`):** Provides access to secondary destinations (Cài Đặt, Giới Thiệu, Trợ Giúp, Nâng Cấp, Đăng Nhập).
+- **User Preferences Menu (`<UserMenu>`):** Floating popover providing 1-click font size scaling, dark mode toggle, and account status.
+
+---
+
+## 4. Storage & Offline Protocol
 
 - **Zero-Backend Guarantee:** All profile data, preferences, and custom charts remain securely inside the client browser (`localStorage` and IndexedDB).
 - **Service Worker Precaching:** All application assets, fonts, and Swiss Ephemeris WASM files are precached for offline functionality.

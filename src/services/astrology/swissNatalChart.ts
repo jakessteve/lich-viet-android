@@ -17,6 +17,7 @@ import type {
 import { detectAspectPatterns, type AspectPattern } from './aspectPatterns';
 import { calculateElementModalityBalance, type ElementModalityBalanceResult } from './elementBalance';
 import { calculateBirthMoonPhase, type MoonPhaseResult } from './moonPhase';
+import { measureAsync } from '@/utils/performanceTracker';
 
 export type SwissNatalObjectCategory =
   | 'planet'
@@ -598,9 +599,12 @@ export async function calculateSwissNatalChart(
   input: WesternChartInput,
   options: CalculateSwissNatalOptions = {},
 ): Promise<SwissNatalChartResult> {
-  const utc = fixedOffsetBirthToUtc(input);
-  const ephemeris = options.ephemeris ?? await loadDefaultEphemeris();
-  const julianDay = ephemeris.dateToJulianDay(utc);
+  return measureAsync(
+    'western_natal_chart_calculate',
+    async () => {
+      const utc = fixedOffsetBirthToUtc(input);
+      const ephemeris = options.ephemeris ?? (await loadDefaultEphemeris());
+      const julianDay = ephemeris.dateToJulianDay(utc);
   if (!Number.isFinite(julianDay)) throw new Error('Swiss Ephemeris returned an invalid Julian day');
 
   const houseData = ephemeris.calculateHouses(julianDay, input.latitude, input.longitude, HouseSystem.Placidus);
@@ -823,8 +827,11 @@ export async function calculateSwissNatalChart(
     aspects,
     aspectPatterns,
     elementBalance,
-    moonPhase,
-    houseRulers,
-    legacyResult: buildLegacyResult(objects, houses, aspects, angles.Ascendant.longitude, angles.Midheaven.longitude),
-  };
+        moonPhase,
+        houseRulers,
+        legacyResult: buildLegacyResult(objects, houses, aspects, angles.Ascendant.longitude, angles.Midheaven.longitude),
+      };
+    },
+    { location: input.locationName || 'unknown' },
+  );
 }

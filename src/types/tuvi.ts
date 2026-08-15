@@ -6,6 +6,8 @@
  */
 
 import type { Can, Chi } from './calendar';
+export type { Can, Chi } from './calendar';
+
 
 // ── Core Enums & Base Types ─────────────────────────────────
 
@@ -458,3 +460,140 @@ export interface TuViMarkdownOptions {
   /** Optional header text prepended to the output */
   promptHeader: string;
 }
+
+// ── Đại Hạn Interpretation Types ────────────────────────────
+
+/**
+ * Detailed astrological interpretation for a 10-year major luck period (Đại Hạn).
+ */
+export interface DaiHanInterpretationResult {
+  /** Palace ID 0–11 */
+  palaceId: number;
+  /** Palace name, e.g. "Mệnh", "Quan Lộc", "Tài Bạch" */
+  palaceName: string;
+  /** Palace branch/chi, e.g. "Tý", "Dần" */
+  palaceChi: string;
+  /** Can-Chi of the palace, e.g. "Giáp Dần" */
+  palaceCanChi: string;
+  /** Palace Thiên Can */
+  palaceCan: string;
+  /** Age range string, e.g. "32–41" */
+  ageRange: string;
+  /** Start nominal age */
+  startAge: number;
+  /** End nominal age */
+  endAge: number;
+  /** Whether this Đại Hạn is the active period for the current/selected age */
+  isCurrent: boolean;
+  /** Overall Luck Rating Score (1.0–10.0) */
+  luckScore: number;
+  /** Overall Luck Tier Category */
+  luckTier: 'Đại Cát' | 'Khởi Sắc' | 'Bình Hòa' | 'Thử Thách' | 'Gian Nan';
+  /** Tam Tài evaluation (Thiên Thời, Địa Lợi, Nhân Hòa, Khí Lực) */
+  tamTai: {
+    thienThoi: {
+      level: 'Đắc Thời' | 'Trung Hòa' | 'Nghịch Cảnh';
+      score: number;
+      desc: string;
+    };
+    diaLoi: {
+      level: 'Tương Sinh' | 'Tỷ Hòa' | 'Khắc Xuất' | 'Sinh Xuất' | 'Khắc Nhập';
+      score: number;
+      desc: string;
+    };
+    nhanHoa: {
+      level: 'Quý Nhân Phò Trợ' | 'Tự Lực Cánh Sinh' | 'Tiểu Nhân Dèm Pha';
+      score: number;
+      desc: string;
+    };
+    khiLuc: {
+      stage: string;
+      level: 'thinh' | 'binh' | 'suy' | 'tich_luy';
+      score: number;
+      desc: string;
+    };
+    totalScore: number;
+  };
+  /** 12-phase Tràng Sinh energy status */
+  truongSinh: {
+    name: string;
+    energyLevel: 'thinh' | 'binh' | 'suy' | 'tich_luy';
+    energyDescription: string;
+    advice: string;
+  };
+  /** Thái Tuế ring posture and social momentum */
+  thaiTue?: {
+    name: string;
+    postureDescription: string;
+  };
+  /** Elemental interaction between native's Mệnh Nạp Âm and Palace / Stars */
+  elementalAnalysis: {
+    menhHanh: string;
+    palaceHanh: string;
+    relationType: 'sinh_nhap' | 'ty_hoa' | 'khac_xuat' | 'sinh_xuat' | 'khac_nhap';
+    description: string;
+  };
+  /** Major stars structure in the palace */
+  starStructure: {
+    majorStars: Array<{ name: string; brightness: string; nguHanh: string }>;
+    hasChinhTinh: boolean;
+    isVoChinhDieu: boolean;
+    vcdSpecialNote?: string;
+    clusterType: 'tu_phu_vu_tuong' | 'sat_pha_tham' | 'co_nguyet_dong_luong' | 'cu_nhat' | 'vo_chinh_dieu' | 'hon_hop';
+    summary: string;
+  };
+  /** Tam Phương Tứ Chính (3 Harmonious + 1 Opposite) projection */
+  tamPhuongTuChinh: {
+    tamHopPalaces: string[];
+    doiCungPalace: string;
+    projectingMajorStars: string[];
+    projectingTuHoa: string[];
+    projectingAuspicious: string[];
+    projectingMalefics: string[];
+    summary: string;
+  };
+  /** Mutagens triggered by the Can of the Great Luck Palace (Lưu Tứ Hóa Đại Hạn) */
+  daiHanTuHoa: {
+    canCung: string;
+    hoaLoc: string;
+    hoaQuyen: string;
+    hoaKhoa: string;
+    hoaKy: string;
+    interactionWithNatal: string[];
+  };
+  /** Prominent classic luck patterns detected */
+  prominentPatterns: Array<{
+    name: string;
+    type: 'cat' | 'hung' | 'trung';
+    description: string;
+    note?: string;
+  }>;
+
+  /** Life stage context matching the chronological age bracket */
+  lifeStageTheme: {
+    stageName: string;
+    coreFocus: string;
+  };
+  /** Dynamic 5-year phasing breakdown (Tiền vận vs Hậu vận) */
+  phasingBreakdown: {
+    firstHalf: string;
+    secondHalf: string;
+  };
+  /** Tuần / Triệt status */
+  tuanTriet: {
+    hasTuan: boolean;
+    hasTriet: boolean;
+    note?: string;
+  };
+  /** 1-sentence executive headline for the 10-year period */
+  themeVi: string;
+  /** Deep humanized synthesis broken down by life dimensions */
+  detailedSynthesis: {
+    overview: string;
+    careerAndWealth: string;
+    relationshipAndHealth: string;
+    strategicGuidance: string;
+  };
+}
+
+

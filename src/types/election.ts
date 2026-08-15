@@ -1,3 +1,5 @@
+import type { HourScoreEntry } from '../utils/activityScorer';
+
 export interface ElectionInput {
   startDate: Date;
   endDate: Date;
@@ -20,4 +22,6 @@ export interface ElectionCandidate {
   reason?: string;
   dayLabel: string;
   solarTerm: string;
+  bestHours?: HourScoreEntry[];
 }
+

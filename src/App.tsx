@@ -122,16 +122,23 @@ function AppLayout() {
               <Outlet />
             </Suspense>
           </div>
-        ) : (
-          /* Module tab routes: with sidebar */
+        ) : activeTab === 'am-lich' ? (
+          /* Am Lich module tab route: with sidebar */
           <div className="flex flex-col md:flex-row gap-6 md:gap-8 items-start">
             {/* Sidebar — now autonomous, handles its own state */}
-            <AppSidebar activeTab={activeTab} />
+            <div className="w-full md:w-auto shrink-0 order-1 md:order-1">
+              <AppSidebar activeTab={activeTab} />
+            </div>
 
-            {/* Main Content Area — Route-based rendering */}
-            <div className="flex-1 w-full min-w-0">
+            {/* Main Content Area */}
+            <div className="flex-1 w-full min-w-0 order-2 md:order-2">
               <Outlet />
             </div>
+          </div>
+        ) : (
+          /* Non-calendar feature routes: Clean full-width workspace */
+          <div className="w-full min-w-0">
+            <Outlet />
           </div>
         )}
       </main>

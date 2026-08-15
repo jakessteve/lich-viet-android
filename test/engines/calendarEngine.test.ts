@@ -22,13 +22,51 @@ describe('calendarEngine', () => {
       expect(lunar.isLeap).toBe(false);
     });
 
-    it('converts solar to lunar correctly for Tết 2025', () => {
-      // Tết Nguyên Đán 2025: solar 2025-01-29 = lunar 1/1/2025
-      const date = new Date(2025, 0, 29);
-      const lunar = getLunarDate(date);
-      expect(lunar.day).toBe(1);
-      expect(lunar.month).toBe(1);
-      expect(lunar.year).toBe(2025);
+    it('converts solar to lunar correctly for multi-year Tết dates (2020-2028)', () => {
+      const tetDates = [
+        { solar: new Date(2020, 0, 25), expectedYear: 2020 },
+        { solar: new Date(2021, 1, 12), expectedYear: 2021 },
+        { solar: new Date(2022, 1, 1), expectedYear: 2022 },
+        { solar: new Date(2023, 0, 22), expectedYear: 2023 },
+        { solar: new Date(2024, 1, 10), expectedYear: 2024 },
+        { solar: new Date(2025, 0, 29), expectedYear: 2025 },
+        { solar: new Date(2026, 1, 17), expectedYear: 2026 },
+        { solar: new Date(2027, 1, 6), expectedYear: 2027 },
+        { solar: new Date(2028, 0, 26), expectedYear: 2028 },
+      ];
+
+      for (const { solar, expectedYear } of tetDates) {
+        const lunar = getLunarDate(solar);
+        expect(lunar.day).toBe(1);
+        expect(lunar.month).toBe(1);
+        expect(lunar.year).toBe(expectedYear);
+        expect(lunar.isLeap).toBe(false);
+      }
+    });
+
+    it('correctly identifies leap months (e.g. Quý Mão 2023 leap month 2)', () => {
+      // Regular month 2: 2023-02-20 is lunar 1/2/2023
+      const regularMonth2 = getLunarDate(new Date(2023, 1, 20));
+      expect(regularMonth2.month).toBe(2);
+      expect(regularMonth2.isLeap).toBe(false);
+
+      // Leap month 2: 2023-03-22 is lunar 1/2/2023 (Leap)
+      const leapMonth2 = getLunarDate(new Date(2023, 2, 22));
+      expect(leapMonth2.month).toBe(2);
+      expect(leapMonth2.isLeap).toBe(true);
+      expect(leapMonth2.day).toBe(1);
+    });
+
+    it('converts historical dates accurately (1984 Giáp Tý, 2000 Canh Thìn)', () => {
+      const tet1984 = getLunarDate(new Date(1984, 1, 2));
+      expect(tet1984.day).toBe(1);
+      expect(tet1984.month).toBe(1);
+      expect(tet1984.year).toBe(1984);
+
+      const tet2000 = getLunarDate(new Date(2000, 1, 5));
+      expect(tet2000.day).toBe(1);
+      expect(tet2000.month).toBe(1);
+      expect(tet2000.year).toBe(2000);
     });
 
     it('converts solar to lunar correctly for a mid-year date', () => {
@@ -37,6 +75,38 @@ describe('calendarEngine', () => {
       expect(lunar.day).toBe(10);
       expect(lunar.month).toBe(5);
       expect(lunar.year).toBe(2024);
+    });
+  });
+
+  describe('28 Mansions (Nhị Thập Bát Tú) & Planetary Week Synchronization', () => {
+    it('synchronizes 28 Tú strictly with the 7-day planetary week', () => {
+      // 2024-02-10 (Saturday) -> Đê
+      const sat = getDetailedDayData(new Date(2024, 1, 10));
+      expect(sat.tu).toContain('Đê');
+
+      // 2024-02-11 (Sunday) -> Phòng
+      const sun = getDetailedDayData(new Date(2024, 1, 11));
+      expect(sun.tu).toContain('Phòng');
+
+      // 2024-02-12 (Monday) -> Tâm
+      const mon = getDetailedDayData(new Date(2024, 1, 12));
+      expect(mon.tu).toContain('Tâm');
+
+      // 2024-02-13 (Tuesday) -> Vĩ
+      const tue = getDetailedDayData(new Date(2024, 1, 13));
+      expect(tue.tu).toContain('Vĩ');
+
+      // 2024-02-14 (Wednesday) -> Cơ
+      const wed = getDetailedDayData(new Date(2024, 1, 14));
+      expect(wed.tu).toContain('Cơ');
+
+      // 2024-02-15 (Thursday) -> Đẩu
+      const thu = getDetailedDayData(new Date(2024, 1, 15));
+      expect(thu.tu).toContain('Đẩu');
+
+      // 2024-02-16 (Friday) -> Ngưu
+      const fri = getDetailedDayData(new Date(2024, 1, 16));
+      expect(fri.tu).toContain('Ngưu');
     });
   });
 

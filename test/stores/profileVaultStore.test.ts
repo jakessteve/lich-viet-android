@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { useProfileVaultStore } from '@/stores/profileVaultStore';
-import { getDualLayerTerm, DUAL_LAYER_TERMS_DICTIONARY } from '@/utils/jargonTranslator';
+import { getDualLayerTerm } from '@/utils/jargonTranslator';
 
 describe('useProfileVaultStore', () => {
   beforeEach(() => {

@@ -34,19 +34,29 @@ export function checkNapAmCompatibility(naIndex1: number, naIndex2: number): num
     return false;
   };
 
-  // Thủy (4) - Hỏa (1) Exception: Phích Lịch (12), Sơn Hạ (16), Thiên Thượng (27) ARE compatible with Thủy.
+  // ── Traditional Nạp Âm Compatibility Exceptions ─────────────────
+  // Academic Sources: "Tam Mệnh Thông Hội" (三命通會, Vạn Dân Anh) & "Uyên Hải Tử Bình" (淵海子平)
+  // These classic texts define special circumstances where standard 5-element clashes
+  // are transformed into harmonious or mutually beneficial relationships:
+
+  // 1. Thủy (4) - Hỏa (1) Exception: Phích Lịch (12), Sơn Hạ (16), Thiên Thượng (27)
+  // Traditional rule: Sấm sét, lửa trên trời không sợ nước mà cùng vận hành tạo sấm mưa.
   if (isException(h1, h2, 1, 4, [12, 16, 27], naIndex1, naIndex2)) return 1;
 
-  // Thổ (2) - Thủy (4) Exception: Thiên Hà (21), Đại Hải (29) ARE NOT limited by Thổ.
+  // 2. Thổ (2) - Thủy (4) Exception: Thiên Hà (21), Đại Hải (29)
+  // Traditional rule: Nước sông ngân hà và nước biển lớn bao la, đất cát thường không ngăn được.
   if (isException(h1, h2, 4, 2, [21, 29], naIndex1, naIndex2)) return 1;
 
-  // Hỏa (1) - Kim (3) Exception: Kiếm Phong (4), Sa Trung (15) NEED Hỏa to be forged.
+  // 3. Hỏa (1) - Kim (3) Exception: Kiếm Phong (4), Sa Trung (15)
+  // Traditional rule: Vàng trong cát và kiếm mũi nhọn cần lửa lò tôi luyện mới thành đồ dùng hữu ích.
   if (isException(h1, h2, 3, 1, [4, 15], naIndex1, naIndex2)) return 1;
 
-  // Kim (3) - Mộc (0) Exception: Bình Địa Mộc (17) is okay with Kim (axes prune it).
+  // 4. Kim (3) - Mộc (0) Exception: Bình Địa Mộc (17)
+  // Traditional rule: Cây đồng bằng mềm mại cần dao búa cắt tỉa mới thành khuôn mẫu tươi tốt.
   if (isException(h1, h2, 0, 3, [17], naIndex1, naIndex2)) return 1;
 
-  // Thổ (2) - Mộc (0) Exception: Lộ Bàng (3), Đại Dịch (22), Sa Trung (26) do not fear Mộc.
+  // 5. Thổ (2) - Mộc (0) Exception: Lộ Bàng (3), Đại Dịch (22), Sa Trung (26)
+  // Traditional rule: Đất ven đường, đất quán trọ và đất cát pha không bị rễ cây làm tổn hại.
   if (isException(h1, h2, 2, 0, [3, 22, 26], naIndex1, naIndex2)) return 1;
 
   // Standard Ngu Hanh rules

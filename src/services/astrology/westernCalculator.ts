@@ -93,6 +93,7 @@ export function calculateWesternChartForJulianDay(
   julianDay: number,
   latitude: number,
   longitude: number,
+  ayanamsaMode: string = 'lahiri',
 ): WesternChartResult {
   const observer = buildTopocentricObserver({
     julianDay,
@@ -101,7 +102,7 @@ export function calculateWesternChartForJulianDay(
     altitudeMeters: 0,
   });
 
-  const snapshot = computeTopocentricPlanetarySnapshot(observer);
+  const snapshot = computeTopocentricPlanetarySnapshot(observer, ayanamsaMode);
 
   const houseData = computePorphyryCusps(observer);
   const cuspsArray = houseData.cusps;
@@ -196,8 +197,8 @@ function buildResult(
   };
 }
 
-export function calculateWesternChart(input: WesternChartInput): WesternChartResult {
+export function calculateWesternChart(input: WesternChartInput & { ayanamsa?: string }): WesternChartResult {
   const birthDate = input.birthDate instanceof Date ? input.birthDate : new Date(input.birthDate);
   const julianDay = unixMsToJulianDay(birthDate.getTime());
-  return calculateWesternChartForJulianDay(julianDay, input.latitude, input.longitude);
+  return calculateWesternChartForJulianDay(julianDay, input.latitude, input.longitude, input.ayanamsa ?? 'lahiri');
 }

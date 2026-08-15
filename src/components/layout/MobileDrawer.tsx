@@ -66,9 +66,17 @@ export default function MobileDrawer() {
         {/* Drawer header */}
         <div className="flex items-center justify-between h-14 px-4 border-b border-border-light dark:border-border-dark">
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold via-gold-light to-amber-600 dark:from-gold-dark dark:via-amber-400 dark:to-yellow-300 tracking-tight">
+            <button
+              onClick={() => {
+                navigate('/');
+                setIsOpen(false);
+              }}
+              className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold via-gold-light to-amber-600 dark:from-gold-dark dark:via-amber-400 dark:to-yellow-300 tracking-tight hover:opacity-80 transition-opacity text-left cursor-pointer"
+              aria-label="Về trang chủ giới thiệu (Landing Page)"
+              title="Về trang giới thiệu Lịch Việt"
+            >
               LỊCH VIỆT
-            </span>
+            </button>
           </div>
           <button
             onClick={handleClose}
@@ -120,52 +128,86 @@ export default function MobileDrawer() {
             ))}
           </div>
 
-          {/* Group 2: Bói Toán & Kinh Dịch */}
+          {/* Group 2: Tử Vi & Chiêm Tinh */}
+          <div>
+            <span className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark opacity-60 block">
+              Tử Vi & Chiêm Tinh
+            </span>
+            {[
+              {
+                id: 'tu-vi',
+                path: '/app/tu-vi',
+                icon: 'auto_awesome',
+                label: 'Tử Vi',
+                desc: 'Tử Vi Đẩu Số · 12 Cung & Sao',
+              },
+              {
+                id: 'chiem-tinh-tay-phuong',
+                path: '/app/chiem-tinh/tay-phuong',
+                icon: 'auto_graph',
+                label: 'Chiêm Tinh Tây Phương',
+                desc: 'Bản đồ sao Natal & Vận hạn',
+              },
+              {
+                id: 'chiem-tinh-vedic',
+                path: '/app/chiem-tinh/vedic',
+                icon: 'bubble_chart',
+                label: 'Chiêm Tinh Ấn Độ (Vedic)',
+                desc: 'Jyotish, Dasha & Cung Vệ Đà',
+              },
+              {
+                id: 'chiem-tinh-hop-la',
+                path: '/app/chiem-tinh/hop-la',
+                icon: 'favorite',
+                label: 'Hợp Lá Số (Synastry)',
+                desc: 'So khớp & Tương hợp đa hệ',
+              },
+            ].map((link, index) => {
+              const isActive =
+                !isFullPage &&
+                (location.pathname === link.path ||
+                  (link.path === '/app/chiem-tinh/tay-phuong' && location.pathname === '/app/chiem-tinh'));
+
+              return (
+                <button
+                  key={link.id}
+                  onClick={() => {
+                    navigate(link.path);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
+                    isActive
+                      ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                      : 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
+                  }`}
+                  style={{ animationDelay: `${index * 30 + 90}ms` }}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  <span
+                    className={`material-icons-round text-xl mt-0.5 ${isActive ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
+                  >
+                    {link.icon}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-sm font-medium block">{link.label}</span>
+                    <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70 truncate">
+                      {link.desc}
+                    </span>
+                  </div>
+                  {isActive && (
+                    <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Group 3: Bói Toán & Kinh Dịch */}
           <div>
             <span className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark opacity-60 block">
               Bói Toán & Tam Thức
             </span>
             {NAV_LINKS.filter((l) => ['gieo-que'].includes(l.id)).map((link, index) => (
-              <button
-                key={link.id}
-                onClick={() => {
-                  if (link.enabled) handleTabChange(link.id);
-                }}
-                className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
-                  activeTab === link.id && !isFullPage
-                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
-                    : link.enabled
-                      ? 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                      : 'text-gray-400 dark:text-gray-600 cursor-default'
-                }`}
-                style={{ animationDelay: `${index * 40 + 90}ms` }}
-                disabled={!link.enabled}
-                aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
-              >
-                <span
-                  className={`material-icons-round text-xl mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
-                >
-                  {link.icon}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <span className="text-sm font-medium block">{link.label}</span>
-                  <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
-                    {link.desc}
-                  </span>
-                </div>
-                {activeTab === link.id && !isFullPage && (
-                  <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
-                )}
-              </button>
-            ))}
-          </div>
-
-          {/* Group 3: Chiêm Tinh & Lá Số */}
-          <div>
-            <span className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark opacity-60 block">
-              Chiêm Tinh & Lá Số
-            </span>
-            {NAV_LINKS.filter((l) => ['tu-vi', 'chiem-tinh-tay-phuong', 'chiem-tinh-vedic', 'chiem-tinh-hop-la'].includes(l.id)).map((link, index) => (
               <button
                 key={link.id}
                 onClick={() => {
@@ -205,7 +247,7 @@ export default function MobileDrawer() {
 
           {/* Settings link */}
           {[
-            { id: 'cai-dat', icon: 'settings', label: 'Cài đặt', desc: 'Tùy chỉnh ứng dụng', path: '/app/cai-dat' },
+            { id: 'cai-dat', icon: 'settings', label: 'Cài đặt', desc: 'Tùy chỉnh ứng dụng & hồ sơ', path: '/app/cai-dat' },
           ].map((link) => (
             <button
               key={link.id}

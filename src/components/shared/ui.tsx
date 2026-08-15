@@ -120,3 +120,121 @@ export function ActionButton({ icon, variant = 'primary', className, children, t
     </button>
   );
 }
+
+export interface ToggleProps {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  id: string;
+  className?: string;
+  disabled?: boolean;
+}
+
+export function Toggle({ checked, onChange, id, className, disabled = false }: ToggleProps) {
+  return (
+    <button
+      id={id}
+      role="switch"
+      aria-checked={checked}
+      disabled={disabled}
+      onClick={() => onChange(!checked)}
+      className={cx(
+        'relative w-14 h-8 min-h-11 rounded-full transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed',
+        checked
+          ? 'bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 shadow-sm shadow-gold/20 dark:shadow-gold-dark/25'
+          : 'bg-gray-200 dark:bg-gray-600',
+        className,
+      )}
+    >
+      <span
+        className={cx(
+          'absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-white shadow-sm transition-transform duration-300 ease-out',
+          checked ? 'translate-x-6' : 'translate-x-0',
+        )}
+      />
+    </button>
+  );
+}
+
+export interface SettingRowProps {
+  icon: string;
+  label: string;
+  description?: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function SettingRow({ icon, label, description, children, className }: SettingRowProps) {
+  return (
+    <div className={cx('flex items-center justify-between gap-4 py-3.5 border-b border-border-light/20 dark:border-border-dark/20 last:border-0', className)}>
+      <div className="flex items-start gap-3 flex-1 min-w-0">
+        <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5 shrink-0">
+          {icon}
+        </span>
+        <div className="min-w-0">
+          <p className="text-sm font-medium">{label}</p>
+          {description && (
+            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5 leading-relaxed">
+              {description}
+            </p>
+          )}
+        </div>
+      </div>
+      <div className="shrink-0">{children}</div>
+    </div>
+  );
+}
+
+export interface SelectOption {
+  value: string;
+  label: string;
+}
+
+export interface SelectProps {
+  value: string;
+  onChange: (value: string) => void;
+  options: SelectOption[];
+  id: string;
+  className?: string;
+  disabled?: boolean;
+}
+
+export function Select({ value, onChange, options, id, className, disabled = false }: SelectProps) {
+  return (
+    <select
+      id={id}
+      value={value}
+      disabled={disabled}
+      onChange={(e) => onChange(e.target.value)}
+      className={cx(
+        'text-xs px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/40 dark:border-border-dark/40 text-text-primary-light dark:text-text-primary-dark focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 outline-none transition-all disabled:opacity-40',
+        className,
+      )}
+    >
+      {options.map((opt) => (
+        <option key={opt.value} value={opt.value}>
+          {opt.label}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+export interface SectionCardProps {
+  icon: string;
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function SectionCard({ icon, title, children, className }: SectionCardProps) {
+  return (
+    <div className={cx('surface-card p-5 sm:p-6 rounded-2xl', className)}>
+      <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-border-light/40 dark:border-border-dark/40">
+        <span className="material-icons-round text-xl text-gold dark:text-gold-dark">{icon}</span>
+        <h2 className="text-base font-bold tracking-tight">{title}</h2>
+      </div>
+      <div>{children}</div>
+    </div>
+  );
+}
+

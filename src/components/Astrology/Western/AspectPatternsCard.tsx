@@ -12,7 +12,7 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
             <span className="material-icons-round text-base text-amber-500">stars</span>
             Mô Hình Góc Chiếu Đặc Biệt & Luận Giải Cá Nhân Hóa
           </h4>
-          <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
+          <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
             Cấu trúc hình học hành tinh gắn liền với hệ thống Cung Địa Bàn (Nhà) và điểm hóa giải năng lượng
           </p>
         </div>
@@ -33,12 +33,12 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
                   <h5 className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                     {pattern.nameVi}
                   </h5>
-                  <span className="text-[10px] text-text-secondary-light/80 dark:text-text-secondary-dark/80 italic">
+                  <span className="text-micro text-text-secondary-light/80 dark:text-text-secondary-dark/80 italic">
                     {pattern.nameEn}
                   </span>
                 </div>
                 {pattern.elementOrModality && (
-                  <span className="shrink-0 rounded-md bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:text-indigo-300">
+                  <span className="shrink-0 rounded-md bg-indigo-500/10 px-2 py-0.5 text-micro font-semibold text-indigo-700 dark:text-indigo-300">
                     {pattern.elementOrModality}
                   </span>
                 )}
@@ -47,13 +47,13 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
               {/* Activated houses */}
               {pattern.lifeAreasVi && pattern.lifeAreasVi.length > 0 && (
                 <div className="flex flex-wrap items-center gap-1">
-                  <span className="text-[10px] font-semibold text-text-secondary-light dark:text-text-secondary-dark">
+                  <span className="text-micro font-semibold text-text-secondary-light dark:text-text-secondary-dark">
                     Trục kích hoạt:
                   </span>
                   {pattern.lifeAreasVi.map((area, idx) => (
                     <span
                       key={idx}
-                      className="rounded bg-sky-500/10 px-1.5 py-0.5 text-[9px] font-medium text-sky-700 dark:text-sky-300"
+                      className="rounded bg-sky-500/10 px-1.5 py-0.5 text-micro font-medium text-sky-700 dark:text-sky-300"
                     >
                       {area}
                     </span>
@@ -63,7 +63,7 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
 
               {/* Personalized 3-layer synthesis */}
               {pattern.personalizedSynthesis ? (
-                <div className="space-y-1.5 pt-1 text-[11px] leading-relaxed">
+                <div className="space-y-1.5 pt-1 text-xs leading-relaxed">
                   <div className="rounded-lg bg-surface-container-low/60 p-2 space-y-1 border border-border-light/30 dark:border-border-dark/30">
                     <p className="text-text-primary-light dark:text-text-primary-dark font-medium">
                       <span className="text-amber-600 dark:text-amber-400 font-bold mr-1">✦ Thiên phú:</span>
@@ -76,7 +76,7 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
                   </div>
 
                   {pattern.resolutionPoint && (
-                    <div className="rounded-lg bg-emerald-500/10 p-2 border border-emerald-500/20 text-emerald-800 dark:text-emerald-300 text-[10.5px]">
+                    <div className="rounded-lg bg-emerald-500/10 p-2 border border-emerald-500/20 text-emerald-800 dark:text-emerald-300 text-xs">
                       <span className="font-bold flex items-center gap-1 mb-0.5">
                         <span className="material-icons-round text-xs">tune</span>
                         Điểm hóa giải (Resolution Point):
@@ -89,18 +89,18 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
                   )}
                 </div>
               ) : (
-                <p className="text-[11px] leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+                <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
                   {pattern.descriptionVi}
                 </p>
               )}
             </div>
 
             <div className="pt-2 border-t border-border-light/40 dark:border-border-dark/40 flex flex-wrap items-center gap-1.5">
-              <span className="text-[10px] font-semibold text-text-secondary-light/80 dark:text-text-secondary-dark/80">Hành tinh:</span>
+              <span className="text-micro font-semibold text-text-secondary-light/80 dark:text-text-secondary-dark/80">Hành tinh:</span>
               {pattern.planets.map((p) => (
                 <span
                   key={p.id}
-                  className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-medium ${
+                  className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-micro font-medium ${
                     pattern.apexPlanet?.id === p.id
                       ? 'bg-rose-500/15 text-rose-700 font-bold dark:text-rose-300 border border-rose-500/30'
                       : 'bg-surface-container text-text-primary-light dark:text-text-primary-dark'
@@ -108,8 +108,8 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
                 >
                   <span>{p.symbol}</span>
                   <span>{p.nameVi}</span>
-                  {p.house && <span className="text-[9px] text-text-secondary-light/70 dark:text-text-secondary-dark/70">(N{p.house})</span>}
-                  {pattern.apexPlanet?.id === p.id && <span className="text-[9px] text-rose-600 dark:text-rose-400 font-bold">(Đỉnh)</span>}
+                  {p.house && <span className="text-micro text-text-secondary-light/70 dark:text-text-secondary-dark/70">(N{p.house})</span>}
+                  {pattern.apexPlanet?.id === p.id && <span className="text-micro text-rose-600 dark:text-rose-400 font-bold">(Đỉnh)</span>}
                 </span>
               ))}
             </div>

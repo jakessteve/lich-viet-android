@@ -5,7 +5,7 @@
 
 import { DayCellData, DayQuality, DayDetailsData, CanChi, HourInfo, Can, Chi } from '../types/calendar';
 
-// Sub-module imports
+import { computeDeltaTDays } from './astroUtils';
 import { getJDN, getSolarTerm, calculateFoundationalLayer, findSolarTermStart } from './foundationalLayer';
 import { calculateModifyingLayer } from './modifyingLayer';
 import { generateDungSu } from './dungSuEngine';
@@ -27,6 +27,7 @@ import { getExtraStars } from './extraStars';
 import { getSwissEphemerisInstance, getSwissLunarDateIfReady } from '../services/astronomy/swissEphemeris';
 import type { SwissGeoLocation } from '../services/astronomy/swissEphemeris';
 import { getCivilDateForOffset } from './geo';
+import { measureSync } from './performanceTracker';
 import {
   CAN,
   CHI,
@@ -105,10 +106,7 @@ function rememberLunarDate(key: string, value: { day: number; month: number; yea
 }
 
 function jdFromDate(dd: number, mm: number, yy: number) {
-  const a = int((14 - mm) / 12);
-  const y = yy + 4800 - a;
-  const m = mm + 12 * a - 3;
-  return dd + int((153 * m + 2) / 5) + 365 * y + int(y / 4) - int(y / 100) + int(y / 400) - 32045;
+  return getJDN(dd, mm, yy);
 }
 
 function sunLongitudeRadians(jdn: number, timeZone: number) {
@@ -169,14 +167,10 @@ function newMoon(k: number) {
     0.001 * Math.sin(2 * Fr - Mprr) +
     0.0005 * Math.sin(Mr + 2 * Mprr);
 
-  let deltaT: number;
-  if (T < -11) {
-    deltaT = 0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3;
-  } else {
-    deltaT = -0.000278 + 0.000265 * T + 0.000262 * T2;
-  }
+  const jde = Jd1 + C1;
+  const deltaTDays = computeDeltaTDays(jde);
 
-  return Jd1 + C1 - deltaT;
+  return jde - deltaTDays;
 }
 
 function getNewMoonDay(k: number, timeZone: number) {
@@ -305,16 +299,34 @@ export function getLunarDate(
 }
 
 export function getDayQuality(date: Date, location?: SwissGeoLocation): DayQuality {
-  const detailed = getDetailedDayData(date, location);
+  const normalized = normalizeDate(date);
+  const detailKey = calendarCacheKey(normalized, location);
+  const cached = detailedDayDataCache.get(detailKey);
+  if (cached && cached.nguHanhGrade) {
+    if (
+      cached.nguHanhGrade === 'Chuyên nhật' ||
+      cached.nguHanhGrade === 'Nghĩa nhật' ||
+      cached.nguHanhGrade === 'Bảo nhật'
+    ) {
+      return 'Good';
+    }
+    if (cached.nguHanhGrade === 'Phạt nhật') {
+      return 'Bad';
+    }
+    return 'Neutral';
+  }
 
-  if (
-    detailed.nguHanhGrade === 'Chuyên nhật' ||
-    detailed.nguHanhGrade === 'Nghĩa nhật' ||
-    detailed.nguHanhGrade === 'Bảo nhật'
-  ) {
+  // Fast O(1) calculation without triggering the heavy 42-day modifying/Dụng Sự layer pipeline
+  const jd = getJDN(normalized.getDate(), normalized.getMonth() + 1, normalized.getFullYear());
+  const can = CAN[dayStemIndex(jd)];
+  const chi = CHI[dayBranchIndex(jd)];
+  const canHanh = NGU_HANH_MAPPING[can as Can];
+  const chiHanh = NGU_HANH_MAPPING[chi as Chi];
+
+  if (canHanh === chiHanh || NGU_HANH_SINH[chiHanh] === canHanh || NGU_HANH_SINH[canHanh] === chiHanh) {
     return 'Good';
   }
-  if (detailed.nguHanhGrade === 'Phạt nhật') {
+  if (NGU_HANH_KHAC[chiHanh] === canHanh) {
     return 'Bad';
   }
   return 'Neutral';
@@ -325,60 +337,66 @@ function isSameDay(d1: Date, d2: Date): boolean {
 }
 
 export function getMonthDays(year: number, month: number, location?: SwissGeoLocation): DayCellData[] {
-  const firstDayOfMonth = new Date(year, month, 1);
-  const lastDayOfMonth = new Date(year, month + 1, 0);
-  const today = location ? getCivilDateForOffset(new Date(), location.timezoneOffsetHours) : new Date();
+  return measureSync(
+    'calendar_month_grid_compute',
+    () => {
+      const firstDayOfMonth = new Date(year, month, 1);
+      const lastDayOfMonth = new Date(year, month + 1, 0);
+      const today = location ? getCivilDateForOffset(new Date(), location.timezoneOffsetHours) : new Date();
 
-  const days: DayCellData[] = [];
+      const days: DayCellData[] = [];
 
-  let firstDayOfWeek = firstDayOfMonth.getDay();
-  firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-  const prevMonthLastDay = new Date(year, month, 0).getDate();
+      let firstDayOfWeek = firstDayOfMonth.getDay();
+      firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+      const prevMonthLastDay = new Date(year, month, 0).getDate();
 
-  for (let i = firstDayOfWeek - 1; i >= 0; i--) {
-    const d = new Date(year, month - 1, prevMonthLastDay - i);
-    const lunar = getLunarDate(d, location);
-    days.push({
-      solarDate: d.getDate(),
-      lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
-      dayQuality: getDayQuality(d, location),
-      fullDate: d,
-      isCurrentMonth: false,
-      isToday: isSameDay(d, today),
-      dayChi: getCanChiDay(d).split(' ')[1] as Chi,
-    });
-  }
+      for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+        const d = new Date(year, month - 1, prevMonthLastDay - i);
+        const lunar = getLunarDate(d, location);
+        days.push({
+          solarDate: d.getDate(),
+          lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
+          dayQuality: getDayQuality(d, location),
+          fullDate: d,
+          isCurrentMonth: false,
+          isToday: isSameDay(d, today),
+          dayChi: getCanChiDay(d).split(' ')[1] as Chi,
+        });
+      }
 
-  for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
-    const d = new Date(year, month, i);
-    const lunar = getLunarDate(d, location);
-    days.push({
-      solarDate: i,
-      lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
-      dayQuality: getDayQuality(d, location),
-      fullDate: d,
-      isCurrentMonth: true,
-      isToday: isSameDay(d, today),
-      dayChi: getCanChiDay(d).split(' ')[1] as Chi,
-    });
-  }
+      for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
+        const d = new Date(year, month, i);
+        const lunar = getLunarDate(d, location);
+        days.push({
+          solarDate: i,
+          lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
+          dayQuality: getDayQuality(d, location),
+          fullDate: d,
+          isCurrentMonth: true,
+          isToday: isSameDay(d, today),
+          dayChi: getCanChiDay(d).split(' ')[1] as Chi,
+        });
+      }
 
-  const remaining = CALENDAR_GRID_CELLS - days.length;
-  for (let i = 1; i <= remaining; i++) {
-    const d = new Date(year, month + 1, i);
-    const lunar = getLunarDate(d, location);
-    days.push({
-      solarDate: i,
-      lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
-      dayQuality: getDayQuality(d, location),
-      fullDate: d,
-      isCurrentMonth: false,
-      isToday: isSameDay(d, today),
-      dayChi: getCanChiDay(d).split(' ')[1] as Chi,
-    });
-  }
+      const remaining = CALENDAR_GRID_CELLS - days.length;
+      for (let i = 1; i <= remaining; i++) {
+        const d = new Date(year, month + 1, i);
+        const lunar = getLunarDate(d, location);
+        days.push({
+          solarDate: i,
+          lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
+          dayQuality: getDayQuality(d, location),
+          fullDate: d,
+          isCurrentMonth: false,
+          isToday: isSameDay(d, today),
+          dayChi: getCanChiDay(d).split(' ')[1] as Chi,
+        });
+      }
 
-  return days;
+      return days;
+    },
+    { year, month },
+  );
 }
 
 // ── Can-Chi Parsing ───────────────────────────────────────────
@@ -648,9 +666,17 @@ export function getDetailedDayData(date: Date, location?: SwissGeoLocation): Day
   const cached = detailedDayDataCache.get(detailKey);
   if (cached) return cached;
 
-  // 1. Parse core identifiers
-  const lunar = getLunarDate(normalized, location);
-  const dayCanChi = parseCanChi(getCanChiDay(normalized));
+  const yyyy = normalized.getFullYear();
+  const mm = String(normalized.getMonth() + 1).padStart(2, '0');
+  const dd = String(normalized.getDate()).padStart(2, '0');
+  const solarDateStr = `${yyyy}-${mm}-${dd}`;
+
+  return measureSync(
+    'calendar_detail_compute',
+    () => {
+      // 1. Parse core identifiers
+      const lunar = getLunarDate(normalized, location);
+      const dayCanChi = parseCanChi(getCanChiDay(normalized));
 
   // 2. Foundational Layer
   const foundational = calculateFoundationalLayer(normalized, lunar, dayCanChi, getCanChiMonth, getCanChiYear);
@@ -703,11 +729,6 @@ export function getDetailedDayData(date: Date, location?: SwissGeoLocation): Day
   );
 
   // 8. Formatting helpers
-  const yyyy = normalized.getFullYear();
-  const mm = String(normalized.getMonth() + 1).padStart(2, '0');
-  const dd = String(normalized.getDate()).padStart(2, '0');
-  const solarDateStr = `${yyyy}-${mm}-${dd}`;
-
   const jd = getJDN(normalized.getDate(), normalized.getMonth() + 1, normalized.getFullYear());
 
   // 9. Buddhist year
@@ -796,10 +817,13 @@ export function getDetailedDayData(date: Date, location?: SwissGeoLocation): Day
     })(),
   };
 
-  if (detailedDayDataCache.size >= DETAIL_DATE_CACHE_LIMIT) {
-    const oldestKey = detailedDayDataCache.keys().next().value;
-    if (oldestKey) detailedDayDataCache.delete(oldestKey);
-  }
-  detailedDayDataCache.set(detailKey, result);
-  return result;
+      if (detailedDayDataCache.size >= DETAIL_DATE_CACHE_LIMIT) {
+        const oldestKey = detailedDayDataCache.keys().next().value;
+        if (oldestKey) detailedDayDataCache.delete(oldestKey);
+      }
+      detailedDayDataCache.set(detailKey, result);
+      return result;
+    },
+    { date: solarDateStr },
+  );
 }

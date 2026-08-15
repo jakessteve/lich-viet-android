@@ -20,9 +20,10 @@ description: Context7 Integration - fetch library docs and conventions before wr
 
 ### Step 1: Resolve the Library ID
 ```
-Call: mcp_context7_resolve-library-id
-Query: [specific question about what you need]
-Library: [library name]
+Tool: call_mcp_tool (ServerName: "context7", ToolName: "resolve-library-id")
+Arguments:
+  libraryName: [exact library name, e.g. "React", "Next.js", "Zod"]
+  query: [what to look up / rank relevance by, e.g. "hooks"]
 ```
 
 **Selection criteria** when multiple results come back:
@@ -36,9 +37,10 @@ Library: [library name]
 
 ### Step 2: Query the Documentation
 ```
-Call: mcp_context7_query-docs
-Library ID: [resolved ID from Step 1]
-Query: [specific, detailed question]
+Tool: call_mcp_tool (ServerName: "context7", ToolName: "query-docs")
+Arguments:
+  libraryId: [resolved Context7-compatible ID from Step 1, e.g. "/reactjs/react.dev"]
+  query: [specific single-concept question, e.g. "useId hook usage"]
 ```
 
 **Good queries:** "How to set up authentication middleware in Express.js 5"

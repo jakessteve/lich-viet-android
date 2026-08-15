@@ -157,7 +157,9 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
     const result = interpretPalace(taiBachPalace, allPalaces);
 
     expect(result.actionableGuidanceVi).toContain('tài lộc');
-    expect(result.actionableGuidanceVi).toContain('Địa Không' || 'kỷ luật tài chính');
+    expect(
+      result.actionableGuidanceVi.includes('Địa Không') || result.actionableGuidanceVi.includes('kỷ luật tài chính'),
+    ).toBe(true);
     expect(result.actionableGuidanceVi).toContain('dự phòng');
   });
 });

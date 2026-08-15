@@ -125,12 +125,19 @@ export function getYearThaiTueType(birthYear: number, targetYear: number): strin
  * When birthday and birthplace details are available, the natal day pillar is
  * re-derived from the corrected birth moment and folded into the score.
  */
+const personalDayScoreCache = new Map<string, PersonalDayScore>();
+const PERSONAL_SCORE_CACHE_LIMIT = 512;
+
 export function calculatePersonalDayScore(
   birthYear: number | undefined | null,
   dayInput: Chi | string,
   birthDetails?: PersonalBirthDetails | null,
 ): PersonalDayScore | null {
   if (!birthYear) return null;
+
+  const cacheKey = `${birthYear}:${dayInput}:${birthDetails?.birthMonth ?? ''}:${birthDetails?.birthDay ?? ''}:${birthDetails?.birthLocation?.lat ?? ''}:${birthDetails?.birthLocation?.lng ?? ''}`;
+  const cached = personalDayScoreCache.get(cacheKey);
+  if (cached) return cached;
 
   const dayChi = (dayInput.includes(' ') ? dayInput.split(' ')[1] : dayInput) as Chi;
   const userChi = getYearChi(birthYear);
@@ -191,6 +198,12 @@ export function calculatePersonalDayScore(
   if (hasBirthDetailAdjustment) {
     scoreData.description = `${scoreData.description} Đã hiệu chỉnh theo ngày sinh và nơi sinh.`;
   }
+
+  if (personalDayScoreCache.size >= PERSONAL_SCORE_CACHE_LIMIT) {
+    const oldestKey = personalDayScoreCache.keys().next().value;
+    if (oldestKey) personalDayScoreCache.delete(oldestKey);
+  }
+  personalDayScoreCache.set(cacheKey, scoreData);
 
   return scoreData;
 }

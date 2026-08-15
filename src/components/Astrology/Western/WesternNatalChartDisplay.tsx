@@ -8,14 +8,24 @@ import { AspectPatternsCard } from './AspectPatternsCard';
 import { WesternSimplifiedExplanation } from './WesternSimplifiedExplanation';
 import { WesternNatalTechnicalDisplay } from './WesternNatalTechnicalDisplay';
 import { WesternMarkdownExport } from '../WesternMarkdownExport';
+import { SegmentedControl, type SegmentedOption } from '../../shared';
+
+type WesternViewMode = 'simple' | 'advanced';
 
 const ZOOM_LEVELS = [1, 1.25, 1.5, 2] as const;
+
+const WESTERN_VIEW_MODES: readonly SegmentedOption<WesternViewMode>[] = [
+  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản', icon: 'menu_book' },
+  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu', icon: 'psychology' },
+];
 
 export const WesternNatalChartDisplay: React.FC = () => {
   const result = useAstrologyStore((state) => state.westernNatalResult);
   const isDark = useAppStore((state) => state.isDark);
   const viewportRef = useRef<HTMLDivElement>(null);
   const [zoomIndex, setZoomIndex] = useState(0);
+  const [viewMode, setViewMode] = useState<WesternViewMode>('simple');
+
   const zoom = ZOOM_LEVELS[zoomIndex];
   const svg = useMemo(() => {
     if (!result) return '';
@@ -58,7 +68,7 @@ export const WesternNatalChartDisplay: React.FC = () => {
         <header className="flex items-center justify-between gap-3 border-b border-border-light/50 px-3 py-2.5 dark:border-border-dark/50 sm:px-4">
           <div className="min-w-0">
             <h3 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">Bản đồ sao</h3>
-            <p className="truncate text-[11px] text-text-secondary-light dark:text-text-secondary-dark">Chạm hai lần để xem chi tiết</p>
+            <p className="truncate text-xs text-text-secondary-light dark:text-text-secondary-dark">Chạm hai lần để xem chi tiết</p>
           </div>
           <div className="flex shrink-0 items-center gap-1" aria-label="Điều khiển thu phóng">
             <button
@@ -99,8 +109,8 @@ export const WesternNatalChartDisplay: React.FC = () => {
           onDoubleClick={toggleDetailZoom}
           onKeyDown={(event) => {
             if (event.key === 'Enter' || event.key === ' ') {
-              event.preventDefault()
-              toggleDetailZoom()
+              event.preventDefault();
+              toggleDetailZoom();
             }
           }}
           role="button"
@@ -126,25 +136,57 @@ export const WesternNatalChartDisplay: React.FC = () => {
       {/* Action buttons immediately below chart */}
       <WesternMarkdownExport system="western" />
 
-      {/* Moon Phase Badge */}
-      {result.moonPhase && <MoonPhaseBadge moonPhase={result.moonPhase} />}
+      {/* Dual Tier Interpretation Selector */}
+      <div className="space-y-2.5 pt-2 border-t border-border-light/40 dark:border-border-dark/40">
+        <div>
+          <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+            Luận Giải Bản Đồ Sao
+          </h4>
+          <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+            Chọn chế độ xem phù hợp với nhu cầu của bạn.
+          </p>
+        </div>
+        <SegmentedControl
+          options={WESTERN_VIEW_MODES}
+          value={viewMode}
+          onChange={setViewMode}
+          ariaLabel="Chế độ xem luận giải Tây phương"
+          tone="indigo"
+          className="w-full"
+        />
+      </div>
 
-      {/* Element & Modality Balance Card */}
-      {result.elementBalance && <ElementBalanceCard balance={result.elementBalance} />}
+      {/* MODE 1: Cơ bản (Simple) */}
+      {viewMode === 'simple' && (
+        <div className="space-y-5 animate-fade-in">
+          {/* Moon Phase Badge */}
+          {result.moonPhase && <MoonPhaseBadge moonPhase={result.moonPhase} />}
 
-      {/* Special Aspect Patterns Card */}
-      {result.aspectPatterns && result.aspectPatterns.length > 0 && (
-        <AspectPatternsCard patterns={result.aspectPatterns} />
+          {/* Element & Modality Balance Card */}
+          {result.elementBalance && <ElementBalanceCard balance={result.elementBalance} />}
+
+          {/* Simplified Interpretations (The Big Three, Personal Drivers, Karma/Growth, Life Spheres) */}
+          <WesternSimplifiedExplanation result={result} mode="simple" />
+        </div>
       )}
 
-      {/* Simplified Interpretations (The Big Three, Personal Drivers, Karma/Growth, Life Spheres) */}
-      <WesternSimplifiedExplanation result={result} />
+      {/* MODE 2: Chuyên sâu (Advanced) */}
+      {viewMode === 'advanced' && (
+        <div className="space-y-5 animate-fade-in">
+          {/* Special Aspect Patterns Card */}
+          {result.aspectPatterns && result.aspectPatterns.length > 0 && (
+            <AspectPatternsCard patterns={result.aspectPatterns} />
+          )}
 
-      {/* Deep Technical Data Accordion */}
-      <WesternNatalTechnicalDisplay result={result} />
+          {/* Deep Technical Data Accordion */}
+          <WesternNatalTechnicalDisplay result={result} />
+
+          {/* Advanced Multi-Dimensional Interpretations */}
+          <WesternSimplifiedExplanation result={result} mode="advanced" />
+        </div>
+      )}
     </section>
   );
 };
 
 export default WesternNatalChartDisplay;
-

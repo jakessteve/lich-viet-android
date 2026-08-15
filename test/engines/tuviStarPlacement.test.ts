@@ -223,11 +223,18 @@ describe('Star Placement Engine', () => {
       expect(positions['Đà La']).toBe(7);
     });
 
-    it('uses Bắc phái Khôi Việt anchors for Canh year', () => {
+    it('uses Vietnamese Khôi Việt anchors for Thiên Lương / Nam phái on Canh year', () => {
+      const positions = placePhuTinh(6, 8, 6, 25, 4, 2, 10, 'Thuận', 'thien-luong');
+
+      expect(positions['Thiên Khôi']).toBe(1); // Sửu
+      expect(positions['Thiên Việt']).toBe(7); // Mùi
+    });
+
+    it('uses standard Bắc phái Khôi Việt anchors for Canh year', () => {
       const positions = placePhuTinh(6, 8, 6, 25, 4, 2, 10, 'Thuận', 'bac-phai');
 
-      expect(positions['Thiên Khôi']).toBe(1);
-      expect(positions['Thiên Việt']).toBe(7);
+      expect(positions['Thiên Khôi']).toBe(6); // Ngọ
+      expect(positions['Thiên Việt']).toBe(2); // Dần
     });
   });
 

@@ -6,7 +6,7 @@
  * and Tam Phương Tứ Chính without bloating bundle size.
  */
 
-import type { TuViPalace, TuViStar, TuViCenterInfo } from '../../types/tuvi';
+import type { TuViPalace, TuViCenterInfo } from '../../types/tuvi';
 import { detectTamHopPalaces, detectDoiCung, detectCombinations } from './combinationDetection';
 
 export interface PalaceInterpretationResult {

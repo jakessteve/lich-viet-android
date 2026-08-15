@@ -6,7 +6,7 @@ const n = (value: number | null, digits = 6) => value === null ? '—' : value.t
 
 const Value: React.FC<{ label: string; children: React.ReactNode; wide?: boolean }> = ({ label, children, wide }) => (
   <div className={wide ? 'col-span-2 sm:col-span-4' : ''}>
-    <dt className="text-[10px] font-medium uppercase tracking-wide text-text-secondary-light/75 dark:text-text-secondary-dark/75">{label}</dt>
+    <dt className="text-micro font-medium uppercase tracking-wide text-text-secondary-light/75 dark:text-text-secondary-dark/75">{label}</dt>
     <dd className="mt-0.5 break-words font-medium text-text-primary-light dark:text-text-primary-dark">{children}</dd>
   </div>
 );
@@ -20,7 +20,7 @@ const Section: React.FC<{
     <summary className="flex min-h-12 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-semibold text-text-primary-light marker:hidden dark:text-text-primary-dark [&::-webkit-details-marker]:hidden">
       <span>{title}</span>
       <span className="flex items-center gap-2">
-        {count !== undefined && <span className="rounded-full bg-indigo-500/10 px-2 py-0.5 text-[11px] text-indigo-700 dark:text-indigo-300">{count}</span>}
+        {count !== undefined && <span className="rounded-full bg-indigo-500/10 px-2 py-0.5 text-xs font-semibold text-indigo-700 dark:text-indigo-300">{count}</span>}
         <span className="material-icons-round text-lg text-text-secondary-light transition-transform group-open:rotate-180 dark:text-text-secondary-dark" aria-hidden="true">expand_more</span>
       </span>
     </summary>
@@ -49,10 +49,10 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
       >
         <span className="min-w-0">
           <span className="block text-sm font-bold text-text-primary-light dark:text-text-primary-dark">Dữ liệu kỹ thuật</span>
-          <span className="mt-0.5 block truncate text-[11px] text-text-secondary-light dark:text-text-secondary-dark">Đối tượng, nhà, góc chiếu và thông số máy tính</span>
+          <span className="mt-0.5 block truncate text-xs text-text-secondary-light dark:text-text-secondary-dark">Đối tượng, nhà, góc chiếu và thông số máy tính</span>
         </span>
         <span className="flex shrink-0 items-center gap-2">
-          <span className="hidden rounded-full bg-surface-container px-2 py-1 text-[10px] text-text-secondary-light dark:text-text-secondary-dark sm:inline">20 · 12 · 4 · {result.aspects.length}</span>
+          <span className="hidden rounded-full bg-surface-container px-2 py-1 text-micro text-text-secondary-light dark:text-text-secondary-dark sm:inline">20 · 12 · 4 · {result.aspects.length}</span>
           <span className={`material-icons-round text-xl text-text-secondary-light transition-transform dark:text-text-secondary-dark ${open ? 'rotate-180' : ''}`} aria-hidden="true">expand_more</span>
         </span>
       </button>
@@ -63,7 +63,7 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
             {[['Đối tượng', 20], ['Nhà', 12], ['Góc', 4], ['Góc chiếu', result.aspects.length]].map(([label, count]) => (
               <div key={String(label)} className="rounded-xl bg-indigo-500/7 px-1.5 py-2 text-center">
                 <strong className="block text-sm text-text-primary-light dark:text-text-primary-dark">{count}</strong>
-                <span className="text-[9px] text-text-secondary-light dark:text-text-secondary-dark">{label}</span>
+                <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">{label}</span>
               </div>
             ))}
           </div>
@@ -78,12 +78,12 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
                         <span>{object.symbol}</span>
                         <span>{object.nameVi}</span>
                         {object.dignity && object.dignity.type !== 'peregrine' && (
-                          <span className={`rounded-md border px-1.5 py-0.2 text-[10px] font-medium ${object.dignity.badgeClass}`}>
+                          <span className={`rounded-md border px-1.5 py-0.5 text-micro font-medium ${object.dignity.badgeClass}`}>
                             {object.dignity.symbol} {object.dignity.labelVi}
                           </span>
                         )}
                       </p>
-                      <code className="block truncate text-[10px] text-text-secondary-light dark:text-text-secondary-dark">{object.id}</code>
+                      <code className="block truncate text-micro text-text-secondary-light dark:text-text-secondary-dark">{object.id}</code>
                     </div>
                     <span className="shrink-0 rounded-lg bg-indigo-500/10 px-2 py-1 font-semibold text-indigo-700 dark:text-indigo-300">
                       {object.signVi} {object.degree}°{object.minute.toString().padStart(2, '0')}′{object.retrograde ? ' · Rx' : ''}
@@ -117,7 +117,7 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
                       </span>
                     </div>
                     {ruler && (
-                      <div className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark border-t border-border-light/30 pt-1.5 dark:border-border-dark/30 flex items-center justify-between">
+                      <div className="text-xs text-text-secondary-light dark:text-text-secondary-dark border-t border-border-light/30 pt-1.5 dark:border-border-dark/30 flex items-center justify-between">
                         <span>Chủ tinh: <strong className="text-text-primary-light dark:text-text-primary-dark">{ruler.traditionalRulerVi} {ruler.traditionalRulerSymbol}</strong></span>
                         {ruler.rulerHouse && <span>(tại Nhà {ruler.rulerHouse})</span>}
                       </div>
@@ -132,8 +132,8 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
             <div className="grid gap-px bg-border-light/40 sm:grid-cols-2 dark:bg-border-dark/40">
               {Object.values(result.angles).map((angle) => (
                 <div key={angle.id} data-technical-angle={angle.id} className="flex items-center justify-between gap-3 bg-surface-container-lowest px-4 py-3">
-                  <span><strong>{angle.symbol}</strong> {angle.nameVi}<code className="block text-[10px] text-text-secondary-light dark:text-text-secondary-dark">{angle.id}</code></span>
-                  <span className="text-right font-medium">{angle.signVi} {angle.degree}°{angle.minute.toString().padStart(2, '0')}′<br /><span className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark">{angle.longitude.toFixed(6)}°</span></span>
+                  <span><strong>{angle.symbol}</strong> {angle.nameVi}<code className="block text-micro text-text-secondary-light dark:text-text-secondary-dark">{angle.id}</code></span>
+                  <span className="text-right font-medium">{angle.signVi} {angle.degree}°{angle.minute.toString().padStart(2, '0')}′<br /><span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">{angle.longitude.toFixed(6)}°</span></span>
                 </div>
               ))}
             </div>
@@ -146,7 +146,7 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="font-semibold text-text-primary-light dark:text-text-primary-dark">{aspect.objectAName} <span className="text-text-secondary-light dark:text-text-secondary-dark">↔</span> {aspect.objectBName}</p>
-                      <p className="truncate text-[10px] text-text-secondary-light dark:text-text-secondary-dark">{aspect.objectAId} · {aspect.objectBId}</p>
+                      <p className="truncate text-micro text-text-secondary-light dark:text-text-secondary-dark">{aspect.objectAId} · {aspect.objectBId}</p>
                     </div>
                     <span className="shrink-0 rounded-lg px-2 py-1 font-semibold" style={{ color: aspect.color, backgroundColor: `${aspect.color}16` }}>{aspect.name}</span>
                   </div>

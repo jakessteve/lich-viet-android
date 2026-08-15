@@ -85,6 +85,13 @@ export {
 // ── Mệnh-Cục Relation ──────────────────────────────────────────
 export { calculateMenhCucRelation, getMenhHanh, getCucHanh } from './menhCucRelation';
 
+// ── Đại Hạn Interpretation ─────────────────────────────────────
+export {
+  interpretDaiHan,
+  getAllDaiHanInterpretations,
+  getCurrentDaiHan,
+} from './daiHanInterpretation';
+
 // ── Markdown Formatter ─────────────────────────────────────────
 export {
   formatTuViChartAsMarkdown,
@@ -93,3 +100,4 @@ export {
   formatCombinationsAsMarkdown,
   generatePromptHeader,
 } from './markdownFormatter';
+

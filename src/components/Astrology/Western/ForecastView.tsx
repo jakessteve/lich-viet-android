@@ -141,7 +141,7 @@ export const ForecastView: React.FC = () => {
                     return (
                       <span
                         key={`${aspect.transitBody}-${aspect.natalBody}-${aspect.type}-${i}`}
-                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-[11px] font-semibold ${meta.cls}`}
+                        className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-semibold ${meta.cls}`}
                       >
                         {BODY_ICONS[aspect.transitBody] ?? '●'} {BODY_LABELS[aspect.transitBody] ?? aspect.transitBody}
                         <span className="opacity-70">{meta.label}</span>

@@ -1,7 +1,6 @@
-import React, { useEffect, useState, useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/stores/authStore';
 import {
   getLunarDate,
   getCanChiDay,
@@ -22,7 +21,8 @@ import { FEATURES, getMoonPhaseName } from './LandingPage/landingPageData';
 import MoonPhaseSVG from './LandingPage/MoonPhaseSVG';
 import HeroAuspiciousArt from './LandingPage/HeroAuspiciousArt';
 import MysticBackgroundPattern from './LandingPage/MysticBackgroundPattern';
-import { ActionButton, IconButton } from '../shared';
+import LandingNav from './LandingPage/LandingNav';
+import { ActionButton } from '../shared';
 
 const TRUST_VALUES = [
   {
@@ -48,40 +48,9 @@ const TRUST_VALUES = [
   },
 ] as const;
 
-// ══════════════════════════════════════════════════════════
-// Landing Page — Revamped with interactive hero, social proof,
-// story cards, emotional trust, pricing cards, and SEO footer
-// ══════════════════════════════════════════════════════════
-
-import { useAppStore } from '@/stores/appStore';
-
 export default function LandingPage() {
   usePageTitle('Tra cứu Âm Lịch, Gieo Quẻ & Tử Vi');
   const navigate = useNavigate();
-  const { isDark, toggleDarkMode } = useAppStore();
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const userMenuRef = useRef<HTMLDivElement>(null);
-  const { user, isAuthenticated, logout } = useAuthStore();
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
-        setUserMenuOpen(false);
-      }
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === 'Escape') setUserMenuOpen(false);
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    document.addEventListener('keydown', handleKeyDown);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
 
   // ── Live "Today" data from calendarEngine ──
   const today = useMemo(() => {
@@ -126,7 +95,7 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen transition-colors duration-200 ease-out overflow-x-hidden relative">
-      {/* ──── Subtle hero texture from the legacy landing page ──── */}
+      {/* ──── Subtle hero texture ──── */}
       <div
         className="absolute top-0 left-0 right-0 h-[1180px] pointer-events-none z-0 overflow-hidden"
         aria-hidden="true"
@@ -162,133 +131,10 @@ export default function LandingPage() {
       </div>
 
       {/* ──── Floating Nav ──── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 glass-nav">
-        <div className="max-w-5xl mx-auto px-5 h-14 flex items-center justify-between">
-          <h1 className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold via-gold-light to-amber-600 dark:from-gold-dark dark:via-amber-400 dark:to-yellow-300 tracking-tight">
-            LỊCH VIỆT
-          </h1>
-          <div className="flex items-center gap-2">
-            <IconButton
-              onClick={toggleDarkMode}
-              className="rounded-full text-gray-400 dark:text-gray-500"
-              icon={isDark ? 'light_mode' : 'dark_mode'}
-              label="Chuyển chế độ sáng/tối"
-            />
-            <div className="relative" ref={userMenuRef}>
-              <IconButton
-                onClick={() => setUserMenuOpen((prev) => !prev)}
-                className="rounded-full text-gray-400 dark:text-gray-500"
-                icon="person"
-                label="Menu người dùng"
-              />
-
-              {userMenuOpen ? (
-                <div className="absolute right-0 mt-2 w-64 rounded-xl border border-border-light bg-white py-1.5 shadow-xl dark:border-mystery-purple/15 dark:bg-mystery-surface/90 dark:backdrop-blur-xl">
-                  <div className="border-b border-border-light px-4 py-3 dark:border-border-dark">
-                    {isAuthenticated && user ? (
-                      <div>
-                        <div className="flex items-center gap-2.5">
-                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-mystery-purple/20 to-mystery-blue/20 dark:from-mystery-purple/25 dark:to-mystery-blue/15">
-                            <span className="text-xs font-bold text-mystery-purple dark:text-mystery-purple-light">
-                              {user.displayName.charAt(0).toUpperCase()}
-                            </span>
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
-                              {user.displayName}
-                            </p>
-                            <p className="truncate text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                              {user.email}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <p className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">Khách</p>
-                        <p className="mt-0.5 text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                          Phiên bản miễn phí
-                        </p>
-                      </>
-                    )}
-                  </div>
-
-                  <div className="py-1">
-                    {isAuthenticated ? (
-                      <>
-                        <button
-                          onClick={() => {
-                            navigate('/app/cai-dat');
-                            setUserMenuOpen(false);
-                          }}
-                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
-                        >
-                          <span className="material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark">
-                            settings
-                          </span>
-                          Cài đặt
-                        </button>
-                        <button
-                          onClick={() => {
-                            navigate('/');
-                            setUserMenuOpen(false);
-                          }}
-                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
-                        >
-                          <span className="material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark">
-                            info
-                          </span>
-                          Giới thiệu
-                        </button>
-                        <div className="mt-1 border-t border-border-light/50 pt-1 dark:border-border-dark/30">
-                          <button
-                            onClick={() => {
-                              logout();
-                              setUserMenuOpen(false);
-                            }}
-                            className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-red-500 transition-colors hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/15"
-                          >
-                            <span className="material-icons-round text-lg">logout</span>
-                            Đăng xuất
-                          </button>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <button
-                          onClick={() => {
-                            navigate('/app/dang-nhap');
-                            setUserMenuOpen(false);
-                          }}
-                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
-                        >
-                          <span className="material-icons-round text-lg text-gold dark:text-gold-dark">login</span>
-                          Đăng nhập
-                        </button>
-                        <button
-                          onClick={() => {
-                            navigate('/app/dang-ky');
-                            setUserMenuOpen(false);
-                          }}
-                          className="flex w-full items-center gap-3 px-4 py-2.5 text-sm text-text-primary-light transition-colors hover:bg-gray-50 dark:text-text-primary-dark dark:hover:bg-gray-700/50"
-                        >
-                          <span className="material-icons-round text-lg text-mystery-purple dark:text-mystery-purple-light">
-                            person_add
-                          </span>
-                          Đăng ký
-                        </button>
-                      </>
-                    )}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          </div>
-        </div>
-      </nav>
+      <LandingNav />
 
       {/* ════════════════════════════════════════════════════════
-           §1 HERO — Centered headline + symmetric 3-card grid
+           §1 HERO — Benefit-driven headline + 3-card grid
          ════════════════════════════════════════════════════════ */}
       <section className="relative px-5 pt-28 pb-8 overflow-hidden">
         {/* Ambient glow */}
@@ -297,24 +143,24 @@ export default function LandingPage() {
           <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-amber-500/4 dark:bg-mystery-purple/6 rounded-full blur-3xl" />
         </div>
 
-        {/* Auspicious Art Background (Scaled to 90% of original massive size) */}
+        {/* Auspicious Art Background */}
         <div className="absolute top-6 right-[-55%] h-[520px] w-[520px] opacity-[0.22] dark:opacity-[0.24] pointer-events-none z-[1] sm:top-0 sm:right-[-20%] sm:h-[720px] sm:w-[720px] sm:opacity-[0.6] md:right-[-10%] lg:right-[0%] lg:h-[900px] lg:w-[900px] lg:opacity-[0.8] lg:dark:opacity-[0.7] transition-opacity duration-300 ease-out">
           <HeroAuspiciousArt />
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          {/* ── Asymmetric headline block ── */}
+          {/* ── Headline block ── */}
           <div className="text-left max-w-3xl mb-16 relative z-10">
             {/* Authority badge */}
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-low dark:bg-gold-dark/6 mb-5 backdrop-blur-sm">
               <span className="material-icons-round text-xs text-gold dark:text-gold-dark">science</span>
-              <span className="text-xs sm:text-xs font-medium text-gold dark:text-gold-dark tracking-wide">
+              <span className="text-xs font-medium text-gold dark:text-gold-dark tracking-wide">
                 Tính toán thiên văn chính xác
               </span>
             </div>
 
-            {/* Hook headline — benefit-driven, more breathing room */}
-            <h2 className="text-5xl sm:text-6xl lg:text-[4.5rem] font-serif font-bold leading-[1.1] tracking-tight mb-6">
+            {/* Main semantic h1 */}
+            <h1 className="text-display font-serif mb-6">
               <span className="bg-clip-text text-transparent bg-gradient-to-br from-text-primary-light to-text-secondary-light dark:from-white dark:to-gray-400">
                 Khám phá
               </span>
@@ -322,7 +168,7 @@ export default function LandingPage() {
               <span className="mystery-text-glow bg-clip-text text-transparent bg-gradient-to-r from-gold via-gold-light to-amber-600 dark:from-gold-dark dark:via-amber-400 dark:to-yellow-300">
                 vận mệnh của bạn
               </span>
-            </h2>
+            </h1>
 
             <p className="text-base sm:text-lg text-text-secondary-light dark:text-text-secondary-dark leading-relaxed mb-8 max-w-xl">
               3 công cụ cốt lõi trong một ứng dụng.
@@ -425,10 +271,10 @@ export default function LandingPage() {
               </div>
             </button>
 
-            {/* ── Card 2: Vận Khí Vũ Trụ (Cosmic Weather) — center ── */}
+            {/* ── Card 2: Vận Khí Vũ Trụ (Cosmic Weather) ── */}
             <CosmicWeatherCard navigate={navigate} today={today} />
 
-            {/* ── Card 3: Khám Phá Nhanh (Birthday Input) — right ── */}
+            {/* ── Card 3: Khám Phá Nhanh (Birthday Input) ── */}
             <div className="flex flex-col">
               <HeroBirthdayInput onNavigate={navigate} />
             </div>
@@ -449,15 +295,14 @@ export default function LandingPage() {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-           §3 STATS — Trust counters (isolated render)
+           §2 STATS — Trust counters
          ════════════════════════════════════════════════════════ */}
       <StatsSection />
 
       {/* ════════════════════════════════════════════════════════
-           §4 FEATURES — Story cards (benefit-first with tiers)
+           §3 FEATURES & TRUST — Core modules with emotional value
          ════════════════════════════════════════════════════════ */}
       <section className="py-14 sm:py-20 px-5 relative z-10 overflow-hidden">
-        {/* Background Pattern */}
         <div className="absolute top-[-10%] right-[-20%] md:right-[0%] w-[800px] h-[800px] opacity-40 dark:opacity-60 pointer-events-none z-0">
           <MysticBackgroundPattern variant="luoshu" />
         </div>
@@ -466,54 +311,73 @@ export default function LandingPage() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold dark:text-gold-dark mb-2">
               Tính năng
             </p>
-            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3 mystery-text-glow">
+            <h2 className="text-h2 mystery-text-glow mb-3">
               3 công cụ trong một ứng dụng
-            </h3>
+            </h2>
             <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark max-w-lg mx-auto">
               Kết hợp lịch âm, Dụng Sự, gieo quẻ và Tử Vi trong một không gian gọn gàng.
             </p>
           </div>
 
-          {/* Basic tier features */}
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 dark:bg-emerald-400/8 text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
-                Cơ bản
-              </span>
-              <div className="flex-1 h-px bg-border-light/20 dark:bg-border-dark/20" />
+          {/* Features grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
+            {FEATURES.filter((f) => f.tier === 'Cơ bản').map((f) => (
+              <button
+                key={f.id}
+                onClick={() => navigate(`/app/${f.id}`)}
+                className="surface-interactive group relative w-full h-full flex flex-col justify-start items-start text-left p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright transition-colors duration-500"
+              >
+                <div
+                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${f.glowColor} dark:opacity-100 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none`}
+                />
+                <div className="relative flex items-start gap-3">
+                  <div
+                    className={`w-10 h-10 rounded-xl ${f.iconBg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <span className={`material-icons-round text-lg ${f.iconColor}`}>{f.icon}</span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="text-sm font-bold">{f.title}</h3>
+                      <span className="px-1.5 py-0.5 rounded bg-gold/8 dark:bg-gold-dark/6 text-[10px] font-bold text-gold dark:text-gold-dark uppercase tracking-wider">
+                        {f.highlight}
+                      </span>
+                    </div>
+                    <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+                      {f.desc}
+                    </p>
+                  </div>
+                </div>
+                <span className="absolute top-4 right-3 material-icons-round text-sm text-text-secondary-light/60 dark:text-text-secondary-dark/60 group-hover:text-gold dark:group-hover:text-gold-dark group-hover:translate-x-0.5 transition-all">
+                  arrow_forward
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* Trust Values Sub-section */}
+          <div className="pt-8 border-t border-border-light/20 dark:border-border-dark/20">
+            <div className="text-center mb-8">
+              <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-2">Được xây dựng vì người dùng</h3>
+              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">Quyền riêng tư và độ chính xác là ưu tiên hàng đầu.</p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {FEATURES.filter((f) => f.tier === 'Cơ bản').map((f) => (
-                <button
-                  key={f.id}
-                  onClick={() => navigate(`/app/${f.id}`)}
-                  className="surface-interactive group relative w-full h-full flex flex-col justify-start items-start text-left p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright transition-colors duration-500"
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {TRUST_VALUES.map((v) => (
+                <div
+                  key={v.title}
+                  className="surface-interactive group p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright transition-colors duration-500"
                 >
                   <div
-                    className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${f.glowColor} dark:opacity-100 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none`}
-                  />
-                  <div className="relative flex items-start gap-3">
-                    <div
-                      className={`w-10 h-10 rounded-xl ${f.iconBg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <span className={`material-icons-round text-lg ${f.iconColor}`}>{f.icon}</span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="text-sm font-bold">{f.title}</h4>
-                        <span className="px-1.5 py-0.5 rounded bg-gold/8 dark:bg-gold-dark/6 text-xs font-bold text-gold dark:text-gold-dark uppercase tracking-wider">
-                          {f.highlight}
-                        </span>
-                      </div>
-                      <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-                        {f.desc}
-                      </p>
-                    </div>
+                    className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${v.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500`}
+                  >
+                    <span className={`material-icons-round text-xl ${v.iconColor}`}>{v.icon}</span>
                   </div>
-                  <span className="absolute top-4 right-3 material-icons-round text-sm text-text-secondary-light/60 dark:text-text-secondary-dark/60 group-hover:text-gold dark:group-hover:text-gold-dark group-hover:translate-x-0.5 transition-all">
-                    arrow_forward
-                  </span>
-                </button>
+                  <h4 className="text-sm font-bold mb-1.5">{v.title}</h4>
+                  <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+                    {v.desc}
+                  </p>
+                </div>
               ))}
             </div>
           </div>
@@ -521,73 +385,12 @@ export default function LandingPage() {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-           §5 TESTIMONIALS — Social proof
+           §4 TESTIMONIALS — Social proof
          ════════════════════════════════════════════════════════ */}
       <TestimonialSection />
 
       {/* ════════════════════════════════════════════════════════
-           §6 WHY LỊCH VIỆT — Emotional trust section
-         ════════════════════════════════════════════════════════ */}
-      <section className="py-14 sm:py-16 px-5 relative z-10 bg-surface-subtle-light dark:bg-background-dark overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-40 dark:opacity-60 pointer-events-none z-0">
-          <MysticBackgroundPattern variant="dipper" />
-        </div>
-        <div className="max-w-4xl mx-auto relative z-10">
-          <div className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold dark:text-gold-dark mb-2">
-              Tại sao chọn Lịch Việt
-            </p>
-            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">Được xây dựng vì người dùng</h3>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {TRUST_VALUES.map((v) => (
-              <div
-                key={v.title}
-                className="surface-interactive group p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright transition-colors duration-500"
-              >
-                <div
-                  className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${v.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500`}
-                >
-                  <span className={`material-icons-round text-xl ${v.iconColor}`}>{v.icon}</span>
-                </div>
-                <h4 className="text-sm font-bold mb-1.5">{v.title}</h4>
-                <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-                  {v.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-           §7 ROADMAP
-         ════════════════════════════════════════════════════════ */}
-      <section className="py-14 sm:py-20 px-5 relative z-10 overflow-hidden">
-        <div className="max-w-2xl mx-auto relative z-10">
-          <div className="text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold dark:text-gold-dark mb-2">
-              Gói nâng cao
-            </p>
-            <h3 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3">Sắp ra mắt</h3>
-            <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark max-w-md mx-auto mb-8">
-              Các tiện ích nâng cao đang được phát triển. Hãy dùng thử các công cụ cơ bản ngay hôm nay.
-            </p>
-            <ActionButton
-              onClick={() => navigate('/app/am-lich')}
-              className="px-8 py-3.5"
-              icon="arrow_forward"
-            >
-              Khám phá ngay
-            </ActionButton>
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════════════════════════
-           §8 CLOSING CTA — Urgency-based with moon phase
+           §5 CLOSING CTA — Urgency & action
          ════════════════════════════════════════════════════════ */}
       <section className="py-14 sm:py-20 px-5 relative z-10">
         <div className="max-w-xl mx-auto text-center">
@@ -598,19 +401,14 @@ export default function LandingPage() {
               <div className="w-12 h-12 rounded-2xl bg-gold/10 dark:bg-gold-dark/8 flex items-center justify-center mx-auto mb-4">
                 <span className="material-icons-round text-2xl text-gold dark:text-gold-dark">explore</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Sẵn sàng khám phá vận mệnh?</h3>
-              <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-1">
-                Trải nghiệm lịch âm, gieo quẻ và nhiều công cụ ngay. Nâng cấp để mở khóa toàn bộ.
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Sẵn sàng khám phá vận mệnh?</h2>
+              <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-4">
+                Trải nghiệm lịch âm, gieo quẻ và nhiều công cụ ngay bây giờ.
               </p>
               {isGoodDay && (
                 <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-4 inline-flex items-center gap-1">
                   <span className="material-icons-round text-xs">verified</span>
                   Hôm nay là ngày Hoàng Đạo — thời điểm tốt để bắt đầu!
-                </p>
-              )}
-              {!isGoodDay && (
-                <p className="text-xs text-text-secondary-light/60 dark:text-text-secondary-dark/60 mb-6">
-                  Hoạt động trên mọi thiết bị — desktop, tablet và điện thoại.
                 </p>
               )}
               <ActionButton
@@ -625,7 +423,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ──── §9 FOOTER — Multi-column SEO-rich ──── */}
+      {/* ──── §6 FOOTER — Multi-column SEO-rich ──── */}
       <footer className="border-t border-border-light/40 dark:border-mystery-purple/10 relative z-10 bg-surface-subtle-light dark:bg-mystery-deep">
         <div className="max-w-5xl mx-auto px-5 py-10">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
@@ -635,7 +433,7 @@ export default function LandingPage() {
                 LỊCH VIỆT
               </span>
               <p className="text-xs text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-1.5 leading-relaxed">
-                Ứng dụng tra cứu âm lịch, Dụng Sự, gieo quẻ và Tử Vi toàn diện nhất.
+                Ứng dụng tra cứu âm lịch, Dụng Sự, gieo quẻ và Tử Vi toàn diện.
               </p>
             </div>
 
@@ -649,6 +447,7 @@ export default function LandingPage() {
                   { label: 'Âm Lịch', path: '/app/am-lich' },
                   { label: 'Dụng Sự', path: '/app/am-lich' },
                   { label: 'Gieo Quẻ', path: '/app/gieo-que' },
+                  { label: 'Tử Vi', path: '/app/tu-vi' },
                 ].map((f) => (
                   <li key={f.label}>
                     <button

@@ -192,7 +192,7 @@ export const WesternMarkdownExport: React.FC<Props> = ({ system }) => {
                 className="flex min-h-12 w-full items-center gap-3 rounded-xl px-3 text-left transition-colors hover:bg-indigo-500/10 focus-visible:bg-indigo-500/10 focus-visible:outline-none disabled:opacity-50"
               >
                 <span className="material-icons-round text-indigo-600 dark:text-indigo-300" aria-hidden="true">data_object</span>
-                <span><strong className="block text-sm">SVG</strong><span className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">Vector, sắc nét khi phóng to</span></span>
+                <span><strong className="block text-sm">SVG</strong><span className="text-xs text-text-secondary-light dark:text-text-secondary-dark">Vector, sắc nét khi phóng to</span></span>
               </button>
               <button
                 type="button"
@@ -202,7 +202,7 @@ export const WesternMarkdownExport: React.FC<Props> = ({ system }) => {
                 className="flex min-h-12 w-full items-center gap-3 rounded-xl px-3 text-left transition-colors hover:bg-indigo-500/10 focus-visible:bg-indigo-500/10 focus-visible:outline-none disabled:opacity-50"
               >
                 <span className="material-icons-round text-indigo-600 dark:text-indigo-300" aria-hidden="true">image</span>
-                <span><strong className="block text-sm">PNG</strong><span className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">Ảnh 2×, dễ chia sẻ</span></span>
+                <span><strong className="block text-sm">PNG</strong><span className="text-xs text-text-secondary-light dark:text-text-secondary-dark">Ảnh 2×, dễ chia sẻ</span></span>
               </button>
             </div>
           )}

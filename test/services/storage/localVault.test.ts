@@ -2,10 +2,8 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import {
   saveVaultProfile,
   getAllVaultProfiles,
-  deleteVaultProfile,
   exportVaultBackupJson,
   importVaultBackupJson,
-  type VaultProfile,
 } from '@/services/storage/localVault';
 import { escapeHtml, escapeSvgText, sanitizePlainText, sanitizeCoordinates } from '@/utils/security';
 

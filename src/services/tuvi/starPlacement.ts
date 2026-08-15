@@ -46,6 +46,7 @@ import thanChuTableData from '../../data/tuvi/thanChuTable.json';
 import { detectCombinations } from './combinationDetection';
 import { DEFAULT_TU_VI_SCHOOL, resolveTuViSchoolProfile } from './schoolProfiles';
 import { formatCivilDateYmd } from './timeNormalization';
+import { measureSync } from '@/utils/performanceTracker';
 
 // ────────────────────────────────────────────────────────────────
 // Lookup Tables
@@ -562,12 +563,12 @@ export function placePhuTinh(
   const khoiViet =
     schoolProfile.khoiVietRule === 'standard'
       ? {
-          khoi: THIEN_KHOI_TABLE[mod10(yearCanIndex)],
-          viet: THIEN_VIET_TABLE[mod10(yearCanIndex)],
-        }
-      : {
           khoi: [1, 0, 11, 11, 1, 0, 6, 6, 3, 3][mod10(yearCanIndex)],
           viet: [7, 8, 9, 9, 7, 8, 2, 2, 5, 5][mod10(yearCanIndex)],
+        }
+      : {
+          khoi: THIEN_KHOI_TABLE[mod10(yearCanIndex)],
+          viet: THIEN_VIET_TABLE[mod10(yearCanIndex)],
         };
 
   const result: Record<string, number> = {
@@ -669,9 +670,12 @@ export function calculatePalaceCans(yearCanIndex: number): number[] {
  * @returns complete `TuViChart`
  */
 export function generateChart(input: TuViInput): TuViChart {
-  const schoolProfile = resolveTuViSchoolProfile(input.school);
-  const birthContext = buildTuViBirthContext(input, schoolProfile);
-  const auditWarnings = [...birthContext.warnings];
+  return measureSync(
+    'tuvi_chart_generate',
+    () => {
+      const schoolProfile = resolveTuViSchoolProfile(input.school);
+      const birthContext = buildTuViBirthContext(input, schoolProfile);
+      const auditWarnings = [...birthContext.warnings];
   const correctedDate = birthContext.correctedDate;
   const lunar = birthContext.lunarDate;
   const yearCanIndex = birthContext.yearCanIndex;
@@ -977,9 +981,12 @@ export function generateChart(input: TuViInput): TuViChart {
     centerInfo,
     palaces,
     combinations,
-    menhCucRelation,
-    auditWarnings,
-  };
+        menhCucRelation,
+        auditWarnings,
+      };
+    },
+    { school: input.school || 'thien-luong' },
+  );
 }
 
 /**

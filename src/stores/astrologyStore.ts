@@ -179,6 +179,7 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
         latitude: vedicInput.latitude,
         longitude: vedicInput.longitude,
         timezone: vedicInput.timezone,
+        ayanamsa: vedicInput.ayanamsa ?? 'lahiri',
       };
       const result = calculateWesternChart(westernInput);
       set({ vedicResult: result, isCalculating: false });

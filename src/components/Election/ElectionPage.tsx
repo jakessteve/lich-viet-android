@@ -7,6 +7,7 @@ import { ElectionResultCard } from './ElectionResultCard';
 
 export const ElectionPage: React.FC = () => {
   usePageTitle('Chọn Ngày Tốt');
+  const [filterCatOnly, setFilterCatOnly] = React.useState(false);
   
   const { results, isScanning, error, clearError } = useElectionStore(
     useShallow((state) => ({
@@ -16,6 +17,11 @@ export const ElectionPage: React.FC = () => {
       clearError: state.clearError,
     })),
   );
+
+  const filteredResults = React.useMemo(() => {
+    if (!results) return [];
+    return filterCatOnly ? results.filter((r) => r.totalScore >= 70) : results;
+  }, [filterCatOnly, results]);
 
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
@@ -64,14 +70,50 @@ export const ElectionPage: React.FC = () => {
       {/* Results */}
       {!isScanning && results && results.length > 0 && (
         <div className="space-y-4 animate-fade-in-up">
-          <h3 className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark border-b border-border-light dark:border-border-dark pb-2">
-            Kết quả đề xuất ({results.length})
-          </h3>
-          <div className="space-y-3">
-            {results.map((result, idx) => (
-              <ElectionResultCard key={idx} result={result} />
-            ))}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-light dark:border-border-dark pb-2">
+            <h3 className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+              <span>Kết quả đề xuất ({filteredResults.length}/{results.length})</span>
+            </h3>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setFilterCatOnly(false)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                  !filterCatOnly
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
+              >
+                Tất cả ({results.length})
+              </button>
+              <button
+                type="button"
+                onClick={() => setFilterCatOnly(true)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1 ${
+                  filterCatOnly
+                    ? 'bg-emerald-600 text-white shadow-sm'
+                    : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-800'
+                }`}
+              >
+                <span className="material-icons-round text-xs">verified</span>
+                Chỉ ngày Cát (≥ 70đ)
+              </button>
+            </div>
           </div>
+
+          {filteredResults.length === 0 ? (
+            <div className="text-center py-8 px-4 glass-card">
+              <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                Không có ngày nào đạt mức điểm Cát lợi (≥ 70đ) trong khoảng đã chọn. Bạn có thể chọn tab &quot;Tất cả&quot; để xem chi tiết các ngày khác.
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {filteredResults.map((result, idx) => (
+                <ElectionResultCard key={idx} result={result} />
+              ))}
+            </div>
+          )}
         </div>
       )}
 

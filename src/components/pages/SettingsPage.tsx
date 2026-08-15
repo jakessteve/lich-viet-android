@@ -6,102 +6,10 @@ import { useAppStore } from '../../stores/appStore';
 import { useAuthStore } from '../../stores/authStore';
 import { useTuViStore } from '@/stores/tuviStore';
 import { TuViLocationPicker } from '../TuVi/TuViLocationPicker';
-import { IconButton } from '../shared';
+import { IconButton, Toggle, SettingRow, Select } from '../shared';
 import SuccessToast from '../shared/SuccessToast';
 import type { TuViBirthLocation } from '../../types/tuvi';
 import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
-
-// ══════════════════════════════════════════════════════════
-// Toggle Switch — Modern pill toggle
-// ══════════════════════════════════════════════════════════
-
-function Toggle({ checked, onChange, id }: { checked: boolean; onChange: (v: boolean) => void; id: string }) {
-  return (
-    <button
-      id={id}
-      role="switch"
-      aria-checked={checked}
-      onClick={() => onChange(!checked)}
-      className={`relative w-14 h-8 min-h-11 rounded-full transition-all duration-300 ${
-        checked
-          ? 'bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 shadow-sm shadow-gold/20 dark:shadow-gold-dark/25'
-          : 'bg-gray-200 dark:bg-gray-600'
-      }`}
-    >
-      <span
-        className={`absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-white shadow-sm transition-transform duration-300 ease-out ${
-          checked ? 'translate-x-6' : 'translate-x-0'
-        }`}
-      />
-    </button>
-  );
-}
-
-// ══════════════════════════════════════════════════════════
-// Setting Row — Consistent layout
-// ══════════════════════════════════════════════════════════
-
-function SettingRow({
-  icon,
-  label,
-  description,
-  children,
-}: {
-  icon: string;
-  label: string;
-  description?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="flex items-center justify-between gap-4 py-3.5 border-b border-border-light/20 dark:border-border-dark/20 last:border-0">
-      <div className="flex items-start gap-3 flex-1 min-w-0">
-        <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5 shrink-0">
-          {icon}
-        </span>
-        <div className="min-w-0">
-          <p className="text-sm font-medium">{label}</p>
-          {description && (
-            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-0.5 leading-relaxed">
-              {description}
-            </p>
-          )}
-        </div>
-      </div>
-      <div className="shrink-0">{children}</div>
-    </div>
-  );
-}
-
-// ══════════════════════════════════════════════════════════
-// Select Component — Modern dropdown
-// ══════════════════════════════════════════════════════════
-
-function Select({
-  value,
-  onChange,
-  options,
-  id,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  options: { value: string; label: string }[];
-  id: string;
-}) {
-  return (
-    <select
-      id={id}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      className="text-xs px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/40 dark:border-border-dark/40 text-text-primary-light dark:text-text-primary-dark focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 outline-none transition-all"
-    >
-      {options.map((opt) => (
-        <option key={opt.value} value={opt.value}>
-          {opt.label}
-        </option>
-      ))}
-    </select>
-  );
-}
 
 // ══════════════════════════════════════════════════════════
 // Section Card — Flat, modern, always-open
@@ -1034,9 +942,10 @@ export default function SettingsPage() {
               Lịch Việt v3.0.0 · MIT
             </p>
             <button
-              onClick={() => navigate(Capacitor.isNativePlatform() ? '/app/am-lich' : '/')}
+              onClick={() => navigate('/app/am-lich')}
               className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
-              aria-label="Trang chủ"
+              aria-label="Về trang Âm Lịch"
+              title="Về trang Âm Lịch"
             >
               <span className="material-icons-round text-base text-text-secondary-light/60 dark:text-text-secondary-dark/60">
                 home

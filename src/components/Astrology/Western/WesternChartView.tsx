@@ -114,7 +114,7 @@ export const WesternChartView: React.FC = () => {
               Bầu Trời Hiện Tại
             </ActionButton>
           </div>
-          <div className="flex items-center justify-between text-[11px] text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/40 dark:border-border-dark/40">
+          <div className="flex items-center justify-between text-xs text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/40 dark:border-border-dark/40">
             <span>Độ chính xác cao: <strong>Swiss Ephemeris (WASM)</strong></span>
             <span>Hệ thống: <strong>Placidus · True Node</strong></span>
           </div>

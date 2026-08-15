@@ -22,32 +22,77 @@ const vtMapping: Record<string, string> = vtMappingData;
 const { Solar } = lunarJs as unknown as { Solar: { fromDate: (date: Date) => { getLunar: () => unknown } } };
 
 const ORACLE_ACTIVITY_MAP: Record<string, string> = {
+  // Hỷ sự & Gia đạo
   '嫁娶': 'Cưới hỏi',
   '结婚': 'Cưới hỏi',
+  '纳采': 'Dạm ngõ',
+  '订盟': 'Lễ ăn hỏi',
+  '问名': 'Dạm ngõ',
+  '纳婿': 'Bắt rể',
+  '冠笄': 'Lễ trưởng thành',
+  '会亲友': 'Gặp gỡ bạn bè',
+  '进人口': 'Nhận con nuôi/Thêm người',
+
+  // Thương mại & Sự nghiệp
   '开市': 'Khai trương',
   '开业': 'Khai trương',
   '开张': 'Khai trương',
   '交易': 'Giao dịch',
   '立券': 'Ký hợp đồng',
+  '纳财': 'Cầu tài',
+  '开仓': 'Mở kho',
+  '出货财': 'Xuất hàng',
+  '赴任': 'Nhận chức',
+  '入学': 'Nhập học',
+
+  // Di chuyển & Nơi ở
   '出行': 'Xuất hành',
   '入宅': 'Chuyển nhà',
   '移徙': 'Chuyển nhà',
-  '安葬': 'Chôn cất',
-  '启钻': 'Chôn cất',
+  '安床': 'Kê giường',
+  '分居': 'Chia gia tài/Ở riêng',
+
+  // Xây dựng & Đất đai
   '动土': 'Động thổ',
   '破土': 'Động thổ',
-  '祭祀': 'Cúng lễ',
-  '求医': 'Chữa bệnh',
-  '治病': 'Chữa bệnh',
-  '解除': 'Giải hạn',
-  '开光': 'Khai quang',
-  '安床': 'Kê giường',
   '修造': 'Sửa chữa',
   '拆卸': 'Phá dỡ nhà',
+  '破屋': 'Phá dỡ nhà',
   '坏垣': 'Xây tường/Lấp vá',
-  '纳财': 'Cầu tài',
-  '纳采': 'Dạm ngõ',
-  '订盟': 'Lễ ăn hỏi',
+  '上梁': 'Cất nóc',
+  '竖柱': 'Dựng cột',
+  '安门': 'Lắp cửa',
+  '挂匾': 'Treo biển hiệu',
+  '掘井': 'Đào giếng',
+  '开池': 'Đào ao',
+  '造畜稠': 'Làm chuồng gia súc',
+  '塞穴': 'Lấp hang lỗ',
+  '扫舍': 'Quét dọn nhà cửa',
+  '伐木': 'Đốn gỗ',
+
+  // Tâm linh & Tang sự
+  '祭祀': 'Cúng lễ',
+  '斋醮': 'Cúng tế',
+  '祈福': 'Cầu phúc',
+  '求嗣': 'Cầu tự',
+  '开光': 'Khai quang',
+  '解除': 'Giải hạn',
+  '求医': 'Chữa bệnh',
+  '治病': 'Chữa bệnh',
+  '安葬': 'Chôn cất',
+  '启钻': 'Chôn cất',
+  '合寿木': 'Làm quan tài',
+
+  // Nông nghiệp & Đời sống
+  '栽种': 'Trồng trọt',
+  '牧养': 'Chăn nuôi',
+  '纳畜': 'Nuôi gia súc',
+  '畋猎': 'Săn bắn',
+  '捕捉': 'Đánh bắt',
+  '裁衣': 'May mặc',
+  '剃头': 'Cắt tóc',
+  '整手足甲': 'Cắt móng tay chân',
+  '沐浴': 'Tắm gội',
 };
 
 function mapOracleActivities(raw: string): string[] {

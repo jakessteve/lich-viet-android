@@ -2,6 +2,7 @@ import type { SwissEphemeris as BrowserSwissEphemeris } from '@swisseph/browser'
 import { CalculationFlag, Planet } from '@swisseph/core';
 import { CAN, CHI, TIET_KHI_NAMES } from '../../utils/constants';
 import { getVietnamUtcOffset } from '../tuvi/timeNormalization';
+import { getJDN, normalizeDegrees } from '../../utils/astroUtils';
 
 export type SwissEphemerisInstance = Pick<
   BrowserSwissEphemeris,
@@ -37,27 +38,12 @@ let swissEphemerisPromise: Promise<BrowserSwissEphemeris> | null = null;
 let swissEphemerisInstance: BrowserSwissEphemeris | null = null;
 let scheduledInit = false;
 
-function normalizeDegrees(value: number): number {
-  return ((value % 360) + 360) % 360;
-}
-
 function signedLongitudeDelta(from: number, to: number): number {
   return ((from - to + 540) % 360) - 180;
 }
 
 function jdFromDate(day: number, month: number, year: number): number {
-  const a = Math.floor((14 - month) / 12);
-  const y = year + 4800 - a;
-  const m = month + 12 * a - 3;
-  return (
-    day +
-    Math.floor((153 * m + 2) / 5) +
-    365 * y +
-    Math.floor(y / 4) -
-    Math.floor(y / 100) +
-    Math.floor(y / 400) -
-    32045
-  );
+  return getJDN(day, month, year);
 }
 
 function getNewMoonDay(swe: SwissEphemerisInstance, k: number, timeZone: number): number {

@@ -14,13 +14,10 @@ export const SynastryPage: React.FC = () => {
         </h2>
       </div>
 
-      <div className="flex justify-center gap-2">
-        <span className="px-4 py-1.5 rounded-xl bg-rose-100 text-rose-700 dark:bg-rose-900/30 dark:text-rose-300 text-sm font-semibold">Hợp Lá Số</span>
-      </div>
-
       <SynastryView />
     </div>
   );
 };
 
 export default SynastryPage;
+

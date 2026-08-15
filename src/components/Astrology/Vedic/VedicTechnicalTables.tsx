@@ -73,7 +73,7 @@ export const VedicTechnicalTables: React.FC<{ result: WesternChartResult }> = ({
         <div className="overflow-x-auto">
           <table className="w-full text-left">
             <thead>
-              <tr className="border-b border-border-light/60 dark:border-border-dark/60 text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+              <tr className="border-b border-border-light/60 dark:border-border-dark/60 label-standard">
                 <th className="py-2 px-3">Hành tinh</th>
                 <th className="py-2 px-3 text-center">Trạng thái (Dignity)</th>
               </tr>

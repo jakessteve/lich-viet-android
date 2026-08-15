@@ -109,11 +109,13 @@ graph LR
 
 ### Type Scale
 
-| Class                | Properties                                      | Usage                     |
+| Class / Utility      | Properties                                      | Usage                     |
 | -------------------- | ----------------------------------------------- | ------------------------- |
-| `.page-title`        | `text-xl`, bold, tight tracking                 | Page headings (H1)        |
-| `.section-title`     | `text-lg`, semibold, tight tracking             | Section headings (H2)     |
-| `.sub-section-title` | `text-base`, semibold, tight tracking           | Sub-section headings (H3) |
+| `.text-display`      | `var(--text-display)` (2.25rem - 3rem), bold    | Hero headlines & impact   |
+| `.text-h1` / `.page-title` | `var(--text-h1)` (1.75rem - 2.25rem), bold| Major page headings (H1)  |
+| `.text-h2` / `.section-title` | `var(--text-h2)` (1.25rem - 1.5rem), semibold | Section headings (H2) |
+| `.text-h3` / `.sub-section-title` | `var(--text-h3)` (1.125rem - 1.25rem), semibold | Sub-section headings (H3) |
+| `.text-micro`        | `var(--text-micro)` (0.6875rem), font-semibold  | Sub-captions, badges, tags|
 | `.label-standard`    | `text-[10px]`, bold, uppercase, widest tracking | Category labels           |
 
 ### Font Size Control
@@ -128,43 +130,49 @@ Users can cycle through 3 font size levels via `appStore.cycleFontSize()`:
 
 ---
 
-## 4. Surface System
+## 4. Surface Elevation Hierarchy
 
-### 4.1 Glass Card Variants
+The design system standardizes surface elevation into 3 explicit semantic tiers across dark and light modes:
 
 ```
-┌─────────────────────────────────────────────────┐
-│  .glass-card                                     │
-│  ─────────────────────────────────────────────── │
-│  Light: white 95% opacity, subtle shadow         │
-│  Dark:  #1a1a2e 55% opacity, blur(20px),        │
-│         purple glow inset, gradient border       │
-│  Hover: deepened shadow + glow                   │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│  Tier 1: .surface-elevated (alias .glass-card / .surface-card)│
+│  ────────────────────────────────────────────────────────── │
+│  Light: white 95% opacity, soft shadow, subtle border        │
+│  Dark:  #1a1a2e 55% opacity, blur(20px), glow border         │
+│  Usage: Main feature cards, charts, modals, hero panels      │
+└─────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────┐
-│  .glass-card-strong                              │
-│  ─────────────────────────────────────────────── │
-│  Stronger opacity (70%), deeper blur (24px)      │
-│  For prominent sections and hero cards           │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│  Tier 2: .surface-default (alias .surface-panel)             │
+│  ────────────────────────────────────────────────────────── │
+│  Light: surface container with border-border-light/50        │
+│  Dark:  surface-container-low/70 with dark border            │
+│  Usage: Section containers, tab panels, standard blocks      │
+└─────────────────────────────────────────────────────────────┘
 
-┌─────────────────────────────────────────────────┐
-│  .card-surface (legacy compat)                   │
-│  ─────────────────────────────────────────────── │
-│  Solid background with blur backdrop in dark     │
-└─────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│  Tier 3: .surface-recessed (alias .card-subtle)              │
+│  ────────────────────────────────────────────────────────── │
+│  Light: #f0eee9 muted parchment background                   │
+│  Dark:  #1e1e35 recessed dark container                      │
+│  Usage: Nested parameter groups, table cells, metric items   │
+└─────────────────────────────────────────────────────────────┘
 ```
 
-### 4.2 Utility Card Classes
+### 4.2 Reusable Shared Components
 
-| Class             | Purpose                                           |
-| ----------------- | ------------------------------------------------- |
-| `.card-subtle`    | Muted background container for nested content     |
-| `.card-subtle-sm` | Compact inline/grid items (max-width: 140px)      |
-| `.card-quote`     | Left-border amber quote block                     |
-| `.card-highlight` | Amber-tinted highlight block with rounded corners |
-| `.card-header`    | Standardized card top section with subtle bg      |
+The design system exports standardized UI components from `@/components/shared`:
+
+| Component | Description |
+| --- | --- |
+| `<Toggle>` | Accessible toggle switch with animated thumb |
+| `<SettingRow>` | Standardized configuration item row with label, description, and action |
+| `<Select>` | Dropdown selection styled with system border and hover states |
+| `<SectionCard>` | Standard elevated card wrapper with optional header and icon |
+| `<UserMenu>` | Dropdown menu for profile, font scaling, dark mode, and quick settings |
+| `<MobileTabBar>` | Bottom navigation bar for mobile screens (< 768px) with safe-area support |
+| `<LandingNav>` | Dedicated navigation bar for the landing surface |
 
 ### 4.3 Shadow System
 

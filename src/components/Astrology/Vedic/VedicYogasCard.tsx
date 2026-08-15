@@ -39,13 +39,13 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
                     <h5 className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                       {item.nameVi}
                     </h5>
-                    <span className="text-[10px] text-text-secondary-light/80 dark:text-text-secondary-dark/80 italic">
+                    <span className="text-micro text-text-secondary-light/80 dark:text-text-secondary-dark/80 italic">
                       {item.nameSanskrit}
                     </span>
                   </div>
                   <div className="flex flex-col items-end gap-1">
                     <span
-                      className={`shrink-0 rounded-md px-2 py-0.5 text-[10px] font-bold ${
+                      className={`shrink-0 rounded-md px-2 py-0.5 text-micro font-bold ${
                         isYoga
                           ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                           : 'bg-amber-500/15 text-amber-700 dark:text-amber-300'
@@ -53,36 +53,36 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
                     >
                       {item.categoryVi}
                     </span>
-                    <span className="text-[9px] text-text-secondary-light dark:text-text-secondary-dark font-medium">
+                    <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark font-medium">
                       Lực: {item.severityOrStrength}
                     </span>
                   </div>
                 </div>
 
                 {item.bhavaClassificationVi && (
-                  <div className="rounded bg-surface-container-low px-2 py-1 text-[10px] font-medium text-text-secondary-light dark:text-text-secondary-dark">
+                  <div className="rounded bg-surface-container-low px-2 py-1 text-micro font-medium text-text-secondary-light dark:text-text-secondary-dark">
                     🏛 {item.bhavaClassificationVi}
                   </div>
                 )}
 
                 {item.personalizedSynthesisVi ? (
-                  <p className="text-[11px] leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+                  <p className="text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
                     {item.personalizedSynthesisVi}
                   </p>
                 ) : (
-                  <p className="text-[11px] leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+                  <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
                     {item.descriptionVi}
                   </p>
                 )}
 
                 {item.dashaActivationVi && (
-                  <div className="text-[10.5px] text-indigo-700 dark:text-indigo-300 font-medium">
+                  <div className="text-xs text-indigo-700 dark:text-indigo-300 font-medium">
                     ⏳ <span className="underline font-semibold">Thời vận kích hoạt:</span> {item.dashaActivationVi}
                   </div>
                 )}
               </div>
 
-              <div className="pt-2 border-t border-border-light/40 dark:border-border-dark/40 space-y-1.5 text-[10px]">
+              <div className="pt-2 border-t border-border-light/40 dark:border-border-dark/40 space-y-1.5 text-micro">
                 <div className="flex flex-wrap gap-1 items-center">
                   <span className="font-semibold text-text-secondary-light/80 dark:text-text-secondary-dark/80">Hành tinh:</span>
                   {item.planetsInvolved.map((p) => (
@@ -97,7 +97,7 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
                   )}
                 </div>
                 {item.remedyOrAdviceVi && (
-                  <p className="text-text-secondary-light dark:text-text-secondary-dark text-[10.5px]">
+                  <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs">
                     💡 <strong className="font-medium text-text-primary-light dark:text-text-primary-dark">Lời khuyên & Hóa giải (Upaya):</strong> {item.remedyOrAdviceVi}
                   </p>
                 )}

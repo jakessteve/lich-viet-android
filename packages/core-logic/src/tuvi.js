@@ -67,9 +67,12 @@ const PHU_TINH = Object.freeze({
 });
 const VAN_XUONG_TABLE = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11];
 const VAN_KHUC_TABLE = [4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2, 3];
-const THIEN_KHOI_TABLE = [1, 0, 11, 11, 1, 0, 6, 6, 3, 3];
-const THIEN_KHOI_STANDARD_TABLE = [1, 0, 11, 9, 1, 0, 6, 6, 3, 3];
-const THIEN_VIET_TABLE = [7, 8, 9, 9, 7, 8, 2, 2, 5, 5];
+const THIEN_KHOI_VIETNAMESE_TABLE = [1, 0, 11, 11, 1, 0, 1, 6, 3, 3];
+const THIEN_VIET_VIETNAMESE_TABLE = [7, 8, 9, 9, 7, 8, 7, 2, 5, 5];
+const THIEN_KHOI_STANDARD_TABLE = [1, 0, 11, 11, 1, 0, 6, 6, 3, 3];
+const THIEN_VIET_STANDARD_TABLE = [7, 8, 9, 9, 7, 8, 2, 2, 5, 5];
+const THIEN_KHOI_TABLE = THIEN_KHOI_VIETNAMESE_TABLE;
+const THIEN_VIET_TABLE = THIEN_VIET_VIETNAMESE_TABLE;
 const LOC_TON_TABLE = [2, 3, 5, 6, 5, 6, 8, 9, 11, 0];
 const DIA_KHONG_TABLE = [11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0];
 const THIEN_MA_TABLE = [2, 11, 8, 5, 2, 11, 8, 5, 2, 11, 8, 5];
@@ -733,8 +736,8 @@ export function placePhuTinh({
   const { coThan, quaTu } = getCoThanQuaTu(yearChiIndex);
 
   const locTonDirection = (school === "thien-luong" && thuanNghich === "Nghịch") ? -1 : 1;
-  const khoi = (school === "bac-phai" ? THIEN_KHOI_STANDARD_TABLE : THIEN_KHOI_TABLE)[mod10(yearCanIndex)];
-  const viet = THIEN_VIET_TABLE[mod10(yearCanIndex)];
+  const khoi = (school === "bac-phai" ? THIEN_KHOI_STANDARD_TABLE : THIEN_KHOI_VIETNAMESE_TABLE)[mod10(yearCanIndex)];
+  const viet = (school === "bac-phai" ? THIEN_VIET_STANDARD_TABLE : THIEN_VIET_VIETNAMESE_TABLE)[mod10(yearCanIndex)];
 
   const result = {
     "Văn Xương": vanXuong,

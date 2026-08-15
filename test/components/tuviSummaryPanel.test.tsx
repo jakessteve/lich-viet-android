@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { TuViSummaryPanel } from '../../src/components/TuVi/TuViSummaryPanel';
 import type { TuViChart, TuViPalace, TuViCombination } from '../../src/types/tuvi';
+import { MemoryRouter } from 'react-router-dom';
 
 function makePalace(overrides: Partial<TuViPalace> & { id: number }): TuViPalace {
   return {
@@ -18,6 +19,12 @@ function makePalace(overrides: Partial<TuViPalace> & { id: number }): TuViPalace
     tuHoa: [],
     brightness: {},
     daiHanAgeRange: '1–10',
+    rings: {
+      truongSinh: 'Trường Sinh',
+      bacSi: 'Bác Sỹ',
+      thaiTue: 'Thái Tuế',
+      tuongTinh: 'Tướng Tinh',
+    },
     isMenh: false,
     isThan: false,
     hasTuan: false,
@@ -45,12 +52,20 @@ function makeChart(): TuViChart {
     },
   ];
 
-  const palaces = Array.from({ length: 12 }, (_, id) => makePalace({ id, name: `Cung ${id}` }));
+  const palaces = Array.from({ length: 12 }, (_, id) =>
+    makePalace({
+      id,
+      name: id === 0 ? 'Mệnh' : id === 8 ? 'Quan Lộc' : `Cung ${id}`,
+      daiHanAgeRange: `${id * 10 + 2}–${id * 10 + 11}`,
+    }),
+  );
+
   palaces[0] = makePalace({
     id: 0,
     name: 'Mệnh',
     chi: 'Tý',
     isMenh: true,
+    daiHanAgeRange: '2–11',
     chinhTinh: [{ name: 'Tử Vi', type: 'chinhTinh', nguHanh: 'Dương Thổ', brightness: 'Miếu' }],
     tuHoa: [{ type: 'Lộc', starName: 'Tử Vi', sourceCan: 'Giáp' }],
   });
@@ -58,12 +73,14 @@ function makeChart(): TuViChart {
     id: 2,
     name: 'Tài Bạch',
     chi: 'Dần',
+    daiHanAgeRange: '22–31',
     phuTinh: [{ name: 'Văn Xương', type: 'phuTinh', nguHanh: 'Âm Kim', brightness: 'Vượng' }],
   });
   palaces[4] = makePalace({
     id: 4,
     name: 'Quan Lộc',
     chi: 'Thìn',
+    daiHanAgeRange: '42–51',
     phuTinh: [{ name: 'Tả Phụ', type: 'phuTinh', nguHanh: 'Dương Thổ', brightness: 'Đắc' }],
   });
 
@@ -124,50 +141,54 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-import { MemoryRouter } from 'react-router-dom';
-
 describe('TuViSummaryPanel', () => {
-  it('shows the overview details and switches to combinations', () => {
+  it('shows the overview details with current Đại hạn Tam Tài scoreboard and switches between Simple and Advanced modes', () => {
     render(
       <MemoryRouter>
         <TuViSummaryPanel chart={makeChart()} />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    expect(screen.getByText('Tổng quan cấu trúc và Cách cục')).toBeTruthy();
+    expect(screen.getByText('Tổng quan cấu trúc và Đại hạn')).toBeTruthy();
     expect(screen.getByText('Bố cục chính tinh')).toBeTruthy();
     expect(screen.getByText('Tứ Hóa hiện diện')).toBeTruthy();
-    expect(screen.getByText(/Tổng Hợp Cách Cục/i)).toBeTruthy();
+    expect(screen.getByText(/Đại Hạn Hiện Tại:/i)).toBeTruthy();
+    expect(screen.getByText('Thiên Thời (Thái Tuế)')).toBeTruthy();
+    expect(screen.getByText('Địa Lợi (Cung Chi)')).toBeTruthy();
+    expect(screen.getByText('Nhân Hòa (Quý Nhân)')).toBeTruthy();
+    expect(screen.getByText('Khí Lực (Trường Sinh)')).toBeTruthy();
 
-    fireEvent.click(screen.getByRole('tab', { name: /Cách cục/ }));
+    // Switch to Đại hạn tab (defaults to Simple mode)
+    fireEvent.click(screen.getByRole('tab', { name: /Đại hạn/ }));
 
-    expect(screen.getByText('Sát Phá Lang').className).toContain('whitespace-nowrap');
-    expect(screen.getByText('殺破狼').className).toContain('whitespace-nowrap');
-    expect(screen.getByText(/Cách cục vô cùng mạnh mẽ/i)).toBeTruthy();
-    expect(screen.getByText('Hung')).toBeTruthy();
-    expect(screen.getByText('7/10')).toBeTruthy();
+    expect(screen.getByText(/Dòng thời gian 12 Đại Hạn/i)).toBeTruthy();
+    expect(screen.getByText('Tổng Quan Dòng Vận 10 Năm')).toBeTruthy();
+    expect(screen.getByText('Sự Nghiệp & Tài Lộc')).toBeTruthy();
+    expect(screen.getByText('Chiến Lược Hành Động Trọng Tâm')).toBeTruthy();
+
+    // Switch to Chuyên sâu (Advanced) mode
+    fireEvent.click(screen.getByRole('tab', { name: /Chuyên sâu/ }));
+
+    expect(screen.getByText('Bố Cục Tọa Thủ & Tam Phương Tứ Chính')).toBeTruthy();
+    expect(screen.getByText('Đánh Giá Tam Tài (Thiên Thời – Địa Lợi – Nhân Hòa)')).toBeTruthy();
+    expect(screen.getByText(/Cách Cục & Điểm Nhấn Nổi Bật/i)).toBeTruthy();
+    expect(screen.getByText('Lộ Trình 10 Năm & Dự Báo Toàn Diện')).toBeTruthy();
+    expect(screen.getByText(/Phân kỳ tiến trình 5 năm/i)).toBeTruthy();
   });
 
-  it('does not reuse keys for repeated combination ids', () => {
-    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    const chart = makeChart();
-
-    chart.combinations = [
-      ...chart.combinations,
-      {
-        ...chart.combinations[0],
-        involvedCung: ['Cung 1', 'Cung 2', 'Cung 3'],
-        involvedStars: ['Kình Dương', 'Đà La'],
-        detectionReason: 'Giáp Sát at another location',
-      },
-    ];
-
+  it('allows clicking different Đại Hạn chips in the timeline to update details', () => {
     render(
       <MemoryRouter>
-        <TuViSummaryPanel chart={chart} />
-      </MemoryRouter>
+        <TuViSummaryPanel chart={makeChart()} />
+      </MemoryRouter>,
     );
 
-    expect(errorSpy.mock.calls.some((call) => String(call[0]).includes('Encountered two children with the same key'))).toBe(false);
+    fireEvent.click(screen.getByRole('tab', { name: /Đại hạn/ }));
+
+    const chips = screen.getAllByRole('button').filter((b) => b.textContent?.includes('2–11t'));
+    expect(chips.length).toBeGreaterThan(0);
+    fireEvent.click(chips[0]);
+
+    expect(screen.getByRole('heading', { name: /Đại Hạn 2–11 tuổi/i })).toBeTruthy();
   });
 });

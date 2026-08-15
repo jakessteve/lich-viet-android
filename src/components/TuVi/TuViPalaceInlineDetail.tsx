@@ -9,7 +9,6 @@
 
 import React, { useState } from 'react';
 import type { PalaceInterpretationResult } from '@/services/tuvi/palaceInterpretation';
-import { getDualLayerTerm } from '@/utils/jargonTranslator';
 
 interface TuViPalaceInlineDetailProps {
   interpretation: PalaceInterpretationResult | null;

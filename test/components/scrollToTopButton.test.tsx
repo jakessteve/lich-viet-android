@@ -11,14 +11,14 @@ describe('ScrollToTopButton Component', () => {
     useAppStore.setState({ showScrollToTopButton: true });
     scrollListeners = [];
     window.scrollTo = vi.fn();
-    window.addEventListener = vi.fn((event: string, handler: any) => {
-      if (event === 'scroll') scrollListeners.push(handler);
-    }) as any;
-    window.removeEventListener = vi.fn((event: string, handler: any) => {
+    window.addEventListener = vi.fn((event: string, handler: EventListenerOrEventListenerObject) => {
+      if (event === 'scroll' && typeof handler === 'function') scrollListeners.push(handler as () => void);
+    }) as unknown as typeof window.addEventListener;
+    window.removeEventListener = vi.fn((event: string, handler: EventListenerOrEventListenerObject) => {
       if (event === 'scroll') {
-        scrollListeners = scrollListeners.filter(l => l !== handler);
+        scrollListeners = scrollListeners.filter((l) => l !== handler);
       }
-    }) as any;
+    }) as unknown as typeof window.removeEventListener;
   });
 
   afterEach(() => {

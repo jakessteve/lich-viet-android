@@ -17,8 +17,8 @@ const DungSuView = React.lazy(() => import('../LichDungSu/DungSuView'));
 type SubTab = 'am-lich' | 'dung-su';
 
 const SUB_TABS: readonly SegmentedOption<SubTab>[] = [
-  { id: 'am-lich', label: 'Âm Lịch', icon: 'calendar_month', shortLabel: 'Âm Lịch' },
-  { id: 'dung-su', label: 'Dụng Sự', icon: 'event_available', shortLabel: 'Dụng Sự' },
+  { id: 'am-lich', label: 'Lịch Ngày', icon: 'calendar_month', shortLabel: 'Lịch Ngày' },
+  { id: 'dung-su', label: 'Dụng Sự Ngày', icon: 'event_available', shortLabel: 'Dụng Sự' },
 ];
 
 export default function AmLichPage() {

@@ -11,8 +11,8 @@ export const MoonPhaseBadge: React.FC<{ moonPhase: MoonPhaseResult }> = ({ moonP
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Pha Mặt Trăng Sinh</span>
-              <span className="rounded-full bg-indigo-500/10 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 dark:text-indigo-300">
+              <span className="text-micro font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Pha Mặt Trăng Sinh</span>
+              <span className="rounded-full bg-indigo-500/10 px-2 py-0.5 text-micro font-semibold text-indigo-700 dark:text-indigo-300">
                 {moonPhase.illuminationPercentage}% sáng
               </span>
             </div>

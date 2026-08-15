@@ -8,6 +8,8 @@
 import React, { useRef, useState } from 'react';
 import { toPng, toJpeg } from 'html-to-image';
 import { sanitizePlainText } from '@/utils/security';
+import { Capacitor } from '@capacitor/core';
+import { Clipboard } from '@capacitor/clipboard';
 
 interface StoryCardExportModalProps {
   isOpen: boolean;
@@ -36,6 +38,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
   const [isExporting, setIsExporting] = useState(false);
   const [exportedImageUrl, setExportedImageUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [copiedToast, setCopiedToast] = useState(false);
 
   if (!isOpen) return null;
 
@@ -74,8 +77,10 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
     try {
       const dataUrl = await generateImagePromise();
       setExportedImageUrl(dataUrl);
+      return dataUrl;
     } catch (err: unknown) {
       setErrorMessage(err instanceof Error ? err.message : 'Không thể tạo ảnh, vui lòng thử lại');
+      return null;
     } finally {
       setIsExporting(false);
     }
@@ -90,26 +95,65 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
   };
 
   const handleShare = async () => {
-    if (!exportedImageUrl) return;
-    try {
-      if (navigator.share && navigator.canShare) {
-        const response = await fetch(exportedImageUrl);
-        const blob = await response.blob();
-        const file = new File([blob], `${safeName}_ban_menh.png`, { type: 'image/png' });
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            title: `Bản Mệnh — ${safeName}`,
-            text: `Khám phá tiềm năng bản sắc cốt lõi trên Lịch Việt!`,
-            files: [file],
-          });
+    let currentUrl = exportedImageUrl;
+    if (!currentUrl) {
+      currentUrl = await handleGenerateImage();
+      if (!currentUrl) return;
+    }
+
+    const shareTitle = `Bản Mệnh — ${safeName}`;
+    const shareText = `Khám phá tiềm năng bản sắc cốt lõi và vận trình trên Lịch Việt!`;
+
+    // 1. Try Web Share API with Image File
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        if (currentUrl && navigator.canShare) {
+          const response = await fetch(currentUrl);
+          const blob = await response.blob();
+          const file = new File([blob], `${safeName}_ban_menh.png`, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              title: shareTitle,
+              text: shareText,
+              files: [file],
+            });
+            return;
+          }
+        }
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') {
+          return; // User cancelled share sheet
+        }
+      }
+
+      // 2. Fallback to Web Share API with text/URL
+      try {
+        await navigator.share({
+          title: shareTitle,
+          text: shareText,
+          url: window.location.href,
+        });
+        return;
+      } catch (err: unknown) {
+        if (err instanceof Error && err.name === 'AbortError') {
           return;
         }
       }
-      // Fallback: download if web share is unavailable
-      handleDownload();
-    } catch {
-      handleDownload();
     }
+
+    // 3. Fallback: Copy info to clipboard and trigger download
+    try {
+      const shareContent = `${shareTitle}\n${shareText}\n${window.location.href}`;
+      if (Capacitor.isNativePlatform()) {
+        await Clipboard.write({ string: shareContent });
+      } else if (navigator.clipboard) {
+        await navigator.clipboard.writeText(shareContent);
+      }
+      setCopiedToast(true);
+      setTimeout(() => setCopiedToast(false), 2500);
+    } catch {}
+
+    handleDownload();
   };
 
   return (
@@ -135,6 +179,13 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
         {errorMessage && (
           <div className="p-2.5 rounded-xl bg-red-50 dark:bg-red-900/20 text-xs text-red-600 dark:text-red-400">
             {errorMessage}
+          </div>
+        )}
+
+        {copiedToast && (
+          <div className="p-2.5 rounded-xl bg-green-50 dark:bg-green-900/20 text-xs text-green-700 dark:text-green-300 flex items-center gap-1.5 font-medium">
+            <span className="material-icons-round text-sm">check_circle</span>
+            Đã sao chép nội dung & thông tin bản mệnh vào bộ nhớ tạm!
           </div>
         )}
 

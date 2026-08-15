@@ -67,8 +67,26 @@ export const SCORING = {
 /** Maximum number of days to search backward when finding solar term start. */
 export const SOLAR_TERM_SEARCH_LIMIT = 35;
 
-// ── Tú (28 Mansions) ─────────────────────────────────────────
-/** JDN offset used to compute the Tú index: (jd + TU_JD_OFFSET) % 28. */
+// ── Tú (28 Mansions - Nhị Thập Bát Tú) ────────────────────────
+/**
+ * JDN offset used to compute the 28-Mansion (Nhị Thập Bát Tú) index: (jd + TU_JD_OFFSET) % 28.
+ *
+ * Mathematical & Astronomical Derivation:
+ * The 28 mansions cycle in a continuous 28-day loop strictly synchronized with the 7-day planetary week (Thất Diệu):
+ * - Index 0: Giác (Mộc Giao) -> Thursday (Thứ 5)
+ * - Index 1: Cang (Kim Long) -> Friday (Thứ 6)
+ * - Index 2: Đê (Thổ Hạc) -> Saturday (Thứ 7)
+ * - Index 3: Phòng (Nhật Thỏ) -> Sunday (Chủ Nhật)
+ * - Index 4: Tâm (Nguyệt Hồ) -> Monday (Thứ 2)
+ * - Index 5: Vĩ (Hỏa Hổ) -> Tuesday (Thứ 3)
+ * - Index 6: Cơ (Thủy Báo) -> Wednesday (Thứ 4)
+ * (repeats across all 4 quadrants: Đông/Bắc/Tây/Nam).
+ *
+ * JDN epoch calibration:
+ * On 2024-02-10 (Saturday, Tết Giáp Thìn), JDN = 2460351.
+ * (2460351 + 11) % 28 = 2 -> Maps to Mansion "Đê" (Saturday / Thổ Hạc),
+ * perfectly matching historical and official Vietnamese/Chinese almanacs (Hiệp Kỷ Biện Phương Thư).
+ */
 export const TU_JD_OFFSET = 11;
 
 // ── Calendar Layout ───────────────────────────────────────────
@@ -378,6 +396,12 @@ export const CHI_PHA: Record<Chi, Chi> = {
   Mùi: 'Tuất',
   Tuất: 'Mùi',
 };
+/**
+ * Chi Tuyệt (Lục Tuyệt / Tuyệt Mệnh Chi)
+ * School-specific relationship in traditional Trạch Nhật (date selection) where certain
+ * earthly branches are considered in a state of mutual severance/exhaustion (Tử Tuyệt).
+ * Primary pairs: Tý-Tỵ, Sửu-Ngọ, Dần-Mùi, Mão-Thân, Thìn-Dậu, Tuất-Hợi.
+ */
 export const CHI_TUYET: Record<Chi, Chi> = {
   Tý: 'Tỵ',
   Tỵ: 'Tý',

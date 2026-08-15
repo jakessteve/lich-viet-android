@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { WesternChartResult, PlanetPosition } from '../../../services/astrology/westernCalculator';
 import { VedicInterpretationPanel } from './VedicInterpretationPanel';
 import { VedicSquareChart } from './VedicSquareChart';
@@ -10,8 +10,10 @@ import { calculateVedicDashaTimeline } from '../../../services/astrology/vedicDa
 import { detectVedicYogasAndDoshas } from '../../../services/astrology/vedicYogas';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { useShallow } from 'zustand/react/shallow';
-import { SegmentedControl } from '../../shared';
+import { SegmentedControl, type SegmentedOption } from '../../shared';
 import { WesternMarkdownExport } from '../WesternMarkdownExport';
+
+type VedicViewMode = 'simple' | 'advanced';
 
 const STYLE_OPTIONS = [
   { id: 'south', label: 'Nam Ấn (Vuông)', icon: 'grid_view', shortLabel: 'Nam Ấn' },
@@ -22,6 +24,11 @@ const TYPE_OPTIONS = [
   { id: 'D1', label: 'D1 Rasi (Bản Mệnh)', icon: 'auto_graph', shortLabel: 'D1 Rasi' },
   { id: 'D9', label: 'D9 Navamsha (Hậu Vận)', icon: 'favorite', shortLabel: 'D9 Navamsha' },
 ] as const;
+
+const VEDIC_VIEW_MODES: readonly SegmentedOption<VedicViewMode>[] = [
+  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản', icon: 'menu_book' },
+  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu', icon: 'psychology' },
+];
 
 const BODY_LABELS: Record<string, string> = {
   sun: 'Mặt Trời',
@@ -80,6 +87,8 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
     }))
   );
 
+  const [viewMode, setViewMode] = useState<VedicViewMode>('simple');
+
   const moon = result.planets.find((p) => p.body === 'moon');
   const birthYear = vedicInput.birthDate instanceof Date ? vedicInput.birthDate.getFullYear() : new Date(vedicInput.birthDate).getFullYear();
 
@@ -133,86 +142,120 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Lagna (Cung Mọc)</p>
+          <p className="label-standard">Lagna (Cung Mọc)</p>
           <p className="text-sm font-bold">{ascDeg}°{ascMin.toString().padStart(2, '0')}&apos; {SIGNS_SIDEREAL[ascSignIndex]}</p>
         </div>
         {moon && (
           <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-            <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Mặt Trăng (Rasi)</p>
+            <p className="label-standard">Mặt Trăng (Rasi)</p>
             <p className="text-sm font-bold">
               {moon.nakshatra || '—'}
             </p>
           </div>
         )}
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Tổng hành tinh</p>
+          <p className="label-standard">Tổng hành tinh</p>
           <p className="text-sm font-bold">{result.planets.length}</p>
         </div>
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Góc chiếu</p>
+          <p className="label-standard">Góc chiếu</p>
           <p className="text-sm font-bold">{result.aspects.length}</p>
         </div>
       </div>
 
-      {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
-
-      {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas} />}
-
-      <VedicInterpretationPanel result={result} />
-
-      {/* Sidereal Planets Table */}
-      <div className="glass-card overflow-hidden">
-        <div className="card-header">
-          <h3 className="section-title text-sm flex items-center gap-2">
-            <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">language</span>
-            Vị Trí Hành Tinh (Sidereal Lahiri)
-          </h3>
+      {/* Dual Tier Interpretation Toggle (Simple vs Advanced) */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-light/40 dark:border-border-dark/40">
+        <div>
+          <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+            Luận Giải Chiêm Tinh Vệ Đà
+          </h4>
+          <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+            Chọn mức độ chi tiết phù hợp với nhu cầu tra cứu của bạn.
+          </p>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-border-light/60 dark:border-border-dark/60 text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
-                <th className="py-2 px-3">Hành tinh</th>
-                <th className="py-2 px-3 text-center">Vị trí</th>
-                <th className="py-2 px-3 text-center">Nakshatra</th>
-                <th className="py-2 px-3 text-center">Pada</th>
-                <th className="py-2 px-3 text-center">Nhà</th>
-              </tr>
-            </thead>
-            <tbody>
-              {result.planets
-                .filter((p) => ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'].includes(p.body))
-                .map((planet) => (
-                  <VedicPlanetRow key={planet.body} planet={planet} />
-                ))}
-            </tbody>
-          </table>
-        </div>
+        <SegmentedControl
+          options={VEDIC_VIEW_MODES}
+          value={viewMode}
+          onChange={setViewMode}
+          ariaLabel="Chế độ xem luận giải Vệ Đà"
+          tone="purple"
+          className="w-auto"
+        />
       </div>
 
-      <VedicTechnicalTables result={result} />
+      {/* MODE 1: Cơ bản (Simple) */}
+      {viewMode === 'simple' && (
+        <div className="space-y-5 animate-fade-in">
+          <VedicInterpretationPanel result={result} />
+          {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas.slice(0, 3)} />}
+          {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
+        </div>
+      )}
 
-      {/* Houses */}
-      <div className="glass-card overflow-hidden">
-        <div className="card-header">
-          <h3 className="section-title text-sm flex items-center gap-2">
-            <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">home</span>
-            12 Bhava (Nhà)
-          </h3>
+      {/* MODE 2: Chuyên sâu (Advanced & Technical) */}
+      {viewMode === 'advanced' && (
+        <div className="space-y-5 animate-fade-in">
+          {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
+
+          {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas} />}
+
+          <VedicInterpretationPanel result={result} />
+
+          {/* Sidereal Planets Table */}
+          <div className="glass-card overflow-hidden">
+            <div className="card-header">
+              <h3 className="section-title text-sm flex items-center gap-2">
+                <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">language</span>
+                Vị Trí Hành Tinh (Sidereal Lahiri)
+              </h3>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-border-light/60 dark:border-border-dark/60 label-standard">
+                    <th className="py-2 px-3">Hành tinh</th>
+                    <th className="py-2 px-3 text-center">Vị trí</th>
+                    <th className="py-2 px-3 text-center">Nakshatra</th>
+                    <th className="py-2 px-3 text-center">Pada</th>
+                    <th className="py-2 px-3 text-center">Nhà</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {result.planets
+                    .filter((p) => ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'].includes(p.body))
+                    .map((planet) => (
+                      <VedicPlanetRow key={planet.body} planet={planet} />
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <VedicTechnicalTables result={result} />
+
+          {/* Houses */}
+          <div className="glass-card overflow-hidden">
+            <div className="card-header">
+              <h3 className="section-title text-sm flex items-center gap-2">
+                <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">home</span>
+                12 Bhava (Nhà)
+              </h3>
+            </div>
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 p-3">
+              {result.houses.map((house) => {
+                const deg = Math.floor(house.longitude % 30);
+                const min = Math.floor(((house.longitude % 30) - deg) * 60);
+                return (
+                  <div key={house.index} className="surface-card p-2 rounded-xl text-center border border-border-light/40 dark:border-border-dark/40">
+                    <p className="label-standard">Bhava {house.index}</p>
+                    <p className="text-xs font-semibold">{deg}°{min.toString().padStart(2, '0')}&apos; {house.sign}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 p-3">
-          {result.houses.map((house) => {
-            const deg = Math.floor(house.longitude % 30);
-            const min = Math.floor(((house.longitude % 30) - deg) * 60);
-            return (
-              <div key={house.index} className="surface-card p-2 rounded-xl text-center border border-border-light/40 dark:border-border-dark/40">
-                <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Bhava {house.index}</p>
-                <p className="text-xs font-semibold">{deg}°{min.toString().padStart(2, '0')}&apos; {house.sign}</p>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

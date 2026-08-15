@@ -34,19 +34,19 @@ export const WesternChartDisplay: React.FC<{ result: WesternChartResult }> = ({ 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Ascendant</p>
+          <p className="label-standard">Ascendant</p>
           <p className="text-sm font-bold">{ascDeg} {ascSign}</p>
         </div>
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Midheaven</p>
+          <p className="label-standard">Midheaven</p>
           <p className="text-sm font-bold">{mcSign}</p>
         </div>
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Điểm Phúc (PoF)</p>
+          <p className="label-standard">Điểm Phúc (PoF)</p>
           <p className="text-sm font-bold">{result.partOfFortune.sign}</p>
         </div>
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
-          <p className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Hình dáng</p>
+          <p className="label-standard">Hình dáng</p>
           <p className="text-sm font-bold capitalize">{result.chartShape?.shape || '—'}</p>
         </div>
       </div>

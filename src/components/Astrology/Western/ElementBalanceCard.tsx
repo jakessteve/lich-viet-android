@@ -32,15 +32,15 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
             <span className="material-icons-round text-base text-indigo-500">balance</span>
             Cân Bằng Nguyên Tố & Tính Chất
           </h4>
-          <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
+          <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
             Phân bổ năng lượng tính cách và phong cách phản ứng
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="rounded-lg bg-indigo-500/10 px-2.5 py-1 text-[11px] font-semibold text-indigo-700 dark:text-indigo-300">
+          <span className="rounded-lg bg-indigo-500/10 px-2.5 py-1 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
             Trội: {balance.dominantElementLabelVi}
           </span>
-          <span className="rounded-lg bg-purple-500/10 px-2.5 py-1 text-[11px] font-semibold text-purple-700 dark:text-purple-300">
+          <span className="rounded-lg bg-purple-500/10 px-2.5 py-1 text-xs font-semibold text-purple-700 dark:text-purple-300">
             {balance.dominantModalityLabelVi}
           </span>
         </div>
@@ -48,9 +48,9 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
 
       {/* Elements Bars */}
       <div className="space-y-2.5">
-        <div className="flex items-center justify-between text-[11px] font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
+        <div className="flex items-center justify-between text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
           <span>4 Nguyên Tố (Elements)</span>
-          <span className="text-[10px] lowercase text-text-secondary-light/70 dark:text-text-secondary-dark/70">tỷ lệ %</span>
+          <span className="text-micro lowercase text-text-secondary-light/70 dark:text-text-secondary-dark/70">tỷ lệ %</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {elements.map((elem) => (
@@ -72,11 +72,11 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
               </div>
               <div className="flex flex-wrap gap-1 min-h-[20px]">
                 {elem.planets.map((p) => (
-                  <span key={p.id} className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark" title={`${p.nameVi}`}>
+                  <span key={p.id} className="text-micro text-text-secondary-light dark:text-text-secondary-dark" title={`${p.nameVi}`}>
                     {p.symbol}
                   </span>
                 ))}
-                {elem.planets.length === 0 && <span className="text-[10px] text-text-secondary-light/50 italic">trống</span>}
+                {elem.planets.length === 0 && <span className="text-micro text-text-secondary-light/50 italic">trống</span>}
               </div>
             </div>
           ))}
@@ -85,7 +85,7 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
 
       {/* Modalities Bars */}
       <div className="space-y-2.5 pt-1">
-        <div className="flex items-center justify-between text-[11px] font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
+        <div className="flex items-center justify-between text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
           <span>3 Tính Chất (Modalities)</span>
         </div>
         <div className="grid grid-cols-3 gap-2.5">
@@ -108,7 +108,7 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
               </div>
               <div className="flex flex-wrap gap-1">
                 {mod.planets.map((p) => (
-                  <span key={p.id} className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark" title={`${p.nameVi}`}>
+                  <span key={p.id} className="text-micro text-text-secondary-light dark:text-text-secondary-dark" title={`${p.nameVi}`}>
                     {p.symbol}
                   </span>
                 ))}

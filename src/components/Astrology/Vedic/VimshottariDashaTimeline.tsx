@@ -66,12 +66,12 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
                   {p.lordVi.split(' ')[0]}
                 </span>
                 {p.isCurrent && (
-                  <span className="rounded bg-purple-500 text-[9px] font-bold text-white px-1">
+                  <span className="rounded bg-purple-500 text-micro font-bold text-white px-1">
                     Hiện tại
                   </span>
                 )}
               </div>
-              <div className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
+              <div className="text-micro text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
                 {p.startYear} - {p.endYear} ({p.ageRange})
               </div>
             </button>
@@ -89,7 +89,7 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
                 Đại Vận {selectedPeriod.lordVi}
               </h5>
               {selectedPeriod.isCurrent && (
-                <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-300">
+                <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-micro font-bold text-emerald-700 dark:text-emerald-300">
                   Giai đoạn hiện tại
                 </span>
               )}

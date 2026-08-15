@@ -159,12 +159,15 @@ export declare function buildTopocentricObserver(input: {
   longitude: number;
   altitudeMeters: number;
 };
-export declare function computeTopocentricPlanetarySnapshot(observer: {
-  julianDay: number;
-  latitude: number;
-  longitude: number;
-  altitudeMeters: number;
-}): Array<{
+export declare function computeTopocentricPlanetarySnapshot(
+  observer: {
+    julianDay: number;
+    latitude: number;
+    longitude: number;
+    altitudeMeters: number;
+  },
+  ayanamsaMode?: string
+): Array<{
   body: string;
   tropicalLongitude: number;
   siderealLongitude: number;

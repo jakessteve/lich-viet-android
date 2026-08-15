@@ -304,15 +304,94 @@ export default function SummaryCard({
             </div>
           )}
 
-          {/* ── Full Explanation ────────────────────── */}
-          <div className="bg-gray-50/80 dark:bg-white/5 rounded-xl p-4 border border-border-light/30 dark:border-border-dark/30">
-            <span className="label-standard block mb-2">Tổng kết luận giải</span>
-            <p className="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed whitespace-pre-line">
-              {summary.detailedExplanation}
-            </p>
-          </div>
+          {/* ── Full Explanation (Formatted with design tokens) ── */}
+          <FormattedDetailedExplanation text={summary.detailedExplanation} />
         </div>
       </div>
     </div>
   );
 }
+
+function FormattedDetailedExplanation({ text }: { text: string }): React.ReactElement {
+  const sections = React.useMemo(() => {
+    if (!text) return [];
+    const regex = /【([^】]+)】:?\s*([\s\S]*?)(?=(?:【|$))/g;
+    const result: Array<{ title: string; content: string }> = [];
+    let match: RegExpExecArray | null;
+
+    while ((match = regex.exec(text)) !== null) {
+      const title = match[1].trim();
+      const content = match[2].trim();
+      if (title && content) {
+        result.push({ title, content });
+      }
+    }
+
+    if (result.length === 0) {
+      return [{ title: 'Tổng Kết Luận Giải', content: text }];
+    }
+    return result;
+  }, [text]);
+
+  const getSectionTheme = (title: string) => {
+    if (title.includes('Thoán Từ') || title.includes('Khẩu Quyết')) {
+      return {
+        icon: 'menu_book',
+        cardClass: 'bg-gold/5 dark:bg-gold-dark/5 border-gold/25 dark:border-gold-dark/25',
+        titleClass: 'text-gold-light dark:text-gold-dark',
+      };
+    }
+    if (title.includes('Tượng Quẻ') || title.includes('Ý Nghĩa')) {
+      return {
+        icon: 'psychology',
+        cardClass: 'bg-purple/5 dark:bg-purple-dark/5 border-purple/25 dark:border-purple-dark/25',
+        titleClass: 'text-purple dark:text-purple-dark',
+      };
+    }
+    if (title.includes('Thể - Dụng') || title.includes('Thời Vận')) {
+      return {
+        icon: 'sync_alt',
+        cardClass: 'bg-info/5 dark:bg-info-dark/5 border-info/25 dark:border-info-dark/25',
+        titleClass: 'text-info dark:text-info-dark',
+      };
+    }
+    return {
+      icon: 'lightbulb',
+      cardClass: 'bg-good/5 dark:bg-good-dark/5 border-good/25 dark:border-good-dark/25',
+      titleClass: 'text-good dark:text-good-dark',
+    };
+  };
+
+  return (
+    <div className="space-y-2.5 pt-1 border-t border-border-light/40 dark:border-border-dark/40">
+      <div className="flex items-center gap-1.5 pt-1">
+        <span className="material-icons-round text-gold-light dark:text-gold-dark text-base">auto_stories</span>
+        <h4 className="label-standard text-text-primary-light dark:text-text-primary-dark font-bold text-xs uppercase tracking-wider">
+          Tổng kết luận giải
+        </h4>
+      </div>
+      <div className="space-y-2.5">
+        {sections.map((sec, idx) => {
+          const theme = getSectionTheme(sec.title);
+          return (
+            <div
+              key={idx}
+              className={`rounded-xl p-3.5 border transition-colors ${theme.cardClass}`}
+            >
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <div className={`flex items-center gap-1.5 font-bold text-xs ${theme.titleClass}`}>
+                  <span className="material-icons-round text-sm">{theme.icon}</span>
+                  <span>{sec.title}</span>
+                </div>
+              </div>
+              <div className="text-xs sm:text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed whitespace-pre-line">
+                {sec.content}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import type { SwissNatalChartResult, SwissNatalObject } from '@/services/astrology/swissNatalChart';
+import type { SwissNatalChartResult, SwissNatalObject, SwissNatalAspect } from '@/services/astrology/swissNatalChart';
 import {
   getPlanetInSignInterpretation,
   getSignInterpretation,
@@ -9,12 +9,31 @@ import {
 
 type TabKey = 'big-three' | 'personal' | 'growth-karma' | 'houses';
 
+export interface WesternSimplifiedExplanationProps {
+  result: SwissNatalChartResult;
+  mode?: 'simple' | 'advanced';
+}
+
 const TABS: Array<{ id: TabKey; label: string; icon: string; shortLabel: string }> = [
   { id: 'big-three', label: 'Tam Trụ Bản Mệnh', icon: 'auto_awesome', shortLabel: 'Tam Trụ' },
   { id: 'personal', label: 'Tư Duy & Tình Cảm', icon: 'psychology', shortLabel: 'Cá Nhân' },
   { id: 'growth-karma', label: 'Vận Hội & Nghiệp Lực', icon: 'military_tech', shortLabel: 'Nghiệp Lực' },
   { id: 'houses', label: 'Trọng Tâm Cuộc Đời', icon: 'account_balance', shortLabel: 'Lĩnh Vực' },
 ];
+
+const ASPECT_META: Record<string, { labelVi: string; symbol: string }> = {
+  conjunction: { labelVi: 'Trùng tụ', symbol: '☌' },
+  opposition: { labelVi: 'Đối đỉnh', symbol: '☍' },
+  trine: { labelVi: 'Tam hợp', symbol: '△' },
+  square: { labelVi: 'Vuông góc', symbol: '□' },
+  sextile: { labelVi: 'Lục hợp', symbol: '⚹' },
+  quincunx: { labelVi: 'Bất điều hòa', symbol: '⚻' },
+  'semi-sextile': { labelVi: 'Bán lục hợp', symbol: '⚺' },
+  'semi-square': { labelVi: 'Bán vuông', symbol: '∠' },
+  sesquiquadrate: { labelVi: 'Một góc rưỡi', symbol: '⚼' },
+  quintile: { labelVi: 'Ngũ hợp', symbol: 'Q' },
+  'bi-quintile': { labelVi: 'Song ngũ hợp', symbol: 'bQ' },
+};
 
 const SIGN_FALLBACKS: Record<string, string> = {
   'Bạch Dương': 'Năng động, tiên phong, dũng cảm và quyết đoán.',
@@ -48,9 +67,24 @@ const EXTRA_INTERPRETATIONS: Record<string, Record<string, string>> = {
     signRole: 'Điểm May Mắn & Tài lộc thịnh vượng',
     description: 'Nơi hội tụ sự hòa hợp giữa Thân (Mọc), Tâm (Trăng) và Trí (Trời), mở ra nguồn năng lượng dồi dào và niềm vui sống đích thực.',
   },
+  'planet:uranus': {
+    signRole: 'Sức mạnh đột phá, thức tỉnh & cách mạng cá nhân',
+    description: 'Thiên Vương tinh kích hoạt tư duy cấp tiến, phá vỡ khuôn mẫu cũ và mang đến những đột phá mang tính cách mạng.',
+  },
+  'planet:neptune': {
+    signRole: 'Trực giác tâm linh, cảm thụ nghệ thuật & lòng trắc ẩn vô điều kiện',
+    description: 'Hải Vương tinh kết nối bạn với chiều sâu vô thức, khát vọng lý tưởng hóa và khả năng thấu cảm siêu hình.',
+  },
+  'planet:pluto': {
+    signRole: 'Quyền năng chuyển hóa, tái sinh & nội lực sâu thẳm',
+    description: 'Diêm Vương tinh đại diện cho sức mạnh lột xác, đối diện bóng tối nội tâm để tái sinh mạnh mẽ hơn từ tro tàn.',
+  },
 };
 
-export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartResult }> = ({ result }) => {
+export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanationProps> = ({
+  result,
+  mode = 'simple',
+}) => {
   const [activeTab, setActiveTab] = useState<TabKey>('big-three');
 
   const sun = result.objects.find((o) => o.id === 'planet:sun');
@@ -60,6 +94,9 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
   const mars = result.objects.find((o) => o.id === 'planet:mars');
   const jupiter = result.objects.find((o) => o.id === 'planet:jupiter');
   const saturn = result.objects.find((o) => o.id === 'planet:saturn');
+  const uranus = result.objects.find((o) => o.id === 'planet:uranus');
+  const neptune = result.objects.find((o) => o.id === 'planet:neptune');
+  const pluto = result.objects.find((o) => o.id === 'planet:pluto');
   const northNode = result.objects.find((o) => o.id === 'lunar-point:true-north-node');
   const southNode = result.objects.find((o) => o.id === 'derived:true-south-node');
   const chiron = result.objects.find((o) => o.id === 'centaur:chiron');
@@ -68,6 +105,23 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
   const asc = result.angles.Ascendant;
   const mc = result.angles.Midheaven;
 
+  // Helper: Find all aspects connected to an object
+  const getObjectAspects = (objectId: string): SwissNatalAspect[] => {
+    if (!result?.aspects || !Array.isArray(result.aspects)) return [];
+    return result.aspects
+      .filter((a) => a?.objectAId === objectId || a?.objectBId === objectId)
+      .sort((a, b) => (a.orbDifference ?? 0) - (b.orbDifference ?? 0));
+  };
+
+  // Helper: Find which houses a planet rules in this natal chart
+  const getRuledHouses = (objectId: string): number[] => {
+    if (!result.houseRulers) return [];
+    return result.houseRulers
+      .filter((hr) => hr.traditionalRulerId === objectId)
+      .map((hr) => hr.houseNumber);
+  };
+
+  // Render planet card with simple vs advanced depth
   const renderPlanetCard = (
     obj: SwissNatalObject | undefined,
     roleTitle: string,
@@ -83,8 +137,9 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
       getPlanetInSignInterpretation(legacyKey, obj.signVi) ??
       SIGN_FALLBACKS[obj.signVi] ??
       '';
-    const houseMeaning = getHouseInterpretation(obj.house);
     const planetInHouse = getPlanetInHouseInterpretation(legacyKey, obj.house);
+    const aspects = getObjectAspects(obj.id);
+    const ruledHouses = getRuledHouses(obj.id);
 
     return (
       <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3">
@@ -99,17 +154,17 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
                   {obj.nameVi} ở {obj.signVi}
                 </h4>
                 {obj.retrograde && (
-                  <span className="rounded-md bg-rose-500/10 px-1.5 py-0.2 text-[10px] font-bold text-rose-600 dark:text-rose-400">
-                    Rx
+                  <span className="rounded-md bg-rose-500/10 px-1.5 py-0.5 text-xs font-bold text-rose-600 dark:text-rose-400">
+                    Rx (Nghịch hành)
                   </span>
                 )}
                 {obj.dignity && obj.dignity.type !== 'peregrine' && (
-                  <span className={`rounded-md border px-1.5 py-0.2 text-[10px] font-medium ${obj.dignity.badgeClass}`}>
+                  <span className={`rounded-md border px-1.5 py-0.5 text-xs font-medium ${obj.dignity.badgeClass}`}>
                     {obj.dignity.symbol} {obj.dignity.labelVi}
                   </span>
                 )}
               </div>
-              <p className="text-[11px] font-medium text-indigo-600 dark:text-indigo-400">
+              <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">
                 {roleTitle} · Tọa độ Nhà {obj.house} ({obj.degree}°{obj.minute.toString().padStart(2, '0')}′)
               </p>
             </div>
@@ -128,15 +183,54 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
               )}
               {planetInHouse && (
                 <p>
-                  <strong className="font-semibold text-text-primary-light dark:text-text-primary-dark">Lĩnh vực phát huy (Nhà {obj.house}):</strong> {planetInHouse}
-                </p>
-              )}
-              {!planetInHouse && houseMeaning && (
-                <p>
-                  <strong className="font-semibold text-text-primary-light dark:text-text-primary-dark">Trọng tâm Nhà {obj.house}:</strong> {houseMeaning}
+                  <strong className="font-semibold text-text-primary-light dark:text-text-primary-dark">Địa hạt:</strong> {planetInHouse}
                 </p>
               )}
             </>
+          )}
+
+          {/* ADVANCED TIER: House Rulerships, Speed, and Exact Aspects */}
+          {mode === 'advanced' && (
+            <div className="mt-3 pt-3 border-t border-border-light/40 dark:border-border-dark/40 space-y-2">
+              {ruledHouses.length > 0 && (
+                <div className="rounded-lg bg-surface-container-low/60 p-2 border border-border-light/30 dark:border-border-dark/30 text-xs">
+                  <span className="font-bold text-indigo-600 dark:text-indigo-400">✦ Cai Quản Cung Địa Bàn:</span>{' '}
+                  <span className="font-medium text-text-primary-light dark:text-text-primary-dark">
+                    Làm chủ Nhà {ruledHouses.join(' & Nhà ')}.
+                  </span>{' '}
+                  <span>
+                    Dòng chảy năng lượng từ các nhà này được hướng tâm và điều phối trực tiếp tại vị trí Nhà {obj.house}.
+                  </span>
+                </div>
+              )}
+
+              {aspects.length > 0 && (
+                <div className="space-y-1">
+                  <span className="text-micro font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+                    Các Góc Chiếu Nổi Bật ({aspects.length}):
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {aspects.slice(0, 5).map((asp, idx) => {
+                      const otherName = asp.objectAId === obj.id ? asp.objectBName : asp.objectAName;
+                      const meta = ASPECT_META[asp.name.toLowerCase()] ?? { labelVi: asp.name, symbol: '•' };
+                      return (
+                        <span
+                          key={idx}
+                          className="inline-flex items-center gap-1 rounded-md bg-surface-container-low px-2 py-0.5 text-[11px] font-medium border border-border-light/40 dark:border-border-dark/40"
+                          title={`${meta.labelVi} với ${otherName} (Sai số ${(asp.orbDifference ?? 0).toFixed(1)}°)`}
+                        >
+                          <span className="text-indigo-600 dark:text-indigo-400 font-bold">{meta.symbol}</span>
+                          <span>{meta.labelVi} {otherName}</span>
+                          <span className="text-text-secondary-light/80 dark:text-text-secondary-dark/80 text-[10px]">
+                            ({(asp.orbDifference ?? 0).toFixed(1)}°)
+                          </span>
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -152,9 +246,10 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
     colorClass: string,
     bgClass: string,
     icon: string,
-    desc: string
+    desc: string,
+    advancedDetails?: React.ReactNode
   ) => (
-    <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-2">
+    <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3">
       <div className="flex items-center gap-3">
         <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${bgClass} ${colorClass} text-sm font-bold shadow-inner`}>
           {icon}
@@ -163,10 +258,11 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
             {title} ở {signVi} ({degree}°{minute.toString().padStart(2, '0')}′)
           </h4>
-          <p className="text-[11px] font-medium text-indigo-600 dark:text-indigo-400">{roleTitle}</p>
+          <p className="text-xs font-medium text-indigo-600 dark:text-indigo-400">{roleTitle}</p>
         </div>
       </div>
       <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">{desc}</p>
+      {mode === 'advanced' && advancedDetails}
     </div>
   );
 
@@ -195,7 +291,6 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
       {/* Tab Content: The Big Three & Angles */}
       {activeTab === 'big-three' && (
         <div className="space-y-3">
-          {/* Holistic Core Triad Dynamic Synthesis Card */}
           {sun && moon && asc && (
             <div className="surface-card rounded-2xl border border-indigo-500/30 bg-gradient-to-br from-indigo-500/5 via-surface-container-lowest to-purple-500/5 p-4 sm:p-5 dark:border-indigo-500/20 shadow-sm space-y-3">
               <div className="flex items-center justify-between gap-2 border-b border-border-light/40 pb-2.5 dark:border-border-dark/40">
@@ -205,28 +300,52 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
                     Bức Tranh Tổng Hợp Tam Trụ Bản Mệnh (Core Triad Dynamic)
                   </h4>
                 </div>
-                <span className="rounded-full bg-indigo-500/15 px-2.5 py-0.5 text-[10px] font-bold text-indigo-700 dark:text-indigo-300">
-                  Tổng Hợp Cá Nhân Hóa
+                <span className="rounded-full bg-indigo-500/15 px-2.5 py-0.5 text-xs font-bold text-indigo-700 dark:text-indigo-300">
+                  {mode === 'advanced' ? 'Phân Tích Đa Chiều' : 'Tổng Hợp Cá Nhân Hóa'}
                 </span>
               </div>
 
               <div className="space-y-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
                 <p>
-                  <strong className="font-semibold text-indigo-600 dark:text-indigo-400">Sự hòa hợp Thân - Tâm - Trí:</strong> Ý chí và cái tôi cốt lõi của bạn mang khí chất <span className="font-bold">{sun.signVi}</span> (Nhà {sun.house}), được nuôi dưỡng bởi thế giới cảm xúc tiềm thức <span className="font-bold">{moon.signVi}</span> (Nhà {moon.house}), và thể hiện ra thế giới bên ngoài qua lăng kính phong thái <span className="font-bold">{asc.signVi}</span>.
+                  <strong className="font-semibold text-indigo-600 dark:text-indigo-400">Sự hòa hợp Thân - Tâm - Trí:</strong> Ý chí và cái tôi cốt lõi mang khí chất <span className="font-bold">{sun.signVi}</span> (Nhà {sun.house}), được nuôi dưỡng bởi thế giới cảm xúc tiềm thức <span className="font-bold">{moon.signVi}</span> (Nhà {moon.house}), và thể hiện ra thế giới bên ngoài qua lăng kính phong thái <span className="font-bold">{asc.signVi}</span>.
                 </p>
 
                 {(() => {
                   const chartRuler = result.houseRulers?.find((r) => r.houseNumber === 1);
                   if (!chartRuler) return null;
                   return (
-                    <div className="rounded-xl bg-surface-container-low/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
+                    <div className="rounded-xl bg-surface-container-low/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 text-xs text-text-secondary-light dark:text-text-secondary-dark">
                       <span className="font-bold text-indigo-600 dark:text-indigo-400">✦ Chủ Tinh Cung Mọc (Chart Ruler):</span>{' '}
                       <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
                         {chartRuler.traditionalRulerVi} ({chartRuler.traditionalRulerSymbol})
                       </span>
                       {chartRuler.rulerHouse && (
                         <span> tọa thủ tại <strong className="text-text-primary-light dark:text-text-primary-dark">Nhà {chartRuler.rulerHouse}</strong> ({chartRuler.rulerSignVi ?? ''})</span>
-                      )}. Đây chính là "kim chỉ nam" dẫn lối cho hành trình phát triển cá nhân và các bước ngoặt lớn trong cuộc đời bạn.
+                      )}. Đây là kim chỉ nam dẫn lối cho hành trình phát triển cá nhân và các bước ngoặt lớn trong cuộc đời bạn.
+                    </div>
+                  );
+                })()}
+
+                {/* ADVANCED SOLILUNAR ASPECT BLEND */}
+                {mode === 'advanced' && (() => {
+                  const sunMoonAspect = result?.aspects?.find(
+                    (a) =>
+                      (a?.objectAId === 'planet:sun' && a?.objectBId === 'planet:moon') ||
+                      (a?.objectAId === 'planet:moon' && a?.objectBId === 'planet:sun')
+                  );
+                  if (!sunMoonAspect) return null;
+                  const aspectKey = sunMoonAspect.name.toLowerCase();
+                  const meta = ASPECT_META[aspectKey] ?? { labelVi: sunMoonAspect.name, symbol: '•' };
+                  return (
+                    <div className="rounded-xl bg-amber-500/5 p-2.5 border border-amber-500/20 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                      <span className="font-bold text-amber-600 dark:text-amber-400">✦ Tương Tác Nhật - Nguyệt ({meta.labelVi}):</span>{' '}
+                      {aspectKey === 'conjunction' && 'Tâm trí và ý chí đồng nhất mạnh mẽ (Thời điểm Trăng Mới), định hướng rõ ràng nhưng đôi khi quá chủ quan.'}
+                      {aspectKey === 'opposition' && 'Thế đối cực Trăng Tròn: Khát vọng ý thức và nhu cầu cảm xúc luôn cần sự thỏa hiệp và cân bằng hài hòa.'}
+                      {(aspectKey === 'trine' || aspectKey === 'sextile') && 'Dòng chảy thuận hòa tự nhiên giữa mong muốn bên ngoài và sự bình an nội tâm.'}
+                      {aspectKey === 'square' && 'Sự căng thẳng tích cực: Nội tâm giằng xé giữa bổn phận và khao khát cá nhân, tạo ra động lực bứt phá vĩ đại.'}
+                      <span className="text-text-secondary-light/70 text-[10px] ml-1">
+                        (Sai số: {(sunMoonAspect.orbDifference ?? 0).toFixed(1)}°)
+                      </span>
                     </div>
                   );
                 })()}
@@ -258,7 +377,13 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
             'bg-emerald-500/10 dark:bg-emerald-500/20',
             'ASC',
             getSignInterpretation(asc.signVi) ??
-              `Cung Mọc tại ${asc.signVi} mang lại cho bạn phong thái ${SIGN_FALLBACKS[asc.signVi]?.toLowerCase() ?? 'đặc trưng'} khi tiếp cận thế giới bên ngoài.`
+              `Cung Mọc tại ${asc.signVi} mang lại cho bạn phong thái ${SIGN_FALLBACKS[asc.signVi]?.toLowerCase() ?? 'đặc trưng'} khi tiếp cận thế giới bên ngoài.`,
+            mode === 'advanced' && (
+              <div className="mt-2 pt-2 border-t border-border-light/30 dark:border-border-dark/30 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                <strong className="text-text-primary-light dark:text-text-primary-dark">Trục Đối Cực AC-DC:</strong>{' '}
+                Cung Mọc {asc.signVi} đối xứng với Cung Lặn (Descendant) tại {result.angles.Descendant?.signVi ?? 'Cung Đối'}. Trong khi bạn khẳng định cá tính độc lập qua {asc.signVi}, bạn bị thu hút và tìm kiếm sự bổ trợ từ đối tác mang tính chất {result.angles.Descendant?.signVi ?? 'đối diện'}.
+              </div>
+            )
           )}
           {renderAngleCard(
             'Thiên Đỉnh (Midheaven / MC)',
@@ -269,7 +394,13 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
             'text-sky-600 dark:text-sky-400',
             'bg-sky-500/10 dark:bg-sky-500/20',
             'MC',
-            `Thiên Đỉnh tại ${mc.signVi} định hình con đường sự nghiệp và hình ảnh công chúng lý tưởng của bạn: hướng tới sự ${SIGN_FALLBACKS[mc.signVi]?.toLowerCase() ?? 'thành công bền vững'}.`
+            `Thiên Đỉnh tại ${mc.signVi} định hình con đường sự nghiệp và hình ảnh công chúng lý tưởng của bạn: hướng tới sự ${SIGN_FALLBACKS[mc.signVi]?.toLowerCase() ?? 'thành công bền vững'}.`,
+            mode === 'advanced' && (
+              <div className="mt-2 pt-2 border-t border-border-light/30 dark:border-border-dark/30 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                <strong className="text-text-primary-light dark:text-text-primary-dark">Trục MC-IC (Sự Nghiệp & Nguồn Cội):</strong>{' '}
+                Thiên Đỉnh {mc.signVi} phản ánh đỉnh cao công danh bên ngoài, trong khi Thiên Đế (IC) tại {result.angles['Imum Coeli']?.signVi ?? 'đối diện'} phản ánh nền tảng gia đình và điểm tựa gốc rễ tâm lý để bạn vươn mình ra thế giới.
+              </div>
+            )
           )}
         </div>
       )}
@@ -318,6 +449,40 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
             'bg-amber-700/10 dark:bg-amber-700/20',
             '♄'
           )}
+
+          {/* ADVANCED MODE OUTER PLANETS */}
+          {mode === 'advanced' && (
+            <>
+              {uranus &&
+                renderPlanetCard(
+                  uranus,
+                  'Thiên Vương Tinh: Đột Phá & Thức Tỉnh Tư Duy',
+                  'text-cyan-600 dark:text-cyan-400',
+                  'bg-cyan-500/10 dark:bg-cyan-500/20',
+                  '♅',
+                  `${EXTRA_INTERPRETATIONS['planet:uranus'].description} Tại ${uranus.signVi} (Nhà ${uranus.house}), bạn có nhu cầu mãnh liệt về sự tự do cá nhân và đổi mới cách tiếp cận truyền thống.`
+                )}
+              {neptune &&
+                renderPlanetCard(
+                  neptune,
+                  'Hải Vương Tinh: Trực Giác & Lý Tưởng Hóa',
+                  'text-blue-600 dark:text-blue-400',
+                  'bg-blue-500/10 dark:bg-blue-500/20',
+                  '♆',
+                  `${EXTRA_INTERPRETATIONS['planet:neptune'].description} Tại ${neptune.signVi} (Nhà ${neptune.house}), mang lại năng lực cảm thụ nghệ thuật phong phú nhưng cần giữ sự tỉnh táo trước ảo vọng.`
+                )}
+              {pluto &&
+                renderPlanetCard(
+                  pluto,
+                  'Diêm Vương Tinh: Quyền Lực & Chuyển Hóa Tái Sinh',
+                  'text-purple-900 dark:text-purple-300',
+                  'bg-purple-900/10 dark:bg-purple-900/20',
+                  '♇',
+                  `${EXTRA_INTERPRETATIONS['planet:pluto'].description} Tọa độ tại ${pluto.signVi} (Nhà ${pluto.house}) chỉ ra địa hạt bạn sẽ trải qua những cuộc cách mạng nội tâm sâu sắc nhất.`
+                )}
+            </>
+          )}
+
           {northNode &&
             renderPlanetCard(
               northNode,
@@ -359,50 +524,91 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
 
       {/* Tab Content: Dominant Houses */}
       {activeTab === 'houses' && (
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3">
-            <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-base text-indigo-500">pie_chart</span>
-              Phân Bổ Hành Tinh Trong 12 Nhà
-            </h4>
-            <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex items-center justify-between gap-2">
+              <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+                <span className="material-icons-round text-base text-indigo-500">pie_chart</span>
+                Phân Bổ Hành Tinh Trong 12 Cung Địa Bàn
+              </h4>
+              {mode === 'advanced' && (
+                <span className="rounded-full bg-indigo-500/15 px-2 py-0.5 text-micro font-bold text-indigo-700 dark:text-indigo-300">
+                  Phân Tích Cấu Trúc Nhà
+                </span>
+              )}
+            </div>
+
+            {mode === 'advanced' && (
+              <div className="grid grid-cols-3 gap-2 text-center text-xs pb-1">
+                <div className="rounded-xl bg-surface-container-low p-2 border border-border-light/40 dark:border-border-dark/40">
+                  <strong className="block text-indigo-600 dark:text-indigo-400 text-xs">Cung Góc (1, 4, 7, 10)</strong>
+                  <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">Hành động & Khởi phát</span>
+                </div>
+                <div className="rounded-xl bg-surface-container-low p-2 border border-border-light/40 dark:border-border-dark/40">
+                  <strong className="block text-emerald-600 dark:text-emerald-400 text-xs">Tiếp Nối (2, 5, 8, 11)</strong>
+                  <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">Tài nguyên & Ổn định</span>
+                </div>
+                <div className="rounded-xl bg-surface-container-low p-2 border border-border-light/40 dark:border-border-dark/40">
+                  <strong className="block text-amber-600 dark:text-amber-400 text-xs">Biến Đổi (3, 6, 9, 12)</strong>
+                  <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">Học hỏi & Thích nghi</span>
+                </div>
+              </div>
+            )}
+
+            <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
               {result.houses.map((h) => {
                 const planetsInHouse = result.objects.filter((o) => o.house === h.number && o.category === 'planet');
                 const ruler = result.houseRulers?.find((r) => r.houseNumber === h.number);
+                const isStellium = planetsInHouse.length >= 3;
+                const isFocused = planetsInHouse.length === 2;
+
                 return (
                   <div
                     key={h.number}
-                    className={`rounded-xl border p-3 flex flex-col justify-between ${
-                      planetsInHouse.length >= 2
-                        ? 'border-indigo-500/40 bg-indigo-500/5 dark:border-indigo-500/30'
-                        : 'border-border-light/40 bg-surface-container-lowest/50 dark:border-border-dark/40'
+                    className={`rounded-xl border p-3 flex flex-col justify-between transition-all ${
+                      isStellium
+                        ? 'border-amber-500/50 bg-amber-500/5 dark:border-amber-500/40 shadow-sm'
+                        : isFocused
+                          ? 'border-indigo-500/40 bg-indigo-500/5 dark:border-indigo-500/30'
+                          : 'border-border-light/40 bg-surface-container-lowest/50 dark:border-border-dark/40'
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between gap-1 mb-1">
                         <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                           Nhà {h.number} · {h.signVi}
+                          {mode === 'advanced' && (
+                            <span className="ml-1 text-[10px] font-normal text-text-secondary-light dark:text-text-secondary-dark">
+                              ({h.degree}°{h.minute.toString().padStart(2, '0')}′)
+                            </span>
+                          )}
                         </span>
-                        {planetsInHouse.length >= 2 && (
-                          <span className="rounded-full bg-indigo-500/15 px-1.5 py-0.2 text-[10px] font-bold text-indigo-700 dark:text-indigo-300">
+                        {isStellium ? (
+                          <span className="rounded-full bg-amber-500/20 px-1.5 py-0.5 text-micro font-bold text-amber-700 dark:text-amber-300">
+                            Stellium ({planetsInHouse.length})
+                          </span>
+                        ) : isFocused ? (
+                          <span className="rounded-full bg-indigo-500/15 px-1.5 py-0.5 text-micro font-bold text-indigo-700 dark:text-indigo-300">
                             Trọng tâm ({planetsInHouse.length})
                           </span>
-                        )}
+                        ) : null}
                       </div>
-                      <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark line-clamp-2">
+                      <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark line-clamp-2">
                         {getHouseInterpretation(h.number)}
                       </p>
                     </div>
 
-                    <div className="mt-2 pt-2 border-t border-border-light/30 dark:border-border-dark/30 text-[10px] text-text-secondary-light dark:text-text-secondary-dark space-y-1">
+                    <div className="mt-2 pt-2 border-t border-border-light/30 dark:border-border-dark/30 text-micro text-text-secondary-light dark:text-text-secondary-dark space-y-1">
                       {ruler && (
                         <div>
                           Chủ tinh: <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">{ruler.traditionalRulerVi} {ruler.traditionalRulerSymbol}</span>
-                          {ruler.rulerHouse && <span> (ở Nhà {ruler.rulerHouse})</span>}
+                          {ruler.rulerHouse && (
+                            <span> (tọa thủ Nhà {ruler.rulerHouse}{ruler.rulerSignVi ? ` - ${ruler.rulerSignVi}` : ''})</span>
+                          )}
                         </div>
                       )}
                       {planetsInHouse.length > 0 && (
-                        <div className="flex items-center gap-1 font-medium text-text-primary-light dark:text-text-primary-dark">
+                        <div className="flex items-center gap-1 font-medium text-text-primary-light dark:text-text-primary-dark flex-wrap">
                           Hành tinh: {planetsInHouse.map((p) => `${p.symbol} ${p.nameVi}`).join(', ')}
                         </div>
                       )}
@@ -417,3 +623,5 @@ export const WesternSimplifiedExplanation: React.FC<{ result: SwissNatalChartRes
     </div>
   );
 };
+
+export default WesternSimplifiedExplanation;
