@@ -1,17 +1,9 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { createWesternNatalFixture } from '../../fixtures/westernNatalFixture';
-import { createWesternNatalExport, renderWesternNatalSvg } from '@/services/astrology/westernNatalExport';
+import { renderWesternNatalSvg } from '@/services/astrology/westernNatalExport';
 
-describe('standalone Western natal SVG/PNG model', () => {
+describe('standalone Western natal SVG rendering model', () => {
   const result = createWesternNatalFixture();
-
-  const pngHeader = (size: number) => {
-    const bytes = new Uint8Array(24);
-    bytes.set([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82]);
-    new DataView(bytes.buffer).setUint32(16, size);
-    new DataView(bytes.buffer).setUint32(20, size);
-    return new Blob([bytes], { type: 'image/png' });
-  };
 
   it('renders the complete normalized chart as accessible standalone SVG', () => {
     const svg = renderWesternNatalSvg(result, { theme: 'light', size: 1180 });
@@ -85,33 +77,5 @@ describe('standalone Western natal SVG/PNG model', () => {
     expect(document.querySelector('[data-role="conjunction-marker"]')?.getAttribute('data-midpoint-longitude')).toBe(
       '0',
     );
-  });
-
-  it('creates distinct SVG and PNG payloads without DOM capture', async () => {
-    const rasterize = vi.fn(async (_svg: string, size: number) => pngHeader(size));
-
-    const svg = await createWesternNatalExport(result, 'svg', { theme: 'dark', size: 640 });
-    const png = await createWesternNatalExport(result, 'png', { theme: 'dark', size: 640, rasterize });
-
-    expect(svg.type).toBe('image/svg+xml');
-    expect(png.type).toBe('image/png');
-    expect(rasterize).toHaveBeenCalledOnce();
-    expect(rasterize.mock.calls[0][0]).not.toContain('foreignObject');
-    expect(rasterize.mock.calls[0][1]).toBe(640);
-  });
-
-  it('rejects an invalid PNG signature or dimensions with an export-stage error', async () => {
-    await expect(
-      createWesternNatalExport(result, 'png', {
-        size: 640,
-        rasterize: async () => new Blob(['not-png'], { type: 'image/png' }),
-      }),
-    ).rejects.toThrow(/PNG validation stage/i);
-    await expect(
-      createWesternNatalExport(result, 'png', {
-        size: 640,
-        rasterize: async () => pngHeader(320),
-      }),
-    ).rejects.toThrow(/dimensions/i);
   });
 });

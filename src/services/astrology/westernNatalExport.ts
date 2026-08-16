@@ -1,17 +1,9 @@
 import type { SwissNatalAspect, SwissNatalChartResult, SwissNatalObject } from './swissNatalChart';
 
 export type WesternNatalTheme = 'light' | 'dark';
-export type WesternNatalExportFormat = 'svg' | 'png';
-
 export interface WesternNatalRenderOptions {
   theme?: WesternNatalTheme;
   size?: number;
-}
-
-export interface WesternNatalExportOptions extends WesternNatalRenderOptions {
-  rasterize?: (svg: string, size: number) => Promise<Blob>;
-  /** Physical PNG pixels per logical SVG unit. */
-  pixelRatio?: number;
 }
 
 interface WesternNatalPalette {
@@ -326,84 +318,4 @@ export function renderWesternNatalSvg(result: SwissNatalChartResult, options: We
     <g id="layer-objects">${renderObjects(result, palette)}</g>
     <g id="layer-metadata"><g data-role="technical-metadata"><rect x="432" y="458" width="136" height="84" rx="8" fill="${palette.metadata}" stroke="${palette.houseLine}" stroke-width="0.7" opacity="0.94"/><text x="500" y="479" text-anchor="middle" fill="${palette.ink}" font-size="10" font-weight="700">${escapeXml(location)}</text><text x="500" y="496" text-anchor="middle" fill="${palette.muted}" font-size="8.5">${escapeXml(result.birth.utc.replace('.000Z', 'Z'))}</text><text x="500" y="512" text-anchor="middle" fill="${palette.muted}" font-size="8.5">JD ${finite(result.birth.julianDayUt)} · Placidus</text><text x="500" y="528" text-anchor="middle" fill="${palette.muted}" font-size="8">${escapeXml(result.metadata.engine)} · ${escapeXml(result.metadata.version)}</text></g><g data-role="aspect-legend"><circle cx="500" cy="557" r="5" fill="none" stroke="${palette.gold}" stroke-width="1.5"/><text x="510" y="560" fill="${palette.muted}" font-size="8">Conjunction / Đồng cung</text></g></g>
   </svg>`;
-}
-
-async function rasterizeSvg(svg: string, size: number): Promise<Blob> {
-  try {
-    await document.fonts?.ready;
-  } catch (error) {
-    throw new Error(
-      `Western natal PNG font readiness stage failed: ${error instanceof Error ? error.message : String(error)}`,
-    );
-  }
-  const source = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
-  const url = URL.createObjectURL(source);
-  try {
-    const image = new Image();
-    image.decoding = 'async';
-    await new Promise<void>((resolve, reject) => {
-      image.onload = () => resolve();
-      image.onerror = () => reject(new Error('Western natal PNG image loading stage failed'));
-      image.src = url;
-    });
-    const canvas = document.createElement('canvas');
-    canvas.width = size;
-    canvas.height = size;
-    const context = canvas.getContext('2d');
-    if (!context) throw new Error('Western natal PNG canvas stage failed: 2D context unavailable');
-    context.drawImage(image, 0, 0, size, size);
-    return await new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob(
-        (blob) => (blob ? resolve(blob) : reject(new Error('Western natal PNG encoding stage failed'))),
-        'image/png',
-      );
-    });
-  } finally {
-    URL.revokeObjectURL(url);
-  }
-}
-
-async function validatePng(blob: Blob, expectedSize: number): Promise<void> {
-  const bytes = new Uint8Array(await blob.arrayBuffer());
-  const signature = [137, 80, 78, 71, 13, 10, 26, 10];
-  if (bytes.length < 24 || !signature.every((byte, index) => bytes[index] === byte)) {
-    throw new Error('Western natal PNG validation stage failed: invalid PNG signature');
-  }
-  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
-  const width = view.getUint32(16);
-  const height = view.getUint32(20);
-  if (width !== expectedSize || height !== expectedSize) {
-    throw new Error(
-      `Western natal PNG validation stage failed: expected ${expectedSize}x${expectedSize} dimensions, received ${width}x${height}`,
-    );
-  }
-}
-
-export async function createWesternNatalExport(
-  result: SwissNatalChartResult,
-  format: WesternNatalExportFormat,
-  options: WesternNatalExportOptions = {},
-): Promise<Blob> {
-  const { theme, size } = validateOptions(options);
-  const svg = renderWesternNatalSvg(result, { theme, size });
-  if (format === 'svg') return new Blob([svg], { type: 'image/svg+xml' });
-  if (format === 'png') {
-    const pixelRatio = options.pixelRatio ?? 1;
-    if (!Number.isFinite(pixelRatio) || pixelRatio <= 0) {
-      throw new Error('Western natal PNG pixel ratio must be positive');
-    }
-    const rasterSize = Math.round(size * pixelRatio);
-    let png: Blob;
-    try {
-      png = await (options.rasterize ?? rasterizeSvg)(svg, rasterSize);
-    } catch (error) {
-      if (error instanceof Error && error.message.includes('stage failed')) throw error;
-      throw new Error(
-        `Western natal PNG rasterization stage failed: ${error instanceof Error ? error.message : String(error)}`,
-      );
-    }
-    await validatePng(png, rasterSize);
-    return png;
-  }
-  throw new Error(`Unsupported Western natal export format: ${String(format)}`);
 }

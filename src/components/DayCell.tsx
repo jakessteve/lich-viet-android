@@ -76,13 +76,13 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
     >
       <span
         className={`
-        text-xs sm:text-sm md:text-base font-medium mb-0.5 relative z-10
+        text-xs sm:text-sm md:text-base font-medium mb-0.5 relative z-10 text-center leading-none select-none
         ${isToday ? 'text-primary' : isWeekend ? 'text-calendar-weekend' : 'text-text-primary-light dark:text-text-primary-dark'}
       `}
       >
         {solarDate}
       </span>
-      <span className="text-xs md:text-sm leading-none text-text-secondary-light dark:text-text-secondary-dark font-semibold relative z-10">
+      <span className="text-xs md:text-sm leading-none text-text-secondary-light dark:text-text-secondary-dark font-semibold relative z-10 text-center select-none">
         {lunarDate}
       </span>
 

@@ -100,7 +100,7 @@ export const ZodiacalReleasingView: React.FC<ZodiacalReleasingViewProps> = ({ na
                     className="w-full text-left p-3.5 flex items-center justify-between cursor-pointer hover:opacity-90 transition-opacity"
                   >
                     <div className="flex items-center gap-2.5">
-                      <span className="w-6 h-6 rounded-full bg-astral-surface-light dark:bg-astral-surface-dark text-astral-primary dark:text-astral-primary-dark font-bold flex items-center justify-center text-xs">
+                      <span className="w-6 h-6 rounded-full bg-astral-surface-light dark:bg-astral-surface-dark text-astral-primary dark:text-astral-primary-dark font-bold shrink-0 inline-flex items-center justify-center text-center leading-none select-none text-xs">
                         {idx + 1}
                       </span>
                       <div>

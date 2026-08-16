@@ -69,28 +69,30 @@ function getScoreLabel(pct: number): { label: string; colorClass: string } {
 
 // ── Alias Matching Helpers ────────────────────────────────────
 
-/** Pre-compute a lowercase Set from a list of strings for O(1)-ish matching. */
-function buildLowerSet(list: string[]): Set<string> {
-  return new Set((list || []).filter(Boolean).map((s) => s.toLowerCase()));
-}
-
-/** Check if an activity nameVi or alias appears in a pre-computed lowercase Set. */
-function activityInSet(activity: ActivityEntry, lowerSet: Set<string>): boolean {
-  if (!activity) return false;
+/** Check if an activity nameVi or alias appears in a term list with zero Set allocations. */
+function matchesActivityTerms(activity: ActivityEntry, termList?: string[]): boolean {
+  if (!activity || !termList || termList.length === 0) return false;
   const nameLC = (activity.nameVi || '').toLowerCase();
-  for (const s of lowerSet) {
+  const aliases = activity.aliases || [];
+  const aliasCount = aliases.length;
+
+  for (let i = 0; i < termList.length; i++) {
+    const raw = termList[i];
+    if (!raw) continue;
+    const s = raw.toLowerCase();
     if (nameLC && s.includes(nameLC)) return true;
-  }
-  for (const alias of activity.aliases || []) {
-    const aliasLC = (alias || '').toLowerCase();
-    for (const s of lowerSet) {
-      if (aliasLC && (s.includes(aliasLC) || aliasLC.includes(s))) return true;
+    for (let j = 0; j < aliasCount; j++) {
+      const alias = aliases[j];
+      if (alias) {
+        const aliasLC = alias.toLowerCase();
+        if (s.includes(aliasLC) || aliasLC.includes(s)) return true;
+      }
     }
   }
   return false;
 }
 
-/** Count how many stars favor/oppose an activity via their suitable/unsuitable fields. */
+/** Count how many stars favor/oppose an activity via their suitable/unsuitable fields with zero Set creation. */
 function countStarMatches(
   activity: ActivityEntry,
   stars: Array<{ name: string; type?: string; suitable?: string[]; unsuitable?: string[] }>,
@@ -98,14 +100,13 @@ function countStarMatches(
   let favorable = 0;
   let opposing = 0;
 
-  for (const star of stars) {
-    if (star.suitable) {
-      const suitSet = buildLowerSet(star.suitable);
-      if (activityInSet(activity, suitSet)) favorable++;
+  for (let i = 0; i < stars.length; i++) {
+    const star = stars[i];
+    if (star.suitable && matchesActivityTerms(activity, star.suitable)) {
+      favorable++;
     }
-    if (star.unsuitable) {
-      const unsuitSet = buildLowerSet(star.unsuitable);
-      if (activityInSet(activity, unsuitSet)) opposing++;
+    if (star.unsuitable && matchesActivityTerms(activity, star.unsuitable)) {
+      opposing++;
     }
   }
 
@@ -145,9 +146,6 @@ export function scoreActivity(
   let totalScore = 0;
   const includeAdvanced = options.includeAdvanced ?? false;
 
-  // Pre-compute lowercase Sets for dụng sự lists (used by Factors 1 & 2)
-  const nghiSet = buildLowerSet(dayData.dungSu.suitable);
-  const kySet = buildLowerSet(dayData.dungSu.unsuitable);
   const { suitableIds, unsuitableIds } = mapDungSuToActivityIds(dayData.dungSu.suitable, dayData.dungSu.unsuitable);
   const { suitableIds: oracleSuitableIds, unsuitableIds: oracleUnsuitableIds } = mapDungSuToActivityIds(
     dayData.dungSu.oracleSuitable || [],
@@ -172,8 +170,8 @@ export function scoreActivity(
   const isBachSuHungVeto = isBachSuHung && !isDirectSupport;
 
   // ── Factor 1: Trực Match ──
-  const inNghi = isDirectSupport || (!isDirectBlock && activityInSet(activity, nghiSet));
-  const inKy = isDirectBlock || (!isDirectSupport && activityInSet(activity, kySet));
+  const inNghi = isDirectSupport || (!isDirectBlock && matchesActivityTerms(activity, dayData.dungSu.suitable));
+  const inKy = isDirectBlock || (!isDirectSupport && matchesActivityTerms(activity, dayData.dungSu.unsuitable));
   let trucScore: number;
   let trucDetail: string;
   if (inNghi && !inKy) {
@@ -450,26 +448,21 @@ export function scoreActivity(
 // ── Best Hours Computation ────────────────────────────────────
 
 function computeBestHours(activity: ActivityEntry, dayData: DayDetailsData): HourScoreEntry[] {
+  if (!activity) {
+    return dayData.allHours
+      .slice()
+      .sort((a, b) => b.score - a.score)
+      .slice(0, BEST_HOURS_SCORING.topCount)
+      .map((h) => ({ hourInfo: h, activityScore: Math.max(0, Math.min(100, h.score)) }));
+  }
+
   const hourScores: HourScoreEntry[] = dayData.allHours.map((h) => {
-    // Simple per-hour activity score: combine hour score with activity nghi/ky match
     let score = h.score; // base: 0-100
 
-    // Bonus if the hour's nghi list mentions this activity
-    const hourNghiStr = (h.nghi || []).join(' ').toLowerCase();
-    const hourKyStr = (h.ky || []).join(' ').toLowerCase();
-
-    if (!activity) return { hourInfo: h, activityScore: Math.max(0, Math.min(100, score)) };
-    const nameLC = (activity.nameVi || '').toLowerCase();
-    if (
-      (activity.aliases || []).some((a) => a && hourNghiStr.includes(a.toLowerCase())) ||
-      (nameLC && hourNghiStr.includes(nameLC))
-    ) {
+    if (h.nghi && matchesActivityTerms(activity, h.nghi)) {
       score += BEST_HOURS_SCORING.nghiBonus;
     }
-    if (
-      (activity.aliases || []).some((a) => a && hourKyStr.includes(a.toLowerCase())) ||
-      (nameLC && hourKyStr.includes(nameLC))
-    ) {
+    if (h.ky && matchesActivityTerms(activity, h.ky)) {
       score += BEST_HOURS_SCORING.kyPenalty;
     }
 

@@ -27,11 +27,15 @@ interface TuViState {
   error: string | null;
   /** Markdown export preview (null = not previewing) */
   markdownPreview: string | null;
+  /** Interpretation depth mode */
+  interpretationMode: 'simple' | 'advanced';
 }
 
 interface TuViActions {
   /** Update input form data */
   setInput: (input: Partial<TuViInput>) => void;
+  /** Set interpretation mode */
+  setInterpretationMode: (mode: 'simple' | 'advanced') => void;
   /** Reset input to defaults */
   resetInput: () => void;
   /** Generate chart from current input */
@@ -106,8 +110,11 @@ export const useTuViStore = create<TuViStore>()((set, get) => ({
   isCalculating: false,
   error: null,
   markdownPreview: getInitialMarkdownPreview(),
+  interpretationMode: 'simple',
 
   // ── Actions ───────────────────────────────────────────────
+
+  setInterpretationMode: (interpretationMode) => set({ interpretationMode }),
 
   setInput: (partial) =>
     set((state) => ({

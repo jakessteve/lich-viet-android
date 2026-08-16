@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useTuViStore } from '../../stores/tuviStore';
 import { formatTuViChartAsMarkdown } from '../../services/tuvi/markdownFormatter';
-import { buildTuViImageFilename, downloadTuViChartAsImage } from '../../services/tuvi/chartImageExport';
 import { Capacitor } from '@capacitor/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
@@ -9,7 +8,6 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 export const TuViMarkdownExport: React.FC = () => {
   const { chart } = useTuViStore();
   const [copied, setCopied] = useState(false);
-  const [isDownloadingImage, setIsDownloadingImage] = useState(false);
 
   if (!chart) return null;
 
@@ -58,34 +56,11 @@ export const TuViMarkdownExport: React.FC = () => {
     }
   };
 
-  const handleDownloadImage = async () => {
-    try {
-      setIsDownloadingImage(true);
-      await downloadTuViChartAsImage('[data-tuvi-chart-export]', buildTuViImageFilename(chart.input.name));
-    } catch (error) {
-      console.error('Failed to export Tử Vi chart as image:', error);
-      window.alert('Không thể tải ảnh Tử Vi lúc này. Vui lòng thử lại.');
-    } finally {
-      setIsDownloadingImage(false);
-    }
-  };
-
   const btnBase =
     'surface-control flex min-h-11 items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-200 btn-interact';
 
   return (
     <div className="flex flex-wrap gap-2">
-      <button
-        type="button"
-        onClick={handleDownloadImage}
-        disabled={isDownloadingImage}
-        className={`${btnBase} hover:bg-surface-container-lowest dark:hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-60`}
-        aria-busy={isDownloadingImage}
-      >
-        <span className="material-icons-round text-sm">{isDownloadingImage ? 'hourglass_top' : 'image'}</span>
-        {isDownloadingImage ? 'Đang tải ảnh...' : 'Tải ảnh'}
-      </button>
-
       <button
         type="button"
         onClick={handleCopy}

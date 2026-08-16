@@ -33,9 +33,12 @@ import {
 // ── Astronomical helpers ──────────────────────────────────────
 
 const sunLongitudeCache = new Map<number, number>();
+const SUN_LONGITUDE_CACHE_MAX = 256;
 
 /** Apparent solar longitude with delta-T, nutation, and aberration corrections. */
 function getApparentSunLongitude(jd: number): number {
+  if (!Number.isFinite(jd)) return 0;
+
   const cached = sunLongitudeCache.get(jd);
   if (cached !== undefined) {
     return cached;
@@ -55,6 +58,14 @@ function getApparentSunLongitude(jd: number): number {
 
   const omega = (125.04 - 1934.136 * T) * (Math.PI / 180);
   const longitude = normalizeDegrees(L0 + center - 0.00569 - 0.00478 * Math.sin(omega));
+
+  if (sunLongitudeCache.size >= SUN_LONGITUDE_CACHE_MAX) {
+    const oldestKey = sunLongitudeCache.keys().next().value;
+    if (oldestKey !== undefined) {
+      sunLongitudeCache.delete(oldestKey);
+    }
+  }
+
   sunLongitudeCache.set(jd, longitude);
   return longitude;
 }

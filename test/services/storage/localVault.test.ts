@@ -76,4 +76,57 @@ describe('IndexedDB Local Vault Storage (with fallback)', () => {
     expect(importRes.importedCount).toBeGreaterThanOrEqual(1);
     expect(importRes.errors).toHaveLength(0);
   });
+
+  it('resiliently handles corrupted localStorage JSON without throwing', async () => {
+    localStorage.setItem('vault_profiles_backup', '{ invalid corrupted json content ...');
+
+    // Should return empty array or handle gracefully instead of throwing
+    const profiles = await getAllVaultProfiles();
+    expect(Array.isArray(profiles)).toBe(true);
+
+    // Saving should still succeed by resetting corrupted list safely
+    const saved = await saveVaultProfile({
+      name: 'Resilient Profile',
+      solarDate: '1998-08-08',
+      birthHour: 10,
+      gender: 'nam',
+    });
+    expect(saved.name).toBe('Resilient Profile');
+  });
+
+  it('sanitizes and clamps boundaries on imported backup profiles', async () => {
+    const maliciousJson = JSON.stringify({
+      version: 1,
+      appName: 'LichViet',
+      profiles: [
+        {
+          name: '<b>Bad User</b><script>alert(1)</script>',
+          solarDate: '1992-04-10',
+          birthHour: -99,
+          birthMinute: 150,
+          gender: 'invalid',
+          birthplace: {
+            locationName: 'Overloaded City',
+            lat: 500,
+            lng: -999,
+            timezone: 25,
+          },
+        },
+      ],
+    });
+
+    const result = await importVaultBackupJson(maliciousJson);
+    expect(result.importedCount).toBe(1);
+
+    const all = await getAllVaultProfiles();
+    const imported = all.find((p) => p.solarDate === '1992-04-10');
+    expect(imported).toBeDefined();
+    expect(imported?.name).not.toContain('<script>');
+    expect(imported?.birthHour).toBe(0); // clamped to min 0
+    expect(imported?.birthMinute).toBe(59); // clamped to max 59
+    expect(imported?.gender).toBe('nam'); // default fallback
+    expect(imported?.birthplace?.lat).toBe(90); // clamped to 90
+    expect(imported?.birthplace?.lng).toBe(-180); // clamped to -180
+    expect(imported?.birthplace?.timezone).toBe(14); // clamped to max 14
+  });
 });

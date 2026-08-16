@@ -60,7 +60,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
       <div className="p-4 space-y-4">
         {sun && (
           <div className="flex gap-3">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-amber-600 dark:text-amber-400 text-xl font-bold">
+            <div className="shrink-0 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-center leading-none select-none text-amber-600 dark:text-amber-400 text-xl font-bold">
               ☉
             </div>
             <div>
@@ -83,7 +83,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
 
         {moon && (
           <div className="flex gap-3">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 text-xl font-bold">
+            <div className="shrink-0 w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-center leading-none select-none text-slate-600 dark:text-slate-300 text-xl font-bold">
               ☽
             </div>
             <div>
@@ -105,7 +105,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
         )}
 
         <div className="flex gap-3">
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm">
+          <div className="shrink-0 w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-center leading-none select-none text-emerald-600 dark:text-emerald-400 font-bold text-sm">
             ASC
           </div>
           <div>
@@ -121,7 +121,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
         </div>
 
         <div className="flex gap-3">
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-400 font-bold text-sm">
+          <div className="shrink-0 w-10 h-10 rounded-full bg-sky-100 dark:bg-sky-900/30 flex items-center justify-center text-center leading-none select-none text-sky-600 dark:text-sky-400 font-bold text-sm">
             MC
           </div>
           <div>

@@ -269,15 +269,19 @@ export function synthesizeVedicReading(
     ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn'].includes(p.body),
   );
   let atmakaraka = mainPlanets[0];
+  const getDeg = (p?: (typeof mainPlanets)[0]) =>
+    p?.degreeInSign ?? (p ? (((p.siderealLongitude % 30) + 30) % 30) : 0);
+
   for (const p of mainPlanets) {
-    if (p.degreeInSign > (atmakaraka?.degreeInSign ?? 0)) {
+    if (getDeg(p) > getDeg(atmakaraka)) {
       atmakaraka = p;
     }
   }
 
   const akNameVi = atmakaraka ? (BODY_LABELS_VI[atmakaraka.body] ?? atmakaraka.body) : 'Mặt Trời';
   const akLesson = atmakaraka ? (ATMAKARAKA_LESSONS[atmakaraka.body] ?? 'Bài học về sự trưởng thành tâm linh.') : '';
-  const atmakarakaReadingVi = `Hành tinh chủ linh hồn (Atmakaraka - AK) là ${akNameVi} (tọa độ cao nhất ${atmakaraka?.degreeInSign.toFixed(1)}° trong cung). ${akLesson}`;
+  const akDeg = atmakaraka ? getDeg(atmakaraka) : 0;
+  const atmakarakaReadingVi = `Hành tinh chủ linh hồn (Atmakaraka - AK) là ${akNameVi} (tọa độ cao nhất ${akDeg.toFixed(1)}° trong cung). ${akLesson}`;
 
   // 4. Detected Yogas & Doshas
   const vedicPositions = chartResult.planets.map((p) => ({

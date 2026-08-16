@@ -266,9 +266,10 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       email: 'Email',
     };
 
+    const uniqueSuffix = generateId().slice(0, 8);
     const mockUser: User = {
       id: generateId(),
-      email: `user@${provider}.com`,
+      email: `user_${uniqueSuffix}@${provider}.auth`,
       displayName: `Người dùng ${providerNames[provider]}`,
       accessTier: 'free',
       avatarUrl: undefined,
@@ -276,19 +277,11 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       createdAt: new Date().toISOString(),
     };
 
-    // Check if social user already exists
     const users = getStoredUsers();
-    const existing = users.find((u) => u.user.provider === provider && u.user.email === mockUser.email);
-
-    if (existing) {
-      saveAuthUser(existing.user);
-      set({ user: existing.user, isAuthenticated: true, isLoading: false });
-    } else {
-      users.push({ user: mockUser, passwordHash: '' });
-      saveStoredUsers(users);
-      saveAuthUser(mockUser);
-      set({ user: mockUser, isAuthenticated: true, isLoading: false });
-    }
+    users.push({ user: mockUser, passwordHash: '' });
+    saveStoredUsers(users);
+    saveAuthUser(mockUser);
+    set({ user: mockUser, isAuthenticated: true, isLoading: false });
 
     return { success: true };
   },
@@ -328,10 +321,16 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
         ...(birthMinute !== undefined && { birthMinute: birthMinute === null ? undefined : birthMinute }),
       };
 
-      // Auto-extract year/month/day if birthday string was updated
-      if (birthday) {
+      // Auto-extract year/month/day if birthday string was updated and valid calendar date
+      if (birthday && /^\d{4}-\d{2}-\d{2}$/.test(birthday)) {
         const [y, m, d] = birthday.split('-').map(Number);
-        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) {
+        const dt = new Date(y, m - 1, d);
+        if (
+          Number.isInteger(y) &&
+          dt.getFullYear() === y &&
+          dt.getMonth() === m - 1 &&
+          dt.getDate() === d
+        ) {
           updated.profile.birthYear = y;
           updated.profile.birthMonth = m;
           updated.profile.birthDay = d;

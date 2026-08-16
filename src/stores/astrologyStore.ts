@@ -21,6 +21,10 @@ import {
   type ProgressionResult,
   type DavisonResult,
 } from '../services/astrology/predictiveCalculator';
+import {
+  calculateMonthlyTransits,
+  type MonthlyTransitTimeline,
+} from '../services/astrology/monthlyTransitTimeline';
 
 export type AstrologyTab = 'tay-phuong' | 'vedic' | 'hop-la';
 
@@ -42,6 +46,7 @@ export interface ForecastResult {
   selectedLunarReturn: ReturnChartResult | null;
   transits: TransitReport;
   progressions: ProgressionResult;
+  monthlyTimeline: MonthlyTransitTimeline | null;
 }
 
 interface AstrologyState {
@@ -224,8 +229,17 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
       const selectedLunarReturn = upcoming ? calculateLunarReturnChart(westernInput, upcoming.julianDay) : null;
       const transits = calculateTransitReport(westernInput, now);
       const progressions = calculateProgressedChart(westernInput, now);
+      const monthlyTimeline = calculateMonthlyTransits(westernInput, forecastYear);
       set({
-        forecastResult: { year: forecastYear, solarReturn, lunarReturns, selectedLunarReturn, transits, progressions },
+        forecastResult: {
+          year: forecastYear,
+          solarReturn,
+          lunarReturns,
+          selectedLunarReturn,
+          transits,
+          progressions,
+          monthlyTimeline,
+        },
         isCalculating: false,
       });
     } catch (e: unknown) {

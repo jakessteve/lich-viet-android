@@ -150,7 +150,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <div
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${bgClass} ${colorClass} text-xl font-bold shadow-inner`}
+              className={`flex h-11 w-11 shrink-0 items-center justify-center text-center leading-none select-none rounded-2xl ${bgClass} ${colorClass} text-xl font-bold shadow-inner`}
             >
               {icon}
             </div>
@@ -164,7 +164,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                     Rx (Nghịch hành)
                   </span>
                 )}
-                {obj.dignity && obj.dignity.type !== 'peregrine' && (
+                {mode === 'advanced' && obj.dignity && obj.dignity.type !== 'peregrine' && (
                   <span className={`rounded-md border px-1.5 py-0.5 text-xs font-medium ${obj.dignity.badgeClass}`}>
                     {obj.dignity.symbol} {obj.dignity.labelVi}
                   </span>
@@ -198,7 +198,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                   {planetInHouse}
                 </p>
               )}
-              {objSynth?.dignitySummaryVi && (
+              {mode === 'advanced' && objSynth?.dignitySummaryVi && (
                 <p className="text-[11px] text-astral-primary dark:text-astral-primary-dark font-medium">
                   ✦ {objSynth.dignitySummaryVi}
                 </p>
@@ -275,7 +275,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
     <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3">
       <div className="flex items-center gap-3">
         <div
-          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${bgClass} ${colorClass} text-sm font-bold shadow-inner`}
+          className={`flex h-11 w-11 shrink-0 items-center justify-center text-center leading-none select-none rounded-2xl ${bgClass} ${colorClass} text-sm font-bold shadow-inner`}
         >
           {icon}
         </div>

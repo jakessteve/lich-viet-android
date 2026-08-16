@@ -257,7 +257,7 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
         role="presentation"
         style={{ ...mobileStageStyle }}
       >
-        <div className="tuvi-chart" data-tuvi-chart-export role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>
+        <div className="tuvi-chart" role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>
           {tamHopLines.length > 0 && (
             <svg className="tuvi-connection-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               {tamHopLines.map((line, index) => (

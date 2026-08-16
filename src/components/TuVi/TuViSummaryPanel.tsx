@@ -1,15 +1,17 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { TuViChart as TuViChartType, DaiHanInterpretationResult } from '../../types/tuvi';
 import { getAllDaiHanInterpretations, getCurrentDaiHan } from '../../services/tuvi/daiHanInterpretation';
 import { classifyTuViChart } from '../../services/tuvi/chartClassification';
 import { calculateFlyingStars } from '../../services/tuvi/flyingStars';
 import { SegmentedControl, type SegmentedOption } from '../shared';
+import { TuViTieuHanPanel } from './TuViTieuHanPanel';
 
-type SummaryTab = 'overview' | 'daiHan' | 'phiTinh';
+type SummaryTab = 'overview' | 'tieuHan' | 'daiHan' | 'phiTinh';
 type DaiHanViewMode = 'simple' | 'advanced';
 
 const SUMMARY_TABS: readonly SegmentedOption<SummaryTab>[] = [
   { id: 'overview', label: 'Tổng quan', shortLabel: 'Tổng quan', icon: 'dashboard' },
+  { id: 'tieuHan', label: 'Tiểu hạn & Năm', shortLabel: 'Tiểu hạn', icon: 'event' },
   { id: 'daiHan', label: 'Đại hạn', shortLabel: 'Đại hạn', icon: 'timeline' },
   { id: 'phiTinh', label: 'Phi Tinh Tứ Hóa', shortLabel: 'Phi Tinh', icon: 'hub' },
 ];
@@ -78,9 +80,25 @@ function summarizeTuHoa(chart: TuViChartType) {
     .sort((a, b) => (order[a.type] ?? 99) - (order[b.type] ?? 99));
 }
 
-export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo(({ chart }) => {
+export const TuViSummaryPanel: React.FC<{
+  chart: TuViChartType;
+  mode?: 'simple' | 'advanced';
+  onModeChange?: (mode: 'simple' | 'advanced') => void;
+}> = React.memo(({ chart, mode, onModeChange }) => {
   const [activeTab, setActiveTab] = useState<SummaryTab>('overview');
-  const [daiHanViewMode, setDaiHanViewMode] = useState<DaiHanViewMode>('simple');
+  const [localDaiHanViewMode, setLocalDaiHanViewMode] = useState<DaiHanViewMode>(mode ?? 'simple');
+
+  useEffect(() => {
+    if (mode) {
+      setLocalDaiHanViewMode(mode);
+    }
+  }, [mode]);
+
+  const daiHanViewMode = onModeChange && mode !== undefined ? mode : localDaiHanViewMode;
+  const setDaiHanViewMode = (newMode: DaiHanViewMode) => {
+    setLocalDaiHanViewMode(newMode);
+    onModeChange?.(newMode);
+  };
 
   const viewYear = chart.hanContext?.viewYear;
   const allDaiHan = useMemo(() => getAllDaiHanInterpretations(chart, viewYear), [chart, viewYear]);
@@ -233,7 +251,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
               </div>
 
               {/* Tam Tài Scoreboard Mini */}
-              <div className="grid gap-2 sm:grid-cols-4 text-xs">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
                   <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
                     Thiên Thời (Thái Tuế)
@@ -399,6 +417,14 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
             </div>
           </div>
         </div>
+      )}
+
+      {activeTab === 'tieuHan' && (
+        <TuViTieuHanPanel
+          chart={chart}
+          viewYear={viewYear}
+          viewMonth={chart.hanContext?.viewMonth}
+        />
       )}
 
       {activeTab === 'daiHan' && (

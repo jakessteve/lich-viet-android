@@ -28,10 +28,33 @@ describe('TuViPalaceInlineDetail (Hybrid Adaptive Display)', () => {
     expect(screen.getByText(/Bản Mệnh & Cốt Cách/i)).toBeDefined();
   });
 
-  it('renders compact pill HUD when zoomed', () => {
-    render(<TuViPalaceInlineDetail interpretation={mockInterpretation} onClose={() => {}} isZoomed={true} />);
+  it('renders focused narrative summary in simple mode', () => {
+    render(
+      <TuViPalaceInlineDetail
+        interpretation={mockInterpretation}
+        onClose={() => {}}
+        isZoomed={false}
+        mode="simple"
+      />,
+    );
 
-    expect(screen.getByText(/Cung Mệnh \(Thìn\)/i)).toBeDefined();
-    expect(screen.getByText(/Chi tiết/i)).toBeDefined();
+    expect(screen.getByText(/Tổng Quan & Khí Chất Cung Vị/i)).toBeDefined();
+    expect(screen.getByText(/Lời Khuyên Thực Tiễn/i)).toBeDefined();
+    expect(screen.queryByText(/Tam Phương Tứ Chính & Hội Chiếu/i)).toBeNull();
+  });
+
+  it('renders classical technical breakdown in advanced mode', () => {
+    render(
+      <TuViPalaceInlineDetail
+        interpretation={mockInterpretation}
+        onClose={() => {}}
+        isZoomed={false}
+        mode="advanced"
+      />,
+    );
+
+    expect(screen.getByText(/Tam Phương Tứ Chính & Hội Chiếu/i)).toBeDefined();
+    expect(screen.getByText(/Tác Động Tứ Hóa & Biến Chuyển Thời Vận/i)).toBeDefined();
+    expect(screen.getByText(/Triệt Không kìm hãm/i)).toBeDefined();
   });
 });

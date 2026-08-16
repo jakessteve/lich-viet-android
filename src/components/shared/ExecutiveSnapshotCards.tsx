@@ -49,43 +49,43 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
       {/* 3 Executive Cards Grid */}
       <div className="grid gap-3 sm:grid-cols-3">
         {/* 1. Core Trait Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-950/20 dark:border-emerald-500/30 p-4 transition-all duration-200 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10">
-          <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 font-bold text-xs uppercase tracking-wider">
-            <span className="material-icons-round text-base">military_tech</span>
-            Bản Sắc Cốt Lõi
+        <div className="group relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-950/20 dark:border-emerald-500/30 p-4 transition-all duration-200 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 min-w-0 flex flex-col justify-start">
+          <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 font-bold text-xs uppercase tracking-wider min-w-0">
+            <span className="material-icons-round text-base shrink-0">military_tech</span>
+            <span className="truncate">Bản Sắc Cốt Lõi</span>
           </div>
-          <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug">
+          <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug break-words min-w-0">
             {superpowerTitle}
           </h4>
-          <p className="mt-1.5 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+          <p className="mt-1.5 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark break-words min-w-0">
             {superpowerDesc}
           </p>
         </div>
 
         {/* 2. Caution & Growth Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-950/20 dark:border-rose-500/30 p-4 transition-all duration-200 hover:border-rose-500/50 hover:shadow-lg hover:shadow-rose-500/10">
-          <div className="flex items-center gap-2 text-rose-700 dark:text-rose-300 font-bold text-xs uppercase tracking-wider">
-            <span className="material-icons-round text-base">bolt</span>
-            Điểm Cần Lưu Tâm & Hóa Giải
+        <div className="group relative overflow-hidden rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-950/20 dark:border-rose-500/30 p-4 transition-all duration-200 hover:border-rose-500/50 hover:shadow-lg hover:shadow-rose-500/10 min-w-0 flex flex-col justify-start">
+          <div className="flex items-center gap-2 text-rose-700 dark:text-rose-300 font-bold text-xs uppercase tracking-wider min-w-0">
+            <span className="material-icons-round text-base shrink-0">bolt</span>
+            <span className="truncate">Điểm Cần Lưu Tâm & Hóa Giải</span>
           </div>
-          <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug">
+          <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug break-words min-w-0">
             {knotTitle}
           </h4>
-          <p className="mt-1.5 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+          <p className="mt-1.5 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark break-words min-w-0">
             {knotDesc}
           </p>
         </div>
 
         {/* 3. 2026 Actionable Direction Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-sky-500/30 bg-sky-500/5 dark:bg-sky-950/20 dark:border-sky-500/30 p-4 transition-all duration-200 hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10">
-          <div className="flex items-center gap-2 text-sky-700 dark:text-sky-300 font-bold text-xs uppercase tracking-wider">
-            <span className="material-icons-round text-base">explore</span>
-            Định Hướng Trọng Tâm 2026
+        <div className="group relative overflow-hidden rounded-2xl border border-sky-500/30 bg-sky-500/5 dark:bg-sky-950/20 dark:border-sky-500/30 p-4 transition-all duration-200 hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10 min-w-0 flex flex-col justify-start">
+          <div className="flex items-center gap-2 text-sky-700 dark:text-sky-300 font-bold text-xs uppercase tracking-wider min-w-0">
+            <span className="material-icons-round text-base shrink-0">explore</span>
+            <span className="truncate">Định Hướng Trọng Tâm 2026</span>
           </div>
-          <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug">
+          <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug break-words min-w-0">
             {year2026CompassTitle}
           </h4>
-          <p className="mt-1.5 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
+          <p className="mt-1.5 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark break-words min-w-0">
             {year2026CompassDesc}
           </p>
         </div>

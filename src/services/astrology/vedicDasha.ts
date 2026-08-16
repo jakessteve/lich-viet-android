@@ -1,4 +1,5 @@
 import { computeVimshottariDasha } from '@omce/core-logic';
+import { calculateAntardashaPeriods, type AntardashaPeriod } from './gocharAnalysis';
 
 export interface DashaPeriod {
   lord: string;
@@ -11,6 +12,7 @@ export interface DashaPeriod {
   isCurrent: boolean;
   ageRange: string;
   descriptionVi: string;
+  antardashas?: AntardashaPeriod[];
 }
 
 export interface VimshottariDashaResult {
@@ -100,6 +102,8 @@ export function calculateVedicDashaTimeline(
       const startAge = Math.max(0, Math.round(sYear - birthYear));
       const endAge = Math.round(eYear - birthYear);
 
+      const antardashas = calculateAntardashaPeriods(d.lord, sYear, d.duration, birthYear, currentYear);
+
       return {
         lord: d.lord,
         lordVi: meta.nameVi,
@@ -111,6 +115,7 @@ export function calculateVedicDashaTimeline(
         isCurrent,
         ageRange: `${startAge} - ${endAge} tuổi`,
         descriptionVi: meta.descVi,
+        antardashas,
       };
     },
   );

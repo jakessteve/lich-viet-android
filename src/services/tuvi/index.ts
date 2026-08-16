@@ -108,6 +108,9 @@ export { interpretPalace } from './palaceInterpretation';
 // ── Đại Hạn Interpretation ─────────────────────────────────────
 export { interpretDaiHan, getAllDaiHanInterpretations, getCurrentDaiHan } from './daiHanInterpretation';
 
+// ── Tiểu Hạn & Nguyệt Hạn Interpretation ───────────────────────
+export { interpretTieuHan, interpretNguyetHan, getYearCanChi } from './tieuHanInterpretation';
+
 // ── Flying Stars & Classification (Phase 4) ────────────────────
 export { calculateFlyingStars } from './flyingStars';
 export { classifyTuViChart } from './chartClassification';
@@ -120,6 +123,7 @@ export {
   formatPalacesAsMarkdown,
   formatPositionalSemanticsAsMarkdown,
   formatHanContextAsMarkdown,
+  formatTieuHanAsMarkdown,
   formatCombinationsAsMarkdown,
   formatFlyingStarsAsMarkdown,
   generatePromptHeader,

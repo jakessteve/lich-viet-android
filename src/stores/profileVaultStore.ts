@@ -50,14 +50,14 @@ interface ProfileVaultState {
 
   // Actions
   setActiveProfile: (profile: Partial<ActiveBirthProfile>) => void;
-  loadSavedProfiles: () => Promise<void>;
+  loadSavedProfiles: (options?: { autoSelectFirst?: boolean }) => Promise<void>;
   saveCurrentAsProfile: (name: string) => Promise<VaultProfile>;
   selectSavedProfile: (profile: VaultProfile) => void;
   removeSavedProfile: (id: string) => Promise<void>;
 }
 
 export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
-  activeProfile: DEFAULT_PROFILE,
+  activeProfile: { ...DEFAULT_PROFILE },
   savedProfiles: [],
   isLoading: false,
 
@@ -74,12 +74,12 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
     }));
   },
 
-  loadSavedProfiles: async () => {
+  loadSavedProfiles: async (options = { autoSelectFirst: false }) => {
     set({ isLoading: true });
     try {
       const profiles = await getAllVaultProfiles();
       set({ savedProfiles: profiles, isLoading: false });
-      if (profiles.length > 0 && !get().activeProfile.id) {
+      if (options.autoSelectFirst && profiles.length > 0 && !get().activeProfile.id) {
         const first = profiles[0];
         set({
           activeProfile: {
@@ -100,15 +100,18 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
 
   saveCurrentAsProfile: async (name: string) => {
     const current = get().activeProfile;
+    const sanitizedName = (name || '').trim() || current.name || 'Bản Thân';
+
     const saved = await saveVaultProfile({
-      name,
+      name: sanitizedName,
       solarDate: current.solarDate,
       birthHour: current.birthHour,
       birthMinute: current.birthMinute,
       gender: current.gender,
       birthplace: current.birthplace,
     });
-    await get().loadSavedProfiles();
+
+    // Atomic update: set the saved profile directly as active BEFORE reloading list
     set((state) => ({
       activeProfile: {
         ...state.activeProfile,
@@ -116,6 +119,9 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
         name: saved.name,
       },
     }));
+
+    // Reload list without clobbering the active profile
+    await get().loadSavedProfiles({ autoSelectFirst: false });
     return saved;
   },
 
@@ -135,6 +141,32 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
 
   removeSavedProfile: async (id: string) => {
     await deleteVaultProfile(id);
-    await get().loadSavedProfiles();
+    const profiles = await getAllVaultProfiles();
+    const currentActiveId = get().activeProfile.id;
+
+    if (currentActiveId === id) {
+      if (profiles.length > 0) {
+        const fallback = profiles[0];
+        set({
+          savedProfiles: profiles,
+          activeProfile: {
+            id: fallback.id,
+            name: fallback.name,
+            solarDate: fallback.solarDate,
+            birthHour: fallback.birthHour,
+            birthMinute: fallback.birthMinute ?? 0,
+            gender: fallback.gender,
+            birthplace: fallback.birthplace ?? DEFAULT_PROFILE.birthplace,
+          },
+        });
+      } else {
+        set({
+          savedProfiles: [],
+          activeProfile: { ...DEFAULT_PROFILE },
+        });
+      }
+    } else {
+      set({ savedProfiles: profiles });
+    }
   },
 }));

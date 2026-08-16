@@ -19,6 +19,7 @@ import { classifyTuViChart } from './chartClassification';
 import { calculateHanContext } from './starPlacement';
 import { getAllDaiHanInterpretations, getCurrentDaiHan } from './daiHanInterpretation';
 import { detectPositionalSemantics } from './combinationDetection';
+import { interpretTieuHan, interpretNguyetHan } from './tieuHanInterpretation';
 
 function escapeMarkdown(text: string): string {
   return text.replace(/\|/g, '\\|');
@@ -239,6 +240,59 @@ export function formatHanContextAsMarkdown(chart: TuViChart, customHan?: TuViHan
     }
   }
 
+  // 4. Detailed Tiểu Hạn (Annual Horizon) Deep Dive
+  const tieuHanResult = interpretTieuHan(chart, han.viewYear);
+  lines.push(`\n### Luận Giải Chi Tiết Tiểu Hạn Năm ${tieuHanResult.viewYear} (${tieuHanResult.yearCan} ${tieuHanResult.yearChi})`);
+  lines.push(`- **Tiêu đề tổng quan**: ${tieuHanResult.themeHeadlineVi}`);
+  lines.push(`- **Cung tọa thủ**: Cung ${tieuHanResult.tieuHanPalaceName} (${tieuHanResult.tieuHanPalaceChi}) · Đánh giá: **${tieuHanResult.luckTier}** (${tieuHanResult.overallScore}/10)`);
+  lines.push(`- **Tương quan Đại Hạn**: ${tieuHanResult.daiHanResonance.titleVi} (${tieuHanResult.daiHanResonance.descriptionVi})`);
+  lines.push(`- **Lưu Tứ Hóa Can ${tieuHanResult.luuTuHoa.canYear}**: Hóa Lộc (${tieuHanResult.luuTuHoa.hoaLoc}), Hóa Quyền (${tieuHanResult.luuTuHoa.hoaQuyen}), Hóa Khoa (${tieuHanResult.luuTuHoa.hoaKhoa}), Hóa Kỵ (${tieuHanResult.luuTuHoa.hoaKy})`);
+  
+  if (tieuHanResult.collisions.length > 0) {
+    lines.push(`- **Tương tác Tứ Hóa nổi bật**:`);
+    for (const c of tieuHanResult.collisions) {
+      lines.push(`  - **${c.titleVi}**: ${c.descriptionVi}`);
+    }
+  }
+
+  lines.push(`- **Bối cảnh & Vận thế**: ${tieuHanResult.detailedSynthesis.generalVibe}`);
+  lines.push(`- **Sự nghiệp & Tài lộc**: ${tieuHanResult.detailedSynthesis.careerAndFinance}`);
+  lines.push(`- **Tình cảm & Sức khỏe**: ${tieuHanResult.detailedSynthesis.relationshipAndHealth}`);
+  lines.push(`- **Lời khuyên hành động**: ${tieuHanResult.detailedSynthesis.actionableAdvice}`);
+
+  if (tieuHanResult.keyWarnings.length > 0) {
+    lines.push(`- **Lưu ý phòng ngừa**: ${tieuHanResult.keyWarnings.join('; ')}`);
+  }
+
+  // 5. Nguyệt Hạn Current Month
+  const nguyetHanResult = interpretNguyetHan(chart, han.viewYear, han.viewMonth);
+  lines.push(`\n### Nguyệt Hạn Tháng ${han.viewMonth} (Cung ${nguyetHanResult.palaceName})`);
+  lines.push(`- **Mức độ**: **${nguyetHanResult.luckTier}** (${nguyetHanResult.monthScore}/10) · **Trọng tâm**: ${nguyetHanResult.focusThemeVi}`);
+  lines.push(`- **Luận giải**: ${nguyetHanResult.summaryVi} ${nguyetHanResult.adviceVi}`);
+
+  return lines.join('\n');
+}
+
+/**
+ * Formats dedicated Tiểu Hạn analysis as Markdown.
+ */
+export function formatTieuHanAsMarkdown(chart: TuViChart, targetYear?: number): string {
+  const result = interpretTieuHan(chart, targetYear);
+  const lines: string[] = [`## Luận Giải Tiểu Hạn Năm ${result.viewYear} (${result.yearCan} ${result.yearChi})`];
+  lines.push(`- **Tổng quan**: ${result.themeHeadlineVi}`);
+  lines.push(`- **Mức độ vận thế**: **${result.luckTier}** (${result.overallScore}/10)`);
+  lines.push(`- **Cung tọa thủ**: Cung ${result.tieuHanPalaceName} [${result.tieuHanPalaceChi}]`);
+  lines.push(`- **Cộng hưởng Đại Hạn**: ${result.daiHanResonance.titleVi}`);
+  lines.push(`\n### Đánh Giá Tam Tài`);
+  lines.push(`- Thiên Thời (${result.tamTai.thienThoi.level}): ${result.tamTai.thienThoi.desc}`);
+  lines.push(`- Địa Lợi (${result.tamTai.diaLoi.level}): ${result.tamTai.diaLoi.desc}`);
+  lines.push(`- Nhân Hòa (${result.tamTai.nhanHoa.level}): ${result.tamTai.nhanHoa.desc}`);
+  lines.push(`- Khí Lực (${result.tamTai.khiLuc.stage}): ${result.tamTai.khiLuc.desc}`);
+  lines.push(`\n### Luận Giải Chi Tiết`);
+  lines.push(`- **Vận trình**: ${result.detailedSynthesis.generalVibe}`);
+  lines.push(`- **Tài chính & Sự nghiệp**: ${result.detailedSynthesis.careerAndFinance}`);
+  lines.push(`- **Tình cảm & Sức khỏe**: ${result.detailedSynthesis.relationshipAndHealth}`);
+  lines.push(`- **Chiến lược hành động**: ${result.detailedSynthesis.actionableAdvice}`);
   return lines.join('\n');
 }
 

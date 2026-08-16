@@ -7,7 +7,7 @@ import { TuViInputForm } from './TuViInputForm';
 import { TuViChart } from './TuViChart';
 import { TuViSummaryPanel } from './TuViSummaryPanel';
 import { TuViMarkdownExport } from './TuViMarkdownExport';
-import { IconButton, type SegmentedOption } from '../shared';
+import { IconButton, SegmentedControl, type SegmentedOption } from '../shared';
 import { TuViPalaceInlineDetail } from './TuViPalaceInlineDetail';
 import { ExecutiveSnapshotCards } from '../shared/ExecutiveSnapshotCards';
 import { interpretPalace } from '@/services/tuvi/palaceInterpretation';
@@ -21,6 +21,11 @@ const SCHOOL_OPTIONS: readonly SegmentedOption<TuViSchool>[] = [
   { id: 'thien-luong', label: 'Thiên Lương', icon: 'auto_awesome' },
   { id: 'bac-phai', label: 'Bắc phái', icon: 'north' },
   { id: 'phi-tinh', label: 'Phi Tinh', icon: 'hub' },
+];
+
+const TUVI_VIEW_MODES: readonly SegmentedOption<'simple' | 'advanced'>[] = [
+  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản', icon: 'menu_book' },
+  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu', icon: 'psychology' },
 ];
 
 export const TuViPage: React.FC = () => {
@@ -37,6 +42,8 @@ export const TuViPage: React.FC = () => {
     clearError,
     input,
     setSchool,
+    interpretationMode,
+    setInterpretationMode,
   } = useTuViStore(
     useShallow((state) => ({
       chart: state.chart,
@@ -49,6 +56,8 @@ export const TuViPage: React.FC = () => {
       clearError: state.clearError,
       input: state.input,
       setSchool: state.setSchool,
+      interpretationMode: state.interpretationMode,
+      setInterpretationMode: state.setInterpretationMode,
     })),
   );
   const now = getDatePartsInTimeZone(new Date(), VIETNAM_TIME_ZONE);
@@ -275,18 +284,40 @@ export const TuViPage: React.FC = () => {
         </div>
       )}
 
+      {chart && (
+        <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-light/40 dark:border-border-dark/40">
+          <div>
+            <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+              Luận Giải Lá Số Tử Vi
+            </h4>
+            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+              Chọn mức độ chi tiết phù hợp với nhu cầu tra cứu.
+            </p>
+          </div>
+          <SegmentedControl
+            options={TUVI_VIEW_MODES}
+            value={interpretationMode}
+            onChange={setInterpretationMode}
+            ariaLabel="Chế độ xem luận giải Tử Vi"
+            tone="gold"
+            className="w-full sm:w-auto"
+          />
+        </div>
+      )}
+
       {/* Hybrid Palace Detail (Inline when fit, Compact HUD when zoomed) */}
       {activePalaceInterpretation && (
         <TuViPalaceInlineDetail
           interpretation={activePalaceInterpretation}
           onClose={() => selectPalace(null as unknown as number)}
           isZoomed={isChartZoomed}
+          mode={interpretationMode}
         />
       )}
 
       {chart && <TuViMarkdownExport />}
 
-      {chart && <TuViSummaryPanel chart={chart} />}
+      {chart && <TuViSummaryPanel chart={chart} mode={interpretationMode} onModeChange={setInterpretationMode} />}
 
       {chart && (
         <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm">

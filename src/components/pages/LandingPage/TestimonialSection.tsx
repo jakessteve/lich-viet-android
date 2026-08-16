@@ -66,7 +66,7 @@ const TestimonialSection: React.FC = () => {
           {TESTIMONIALS.map((t, i) => (
             <div
               key={i}
-              className={`glass-card-strong p-6 sm:p-8 text-center transition-all duration-500 absolute inset-0 flex flex-col justify-center items-center ${
+              className={`glass-card-strong p-6 sm:p-8 text-center transition-[opacity,transform] duration-300 ease-out absolute inset-0 flex flex-col justify-center items-center ${
                 i === active
                   ? 'opacity-100 translate-y-0 pointer-events-auto z-10'
                   : 'opacity-0 translate-y-2 pointer-events-none z-0'

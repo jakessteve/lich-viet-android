@@ -6,8 +6,10 @@ import { VedicDiamondChart } from './VedicDiamondChart';
 import { VedicTechnicalTables } from './VedicTechnicalTables';
 import { VimshottariDashaTimeline } from './VimshottariDashaTimeline';
 import { VedicYogasCard } from './VedicYogasCard';
+import { VedicGocharCard } from './VedicGocharCard';
 import { calculateVedicDashaTimeline } from '../../../services/astrology/vedicDasha';
 import { detectVedicYogasAndDoshas } from '../../../services/astrology/vedicYogas';
+import { calculateVedicGochar } from '../../../services/astrology/gocharAnalysis';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { useShallow } from 'zustand/react/shallow';
 import { SegmentedControl, type SegmentedOption } from '../../shared';
@@ -121,6 +123,10 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
     return detectVedicYogasAndDoshas(positions, result.ascendant);
   }, [result]);
 
+  const gocharReport = useMemo(() => {
+    return calculateVedicGochar(vedicInput);
+  }, [vedicInput]);
+
   const ascSignIndex = Math.floor((((result.ascendant % 360) + 360) % 360) / 30);
   const ascDeg = Math.floor(result.ascendant % 30);
   const ascMin = Math.floor(((result.ascendant % 30) - ascDeg) * 60);
@@ -200,7 +206,8 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       {/* MODE 1: Cơ bản (Simple) */}
       {viewMode === 'simple' && (
         <div className="space-y-5 animate-fade-in">
-          <VedicInterpretationPanel result={result} />
+          {gocharReport && <VedicGocharCard gochar={gocharReport} />}
+          <VedicInterpretationPanel result={result} mode="simple" />
           {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas.slice(0, 3)} />}
           {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
         </div>
@@ -209,11 +216,10 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       {/* MODE 2: Chuyên sâu (Advanced & Technical) */}
       {viewMode === 'advanced' && (
         <div className="space-y-5 animate-fade-in">
+          {gocharReport && <VedicGocharCard gochar={gocharReport} />}
           {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
-
           {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas} />}
-
-          <VedicInterpretationPanel result={result} />
+          <VedicInterpretationPanel result={result} mode="advanced" />
 
           {/* Sidereal Planets Table */}
           <div className="glass-card overflow-hidden">

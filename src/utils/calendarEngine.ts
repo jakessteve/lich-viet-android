@@ -336,64 +336,97 @@ function isSameDay(d1: Date, d2: Date): boolean {
   return d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth() && d1.getDate() === d2.getDate();
 }
 
+interface StaticDayCellData {
+  solarDate: number;
+  lunarDate: string | number;
+  dayQuality: DayQuality;
+  fullDate: Date;
+  isCurrentMonth: boolean;
+  dayChi: Chi;
+}
+
+const MONTH_GRID_BASE_CACHE = new Map<string, StaticDayCellData[]>();
+const MONTH_GRID_BASE_CACHE_LIMIT = 48;
+
+function getBaseMonthDays(year: number, month: number, location?: SwissGeoLocation): StaticDayCellData[] {
+  const cacheKey = `${year}-${month}:${locationCacheKey(location)}:${getSwissEphemerisInstance() ? 'swiss' : 'fallback'}`;
+  const cached = MONTH_GRID_BASE_CACHE.get(cacheKey);
+  if (cached) return cached;
+
+  const firstDayOfMonth = new Date(year, month, 1);
+  const lastDayOfMonth = new Date(year, month + 1, 0);
+
+  const days: StaticDayCellData[] = [];
+
+  let firstDayOfWeek = firstDayOfMonth.getDay();
+  firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
+  const prevMonthLastDay = new Date(year, month, 0).getDate();
+
+  for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+    const d = new Date(year, month - 1, prevMonthLastDay - i);
+    const lunar = getLunarDate(d, location);
+    const jd = getJDN(d.getDate(), d.getMonth() + 1, d.getFullYear());
+    const chi = CHI[dayBranchIndex(jd)] as Chi;
+    days.push({
+      solarDate: d.getDate(),
+      lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
+      dayQuality: getDayQuality(d, location),
+      fullDate: d,
+      isCurrentMonth: false,
+      dayChi: chi,
+    });
+  }
+
+  for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
+    const d = new Date(year, month, i);
+    const lunar = getLunarDate(d, location);
+    const jd = getJDN(i, month + 1, year);
+    const chi = CHI[dayBranchIndex(jd)] as Chi;
+    days.push({
+      solarDate: i,
+      lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
+      dayQuality: getDayQuality(d, location),
+      fullDate: d,
+      isCurrentMonth: true,
+      dayChi: chi,
+    });
+  }
+
+  const remaining = CALENDAR_GRID_CELLS - days.length;
+  for (let i = 1; i <= remaining; i++) {
+    const d = new Date(year, month + 1, i);
+    const lunar = getLunarDate(d, location);
+    const jd = getJDN(d.getDate(), d.getMonth() + 1, d.getFullYear());
+    const chi = CHI[dayBranchIndex(jd)] as Chi;
+    days.push({
+      solarDate: i,
+      lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
+      dayQuality: getDayQuality(d, location),
+      fullDate: d,
+      isCurrentMonth: false,
+      dayChi: chi,
+    });
+  }
+
+  if (MONTH_GRID_BASE_CACHE.size >= MONTH_GRID_BASE_CACHE_LIMIT) {
+    const oldestKey = MONTH_GRID_BASE_CACHE.keys().next().value;
+    if (oldestKey) MONTH_GRID_BASE_CACHE.delete(oldestKey);
+  }
+  MONTH_GRID_BASE_CACHE.set(cacheKey, days);
+  return days;
+}
+
 export function getMonthDays(year: number, month: number, location?: SwissGeoLocation): DayCellData[] {
   return measureSync(
     'calendar_month_grid_compute',
     () => {
-      const firstDayOfMonth = new Date(year, month, 1);
-      const lastDayOfMonth = new Date(year, month + 1, 0);
       const today = location ? getCivilDateForOffset(new Date(), location.timezoneOffsetHours) : new Date();
+      const baseDays = getBaseMonthDays(year, month, location);
 
-      const days: DayCellData[] = [];
-
-      let firstDayOfWeek = firstDayOfMonth.getDay();
-      firstDayOfWeek = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-      const prevMonthLastDay = new Date(year, month, 0).getDate();
-
-      for (let i = firstDayOfWeek - 1; i >= 0; i--) {
-        const d = new Date(year, month - 1, prevMonthLastDay - i);
-        const lunar = getLunarDate(d, location);
-        days.push({
-          solarDate: d.getDate(),
-          lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
-          dayQuality: getDayQuality(d, location),
-          fullDate: d,
-          isCurrentMonth: false,
-          isToday: isSameDay(d, today),
-          dayChi: getCanChiDay(d).split(' ')[1] as Chi,
-        });
-      }
-
-      for (let i = 1; i <= lastDayOfMonth.getDate(); i++) {
-        const d = new Date(year, month, i);
-        const lunar = getLunarDate(d, location);
-        days.push({
-          solarDate: i,
-          lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
-          dayQuality: getDayQuality(d, location),
-          fullDate: d,
-          isCurrentMonth: true,
-          isToday: isSameDay(d, today),
-          dayChi: getCanChiDay(d).split(' ')[1] as Chi,
-        });
-      }
-
-      const remaining = CALENDAR_GRID_CELLS - days.length;
-      for (let i = 1; i <= remaining; i++) {
-        const d = new Date(year, month + 1, i);
-        const lunar = getLunarDate(d, location);
-        days.push({
-          solarDate: i,
-          lunarDate: lunar.day === 1 ? `${lunar.day}/${lunar.month}` : lunar.day,
-          dayQuality: getDayQuality(d, location),
-          fullDate: d,
-          isCurrentMonth: false,
-          isToday: isSameDay(d, today),
-          dayChi: getCanChiDay(d).split(' ')[1] as Chi,
-        });
-      }
-
-      return days;
+      return baseDays.map((cell) => ({
+        ...cell,
+        isToday: isSameDay(cell.fullDate, today),
+      }));
     },
     { year, month },
   );

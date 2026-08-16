@@ -36,6 +36,7 @@ export default function HeroAuspiciousArt() {
       style={{
         maskImage: 'radial-gradient(circle at 50% 50%, black 80%, rgba(0,0,0,0.5) 94%, transparent 100%)',
         WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 80%, rgba(0,0,0,0.5) 94%, transparent 100%)',
+        contain: 'strict',
       }}
     >
       {/* Main Celestial Board with native GPU-accelerated SVG */}
@@ -44,7 +45,8 @@ export default function HeroAuspiciousArt() {
         viewBox="0 0 800 800"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        style={{ willChange: 'transform', transform: 'translate3d(0,0,0)' }}
+        shapeRendering="geometricPrecision"
+        style={{ willChange: 'transform', transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}
       >
         <defs>
           <linearGradient id={goldGradId} x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">

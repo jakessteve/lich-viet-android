@@ -582,7 +582,7 @@ export default function SettingsPage() {
                         {user.avatarUrl ? (
                           <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" />
                         ) : (
-                          <span className="text-lg font-bold text-mystery-purple dark:text-mystery-purple-light">
+                          <span className="text-lg font-bold text-center leading-none select-none text-mystery-purple dark:text-mystery-purple-light">
                             {user.displayName.charAt(0).toUpperCase()}
                           </span>
                         )}
@@ -875,7 +875,7 @@ export default function SettingsPage() {
                       {user.avatarUrl ? (
                         <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" />
                       ) : (
-                        <span className="text-lg font-bold text-mystery-purple dark:text-mystery-purple-light">
+                        <span className="text-lg font-bold text-center leading-none select-none text-mystery-purple dark:text-mystery-purple-light">
                           {user.displayName.charAt(0).toUpperCase()}
                         </span>
                       )}
@@ -901,8 +901,8 @@ export default function SettingsPage() {
                   </>
                 ) : (
                   <>
-                    <div className="w-12 h-12 mx-auto mb-2.5 rounded-full bg-gray-100 dark:bg-white/6 flex items-center justify-center">
-                      <span className="material-icons-round text-xl text-gray-400 dark:text-gray-500">person</span>
+                    <div className="w-12 h-12 mx-auto mb-2.5 rounded-full bg-gray-100 dark:bg-white/6 flex items-center justify-center text-center select-none">
+                      <span className="material-icons-round text-xl text-gray-400 dark:text-gray-500 leading-none">person</span>
                     </div>
                     <p className="text-sm font-semibold mb-0.5">Khách</p>
                     <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mb-4">

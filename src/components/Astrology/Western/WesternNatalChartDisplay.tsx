@@ -126,7 +126,6 @@ export const WesternNatalChartDisplay: React.FC = () => {
           <div data-western-chart-stage className="aspect-square origin-top-left" style={{ width: `${zoom * 100}%` }}>
             <div
               data-western-natal-chart
-              data-western-chart-export
               className="h-full w-full [&>svg]:block [&>svg]:h-auto [&>svg]:w-full [&>svg]:max-w-none"
               dangerouslySetInnerHTML={{ __html: svg }}
             />

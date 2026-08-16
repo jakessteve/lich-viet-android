@@ -57,7 +57,7 @@ export default function UserMenu({ showFontSizeControl = false, onOpenHelp, onOp
               <div>
                 <div className="flex items-center gap-2.5">
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-mystery-purple/20 to-mystery-blue/20 dark:from-mystery-purple/25 dark:to-mystery-blue/15">
-                    <span className="text-xs font-bold text-mystery-purple dark:text-mystery-purple-light">
+                    <span className="text-xs font-bold text-center leading-none select-none text-mystery-purple dark:text-mystery-purple-light">
                       {user.displayName.charAt(0).toUpperCase()}
                     </span>
                   </div>

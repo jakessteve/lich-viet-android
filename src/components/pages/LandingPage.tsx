@@ -101,7 +101,7 @@ export default function LandingPage() {
         aria-hidden="true"
       >
         <div
-          className="absolute inset-0 opacity-[0.35] dark:opacity-[0.16] transition-opacity duration-300 ease-out"
+          className="absolute inset-0 opacity-[0.35] dark:opacity-[0.16]"
           style={{
             backgroundImage: `
               radial-gradient(circle at 20% 30%, rgba(212,168,67,0.35) 1px, transparent 1px),
@@ -115,7 +115,7 @@ export default function LandingPage() {
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
-              className="absolute rounded-full border border-gold/10 dark:border-gold-dark/10 transition-colors duration-300 ease-out"
+              className="absolute rounded-full border border-gold/10 dark:border-gold-dark/10"
               style={{
                 width: `${420 + i * 220}px`,
                 height: `${420 + i * 220}px`,
@@ -144,7 +144,7 @@ export default function LandingPage() {
         </div>
 
         {/* Auspicious Art Background */}
-        <div className="absolute top-6 right-[-55%] h-[520px] w-[520px] opacity-[0.22] dark:opacity-[0.24] pointer-events-none z-[1] sm:top-0 sm:right-[-20%] sm:h-[720px] sm:w-[720px] sm:opacity-[0.6] md:right-[-10%] lg:right-[0%] lg:h-[900px] lg:w-[900px] lg:opacity-[0.8] lg:dark:opacity-[0.7] transition-opacity duration-300 ease-out">
+        <div className="absolute top-6 right-[-55%] h-[520px] w-[520px] opacity-[0.22] dark:opacity-[0.24] pointer-events-none z-[1] sm:top-0 sm:right-[-20%] sm:h-[720px] sm:w-[720px] sm:opacity-[0.6] md:right-[-10%] lg:right-[0%] lg:h-[900px] lg:w-[900px] lg:opacity-[0.8] lg:dark:opacity-[0.7]">
           <HeroAuspiciousArt />
         </div>
 
@@ -323,14 +323,14 @@ export default function LandingPage() {
               <button
                 key={f.id}
                 onClick={() => navigate(`/app/${f.id}`)}
-                className="surface-interactive group relative w-full h-full flex flex-col justify-start items-start text-left p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright transition-colors duration-500"
+                className="surface-interactive group relative w-full h-full flex flex-col justify-start items-start text-left p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright"
               >
                 <div
-                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${f.glowColor} dark:opacity-100 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none`}
+                  className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${f.glowColor} dark:opacity-100 opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none`}
                 />
                 <div className="relative flex items-start gap-3">
                   <div
-                    className={`w-10 h-10 rounded-xl ${f.iconBg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}
+                    className={`w-10 h-10 rounded-xl ${f.iconBg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-200`}
                   >
                     <span className={`material-icons-round text-lg ${f.iconColor}`}>{f.icon}</span>
                   </div>
@@ -366,10 +366,10 @@ export default function LandingPage() {
               {TRUST_VALUES.map((v) => (
                 <div
                   key={v.title}
-                  className="surface-interactive group p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright transition-colors duration-500"
+                  className="surface-interactive group p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright"
                 >
                   <div
-                    className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${v.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-500`}
+                    className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${v.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}
                   >
                     <span className={`material-icons-round text-xl ${v.iconColor}`}>{v.icon}</span>
                   </div>

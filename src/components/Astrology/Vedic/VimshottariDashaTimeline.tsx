@@ -103,6 +103,53 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
           <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
             {selectedPeriod.descriptionVi}
           </p>
+
+          {/* ── 9 Antardasha (Bhukti) Sub-Periods ─────────────────── */}
+          {selectedPeriod.antardashas && selectedPeriod.antardashas.length > 0 && (
+            <div className="space-y-2 pt-2 border-t border-purple-500/20">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
+                  <span className="material-icons-round text-sm text-purple-600 dark:text-purple-400">tune</span>
+                  9 Phân Kỳ Tiểu Vận (Antardasha / Bhukti)
+                </span>
+                <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">
+                  Tiến trình chi tiết
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {selectedPeriod.antardashas.map((sub, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-2.5 rounded-xl border text-xs space-y-1 transition-all ${
+                      sub.isCurrent
+                        ? 'border-purple-500 bg-purple-500/15 dark:bg-purple-900/30 shadow-sm ring-1 ring-purple-500'
+                        : 'border-border-light/40 bg-surface-container-lowest/60 dark:border-border-dark/40'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1">
+                        <span style={{ color: sub.color }}>{sub.symbol}</span>
+                        {sub.subLordVi.split(' ')[0]}
+                      </span>
+                      {sub.isCurrent && (
+                        <span className="rounded bg-purple-500 text-white text-micro font-bold px-1.5 py-0.2">
+                          Hiện tại
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark flex items-center justify-between">
+                      <span>{sub.startYear} – {sub.endYear}</span>
+                      <span>({sub.durationMonths} thg)</span>
+                    </div>
+                    <p className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark leading-tight pt-0.5">
+                      {sub.descriptionVi}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

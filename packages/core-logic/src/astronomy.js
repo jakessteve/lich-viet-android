@@ -230,16 +230,54 @@ export function computeJulianCentury(julianDay) {
 }
 
 
+// Static flattened term tables: [coefficient, D, M, M_prime, F] packed sequentially.
+// Zero GC allocations inside high-frequency ephemeris loops.
+const LON_TERMS_FLAT = new Int16Array([
+  22640,0,0,1,0, -4586,2,0,-1,0, 2370,2,0,0,0, 769,0,0,2,0,
+  -668,0,1,0,0, -412,2,0,-2,0, -212,2,-1,-1,0, -206,2,0,1,0,
+  212,2,1,-1,0, -165,0,0,1,-2, -125,1,0,0,0, -110,0,1,1,0,
+  148,0,-1,1,0, -55,2,0,0,-2, -45,2,0,-3,0, 40,0,0,3,0,
+  -38,2,1,0,0, 28,0,-1,2,0, -24,0,1,-1,0, 24,2,-1,0,0,
+  18,0,-1,0,0, 15,2,0,2,0, 15,4,0,-1,0, -14,0,2,0,0,
+  14,2,0,-1,-2, -14,0,0,2,-2, -11,4,0,-2,0, 11,2,1,-2,0,
+  -9,2,-1,-2,0, -8,2,-1,1,0, 7,0,1,2,0, -7,2,2,-1,0,
+  -7,2,-2,0,0, 6,4,0,0,0, 6,2,0,1,-2, 6,2,-1,0,-2,
+  -6,4,0,-2,0, 5,2,0,3,0, -5,0,0,-1,2, -5,2,1,1,0,
+  4,0,-2,1,0, 4,2,0,0,2, 4,0,1,0,-2, -4,2,-1,-1,-2,
+  -4,2,1,-1,-2, -4,0,-1,1,-2, 3,0,0,-2,2
+]);
+const LON_TERMS_COUNT = (LON_TERMS_FLAT.length / 5) | 0;
+
+const LAT_TERMS_FLAT = new Int16Array([
+  5128,0,0,0,1, 280,0,0,1,1, 277,0,0,1,-1, 173,2,0,0,-1,
+  55,2,0,-1,1, 46,2,0,-1,-1, 32,2,0,0,1, 17,0,0,2,1,
+  15,0,0,2,-1, 9,2,0,1,-1, 7,0,-1,1,1, 7,0,-1,1,-1,
+  6,2,0,-2,-1, 5,2,0,1,1, 4,2,-1,0,-1, 4,0,1,0,1,
+  3,0,1,0,-1, 3,0,-1,0,1, 3,2,0,-2,1, 3,2,0,0,-3
+]);
+const LAT_TERMS_COUNT = (LAT_TERMS_FLAT.length / 5) | 0;
+
+const DIST_TERMS_FLAT = new Int16Array([
+  -10459,0,0,1,0, -8,2,0,-1,0, -712,2,0,0,0, -57,0,0,2,0,
+  0,0,1,0,0, -2,2,0,-2,0, -1,2,-1,-1,0, -2,2,0,1,0,
+  0,2,1,-1,0, 1,0,0,1,-2, -1,1,0,0,0, 1,0,1,1,0,
+  -1,0,-1,1,0, -1,2,0,0,-2
+]);
+const DIST_TERMS_COUNT = (DIST_TERMS_FLAT.length / 5) | 0;
+
 export function computeTrueLunarPosition(julianDay) {
   const jdTT = julianDay + computeDeltaT(julianDay) / 86400;
   const T = computeJulianCentury(jdTT);
+  const T2 = T * T;
+  const T3 = T2 * T;
+  const T4 = T3 * T;
   
   // Mean elements (Meeus Ch 47)
-  let L_prime = 218.3164477 + 481267.88123421 * T - 0.0015786 * T * T + T * T * T / 538841.0 - T * T * T * T / 65194000.0;
-  let D = 297.8501921 + 445267.1114034 * T - 0.0018819 * T * T + T * T * T / 545868.0 - T * T * T * T / 113065000.0;
-  let M = 357.5291092 + 35999.0502909 * T - 0.0001536 * T * T + T * T * T / 24490000.0;
-  let M_prime = 134.9633964 + 477198.8675055 * T + 0.0087414 * T * T + T * T * T / 69699.0 - T * T * T * T / 14712000.0;
-  let F = 93.2720950 + 483202.0175233 * T - 0.0036539 * T * T - T * T * T / 3526000.0 + T * T * T * T / 863310000.0;
+  let L_prime = 218.3164477 + 481267.88123421 * T - 0.0015786 * T2 + T3 / 538841.0 - T4 / 65194000.0;
+  let D = 297.8501921 + 445267.1114034 * T - 0.0018819 * T2 + T3 / 545868.0 - T4 / 113065000.0;
+  let M = 357.5291092 + 35999.0502909 * T - 0.0001536 * T2 + T3 / 24490000.0;
+  let M_prime = 134.9633964 + 477198.8675055 * T + 0.0087414 * T2 + T3 / 69699.0 - T4 / 14712000.0;
+  let F = 93.2720950 + 483202.0175233 * T - 0.0036539 * T2 - T3 / 3526000.0 + T4 / 863310000.0;
 
   // Normalize
   L_prime = normalizeDegrees(L_prime);
@@ -248,56 +286,56 @@ export function computeTrueLunarPosition(julianDay) {
   M_prime = normalizeDegrees(M_prime) * DEG_TO_RAD;
   F = normalizeDegrees(F) * DEG_TO_RAD;
 
-  // eccentricity parameter E
-  const E = 1 - 0.002516 * T - 0.0000074 * T * T;
+  // Eccentricity parameter E and precomputed power lookups (avoiding Math.pow in hot loop)
+  const E = 1 - 0.002516 * T - 0.0000074 * T2;
+  const E2 = E * E;
+  const E3 = E2 * E;
+  const ePowers = [1.0, E, E2, E3];
 
-  const lonTerms = [
-    [22640,0,0,1,0], [-4586,2,0,-1,0], [2370,2,0,0,0], [769,0,0,2,0],
-    [-668,0,1,0,0], [-412,2,0,-2,0], [-212,2,-1,-1,0], [-206,2,0,1,0],
-    [212,2,1,-1,0], [-165,0,0,1,-2], [-125,1,0,0,0], [-110,0,1,1,0],
-    [148,0,-1,1,0], [-55,2,0,0,-2], [-45,2,0,-3,0], [40,0,0,3,0],
-    [-38,2,1,0,0], [28,0,-1,2,0], [-24,0,1,-1,0], [24,2,-1,0,0],
-    [18,0,-1,0,0], [15,2,0,2,0], [15,4,0,-1,0], [-14,0,2,0,0],
-    [14,2,0,-1,-2], [-14,0,0,2,-2], [-11,4,0,-2,0], [11,2,1,-2,0],
-    [-9,2,-1,-2,0], [-8,2,-1,1,0], [7,0,1,2,0], [-7,2,2,-1,0],
-    [-7,2,-2,0,0], [6,4,0,0,0], [6,2,0,1,-2], [6,2,-1,0,-2],
-    [-6,4,0,-2,0], [5,2,0,3,0], [-5,0,0,-1,2], [-5,2,1,1,0],
-    [4,0,-2,1,0], [4,2,0,0,2], [4,0,1,0,-2], [-4,2,-1,-1,-2],
-    [-4,2,1,-1,-2], [-4,0,-1,1,-2], [3,0,0,-2,2]
-  ];
+  let sumLon = 0.0;
+  let sumLat = 0.0;
+  let sumDist = 0.0;
 
-  const latTerms = [
-    [5128,0,0,0,1], [280,0,0,1,1], [277,0,0,1,-1], [173,2,0,0,-1],
-    [55,2,0,-1,1], [46,2,0,-1,-1], [32,2,0,0,1], [17,0,0,2,1],
-    [15,0,0,2,-1], [9,2,0,1,-1], [7,0,-1,1,1], [7,0,-1,1,-1],
-    [6,2,0,-2,-1], [5,2,0,1,1], [4,2,-1,0,-1], [4,0,1,0,1],
-    [3,0,1,0,-1], [3,0,-1,0,1], [3,2,0,-2,1], [3,2,0,0,-3]
-  ];
-  
-  const distTerms = [
-    [-10459,0,0,1,0], [-8,2,0,-1,0], [-712,2,0,0,0], [-57,0,0,2,0],
-    [0,0,1,0,0], [-2,2,0,-2,0], [-1,2,-1,-1,0], [-2,2,0,1,0],
-    [0,2,1,-1,0], [1,0,0,1,-2], [-1,1,0,0,0], [1,0,1,1,0],
-    [-1,0,-1,1,0], [-1,2,0,0,-2]
-  ];
+  for (let i = 0; i < LON_TERMS_COUNT; i++) {
+    const idx = i * 5;
+    const coeff = LON_TERMS_FLAT[idx];
+    const dCoeff = LON_TERMS_FLAT[idx + 1];
+    const mCoeff = LON_TERMS_FLAT[idx + 2];
+    const mpCoeff = LON_TERMS_FLAT[idx + 3];
+    const fCoeff = LON_TERMS_FLAT[idx + 4];
 
-  let sumLon = 0;
-  let sumLat = 0;
-  let sumDist = 0;
-
-  for (const t of lonTerms) {
-    const mult = (t[2] !== 0) ? Math.pow(E, Math.abs(t[2])) : 1;
-    sumLon += mult * t[0] * Math.sin(t[1]*D + t[2]*M + t[3]*M_prime + t[4]*F);
+    const absM = mCoeff < 0 ? -mCoeff : mCoeff;
+    const mult = ePowers[absM] || 1.0;
+    const angle = dCoeff * D + mCoeff * M + mpCoeff * M_prime + fCoeff * F;
+    sumLon += mult * coeff * Math.sin(angle);
   }
 
-  for (const t of latTerms) {
-    const mult = (t[2] !== 0) ? Math.pow(E, Math.abs(t[2])) : 1;
-    sumLat += mult * t[0] * Math.sin(t[1]*D + t[2]*M + t[3]*M_prime + t[4]*F);
+  for (let i = 0; i < LAT_TERMS_COUNT; i++) {
+    const idx = i * 5;
+    const coeff = LAT_TERMS_FLAT[idx];
+    const dCoeff = LAT_TERMS_FLAT[idx + 1];
+    const mCoeff = LAT_TERMS_FLAT[idx + 2];
+    const mpCoeff = LAT_TERMS_FLAT[idx + 3];
+    const fCoeff = LAT_TERMS_FLAT[idx + 4];
+
+    const absM = mCoeff < 0 ? -mCoeff : mCoeff;
+    const mult = ePowers[absM] || 1.0;
+    const angle = dCoeff * D + mCoeff * M + mpCoeff * M_prime + fCoeff * F;
+    sumLat += mult * coeff * Math.sin(angle);
   }
-  
-  for (const t of distTerms) {
-    const mult = (t[2] !== 0) ? Math.pow(E, Math.abs(t[2])) : 1;
-    sumDist += mult * t[0] * Math.cos(t[1]*D + t[2]*M + t[3]*M_prime + t[4]*F);
+
+  for (let i = 0; i < DIST_TERMS_COUNT; i++) {
+    const idx = i * 5;
+    const coeff = DIST_TERMS_FLAT[idx];
+    const dCoeff = DIST_TERMS_FLAT[idx + 1];
+    const mCoeff = DIST_TERMS_FLAT[idx + 2];
+    const mpCoeff = DIST_TERMS_FLAT[idx + 3];
+    const fCoeff = DIST_TERMS_FLAT[idx + 4];
+
+    const absM = mCoeff < 0 ? -mCoeff : mCoeff;
+    const mult = ePowers[absM] || 1.0;
+    const angle = dCoeff * D + mCoeff * M + mpCoeff * M_prime + fCoeff * F;
+    sumDist += mult * coeff * Math.cos(angle);
   }
 
   // Add Venus, Jupiter, flat earth, etc corrections (A1 to A14, omitted for brevity, sum ~ 10 arcsec)

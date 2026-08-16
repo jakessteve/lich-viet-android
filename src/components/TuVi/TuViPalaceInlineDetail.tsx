@@ -14,12 +14,14 @@ interface TuViPalaceInlineDetailProps {
   interpretation: PalaceInterpretationResult | null;
   onClose: () => void;
   isZoomed?: boolean;
+  mode?: 'simple' | 'advanced';
 }
 
 export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
   interpretation,
   onClose,
   isZoomed = false,
+  mode = 'simple',
 }) => {
   const [isZoomDrawerExpanded, setIsZoomDrawerExpanded] = useState(false);
 
@@ -258,121 +260,166 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
         </button>
       </div>
 
-      {/* Blended Cách Cục Highlight if present */}
-      {cachCucAnalysisVi && (
-        <div className="rounded-2xl bg-gradient-to-r from-amber-500/10 via-gold/10 to-amber-500/10 border border-gold/40 p-4 space-y-2">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-2 flex-wrap">
+      {/* MODE 1: Cơ bản (Simple & Accessible) */}
+      {mode === 'simple' && (
+        <div className="space-y-3 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+          {/* 1. Core Essence Card */}
+          <div className="rounded-2xl bg-gold/10 border border-gold/25 p-4 space-y-1.5">
+            <div className="font-bold text-gold-light dark:text-gold-dark text-xs sm:text-sm flex items-center gap-1.5">
               <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
-              <h4 className="text-sm font-bold text-gold-light dark:text-gold-dark">
-                Cách Cục Tọa Thủ: {cachCucAnalysisVi.name}
-              </h4>
-              {allCachCuc && allCachCuc.length > 1 && (
-                <div className="flex items-center gap-1">
-                  {allCachCuc.slice(1).map((c) => (
-                    <span
-                      key={c.name}
-                      className="rounded-full bg-gold/20 px-2 py-0.5 text-[9px] font-semibold text-gold-light dark:text-gold-dark"
-                    >
-                      + {c.name}
-                    </span>
-                  ))}
-                </div>
-              )}
+              Tổng Quan & Khí Chất Cung Vị
             </div>
-            <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold-light dark:text-gold-dark">
-              {cachCucAnalysisVi.purity}
-            </span>
+            <p className="text-text-primary-light dark:text-text-primary-dark font-medium leading-relaxed">
+              {majorStarsAnalysisVi}
+            </p>
           </div>
-          <p className="text-xs font-semibold text-text-primary-light dark:text-text-primary-dark">
-            {cachCucAnalysisVi.description}
-          </p>
-          <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/30 dark:border-border-dark/30">
-            {cachCucAnalysisVi.synthesisVi}
-          </p>
+
+          {/* 2. Key Pattern or Life Theme */}
+          {cachCucAnalysisVi && (
+            <div className="rounded-2xl bg-amber-500/10 border border-gold/30 p-3.5 space-y-1">
+              <div className="font-bold text-gold-light dark:text-gold-dark text-xs sm:text-sm flex items-center gap-1.5">
+                <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
+                Đặc Điểm Nổi Bật: {cachCucAnalysisVi.name}
+              </div>
+              <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs">
+                {cachCucAnalysisVi.description}
+              </p>
+            </div>
+          )}
+
+          {/* 3. Actionable Guidance */}
+          <div className="rounded-2xl bg-info/10 border border-info/25 p-4 space-y-1.5">
+            <div className="font-bold text-info dark:text-info-dark text-xs sm:text-sm flex items-center gap-1.5">
+              <span className="indicator-pip-sm bg-info" aria-hidden="true" />
+              Lời Khuyên Thực Tiễn
+            </div>
+            <p className="text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+              {actionableGuidanceVi}
+            </p>
+          </div>
         </div>
       )}
 
-      {/* Content Grid */}
-      <div className="grid gap-3 sm:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
-        {/* 1. Chính Tinh */}
-        <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5">
-          <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
-            <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
-            Chính Tinh Tọa Thủ
-          </div>
-          <p className="text-text-secondary-light dark:text-text-secondary-dark">{majorStarsAnalysisVi}</p>
-        </div>
-
-        {/* 2. Tam Phương Tứ Chính */}
-        <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5">
-          <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
-            <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
-            Tam Phương Tứ Chính & Hội Chiếu
-          </div>
-          <p className="text-text-secondary-light dark:text-text-secondary-dark">{tamPhuongTuChinhVi}</p>
-        </div>
-
-        {/* 3. Tứ Hóa & Tuần Triệt */}
-        {(tuHoaAnalysisVi.length > 0 || tuanTrietAnalysisVi) && (
-          <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5 sm:col-span-2">
-            <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
-              <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
-              Tác Động Tứ Hóa & Biến Chuyển Thời Vận
-            </div>
-            {tuHoaAnalysisVi.map((th) => (
-              <p key={th} className="text-text-secondary-light dark:text-text-secondary-dark">
-                ✦ {th}
+      {/* MODE 2: Chuyên sâu (Advanced & Technical Classical Apparatus) */}
+      {mode === 'advanced' && (
+        <>
+          {/* Blended Cách Cục Highlight if present */}
+          {cachCucAnalysisVi && (
+            <div className="rounded-2xl bg-gradient-to-r from-amber-500/10 via-gold/10 to-amber-500/10 border border-gold/40 p-4 space-y-2">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
+                  <h4 className="text-sm font-bold text-gold-light dark:text-gold-dark">
+                    Cách Cục Tọa Thủ: {cachCucAnalysisVi.name}
+                  </h4>
+                  {allCachCuc && allCachCuc.length > 1 && (
+                    <div className="flex items-center gap-1">
+                      {allCachCuc.slice(1).map((c) => (
+                        <span
+                          key={c.name}
+                          className="rounded-full bg-gold/20 px-2 py-0.5 text-[9px] font-semibold text-gold-light dark:text-gold-dark"
+                        >
+                          + {c.name}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold-light dark:text-gold-dark">
+                  {cachCucAnalysisVi.purity}
+                </span>
+              </div>
+              <p className="text-xs font-semibold text-text-primary-light dark:text-text-primary-dark">
+                {cachCucAnalysisVi.description}
               </p>
-            ))}
-            {tuanTrietAnalysisVi && (
-              <p className="text-bad dark:text-bad-dark font-medium pt-1">🛡️ {tuanTrietAnalysisVi}</p>
-            )}
-          </div>
-        )}
-
-        {/* 4. Khí Lực Tràng Sinh & Nhị Hợp */}
-        {(interpretation.truongSinhAnalysisVi || interpretation.nhiHopAnalysisVi) && (
-          <div className="rounded-2xl bg-good/10 border border-good/25 p-3.5 space-y-1.5 sm:col-span-2">
-            <div className="font-bold text-good dark:text-good-dark text-xs flex items-center gap-1.5">
-              <span className="indicator-pip-sm bg-good" aria-hidden="true" />
-              Khí Trường Vòng Tràng Sinh & Nhị Hợp Cung Vị
-            </div>
-            {interpretation.truongSinhAnalysisVi && (
-              <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                🌱 {interpretation.truongSinhAnalysisVi}
+              <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/30 dark:border-border-dark/30">
+                {cachCucAnalysisVi.synthesisVi}
               </p>
-            )}
-            {interpretation.nhiHopAnalysisVi && (
-              <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                🔗 {interpretation.nhiHopAnalysisVi}
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* 5. Tương Tác Cung Vị Cổ Điển */}
-        {interpretation.positionalSemanticsVi && (
-          <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5 sm:col-span-2">
-            <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
-              <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
-              Tương Tác Cung Vị (Tọa, Cứ, Triều, Xung, Củng, Hiệp)
             </div>
-            <div className="space-y-1 text-text-secondary-light dark:text-text-secondary-dark whitespace-pre-line">
-              {interpretation.positionalSemanticsVi}
+          )}
+
+          {/* Content Grid */}
+          <div className="grid gap-3 sm:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+            {/* 1. Chính Tinh */}
+            <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5">
+              <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
+                <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
+                Chính Tinh Tọa Thủ
+              </div>
+              <p className="text-text-secondary-light dark:text-text-secondary-dark">{majorStarsAnalysisVi}</p>
+            </div>
+
+            {/* 2. Tam Phương Tứ Chính */}
+            <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5">
+              <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
+                <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
+                Tam Phương Tứ Chính & Hội Chiếu
+              </div>
+              <p className="text-text-secondary-light dark:text-text-secondary-dark">{tamPhuongTuChinhVi}</p>
+            </div>
+
+            {/* 3. Tứ Hóa & Tuần Triệt */}
+            {(tuHoaAnalysisVi.length > 0 || tuanTrietAnalysisVi) && (
+              <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5 sm:col-span-2">
+                <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
+                  <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
+                  Tác Động Tứ Hóa & Biến Chuyển Thời Vận
+                </div>
+                {tuHoaAnalysisVi.map((th) => (
+                  <p key={th} className="text-text-secondary-light dark:text-text-secondary-dark">
+                    ✦ {th}
+                  </p>
+                ))}
+                {tuanTrietAnalysisVi && (
+                  <p className="text-bad dark:text-bad-dark font-medium pt-1">🛡️ {tuanTrietAnalysisVi}</p>
+                )}
+              </div>
+            )}
+
+            {/* 4. Khí Lực Tràng Sinh & Nhị Hợp */}
+            {(interpretation.truongSinhAnalysisVi || interpretation.nhiHopAnalysisVi) && (
+              <div className="rounded-2xl bg-good/10 border border-good/25 p-3.5 space-y-1.5 sm:col-span-2">
+                <div className="font-bold text-good dark:text-good-dark text-xs flex items-center gap-1.5">
+                  <span className="indicator-pip-sm bg-good" aria-hidden="true" />
+                  Khí Trường Vòng Tràng Sinh & Nhị Hợp Cung Vị
+                </div>
+                {interpretation.truongSinhAnalysisVi && (
+                  <p className="text-text-secondary-light dark:text-text-secondary-dark">
+                    🌱 {interpretation.truongSinhAnalysisVi}
+                  </p>
+                )}
+                {interpretation.nhiHopAnalysisVi && (
+                  <p className="text-text-secondary-light dark:text-text-secondary-dark">
+                    🔗 {interpretation.nhiHopAnalysisVi}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* 5. Tương Tác Cung Vị Cổ Điển */}
+            {interpretation.positionalSemanticsVi && (
+              <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5 sm:col-span-2">
+                <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
+                  <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
+                  Tương Tác Cung Vị (Tọa, Cứ, Triều, Xung, Củng, Hiệp)
+                </div>
+                <div className="space-y-1 text-text-secondary-light dark:text-text-secondary-dark whitespace-pre-line">
+                  {interpretation.positionalSemanticsVi}
+                </div>
+              </div>
+            )}
+
+            {/* 6. Lời Khuyên Hành Động */}
+            <div className="rounded-2xl bg-info/10 border border-info/25 p-3.5 space-y-1.5 sm:col-span-2">
+              <div className="font-bold text-info dark:text-info-dark text-xs flex items-center gap-1.5">
+                <span className="indicator-pip-sm bg-info" aria-hidden="true" />
+                Định Hướng & Lời Khuyên Hành Động
+              </div>
+              <p className="text-text-secondary-light dark:text-text-secondary-dark">{actionableGuidanceVi}</p>
             </div>
           </div>
-        )}
-
-        {/* 6. Lời Khuyên Hành Động */}
-        <div className="rounded-2xl bg-info/10 border border-info/25 p-3.5 space-y-1.5 sm:col-span-2">
-          <div className="font-bold text-info dark:text-info-dark text-xs flex items-center gap-1.5">
-            <span className="indicator-pip-sm bg-info" aria-hidden="true" />
-            Định Hướng & Lời Khuyên Hành Động
-          </div>
-          <p className="text-text-secondary-light dark:text-text-secondary-dark">{actionableGuidanceVi}</p>
-        </div>
-      </div>
+        </>
+      )}
     </section>
   );
 };

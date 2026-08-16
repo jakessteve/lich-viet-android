@@ -3,7 +3,6 @@ import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
 import { getSavedRoute, saveCurrentRoute, LAST_ACTIVE_ROUTE_KEY, LandingRoute } from '@/router/routes';
 
 vi.mock('@capacitor/core', () => ({

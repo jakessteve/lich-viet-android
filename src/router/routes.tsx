@@ -63,7 +63,9 @@ const ChiemTinhPage = React.lazy(() =>
 export function LandingRoute() {
   return (
     <Suspense fallback={<LoadingState />}>
-      <LandingPage />
+      <div className="page-enter-smooth">
+        <LandingPage />
+      </div>
     </Suspense>
   );
 }

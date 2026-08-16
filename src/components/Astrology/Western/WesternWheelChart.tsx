@@ -162,7 +162,7 @@ export const WesternWheelChart: React.FC<{ result: WesternChartResult }> = ({ re
   }, [result, pl]);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }} data-western-chart-export>
+    <div style={{ display: 'flex', justifyContent: 'center' }}>
       <svg
         viewBox={`0 0 ${S} ${S}`}
         style={{ width: '100%', maxWidth: S }}

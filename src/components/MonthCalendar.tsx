@@ -26,16 +26,20 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   collapseOnMobile = false,
   isPersonalized = false,
 }) => {
-  const [currentDate, setCurrentDate] = useState(new Date(selectedDate));
+  const [viewYear, setViewYear] = useState(() => selectedDate.getFullYear());
+  const [viewMonth, setViewMonth] = useState(() => selectedDate.getMonth());
   const { user } = useAuthStore();
   const userBirthProfile = useMemo(() => getUserBirthProfile(user), [user]);
 
   const days = useMemo(() => {
-    return getMonthDays(currentDate.getFullYear(), currentDate.getMonth(), viewerLocation ?? undefined);
-  }, [currentDate, viewerLocation]);
+    return getMonthDays(viewYear, viewMonth, viewerLocation ?? undefined);
+  }, [viewYear, viewMonth, viewerLocation]);
 
   useEffect(() => {
-    setCurrentDate(new Date(selectedDate));
+    const selY = selectedDate.getFullYear();
+    const selM = selectedDate.getMonth();
+    setViewYear((prevY) => (prevY !== selY ? selY : prevY));
+    setViewMonth((prevM) => (prevM !== selM ? selM : prevM));
   }, [selectedDate]);
 
   const birthYear = userBirthProfile?.birthYear;
@@ -74,12 +78,22 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
 
   const nextMonth = () => {
     setSlideDir('left');
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
+    if (viewMonth === 11) {
+      setViewYear((y) => y + 1);
+      setViewMonth(0);
+    } else {
+      setViewMonth((m) => m + 1);
+    }
   };
 
   const prevMonth = () => {
     setSlideDir('right');
-    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
+    if (viewMonth === 0) {
+      setViewYear((y) => y - 1);
+      setViewMonth(11);
+    } else {
+      setViewMonth((m) => m - 1);
+    }
   };
 
   // Compute which row index (0-based, 7 days per row) contains the selected date
@@ -93,14 +107,14 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   // Month/Year dropdown selection handlers
   const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newMonth = parseInt(e.target.value, 10);
-    setSlideDir(newMonth > currentDate.getMonth() ? 'left' : 'right');
-    setCurrentDate(new Date(currentDate.getFullYear(), newMonth, 1));
+    setSlideDir(newMonth > viewMonth ? 'left' : 'right');
+    setViewMonth(newMonth);
   };
 
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newYear = parseInt(e.target.value, 10);
-    setSlideDir(newYear > currentDate.getFullYear() ? 'left' : 'right');
-    setCurrentDate(new Date(newYear, currentDate.getMonth(), 1));
+    setSlideDir(newYear > viewYear ? 'left' : 'right');
+    setViewYear(newYear);
   };
 
   // Shared select styling
@@ -122,7 +136,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
           <div className="flex min-w-0 flex-1 justify-center px-1">
             <div className="flex items-center gap-1 whitespace-nowrap font-semibold text-sm">
               <select
-                value={currentDate.getMonth()}
+                value={viewMonth}
                 onChange={handleMonthChange}
                 className={selectClass}
                 aria-label="Chọn tháng"
@@ -135,7 +149,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
               </select>
               <span className="text-gray-300 dark:text-gray-600 select-none">|</span>
               <select
-                value={currentDate.getFullYear()}
+                value={viewYear}
                 onChange={handleYearChange}
                 className={selectClass}
                 aria-label="Chọn năm"
@@ -161,7 +175,8 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
                 const today = viewerLocation
                   ? getCivilDateForOffset(new Date(), viewerLocation.timezoneOffsetHours)
                   : new Date();
-                setCurrentDate(today);
+                setViewYear(today.getFullYear());
+                setViewMonth(today.getMonth());
                 onSelectDate(today);
               }}
               className="shrink-0 h-10 w-10 min-h-10 min-w-10"
@@ -189,7 +204,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
           <div className="flex-1 flex justify-center py-1.5">
             <div className="flex items-center gap-1 sm:gap-2 font-semibold text-sm sm:text-sm">
               <select
-                value={currentDate.getMonth()}
+                value={viewMonth}
                 onChange={handleMonthChange}
                 className={selectClass}
                 aria-label="Chọn tháng"
@@ -202,7 +217,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
               </select>
               <span className="text-gray-300 dark:text-gray-600 select-none">|</span>
               <select
-                value={currentDate.getFullYear()}
+                value={viewYear}
                 onChange={handleYearChange}
                 className={selectClass}
                 aria-label="Chọn năm"
@@ -223,7 +238,8 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
                 const today = viewerLocation
                   ? getCivilDateForOffset(new Date(), viewerLocation.timezoneOffsetHours)
                   : new Date();
-                setCurrentDate(today);
+                setViewYear(today.getFullYear());
+                setViewMonth(today.getMonth());
                 onSelectDate(today);
               }}
               className="shrink-0"
@@ -250,7 +266,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
       <div
         className="surface-card p-3 transition-colors flex flex-col"
         role="grid"
-        aria-label={`Lịch tháng ${currentDate.getMonth() + 1} năm ${currentDate.getFullYear()}`}
+        aria-label={`Lịch tháng ${viewMonth + 1} năm ${viewYear}`}
       >
         {/* Weekday header — always visible */}
         <div className="grid grid-cols-7 mb-1 pb-1 border-b border-border-light dark:border-border-dark">
@@ -266,7 +282,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
 
         {/* Month Content with directional slide and smooth row transitions */}
         <div
-          key={`${currentDate.getFullYear()}-${currentDate.getMonth()}`}
+          key={`${viewYear}-${viewMonth}`}
           className={`flex flex-col rounded-lg border border-border-light/60 dark:border-border-dark/60 bg-surface-container-low dark:bg-surface-elevated-dark overflow-hidden motion-gpu ${
             slideDir === 'left' ? 'animate-slide-left' : slideDir === 'right' ? 'animate-slide-right' : ''
           }`}

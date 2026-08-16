@@ -678,3 +678,109 @@ export interface TuViChartClassification {
   classificationPath: string[]; // ['Dương Nam', 'Thủy Nhị Cục', 'Mệnh tại Tý', 'Tử Vi Cư Tý', 'Thân cư Thê']
   patternSummaryVi: string;
 }
+
+// ── Tiểu Hạn & Nguyệt Hạn Interpretation Types ─────────────────
+
+export interface LuuTuHoaCollision {
+  type: TuHoaType;
+  starName: string;
+  sourceCan: Can;
+  targetPalaceId: number;
+  targetPalaceName: string;
+  collisionKind: 'song_loc' | 'song_ky' | 'loc_gap_loc' | 'ky_xung_thai_tue' | 'ky_xung_menh' | 'don_thu' | 'khac';
+  titleVi: string;
+  descriptionVi: string;
+}
+
+export interface TieuHanTamTaiMatrix {
+  thienThoi: {
+    level: 'Đắc Thời' | 'Trung Hòa' | 'Nghịch Cảnh';
+    score: number;
+    desc: string;
+  };
+  diaLoi: {
+    level: 'Tương Sinh' | 'Tỷ Hòa' | 'Khắc Xuất' | 'Sinh Xuất' | 'Khắc Nhập';
+    score: number;
+    desc: string;
+  };
+  nhanHoa: {
+    level: 'Quý Nhân Phò Trợ' | 'Tự Lực Cánh Sinh' | 'Tiểu Nhân Dèm Pha';
+    score: number;
+    desc: string;
+  };
+  khiLuc: {
+    stage: string;
+    level: 'thinh' | 'binh' | 'suy' | 'tich_luy';
+    score: number;
+    desc: string;
+  };
+  totalScore: number;
+}
+
+export interface DaiHanResonance {
+  type: 'dong_cung' | 'tam_hop' | 'doi_cung' | 'nhi_hop' | 'cach_cung';
+  titleVi: string;
+  descriptionVi: string;
+  amplification: number; // Multiplier from 0.8 to 1.5
+}
+
+export interface TieuHanInterpretationResult {
+  viewYear: number;
+  viewAge: number;
+  yearCan: Can;
+  yearChi: Chi;
+  tieuHanPalaceId: number;
+  tieuHanPalaceName: string;
+  tieuHanPalaceChi: Chi;
+  isMenh: boolean;
+  isThan: boolean;
+
+  // Star analysis & classification
+  majorStars: Array<{ name: string; brightness: string; nguHanh: string }>;
+  phuTinh: string[];
+  satTinh: string[];
+  tuanTriet: { hasTuan: boolean; hasTriet: boolean; note?: string };
+
+  // Annual Lưu Tứ Hóa & interactions
+  luuTuHoa: {
+    canYear: Can;
+    hoaLoc: string;
+    hoaQuyen: string;
+    hoaKhoa: string;
+    hoaKy: string;
+  };
+  collisions: LuuTuHoaCollision[];
+
+  // Cross-layer resonance
+  daiHanResonance: DaiHanResonance;
+  tamTai: TieuHanTamTaiMatrix;
+
+  // Overall Assessment & Guidance
+  overallScore: number; // 0.0 - 10.0
+  luckTier: 'Đại Cát' | 'Khởi Sắc' | 'Bình Hòa' | 'Thử Thách' | 'Gian Nan';
+  themeHeadlineVi: string;
+  detailedSynthesis: {
+    generalVibe: string;
+    careerAndFinance: string;
+    relationshipAndHealth: string;
+    actionableAdvice: string;
+  };
+  keyWarnings: string[];
+  favorableMonths: number[];
+  challengingMonths: number[];
+}
+
+export interface NguyetHanInterpretationResult {
+  viewMonth: number;
+  viewYear: number;
+  palaceId: number;
+  palaceName: string;
+  palaceChi: Chi;
+  majorStarsSummary: string;
+  monthScore: number; // 0.0 - 10.0
+  luckTier: 'Đại Cát' | 'Khởi Sắc' | 'Bình Hòa' | 'Thử Thách' | 'Gian Nan';
+  summaryVi: string;
+  focusThemeVi: string;
+  adviceVi: string;
+}
+

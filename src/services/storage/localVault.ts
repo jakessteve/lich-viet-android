@@ -5,6 +5,8 @@
  * with zero-server transmission and JSON backup/restore capabilities.
  */
 
+import { sanitizeCoordinates, sanitizePlainText } from '@/utils/security';
+
 export interface VaultProfile {
   id: string;
   name: string;
@@ -50,6 +52,25 @@ function openDB(): Promise<IDBDatabase> {
   });
 }
 
+function readSafeLocalStorageList(): VaultProfile[] {
+  try {
+    const raw = localStorage.getItem('vault_profiles_backup');
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? (parsed as VaultProfile[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeSafeLocalStorageList(list: VaultProfile[]): void {
+  try {
+    localStorage.setItem('vault_profiles_backup', JSON.stringify(list));
+  } catch {
+    // Ignore storage quota edge cases
+  }
+}
+
 /**
  * Saves or updates a profile in the IndexedDB Local Vault.
  */
@@ -57,9 +78,35 @@ export async function saveVaultProfile(
   profile: Omit<VaultProfile, 'id' | 'createdAt' | 'updatedAt'> & { id?: string },
 ): Promise<VaultProfile> {
   const now = Date.now();
+  const rawCoords = profile.birthplace;
+  const safeCoords = rawCoords
+    ? sanitizeCoordinates(rawCoords.lat, rawCoords.lng)
+    : { lat: 21.0285, lng: 105.8542 };
+
+  const sanitizedBirthplace = rawCoords
+    ? {
+        locationName: sanitizePlainText(rawCoords.locationName || 'Việt Nam', 100),
+        lat: safeCoords.lat,
+        lng: safeCoords.lng,
+        timezone: Math.max(-12, Math.min(14, rawCoords.timezone ?? 7)),
+      }
+    : undefined;
+
+  const rawHour = Number(profile.birthHour);
+  const safeHour = Number.isFinite(rawHour) ? Math.max(0, Math.min(23, Math.floor(rawHour))) : 0;
+  const rawMinute = profile.birthMinute != null ? Number(profile.birthMinute) : undefined;
+  const safeMinute =
+    rawMinute != null && Number.isFinite(rawMinute) ? Math.max(0, Math.min(59, Math.floor(rawMinute))) : undefined;
+
   const fullProfile: VaultProfile = {
     id: profile.id || `profile_${now}_${Math.random().toString(36).slice(2, 8)}`,
-    ...profile,
+    name: sanitizePlainText(profile.name || 'Hồ Sơ', 60),
+    solarDate: profile.solarDate,
+    birthHour: safeHour,
+    birthMinute: safeMinute,
+    gender: profile.gender === 'nữ' ? 'nữ' : 'nam',
+    birthplace: sanitizedBirthplace,
+    notes: profile.notes ? sanitizePlainText(profile.notes, 500) : undefined,
     createdAt: now,
     updatedAt: now,
   };
@@ -75,13 +122,11 @@ export async function saveVaultProfile(
       req.onerror = () => reject(req.error);
     });
   } catch {
-    // Fallback to localStorage
-    const local = localStorage.getItem('vault_profiles_backup') || '[]';
-    const list: VaultProfile[] = JSON.parse(local);
+    const list = readSafeLocalStorageList();
     const idx = list.findIndex((p) => p.id === fullProfile.id);
     if (idx >= 0) list[idx] = fullProfile;
     else list.push(fullProfile);
-    localStorage.setItem('vault_profiles_backup', JSON.stringify(list));
+    writeSafeLocalStorageList(list);
     return fullProfile;
   }
 }
@@ -101,8 +146,7 @@ export async function getAllVaultProfiles(): Promise<VaultProfile[]> {
       req.onerror = () => reject(req.error);
     });
   } catch {
-    const local = localStorage.getItem('vault_profiles_backup') || '[]';
-    return JSON.parse(local) as VaultProfile[];
+    return readSafeLocalStorageList();
   }
 }
 
@@ -121,10 +165,9 @@ export async function deleteVaultProfile(id: string): Promise<void> {
       req.onerror = () => reject(req.error);
     });
   } catch {
-    const local = localStorage.getItem('vault_profiles_backup') || '[]';
-    const list: VaultProfile[] = JSON.parse(local);
+    const list = readSafeLocalStorageList();
     const filtered = list.filter((p) => p.id !== id);
-    localStorage.setItem('vault_profiles_backup', JSON.stringify(filtered));
+    writeSafeLocalStorageList(filtered);
   }
 }
 
@@ -157,7 +200,7 @@ export async function importVaultBackupJson(jsonString: string): Promise<{ impor
     }
 
     for (const p of parsed.profiles) {
-      if (!p.name || !p.solarDate) {
+      if (!p || typeof p !== 'object' || !p.name || !p.solarDate) {
         errors.push(`Hồ sơ thiếu thông tin bắt buộc: ${JSON.stringify(p)}`);
         continue;
       }

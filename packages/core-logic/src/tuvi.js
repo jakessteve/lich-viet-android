@@ -1220,12 +1220,21 @@ export function detectTuViCombinations(palaces) {
     return (palaceIndex + 6) % 12;
   }
 
+  // Pre-index palace star names once to eliminate repeated array map/spreads
+  const palaceStarSetMap = new WeakMap();
+  for (let i = 0; i < palaces.length; i++) {
+    const p = palaces[i];
+    const set = new Set();
+    for (let j = 0; j < p.chinhTinh.length; j++) set.add(p.chinhTinh[j].name);
+    for (let j = 0; j < p.phuTinh.length; j++) set.add(p.phuTinh[j].name);
+    for (let j = 0; j < p.satTinh.length; j++) set.add(p.satTinh[j].name);
+    palaceStarSetMap.set(p, set);
+  }
+
   function getStarsInPalace(palace) {
-    return [
-      ...palace.chinhTinh.map((s) => s.name),
-      ...palace.phuTinh.map((s) => s.name),
-      ...palace.satTinh.map((s) => s.name)
-    ];
+    if (!palace) return [];
+    const set = palaceStarSetMap.get(palace);
+    return set ? Array.from(set) : [];
   }
 
   function checkCombinationPurity(involvedPalaces) {
@@ -1295,7 +1304,8 @@ export function detectTuViCombinations(palaces) {
 
   function hasStar(palace, starName) {
     if (!palace) return false;
-    return getStarsInPalace(palace).includes(starName);
+    const set = palaceStarSetMap.get(palace);
+    return set ? set.has(starName) : false;
   }
 
   function hasMutagen(palace, type) {
