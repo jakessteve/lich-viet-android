@@ -18,6 +18,7 @@ import {
 } from '../services/personalization';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import CollapsibleCard from './CollapsibleCard';
+import { Badge } from './shared';
 
 interface DetailedDayViewProps {
   date: Date;
@@ -227,22 +228,22 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
           {computedProfile?.birthYear ? (
             <button
               onClick={togglePersonalization}
-              className={`flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full shrink-0 w-full sm:w-auto transition-colors hover:opacity-80 ${
+              className={`flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full shrink-0 w-full sm:w-auto transition-[background-color,color,border-color,box-shadow] duration-200 spring-press motion-gpu ${
                 isPersonalized
-                  ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300'
-                  : 'bg-gray-100 dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark'
+                  ? 'bg-purple/15 text-purple dark:text-purple-dark border border-purple/30 shadow-sm'
+                  : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low'
               }`}
               title={isPersonalized ? 'Tắt cá nhân hoá' : 'Bật cá nhân hoá theo tuổi của bạn'}
             >
-              <span className="material-icons-round text-sm">person</span>
+              <span className="indicator-pip-sm bg-purple animate-glow-breathe" aria-hidden="true" />
               {isPersonalized ? 'Đã CNH' : 'Chưa CNH'}
             </button>
           ) : (
             <span
-              className="flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full shrink-0 w-full sm:w-auto bg-gray-100 dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark"
+              className="flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full shrink-0 w-full sm:w-auto bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40"
               title="Cập nhật ngày sinh để cá nhân hoá"
             >
-              <span className="material-icons-round text-sm">person</span>
+              <span className="indicator-pip-sm bg-text-secondary-light/40" aria-hidden="true" />
               Chưa CNH
             </span>
           )}
@@ -252,23 +253,24 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
       {/* Personal Score Card */}
       {isPersonalized && personalScore && (
         <div
-          className={`rounded-2xl border px-5 py-4 ${
+          className={`rounded-2xl border px-5 py-4 page-enter-smooth ${
             personalScore.actionScore >= 2
-              ? 'bg-purple-50/50 dark:bg-purple-900/10 border-purple-200 dark:border-purple-800'
+              ? 'bg-purple/5 dark:bg-purple-dark/5 border-purple/30 dark:border-purple-dark/30'
               : personalScore.actionScore < 0
-                ? 'bg-orange-50/50 dark:bg-orange-900/10 border-orange-200 dark:border-orange-800'
-                : 'bg-gray-50/50 dark:bg-gray-800/20 border-gray-200 dark:border-gray-700'
+                ? 'bg-orange/5 dark:bg-orange-dark/5 border-orange/30 dark:border-orange-dark/30'
+                : 'bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/60 border-border-light/60 dark:border-border-dark/60'
           }`}
         >
           <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
             <span
               className={`material-icons-round text-xl mt-0.5 ${
                 personalScore.actionScore >= 2
-                  ? 'text-purple-600 dark:text-purple-400'
+                  ? 'text-purple dark:text-purple-dark'
                   : personalScore.actionScore < 0
-                    ? 'text-orange-600 dark:text-orange-400'
-                    : 'text-gray-500 dark:text-gray-400'
+                    ? 'text-orange dark:text-orange-dark'
+                    : 'text-text-secondary-light dark:text-text-secondary-dark'
               }`}
+              aria-hidden="true"
             >
               {personalScore.actionScore >= 2
                 ? 'sentiment_very_satisfied'
@@ -282,9 +284,9 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 <span
                   className={
                     personalScore.actionScore >= 2
-                      ? 'text-purple-700 dark:text-purple-300'
+                      ? 'text-purple dark:text-purple-dark'
                       : personalScore.actionScore < 0
-                        ? 'text-orange-700 dark:text-orange-300'
+                        ? 'text-orange dark:text-orange-dark'
                         : 'text-text-primary-light dark:text-text-primary-dark'
                   }
                 >
@@ -296,39 +298,25 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               </div>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {personalScore.isTamHop && (
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
-                    Tam Hợp
-                  </span>
+                  <Badge variant="purple">Tam Hợp</Badge>
                 )}
                 {personalScore.isLucHop && (
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300">
-                    Lục Hợp
-                  </span>
+                  <Badge variant="purple">Lục Hợp</Badge>
                 )}
                 {personalScore.isThaiTue && (
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">
-                    Trị Thái Tuế
-                  </span>
+                  <Badge variant="gold">Trị Thái Tuế</Badge>
                 )}
                 {personalScore.isTuongXung && (
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">
-                    Lục Xung
-                  </span>
+                  <Badge variant="orange">Lục Xung</Badge>
                 )}
                 {personalScore.isTuongHai && (
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300">
-                    Lục Hại
-                  </span>
+                  <Badge variant="orange">Lục Hại</Badge>
                 )}
                 {personalScore.isTuongHinh && (
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">
-                    Tương Hình
-                  </span>
+                  <Badge variant="bad">Tương Hình</Badge>
                 )}
                 {personalScore.isTuongPha && (
-                  <span className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">
-                    Tương Phá
-                  </span>
+                  <Badge variant="bad">Tương Phá</Badge>
                 )}
               </div>
             </div>
@@ -342,18 +330,14 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
           <div className="divide-y divide-border-light dark:divide-border-dark text-sm px-4 sm:px-6 py-3">
             {personalDungSu.recommended.length > 0 && (
               <div className="py-2">
-                <div className="text-xs font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400 mb-1.5">
+                <div className="text-xs font-semibold uppercase tracking-wider text-purple dark:text-purple-dark mb-1.5">
                   Nên làm
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {personalDungSu.recommended.map((act, i) => (
-                    <span
-                      key={i}
-                      className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300"
-                      title={act.reason}
-                    >
+                    <Badge key={i} variant="purple" className="cursor-help">
                       {act.name}
-                    </span>
+                    </Badge>
                   ))}
                 </div>
               </div>
@@ -365,30 +349,23 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {personalDungSu.regular.map((act, i) => (
-                    <span
-                      key={i}
-                      className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
-                    >
+                    <Badge key={i} variant="neutral">
                       {act.name}
-                    </span>
+                    </Badge>
                   ))}
                 </div>
               </div>
             )}
             {personalDungSu.warned.length > 0 && (
               <div className="py-2">
-                <div className="text-xs font-semibold uppercase tracking-wider text-orange-600 dark:text-orange-400 mb-1.5">
+                <div className="text-xs font-semibold uppercase tracking-wider text-orange dark:text-orange-dark mb-1.5">
                   Cẩn thận
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {personalDungSu.warned.map((act, i) => (
-                    <span
-                      key={i}
-                      className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300"
-                      title={act.reason}
-                    >
+                    <Badge key={i} variant="orange" className="cursor-help">
                       {act.name}
-                    </span>
+                    </Badge>
                   ))}
                 </div>
               </div>
@@ -464,7 +441,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               {data.goodStars.join(', ') || 'Không có'}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
               Nghi
             </div>
@@ -472,17 +449,14 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               {formattedNghi.focus || formattedNghi.rest.length > 0 ? (
                 <div className="flex flex-wrap gap-1.5">
                   {formattedNghi.focus && (
-                    <span className="inline-block px-2 py-0.5 text-xs font-bold rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400">
+                    <Badge variant="good" pip={true}>
                       Tốt mọi việc
-                    </span>
+                    </Badge>
                   )}
                   {formattedNghi.rest.map((item, i) => (
-                    <span
-                      key={i}
-                      className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-900/20 dark:text-emerald-400"
-                    >
+                    <Badge key={i} variant="good">
                       {item}
-                    </span>
+                    </Badge>
                   ))}
                 </div>
               ) : (
@@ -490,7 +464,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
               Hung thần
             </div>
@@ -498,7 +472,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               {data.badStars.join(', ') || 'Không có'}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
               Kỵ
             </div>
@@ -506,17 +480,14 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               {formattedKy.focus || formattedKy.rest.length > 0 ? (
                 <div className="flex flex-wrap gap-1.5">
                   {formattedKy.focus && (
-                    <span className="inline-block px-2 py-0.5 text-xs font-bold rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400">
+                    <Badge variant="bad" pip={true}>
                       Xấu mọi việc
-                    </span>
+                    </Badge>
                   )}
                   {formattedKy.rest.map((item, i) => (
-                    <span
-                      key={i}
-                      className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-red-50 text-red-600 dark:bg-red-900/20 dark:text-red-400"
-                    >
+                    <Badge key={i} variant="bad">
                       {item}
-                    </span>
+                    </Badge>
                   ))}
                 </div>
               ) : (
@@ -524,7 +495,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
               Bành tổ bách kỵ
             </div>
@@ -543,10 +514,10 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 const endStr = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`;
                 navigate(`/app/ngay-tot?start=${startStr}&end=${endStr}`);
               }}
-              className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
+              className="text-sm font-semibold text-good dark:text-good-dark hover:underline inline-flex items-center gap-1 interactive-press"
             >
               Tìm ngày giờ tốt trong 14 ngày tới
-              <span className="material-icons-round text-base">arrow_forward</span>
+              <span className="material-icons-round text-base" aria-hidden="true">arrow_forward</span>
             </button>
           </div>
         </div>
@@ -560,9 +531,9 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
         headerRight={
           <button
             onClick={() => setSortByScore((prev) => !prev)}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full bg-gray-100 dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-200 dark:hover:bg-white/15 transition-colors"
+            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-[background-color,color,transform] duration-150 spring-press motion-gpu"
           >
-            <span className="material-icons-round text-sm">{sortByScore ? 'schedule' : 'trending_up'}</span>
+            <span className="material-icons-round text-sm" aria-hidden="true">{sortByScore ? 'schedule' : 'trending_up'}</span>
             {sortByScore ? 'Theo giờ' : 'Giờ tốt trước'}
           </button>
         }
@@ -629,10 +600,10 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                       isTop3
                         ? 'bg-gold/5 dark:bg-gold-dark/5 border-l-2 border-l-gold dark:border-l-gold-dark hover:bg-gold/10 dark:hover:bg-gold-dark/10'
                         : isWeak
-                          ? 'opacity-60 hover:opacity-100 hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                          ? 'opacity-60 hover:opacity-100 hover:bg-surface-subtle-light dark:hover:bg-white/5'
                           : isAuspiciousCurrent
-                            ? 'bg-blue-50/20 dark:bg-blue-900/10 hover:bg-gray-50 dark:hover:bg-gray-800/50'
-                            : 'hover:bg-gray-50 dark:hover:bg-gray-800/50'
+                            ? 'bg-info/5 dark:bg-info-dark/5 hover:bg-surface-subtle-light dark:hover:bg-white/5'
+                            : 'hover:bg-surface-subtle-light dark:hover:bg-white/5'
                     }`}
                   >
                     <td className="hidden sm:table-cell px-6 py-4 font-medium whitespace-nowrap align-top">
@@ -665,11 +636,11 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                     </td>
                     <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-text-primary-light dark:text-text-primary-dark space-y-1.5 align-top">
                       <div className="leading-relaxed">
-                        <span className="font-bold text-emerald-600 dark:text-emerald-400 mr-1">Nghi:</span>
+                        <span className="font-bold text-good dark:text-good-dark mr-1">Nghi:</span>
                         <span>{normalizedHourDungSu.nghi}</span>
                       </div>
                       <div className="leading-relaxed">
-                        <span className="font-bold text-crimson-600 dark:text-crimson-400 mr-1">Kỵ:</span>
+                        <span className="font-bold text-bad dark:text-bad-dark mr-1">Kỵ:</span>
                         <span>{normalizedHourDungSu.ky}</span>
                       </div>
                       {isPersonalized && personalBreakdowns.length > 0 && (

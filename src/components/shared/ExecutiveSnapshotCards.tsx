@@ -15,7 +15,6 @@ interface ExecutiveSnapshotCardsProps {
   knotDesc: string;
   year2026CompassTitle: string;
   year2026CompassDesc: string;
-  onOpenStoryExport?: () => void;
 }
 
 export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
@@ -26,11 +25,10 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
   knotDesc,
   year2026CompassTitle,
   year2026CompassDesc,
-  onOpenStoryExport,
 }) => {
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-border-light/70 dark:border-border-dark/70 bg-gradient-to-br from-surface-card via-surface-container-low to-surface-card p-4 sm:p-6 shadow-xl space-y-4">
-      {/* Header with name and share image button */}
+    <section className="relative overflow-hidden rounded-3xl border border-border-light/70 dark:border-border-dark/70 bg-surface-light dark:bg-surface-dark p-4 sm:p-6 shadow-xl space-y-4">
+      {/* Header with name */}
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-light/40 dark:border-border-dark/40 pb-3.5">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2">
@@ -46,23 +44,12 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
             Nhận diện cốt cách bẩm sinh và định hướng hành động thiết thực
           </p>
         </div>
-
-        {onOpenStoryExport && (
-          <button
-            type="button"
-            onClick={onOpenStoryExport}
-            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-gold/20 hover:from-amber-500/30 hover:to-gold/30 border border-gold/30 px-3 py-1.5 text-xs font-bold text-gold-light dark:text-gold-dark transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm"
-          >
-            <span className="material-icons-round text-sm">photo_camera</span>
-            Lưu & Chia Sẻ Ảnh Bản Mệnh
-          </button>
-        )}
       </div>
 
       {/* 3 Executive Cards Grid */}
       <div className="grid gap-3 sm:grid-cols-3">
         {/* 1. Core Trait Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-500/[0.03] p-4 transition-all duration-300 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10">
+        <div className="group relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-950/20 dark:border-emerald-500/30 p-4 transition-all duration-200 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10">
           <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 font-bold text-xs uppercase tracking-wider">
             <span className="material-icons-round text-base">military_tech</span>
             Bản Sắc Cốt Lõi
@@ -76,7 +63,7 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
         </div>
 
         {/* 2. Caution & Growth Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-500/[0.03] p-4 transition-all duration-300 hover:border-rose-500/50 hover:shadow-lg hover:shadow-rose-500/10">
+        <div className="group relative overflow-hidden rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-950/20 dark:border-rose-500/30 p-4 transition-all duration-200 hover:border-rose-500/50 hover:shadow-lg hover:shadow-rose-500/10">
           <div className="flex items-center gap-2 text-rose-700 dark:text-rose-300 font-bold text-xs uppercase tracking-wider">
             <span className="material-icons-round text-base">bolt</span>
             Điểm Cần Lưu Tâm & Hóa Giải
@@ -90,7 +77,7 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
         </div>
 
         {/* 3. 2026 Actionable Direction Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-sky-500/30 bg-sky-500/5 dark:bg-sky-500/[0.03] p-4 transition-all duration-300 hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10">
+        <div className="group relative overflow-hidden rounded-2xl border border-sky-500/30 bg-sky-500/5 dark:bg-sky-950/20 dark:border-sky-500/30 p-4 transition-all duration-200 hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10">
           <div className="flex items-center gap-2 text-sky-700 dark:text-sky-300 font-bold text-xs uppercase tracking-wider">
             <span className="material-icons-round text-base">explore</span>
             Định Hướng Trọng Tâm 2026
@@ -102,15 +89,6 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
             {year2026CompassDesc}
           </p>
         </div>
-      </div>
-
-      {/* Micro-Onboarding Chart Exploration Hint */}
-      <div className="flex items-center gap-2 rounded-xl bg-surface-container-low/60 px-3 py-2 text-xs text-text-secondary-light dark:text-text-secondary-dark/90 border border-border-light/40 dark:border-border-dark/40 select-none">
-        <span className="material-icons-round text-amber-500 text-sm animate-bounce">touch_app</span>
-        <span>
-          <strong className="text-gold-light dark:text-gold-dark">Mẹo tương tác:</strong> Chạm vào bất kỳ Cung hoặc Ngôi
-          sao nào trên bảng lá số để xem phân tích chi tiết liền mạch phía dưới.
-        </span>
       </div>
     </section>
   );

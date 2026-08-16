@@ -94,7 +94,7 @@ export default function LandingPage() {
       : 'text-amber-500 dark:text-amber-400 bg-amber-500/8 dark:bg-amber-400/8 border-amber-500/15 dark:border-amber-400/15';
 
   return (
-    <div className="min-h-screen transition-colors duration-200 ease-out overflow-x-hidden relative">
+    <div className="min-h-screen overflow-x-hidden relative">
       {/* ──── Subtle hero texture ──── */}
       <div
         className="absolute top-0 left-0 right-0 h-[1180px] pointer-events-none z-0 overflow-hidden"

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useShallow } from 'zustand/react/shallow';
@@ -7,10 +7,9 @@ import { TuViInputForm } from './TuViInputForm';
 import { TuViChart } from './TuViChart';
 import { TuViSummaryPanel } from './TuViSummaryPanel';
 import { TuViMarkdownExport } from './TuViMarkdownExport';
-import { IconButton, SegmentedControl, type SegmentedOption } from '../shared';
+import { IconButton, type SegmentedOption } from '../shared';
 import { TuViPalaceInlineDetail } from './TuViPalaceInlineDetail';
 import { ExecutiveSnapshotCards } from '../shared/ExecutiveSnapshotCards';
-import { StoryCardExportModal } from '../shared/StoryCardExportModal';
 import { interpretPalace } from '@/services/tuvi/palaceInterpretation';
 import type { TuViSchool } from '../../types/tuvi';
 import './tuviChart.css';
@@ -56,8 +55,14 @@ export const TuViPage: React.FC = () => {
   const currentYear = now.year;
   const currentMonth = now.month;
 
-  const [showStoryModal, setShowStoryModal] = useState(false);
   const [isChartZoomed, setIsChartZoomed] = useState(false);
+
+  const activePalaceInterpretation = useMemo(() => {
+    if (!chart || selectedPalaceIndex === null) return null;
+    const palace = chart.palaces[selectedPalaceIndex];
+    if (!palace) return null;
+    return interpretPalace(palace, chart.palaces, chart.centerInfo, chart.combinations);
+  }, [chart, selectedPalaceIndex]);
   const snapshotRef = useRef<HTMLDivElement>(null);
   const lastScrolledInputRef = useRef<string>('');
 
@@ -120,24 +125,8 @@ export const TuViPage: React.FC = () => {
             knotDesc={knotDesc}
             year2026CompassTitle={`Năm Bính Ngọ ${currentYear}`}
             year2026CompassDesc={`Tập trung mở rộng đối tác, củng cố vị thế chuyên môn và giữ vững kỷ luật tài chính trong năm ${currentYear}.`}
-            onOpenStoryExport={() => setShowStoryModal(true)}
           />
         </div>
-      )}
-
-      {/* Story 9:16 Modal */}
-      {chart && (
-        <StoryCardExportModal
-          isOpen={showStoryModal}
-          onClose={() => setShowStoryModal(false)}
-          name={input.name || 'Bản Thân'}
-          solarDate={chart.centerInfo.duongLich}
-          tuViArchetype={`Mệnh ${menhStars} (${chart.centerInfo.cuc})`}
-          westernArchetype="Chiêm Tinh Tây Phương"
-          vedicArchetype="Chiêm Tinh Vệ Đà"
-          superpower={superpowerDesc}
-          actionCompass={`Năm ${currentYear}: Tận dụng tối đa năng lực lãnh đạo và bản lĩnh tự chủ để bứt phá sự nghiệp.`}
-        />
       )}
 
       {/* Input Form */}
@@ -230,26 +219,48 @@ export const TuViPage: React.FC = () => {
       )}
 
       {chart && (
-        <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3">
-          <div className="flex items-center gap-2">
-            <span className="material-icons-round text-base text-gold-light dark:text-gold-dark">account_tree</span>
+        <div className="surface-panel flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold-light dark:text-gold-dark">
+              <span className="material-icons-round text-lg">account_tree</span>
+            </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-text-secondary-light dark:text-text-secondary-dark">
-                Trường phái
+                Trường phái Tử Vi
               </p>
-              <p className="text-sm text-text-primary-light dark:text-text-primary-dark">
+              <p className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
                 {chart.centerInfo.schoolLabel}
               </p>
             </div>
           </div>
 
-          <SegmentedControl
-            options={SCHOOL_OPTIONS}
-            value={input.school ?? 'thien-luong'}
-            onChange={setSchool}
-            ariaLabel="Trường phái Tử Vi"
-            className="w-full sm:w-auto"
-          />
+          <div
+            className="surface-card p-1.5 grid grid-cols-2 gap-1.5 w-full sm:w-auto sm:min-w-[320px]"
+            role="tablist"
+            aria-label="Trường phái Tử Vi"
+          >
+            {SCHOOL_OPTIONS.map((option) => {
+              const active = (input.school ?? 'thien-luong') === option.id;
+              return (
+                <button
+                  key={option.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={active}
+                  aria-current={active ? 'page' : undefined}
+                  onClick={() => setSchool(option.id)}
+                  className={`flex min-h-11 items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 active:scale-[0.98] ${
+                    active
+                      ? 'bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white shadow-md shadow-gold/20 font-semibold'
+                      : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-white/5'
+                  }`}
+                >
+                  {option.icon && <span className="material-icons-round text-base">{option.icon}</span>}
+                  <span>{option.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       )}
 
@@ -265,21 +276,13 @@ export const TuViPage: React.FC = () => {
       )}
 
       {/* Hybrid Palace Detail (Inline when fit, Compact HUD when zoomed) */}
-      {chart &&
-        selectedPalaceIndex !== null &&
-        chart.palaces[selectedPalaceIndex] &&
-        (() => {
-          const palace = chart.palaces[selectedPalaceIndex];
-          const interpretation = interpretPalace(palace, chart.palaces, chart.centerInfo);
-
-          return (
-            <TuViPalaceInlineDetail
-              interpretation={interpretation}
-              onClose={() => selectPalace(null as unknown as number)}
-              isZoomed={isChartZoomed}
-            />
-          );
-        })()}
+      {activePalaceInterpretation && (
+        <TuViPalaceInlineDetail
+          interpretation={activePalaceInterpretation}
+          onClose={() => selectPalace(null as unknown as number)}
+          isZoomed={isChartZoomed}
+        />
+      )}
 
       {chart && <TuViMarkdownExport />}
 

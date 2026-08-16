@@ -34,7 +34,7 @@ export {
 export { getTuViCatalogSummary, getTuViStarLayer } from './catalogLayers';
 
 // ── Time Normalization ────────────────────────────────────────
-export { normalizeBirthTime, getVietnamUtcOffset } from './timeNormalization';
+export { normalizeBirthTime, getVietnamUtcOffset, normalizeBirthTimeWithPolicy } from './timeNormalization';
 
 // ── Star Placement ────────────────────────────────────────────
 export {
@@ -53,7 +53,6 @@ export {
 
 export { DEFAULT_TU_VI_SCHOOL, TU_VI_SCHOOL_PROFILES, resolveTuViSchoolProfile } from './schoolProfiles';
 export { buildTuViBirthContext } from './birthContext';
-export { normalizeBirthTimeWithPolicy } from './timeNormalization';
 
 // ── Center Metadata ────────────────────────────────────────────
 export {
@@ -117,7 +116,10 @@ export { classifyTuViChart } from './chartClassification';
 export {
   formatTuViChartAsMarkdown,
   formatCenterInfoAsMarkdown,
+  formatChartClassificationAsMarkdown,
   formatPalacesAsMarkdown,
+  formatPositionalSemanticsAsMarkdown,
+  formatHanContextAsMarkdown,
   formatCombinationsAsMarkdown,
   formatFlyingStarsAsMarkdown,
   generatePromptHeader,

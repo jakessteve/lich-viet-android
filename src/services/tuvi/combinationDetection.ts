@@ -5,13 +5,24 @@
  * in a Tử Vi chart. No React dependencies.
  */
 
-import type { TuViPalace, TuViCombination, CombinationPurity, PositionalSemantic } from '../../types/tuvi';
+import type {
+  TuViPalace,
+  TuViCombination,
+  CombinationPurity,
+  PositionalSemantic,
+  CombinationCategory,
+} from '../../types/tuvi';
 import combinationsData from '../../data/tuvi/combinations.json';
 import { TAM_HOP_GROUPS, DOI_CUNG_MAP, NHI_HOP_MAP } from './constants';
+import {
+  evaluateResidentInteractions,
+  evaluateOppositionInteractions,
+  evaluateTrineInteractions,
+  evaluateBracketInteractions,
+} from './starInteractionRules';
 
 // ── Type Definitions ──────────────────────────────────────────
 
-type CombinationCategory = 'cat' | 'hung' | 'trung';
 type StandardConstraint = 'sameCung' | 'tamHop' | 'sameCungOrTamHop' | 'giap';
 type CustomMatchKind =
   | 'menhBranchStars'
@@ -71,13 +82,22 @@ const BRIGHTNESS_SCORES: Record<string, number> = {
 // ── Geometry Helpers ──────────────────────────────────────────
 
 /**
+ * Normalizes a palace index into the valid 0–11 integer range.
+ */
+function normalizePalaceIndex(palaceIndex: number): number {
+  if (Number.isNaN(palaceIndex) || !Number.isFinite(palaceIndex)) return 0;
+  return ((Math.floor(palaceIndex) % 12) + 12) % 12;
+}
+
+/**
  * Returns the indices of the two Tam Hợp palaces for a given palace.
  * Each palace belongs to exactly one Tam Hợp group of 3 palaces.
  */
 export function detectTamHopPalaces(palaceIndex: number): number[] {
+  const normIdx = normalizePalaceIndex(palaceIndex);
   for (const group of TAM_HOP_GROUPS) {
-    if (group.includes(palaceIndex)) {
-      return group.filter((idx) => idx !== palaceIndex);
+    if (group.includes(normIdx)) {
+      return group.filter((idx) => idx !== normIdx);
     }
   }
   return [];
@@ -87,14 +107,16 @@ export function detectTamHopPalaces(palaceIndex: number): number[] {
  * Returns the index of the Đối Cung (opposition palace).
  */
 export function detectDoiCung(palaceIndex: number): number {
-  return DOI_CUNG_MAP[palaceIndex];
+  const normIdx = normalizePalaceIndex(palaceIndex);
+  return DOI_CUNG_MAP[normIdx] ?? (normIdx + 6) % 12;
 }
 
 /**
  * Returns the index of the Nhị Hợp (symmetrical harmonic pair) palace.
  */
 export function detectNhiHopPalace(palaceIndex: number): number {
-  return NHI_HOP_MAP[palaceIndex];
+  const normIdx = normalizePalaceIndex(palaceIndex);
+  return NHI_HOP_MAP[normIdx] ?? (normIdx === 0 ? 1 : normIdx === 1 ? 0 : (13 - normIdx) % 12);
 }
 
 // ── Star Extraction ───────────────────────────────────────────
@@ -103,6 +125,7 @@ export function detectNhiHopPalace(palaceIndex: number): number {
  * Returns all star names in a palace (Chính Tinh + Phụ Tinh + Sát Tinh).
  */
 export function getStarsInPalace(palace: TuViPalace): string[] {
+  if (!palace) return [];
   return [
     ...palace.chinhTinh.map((s) => s.name),
     ...palace.phuTinh.map((s) => s.name),
@@ -115,7 +138,8 @@ export function getStarsInPalace(palace: TuViPalace): string[] {
  */
 export function getStarsInNhiHop(palaces: TuViPalace[], palaceIndex: number): string[] {
   const nhiHopIdx = detectNhiHopPalace(palaceIndex);
-  return palaces[nhiHopIdx] ? getStarsInPalace(palaces[nhiHopIdx]) : [];
+  const pairedPalace = palaces[nhiHopIdx];
+  return pairedPalace ? getStarsInPalace(pairedPalace) : [];
 }
 
 /**
@@ -123,14 +147,18 @@ export function getStarsInNhiHop(palaces: TuViPalace[], palaceIndex: number): st
  * (palace + 2 Tam Hợp + Đối Cung).
  */
 export function getStarsInTamHop(palaces: TuViPalace[], palaceIndex: number): string[] {
-  const tamHop = detectTamHopPalaces(palaceIndex);
-  const doiCung = detectDoiCung(palaceIndex);
-  const indices = [palaceIndex, ...tamHop, doiCung];
+  const normIdx = normalizePalaceIndex(palaceIndex);
+  const tamHop = detectTamHopPalaces(normIdx);
+  const doiCung = detectDoiCung(normIdx);
+  const indices = [normIdx, ...tamHop, doiCung];
   const uniqueIndices = Array.from(new Set(indices));
 
   const stars: string[] = [];
   for (const idx of uniqueIndices) {
-    stars.push(...getStarsInPalace(palaces[idx]));
+    const p = palaces[idx];
+    if (p) {
+      stars.push(...getStarsInPalace(p));
+    }
   }
   return stars;
 }
@@ -146,20 +174,21 @@ export function getStarsInTamHop(palaces: TuViPalace[], palaceIndex: number): st
  */
 export function checkCombinationPurity(
   involvedPalaces: TuViPalace[],
-  satTinhNames: string[] = Array.from(ALL_SAT_TINH),
+  satTinhNames?: string[],
 ): CombinationPurity {
-  const majorSet = new Set([...MAJOR_SAT_TINH].filter((n) => satTinhNames.includes(n)));
-  const minorSet = new Set([...MINOR_SAT_TINH].filter((n) => satTinhNames.includes(n)));
+  const customMajor = satTinhNames ? new Set(satTinhNames.filter((n) => MAJOR_SAT_TINH.has(n))) : MAJOR_SAT_TINH;
+  const customMinor = satTinhNames ? new Set(satTinhNames.filter((n) => MINOR_SAT_TINH.has(n))) : MINOR_SAT_TINH;
 
   let hasMajor = false;
   let hasMinor = false;
 
   for (const palace of involvedPalaces) {
+    if (!palace) continue;
     for (const star of palace.satTinh) {
-      if (majorSet.has(star.name)) {
+      if (customMajor.has(star.name)) {
         hasMajor = true;
       }
-      if (minorSet.has(star.name)) {
+      if (customMinor.has(star.name)) {
         hasMinor = true;
       }
     }
@@ -1024,13 +1053,6 @@ function detectPhongVanTeHoi(
 }
 
 // ── Positional Semantics (Tọa, Cứ, Triều, Xung, Củng, Hiệp, Hiếp) ──
-
-import {
-  evaluateResidentInteractions,
-  evaluateOppositionInteractions,
-  evaluateTrineInteractions,
-  evaluateBracketInteractions,
-} from './starInteractionRules';
 
 /**
  * Evaluates the 7 classical positional interaction dynamics for a given palace

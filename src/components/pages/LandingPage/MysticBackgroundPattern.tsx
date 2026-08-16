@@ -47,7 +47,14 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
     return (
       <svg className="w-full h-full" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
         {defs}
-        <g style={{ animation: 'spin 200s linear infinite reverse', transformOrigin: 'center' }}>
+        <g
+          style={{
+            animation: 'spin 200s linear infinite reverse',
+            transformBox: 'view-box',
+            transformOrigin: '400px 400px',
+            willChange: 'transform',
+          }}
+        >
           {/* Celestial bounding frames */}
           <circle
             cx="400"
@@ -104,7 +111,14 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
         <circle cx="400" cy="400" r="30" stroke="#ffffff" strokeWidth="1" strokeDasharray="2 4" opacity="0.3" />
 
         {/* Big Dipper Constellation */}
-        <g style={{ animation: 'spin 180s linear infinite', transformOrigin: 'center' }}>
+        <g
+          style={{
+            animation: 'spin 180s linear infinite',
+            transformBox: 'view-box',
+            transformOrigin: '400px 400px',
+            willChange: 'transform',
+          }}
+        >
           {/* Thick connecting light beams */}
           <path
             d="M 240 280 L 320 220 L 380 260 L 410 340 L 490 420 L 570 460 L 650 430"
@@ -161,7 +175,15 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
     return (
       <svg className="w-full h-full" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
         {defs}
-        <g style={{ animation: 'spin 140s linear infinite reverse', transformOrigin: 'center' }}>
+        <g
+          style={{
+            animation: 'spin 140s linear infinite reverse',
+            transformBox: 'view-box',
+            transformOrigin: '400px 400px',
+            willChange: 'transform',
+          }}
+        >
+
           {/* Massive boundary rings representing Earth and Heaven */}
           <circle cx="400" cy="400" r="370" stroke={mysticGoldUrl} strokeWidth="2" opacity="0.4" />
           <circle

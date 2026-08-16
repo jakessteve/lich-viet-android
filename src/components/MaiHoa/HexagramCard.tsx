@@ -94,7 +94,7 @@ export default function HexagramCard({
   const hasDetails = haoDetails !== undefined && haoDetails.length > 0;
 
   return (
-    <div className="flex flex-col h-full rounded-xl sm:rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light/50 dark:border-border-dark/50 shadow-apple transition-all duration-200 hover:shadow-apple-hover overflow-hidden">
+    <div className="flex flex-col h-full rounded-xl sm:rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light/50 dark:border-border-dark/50 shadow-apple transition-[box-shadow,transform] duration-200 hover:shadow-apple-hover hover:-translate-y-0.5 overflow-hidden motion-gpu">
       {/* ── Card Body: Centered Content ───────────────── */}
       <div className="flex flex-col items-center gap-1 sm:gap-2 p-1.5 sm:p-4 md:p-5 flex-1">
         {/* Label badge */}

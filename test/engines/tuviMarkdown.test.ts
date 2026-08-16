@@ -21,6 +21,21 @@ describe('Markdown Formatter', () => {
     expect(markdown).toContain('Nguyễn Văn A');
     expect(markdown).toContain('## Thập Nhị Cung');
     expect(markdown).toContain('Mệnh');
+    expect(markdown).toContain('## Cấu Trúc Lá Số & Thế Cục Bản Mệnh');
+    expect(markdown).toContain('## Tam Phương Tứ Chính & Tương Tác Cung Vị Then Chốt');
+    expect(markdown).toContain('## Vận Hạn & Lưu Niên Chi Tiết');
+    expect(markdown).toContain('Bảng 12 Thập Niên Đại Hạn Cuộc Đời');
+    expect(markdown).toContain('Luận Giải Chuyên Sâu Đại Hạn');
+    expect(markdown).toContain('4 Vòng Tràng Sinh');
+  });
+
+  it('should NOT include redundant engine metadata and catalog layering', () => {
+    const chart = generateChart(input);
+    const markdown = formatTuViChartAsMarkdown(chart);
+    expect(markdown).not.toContain('## Dữ Liệu Engine');
+    expect(markdown).not.toContain('## Phân Tầng Danh Mục');
+    expect(markdown).not.toContain('academicTargetTotal');
+    expect(markdown).not.toContain('leapMonthPolicy');
   });
 
   it('should not include the removed scoring section', () => {
@@ -29,6 +44,7 @@ describe('Markdown Formatter', () => {
     expect(markdown).not.toContain(['## Điểm', 'Huyền', 'Khí'].join(' '));
     expect(markdown).not.toContain(['Điểm', 'huyền', 'khí'].join(' '));
   });
+
 
   it('should include combinations section when enabled', () => {
     const chart = generateChart(input);

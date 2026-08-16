@@ -226,8 +226,8 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
 
         {/* ── Loading State ──────────────────────────── */}
         {isLoading && (
-          <div className="card-surface p-8 flex flex-col items-center gap-4 animate-fade-in-up">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent-main/20 to-accent-mutual/20 dark:from-accent-main-dark/20 dark:to-accent-mutual-dark/20 flex items-center justify-center">
+          <div className="card-surface p-8 flex flex-col items-center gap-4 animate-scale-in motion-gpu">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent-main/20 via-accent-mutual/20 to-amber-500/20 dark:from-accent-main-dark/20 dark:to-accent-mutual-dark/20 flex items-center justify-center animate-glow-breathe">
               <span
                 className="material-icons-round text-3xl text-accent-main dark:text-accent-main-dark animate-spin"
                 style={{ animationDuration: '2s' }}
@@ -236,14 +236,14 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
               </span>
             </div>
             <div className="text-center">
-              <p className="font-semibold text-text-primary-light dark:text-text-primary-dark">Đang luận quẻ...</p>
+              <p className="font-semibold text-text-primary-light dark:text-text-primary-dark">Đang khởi quẻ...</p>
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1">
-                Phân tích Ngũ Hành, Thể Dụng, và Lục Thân
+                Nạp Giáp, an Lục Thân, phân định Thể Dụng
               </p>
             </div>
-            <div className="w-48 h-1 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+            <div className="w-48 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-accent-main to-accent-mutual loading-shimmer"
+                className="h-full rounded-full bg-gradient-to-r from-accent-main via-accent-mutual to-amber-500 loading-shimmer"
                 style={{ width: '100%' }}
               />
             </div>

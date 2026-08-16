@@ -292,7 +292,7 @@ export default function SettingsPage() {
           {activeSection === 'appearance' && (
             <SectionCard icon="palette" title="Giao diện">
               <SettingRow icon="dark_mode" label="Chế độ tối" description="Giảm mỏi mắt khi dùng ban đêm">
-                <Toggle id="toggle-dark-mode" checked={isDark} onChange={toggleDarkMode} />
+                <Toggle id="toggle-dark-mode" checked={isDark} onChange={(_checked, e) => toggleDarkMode(e)} />
               </SettingRow>
               <SettingRow icon="format_size" label="Cỡ chữ">
                 <div className="flex items-center gap-0.5">

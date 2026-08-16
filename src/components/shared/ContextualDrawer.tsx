@@ -32,17 +32,20 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
 
   return (
     <div
-      className={`fixed sm:relative inset-x-0 bottom-0 z-40 sm:z-auto transition-all duration-300 ease-out flex flex-col ${
+      className={`fixed sm:relative inset-x-0 bottom-0 z-40 sm:z-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${
         isExpanded ? 'h-[80vh]' : 'h-[44vh] sm:h-auto'
-      } max-h-[85vh] bg-surface-card/95 backdrop-blur-md sm:backdrop-blur-none border-t sm:border border-border-light/80 dark:border-border-dark/80 rounded-t-3xl sm:rounded-2xl shadow-2xl sm:shadow-md overflow-hidden`}
+      } max-h-[85vh] bg-surface-card/95 backdrop-blur-md sm:backdrop-blur-none border-t sm:border border-border-light/80 dark:border-border-dark/80 rounded-t-3xl sm:rounded-2xl shadow-2xl sm:shadow-md overflow-hidden motion-gpu animate-slide-up`}
       role="region"
       aria-label={title}
     >
       {/* Drag Handle & Header */}
       <div className="flex-shrink-0 px-4 pt-3 pb-2.5 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-container-low/80 select-none">
         {/* Mobile Handle bar */}
-        <div className="flex justify-center sm:hidden pb-2">
-          <div className="w-10 h-1 rounded-full bg-border-light dark:bg-border-dark" />
+        <div
+          className="flex justify-center sm:hidden pb-2 cursor-grab active:cursor-grabbing"
+          onClick={() => setIsExpanded((prev) => !prev)}
+        >
+          <div className="w-10 h-1.5 rounded-full bg-border-light dark:bg-border-dark transition-transform hover:scale-110 active:scale-95" />
         </div>
 
         <div className="flex items-center justify-between gap-2">
@@ -51,7 +54,9 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
               <h3 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark truncate">
                 {title}
               </h3>
-              {badge && <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badgeClass}`}>{badge}</span>}
+              {badge && (
+                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badgeClass}`}>{badge}</span>
+              )}
             </div>
             {subtitle && (
               <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark truncate mt-0.5">
@@ -65,17 +70,19 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
             <button
               type="button"
               onClick={() => setIsExpanded((prev) => !prev)}
-              className="p-1 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark sm:hidden"
+              className="p-1.5 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark sm:hidden spring-press"
               title={isExpanded ? 'Thu nhỏ' : 'Mở rộng'}
             >
-              <span className="material-icons-round text-base">{isExpanded ? 'unfold_less' : 'unfold_more'}</span>
+              <span className="material-icons-round text-base transition-transform duration-200">
+                {isExpanded ? 'unfold_less' : 'unfold_more'}
+              </span>
             </button>
 
             {/* Close Button */}
             <button
               type="button"
               onClick={onClose}
-              className="p-1 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark transition-colors"
+              className="p-1.5 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark transition-colors spring-press"
               title="Đóng ngăn kéo"
             >
               <span className="material-icons-round text-base">close</span>

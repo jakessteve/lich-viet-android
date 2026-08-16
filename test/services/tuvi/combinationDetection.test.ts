@@ -75,6 +75,34 @@ describe('detectDoiCung', () => {
       expect(detectDoiCung(detectDoiCung(i))).toBe(i);
     }
   });
+
+  it('safely normalizes out-of-range and negative indices without throwing', () => {
+    expect(detectDoiCung(-1)).toBe(5); // -1 normalized to 11 -> đối cung is 5
+    expect(detectDoiCung(12)).toBe(6); // 12 normalized to 0 -> đối cung is 6
+    expect(detectDoiCung(NaN)).toBe(6); // NaN normalized to 0 -> 6
+  });
+});
+
+describe('detectNhiHopPalace', () => {
+  it('returns 1 for Tý (0)', () => {
+    expect(detectNhiHopPalace(0)).toBe(1);
+  });
+
+  it('returns 0 for Sửu (1)', () => {
+    expect(detectNhiHopPalace(1)).toBe(0);
+  });
+
+  it('is reflexive', () => {
+    for (let i = 0; i < 12; i++) {
+      expect(detectNhiHopPalace(detectNhiHopPalace(i))).toBe(i);
+    }
+  });
+
+  it('safely normalizes out-of-range and negative indices without throwing', () => {
+    expect(detectNhiHopPalace(-1)).toBe(2); // -1 normalized to 11 -> 2
+    expect(detectNhiHopPalace(12)).toBe(1); // 12 normalized to 0 -> 1
+    expect(detectNhiHopPalace(NaN)).toBe(1); // NaN normalized to 0 -> 1
+  });
 });
 
 // ── Star Extraction ───────────────────────────────────────────

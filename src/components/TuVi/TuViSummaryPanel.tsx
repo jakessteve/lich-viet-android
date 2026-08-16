@@ -167,7 +167,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
           <div className="rounded-2xl border border-gold/40 bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/60 p-4 space-y-2.5 shadow-sm">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg">account_tree</span>
+                <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg" aria-hidden="true">account_tree</span>
                 <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
                   Cây Phân Loại Lá Số
                 </h4>
@@ -201,7 +201,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
             <div className="surface-card relative overflow-hidden p-4 sm:p-5 shadow-sm space-y-3.5 border-gold/40 dark:border-gold-dark/40 bg-gradient-to-br from-gold/10 via-surface-subtle-light/80 to-surface-container-low dark:from-gold-dark/10 dark:via-surface-subtle-dark/80 dark:to-surface-elevated-dark/50">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-xl animate-pulse">
+                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-xl animate-glow-breathe" aria-hidden="true">
                     timeline
                   </span>
                   <div>
@@ -225,10 +225,10 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                     setSelectedDaiHanIndex(currentDaiHanIndex);
                     setActiveTab('daiHan');
                   }}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-gold-light dark:text-gold-dark hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-gold-light dark:text-gold-dark hover:underline cursor-pointer interactive-press"
                 >
                   Khám phá 12 Đại hạn
-                  <span className="material-icons-round text-sm">chevron_right</span>
+                  <span className="material-icons-round text-sm" aria-hidden="true">chevron_right</span>
                 </button>
               </div>
 
@@ -489,10 +489,10 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
 
               {/* MODE 1: Cơ bản (Simple & Accessible) */}
               {daiHanViewMode === 'simple' && (
-                <div className="space-y-3.5 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark animate-fade-in">
+                <div className="space-y-3.5 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark page-enter-smooth">
                   <div className="rounded-xl bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 border border-border-light/40 dark:border-border-dark/40 p-4 space-y-2.5">
                     <div className="flex items-center gap-2 font-bold text-gold-light dark:text-gold-dark text-sm">
-                      <span className="material-icons-round text-base">auto_awesome</span>
+                      <span className="indicator-pip bg-gold" aria-hidden="true" />
                       Tổng Quan Dòng Vận 10 Năm
                     </div>
                     <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
@@ -516,7 +516,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                   <div className="grid gap-3 sm:grid-cols-2">
                     <div className="rounded-xl bg-good/5 dark:bg-good-dark/5 border border-good/25 dark:border-good-dark/25 p-3.5 space-y-2">
                       <div className="flex items-center gap-1.5 font-bold text-good dark:text-good-dark text-xs sm:text-sm">
-                        <span className="material-icons-round text-base">work</span>
+                        <span className="indicator-pip-sm bg-good" aria-hidden="true" />
                         Sự Nghiệp & Tài Lộc
                       </div>
                       <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs sm:text-sm">
@@ -526,7 +526,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
 
                     <div className="rounded-xl bg-info/5 dark:bg-info-dark/5 border border-info/25 dark:border-info-dark/25 p-3.5 space-y-2">
                       <div className="flex items-center gap-1.5 font-bold text-info dark:text-info-dark text-xs sm:text-sm">
-                        <span className="material-icons-round text-base">favorite</span>
+                        <span className="indicator-pip-sm bg-info" aria-hidden="true" />
                         Gia Đạo, Tình Cảm & Thể Trạng
                       </div>
                       <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs sm:text-sm">
@@ -537,7 +537,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
 
                   <div className="rounded-xl bg-gold/10 dark:bg-gold-dark/10 border border-gold/30 dark:border-gold-dark/30 p-3.5 space-y-1.5">
                     <div className="flex items-center gap-1.5 font-bold text-gold-light dark:text-gold-dark text-xs sm:text-sm">
-                      <span className="material-icons-round text-base">lightbulb</span>
+                      <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                       Chiến Lược Hành Động Trọng Tâm
                     </div>
                     <p className="text-text-primary-light dark:text-text-primary-dark font-medium text-xs sm:text-sm">
@@ -547,13 +547,13 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                 </div>
               )}
 
-              {/* MODE 2: Chuyên sâu (Advanced & Technical) (Item 4: Tam Tài 1-column layout) */}
+              {/* MODE 2: Chuyên sâu (Advanced & Technical) */}
               {daiHanViewMode === 'advanced' && (
-                <div className="grid gap-3.5 lg:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark animate-fade-in">
+                <div className="grid gap-3.5 lg:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark page-enter-smooth">
                   {/* 1. Bố Cục Tọa Thủ & Tam Phương Tứ Chính */}
                   <div className="rounded-xl bg-gold/5 dark:bg-gold-dark/5 border border-gold/25 dark:border-gold-dark/25 p-3.5 space-y-2">
                     <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
-                      <span className="material-icons-round text-sm">stars</span>
+                      <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                       Bố Cục Tọa Thủ & Tam Phương Tứ Chính
                     </div>
                     <p className="text-text-secondary-light dark:text-text-secondary-dark font-medium">
@@ -601,10 +601,10 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                     )}
                   </div>
 
-                  {/* 2. Đánh Giá Tam Tài (Item 4: Clean 1-column Vertical Stack) */}
+                  {/* 2. Đánh Giá Tam Tài */}
                   <div className="rounded-xl bg-purple/5 dark:bg-purple-dark/5 border border-purple/25 dark:border-purple-dark/25 p-3.5 space-y-2.5">
                     <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
-                      <span className="material-icons-round text-sm">balance</span>
+                      <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
                       Đánh Giá Tam Tài (Thiên Thời – Địa Lợi – Nhân Hòa)
                     </div>
                     <div className="space-y-2.5">
@@ -663,7 +663,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                   {/* 3. Các Cách Cục & Điểm Nhấn Nổi Bật */}
                   <div className="rounded-xl bg-good/5 dark:bg-good-dark/5 border border-good/25 dark:border-good-dark/25 p-3.5 space-y-2">
                     <div className="font-bold text-good dark:text-good-dark text-xs flex items-center gap-1.5">
-                      <span className="material-icons-round text-sm">auto_awesome</span>
+                      <span className="indicator-pip-sm bg-good" aria-hidden="true" />
                       Cách Cục & Điểm Nhấn Nổi Bật ({selectedDaiHan.prominentPatterns.length})
                     </div>
                     {selectedDaiHan.prominentPatterns.length === 0 ? (
@@ -694,7 +694,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                   {/* 4. Lộ Trình 10 Năm & Dự Báo Toàn Diện */}
                   <div className="rounded-xl bg-info/5 dark:bg-info-dark/5 border border-info/25 dark:border-info-dark/25 p-3.5 space-y-2.5">
                     <div className="font-bold text-info dark:text-info-dark text-xs flex items-center gap-1.5">
-                      <span className="material-icons-round text-sm">trending_up</span>
+                      <span className="indicator-pip-sm bg-info" aria-hidden="true" />
                       Lộ Trình 10 Năm & Dự Báo Toàn Diện
                     </div>
 
@@ -729,11 +729,11 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
       )}
 
       {activeTab === 'phiTinh' && (
-        <div className="space-y-4">
+        <div className="space-y-4 page-enter-smooth">
           {/* Executive Synthesis Card */}
           <div className="surface-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-gold space-y-2">
             <div className="flex items-center gap-2">
-              <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg">hub</span>
+              <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg" aria-hidden="true">hub</span>
               <h3 className="font-bold text-sm text-text-primary-light dark:text-text-primary-dark">
                 Luận Giải Động Thái Phi Tinh Toàn Bàn
               </h3>
@@ -748,7 +748,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
             {/* Mệnh Flying */}
             <div className="surface-card rounded-2xl p-4 space-y-2">
               <h4 className="text-xs font-bold uppercase tracking-wider text-gold-light dark:text-gold-dark flex items-center gap-1.5">
-                <span className="material-icons-round text-base">flight_takeoff</span>
+                <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                 Mệnh Xuất Tứ Hóa
               </h4>
               <div className="space-y-1.5">
@@ -773,7 +773,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
             {/* Mệnh Received */}
             <div className="surface-card rounded-2xl p-4 space-y-2">
               <h4 className="text-xs font-bold uppercase tracking-wider text-info dark:text-info-dark flex items-center gap-1.5">
-                <span className="material-icons-round text-base">flight_land</span>
+                <span className="indicator-pip-sm bg-info" aria-hidden="true" />
                 Tứ Hóa Nhập Cung Mệnh
               </h4>
               <div className="space-y-1.5">
@@ -802,7 +802,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
           {/* Tự Hóa Grid */}
           <div className="surface-card rounded-2xl p-4 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-purple dark:text-purple-dark flex items-center gap-1.5">
-              <span className="material-icons-round text-base">sync_alt</span>
+              <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
               Các Vị Trí Tự Hóa Nội Cung ({flyingStars.tuHuaList.length})
             </h4>
             {flyingStars.tuHuaList.length === 0 ? (

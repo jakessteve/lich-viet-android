@@ -60,8 +60,9 @@ export default function MobileDrawer() {
       />
       {/* Drawer panel */}
       <div
-        className={`absolute top-0 left-0 h-full w-64 min-[400px]:w-80 bg-white dark:bg-mystery-surface/95 dark:backdrop-blur-xl shadow-2xl dark:shadow-mystery-purple/10 flex flex-col transition-transform duration-300 ${isClosing ? '-translate-x-full' : 'animate-fade-in-up'}`}
-        style={{ transitionTimingFunction: 'cubic-bezier(0.32, 0.72, 0, 1)' }}
+        className={`absolute top-0 left-0 h-full w-64 min-[400px]:w-80 bg-white dark:bg-mystery-surface/95 dark:backdrop-blur-xl shadow-2xl dark:shadow-mystery-purple/10 flex flex-col transition-transform duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu ${
+          isClosing ? '-translate-x-full' : 'translate-x-0 animate-slide-left'
+        }`}
       >
         {/* Drawer header */}
         <div className="flex items-center justify-between h-14 px-4 border-b border-border-light dark:border-border-dark">

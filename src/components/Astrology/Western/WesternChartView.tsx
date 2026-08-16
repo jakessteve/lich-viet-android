@@ -3,7 +3,6 @@ import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { BirthDataInput, ActionButton, SegmentedControl } from '../../shared';
 import { ExecutiveSnapshotCards } from '../../shared/ExecutiveSnapshotCards';
-import { StoryCardExportModal } from '../../shared/StoryCardExportModal';
 import { WesternNatalChartDisplay } from './WesternNatalChartDisplay';
 import { SavedChartsPicker } from './SavedChartsPicker';
 import { TraditionalChartView } from './TraditionalChartView';
@@ -36,7 +35,6 @@ export const WesternChartView: React.FC = () => {
   );
 
   const [activeTab, setActiveTab] = useState<ViewTab>('natal');
-  const [showStoryModal, setShowStoryModal] = useState(false);
   const snapshotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -78,24 +76,8 @@ export const WesternChartView: React.FC = () => {
             knotDesc={`Cần chú ý lắng nghe thế giới nội tâm của Mặt Trăng ${moonSign}, tránh kìm nén cảm xúc để giữ sự cân bằng Thân - Tâm.`}
             year2026CompassTitle={`Năm Bính Ngọ ${currentYear}`}
             year2026CompassDesc={`Năm thuận lợi cho việc bứt phá năng lực chuyên môn, mở rộng giao thiệp xã hội và thiết lập các mục tiêu lớn.`}
-            onOpenStoryExport={() => setShowStoryModal(true)}
           />
         </div>
-      )}
-
-      {/* Story 9:16 Modal */}
-      {result && (
-        <StoryCardExportModal
-          isOpen={showStoryModal}
-          onClose={() => setShowStoryModal(false)}
-          name="Bản Thân"
-          solarDate={input.birthDate ? input.birthDate.toLocaleDateString('vi-VN') : '1995-05-15'}
-          westernArchetype={`Mặt Trời ${sunSign} · Cung Mọc ${ascSign}`}
-          tuViArchetype="Tử Vi Đẩu Số"
-          vedicArchetype="Chiêm Tinh Vệ Đà"
-          superpower={`Bản mệnh nổi bật với tư duy độc lập của ${sunSign} và phong thái ${ascSign}.`}
-          actionCompass={`Năm ${currentYear}: Tận dụng tối đa năng lực lãnh đạo và tư duy đổi mới để kiến tạo thành công.`}
-        />
       )}
 
       <div className="glass-card">

@@ -1,4 +1,5 @@
 export interface WesternChartInput {
+  name?: string;
   birthDate: Date;
   birthHour: number;
   birthMinute: number;
@@ -12,6 +13,7 @@ export interface WesternChartInput {
   houseSystem?: 'placidus' | 'wholesign' | 'koch' | 'equal' | 'regiomontanus' | 'campanus' | 'porphyry' | 'morinus';
   zodiacMode?: 'tropical' | 'draconic' | 'sidereal';
 }
+
 
 export interface VedicChartInput extends WesternChartInput {
   ayanamsa?: 'lahiri' | 'krishnamurti';

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import { useAppStore } from '../../../stores/appStore';
 
@@ -105,6 +105,7 @@ function col(d: boolean) {
 }
 
 export const WesternWheelChart: React.FC<{ result: WesternChartResult }> = ({ result }) => {
+  const [activePlanet, setActivePlanet] = useState<string | null>(null);
   const dark = useAppStore((s) => s.isDark);
   const co = useMemo(() => col(dark), [dark]);
   const si = dark ? SD : SC;
@@ -155,14 +156,20 @@ export const WesternWheelChart: React.FC<{ result: WesternChartResult }> = ({ re
         if (!pA || !pB) return null;
         const a = xy(R_PLANET, pA.a),
           b = xy(R_PLANET, pB.a);
-        return { t: asp.type, x1: a.x, y1: a.y, x2: b.x, y2: b.y };
+        return { t: asp.type, x1: a.x, y1: a.y, x2: b.x, y2: b.y, planetA: asp.planetA, planetB: asp.planetB };
       })
       .filter(Boolean);
   }, [result, pl]);
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }} data-western-chart-export>
-      <svg viewBox={`0 0 ${S} ${S}`} style={{ width: '100%', maxWidth: S }} role="img" aria-label="Western Birth Chart">
+      <svg
+        viewBox={`0 0 ${S} ${S}`}
+        style={{ width: '100%', maxWidth: S }}
+        className="animate-orbital-settle motion-gpu"
+        role="img"
+        aria-label="Western Birth Chart"
+      >
         <rect x={0} y={0} width={S} height={S} fill={co.bg} rx="8" />
 
         <circle cx={CX} cy={CY} r={R} fill="none" stroke={co.ln} strokeWidth="1.5" strokeOpacity={0.5} />
@@ -309,6 +316,10 @@ export const WesternWheelChart: React.FC<{ result: WesternChartResult }> = ({ re
         {/* aspect lines */}
         {al.map((l, i) => {
           if (!l) return null;
+          const isConnected = activePlanet ? l.planetA === activePlanet || l.planetB === activePlanet : false;
+          const strokeOpacity = activePlanet ? (isConnected ? 0.95 : 0.12) : 0.5;
+          const strokeWidth = isConnected ? 1.6 : 0.7;
+
           return (
             <line
               key={'al' + i}
@@ -317,9 +328,10 @@ export const WesternWheelChart: React.FC<{ result: WesternChartResult }> = ({ re
               x2={l.x2}
               y2={l.y2}
               stroke={AC[l.t] || '#999'}
-              strokeWidth="0.7"
-              strokeOpacity={0.5}
+              strokeWidth={strokeWidth}
+              strokeOpacity={strokeOpacity}
               strokeDasharray={l.t === 'opposition' ? '4,2' : l.t === 'trine' ? undefined : '2,2'}
+              className="transition-[stroke-opacity,stroke-width] duration-200"
             />
           );
         })}
@@ -332,8 +344,29 @@ export const WesternWheelChart: React.FC<{ result: WesternChartResult }> = ({ re
             m = Math.floor((p.di - d) * 60)
               .toString()
               .padStart(2, '0');
+          const isSelected = activePlanet === p.b;
+
           return (
-            <g key={p.b}>
+            <g
+              key={p.b}
+              className="cursor-pointer transition-transform duration-150 active:scale-95"
+              onMouseEnter={() => setActivePlanet(p.b)}
+              onMouseLeave={() => setActivePlanet(null)}
+              onClick={() => setActivePlanet(activePlanet === p.b ? null : p.b)}
+            >
+              {isSelected && (
+                <circle
+                  cx={ps.x}
+                  cy={ps.y}
+                  r="18"
+                  fill="none"
+                  stroke={GC[p.b] || '#d4a843'}
+                  strokeWidth="1"
+                  strokeDasharray="2 2"
+                  className="animate-spin"
+                  style={{ animationDuration: '6s' }}
+                />
+              )}
               <text
                 x={ps.x}
                 y={ps.y - 5}

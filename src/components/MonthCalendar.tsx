@@ -61,6 +61,8 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   const shouldCollapse = collapseOnMobile && isCompact;
   const [isExpanded, setIsExpanded] = useState(!shouldCollapse);
 
+  const [slideDir, setSlideDir] = useState<'left' | 'right' | null>(null);
+
   // Sync expanded state when navigating between tabs (prop changes)
   useEffect(() => {
     if (shouldCollapse) {
@@ -71,10 +73,12 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
   }, [shouldCollapse]);
 
   const nextMonth = () => {
+    setSlideDir('left');
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
   const prevMonth = () => {
+    setSlideDir('right');
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   };
 
@@ -86,20 +90,16 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
     return Math.floor(idx / 7);
   }, [daysWithScore, selectedDate]);
 
-  // When collapsed, show the row containing the selected date
-  const collapsedRowDays = useMemo(() => {
-    const start = selectedRowIndex * 7;
-    return daysWithScore.slice(start, start + 7);
-  }, [daysWithScore, selectedRowIndex]);
-
   // Month/Year dropdown selection handlers
   const handleMonthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newMonth = parseInt(e.target.value, 10);
+    setSlideDir(newMonth > currentDate.getMonth() ? 'left' : 'right');
     setCurrentDate(new Date(currentDate.getFullYear(), newMonth, 1));
   };
 
   const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newYear = parseInt(e.target.value, 10);
+    setSlideDir(newYear > currentDate.getFullYear() ? 'left' : 'right');
     setCurrentDate(new Date(newYear, currentDate.getMonth(), 1));
   };
 
@@ -264,58 +264,55 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
           ))}
         </div>
 
-        {isExpanded ? (
-          /* Full calendar grid */
-          <div className="flex flex-col rounded-lg border border-border-light/60 dark:border-border-dark/60 bg-surface-container-low dark:bg-surface-elevated-dark overflow-visible">
-            {Array.from({ length: Math.ceil(daysWithScore.length / 7) }).map((_, rowIdx) => {
-              const rowDays = daysWithScore.slice(rowIdx * 7, rowIdx * 7 + 7);
-              const isFirst = rowIdx === 0;
-              const isLast = rowIdx === Math.ceil(daysWithScore.length / 7) - 1;
-              return (
-                <div key={rowIdx} className={`grid grid-cols-7 gap-px w-full ${rowIdx > 0 ? 'mt-px' : ''}`}>
-                  {rowDays.map((day, colIdx) => {
-                    let roundedClass = '';
+        {/* Month Content with directional slide and smooth row transitions */}
+        <div
+          key={`${currentDate.getFullYear()}-${currentDate.getMonth()}`}
+          className={`flex flex-col rounded-lg border border-border-light/60 dark:border-border-dark/60 bg-surface-container-low dark:bg-surface-elevated-dark overflow-hidden motion-gpu ${
+            slideDir === 'left' ? 'animate-slide-left' : slideDir === 'right' ? 'animate-slide-right' : ''
+          }`}
+        >
+          {Array.from({ length: Math.ceil(daysWithScore.length / 7) }).map((_, rowIdx) => {
+            const isSelectedRow = rowIdx === selectedRowIndex;
+            const isVisibleRow = isExpanded || isSelectedRow;
+            const rowDays = daysWithScore.slice(rowIdx * 7, rowIdx * 7 + 7);
+            const isFirst = rowIdx === 0;
+            const isLast = rowIdx === Math.ceil(daysWithScore.length / 7) - 1;
+
+            if (!isVisibleRow) return null;
+
+            return (
+              <div
+                key={rowIdx}
+                className={`grid grid-cols-7 gap-px w-full transition-[opacity,transform] duration-200 ${
+                  rowIdx > 0 && isVisibleRow ? 'mt-px' : ''
+                }`}
+              >
+                {rowDays.map((day, colIdx) => {
+                  let roundedClass = '';
+                  if (isExpanded) {
                     if (isFirst && colIdx === 0) roundedClass = 'rounded-tl-lg';
                     else if (isFirst && colIdx === 6) roundedClass = 'rounded-tr-lg';
                     else if (isLast && colIdx === 0) roundedClass = 'rounded-bl-lg';
                     else if (isLast && colIdx === 6) roundedClass = 'rounded-br-lg';
+                  } else {
+                    if (colIdx === 0) roundedClass = 'rounded-l-lg';
+                    else if (colIdx === 6) roundedClass = 'rounded-r-lg';
+                  }
 
-                    return (
-                      <DayCell
-                        key={rowIdx * 7 + colIdx}
-                        data={day}
-                        isSelected={selectedDate.toDateString() === day.fullDate.toDateString()}
-                        onClick={onSelectDate}
-                        roundedClass={roundedClass}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </div>
-        ) : (
-          /* Collapsed: show only the row containing the selected date */
-          <div className="flex flex-col rounded-lg border border-border-light/60 dark:border-border-dark/60 bg-surface-container-low dark:bg-surface-elevated-dark overflow-visible">
-            <div className="grid grid-cols-7 gap-px w-full">
-              {collapsedRowDays.map((day, colIdx) => {
-                let roundedClass = '';
-                if (colIdx === 0) roundedClass = 'rounded-l-lg';
-                else if (colIdx === 6) roundedClass = 'rounded-r-lg';
-
-                return (
-                  <DayCell
-                    key={`collapsed-${colIdx}`}
-                    data={day}
-                    isSelected={selectedDate.toDateString() === day.fullDate.toDateString()}
-                    onClick={onSelectDate}
-                    roundedClass={roundedClass}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        )}
+                  return (
+                    <DayCell
+                      key={rowIdx * 7 + colIdx}
+                      data={day}
+                      isSelected={selectedDate.toDateString() === day.fullDate.toDateString()}
+                      onClick={onSelectDate}
+                      roundedClass={roundedClass}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
 
         {/* Calendar Legend — all color-coded indicators */}
         <div className="mt-2 border-t border-border-light/50 pt-2 text-xs text-text-secondary-light select-none dark:border-border-dark/50 dark:text-text-secondary-dark">

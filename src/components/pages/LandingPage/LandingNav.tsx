@@ -13,7 +13,7 @@ export default function LandingNav() {
         </span>
         <div className="flex items-center gap-2">
           <IconButton
-            onClick={toggleDarkMode}
+            onClick={(e) => toggleDarkMode(e)}
             className="rounded-full text-text-secondary-light/70 dark:text-text-secondary-dark/70"
             icon={isDark ? 'light_mode' : 'dark_mode'}
             label="Chuyển chế độ sáng/tối"

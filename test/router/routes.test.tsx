@@ -63,35 +63,17 @@ describe('Route Persistence & Native Navigation', () => {
   });
 
   describe('LandingRoute', () => {
-    it('redirects to saved route when isNativePlatform is true', async () => {
-      vi.mocked(Capacitor.isNativePlatform).mockReturnValue(true);
-      localStorage.setItem(LAST_ACTIVE_ROUTE_KEY, '/app/tu-vi');
-
+    it('renders LandingPage for root / route', async () => {
       render(
         <MemoryRouter initialEntries={['/']}>
           <Routes>
             <Route path="/" element={<LandingRoute />} />
-            <Route path="/app/tu-vi" element={<div>Tu Vi Page Target</div>} />
           </Routes>
         </MemoryRouter>,
       );
 
-      expect(screen.getByText('Tu Vi Page Target')).toBeInTheDocument();
-    });
-
-    it('redirects to /app/am-lich on native platform when no prior route was saved', async () => {
-      vi.mocked(Capacitor.isNativePlatform).mockReturnValue(true);
-
-      render(
-        <MemoryRouter initialEntries={['/']}>
-          <Routes>
-            <Route path="/" element={<LandingRoute />} />
-            <Route path="/app/am-lich" element={<div>Am Lich Default Target</div>} />
-          </Routes>
-        </MemoryRouter>,
-      );
-
-      expect(screen.getByText('Am Lich Default Target')).toBeInTheDocument();
+      expect(await screen.findByRole('heading', { level: 1 }, { timeout: 4000 })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: /Trải nghiệm ngay/i }, { timeout: 4000 })).toBeInTheDocument();
     });
   });
 });

@@ -1,15 +1,34 @@
 /* Lunar Event Manager Styles */
 
+@keyframes lunarFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes lunarSlideUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 .lunar-event-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
-  animation: fadeIn 0.2s ease;
+  animation: lunarFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
 }
 
 .lunar-event-modal {
@@ -22,7 +41,9 @@
   display: flex;
   flex-direction: column;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  animation: slideUp 0.3s ease;
+  animation: lunarSlideUp 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, 0, 0);
+  will-change: transform, opacity;
 }
 
 .dark .lunar-event-modal {

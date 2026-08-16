@@ -108,6 +108,16 @@
   --text-body: 0.875rem;
   --text-caption: 0.75rem;
   --text-micro: 0.625rem;
+
+  /* ── 120Hz / 60Hz Motion Tokens ───────────────────────── */
+  --ease-spring-snappy: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring-gentle: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --ease-accelerate: cubic-bezier(0.4, 0, 1, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 240ms;
+  --duration-slow: 360ms;
 }
 
 @layer base {
@@ -115,9 +125,6 @@
     @apply bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark font-sans antialiased;
     line-height: 1.6;
     letter-spacing: 0;
-    transition:
-      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 250ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Noto Sans font-feature-settings for improved readability */
@@ -127,7 +134,7 @@
       'liga' 1;
   }
 
-  /* Mystery ambient background for dark mode with buttery smooth opacity cross-fade */
+  /* Mystery ambient background for dark mode */
   body::before {
     content: '';
     position: fixed;
@@ -135,7 +142,6 @@
     pointer-events: none;
     z-index: 0;
     opacity: 0;
-    transition: opacity 300ms cubic-bezier(0.16, 1, 0.3, 1);
     background:
       radial-gradient(ellipse 80% 60% at 20% 30%, rgba(124, 58, 237, 0.08) 0%, transparent 70%),
       radial-gradient(ellipse 60% 50% at 80% 70%, rgba(37, 99, 235, 0.07) 0%, transparent 70%),
@@ -146,12 +152,18 @@
     opacity: 1;
   }
 
+  .dark {
+    --color-surface-container-low: #1e1e35;
+    --color-surface-container-lowest: #141424;
+  }
+
   *:focus-visible {
     outline: 2px solid rgba(79, 70, 229, 0.5);
     outline-offset: 2px;
     border-radius: 4px;
   }
 }
+
 
 @layer components {
   /* ── Semantic Surface Primitives ─────────────────────────── */
@@ -160,27 +172,25 @@
   .surface-elevated {
     @apply rounded-2xl overflow-hidden;
     transition:
-      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      background-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(255, 255, 255, 0.88);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(229, 229, 234, 0.6);
     box-shadow:
       0 8px 32px rgba(0, 0, 0, 0.06),
       0 2px 14px rgba(0, 0, 0, 0.02);
-    transform: translateZ(0);
-    backface-visibility: hidden;
   }
 
   .dark .surface-card,
   .dark .glass-card,
   .dark .surface-elevated {
-    background: rgba(26, 26, 46, 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(26, 26, 46, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-top-color: rgba(255, 255, 255, 0.1);
     border-left-color: rgba(255, 255, 255, 0.08);
@@ -195,16 +205,16 @@
   .surface-default {
     @apply rounded-xl border border-border-light/40 dark:border-border-dark/35 bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/45;
     transition:
-      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1);
+      background-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .surface-control {
     @apply rounded-lg border border-border-light/40 dark:border-border-dark/40 bg-white/85 dark:bg-surface-elevated-dark/60 text-text-primary-light dark:text-text-primary-dark;
     transition:
-      background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+      background-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 180ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 180ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .surface-interactive {
@@ -641,36 +651,36 @@
   @keyframes fadeScale {
     from {
       opacity: 0;
-      transform: scale(0.97) translateY(6px);
+      transform: translate3d(0, 4px, 0);
     }
     to {
       opacity: 1;
-      transform: scale(1) translateY(0);
+      transform: translate3d(0, 0, 0);
     }
   }
 
   /* ── Entrance Utilities ────────────────────────────────── */
 
   .animate-fade-in-up {
-    animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
 
   .animate-scale-in {
-    animation: scaleIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: scaleIn 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
 
   .animate-slide-up {
-    animation: slideInUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: slideInUp 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
 
   .animate-fade-scale {
-    animation: fadeScale 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: fadeScale 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
@@ -716,6 +726,39 @@
 
   .dark .hover-lift:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .page-enter-smooth {
+    animation: pageEnterSmooth 0.18s cubic-bezier(0.16, 1, 0.3, 1) both;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+  }
+
+  @keyframes pageEnterSmooth {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .interactive-press {
+    transition: transform 120ms cubic-bezier(0.2, 0, 0, 1), box-shadow 120ms ease;
+  }
+
+  .interactive-press:active {
+    transform: scale(0.98);
+  }
+
+  .indicator-pip {
+    @apply inline-block w-2 h-2 rounded-full shrink-0;
+  }
+
+  .indicator-pip-sm {
+    @apply inline-block w-1.5 h-1.5 rounded-full shrink-0;
   }
 
   .btn-interact {
@@ -927,75 +970,32 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SMOOTH THEME TRANSITIONS (Zero Flash / Native View Transitions)
+   SMOOTH THEME TRANSITIONS (Fast Circular GPU View Transition)
    ═══════════════════════════════════════════════════════════ */
+
+/* Suppress individual CSS transition interpolations while View Transition runs to eliminate frame-drop/paint thrashing */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: none !important;
+}
+
 ::view-transition-old(root),
 ::view-transition-new(root) {
-  animation-duration: 250ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation: none;
+  mix-blend-mode: normal;
+  display: block;
 }
 
 ::view-transition-old(root) {
-  animation-name: theme-fade-out;
+  z-index: 1;
 }
 
 ::view-transition-new(root) {
-  animation-name: theme-fade-in;
+  z-index: 9999;
 }
 
-@keyframes theme-fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes theme-fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-html.theme-transitioning,
-html.theme-transitioning body,
-html.theme-transitioning .surface-card,
-html.theme-transitioning .glass-card,
-html.theme-transitioning .glass-card-strong,
-html.theme-transitioning .glass-nav,
-html.theme-transitioning .card-surface,
-html.theme-transitioning .surface-panel,
-html.theme-transitioning .surface-control,
-html.theme-transitioning .card-subtle,
-html.theme-transitioning .card-subtle-sm,
-html.theme-transitioning .card-quote,
-html.theme-transitioning .card-highlight,
-html.theme-transitioning header,
-html.theme-transitioning nav,
-html.theme-transitioning button,
-html.theme-transitioning input,
-html.theme-transitioning select,
-html.theme-transitioning textarea,
-html.theme-transitioning a,
-html.theme-transitioning p,
-html.theme-transitioning span,
-html.theme-transitioning h1,
-html.theme-transitioning h2,
-html.theme-transitioning h3,
-html.theme-transitioning h4,
-html.theme-transitioning h5,
-html.theme-transitioning h6 {
-  transition:
-    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1) !important;
-  transition-delay: 0s !important;
-}
 
 /* ═══════════════════════════════════════════════════════════
    CELESTIAL MICRO-ANIMATIONS & INTERACTION REFINEMENTS
@@ -1030,6 +1030,95 @@ html.theme-transitioning h6 {
   }
 }
 
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes orbitalSettle {
+  from {
+    transform: rotate(-10deg) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: rotate(0deg) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes haoDraw {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scaleX(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleX(1);
+  }
+}
+
+@keyframes haoMovingPulse {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.8), 0 0 24px rgba(217, 119, 6, 0.5);
+  }
+}
+
+@keyframes phiTinhFlow {
+  0% {
+    stroke-dashoffset: 60;
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes radarExpand {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translate3d(24px, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translate3d(-24px, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
 .animate-celestial-pulse {
   animation: celestial-pulse 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -1040,6 +1129,56 @@ html.theme-transitioning h6 {
 
 .animate-stagger-item {
   animation: fadeSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-orbital-settle {
+  animation: orbitalSettle 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+}
+
+.animate-hao-draw {
+  animation: haoDraw 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-hao-pulse {
+  animation: haoMovingPulse 2.4s ease-in-out infinite;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-slide-right {
+  animation: slideRight 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-radar-expand {
+  animation: radarExpand 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transform-origin: center;
+}
+
+.animate-phi-tinh-flow {
+  animation: phiTinhFlow 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ── 120Hz GPU Compositor Utilities ─────────────────────── */
+.motion-gpu {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.spring-press {
+  transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 140ms ease;
+  will-change: transform;
+}
+
+.spring-press:active {
+  transform: scale(0.95);
+}
+
+.spring-bounce {
+  transition: transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 240ms ease;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1059,12 +1198,20 @@ html.theme-transitioning h6 {
   .animate-scale-in,
   .animate-slide-up,
   .animate-fade-scale,
+  .page-enter-smooth,
   .animate-bounce,
   .animate-spin,
   .animate-glow-pulse,
   .animate-celestial-pulse,
   .animate-glow-breathe,
   .animate-stagger-item,
+  .animate-orbital-settle,
+  .animate-hao-draw,
+  .animate-hao-pulse,
+  .animate-slide-left,
+  .animate-slide-right,
+  .animate-radar-expand,
+  .animate-phi-tinh-flow,
   .loading-shimmer,
   .animate-shimmer,
   .glass-shimmer::after {
@@ -1075,7 +1222,9 @@ html.theme-transitioning h6 {
 
   .hover-lift:hover,
   .btn-interact:hover,
-  .btn-interact:active {
+  .btn-interact:active,
+  .interactive-press:active,
+  .spring-press:active {
     transform: none !important;
   }
 }

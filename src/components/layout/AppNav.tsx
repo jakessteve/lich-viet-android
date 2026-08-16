@@ -10,7 +10,6 @@ import UserMenu from '../shared/UserMenu';
 export default function AppNav() {
   const isDark = useAppStore((s) => s.isDark);
   const toggleDarkMode = useAppStore((s) => s.toggleDarkMode);
-  const [darkModeFlash, setDarkModeFlash] = useState(false);
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -62,9 +61,9 @@ export default function AppNav() {
               <button
                 key={link.id}
                 onClick={() => link.enabled && handleTabChange(link.id)}
-                className={`relative flex items-center gap-1.5 px-3 lg:px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
+                className={`relative flex items-center gap-1.5 px-3 lg:px-4 py-1.5 rounded-full text-sm font-medium transition-[background-color,color,box-shadow,transform] duration-200 spring-press motion-gpu ${
                   activeTab === link.id && !isFullPage
-                    ? 'bg-white dark:bg-transparent dark:nav-glass-pill text-text-primary-light dark:text-white shadow-sm dark:shadow-none'
+                    ? 'bg-white dark:bg-transparent dark:nav-glass-pill text-text-primary-light dark:text-white shadow-sm dark:shadow-none font-semibold'
                     : link.enabled
                       ? 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white hover:bg-white/5'
                       : 'text-gray-400 dark:text-gray-600 cursor-default'
@@ -74,7 +73,8 @@ export default function AppNav() {
                 aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
               >
                 <span
-                  className={`material-icons-round text-base ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : ''}`}
+                  className={`material-icons-round text-base transition-colors duration-200 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : ''}`}
+                  aria-hidden="true"
                 >
                   {link.icon}
                 </span>
@@ -85,7 +85,7 @@ export default function AppNav() {
                   </span>
                 )}
                 {activeTab === link.id && !isFullPage && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-gold dark:bg-gold-dark transition-all duration-300" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-gold dark:bg-gold-dark transition-[transform,opacity] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 )}
               </button>
             ))}
@@ -96,12 +96,8 @@ export default function AppNav() {
             {/* Dark mode toggle */}
             <button
               id="tour-theme-toggle"
-              className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400 transition-transform duration-300 ${darkModeFlash ? 'scale-110 rotate-180' : ''}`}
-              onClick={() => {
-                toggleDarkMode();
-                setDarkModeFlash(true);
-                setTimeout(() => setDarkModeFlash(false), 300);
-              }}
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 dark:text-gray-400"
+              onClick={(e) => toggleDarkMode(e)}
               aria-label="Chuyển chế độ sáng/tối"
             >
               <span className="material-icons-round text-xl">{isDark ? 'light_mode' : 'dark_mode'}</span>

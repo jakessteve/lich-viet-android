@@ -61,14 +61,6 @@ const ChiemTinhPage = React.lazy(() =>
 // ══════════════════════════════════════════════════════════
 
 export function LandingRoute() {
-  const isNative = Capacitor.isNativePlatform();
-
-  // On native Android/iOS app, always keep/restore current in-app route instead of showing web marketing landing page
-  if (isNative) {
-    const targetRoute = getSavedRoute();
-    return <Navigate to={targetRoute} replace />;
-  }
-
   return (
     <Suspense fallback={<LoadingState />}>
       <LandingPage />
@@ -92,7 +84,7 @@ export function renderModuleRoutes() {
         element={
           <ErrorBoundary viewName="Âm Lịch">
             <Suspense fallback={<LoadingState />}>
-              <div className="animate-fade-scale">
+              <div className="page-enter-smooth">
                 <AmLichPage />
               </div>
             </Suspense>
@@ -106,7 +98,7 @@ export function renderModuleRoutes() {
         element={
           <ErrorBoundary viewName="Ngày Tốt">
             <Suspense fallback={<LoadingState />}>
-              <div className="animate-fade-scale">
+              <div className="page-enter-smooth">
                 <ElectionPage />
               </div>
             </Suspense>
@@ -117,7 +109,7 @@ export function renderModuleRoutes() {
         path="gieo-que"
         element={
           <ErrorBoundary viewName="Gieo Quẻ — Mai Hoa & Tam Thức">
-            <div className="animate-fade-scale">
+            <div className="page-enter-smooth">
               <Suspense fallback={<LoadingState />}>
                 <GieoQueView />
               </Suspense>
@@ -133,7 +125,7 @@ export function renderModuleRoutes() {
         path="tu-vi"
         element={
           <ErrorBoundary viewName="Tử Vi — Tử Vi Đẩu Số">
-            <div className="animate-fade-scale">
+            <div className="page-enter-smooth">
               <Suspense fallback={<LoadingState />}>
                 <TuViPage />
               </Suspense>
@@ -145,7 +137,7 @@ export function renderModuleRoutes() {
         path="chiem-tinh"
         element={
           <ErrorBoundary viewName="Chiêm Tinh Học">
-            <div className="animate-fade-scale">
+            <div className="page-enter-smooth">
               <Suspense fallback={<LoadingState />}>
                 <ChiemTinhPage />
               </Suspense>
@@ -157,7 +149,7 @@ export function renderModuleRoutes() {
         path="chiem-tinh/*"
         element={
           <ErrorBoundary viewName="Chiêm Tinh Học">
-            <div className="animate-fade-scale">
+            <div className="page-enter-smooth">
               <Suspense fallback={<LoadingState />}>
                 <ChiemTinhPage />
               </Suspense>

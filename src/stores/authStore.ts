@@ -86,7 +86,11 @@ function getStoredUsers(): StoredUser[] {
 }
 
 function saveStoredUsers(users: StoredUser[]): void {
-  localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+  try {
+    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
+  } catch {
+    // Ignore storage failures in private mode / quota edge cases.
+  }
 }
 
 function saveAuthUser(user: User | null): void {

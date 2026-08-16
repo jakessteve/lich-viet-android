@@ -40,7 +40,7 @@ export function SegmentedControl<T extends string>({
 }: SegmentedControlProps<T>) {
   return (
     <div
-      className={cx('surface-card p-1.5 flex gap-1 overflow-x-auto hide-scrollbar flex-nowrap', className)}
+      className={cx('surface-card p-1.5 flex gap-1 overflow-x-auto hide-scrollbar flex-nowrap motion-gpu', className)}
       role="tablist"
       aria-label={ariaLabel}
     >
@@ -55,7 +55,7 @@ export function SegmentedControl<T extends string>({
             aria-current={active ? 'page' : undefined}
             onClick={() => onChange(option.id)}
             className={cx(
-              'flex-1 min-w-max flex-shrink-0 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 min-h-11 active:scale-[0.98]',
+              'flex-1 min-w-max flex-shrink-0 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-[background-color,color,transform,box-shadow] duration-200 min-h-11 spring-press',
               active
                 ? activeTone[tone]
                 : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-white/5',
@@ -82,7 +82,7 @@ export function IconButton({ icon, label, iconClassName, className, type = 'butt
     <button
       type={type}
       className={cx(
-        'inline-flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-lg text-text-secondary-light dark:text-text-secondary-dark transition-colors hover:bg-surface-container-low dark:hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-gold/35 dark:focus:ring-gold-dark/30',
+        'inline-flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-lg text-text-secondary-light dark:text-text-secondary-dark transition-[background-color,color,transform] duration-150 hover:bg-surface-container-low dark:hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-gold/35 dark:focus:ring-gold-dark/30 spring-press',
         className,
       )}
       aria-label={label}
@@ -90,7 +90,7 @@ export function IconButton({ icon, label, iconClassName, className, type = 'butt
     >
       <span
         className={cx(
-          'material-icons-round block text-xl leading-none transition-transform duration-300',
+          'material-icons-round block text-xl leading-none transition-transform duration-200',
           iconClassName,
         )}
         aria-hidden="true"
@@ -118,7 +118,7 @@ export function ActionButton({
     <button
       type={type}
       className={cx(
-        'inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-bold transition-all duration-300 btn-interact',
+        'inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-bold transition-[background-color,color,transform,box-shadow] duration-200 spring-press motion-gpu',
         variant === 'primary'
           ? 'bg-gradient-to-r from-mystery-deep to-indigo-950 text-gold-light ring-1 ring-gold/20 hover:shadow-xl hover:shadow-mystery-deep/20 dark:from-gold dark:to-amber-500 dark:text-indigo-950 dark:ring-0 dark:hover:shadow-gold-dark/25'
           : 'text-text-secondary-light/70 hover:text-text-primary-light dark:text-text-secondary-dark/70 dark:hover:text-white',
@@ -138,10 +138,56 @@ export function ActionButton({
 
 export interface ToggleProps {
   checked: boolean;
-  onChange: (checked: boolean) => void;
+  onChange: (checked: boolean, event?: React.MouseEvent) => void;
   id: string;
   className?: string;
   disabled?: boolean;
+}
+
+export interface BadgeProps {
+  children: React.ReactNode;
+  variant?: 'gold' | 'good' | 'bad' | 'purple' | 'orange' | 'info' | 'neutral' | 'astral';
+  size?: 'sm' | 'md';
+  pip?: boolean;
+  className?: string;
+}
+
+const badgeVariants: Record<string, string> = {
+  gold: 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark border-gold/30 dark:border-gold-dark/25',
+  good: 'bg-good/10 dark:bg-good-dark/10 text-good dark:text-good-dark border-good/30 dark:border-good-dark/25',
+  bad: 'bg-bad/10 dark:bg-bad-dark/10 text-bad dark:text-bad-dark border-bad/30 dark:border-bad-dark/25',
+  purple: 'bg-purple/10 dark:bg-purple-dark/10 text-purple dark:text-purple-dark border-purple/30 dark:border-purple-dark/25',
+  orange: 'bg-orange/10 dark:bg-orange-dark/10 text-orange dark:text-orange-dark border-orange/30 dark:border-orange-dark/25',
+  info: 'bg-info/10 dark:bg-info-dark/10 text-info dark:text-info-dark border-info/30 dark:border-info-dark/25',
+  astral: 'bg-astral-primary/10 dark:bg-astral-primary-dark/15 text-astral-primary dark:text-astral-primary-dark border-astral-border-light dark:border-astral-border-dark',
+  neutral: 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border-border-light dark:border-border-dark/40',
+};
+
+const pipVariants: Record<string, string> = {
+  gold: 'bg-gold dark:bg-gold-dark',
+  good: 'bg-good dark:bg-good-dark',
+  bad: 'bg-bad dark:bg-bad-dark',
+  purple: 'bg-purple dark:bg-purple-dark',
+  orange: 'bg-orange dark:bg-orange-dark',
+  info: 'bg-info dark:bg-info-dark',
+  astral: 'bg-astral-primary dark:bg-astral-primary-dark',
+  neutral: 'bg-text-secondary-light/40 dark:text-text-secondary-dark/40',
+};
+
+export function Badge({ children, variant = 'neutral', size = 'sm', pip = false, className }: BadgeProps) {
+  return (
+    <span
+      className={cx(
+        'inline-flex items-center gap-1.5 font-semibold rounded-full border tracking-wide select-none transition-colors duration-150',
+        size === 'sm' ? 'px-2.5 py-0.5 text-xs' : 'px-3 py-1 text-sm',
+        badgeVariants[variant],
+        className,
+      )}
+    >
+      {pip && <span className={cx('indicator-pip-sm animate-glow-breathe', pipVariants[variant])} aria-hidden="true" />}
+      {children}
+    </span>
+  );
 }
 
 export function Toggle({ checked, onChange, id, className, disabled = false }: ToggleProps) {
@@ -151,18 +197,18 @@ export function Toggle({ checked, onChange, id, className, disabled = false }: T
       role="switch"
       aria-checked={checked}
       disabled={disabled}
-      onClick={() => onChange(!checked)}
+      onClick={(e) => onChange(!checked, e)}
       className={cx(
-        'relative w-14 h-8 min-h-11 rounded-full transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed',
+        'relative w-14 h-8 min-h-11 rounded-full transition-[background-color,border-color,box-shadow,transform] duration-200 spring-press motion-gpu disabled:opacity-40 disabled:cursor-not-allowed',
         checked
           ? 'bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 shadow-sm shadow-gold/20 dark:shadow-gold-dark/25'
-          : 'bg-gray-200 dark:bg-gray-600',
+          : 'bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light dark:border-border-dark/60',
         className,
       )}
     >
       <span
         className={cx(
-          'absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-white shadow-sm transition-transform duration-300 ease-out',
+          'absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-white dark:bg-gray-200 shadow-sm transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu',
           checked ? 'translate-x-6' : 'translate-x-0',
         )}
       />
@@ -187,7 +233,10 @@ export function SettingRow({ icon, label, description, children, className }: Se
       )}
     >
       <div className="flex items-start gap-3 flex-1 min-w-0">
-        <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5 shrink-0">
+        <span
+          className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5 shrink-0"
+          aria-hidden="true"
+        >
           {icon}
         </span>
         <div className="min-w-0">
@@ -226,7 +275,7 @@ export function Select({ value, onChange, options, id, className, disabled = fal
       disabled={disabled}
       onChange={(e) => onChange(e.target.value)}
       className={cx(
-        'text-xs px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/40 dark:border-border-dark/40 text-text-primary-light dark:text-text-primary-dark focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 outline-none transition-all disabled:opacity-40',
+        'text-xs px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/40 dark:border-border-dark/40 text-text-primary-light dark:text-text-primary-dark focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 outline-none transition-colors disabled:opacity-40 spring-press',
         className,
       )}
     >
@@ -240,7 +289,7 @@ export function Select({ value, onChange, options, id, className, disabled = fal
 }
 
 export interface SectionCardProps {
-  icon: string;
+  icon?: string;
   title: string;
   children: React.ReactNode;
   className?: string;
@@ -250,7 +299,11 @@ export function SectionCard({ icon, title, children, className }: SectionCardPro
   return (
     <div className={cx('surface-card p-5 sm:p-6 rounded-2xl', className)}>
       <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-border-light/40 dark:border-border-dark/40">
-        <span className="material-icons-round text-xl text-gold dark:text-gold-dark">{icon}</span>
+        {icon && (
+          <span className="material-icons-round text-xl text-gold dark:text-gold-dark" aria-hidden="true">
+            {icon}
+          </span>
+        )}
         <h2 className="text-base font-bold tracking-tight">{title}</h2>
       </div>
       <div>{children}</div>

@@ -118,7 +118,7 @@ const SynergyRadar: React.FC<SynergyRadarProps> = ({ data, axes = DEFAULT_AXES, 
           fill="url(#radarGradient)"
           stroke="var(--color-gold, #d4a574)"
           strokeWidth={1.5}
-          className="animate-fade-scale"
+          className="animate-radar-expand motion-gpu"
         />
 
         {/* Data points */}
@@ -130,10 +130,12 @@ const SynergyRadar: React.FC<SynergyRadarProps> = ({ data, axes = DEFAULT_AXES, 
               key={l.key}
               cx={pt.x}
               cy={pt.y}
-              r={3}
+              r={3.5}
               fill="var(--color-gold, #d4a574)"
               stroke="white"
-              strokeWidth={1}
+              strokeWidth={1.5}
+              className="animate-scale-in motion-gpu"
+              style={{ animationDelay: `${i * 60}ms` }}
             />
           );
         })}

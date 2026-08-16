@@ -274,4 +274,23 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
     expect(result.actionableGuidanceVi).toContain('Đại Hải Thủy');
     expect(result.actionableGuidanceVi).toContain('Thủy Nhị Cục');
   });
+
+  it('produces identical result when precomputedCombinations is provided vs computed inline', () => {
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
+    const menhPalace = makeTestPalace({
+      id: 0,
+      name: 'Mệnh',
+      chi: 'Dần',
+      isMenh: true,
+      chinhTinh: [{ name: 'Tử Vi', type: 'chinhTinh', nguHanh: 'Thổ', brightness: 'Miếu' }],
+    });
+    allPalaces[0] = menhPalace;
+
+    const inlineResult = interpretPalace(menhPalace, allPalaces);
+    const precomputedResult = interpretPalace(menhPalace, allPalaces, undefined, []);
+
+    expect(precomputedResult.palaceId).toBe(inlineResult.palaceId);
+    expect(precomputedResult.majorStarsAnalysisVi).toBe(inlineResult.majorStarsAnalysisVi);
+    expect(precomputedResult.coreThemeVi).toBe(inlineResult.coreThemeVi);
+  });
 });

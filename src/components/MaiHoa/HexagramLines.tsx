@@ -31,17 +31,23 @@ function HexagramLine({
   isYang,
   isMoving,
   lineNumber,
+  animate = true,
 }: {
   readonly isYang: boolean;
   readonly isMoving: boolean;
   readonly lineNumber: number;
+  readonly animate?: boolean;
 }): React.ReactElement {
-  const baseColor = isMoving ? 'bg-amber-500 dark:bg-amber-400' : 'bg-gray-700 dark:bg-gray-300';
+  const baseColor = isMoving
+    ? 'bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 shadow-sm shadow-amber-500/30 dark:from-amber-400 dark:to-yellow-300'
+    : 'bg-gray-700 dark:bg-gray-300';
 
   const lineGraphic = isYang ? (
     <div className="relative flex items-center w-full" role="img">
       <div
-        className={`w-full rounded-sm ${baseColor} transition-colors duration-200`}
+        className={`w-full rounded-sm ${baseColor} transition-[background-color,box-shadow] duration-200 ${
+          isMoving ? 'animate-hao-pulse' : ''
+        }`}
         style={{ height: LINE_HEIGHT }}
       />
     </div>
@@ -49,11 +55,15 @@ function HexagramLine({
     <div className="relative flex items-center w-full" role="img">
       <div className="flex w-full items-center" style={{ gap: BROKEN_GAP }}>
         <div
-          className={`flex-1 rounded-sm ${baseColor} transition-colors duration-200`}
+          className={`flex-1 rounded-sm ${baseColor} transition-[background-color,box-shadow] duration-200 ${
+            isMoving ? 'animate-hao-pulse' : ''
+          }`}
           style={{ height: LINE_HEIGHT }}
         />
         <div
-          className={`flex-1 rounded-sm ${baseColor} transition-colors duration-200`}
+          className={`flex-1 rounded-sm ${baseColor} transition-[background-color,box-shadow] duration-200 ${
+            isMoving ? 'animate-hao-pulse' : ''
+          }`}
           style={{ height: LINE_HEIGHT }}
         />
       </div>
@@ -62,11 +72,16 @@ function HexagramLine({
 
   return (
     <div
-      className="flex items-center w-full"
+      className={`flex items-center w-full ${animate ? 'animate-hao-draw motion-gpu' : ''}`}
+      style={animate ? { animationDelay: `${(lineNumber - 1) * 55}ms` } : undefined}
       aria-label={`Hào ${lineNumber}: ${isYang ? 'Dương' : 'Âm'}${isMoving ? ' (Hào Động)' : ''}`}
     >
       {lineGraphic}
-      {isMoving && <span className="text-amber-500 dark:text-amber-400 text-[10px] leading-none ml-1 shrink-0">●</span>}
+      {isMoving && (
+        <span className="text-amber-500 dark:text-amber-400 text-[10px] leading-none ml-1 shrink-0 animate-pulse">
+          ●
+        </span>
+      )}
     </div>
   );
 }

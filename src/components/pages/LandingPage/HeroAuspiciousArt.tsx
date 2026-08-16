@@ -10,8 +10,6 @@ export default function HeroAuspiciousArt() {
   const uid = rawId.replace(/[^a-zA-Z0-9_-]/g, '');
   const goldGradId = `heroGoldGrad-${uid}`;
   const softGoldId = `heroSoftGold-${uid}`;
-  const maskGradId = `heroMaskGrad-${uid}`;
-  const maskId = `heroMask-${uid}`;
   const solidYaoId = `solidYao-${uid}`;
   const brokenYaoId = `brokenYao-${uid}`;
   const constGroup1Id = `constellationGroup1-${uid}`;
@@ -35,26 +33,20 @@ export default function HeroAuspiciousArt() {
   return (
     <div
       className="w-full h-full relative flex items-center justify-center pointer-events-none select-none"
-      style={{ contain: 'strict' }}
+      style={{
+        maskImage: 'radial-gradient(circle at 50% 50%, black 80%, rgba(0,0,0,0.5) 94%, transparent 100%)',
+        WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 80%, rgba(0,0,0,0.5) 94%, transparent 100%)',
+      }}
     >
-      {/* Main Celestial Board with native hardware-accelerated SVG mask */}
+      {/* Main Celestial Board with native GPU-accelerated SVG */}
       <svg
         className="absolute inset-0 w-full h-full"
         viewBox="0 0 800 800"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        style={{ willChange: 'transform', transform: 'translate3d(0,0,0)' }}
       >
         <defs>
-          <radialGradient id={maskGradId} cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
-            <stop offset="82%" stopColor="#ffffff" stopOpacity="1" />
-            <stop offset="94%" stopColor="#ffffff" stopOpacity="0.6" />
-            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
-          </radialGradient>
-          <mask id={maskId}>
-            <rect x="0" y="0" width="800" height="800" fill={`url(#${maskGradId})`} />
-          </mask>
-
           <linearGradient id={goldGradId} x1="0" y1="0" x2="800" y2="800" gradientUnits="userSpaceOnUse">
             <stop stopColor="#d4a843" stopOpacity="0.9" />
             <stop offset="0.5" stopColor="#8c6a1d" stopOpacity="0.4" />
@@ -102,7 +94,7 @@ export default function HeroAuspiciousArt() {
           </g>
         </defs>
 
-        <g mask={`url(#${maskId})`}>
+        <g>
           {/* Outer ceremonial framing rings */}
           <circle cx="400" cy="400" r="370" stroke={`url(#${goldGradId})`} strokeWidth="1" opacity="0.12" />
           <circle
@@ -117,7 +109,14 @@ export default function HeroAuspiciousArt() {
           <circle cx="400" cy="400" r="315" stroke={`url(#${softGoldId})`} strokeWidth="1" opacity="0.12" />
 
           {/* 2. BIG BOLD BÁT QUÁI RING */}
-          <g style={{ animation: 'spin 90s linear infinite', transformOrigin: 'center' }}>
+          <g
+            style={{
+              animation: 'spin 90s linear infinite',
+              transformBox: 'view-box',
+              transformOrigin: '400px 400px',
+              willChange: 'transform',
+            }}
+          >
             {trigrams.map((val, i) => {
               const isInnerSolid = (val & 1) !== 0;
               const isMidSolid = (val & 2) !== 0;
@@ -153,8 +152,15 @@ export default function HeroAuspiciousArt() {
           </g>
 
           {/* 3. CHÒM SAO (Constellations Void Filler) */}
-          <g style={{ transform: 'scale(1)', transformOrigin: 'center' }}>
-            <g style={{ animation: 'spin 105s linear infinite reverse', transformOrigin: 'center' }}>
+          <g style={{ transform: 'scale(1)', transformOrigin: '400px 400px' }}>
+            <g
+              style={{
+                animation: 'spin 105s linear infinite reverse',
+                transformBox: 'view-box',
+                transformOrigin: '400px 400px',
+                willChange: 'transform',
+              }}
+            >
               {[0, 72, 144, 216, 288].map((angle) => (
                 <use
                   key={`c1-${angle}`}
@@ -198,7 +204,14 @@ export default function HeroAuspiciousArt() {
           <circle cx="400" cy="400" r="72" fill={`url(#${goldGradId})`} opacity="0.08" />
 
           {/* Rotating Taiji Symbol */}
-          <g style={{ animation: 'spin 120s linear infinite', transformOrigin: 'center' }}>
+          <g
+            style={{
+              animation: 'spin 120s linear infinite',
+              transformBox: 'view-box',
+              transformOrigin: '400px 400px',
+              willChange: 'transform',
+            }}
+          >
             <circle cx="400" cy="400" r="54" stroke={`url(#${goldGradId})`} strokeWidth="3" fill="none" opacity="0.9" />
             <circle cx="400" cy="400" r="59" stroke={`url(#${softGoldId})`} strokeWidth="1" strokeDasharray="2 4" />
 
@@ -221,3 +234,4 @@ export default function HeroAuspiciousArt() {
     </div>
   );
 }
+

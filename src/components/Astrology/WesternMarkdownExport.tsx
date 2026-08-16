@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useAstrologyStore } from '../../stores/astrologyStore';
 import type { WesternChartResult } from '../../services/astrology/westernCalculator';
-import { formatWesternChartAsMarkdown } from '../../services/astrology/markdownFormatter';
 import { formatWesternNatalAsMarkdown } from '../../services/astrology/westernNatalMarkdown';
+import { formatVedicChartAsMarkdown } from '../../services/astrology/vedicMarkdownFormatter';
 import { downloadChartAsImage, buildChartImageFilename } from '../../services/astrology/chartImageExport';
 import { saveWesternNatalChart } from '../../services/astrology/westernNatalSave';
 import { useAppStore } from '../../stores/appStore';
@@ -17,6 +17,7 @@ interface Props {
 export const WesternMarkdownExport: React.FC<Props> = ({ system }) => {
   const result = useAstrologyStore((s) => (system === 'vedic' ? s.vedicResult : s.westernResult));
   const westernNatalResult = useAstrologyStore((s) => s.westernNatalResult);
+  const vedicInput = useAstrologyStore((s) => s.vedicInput);
   const isDark = useAppStore((s) => s.isDark);
   const [isDownloadingImage, setIsDownloadingImage] = useState(false);
   const [savingNatalFormat, setSavingNatalFormat] = useState<'svg' | 'png' | null>(null);
@@ -58,9 +59,19 @@ export const WesternMarkdownExport: React.FC<Props> = ({ system }) => {
   const md =
     system === 'western'
       ? formatWesternNatalAsMarkdown(westernNatalResult as NonNullable<typeof westernNatalResult>)
-      : formatWesternChartAsMarkdown(result as WesternChartResult, system);
+      : formatVedicChartAsMarkdown(result as WesternChartResult, {
+          birthDate:
+            vedicInput?.birthDate instanceof Date
+              ? vedicInput.birthDate
+              : vedicInput?.birthDate
+                ? new Date(vedicInput.birthDate)
+                : undefined,
+          name: vedicInput?.name,
+          ayanamsa: vedicInput?.ayanamsa,
+        });
   const selector = system === 'vedic' ? '[data-vedic-chart-export]' : '[data-western-chart-export]';
   const prefix = system === 'vedic' ? 'vedic' : 'western';
+
 
   const handleCopy = async () => {
     try {

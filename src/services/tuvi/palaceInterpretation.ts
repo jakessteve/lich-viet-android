@@ -6,7 +6,7 @@
  * and Tam Phương Tứ Chính without bloating bundle size.
  */
 
-import type { TuViPalace, TuViCenterInfo } from '../../types/tuvi';
+import type { TuViPalace, TuViCenterInfo, TuViCombination } from '../../types/tuvi';
 import {
   detectTamHopPalaces,
   detectDoiCung,
@@ -31,6 +31,7 @@ export interface PalaceInterpretationResult {
     description: string;
     synthesisVi: string;
   };
+  allCachCuc?: TuViCombination[];
   tuHoaAnalysisVi: string[];
   auxiliaryAndMaleficVi: string;
   truongSinhAnalysisVi?: string;
@@ -616,6 +617,7 @@ export function interpretPalace(
   palace: TuViPalace,
   allPalaces: TuViPalace[],
   centerInfo?: TuViCenterInfo,
+  precomputedCombinations?: TuViCombination[],
 ): PalaceInterpretationResult {
   const domain = PALACE_DOMAIN_THEMES[palace.name] ?? {
     role: palace.name,
@@ -737,12 +739,16 @@ export function interpretPalace(
 
   // 9. Blended Cách Cục (Combination)
   let cachCucAnalysisVi: PalaceInterpretationResult['cachCucAnalysisVi'];
+  let allCachCuc: TuViCombination[] = [];
   try {
-    const combinations = detectCombinations(allPalaces);
-    const relevantComb = combinations.find(
+    const combinations = precomputedCombinations ?? detectCombinations(allPalaces);
+    allCachCuc = combinations.filter(
       (c) => c.involvedCung.includes(palace.name) || (palace.isMenh && c.involvedCung.includes('Mệnh')),
     );
-    if (relevantComb) {
+    if (allCachCuc.length > 0) {
+      // Pick highest strength combination as primary
+      const sortedComb = [...allCachCuc].sort((a, b) => b.strength - a.strength);
+      const relevantComb = sortedComb[0];
       const purityLabel =
         relevantComb.purity === 'thuần'
           ? 'Thuần Cách (Đắc địa toàn vẹn)'
@@ -758,8 +764,10 @@ export function interpretPalace(
           `${relevantComb.nameHanViet}: ${relevantComb.detectionReason}. ${relevantComb.note}`,
       };
     }
-  } catch {
-    // Graceful fallback if combination detection fails
+  } catch (err) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn('[TuVi] Combination detection failed for palace', palace.name, err);
+    }
   }
 
   // 10. Actionable Guidance (Personalized, Human-Oriented & Empathetic)
@@ -775,6 +783,7 @@ export function interpretPalace(
     coreThemeVi: `${domain.role} — ${domain.focus}.${cuongCungTag}`,
     majorStarsAnalysisVi,
     cachCucAnalysisVi,
+    allCachCuc: allCachCuc.length > 0 ? allCachCuc : undefined,
     tuHoaAnalysisVi,
     auxiliaryAndMaleficVi,
     truongSinhAnalysisVi,

@@ -110,7 +110,7 @@ function CollapsibleCard({
                 }
               }
         }
-        className={`card-header flex items-center justify-between w-full text-left transition-colors ${forceOpen ? '' : 'cursor-pointer hover:bg-gray-50/50 dark:hover:bg-white/3'}`}
+        className={`card-header flex items-center justify-between w-full text-left transition-colors ${forceOpen ? '' : 'cursor-pointer hover:bg-gray-50/50 dark:hover:bg-white/3 spring-press motion-gpu'}`}
         aria-expanded={effectiveOpen}
       >
         <div className="flex items-center gap-2 min-w-0">
@@ -149,7 +149,7 @@ function CollapsibleCard({
           )}
           {!forceOpen && (
             <span
-              className={`material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-300 ${effectiveOpen ? 'rotate-180' : ''}`}
+              className={`material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] ${effectiveOpen ? 'rotate-180' : ''}`}
               aria-hidden="true"
             >
               expand_more

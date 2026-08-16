@@ -55,8 +55,7 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
       aria-label={ariaLabel}
       aria-selected={isSelected}
       className={`
-        aspect-square min-h-[2.75rem] sm:min-h-[3rem] md:min-h-[3.25rem] flex flex-col items-center justify-center transition-colors duration-150 cursor-pointer relative group
-        active:scale-95
+        aspect-square min-h-[2.75rem] sm:min-h-[3rem] md:min-h-[3.25rem] flex flex-col items-center justify-center transition-[background-color,color,box-shadow] duration-150 cursor-pointer relative group spring-press motion-gpu
         ${isToday ? 'bg-amber-50/70 dark:bg-amber-900/20 day-cell-today' : 'bg-surface-light dark:bg-surface-dark'}
         ${roundedClass}
         ${

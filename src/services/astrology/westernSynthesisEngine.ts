@@ -305,3 +305,6 @@ export function synthesizeWesternNatalChart(chart: SwissNatalChartResult): Weste
     actionableGuidanceVi,
   };
 }
+
+export const synthesizeWesternReading = synthesizeWesternNatalChart;
+
