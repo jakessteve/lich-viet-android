@@ -18,6 +18,7 @@ import {
 } from '../services/personalization';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import CollapsibleCard from './CollapsibleCard';
+import { Sparkles, Smile, Frown, Meh, ArrowRight, Clock, TrendingUp } from 'lucide-react';
 import { Badge } from './shared';
 
 interface DetailedDayViewProps {
@@ -197,7 +198,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
         className="rounded-2xl bg-gradient-to-r from-gold/5 via-amber-50/50 to-gold/5 dark:from-gold-dark/5 dark:via-amber-900/10 dark:to-gold-dark/5 border border-gold/15 dark:border-gold-dark/15 px-5 py-4"
       >
         <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
-          <span className="material-icons-round text-gold dark:text-gold-dark text-xl mt-0.5">auto_awesome</span>
+          <Sparkles className="h-5 w-5 text-gold dark:text-gold-dark mt-0.5 shrink-0" />
           <div className="text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark flex-1 space-y-0.5">
             <div className="font-bold">
               {dayOfWeekAbbr}, {solarDateStr}
@@ -262,22 +263,15 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
           }`}
         >
           <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
-            <span
-              className={`material-icons-round text-xl mt-0.5 ${
-                personalScore.actionScore >= 2
-                  ? 'text-purple dark:text-purple-dark'
-                  : personalScore.actionScore < 0
-                    ? 'text-orange dark:text-orange-dark'
-                    : 'text-text-secondary-light dark:text-text-secondary-dark'
-              }`}
-              aria-hidden="true"
-            >
-              {personalScore.actionScore >= 2
-                ? 'sentiment_very_satisfied'
-                : personalScore.actionScore < 0
-                  ? 'sentiment_very_dissatisfied'
-                  : 'sentiment_neutral'}
-            </span>
+            <div className="mt-0.5 shrink-0">
+              {personalScore.actionScore >= 2 ? (
+                <Smile className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+              ) : personalScore.actionScore < 0 ? (
+                <Frown className="h-5 w-5 text-orange-600 dark:text-orange-400" />
+              ) : (
+                <Meh className="h-5 w-5 text-text-secondary-light dark:text-text-secondary-dark" />
+              )}
+            </div>
             <div className="text-sm leading-relaxed">
               <div className="font-bold text-text-primary-light dark:text-text-primary-dark">
                 Điểm cá nhân hoá:{' '}
@@ -387,7 +381,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
             >
               Tìm ngày tốt quanh ngày này
-              <span className="material-icons-round text-base">arrow_forward</span>
+              <ArrowRight className="h-4 w-4" />
             </button>
           </div>
         </CollapsibleCard>
@@ -517,7 +511,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               className="text-sm font-semibold text-good dark:text-good-dark hover:underline inline-flex items-center gap-1 interactive-press"
             >
               Tìm ngày giờ tốt trong 14 ngày tới
-              <span className="material-icons-round text-base" aria-hidden="true">arrow_forward</span>
+              <ArrowRight className="h-4 w-4" />
             </button>
           </div>
         </div>
@@ -531,9 +525,9 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
         headerRight={
           <button
             onClick={() => setSortByScore((prev) => !prev)}
-            className="flex items-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-[background-color,color,transform] duration-150 spring-press motion-gpu"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-[background-color,color,transform] duration-150 spring-press motion-gpu"
           >
-            <span className="material-icons-round text-sm" aria-hidden="true">{sortByScore ? 'schedule' : 'trending_up'}</span>
+            {sortByScore ? <Clock className="h-3.5 w-3.5" /> : <TrendingUp className="h-3.5 w-3.5" />}
             {sortByScore ? 'Theo giờ' : 'Giờ tốt trước'}
           </button>
         }

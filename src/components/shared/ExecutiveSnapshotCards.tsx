@@ -6,6 +6,7 @@
  */
 
 import React from 'react';
+import { Sparkles, ShieldCheck, Zap, Compass } from 'lucide-react';
 
 interface ExecutiveSnapshotCardsProps {
   name: string;
@@ -32,11 +33,11 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
       <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-light/40 dark:border-border-dark/40 pb-3.5">
         <div className="space-y-0.5">
           <div className="flex items-center gap-2">
-            <span className="material-icons-round text-amber-500 text-lg">auto_awesome</span>
+            <Sparkles className="h-5 w-5 text-amber-500" />
             <h3 className="text-base sm:text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
               Tóm Lược Bản Mệnh
             </h3>
-            <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold-light dark:text-gold-dark uppercase tracking-wider">
+            <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold dark:text-gold-dark uppercase tracking-wider">
               {name}
             </span>
           </div>
@@ -51,7 +52,7 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
         {/* 1. Core Trait Card */}
         <div className="group relative overflow-hidden rounded-2xl border border-emerald-500/30 bg-emerald-500/5 dark:bg-emerald-950/20 dark:border-emerald-500/30 p-4 transition-all duration-200 hover:border-emerald-500/50 hover:shadow-lg hover:shadow-emerald-500/10 min-w-0 flex flex-col justify-start">
           <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 font-bold text-xs uppercase tracking-wider min-w-0">
-            <span className="material-icons-round text-base shrink-0">military_tech</span>
+            <ShieldCheck className="h-4 w-4 shrink-0" />
             <span className="truncate">Bản Sắc Cốt Lõi</span>
           </div>
           <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug break-words min-w-0">
@@ -65,7 +66,7 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
         {/* 2. Caution & Growth Card */}
         <div className="group relative overflow-hidden rounded-2xl border border-rose-500/30 bg-rose-500/5 dark:bg-rose-950/20 dark:border-rose-500/30 p-4 transition-all duration-200 hover:border-rose-500/50 hover:shadow-lg hover:shadow-rose-500/10 min-w-0 flex flex-col justify-start">
           <div className="flex items-center gap-2 text-rose-700 dark:text-rose-300 font-bold text-xs uppercase tracking-wider min-w-0">
-            <span className="material-icons-round text-base shrink-0">bolt</span>
+            <Zap className="h-4 w-4 shrink-0" />
             <span className="truncate">Điểm Cần Lưu Tâm & Hóa Giải</span>
           </div>
           <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug break-words min-w-0">
@@ -79,7 +80,7 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
         {/* 3. 2026 Actionable Direction Card */}
         <div className="group relative overflow-hidden rounded-2xl border border-sky-500/30 bg-sky-500/5 dark:bg-sky-950/20 dark:border-sky-500/30 p-4 transition-all duration-200 hover:border-sky-500/50 hover:shadow-lg hover:shadow-sky-500/10 min-w-0 flex flex-col justify-start">
           <div className="flex items-center gap-2 text-sky-700 dark:text-sky-300 font-bold text-xs uppercase tracking-wider min-w-0">
-            <span className="material-icons-round text-base shrink-0">explore</span>
+            <Compass className="h-4 w-4 shrink-0" />
             <span className="truncate">Định Hướng Trọng Tâm 2026</span>
           </div>
           <h4 className="mt-2 text-sm font-bold text-text-primary-light dark:text-text-primary-dark leading-snug break-words min-w-0">
@@ -93,3 +94,5 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
     </section>
   );
 };
+
+export default ExecutiveSnapshotCards;

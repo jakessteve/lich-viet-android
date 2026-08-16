@@ -42,7 +42,7 @@ function getVerdict(pct: number): { text: string; emoji: string; bgGrad: string;
       emoji: '⚖️',
       bgGrad:
         'from-amber-400/15 via-yellow-400/10 to-amber-300/5 dark:from-amber-500/10 dark:via-yellow-600/8 dark:to-amber-900/5',
-      textColor: 'text-amber-600 dark:text-amber-400',
+      textColor: 'text-amber-800 dark:text-amber-300',
     };
   if (pct >= 20)
     return {

@@ -160,7 +160,7 @@ export function formatVedicChartAsMarkdown(
     const gMeta = GRAHA_NAMES[body] ?? { nameVi: body, nameSkt: '', symbol: '★' };
     const signIdx = Math.floor((((p.siderealLongitude % 360) + 360) % 360) / 30);
     const signName = SIGNS_SIDEREAL[signIdx] ?? p.sign;
-    const nakshatraStr = p.nakshatra ? `${p.nakshatra} (P.${(p.pada ?? 0) + 1})` : '—';
+    const nakshatraStr = p.nakshatra ? `${p.nakshatra} (P.${(p.pada ?? 0) + 1})` : '-';
     const rawDignity = computeVedicDignity(p.body, p.siderealLongitude);
     const dignityText = DIGNITY_LABELS_VI[rawDignity] ?? 'Bình hòa';
 
@@ -206,7 +206,7 @@ export function formatVedicChartAsMarkdown(
     linesYogas.push('Lá số sở hữu cấu trúc hành tinh phân bổ đồng đều, không phát hiện tổ hợp cực đoan.');
   } else {
     for (const yoga of detectedYogas) {
-      linesYogas.push(`\n### ${yoga.nameVi} (${yoga.nameSanskrit}) — [${yoga.categoryVi} · Mức độ: ${yoga.severityOrStrength}]`);
+      linesYogas.push(`\n### ${yoga.nameVi} (${yoga.nameSanskrit}) - [${yoga.categoryVi} · Mức độ: ${yoga.severityOrStrength}]`);
       linesYogas.push(`- **Hành tinh & Cung vị**: ${yoga.planetsInvolved.join(' + ')}${yoga.bhavaHouses ? ` tại Nhà ${yoga.bhavaHouses.join(', ')}` : ''}`);
       linesYogas.push(`- **Ý nghĩa cấu trúc**: ${yoga.descriptionVi}`);
       if (yoga.personalizedSynthesisVi) {
@@ -236,7 +236,7 @@ export function formatVedicChartAsMarkdown(
     linesDasha.push('|---|:---:|---|---|---:|:---:|');
 
     for (const period of dashaTimeline.periods) {
-      const currentMarker = period.isCurrent ? '★ **Đang Kích Hoạt**' : '—';
+      const currentMarker = period.isCurrent ? '★ **Đang Kích Hoạt**' : '-';
       linesDasha.push(
         `| ${period.lordVi} | ${period.symbol} | ${period.startYear} – ${period.endYear} | ${period.ageRange} | ${period.durationYears} năm | ${currentMarker} |`,
       );
@@ -262,7 +262,7 @@ export function formatVedicChartAsMarkdown(
 
   // Footer
   parts.push('---');
-  parts.push('*Lá số được tính toán theo hệ tọa độ thiên văn Sidereal Lahiri (Chitra Paksha Ayanamsa) — Hệ thống Jyotish Lịch Việt.*');
+  parts.push('*Lá số được tính toán theo hệ tọa độ thiên văn Sidereal Lahiri (Chitra Paksha Ayanamsa) - Hệ thống Jyotish Lịch Việt.*');
 
   return parts.join('\n\n');
 }

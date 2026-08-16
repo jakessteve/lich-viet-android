@@ -7,6 +7,7 @@ import HolidaysCard from '../Calendar/HolidaysCard';
 import CollapsibleCard from '../CollapsibleCard';
 import { NAP_AM_HANH, STAR_COLORS } from '@/services/tuvi/constants';
 import type { ActiveTab } from '../../router/constants';
+import { Info, ShieldCheck, User } from 'lucide-react';
 
 interface AppSidebarProps {
   activeTab: ActiveTab;
@@ -214,7 +215,7 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
         {activeTab === 'ngay-tot' && (
           <div className="surface-card p-4 rounded-2xl border border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-900/10">
             <div className="flex items-start gap-3 text-sm text-text-primary-light dark:text-text-primary-dark">
-              <span className="material-icons-round text-emerald-600 dark:text-emerald-400 mt-0.5">info</span>
+              <Info className="h-5 w-5 text-emerald-600 dark:text-emerald-400 mt-0.5 shrink-0" />
               <div>
                 <span className="font-semibold block mb-1">Tra cứu Ngày Tốt</span>
                 <span className="text-text-secondary-light dark:text-text-secondary-dark">
@@ -228,9 +229,11 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
         {String(activeTab).startsWith('chiem-tinh') && (
           <div className="surface-card p-4 rounded-2xl border border-indigo-500/30 bg-indigo-50/50 dark:bg-indigo-900/10">
             <div className="flex items-start gap-3 text-sm text-text-primary-light dark:text-text-primary-dark">
-              <span className="material-icons-round text-indigo-600 dark:text-indigo-400 mt-0.5">
-                {isAuthenticated ? 'verified_user' : 'account_circle'}
-              </span>
+              {isAuthenticated ? (
+                <ShieldCheck className="h-5 w-5 text-indigo-600 dark:text-indigo-400 mt-0.5 shrink-0" />
+              ) : (
+                <User className="h-5 w-5 text-indigo-600 dark:text-indigo-400 mt-0.5 shrink-0" />
+              )}
               <div>
                 <span className="font-semibold block mb-1">Chiêm Tinh Học</span>
                 <span className="text-text-secondary-light dark:text-text-secondary-dark">

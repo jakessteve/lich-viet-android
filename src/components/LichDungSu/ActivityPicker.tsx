@@ -45,7 +45,7 @@ const CAT_COLORS: Record<string, { icon: string; ring: string; bg: string; pillB
     ring: 'ring-amber-400/30',
     bg: 'bg-amber-50 dark:bg-amber-900/15',
     pillBg: 'bg-amber-100 dark:bg-amber-900/25',
-    pillText: 'text-amber-700 dark:text-amber-300',
+    pillText: 'text-amber-800 dark:text-amber-300',
   },
   cyan: {
     icon: 'text-cyan-500',

@@ -8,6 +8,7 @@
  */
 
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { Sparkles, Calendar, AlertCircle, CheckCircle2, AlertTriangle, Info } from 'lucide-react';
 import { synthesizeTamThuc, type TamThucSynthesis, type MethodSummary } from '@lich-viet/core/tamThuc';
 import { getLunarDate } from '@lich-viet/core/calendar';
 import { adjustDateForTyBoundary } from '@lich-viet/core/maihoa';
@@ -15,14 +16,16 @@ import type { CalendarMode } from '../../types/maiHoa';
 import InputForm from '../MaiHoa/InputForm';
 import CrossRefSynthesis from './CrossRefSynthesis';
 import CollapsibleCard from '../CollapsibleCard';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 // ── Constants ──────────────────────────────────────────────────
 
 const VERDICT_COLORS: Record<string, string> = {
-  cat: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/20 border-emerald-200 dark:border-emerald-700/30',
-  hung: 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/15 border-red-200 dark:border-red-700/30',
+  cat: 'text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-700/30',
+  hung: 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-700/30',
   trungBinh:
-    'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/15 border-amber-200 dark:border-amber-700/30',
+    'text-amber-800 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/20 border-amber-200 dark:border-amber-700/30',
 };
 
 // ── Method Detail Card ─────────────────────────────────────────
@@ -43,11 +46,15 @@ function MethodDetailCard({ method }: { method: MethodSummary }) {
       <div className="p-4 space-y-3">
         {/* Verdict badge */}
         <div
-          className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border ${verdictColor}`}
+          className={cn('inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border', verdictColor)}
         >
-          <span className="material-icons-round text-sm">
-            {method.verdict === 'cat' ? 'check_circle' : method.verdict === 'hung' ? 'warning' : 'info'}
-          </span>
+          {method.verdict === 'cat' ? (
+            <CheckCircle2 className="h-3.5 w-3.5" />
+          ) : method.verdict === 'hung' ? (
+            <AlertTriangle className="h-3.5 w-3.5" />
+          ) : (
+            <Info className="h-3.5 w-3.5" />
+          )}
           {method.verdictLabel}
         </div>
 
@@ -98,57 +105,57 @@ export default function TamThucView({ selectedDate }: TamThucViewProps) {
 
   /**
    * Derive the Địa Chi hour index from a 24-hour clock value.
-   * 23–01 = Tý (0), 01–03 = Sửu (1), ..., 21–23 = Hợi (11)
    */
-  const getHourIndex = useCallback((hour: number): number => {
-    return Math.floor(((hour + 1) % 24) / 2);
-  }, []);
+  const getHourIndex = (h: number): number => {
+    return Math.floor(((h + 1) % 24) / 2);
+  };
 
   /**
-   * Time-based divination — uses current hour + selectedDate.
+   * Time-based divination handler.
    */
   const handleDivineByTime = useCallback(
-    (_mode: CalendarMode, _query: string) => {
+    async (_mode: CalendarMode, _query: string) => {
       setErrorMsg('');
+      setIsLoading(true);
       try {
         const now = new Date();
         const currentHour = now.getHours();
         const adjustedDate = adjustDateForTyBoundary(selectedDate, currentHour);
-        const hourIndex = getHourIndex(currentHour);
+        const hourIdx = getHourIndex(currentHour);
 
-        setIsLoading(true);
+        const result = synthesizeTamThuc(adjustedDate, hourIdx);
         setTimeout(() => {
-          const result = synthesizeTamThuc(adjustedDate, hourIndex);
           setSynthesis(result);
           setIsLoading(false);
-        }, 1000);
+        }, 600);
       } catch (err) {
-        setErrorMsg(err instanceof Error ? err.message : 'Lỗi không xác định khi bốc quẻ.');
+        setErrorMsg(err instanceof Error ? err.message : 'Lỗi không xác định khi bốc quẻ Tam Thức.');
+        setIsLoading(false);
       }
     },
-    [selectedDate, getHourIndex],
+    [selectedDate],
   );
 
   /**
-   * Number-based divination — derives hour index from (num1 + num2) % 12.
+   * Number-based divination handler.
    */
   const handleDivineByNumbers = useCallback(
-    (num1: number, num2: number, _mode: CalendarMode, _query: string) => {
+    async (num1: number, _num2: number, _mode: CalendarMode, _query: string) => {
       setErrorMsg('');
+      setIsLoading(true);
       try {
+        const hourIdx = (num1 - 1) % 12;
         const now = new Date();
-        const currentHour = now.getHours();
-        const adjustedDate = adjustDateForTyBoundary(selectedDate, currentHour);
-        const hourIndex = (num1 + num2) % 12;
+        const adjustedDate = adjustDateForTyBoundary(selectedDate, now.getHours());
 
-        setIsLoading(true);
+        const result = synthesizeTamThuc(adjustedDate, hourIdx);
         setTimeout(() => {
-          const result = synthesizeTamThuc(adjustedDate, hourIndex);
           setSynthesis(result);
           setIsLoading(false);
-        }, 1000);
+        }, 600);
       } catch (err) {
         setErrorMsg(err instanceof Error ? err.message : 'Lỗi không xác định khi bốc quẻ.');
+        setIsLoading(false);
       }
     },
     [selectedDate],
@@ -157,23 +164,23 @@ export default function TamThucView({ selectedDate }: TamThucViewProps) {
   return (
     <div className="space-y-6">
       {/* ── Input Card (reuses Mai Hoa InputForm) ── */}
-      <div className="card-surface">
-        <div className="card-header">
-          <div className="text-center w-full space-y-1">
-            <h2 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark flex items-center justify-center gap-2">
-              <span className="material-icons-round text-xl text-purple-500 dark:text-purple-400">auto_awesome</span>
+      <Card className="rounded-2xl border border-border-light/60 dark:border-border-dark/60 overflow-hidden shadow-apple">
+        <CardHeader className="text-center pb-2 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-subtle-light dark:bg-surface-subtle-dark">
+          <div className="flex items-center justify-center gap-2">
+            <Sparkles className="h-5 w-5 text-purple-500 dark:text-purple-400" />
+            <CardTitle className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">
               Tam Thức — Tam Đại Quái Thuật
-            </h2>
-            <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-              Kỳ Môn Độn Giáp · Đại Lục Nhâm · Thái Ất Thần Số — cùng phân tích từ một thời điểm
-            </p>
+            </CardTitle>
           </div>
-        </div>
+          <CardDescription className="text-xs sm:text-sm text-text-secondary-light dark:text-text-secondary-dark">
+            Kỳ Môn Độn Giáp · Đại Lục Nhâm · Thái Ất Thần Số — cùng phân tích từ một thời điểm
+          </CardDescription>
+        </CardHeader>
 
-        <div className="p-4 sm:p-5">
+        <CardContent className="p-4 sm:p-5">
           {/* Lunar date context */}
           <div className="mb-4 text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-2">
-            <span className="material-icons-round text-base">calendar_today</span>
+            <Calendar className="h-4 w-4" />
             <span>
               Âm lịch: ngày{' '}
               <span className="font-bold text-text-primary-light dark:text-text-primary-dark">{lunarDate.day}</span>{' '}
@@ -195,30 +202,25 @@ export default function TamThucView({ selectedDate }: TamThucViewProps) {
             loadingLabel="Đang phân tích Tam Thức..."
             idPrefix="tamThuc"
           />
-        </div>
+        </CardContent>
 
         {/* Error display */}
         {errorMsg && (
           <div
-            className="mx-4 sm:mx-5 mb-4 sm:mb-5 p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-bad dark:text-bad-dark flex items-start gap-2"
+            className="mx-4 sm:mx-5 mb-4 sm:mb-5 p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-red-600 dark:text-red-400 flex items-start gap-2"
             role="alert"
           >
-            <span className="material-icons-round text-base mt-0.5">error</span>
+            <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
             {errorMsg}
           </div>
         )}
-      </div>
+      </Card>
 
       {/* ── Loading State ── */}
       {isLoading && (
-        <div className="card-surface p-8 flex flex-col items-center gap-4 animate-fade-in-up">
+        <Card className="p-8 flex flex-col items-center gap-4 animate-fade-in-up rounded-2xl border border-border-light/60 dark:border-border-dark/60">
           <div className="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
-            <span
-              className="material-icons-round text-3xl text-purple-500 dark:text-purple-400 animate-spin"
-              style={{ animationDuration: '2s' }}
-            >
-              auto_awesome
-            </span>
+            <Sparkles className="h-8 w-8 text-purple-500 dark:text-purple-400 animate-spin" />
           </div>
           <div className="text-center">
             <p className="font-semibold text-text-primary-light dark:text-text-primary-dark">
@@ -234,7 +236,7 @@ export default function TamThucView({ selectedDate }: TamThucViewProps) {
               style={{ width: '100%' }}
             />
           </div>
-        </div>
+        </Card>
       )}
 
       {/* ── Results ── */}

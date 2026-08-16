@@ -9,6 +9,7 @@
 
 import React, { useState, useEffect } from 'react';
 import type { PalaceInterpretationResult } from '@/services/tuvi/palaceInterpretation';
+import { ChevronsUpDown, X } from 'lucide-react';
 
 interface TuViPalaceInlineDetailProps {
   interpretation: PalaceInterpretationResult | null;
@@ -79,13 +80,13 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                     allCachCuc.map((c) => (
                       <span
                         key={c.name}
-                        className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold-light dark:text-gold-dark truncate"
+                        className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold dark:text-gold-dark truncate"
                       >
                         {c.name}
                       </span>
                     ))
                   ) : cachCucAnalysisVi ? (
-                    <span className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold-light dark:text-gold-dark truncate">
+                    <span className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold dark:text-gold-dark truncate">
                       {cachCucAnalysisVi.name}
                     </span>
                   ) : null}
@@ -100,10 +101,10 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               <button
                 type="button"
                 onClick={() => setIsZoomDrawerExpanded(true)}
-                className="inline-flex items-center gap-1 rounded-xl bg-gold/20 hover:bg-gold/30 border border-gold/40 px-2.5 py-1 text-[11px] font-bold text-gold-light dark:text-gold-dark transition-all interactive-press"
+                className="inline-flex items-center gap-1 rounded-xl bg-gold/20 hover:bg-gold/30 border border-gold/40 px-2.5 py-1 text-[11px] font-bold text-gold dark:text-gold-dark transition-all interactive-press"
               >
                 Chi tiết
-                <span className="material-icons-round text-xs" aria-hidden="true">unfold_more</span>
+                <ChevronsUpDown className="h-3 w-3" />
               </button>
               <button
                 type="button"
@@ -111,7 +112,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                 className="p-1 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark"
                 title="Đóng"
               >
-                <span className="material-icons-round text-sm" aria-hidden="true">close</span>
+                <X className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -132,7 +133,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                 onClick={() => setIsZoomDrawerExpanded(false)}
                 className="p-1.5 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark"
               >
-                <span className="material-icons-round text-base" aria-hidden="true">close</span>
+                <X className="h-4 w-4" />
               </button>
             </div>
 
@@ -140,7 +141,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               {/* Blended Cách Cục */}
               {cachCucAnalysisVi && (
                 <div className="rounded-xl bg-amber-500/10 border border-gold/30 p-3 space-y-1">
-                  <div className="font-bold text-gold-light dark:text-gold-dark flex items-center justify-between">
+                  <div className="font-bold text-gold dark:text-gold-dark flex items-center justify-between">
                     <span className="flex items-center gap-1.5">
                       <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                       Cách Cục: {cachCucAnalysisVi.name}
@@ -159,7 +160,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               )}
 
               <div className="rounded-xl bg-gold/10 border border-gold/25 p-3 space-y-1">
-                <div className="font-bold text-gold-light dark:text-gold-dark flex items-center gap-1.5">
+                <div className="font-bold text-gold dark:text-gold-dark flex items-center gap-1.5">
                   <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                   Chính Tinh & Cốt Cách
                 </div>
@@ -211,7 +212,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
 
               {interpretation.positionalSemanticsVi && (
                 <div className="rounded-xl bg-gold/10 border border-gold/25 p-3 space-y-1">
-                  <div className="font-bold text-gold-light dark:text-gold-dark flex items-center gap-1.5">
+                  <div className="font-bold text-gold dark:text-gold-dark flex items-center gap-1.5">
                     <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                     Tương Tác Cung Vị (Tọa, Cứ, Triều, Xung, Củng, Hiệp)
                   </div>
@@ -245,7 +246,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
           <h3 className="text-base sm:text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
             Luận Giải Chi Tiết {roleBadge} ({palaceBranch})
           </h3>
-          <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[10px] font-bold text-gold-light dark:text-gold-dark">
+          <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[10px] font-bold text-gold dark:text-gold-dark">
             {coreThemeVi}
           </span>
         </div>
@@ -256,7 +257,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
           className="p-1 rounded-xl text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark hover:bg-surface-container-low transition-colors"
           title="Thu gọn"
         >
-          <span className="material-icons-round text-base" aria-hidden="true">close</span>
+          <X className="h-5 w-5" />
         </button>
       </div>
 
@@ -265,7 +266,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
         <div className="space-y-3 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
           {/* 1. Core Essence Card */}
           <div className="rounded-2xl bg-gold/10 border border-gold/25 p-4 space-y-1.5">
-            <div className="font-bold text-gold-light dark:text-gold-dark text-xs sm:text-sm flex items-center gap-1.5">
+            <div className="font-bold text-gold dark:text-gold-dark text-xs sm:text-sm flex items-center gap-1.5">
               <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
               Tổng Quan & Khí Chất Cung Vị
             </div>
@@ -277,7 +278,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
           {/* 2. Key Pattern or Life Theme */}
           {cachCucAnalysisVi && (
             <div className="rounded-2xl bg-amber-500/10 border border-gold/30 p-3.5 space-y-1">
-              <div className="font-bold text-gold-light dark:text-gold-dark text-xs sm:text-sm flex items-center gap-1.5">
+              <div className="font-bold text-gold dark:text-gold-dark text-xs sm:text-sm flex items-center gap-1.5">
                 <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                 Đặc Điểm Nổi Bật: {cachCucAnalysisVi.name}
               </div>
@@ -309,7 +310,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
-                  <h4 className="text-sm font-bold text-gold-light dark:text-gold-dark">
+                  <h4 className="text-sm font-bold text-gold dark:text-gold-dark">
                     Cách Cục Tọa Thủ: {cachCucAnalysisVi.name}
                   </h4>
                   {allCachCuc && allCachCuc.length > 1 && (
@@ -317,7 +318,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                       {allCachCuc.slice(1).map((c) => (
                         <span
                           key={c.name}
-                          className="rounded-full bg-gold/20 px-2 py-0.5 text-[9px] font-semibold text-gold-light dark:text-gold-dark"
+                          className="rounded-full bg-gold/20 px-2 py-0.5 text-[9px] font-semibold text-gold dark:text-gold-dark"
                         >
                           + {c.name}
                         </span>
@@ -325,7 +326,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                     </div>
                   )}
                 </div>
-                <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold-light dark:text-gold-dark">
+                <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold dark:text-gold-dark">
                   {cachCucAnalysisVi.purity}
                 </span>
               </div>
@@ -338,11 +339,11 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
             </div>
           )}
 
-          {/* Content Grid */}
-          <div className="grid gap-3 sm:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+          {/* Content Rows */}
+          <div className="space-y-3 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
             {/* 1. Chính Tinh */}
             <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5">
-              <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
+              <div className="font-bold text-gold dark:text-gold-dark text-xs flex items-center gap-1.5">
                 <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                 Chính Tinh Tọa Thủ
               </div>
@@ -360,7 +361,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
 
             {/* 3. Tứ Hóa & Tuần Triệt */}
             {(tuHoaAnalysisVi.length > 0 || tuanTrietAnalysisVi) && (
-              <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5 sm:col-span-2">
+              <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5">
                 <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
                   <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
                   Tác Động Tứ Hóa & Biến Chuyển Thời Vận
@@ -378,7 +379,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
 
             {/* 4. Khí Lực Tràng Sinh & Nhị Hợp */}
             {(interpretation.truongSinhAnalysisVi || interpretation.nhiHopAnalysisVi) && (
-              <div className="rounded-2xl bg-good/10 border border-good/25 p-3.5 space-y-1.5 sm:col-span-2">
+              <div className="rounded-2xl bg-good/10 border border-good/25 p-3.5 space-y-1.5">
                 <div className="font-bold text-good dark:text-good-dark text-xs flex items-center gap-1.5">
                   <span className="indicator-pip-sm bg-good" aria-hidden="true" />
                   Khí Trường Vòng Tràng Sinh & Nhị Hợp Cung Vị
@@ -398,8 +399,8 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
 
             {/* 5. Tương Tác Cung Vị Cổ Điển */}
             {interpretation.positionalSemanticsVi && (
-              <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5 sm:col-span-2">
-                <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
+              <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5">
+                <div className="font-bold text-gold dark:text-gold-dark text-xs flex items-center gap-1.5">
                   <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                   Tương Tác Cung Vị (Tọa, Cứ, Triều, Xung, Củng, Hiệp)
                 </div>
@@ -410,7 +411,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
             )}
 
             {/* 6. Lời Khuyên Hành Động */}
-            <div className="rounded-2xl bg-info/10 border border-info/25 p-3.5 space-y-1.5 sm:col-span-2">
+            <div className="rounded-2xl bg-info/10 border border-info/25 p-3.5 space-y-1.5">
               <div className="font-bold text-info dark:text-info-dark text-xs flex items-center gap-1.5">
                 <span className="indicator-pip-sm bg-info" aria-hidden="true" />
                 Định Hướng & Lời Khuyên Hành Động

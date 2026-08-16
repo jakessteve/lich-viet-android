@@ -269,12 +269,12 @@ function calculateDaiHanTuHoa(palaceCan: Can, chart: TuViChart): DaiHanInterpret
 
   if (natalLoc && natalLoc.starName === mapping.Loc) {
     interactions.push(
-      `Song Lộc Trùng Phùng: Đại Hạn Hóa Lộc gặp Năm Sinh Hóa Lộc tại sao ${mapping.Loc} — Thời vận đại phát tài lộc.`,
+      `Song Lộc Trùng Phùng: Đại Hạn Hóa Lộc gặp Năm Sinh Hóa Lộc tại sao ${mapping.Loc} - Thời vận đại phát tài lộc.`,
     );
   }
   if (natalKy && natalKy.starName === mapping.Ky) {
     interactions.push(
-      `Song Kỵ Trùng Phùng: Đại Hạn Hóa Kỵ gặp Năm Sinh Hóa Kỵ tại sao ${mapping.Ky} — Cần hết sức thận trọng thị phi, giấy tờ và rủi ro lớn.`,
+      `Song Kỵ Trùng Phùng: Đại Hạn Hóa Kỵ gặp Năm Sinh Hóa Kỵ tại sao ${mapping.Ky} - Cần hết sức thận trọng thị phi, giấy tờ và rủi ro lớn.`,
     );
   }
 
@@ -654,7 +654,7 @@ export function interpretDaiHan(palace: TuViPalace, chart: TuViChart, isCurrent 
   }
 
   // 1-sentence headline theme
-  const themeVi = `Đại Hạn ${ageRange} tuổi tại Cung ${palace.name} (${palace.canChi}) — Vận thế ${luckTier} (${tamTai.totalScore}/10): ${lifeStageTheme.coreFocus}`;
+  const themeVi = `Đại Hạn ${ageRange} tuổi tại Cung ${palace.name} (${palace.canChi}) - Vận thế ${luckTier} (${tamTai.totalScore}/10): ${lifeStageTheme.coreFocus}`;
 
   // Humanized Detailed Syntheses
   const overview = `Trong 10 năm từ ${parsed.start} đến ${parsed.end} tuổi, dòng chảy vận hạn của bạn dịch chuyển qua Cung ${palace.name} (${palace.canChi}), đạt ${tamTai.totalScore}/10 (${luckTier}).\n\nThiên thời: ${tamTai.thienThoi.desc}\n\nĐịa lợi: ${tamTai.diaLoi.desc}\n\nNhân hòa: ${tamTai.nhanHoa.desc}\n\nKhí lực: Năng lượng ${tsName} (${tamTai.khiLuc.desc.toLowerCase()}).`;

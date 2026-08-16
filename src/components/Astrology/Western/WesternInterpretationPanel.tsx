@@ -60,7 +60,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
       <div className="p-4 space-y-4">
         {sun && (
           <div className="flex gap-3">
-            <div className="shrink-0 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-center leading-none select-none text-amber-600 dark:text-amber-400 text-xl font-bold">
+            <div className="shrink-0 w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center text-center leading-none select-none text-amber-800 dark:text-amber-300 text-xl font-bold">
               ☉
             </div>
             <div>

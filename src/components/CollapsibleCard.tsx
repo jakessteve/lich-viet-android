@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { ChevronDown, Lock, Award, Diamond, Sparkles } from 'lucide-react';
 import { useDeviceClass } from '../hooks/useDeviceClass';
+import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
+import { cn } from '@/lib/utils';
 
 type TierLevel = 'free' | 'premium' | 'elite' | 'credit';
 
@@ -7,10 +10,9 @@ interface CollapsibleCardProps {
   /** Card title — string or JSX */
   title: React.ReactNode;
   /**
-   * Material Icons name (e.g. "auto_awesome", "calculate").
-   * Avoid emojis — use icon names for visual consistency.
+   * Icon name (string for Material Icons, or React node for Lucide).
    */
-  icon?: string;
+  icon?: string | React.ReactNode;
   /** Whether card is open by default on desktop */
   defaultOpen?: boolean;
   /** Override: force collapsed on mobile regardless of defaultOpen */
@@ -23,42 +25,40 @@ interface CollapsibleCardProps {
   className?: string;
   /**
    * If set, shows a TierBadge in the header right area indicating which tier
-   * is required to see this card's content. Does NOT gate the content — just
-   * communicates access. Pair with <ContentGate> for actual gating.
+   * is required to see this card's content.
    */
   tierBadge?: TierLevel;
   /**
    * Always-visible "one thing first" row shown ABOVE the collapsible content,
-   * even when the card is collapsed. Use for a key insight / highlight.
+   * even when the card is collapsed.
    */
   highlightRow?: React.ReactNode;
   /**
    * Credit cost badge shown in header (e.g. 1 = "1 tín dụng").
-   * Displayed alongside tierBadge when tierBadge="credit".
    */
   creditCost?: number;
   children: React.ReactNode;
 }
 
-const TIER_BADGE_CONFIG: Record<string, { label: string; icon: string; colorClass: string }> = {
+const TIER_BADGE_CONFIG: Record<string, { label: string; icon: React.ReactNode; colorClass: string }> = {
   free: {
     label: 'Miễn Phí',
-    icon: 'lock',
-    colorClass: 'bg-gray-100 dark:bg-gray-700/50 text-gray-500 dark:text-gray-400',
+    icon: <Lock className="h-3 w-3" />,
+    colorClass: 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark',
   },
   premium: {
     label: 'Premium',
-    icon: 'workspace_premium',
-    colorClass: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400',
+    icon: <Award className="h-3 w-3" />,
+    colorClass: 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300',
   },
   elite: {
     label: 'Elite',
-    icon: 'diamond',
+    icon: <Diamond className="h-3 w-3" />,
     colorClass: 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400',
   },
   credit: {
     label: 'Tín dụng',
-    icon: 'stars',
+    icon: <Sparkles className="h-3 w-3" />,
     colorClass: 'bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400',
   },
 };
@@ -95,7 +95,11 @@ function CollapsibleCard({
   const badgeCfg = tierBadge ? TIER_BADGE_CONFIG[tierBadge] : null;
 
   return (
-    <div className={`card-surface ${className}`}>
+    <Collapsible
+      open={effectiveOpen}
+      onOpenChange={forceOpen ? undefined : setIsOpen}
+      className={cn('card-surface', className)}
+    >
       <div
         role={forceOpen ? undefined : 'button'}
         tabIndex={forceOpen ? undefined : 0}
@@ -110,17 +114,23 @@ function CollapsibleCard({
                 }
               }
         }
-        className={`card-header flex items-center justify-between w-full text-left transition-colors ${forceOpen ? '' : 'cursor-pointer hover:bg-gray-50/50 dark:hover:bg-white/3 spring-press motion-gpu'}`}
+        className={cn(
+          'card-header flex items-center justify-between w-full text-left transition-colors',
+          forceOpen ? '' : 'cursor-pointer hover:bg-surface-container-low/50 dark:hover:bg-white/5 spring-press motion-gpu',
+        )}
         aria-expanded={effectiveOpen}
       >
         <div className="flex items-center gap-2 min-w-0">
           {icon && (
-            <span
-              className="material-icons-round text-lg shrink-0 text-text-secondary-light dark:text-text-secondary-dark"
-              aria-hidden="true"
-            >
-              {icon}
-            </span>
+            <div className="text-text-secondary-light dark:text-text-secondary-dark shrink-0">
+              {typeof icon === 'string' ? (
+                <span className="material-icons-round text-lg shrink-0" aria-hidden="true">
+                  {icon}
+                </span>
+              ) : (
+                icon
+              )}
+            </div>
           )}
           {typeof title === 'string' ? <h2 className="section-title truncate">{title}</h2> : title}
         </div>
@@ -128,11 +138,12 @@ function CollapsibleCard({
           {/* Tier badge */}
           {badgeCfg && (
             <div
-              className={`flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium h-6 ${badgeCfg.colorClass}`}
+              className={cn(
+                'flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium h-6 border border-border-light/40 dark:border-border-dark/40',
+                badgeCfg.colorClass,
+              )}
             >
-              <span className="material-icons-round text-[13px] leading-none" aria-hidden="true">
-                {badgeCfg.icon}
-              </span>
+              {badgeCfg.icon}
               {creditCost != null && tierBadge === 'credit' ? (
                 <span>
                   {creditCost} {badgeCfg.label}
@@ -148,27 +159,28 @@ function CollapsibleCard({
             </div>
           )}
           {!forceOpen && (
-            <span
-              className={`material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] ${effectiveOpen ? 'rotate-180' : ''}`}
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)]',
+                effectiveOpen && 'rotate-180',
+              )}
               aria-hidden="true"
-            >
-              expand_more
-            </span>
+            />
           )}
         </div>
       </div>
 
-      {/* Always-visible highlight row (one key insight, shown even when collapsed) */}
+      {/* Always-visible highlight row */}
       {highlightRow && (
         <div className="px-4 py-2.5 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-subtle-light/50 dark:bg-surface-subtle-dark/30">
           {highlightRow}
         </div>
       )}
 
-      <div className="collapse-grid" data-open={effectiveOpen}>
+      <CollapsibleContent className="overflow-hidden transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
         <div>{children}</div>
-      </div>
-    </div>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
 

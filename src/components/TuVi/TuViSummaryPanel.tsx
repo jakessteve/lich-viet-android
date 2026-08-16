@@ -1,24 +1,20 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { TuViChart as TuViChartType, DaiHanInterpretationResult } from '../../types/tuvi';
 import { getAllDaiHanInterpretations, getCurrentDaiHan } from '../../services/tuvi/daiHanInterpretation';
 import { classifyTuViChart } from '../../services/tuvi/chartClassification';
 import { calculateFlyingStars } from '../../services/tuvi/flyingStars';
 import { SegmentedControl, type SegmentedOption } from '../shared';
 import { TuViTieuHanPanel } from './TuViTieuHanPanel';
+import { LayoutDashboard, Calendar, TrendingUp, Network, ChevronRight, Activity } from 'lucide-react';
+import { cn } from '../../lib/utils';
 
 type SummaryTab = 'overview' | 'tieuHan' | 'daiHan' | 'phiTinh';
-type DaiHanViewMode = 'simple' | 'advanced';
 
 const SUMMARY_TABS: readonly SegmentedOption<SummaryTab>[] = [
-  { id: 'overview', label: 'Tổng quan', shortLabel: 'Tổng quan', icon: 'dashboard' },
-  { id: 'tieuHan', label: 'Tiểu hạn & Năm', shortLabel: 'Tiểu hạn', icon: 'event' },
-  { id: 'daiHan', label: 'Đại hạn', shortLabel: 'Đại hạn', icon: 'timeline' },
-  { id: 'phiTinh', label: 'Phi Tinh Tứ Hóa', shortLabel: 'Phi Tinh', icon: 'hub' },
-];
-
-const DAI_HAN_VIEW_MODES: readonly SegmentedOption<DaiHanViewMode>[] = [
-  { id: 'simple', label: 'Cơ bản (Dễ hiểu)', shortLabel: 'Cơ bản', icon: 'menu_book' },
-  { id: 'advanced', label: 'Chuyên sâu (Kỹ thuật)', shortLabel: 'Chuyên sâu', icon: 'psychology' },
+  { id: 'overview', label: 'Tổng quan', shortLabel: 'Tổng quan', icon: <LayoutDashboard className="h-4 w-4" /> as unknown as string },
+  { id: 'tieuHan', label: 'Tiểu hạn & Năm', shortLabel: 'Tiểu hạn', icon: <Calendar className="h-4 w-4" /> as unknown as string },
+  { id: 'daiHan', label: 'Đại hạn', shortLabel: 'Đại hạn', icon: <TrendingUp className="h-4 w-4" /> as unknown as string },
+  { id: 'phiTinh', label: 'Phi Tinh Tứ Hóa', shortLabel: 'Phi Tinh', icon: <Network className="h-4 w-4" /> as unknown as string },
 ];
 
 const TUHOA_CLASS: Record<'Lộc' | 'Quyền' | 'Khoa' | 'Kỵ', string> = {
@@ -31,7 +27,7 @@ const TUHOA_CLASS: Record<'Lộc' | 'Quyền' | 'Khoa' | 'Kỵ', string> = {
 const LUCK_TIER_CLASS: Record<DaiHanInterpretationResult['luckTier'], string> = {
   'Đại Cát': 'bg-good/15 text-good dark:text-good-dark border-good/40',
   'Khởi Sắc': 'bg-info/15 text-info dark:text-info-dark border-info/40',
-  'Bình Hòa': 'bg-gold/15 text-gold-light dark:text-gold-dark border-gold/40',
+  'Bình Hòa': 'bg-gold/15 text-gold dark:text-gold-dark border-gold/40',
   'Thử Thách': 'bg-orange/15 text-orange dark:text-orange-dark border-orange/40',
   'Gian Nan': 'bg-bad/15 text-bad dark:text-bad-dark border-bad/40',
 };
@@ -49,7 +45,7 @@ function TuHoaHeaderIcon() {
     <svg
       aria-hidden="true"
       viewBox="0 0 24 24"
-      className="h-4 w-4 shrink-0 text-gold-light dark:text-gold-dark"
+      className="h-4 w-4 shrink-0 text-gold dark:text-gold-dark"
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
@@ -57,24 +53,22 @@ function TuHoaHeaderIcon() {
       strokeWidth="1.8"
     >
       <path d="M7 6h8" />
-      <path d="M9 4l-2 2 2 2" />
-      <path d="M17 18H9" />
-      <path d="M15 16l2 2-2 2" />
-      <path d="M6 12h12" />
-      <path d="M12 6v12" />
+      <path d="M12 6v6" />
+      <path d="M9 12h6" />
+      <path d="M8 18h8" />
+      <circle cx="12" cy="12" r="9" />
     </svg>
   );
 }
 
 function summarizeTuHoa(chart: TuViChartType) {
-  const order: Record<string, number> = { Lộc: 0, Quyền: 1, Khoa: 2, Kỵ: 3 };
+  const order = { Lộc: 0, Quyền: 1, Khoa: 2, Kỵ: 3 };
   return chart.palaces
     .flatMap((palace) =>
-      palace.tuHoa.map((tuHoa) => ({
+      palace.tuHoa.map((entry) => ({
+        ...entry,
         palaceName: palace.name,
-        type: tuHoa.type,
-        starName: tuHoa.starName,
-        sourceCan: tuHoa.sourceCan,
+        palaceChi: palace.chi,
       })),
     )
     .sort((a, b) => (order[a.type] ?? 99) - (order[b.type] ?? 99));
@@ -84,21 +78,8 @@ export const TuViSummaryPanel: React.FC<{
   chart: TuViChartType;
   mode?: 'simple' | 'advanced';
   onModeChange?: (mode: 'simple' | 'advanced') => void;
-}> = React.memo(({ chart, mode, onModeChange }) => {
+}> = React.memo(({ chart, mode = 'simple' }) => {
   const [activeTab, setActiveTab] = useState<SummaryTab>('overview');
-  const [localDaiHanViewMode, setLocalDaiHanViewMode] = useState<DaiHanViewMode>(mode ?? 'simple');
-
-  useEffect(() => {
-    if (mode) {
-      setLocalDaiHanViewMode(mode);
-    }
-  }, [mode]);
-
-  const daiHanViewMode = onModeChange && mode !== undefined ? mode : localDaiHanViewMode;
-  const setDaiHanViewMode = (newMode: DaiHanViewMode) => {
-    setLocalDaiHanViewMode(newMode);
-    onModeChange?.(newMode);
-  };
 
   const viewYear = chart.hanContext?.viewYear;
   const allDaiHan = useMemo(() => getAllDaiHanInterpretations(chart, viewYear), [chart, viewYear]);
@@ -181,53 +162,53 @@ export const TuViSummaryPanel: React.FC<{
 
       {activeTab === 'overview' && (
         <div className="space-y-4">
-          {/* Cây Phân Loại Lá Số (Classification Tree Archetype) */}
-          <div className="rounded-2xl border border-gold/40 bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/60 p-4 space-y-2.5 shadow-sm">
-            <div className="flex items-center justify-between flex-wrap gap-2">
-              <div className="flex items-center gap-2">
-                <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg" aria-hidden="true">account_tree</span>
-                <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
-                  Cây Phân Loại Lá Số
-                </h4>
+          {/* Cây Phân Loại Lá Số (Only in Advanced Mode) */}
+          {mode === 'advanced' && (
+            <div className="rounded-2xl border border-gold/40 bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/60 p-4 space-y-2.5 shadow-sm">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <div className="flex items-center gap-2">
+                  <Network className="h-4 w-4 text-gold dark:text-gold-dark" />
+                  <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+                    Cây Phân Loại Lá Số
+                  </h4>
+                </div>
+                <Badge className="bg-gold/15 text-gold dark:text-gold-dark border border-gold/40">
+                  {classification.cucName}
+                </Badge>
               </div>
-              <Badge className="bg-gold/15 text-gold-light dark:text-gold-dark border border-gold/40">
-                {classification.cucName}
-              </Badge>
-            </div>
 
-            {/* Breadcrumb Path */}
-            <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold">
-              {classification.classificationPath.map((step, idx) => (
-                <React.Fragment key={idx}>
-                  <span className="rounded-lg bg-surface-container-low px-2.5 py-1 text-text-primary-light dark:text-text-primary-dark border border-border-light/50 dark:border-border-dark/50">
-                    {step}
-                  </span>
-                  {idx < classification.classificationPath.length - 1 && (
-                    <span className="text-text-secondary-light dark:text-text-secondary-dark text-xs">›</span>
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
+              {/* Breadcrumb Path */}
+              <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold">
+                {classification.classificationPath.map((step, idx) => (
+                  <React.Fragment key={idx}>
+                    <span className="rounded-lg bg-surface-container-low px-2.5 py-1 text-text-primary-light dark:text-text-primary-dark border border-border-light/50 dark:border-border-dark/50">
+                      {step}
+                    </span>
+                    {idx < classification.classificationPath.length - 1 && (
+                      <span className="text-text-secondary-light dark:text-text-secondary-dark text-xs">›</span>
+                    )}
+                  </React.Fragment>
+                ))}
+              </div>
 
-            <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/30 dark:border-border-dark/30">
-              {classification.patternSummaryVi}
-            </p>
-          </div>
+              <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/30 dark:border-border-dark/30">
+                {classification.patternSummaryVi}
+              </p>
+            </div>
+          )}
 
           {/* Current Đại Hạn High-Signal Highlight Card */}
           {currentDaiHan && (
             <div className="surface-card relative overflow-hidden p-4 sm:p-5 shadow-sm space-y-3.5 border-gold/40 dark:border-gold-dark/40 bg-gradient-to-br from-gold/10 via-surface-subtle-light/80 to-surface-container-low dark:from-gold-dark/10 dark:via-surface-subtle-dark/80 dark:to-surface-elevated-dark/50">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-xl animate-glow-breathe" aria-hidden="true">
-                    timeline
-                  </span>
+                  <TrendingUp className="h-5 w-5 text-gold dark:text-gold-dark shrink-0" />
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="text-base font-bold text-text-primary-light dark:text-text-primary-dark">
                         Đại Hạn Hiện Tại: {currentDaiHan.ageRange} tuổi
                       </h4>
-                      <Badge className="bg-gold/20 text-gold-light dark:text-gold-dark border border-gold/40">
+                      <Badge className="bg-gold/20 text-gold dark:text-gold-dark border border-gold/40">
                         Cung {currentDaiHan.palaceName} ({currentDaiHan.palaceCanChi})
                       </Badge>
                       <Badge className={`border ${LUCK_TIER_CLASS[currentDaiHan.luckTier]}`}>
@@ -243,177 +224,122 @@ export const TuViSummaryPanel: React.FC<{
                     setSelectedDaiHanIndex(currentDaiHanIndex);
                     setActiveTab('daiHan');
                   }}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-gold-light dark:text-gold-dark hover:underline cursor-pointer interactive-press"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-gold dark:text-gold-dark hover:underline cursor-pointer interactive-press"
                 >
                   Khám phá 12 Đại hạn
-                  <span className="material-icons-round text-sm" aria-hidden="true">chevron_right</span>
+                  <ChevronRight className="h-3.5 w-3.5" />
                 </button>
               </div>
 
-              {/* Tam Tài Scoreboard Mini */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-                <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
-                    Thiên Thời (Thái Tuế)
-                  </span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
-                    {currentDaiHan.tamTai.thienThoi.level}
-                  </p>
-                </div>
-                <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
-                    Địa Lợi (Cung Chi)
-                  </span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
-                    {currentDaiHan.tamTai.diaLoi.level}
-                  </p>
-                </div>
-                <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
-                    Nhân Hòa (Quý Nhân)
-                  </span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
-                    {currentDaiHan.tamTai.nhanHoa.level}
-                  </p>
-                </div>
-                <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
-                    Khí Lực (Trường Sinh)
-                  </span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
-                    {currentDaiHan.truongSinh.name}
-                  </p>
-                </div>
-              </div>
-
-              {/* Prominent Patterns Tags */}
-              {currentDaiHan.prominentPatterns.length > 0 && (
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {currentDaiHan.prominentPatterns.map((pat, i) => (
-                    <span
-                      key={i}
-                      className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[11px] font-semibold border ${
-                        pat.type === 'cat'
-                          ? 'bg-good/15 text-good dark:text-good-dark border-good/30'
-                          : pat.type === 'hung'
-                            ? 'bg-bad/15 text-bad dark:text-bad-dark border-bad/30'
-                            : 'bg-gold/15 text-gold-light dark:text-gold-dark border-gold/30'
-                      }`}
-                    >
-                      {pat.name}
+              {/* Tam Tài Scoreboard Mini (Only in Advanced Mode) */}
+              {mode === 'advanced' && (
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
+                    <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                      Thiên Thời (Thái Tuế)
                     </span>
-                  ))}
+                    <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                      {currentDaiHan.tamTai.thienThoi.level}
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
+                    <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                      Địa Lợi (Nạp Âm)
+                    </span>
+                    <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                      {currentDaiHan.tamTai.diaLoi.level}
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
+                    <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                      Nhân Hòa (Cát/Sát)
+                    </span>
+                    <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                      {currentDaiHan.tamTai.nhanHoa.level}
+                    </p>
+                  </div>
+                  <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
+                    <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                      Khí Lực (Tràng Sinh)
+                    </span>
+                    <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                      {currentDaiHan.truongSinh.name}
+                    </p>
+                  </div>
                 </div>
               )}
 
-              {/* Formatted 4-pillar Overview */}
-              <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
-                {currentDaiHan.detailedSynthesis.overview.split('\n\n').map((part, idx) => {
-                  const colonIdx = part.indexOf(':');
-                  if (colonIdx > 0 && colonIdx < 20) {
-                    const title = part.slice(0, colonIdx);
-                    const content = part.slice(colonIdx + 1);
-                    return (
-                      <p key={idx}>
-                        <strong className="font-bold text-gold-light dark:text-gold-dark">{title}:</strong>
-                        {content}
-                      </p>
-                    );
-                  }
-                  return <p key={idx}>{part}</p>;
-                })}
-              </div>
-
-              {/* Item 2 Fixed Spacing */}
-              <div className="mt-3 pt-3 border-t border-border-light/40 dark:border-border-dark/40 flex flex-wrap items-start justify-between gap-2 text-xs sm:text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                <div className="flex items-start gap-2 leading-relaxed">
-                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-base shrink-0 mt-0.5">
-                    lightbulb
-                  </span>
-                  <div>
-                    <strong className="text-text-primary-light dark:text-text-primary-dark">Định hướng cốt lõi:</strong>{' '}
-                    <span>{currentDaiHan.detailedSynthesis.strategicGuidance}</span>
-                  </div>
-                </div>
-              </div>
+              {/* One-Line Executive Synthesis */}
+              <p className="text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark font-medium border-t border-border-light/30 dark:border-border-dark/30 pt-2.5">
+                {currentDaiHan.detailedSynthesis.overview}
+              </p>
             </div>
           )}
 
-          <div className="grid gap-3 xl:grid-cols-2">
-            {/* Major Star Layout Card */}
-            <div className="surface-card rounded-2xl p-4">
-              <div className="flex items-center gap-1.5">
-                <span className="material-icons-round shrink-0 text-base text-gold-light dark:text-gold-dark">
-                  straighten
-                </span>
-                <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
-                  Bố cục chính tinh
-                </h4>
-              </div>
-              <div className="mt-3 space-y-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                <p>
-                  Tổng chính tinh:{' '}
-                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    {summary.totalMajorStars}
-                  </span>
-                </p>
-                <p>
-                  Tổng phụ tinh:{' '}
-                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    {summary.totalAuxiliaryStars}
-                  </span>
-                </p>
-                <p>
-                  Tổng sát tinh:{' '}
-                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    {summary.totalSatStars}
-                  </span>
-                </p>
-                <p>
-                  Cung nhiều chính tinh nhất:{' '}
-                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    {summary.strongestPalaces.length > 0 ? summary.strongestPalaces.join(', ') : '—'}
-                  </span>
-                </p>
-                <p>
-                  Cung vô chính diệu:{' '}
-                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
-                    {summary.emptyMajorPalaces.length > 0 ? summary.emptyMajorPalaces.join(', ') : 'Không có'}
-                  </span>
-                </p>
-              </div>
+          {/* Quick Metrics Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="surface-card rounded-2xl p-3 text-center border-gold/30">
+              <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
+                Chính Tinh
+              </span>
+              <p className="text-lg font-bold text-gold dark:text-gold-dark mt-0.5">
+                {summary.totalMajorStars}
+              </p>
             </div>
+            <div className="surface-card rounded-2xl p-3 text-center border-info/30">
+              <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
+                Phụ Tinh
+              </span>
+              <p className="text-lg font-bold text-info dark:text-info-dark mt-0.5">
+                {summary.totalAuxiliaryStars}
+              </p>
+            </div>
+            <div className="surface-card rounded-2xl p-3 text-center border-bad/30">
+              <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
+                Sát Tinh
+              </span>
+              <p className="text-lg font-bold text-bad dark:text-bad-dark mt-0.5">
+                {summary.totalSatStars}
+              </p>
+            </div>
+            <div className="surface-card rounded-2xl p-3 text-center border-purple/30">
+              <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
+                Tứ Hóa
+              </span>
+              <p className="text-lg font-bold text-purple dark:text-purple-dark mt-0.5">
+                {summary.tuHoaEntries.length}
+              </p>
+            </div>
+          </div>
 
-            {/* Tu Hoa Transformations Card */}
-            <div className="surface-card rounded-2xl p-4">
-              <div className="flex items-center gap-1.5">
+          {/* Four Transformations Banner */}
+          <div className="surface-card rounded-2xl p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold dark:text-gold-dark flex items-center gap-1.5">
                 <TuHoaHeaderIcon />
-                <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
-                  Tứ Hóa hiện diện
-                </h4>
-              </div>
-              <div className="mt-3 space-y-2">
-                {summary.tuHoaEntries.length === 0 ? (
-                  <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                    Chưa có Tứ Hóa được ghi nhận.
+                Tứ Hóa Năm Sinh Toàn Bàn
+              </h4>
+              <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">
+                Can {chart.centerInfo.canChiYear.split(' ')[0]} định hình
+              </span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {summary.tuHoaEntries.map((tuHoa, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-xl bg-surface-subtle-light/70 dark:bg-surface-elevated-dark/50 border border-border-light/40 dark:border-border-dark/40 p-3 flex flex-col items-start gap-1.5"
+                >
+                  <Badge className={cn(TUHOA_CLASS[tuHoa.type], 'text-xs font-semibold px-2 py-0.5')}>
+                    Hóa {tuHoa.type}
+                  </Badge>
+                  <span className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+                    {tuHoa.starName}
+                  </span>
+                  <p className="text-micro text-text-secondary-light dark:text-text-secondary-dark truncate w-full">
+                    Cung {tuHoa.palaceName} [{tuHoa.palaceChi}]
                   </p>
-                ) : (
-                  summary.tuHoaEntries.slice(0, 8).map((entry) => (
-                    <div
-                      key={`${entry.palaceName}-${entry.type}-${entry.starName}`}
-                      className="flex flex-wrap items-center gap-2 text-sm"
-                    >
-                      <Badge className={TUHOA_CLASS[entry.type]}>{entry.type}</Badge>
-                      <span className="font-medium text-text-primary-light dark:text-text-primary-dark">
-                        {entry.starName}
-                      </span>
-                      <span className="text-text-secondary-light dark:text-text-secondary-dark">
-                        → {entry.palaceName}
-                      </span>
-                    </div>
-                  ))
-                )}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -423,21 +349,12 @@ export const TuViSummaryPanel: React.FC<{
         <TuViTieuHanPanel
           chart={chart}
           viewYear={viewYear}
-          viewMonth={chart.hanContext?.viewMonth}
+          mode={mode}
         />
       )}
 
       {activeTab === 'daiHan' && (
         <div className="space-y-4">
-          {/* View Mode Selector: Full width matching page width */}
-          <SegmentedControl
-            options={DAI_HAN_VIEW_MODES}
-            value={daiHanViewMode}
-            onChange={setDaiHanViewMode}
-            ariaLabel="Chế độ xem luận giải Đại Hạn"
-            className="w-full"
-          />
-
           {/* 12 Đại Hạn Timeline Selector */}
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark mb-2">
@@ -459,7 +376,7 @@ export const TuViSummaryPanel: React.FC<{
                   >
                     <span className="font-bold whitespace-nowrap">{dh.ageRange}t</span>
                     <span className="text-[10px] truncate max-w-[75px]">{dh.palaceName}</span>
-                    <span className="text-[9px] font-medium text-gold-light dark:text-gold-dark">
+                    <span className="text-[9px] font-medium text-gold dark:text-gold-dark">
                       {dh.luckScore}/10
                     </span>
                     {dh.isCurrent && (
@@ -474,9 +391,9 @@ export const TuViSummaryPanel: React.FC<{
             </div>
           </div>
 
-          {/* Selected Đại Hạn Detail Inspector */}
+          {/* Unified Đại Hạn Detail Inspector */}
           {selectedDaiHan && (
-            <article className="space-y-4 surface-card rounded-2xl p-4 sm:p-5">
+            <article className="space-y-4 surface-card rounded-2xl p-4 sm:p-5 border border-border-light/60 dark:border-border-dark/60">
               {/* Header Banner */}
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-border-light/40 dark:border-border-dark/40 pb-3.5">
                 <div>
@@ -484,14 +401,14 @@ export const TuViSummaryPanel: React.FC<{
                     <h4 className="text-base sm:text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
                       Đại Hạn {selectedDaiHan.ageRange} tuổi
                     </h4>
-                    <span className="text-sm font-semibold text-gold-light dark:text-gold-dark">
+                    <span className="text-sm font-semibold text-gold dark:text-gold-dark">
                       — Cung {selectedDaiHan.palaceName} ({selectedDaiHan.palaceCanChi})
                     </span>
                     <Badge className={`border ${LUCK_TIER_CLASS[selectedDaiHan.luckTier]}`}>
                       {selectedDaiHan.luckTier} ({selectedDaiHan.luckScore}/10)
                     </Badge>
                     {selectedDaiHan.isCurrent && (
-                      <Badge className="bg-gold/20 text-gold-light dark:text-gold-dark border border-gold/40">
+                      <Badge className="bg-gold/20 text-gold dark:text-gold-dark border border-gold/40">
                         Đang diễn ra
                       </Badge>
                     )}
@@ -513,72 +430,70 @@ export const TuViSummaryPanel: React.FC<{
                 </div>
               </div>
 
-              {/* MODE 1: Cơ bản (Simple & Accessible) */}
-              {daiHanViewMode === 'simple' && (
-                <div className="space-y-3.5 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark page-enter-smooth">
-                  <div className="rounded-xl bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 border border-border-light/40 dark:border-border-dark/40 p-4 space-y-2.5">
-                    <div className="flex items-center gap-2 font-bold text-gold-light dark:text-gold-dark text-sm">
-                      <span className="indicator-pip bg-gold" aria-hidden="true" />
-                      Tổng Quan Dòng Vận 10 Năm
-                    </div>
-                    <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
-                      {selectedDaiHan.detailedSynthesis.overview.split('\n\n').map((part, idx) => {
-                        const colonIdx = part.indexOf(':');
-                        if (colonIdx > 0 && colonIdx < 20) {
-                          const title = part.slice(0, colonIdx);
-                          const content = part.slice(colonIdx + 1);
-                          return (
-                            <p key={idx}>
-                              <strong className="font-bold text-gold-light dark:text-gold-dark">{title}:</strong>
-                              {content}
-                            </p>
-                          );
-                        }
-                        return <p key={idx}>{part}</p>;
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="grid gap-3 sm:grid-cols-2">
-                    <div className="rounded-xl bg-good/5 dark:bg-good-dark/5 border border-good/25 dark:border-good-dark/25 p-3.5 space-y-2">
-                      <div className="flex items-center gap-1.5 font-bold text-good dark:text-good-dark text-xs sm:text-sm">
-                        <span className="indicator-pip-sm bg-good" aria-hidden="true" />
-                        Sự Nghiệp & Tài Lộc
-                      </div>
-                      <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs sm:text-sm">
-                        {selectedDaiHan.detailedSynthesis.careerAndWealth}
-                      </p>
-                    </div>
-
-                    <div className="rounded-xl bg-info/5 dark:bg-info-dark/5 border border-info/25 dark:border-info-dark/25 p-3.5 space-y-2">
-                      <div className="flex items-center gap-1.5 font-bold text-info dark:text-info-dark text-xs sm:text-sm">
-                        <span className="indicator-pip-sm bg-info" aria-hidden="true" />
-                        Gia Đạo, Tình Cảm & Thể Trạng
-                      </div>
-                      <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs sm:text-sm">
-                        {selectedDaiHan.detailedSynthesis.relationshipAndHealth}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="rounded-xl bg-gold/10 dark:bg-gold-dark/10 border border-gold/30 dark:border-gold-dark/30 p-3.5 space-y-1.5">
-                    <div className="flex items-center gap-1.5 font-bold text-gold-light dark:text-gold-dark text-xs sm:text-sm">
-                      <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
-                      Chiến Lược Hành Động Trọng Tâm
-                    </div>
-                    <p className="text-text-primary-light dark:text-text-primary-dark font-medium text-xs sm:text-sm">
-                      {selectedDaiHan.detailedSynthesis.strategicGuidance}
-                    </p>
-                  </div>
+              {/* 1. Tổng Quan Dòng Vận 10 Năm */}
+              <div className="rounded-xl bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 border border-border-light/40 dark:border-border-dark/40 p-4 space-y-2.5">
+                <div className="flex items-center gap-2 font-bold text-gold dark:text-gold-dark text-sm">
+                  <span className="indicator-pip bg-gold" aria-hidden="true" />
+                  Tổng Quan Dòng Vận 10 Năm
                 </div>
-              )}
+                <div className="space-y-2 text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+                  {selectedDaiHan.detailedSynthesis.overview.split('\n\n').map((part, idx) => {
+                    const colonIdx = part.indexOf(':');
+                    if (colonIdx > 0 && colonIdx < 30) {
+                      const title = part.slice(0, colonIdx);
+                      const content = part.slice(colonIdx + 1);
+                      return (
+                        <p key={idx}>
+                          <strong className="font-bold text-gold dark:text-gold-dark">{title}:</strong>
+                          {content}
+                        </p>
+                      );
+                    }
+                    return <p key={idx}>{part}</p>;
+                  })}
+                </div>
+              </div>
 
-              {/* MODE 2: Chuyên sâu (Advanced & Technical) */}
-              {daiHanViewMode === 'advanced' && (
-                <div className="grid gap-3.5 lg:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark page-enter-smooth">
-                  {/* 1. Bố Cục Tọa Thủ & Tam Phương Tứ Chính */}
-                  <div className="rounded-xl bg-gold/5 dark:bg-gold-dark/5 border border-gold/25 dark:border-gold-dark/25 p-3.5 space-y-2">
-                    <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
+              {/* 2. Trọng Tâm Sự Nghiệp & Gia Đạo */}
+              <div className="space-y-3">
+                <div className="rounded-xl bg-good/5 dark:bg-good-dark/5 border border-good/25 dark:border-good-dark/25 p-3.5 space-y-2">
+                  <div className="flex items-center gap-1.5 font-bold text-good dark:text-good-dark text-xs sm:text-sm">
+                    <span className="indicator-pip-sm bg-good" aria-hidden="true" />
+                    Sự Nghiệp & Tài Lộc
+                  </div>
+                  <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs sm:text-sm leading-relaxed">
+                    {selectedDaiHan.detailedSynthesis.careerAndWealth}
+                  </p>
+                </div>
+
+                <div className="rounded-xl bg-info/5 dark:bg-info-dark/5 border border-info/25 dark:border-info-dark/25 p-3.5 space-y-2">
+                  <div className="flex items-center gap-1.5 font-bold text-info dark:text-info-dark text-xs sm:text-sm">
+                    <span className="indicator-pip-sm bg-info" aria-hidden="true" />
+                    Gia Đạo, Tình Cảm & Thể Trạng
+                  </div>
+                  <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs sm:text-sm leading-relaxed">
+                    {selectedDaiHan.detailedSynthesis.relationshipAndHealth}
+                  </p>
+                </div>
+              </div>
+
+              {/* 3. Chiến Lược Hành Động Trọng Tâm */}
+              <div className="rounded-xl bg-gold/10 dark:bg-gold-dark/10 border border-gold/30 dark:border-gold-dark/30 p-3.5 space-y-1.5">
+                <div className="flex items-center gap-1.5 font-bold text-gold dark:text-gold-dark text-xs sm:text-sm">
+                  <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
+                  Chiến Lược Hành Động Trọng Tâm
+                </div>
+                <p className="text-text-primary-light dark:text-text-primary-dark font-medium text-xs sm:text-sm leading-relaxed">
+                  {selectedDaiHan.detailedSynthesis.strategicGuidance}
+                </p>
+              </div>
+
+              {/* 4. Cấu Trúc Tam Tài & Bố Cục Tọa Thủ (Only in Advanced Mode) */}
+              {mode === 'advanced' && (
+                <div className="space-y-3.5 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark pt-1">
+                  {/* Bố Cục Tọa Thủ & Tam Phương Tứ Chính */}
+                  <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/40 dark:border-border-dark/40 p-3.5 space-y-2">
+                    <div className="font-bold text-gold dark:text-gold-dark text-xs flex items-center gap-1.5">
                       <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                       Bố Cục Tọa Thủ & Tam Phương Tứ Chính
                     </div>
@@ -591,8 +506,7 @@ export const TuViSummaryPanel: React.FC<{
                         {selectedDaiHan.starStructure.majorStars.map((s) => `${s.name} (${s.brightness})`).join(', ')}
                       </p>
                     ) : (
-                      <p className="text-gold-light dark:text-gold-dark font-medium">
-                        ⚠️{' '}
+                      <p className="text-gold dark:text-gold-dark font-medium">
                         {selectedDaiHan.starStructure.vcdSpecialNote ??
                           'Bản cung Vô Chính Diệu, mượn lực chiếu từ đối cung.'}
                       </p>
@@ -600,22 +514,14 @@ export const TuViSummaryPanel: React.FC<{
 
                     {/* Can Cung Đại Hạn Tứ Hóa */}
                     <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 space-y-1 border border-border-light/40 dark:border-border-dark/40">
-                      <span className="text-[10px] uppercase font-bold text-gold-light dark:text-gold-dark">
+                      <span className="text-[10px] uppercase font-bold text-gold dark:text-gold-dark">
                         Lưu Tứ Hóa Can {selectedDaiHan.daiHanTuHoa.canCung} Đại Hạn:
                       </span>
                       <div className="grid grid-cols-2 gap-1 text-[11px]">
-                        <span>
-                          ✦ Lộc: <strong>{selectedDaiHan.daiHanTuHoa.hoaLoc}</strong>
-                        </span>
-                        <span>
-                          ✦ Quyền: <strong>{selectedDaiHan.daiHanTuHoa.hoaQuyen}</strong>
-                        </span>
-                        <span>
-                          ✦ Khoa: <strong>{selectedDaiHan.daiHanTuHoa.hoaKhoa}</strong>
-                        </span>
-                        <span>
-                          ✦ Kỵ: <strong>{selectedDaiHan.daiHanTuHoa.hoaKy}</strong>
-                        </span>
+                        <span>✦ Lộc: <strong>{selectedDaiHan.daiHanTuHoa.hoaLoc}</strong></span>
+                        <span>✦ Quyền: <strong>{selectedDaiHan.daiHanTuHoa.hoaQuyen}</strong></span>
+                        <span>✦ Khoa: <strong>{selectedDaiHan.daiHanTuHoa.hoaKhoa}</strong></span>
+                        <span>✦ Kỵ: <strong>{selectedDaiHan.daiHanTuHoa.hoaKy}</strong></span>
                       </div>
                     </div>
 
@@ -623,21 +529,21 @@ export const TuViSummaryPanel: React.FC<{
                       {selectedDaiHan.tamPhuongTuChinh.summary}
                     </p>
                     {selectedDaiHan.tuanTriet.note && (
-                      <p className="text-bad dark:text-bad-dark pt-1 font-medium">🛡️ {selectedDaiHan.tuanTriet.note}</p>
+                      <p className="text-bad dark:text-bad-dark pt-1 font-medium">{selectedDaiHan.tuanTriet.note}</p>
                     )}
                   </div>
 
-                  {/* 2. Đánh Giá Tam Tài */}
-                  <div className="rounded-xl bg-purple/5 dark:bg-purple-dark/5 border border-purple/25 dark:border-purple-dark/25 p-3.5 space-y-2.5">
+                  {/* Đánh Giá Tam Tài */}
+                  <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/40 dark:border-border-dark/40 p-3.5 space-y-2.5">
                     <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
                       <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
                       Đánh Giá Tam Tài (Thiên Thời – Địa Lợi – Nhân Hòa)
                     </div>
-                    <div className="space-y-2.5">
-                      <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
+                    <div className="space-y-2">
+                      <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2 border border-border-light/30 dark:border-border-dark/30 space-y-0.5">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-bold text-gold-light dark:text-gold-dark text-xs">✦ Thiên Thời</span>
-                          <Badge className="bg-gold/15 text-gold-light dark:text-gold-dark">
+                          <span className="font-bold text-gold dark:text-gold-dark text-xs">✦ Thiên Thời (Thái Tuế)</span>
+                          <Badge className="bg-gold/15 text-gold dark:text-gold-dark">
                             {selectedDaiHan.tamTai.thienThoi.level}
                           </Badge>
                         </div>
@@ -646,9 +552,9 @@ export const TuViSummaryPanel: React.FC<{
                         </p>
                       </div>
 
-                      <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
+                      <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2 border border-border-light/30 dark:border-border-dark/30 space-y-0.5">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-bold text-info dark:text-info-dark text-xs">✦ Địa Lợi</span>
+                          <span className="font-bold text-info dark:text-info-dark text-xs">✦ Địa Lợi (Nạp Âm)</span>
                           <Badge className="bg-info/15 text-info dark:text-info-dark">
                             {selectedDaiHan.tamTai.diaLoi.level}
                           </Badge>
@@ -658,9 +564,9 @@ export const TuViSummaryPanel: React.FC<{
                         </p>
                       </div>
 
-                      <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
+                      <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2 border border-border-light/30 dark:border-border-dark/30 space-y-0.5">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-bold text-good dark:text-good-dark text-xs">✦ Nhân Hòa</span>
+                          <span className="font-bold text-good dark:text-good-dark text-xs">✦ Nhân Hòa (Cát/Sát)</span>
                           <Badge className="bg-good/15 text-good dark:text-good-dark">
                             {selectedDaiHan.tamTai.nhanHoa.level}
                           </Badge>
@@ -669,83 +575,31 @@ export const TuViSummaryPanel: React.FC<{
                           {selectedDaiHan.tamTai.nhanHoa.desc}
                         </p>
                       </div>
-
-                      <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="font-bold text-purple dark:text-purple-dark text-xs">
-                            ✦ Khí Lực ({selectedDaiHan.truongSinh.name})
-                          </span>
-                          <Badge className="bg-purple/15 text-purple dark:text-purple-dark">
-                            {selectedDaiHan.truongSinh.name}
-                          </Badge>
-                        </div>
-                        <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-                          {selectedDaiHan.truongSinh.energyDescription}
-                        </p>
-                      </div>
                     </div>
                   </div>
+                </div>
+              )}
 
-                  {/* 3. Các Cách Cục & Điểm Nhấn Nổi Bật */}
-                  <div className="rounded-xl bg-good/5 dark:bg-good-dark/5 border border-good/25 dark:border-good-dark/25 p-3.5 space-y-2">
-                    <div className="font-bold text-good dark:text-good-dark text-xs flex items-center gap-1.5">
-                      <span className="indicator-pip-sm bg-good" aria-hidden="true" />
-                      Cách Cục & Điểm Nhấn Nổi Bật ({selectedDaiHan.prominentPatterns.length})
-                    </div>
-                    {selectedDaiHan.prominentPatterns.length === 0 ? (
-                      <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                        Đại vận duy trì thế quân bình, không bị sát tinh xung phá nặng nề.
-                      </p>
-                    ) : (
-                      <div className="space-y-2">
-                        {selectedDaiHan.prominentPatterns.map((pat, i) => (
-                          <div
-                            key={i}
-                            className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2 border border-border-light/40 dark:border-border-dark/40 space-y-0.5"
-                          >
-                            <span
-                              className={`text-[11px] font-bold ${pat.type === 'cat' ? 'text-good dark:text-good-dark' : pat.type === 'hung' ? 'text-bad dark:text-bad-dark' : 'text-gold-light dark:text-gold-dark'}`}
-                            >
-                              ✦ {pat.name}
-                            </span>
-                            <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
-                              {pat.note ?? pat.description}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* 4. Lộ Trình 10 Năm & Dự Báo Toàn Diện */}
-                  <div className="rounded-xl bg-info/5 dark:bg-info-dark/5 border border-info/25 dark:border-info-dark/25 p-3.5 space-y-2.5">
-                    <div className="font-bold text-info dark:text-info-dark text-xs flex items-center gap-1.5">
-                      <span className="indicator-pip-sm bg-info" aria-hidden="true" />
-                      Lộ Trình 10 Năm & Dự Báo Toàn Diện
-                    </div>
-
-                    {/* 5-Year Phasing */}
-                    <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 space-y-1.5 border border-border-light/40 dark:border-border-dark/40">
-                      <span className="text-[10px] uppercase font-bold text-info dark:text-info-dark">
-                        ⏳ Phân kỳ tiến trình 5 năm:
+              {/* 5. Phân Kỳ Tiến Trình 5 Năm (Only in Advanced Mode) */}
+              {mode === 'advanced' && (
+                <div className="rounded-xl bg-surface-subtle-light/70 dark:bg-surface-elevated-dark/50 border border-border-light/40 dark:border-border-dark/40 p-3.5 space-y-2">
+                  <span className="text-xs uppercase font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
+                    <Activity className="h-4 w-4 text-info" />
+                    Phân Kỳ Tiến Trình 5 Năm
+                  </span>
+                  <div className="space-y-2 text-xs leading-relaxed">
+                    <div className="p-2.5 rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 border border-border-light/30 dark:border-border-dark/30">
+                      <strong className="text-gold dark:text-gold-dark block mb-1">Tiền vận (5 năm đầu):</strong>
+                      <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                        {selectedDaiHan.phasingBreakdown.firstHalf}
                       </span>
-                      <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
-                        • <strong>Tiền vận (5 năm đầu):</strong> {selectedDaiHan.phasingBreakdown.firstHalf}
-                      </p>
-                      <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
-                        • <strong>Hậu vận (5 năm sau):</strong> {selectedDaiHan.phasingBreakdown.secondHalf}
-                      </p>
                     </div>
-
-                    <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                      💼 {selectedDaiHan.detailedSynthesis.careerAndWealth}
-                    </p>
-                    <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                      🛡️ {selectedDaiHan.detailedSynthesis.relationshipAndHealth}
-                    </p>
-                    <p className="text-info dark:text-info-dark font-semibold pt-1 border-t border-border-light/30 dark:border-border-dark/30">
-                      ☞ {selectedDaiHan.detailedSynthesis.strategicGuidance}
-                    </p>
+                    <div className="p-2.5 rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 border border-border-light/30 dark:border-border-dark/30">
+                      <strong className="text-info dark:text-info-dark block mb-1">Hậu vận (5 năm sau):</strong>
+                      <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                        {selectedDaiHan.phasingBreakdown.secondHalf}
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}
@@ -756,24 +610,64 @@ export const TuViSummaryPanel: React.FC<{
 
       {activeTab === 'phiTinh' && (
         <div className="space-y-4 page-enter-smooth">
-          {/* Executive Synthesis Card */}
-          <div className="surface-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-gold space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg" aria-hidden="true">hub</span>
+          {/* Executive Synthesis Card with Formatted Paragraphs */}
+          <div className="surface-card rounded-2xl p-4 sm:p-5 border border-border-light/60 dark:border-border-dark/60 space-y-3">
+            <div className="flex items-center gap-2 border-b border-border-light/40 dark:border-border-dark/40 pb-2.5">
+              <Network className="h-5 w-5 text-gold dark:text-gold-dark" />
               <h3 className="font-bold text-sm text-text-primary-light dark:text-text-primary-dark">
                 Luận Giải Động Thái Phi Tinh Toàn Bàn
               </h3>
             </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
-              {flyingStars.overallSynthesisVi}
-            </p>
+            
+            <div className="space-y-2.5 pt-1">
+              {flyingStars.synthesisItems && flyingStars.synthesisItems.length > 0 ? (
+                flyingStars.synthesisItems.map((item, idx) => (
+                  <p
+                    key={idx}
+                    className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
+                  >
+                    <strong className="font-bold text-gold dark:text-gold-dark mr-1">
+                      {item.title}:
+                    </strong>
+                    {item.content}
+                  </p>
+                ))
+              ) : (
+                flyingStars.overallSynthesisVi.split('\n\n').map((para, idx) => {
+                  const colonIdx = para.indexOf(':');
+                  if (colonIdx > 0 && colonIdx < 40) {
+                    const title = para.slice(0, colonIdx);
+                    const rest = para.slice(colonIdx + 1);
+                    return (
+                      <p
+                        key={idx}
+                        className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
+                      >
+                        <strong className="font-bold text-gold dark:text-gold-dark mr-1">
+                          {title}:
+                        </strong>
+                        {rest}
+                      </p>
+                    );
+                  }
+                  return (
+                    <p
+                      key={idx}
+                      className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
+                    >
+                      {para}
+                    </p>
+                  );
+                })
+              )}
+            </div>
           </div>
 
           {/* Key Interactions: Mệnh & Tài Quan */}
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="space-y-3">
             {/* Mệnh Flying */}
             <div className="surface-card rounded-2xl p-4 space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-gold-light dark:text-gold-dark flex items-center gap-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold dark:text-gold-dark flex items-center gap-1.5">
                 <span className="indicator-pip-sm bg-gold" aria-hidden="true" />
                 Mệnh Xuất Tứ Hóa
               </h4>
@@ -825,37 +719,39 @@ export const TuViSummaryPanel: React.FC<{
             </div>
           </div>
 
-          {/* Tự Hóa Grid */}
-          <div className="surface-card rounded-2xl p-4 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-purple dark:text-purple-dark flex items-center gap-1.5">
-              <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
-              Các Vị Trí Tự Hóa Nội Cung ({flyingStars.tuHuaList.length})
-            </h4>
-            {flyingStars.tuHuaList.length === 0 ? (
-              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                Bản bàn không có vị trí Tự Hóa nội tại.
-              </p>
-            ) : (
-              <div className="grid gap-2 sm:grid-cols-2">
-                {flyingStars.tuHuaList.map((tuHua, idx) => (
-                  <div
-                    key={idx}
-                    className="p-2.5 rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 text-xs space-y-1"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="font-bold text-text-primary-light dark:text-text-primary-dark">
-                        Cung {tuHua.sourcePalaceName} (Can {tuHua.sourceCan})
-                      </span>
-                      <Badge className={TUHOA_CLASS[tuHua.type]}>Tự Hóa {tuHua.type}</Badge>
+          {/* Tự Hóa Grid (Only in Advanced Mode) */}
+          {mode === 'advanced' && (
+            <div className="surface-card rounded-2xl p-4 space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-purple dark:text-purple-dark flex items-center gap-1.5">
+                <span className="indicator-pip-sm bg-purple" aria-hidden="true" />
+                Các Vị Trí Tự Hóa Nội Cung ({flyingStars.tuHuaList.length})
+              </h4>
+              {flyingStars.tuHuaList.length === 0 ? (
+                <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                  Bản bàn không có vị trí Tự Hóa nội tại.
+                </p>
+              ) : (
+                <div className="space-y-2">
+                  {flyingStars.tuHuaList.map((tuHua, idx) => (
+                    <div
+                      key={idx}
+                      className="p-2.5 rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 text-xs space-y-1"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-bold text-text-primary-light dark:text-text-primary-dark">
+                          Cung {tuHua.sourcePalaceName} (Can {tuHua.sourceCan})
+                        </span>
+                        <Badge className={TUHOA_CLASS[tuHua.type]}>Tự Hóa {tuHua.type}</Badge>
+                      </div>
+                      <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+                        {tuHua.descriptionVi}
+                      </p>
                     </div>
-                    <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-                      {tuHua.descriptionVi}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </section>

@@ -6,10 +6,11 @@ import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import { SegmentedControl } from '../../shared';
 import { WesternChartView } from './WesternChartView';
 import { ForecastView } from './ForecastView';
+import { Compass, User, Sunrise } from 'lucide-react';
 
 const PAGE_TABS = [
-  { id: 'la-so', label: 'Lá Số Gốc', icon: 'person', shortLabel: 'Lá Số' },
-  { id: 'van-han', label: 'Vận Hạn', icon: 'wb_twilight', shortLabel: 'Vận Hạn' },
+  { id: 'la-so', label: 'Lá Số Gốc', icon: <User className="h-4 w-4" /> as unknown as string, shortLabel: 'Lá Số' },
+  { id: 'van-han', label: 'Vận Hạn', icon: <Sunrise className="h-4 w-4" /> as unknown as string, shortLabel: 'Vận Hạn' },
 ] as const;
 
 type PageTab = (typeof PAGE_TABS)[number]['id'];
@@ -52,7 +53,7 @@ export const WesternAstrologyPage: React.FC = () => {
     <div className="space-y-6 max-w-4xl mx-auto">
       <div className="text-center space-y-1">
         <h2 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark flex items-center justify-center gap-2">
-          <span className="material-icons-round text-xl text-indigo-500 dark:text-indigo-400">auto_graph</span>
+          <Compass className="h-5 w-5 text-indigo-500 dark:text-indigo-400" />
           Chiêm Tinh Tây Phương
         </h2>
       </div>

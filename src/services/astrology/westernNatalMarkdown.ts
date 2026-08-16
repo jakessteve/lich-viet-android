@@ -75,12 +75,12 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
 
   // Sect & Moon Phase
   linesBasic.push(
-    `- **Phân loại Ngày / Đêm (Chart Sect)**: ${synthesis.sect.isDiurnal ? 'Ban Ngày (Diurnal)' : 'Ban Đêm (Nocturnal)'} — ${synthesis.sect.descriptionVi}`,
+    `- **Phân loại Ngày / Đêm (Chart Sect)**: ${synthesis.sect.isDiurnal ? 'Ban Ngày (Diurnal)' : 'Ban Đêm (Nocturnal)'} - ${synthesis.sect.descriptionVi}`,
   );
 
   if (moonPhase) {
     linesBasic.push(
-      `- **Pha Mặt Trăng lúc sinh**: ${moonPhase.nameVi} (${moonPhase.symbol ?? ''} góc ${moonPhase.phaseAngle?.toFixed(1) ?? '0.0'}°, sáng ${moonPhase.illuminationPercentage?.toFixed(0) ?? '0'}%) — ${moonPhase.personalityTraitsVi || moonPhase.descriptionVi || ''}`,
+      `- **Pha Mặt Trăng lúc sinh**: ${moonPhase.nameVi} (${moonPhase.symbol ?? ''} góc ${moonPhase.phaseAngle?.toFixed(1) ?? '0.0'}°, sáng ${moonPhase.illuminationPercentage?.toFixed(0) ?? '0'}%) - ${moonPhase.personalityTraitsVi || moonPhase.descriptionVi || ''}`,
     );
   }
 
@@ -101,7 +101,7 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
 
   for (const obj of result.objects) {
     const rxText = obj.retrograde ? 'Nghịch hành (Rx)' : 'Thuận hành';
-    const dignityText = obj.dignity ? `${obj.dignity.labelVi} (${obj.dignity.symbol})` : '—';
+    const dignityText = obj.dignity ? `${obj.dignity.labelVi} (${obj.dignity.symbol})` : '-';
     linesObjects.push(
       `| ${obj.nameVi} | ${obj.symbol} | ${obj.signVi} | ${formatDegMin(obj.degree, obj.minute)} | Nhà ${obj.house} | ${rxText} | ${dignityText} |`,
     );
@@ -117,16 +117,16 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
     );
     linesBalance.push(`- **Phân bổ 4 Nguyên Tố**:`);
     linesBalance.push(
-      `  - **Lửa (Fire)**: ${eb.elements.fire.points} điểm (${eb.elements.fire.percentage.toFixed(0)}%) — ${eb.elements.fire.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
+      `  - **Lửa (Fire)**: ${eb.elements.fire.points} điểm (${eb.elements.fire.percentage.toFixed(0)}%) - ${eb.elements.fire.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
     );
     linesBalance.push(
-      `  - **Đất (Earth)**: ${eb.elements.earth.points} điểm (${eb.elements.earth.percentage.toFixed(0)}%) — ${eb.elements.earth.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
+      `  - **Đất (Earth)**: ${eb.elements.earth.points} điểm (${eb.elements.earth.percentage.toFixed(0)}%) - ${eb.elements.earth.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
     );
     linesBalance.push(
-      `  - **Khí (Air)**: ${eb.elements.air.points} điểm (${eb.elements.air.percentage.toFixed(0)}%) — ${eb.elements.air.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
+      `  - **Khí (Air)**: ${eb.elements.air.points} điểm (${eb.elements.air.percentage.toFixed(0)}%) - ${eb.elements.air.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
     );
     linesBalance.push(
-      `  - **Nước (Water)**: ${eb.elements.water.points} điểm (${eb.elements.water.percentage.toFixed(0)}%) — ${eb.elements.water.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
+      `  - **Nước (Water)**: ${eb.elements.water.points} điểm (${eb.elements.water.percentage.toFixed(0)}%) - ${eb.elements.water.planets.map((p) => p.nameVi).join(', ') || 'Không có'}`,
     );
     linesBalance.push(`- **Phân bổ 3 Tính Chất**:`);
     linesBalance.push(
@@ -150,11 +150,11 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
 
   for (const house of result.houses) {
     const ruler = houseRulers.find((hr) => hr.houseNumber === house.number);
-    const rulerText = ruler ? `${ruler.traditionalRulerVi} ${ruler.traditionalRulerSymbol}` : '—';
+    const rulerText = ruler ? `${ruler.traditionalRulerVi} ${ruler.traditionalRulerSymbol}` : '-';
     const rulerPos =
       ruler && ruler.rulerHouse
         ? `Ngự tại Nhà ${ruler.rulerHouse} (${ruler.rulerSignVi ?? ''})`
-        : '—';
+        : '-';
     linesHouses.push(
       `| Nhà ${house.number} | ${house.signVi} | ${formatDegMin(house.degree, house.minute)} | ${rulerText} | ${rulerPos} |`,
     );
@@ -169,7 +169,7 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
     linesAspects.push('| Thiên Thể A | Thiên Thể B | Góc Chiếu | Góc Chính Xác | Sai Số Orb | Trạng Thái |');
     linesAspects.push('|---|---|:---:|---:|---:|:---:|');
     for (const aspect of result.aspects) {
-      const stateText = aspect.state === 'applying' ? 'Áp sát (Applying)' : aspect.state === 'separating' ? 'Tách rời (Separating)' : '—';
+      const stateText = aspect.state === 'applying' ? 'Áp sát (Applying)' : aspect.state === 'separating' ? 'Tách rời (Separating)' : '-';
       linesAspects.push(
         `| ${aspect.objectAName} | ${aspect.objectBName} | ${aspect.name} | ${aspect.exactAngle}° | ${aspect.orbDifference.toFixed(1)}° | ${stateText} |`,
       );
@@ -189,7 +189,7 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
         linesPatterns.push(`- **Đỉnh tiêu điểm (Apex)**: ${pattern.apexPlanet.nameVi} tại Cung ${pattern.apexPlanet.signVi}`);
       }
       if (pattern.resolutionPoint) {
-        linesPatterns.push(`- **Điểm giải tỏa căng thẳng**: Cung đối diện ${pattern.resolutionPoint.oppositeSignVi} — ${pattern.resolutionPoint.adviceVi}`);
+        linesPatterns.push(`- **Điểm giải tỏa căng thẳng**: Cung đối diện ${pattern.resolutionPoint.oppositeSignVi}: ${pattern.resolutionPoint.adviceVi}`);
       }
       if (pattern.personalizedSynthesis) {
         linesPatterns.push(`- **Thử thách cốt lõi**: ${pattern.personalizedSynthesis.coreChallengeVi}`);
@@ -218,7 +218,7 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
 
   // Footer
   parts.push('---');
-  parts.push('*Lá số được tính toán chính xác cao bởi Lịch Việt — sử dụng Swiss Ephemeris chuẩn quốc tế.*');
+  parts.push('*Lá số được tính toán chính xác cao bởi Lịch Việt - sử dụng Swiss Ephemeris chuẩn quốc tế.*');
 
   return parts.join('\n\n');
 }

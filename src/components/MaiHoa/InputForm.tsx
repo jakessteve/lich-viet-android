@@ -1,11 +1,12 @@
 // ── InputForm.tsx ──────────────────────────────────────────────
 // Epic 4 (US_MH_10): Input selection form for Mai Hoa divination.
 import type { CalendarMode } from '../../types/maiHoa';
-// Supports two modes:
-//   1. "Current Time" — Uses the currently selected date's lunar data + current hour.
-//   2. "Manual Numbers" — User enters two positive integers (num1, num2).
-
 import React, { useState } from 'react';
+import { Clock, Info, Hash } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 /** Which input method is selected. */
 type InputMode = 'time' | 'numbers';
@@ -29,10 +30,6 @@ interface InputFormProps {
 const MIN_INPUT = 1;
 const MAX_INPUT = 9999;
 
-/**
- * Input form for Mai Hoa divination.
- * Provides two modes: time-based and number-based.
- */
 export default function InputForm({
   onDivineByTime,
   onDivineByNumbers,
@@ -72,24 +69,25 @@ export default function InputForm({
     onDivineByNumbers(parsedNum1, parsedNum2, calendarMode, query.trim());
   }
 
-  const tabBaseClass = 'flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-all duration-200';
-  const tabActiveClass = 'bg-white dark:bg-gray-700 text-primary dark:text-primary-dark shadow-sm';
-  const tabInactiveClass =
-    'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white';
-
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-5">
       {/* Mode Selector */}
       <div className="flex flex-col gap-2">
-        <div className="flex gap-1 p-1 bg-gray-100/80 dark:bg-white/10 rounded-xl">
+        <div className="flex gap-1 p-1 bg-surface-subtle-light dark:bg-white/10 rounded-xl">
           <button
             type="button"
             onClick={() => {
               setMode('time');
               setError('');
             }}
-            className={`${tabBaseClass} ${mode === 'time' ? tabActiveClass : tabInactiveClass}`}
+            className={cn(
+              'flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 spring-press',
+              mode === 'time'
+                ? 'bg-white dark:bg-surface-elevated-dark text-primary dark:text-gold shadow-sm font-semibold'
+                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white',
+            )}
           >
+            <Clock className="h-4 w-4" />
             Theo giờ hiện tại
           </button>
           <button
@@ -98,8 +96,14 @@ export default function InputForm({
               setMode('numbers');
               setError('');
             }}
-            className={`${tabBaseClass} ${mode === 'numbers' ? tabActiveClass : tabInactiveClass}`}
+            className={cn(
+              'flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 spring-press',
+              mode === 'numbers'
+                ? 'bg-white dark:bg-surface-elevated-dark text-primary dark:text-gold shadow-sm font-semibold'
+                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white',
+            )}
           >
+            <Hash className="h-4 w-4" />
             Nhập số
           </button>
         </div>
@@ -107,56 +111,44 @@ export default function InputForm({
 
       {/* Calendar Mode Toggle */}
       <div className="flex flex-col gap-2 px-1">
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1.5">
           <span className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
             Hệ lịch: Âm Lịch
           </span>
           <span
-            className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark cursor-help"
+            className="text-text-secondary-light dark:text-text-secondary-dark cursor-help"
             title="Mai Hoa Dịch Số tính tháng theo chu kỳ Mặt Trăng (Âm Lịch)."
           >
-            info_outline
+            <Info className="h-4 w-4" />
           </span>
         </div>
       </div>
 
       {/* Query Input */}
-      <div>
-        <label
-          htmlFor={`${idPrefix}Query`}
-          className="block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-1 tracking-wide"
-        >
-          Việc cần xem (Tuỳ chọn)
-        </label>
-        <input
+      <div className="space-y-1.5">
+        <Label htmlFor={`${idPrefix}Query`}>Việc cần xem (Tuỳ chọn)</Label>
+        <Input
           id={`${idPrefix}Query`}
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="VD: Hỏi về công danh sự nghiệp..."
-          className="w-full px-3 py-2.5 rounded-xl bg-gray-100 dark:bg-white/10 border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all placeholder:text-gray-400 dark:placeholder:text-gray-400"
+          className="w-full"
         />
       </div>
 
       {/* Mode-specific content */}
       {mode === 'time' ? (
-        <div className="flex items-center justify-center gap-2 text-base text-text-secondary-light dark:text-text-secondary-dark py-4 bg-blue-50/50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/30">
-          <span className="material-icons-round text-xl text-blue-500 dark:text-blue-400 leading-none">
-            access_time
-          </span>
-          <span>Sử dụng ngày giờ hiện tại để lấy quẻ.</span>
+        <div className="flex items-center justify-center gap-2 text-base text-text-secondary-light dark:text-text-secondary-dark py-4 bg-surface-subtle-light/60 dark:bg-surface-elevated-dark/40 rounded-xl border border-border-light/60 dark:border-border-dark/40">
+          <Clock className="h-5 w-5 text-gold dark:text-gold-dark shrink-0" />
+          <span className="text-sm">Sử dụng ngày giờ hiện tại để lấy quẻ.</span>
         </div>
       ) : (
         <div className="space-y-2">
           <div className="flex gap-3">
-            <div className="flex-1">
-              <label
-                htmlFor={`${idPrefix}Num1`}
-                className="block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-1 tracking-wide"
-              >
-                Số thứ nhất
-              </label>
-              <input
+            <div className="flex-1 space-y-1.5">
+              <Label htmlFor={`${idPrefix}Num1`}>Số thứ nhất</Label>
+              <Input
                 id={`${idPrefix}Num1`}
                 type="number"
                 min={MIN_INPUT}
@@ -164,18 +156,13 @@ export default function InputForm({
                 value={num1}
                 onChange={(e) => setNum1(e.target.value)}
                 placeholder="VD: 42"
-                className="w-full px-3 py-2.5 rounded-xl bg-gray-100 dark:bg-white/10 border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark text-center text-lg font-semibold placeholder:text-gray-400 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all"
+                className="text-center text-lg font-semibold"
                 required
               />
             </div>
-            <div className="flex-1">
-              <label
-                htmlFor={`${idPrefix}Num2`}
-                className="block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-1 tracking-wide"
-              >
-                Số thứ hai
-              </label>
-              <input
+            <div className="flex-1 space-y-1.5">
+              <Label htmlFor={`${idPrefix}Num2`}>Số thứ hai</Label>
+              <Input
                 id={`${idPrefix}Num2`}
                 type="number"
                 min={MIN_INPUT}
@@ -183,7 +170,7 @@ export default function InputForm({
                 value={num2}
                 onChange={(e) => setNum2(e.target.value)}
                 placeholder="VD: 7"
-                className="w-full px-3 py-2.5 rounded-xl bg-gray-100 dark:bg-white/10 border border-border-light dark:border-border-dark text-text-primary-light dark:text-text-primary-dark text-center text-lg font-semibold placeholder:text-gray-400 dark:placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all"
+                className="text-center text-lg font-semibold"
                 required
               />
             </div>
@@ -199,13 +186,14 @@ export default function InputForm({
       )}
 
       {/* Submit */}
-      <button
+      <Button
         type="submit"
         disabled={isLoading}
-        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white font-bold text-sm shadow-md hover:shadow-lg hover:brightness-110 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        variant="gold"
+        className="w-full py-3.5 h-12 text-sm font-bold shadow-md hover:shadow-lg"
       >
         {isLoading ? loadingLabel : submitLabel}
-      </button>
+      </Button>
     </form>
   );
 }

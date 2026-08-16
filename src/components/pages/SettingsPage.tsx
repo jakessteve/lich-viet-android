@@ -10,19 +10,26 @@ import SuccessToast from '../shared/SuccessToast';
 import type { TuViBirthLocation } from '../../types/tuvi';
 import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
 
+import { Palette, Clock, Calendar, Bell, Shield, UserCog, User, ChevronRight, Edit2, Lock, LogOut, LogIn, UserPlus } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+
 // ══════════════════════════════════════════════════════════
 // Section Card — Flat, modern, always-open
 // ══════════════════════════════════════════════════════════
 
-function SectionCard({ icon, title, children }: { icon: string; title: string; children: React.ReactNode }) {
+function SectionCard({ icon, title, children }: { icon: React.ReactNode | string; title: string; children: React.ReactNode }) {
   return (
-    <div className="glass-card">
+    <Card className="glass-card rounded-2xl overflow-hidden border border-border-light/40 dark:border-border-dark/30">
       <div className="flex items-center gap-2.5 px-5 py-3 border-b border-border-light/20 dark:border-border-dark/15">
-        <span className="material-icons-round text-base text-gold dark:text-gold-dark">{icon}</span>
+        {typeof icon === 'string' ? (
+          <span className="material-icons-round text-base text-gold dark:text-gold-dark">{icon}</span>
+        ) : (
+          <div className="text-gold dark:text-gold-dark">{icon}</div>
+        )}
         <span className="text-base font-semibold tracking-tight">{title}</span>
       </div>
       <div className="px-5 py-1">{children}</div>
-    </div>
+    </Card>
   );
 }
 
@@ -46,16 +53,16 @@ export default function SettingsPage() {
   // Active section (sidebar navigation)
   const [activeSection, setActiveSection] = useState('appearance');
 
-  // Sections definition — removed: astrology, security, promo, subscription
+  // Sections definition
   const SECTIONS = useMemo(
     () => [
-      { id: 'appearance', icon: 'palette', label: 'Giao diện' },
-      { id: 'general', icon: 'schedule', label: 'Ngày tháng' },
-      { id: 'calendar', icon: 'calendar_month', label: 'Âm Lịch' },
-      { id: 'notifications', icon: 'notifications', label: 'Thông báo' },
-      { id: 'data', icon: 'security', label: 'Dữ liệu' },
-      ...(isAuthenticated ? [{ id: 'profile', icon: 'manage_accounts', label: 'Hồ Sơ' }] : []),
-      { id: 'account', icon: 'person', label: 'Tài khoản' },
+      { id: 'appearance', icon: <Palette className="h-4 w-4" />, label: 'Giao diện' },
+      { id: 'general', icon: <Clock className="h-4 w-4" />, label: 'Ngày tháng' },
+      { id: 'calendar', icon: <Calendar className="h-4 w-4" />, label: 'Âm Lịch' },
+      { id: 'notifications', icon: <Bell className="h-4 w-4" />, label: 'Thông báo' },
+      { id: 'data', icon: <Shield className="h-4 w-4" />, label: 'Dữ liệu' },
+      ...(isAuthenticated ? [{ id: 'profile', icon: <UserCog className="h-4 w-4" />, label: 'Hồ Sơ' }] : []),
+      { id: 'account', icon: <User className="h-4 w-4" />, label: 'Tài khoản' },
     ],
     [isAuthenticated],
   );
@@ -238,13 +245,17 @@ export default function SettingsPage() {
               <button
                 key={s.id}
                 onClick={() => setActiveSection(s.id)}
-                className={`flex shrink-0 snap-start items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                className={`flex shrink-0 snap-start items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 spring-press ${
                   activeSection === s.id
-                    ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/12 dark:to-amber-400/8 text-gold dark:text-gold-dark shadow-sm'
+                    ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/12 dark:to-amber-400/8 text-gold dark:text-gold-dark shadow-sm font-semibold'
                     : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5'
                 }`}
               >
-                <span className="material-icons-round text-sm">{s.icon}</span>
+                {typeof s.icon === 'string' ? (
+                  <span className="material-icons-round text-sm">{s.icon}</span>
+                ) : (
+                  s.icon
+                )}
                 <span>{s.label}</span>
               </button>
             ))}
@@ -253,35 +264,45 @@ export default function SettingsPage() {
             className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-end pr-1 pl-6 bg-gradient-to-l from-surface-light via-surface-light/90 to-transparent dark:from-surface-dark dark:via-surface-dark/90"
             aria-hidden="true"
           >
-            <span className="material-icons-round text-base text-text-secondary-light/70 dark:text-text-secondary-dark/70">
-              chevron_right
-            </span>
+            <ChevronRight className="h-4 w-4 text-text-secondary-light/70 dark:text-text-secondary-dark/70" />
           </div>
         </div>
       </div>
       {/* Desktop: 2-column layout */}
       <div className="flex gap-5 items-start">
         {/* ── LEFT SIDEBAR ── */}
-        <nav className="hidden md:flex flex-col gap-0.5 w-[190px] shrink-0 sticky top-4 glass-card p-2">
+        <nav className="hidden md:flex flex-col gap-0.5 w-[190px] shrink-0 sticky top-4 glass-card p-2 rounded-2xl">
           {SECTIONS.map((s) => (
             <button
               key={s.id}
               onClick={() => setActiveSection(s.id)}
-              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium w-full text-left transition-all duration-200 ${
+              className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium w-full text-left transition-all duration-200 spring-press ${
                 activeSection === s.id
-                  ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/15 dark:to-amber-400/8 text-gold dark:text-gold-dark'
+                  ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/15 dark:to-amber-400/8 text-gold dark:text-gold-dark font-semibold'
                   : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100/80 dark:hover:bg-white/5'
               }`}
             >
-              <span
-                className={`material-icons-round text-[18px] ${
-                  activeSection === s.id
-                    ? 'text-gold dark:text-gold-dark'
-                    : 'text-text-secondary-light/60 dark:text-text-secondary-dark/60'
-                }`}
-              >
-                {s.icon}
-              </span>
+              {typeof s.icon === 'string' ? (
+                <span
+                  className={`material-icons-round text-[18px] ${
+                    activeSection === s.id
+                      ? 'text-gold dark:text-gold-dark'
+                      : 'text-text-secondary-light/60 dark:text-text-secondary-dark/60'
+                  }`}
+                >
+                  {s.icon}
+                </span>
+              ) : (
+                <div
+                  className={
+                    activeSection === s.id
+                      ? 'text-gold dark:text-gold-dark'
+                      : 'text-text-secondary-light/60 dark:text-text-secondary-dark/60'
+                  }
+                >
+                  {s.icon}
+                </div>
+              )}
               <span>{s.label}</span>
             </button>
           ))}
@@ -607,9 +628,9 @@ export default function SettingsPage() {
                     <div className="flex flex-col gap-1.5 shrink-0">
                       <button
                         onClick={startEdit}
-                        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gold/8 dark:bg-gold-dark/6 text-gold dark:text-gold-dark hover:bg-gold/15 transition-colors flex items-center gap-1"
+                        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gold/8 dark:bg-gold-dark/6 text-gold dark:text-gold-dark hover:bg-gold/15 transition-colors flex items-center gap-1.5"
                       >
-                        <span className="material-icons-round text-sm">edit</span> Sửa
+                        <Edit2 className="h-3.5 w-3.5" /> Sửa
                       </button>
                       {user.provider === 'email' && (
                         <button
@@ -617,9 +638,9 @@ export default function SettingsPage() {
                             setProfileMode('password');
                             setPwMsg(null);
                           }}
-                          className="text-xs font-medium px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 hover:bg-gray-100 dark:hover:bg-white/8 transition-colors flex items-center gap-1"
+                          className="text-xs font-medium px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 hover:bg-gray-100 dark:hover:bg-white/8 transition-colors flex items-center gap-1.5"
                         >
-                          <span className="material-icons-round text-sm">lock</span> Đổi mật khẩu
+                          <Lock className="h-3.5 w-3.5" /> Đổi mật khẩu
                         </button>
                       )}
                     </div>
@@ -867,7 +888,7 @@ export default function SettingsPage() {
 
           {/* Account */}
           {activeSection === 'account' && (
-            <SectionCard icon="person" title="Tài khoản">
+            <SectionCard icon={<User className="h-4 w-4" />} title="Tài khoản">
               <div className="py-5 text-center">
                 {isAuthenticated && user ? (
                   <>
@@ -892,9 +913,9 @@ export default function SettingsPage() {
                         onClick={() => {
                           if (confirm('Bạn có chắc muốn đăng xuất?')) logout();
                         }}
-                        className="px-4 py-1.5 rounded-xl text-xs font-medium bg-red-50 dark:bg-red-900/15 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/25 transition-colors"
+                        className="px-4 py-1.5 rounded-xl text-xs font-medium bg-red-50 dark:bg-red-900/15 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/25 transition-colors inline-flex items-center gap-1.5"
                       >
-                        <span className="material-icons-round text-sm mr-1 align-middle">logout</span>
+                        <LogOut className="h-3.5 w-3.5" />
                         Đăng xuất
                       </button>
                     </div>
@@ -902,7 +923,7 @@ export default function SettingsPage() {
                 ) : (
                   <>
                     <div className="w-12 h-12 mx-auto mb-2.5 rounded-full bg-gray-100 dark:bg-white/6 flex items-center justify-center text-center select-none">
-                      <span className="material-icons-round text-xl text-gray-400 dark:text-gray-500 leading-none">person</span>
+                      <User className="h-6 w-6 text-gray-400 dark:text-gray-500" />
                     </div>
                     <p className="text-sm font-semibold mb-0.5">Khách</p>
                     <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mb-4">
@@ -911,16 +932,16 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-center gap-2.5">
                       <button
                         onClick={() => navigate('/app/dang-nhap')}
-                        className="px-4 py-1.5 rounded-xl text-xs font-medium bg-gold/10 dark:bg-gold-dark/8 text-gold dark:text-gold-dark hover:bg-gold/18 dark:hover:bg-gold-dark/15 transition-colors"
+                        className="px-4 py-1.5 rounded-xl text-xs font-medium bg-gold/10 dark:bg-gold-dark/8 text-gold dark:text-gold-dark hover:bg-gold/18 dark:hover:bg-gold-dark/15 transition-colors inline-flex items-center gap-1.5"
                       >
-                        <span className="material-icons-round text-sm mr-1 align-middle">login</span>
+                        <LogIn className="h-3.5 w-3.5" />
                         Đăng nhập
                       </button>
                       <button
                         onClick={() => navigate('/app/dang-ky')}
-                        className="px-4 py-1.5 rounded-xl text-xs font-medium border border-border-light/50 dark:border-mystery-purple/15 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
+                        className="px-4 py-1.5 rounded-xl text-xs font-medium border border-border-light/50 dark:border-mystery-purple/15 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1.5"
                       >
-                        <span className="material-icons-round text-sm mr-1 align-middle">person_add</span>
+                        <UserPlus className="h-3.5 w-3.5" />
                         Đăng ký
                       </button>
                     </div>
@@ -933,7 +954,7 @@ export default function SettingsPage() {
           {/* About footer */}
           <div className="flex items-center justify-between px-4 py-3">
             <p className="text-xs text-text-secondary-light/60 dark:text-text-secondary-dark/60">
-              Lịch Việt v3.0.0 · MIT
+              Lịch Việt v1.0 · MIT
             </p>
             <button
               onClick={() => navigate('/app/am-lich')}

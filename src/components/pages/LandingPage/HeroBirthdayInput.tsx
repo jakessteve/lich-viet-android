@@ -10,6 +10,8 @@ import { useTuViStore } from '@/stores/tuviStore';
 import { useAuthStore } from '@/stores/authStore';
 import type { TuViChart, TuViGender, TuViInput } from '@/types/tuvi';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
+import { Sparkles, ArrowRight, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 const getChiHourFromClockHour = (hour: number) => (hour === 23 ? 0 : Math.floor((hour + 1) / 2) % 12);
 const clampTimePart = (value: string, max: number) => {
@@ -98,22 +100,32 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
       }
 
       setIsAnimating(true);
-      const input: TuViInput = {
-        name: '',
-        solarDate: date,
-        birthHour: getChiHourFromClockHour(normalizedHour),
-        birthClockHour: normalizedHour,
-        birthMinute: normalizedMinute,
-        gender,
-        timezone: 'Asia/Ho_Chi_Minh',
-        birthLocation: userBirthProfile?.birthLocation ?? DEFAULT_BIRTH_LOCATION,
-      };
-
       setTimeout(() => {
         try {
-          setResult(generateChart(input));
-        } catch (err) {
-          setError(err instanceof Error ? err.message : 'Không thể tính lá số.');
+          const chartInput: TuViInput = {
+            name: 'Bạn',
+            solarDate: date,
+            birthHour: getChiHourFromClockHour(normalizedHour),
+            birthClockHour: normalizedHour,
+            birthMinute: normalizedMinute,
+            gender,
+            timezone: 'Asia/Ho_Chi_Minh',
+            birthLocation: userBirthProfile?.birthLocation
+              ? {
+                  locationName: userBirthProfile.birthLocation.locationName || DEFAULT_BIRTH_LOCATION.locationName,
+                  lat: userBirthProfile.birthLocation.lat || DEFAULT_BIRTH_LOCATION.lat,
+                  lng: userBirthProfile.birthLocation.lng || DEFAULT_BIRTH_LOCATION.lng,
+                  timezone: userBirthProfile.birthLocation.timezone || DEFAULT_BIRTH_LOCATION.timezone,
+                  countryCode: userBirthProfile.birthLocation.countryCode,
+                  countryName: userBirthProfile.birthLocation.countryName,
+                }
+              : DEFAULT_BIRTH_LOCATION,
+            school: 'thien-luong',
+          };
+          const chart = generateChart(chartInput);
+          setResult(chart);
+        } catch {
+          setError('Không thể lập lá số. Vui lòng thử lại.');
         } finally {
           setIsAnimating(false);
         }
@@ -132,9 +144,9 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
   return (
     <div className="w-full h-full flex flex-col">
       {!result ? (
-        <form onSubmit={handleSubmit} className="glass-card-strong glass-shimmer glass-noise p-5 flex flex-col flex-1">
+        <form onSubmit={handleSubmit} className="glass-card-strong glass-shimmer glass-noise p-5 flex flex-col flex-1 rounded-2xl border border-border-light/60 dark:border-border-dark/60">
           <div className="flex items-center gap-2 mb-3">
-            <span className="material-icons-round text-base text-gold dark:text-gold-dark">auto_awesome</span>
+            <Sparkles className="h-4 w-4 text-gold dark:text-gold-dark" />
             <span className="label-standard text-text-secondary-light/70 dark:text-text-secondary-dark/70">
               Khám phá nhanh
             </span>
@@ -194,31 +206,32 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
                 {error}
               </p>
             )}
-            <button
+            <Button
               type="submit"
               disabled={isAnimating}
-              className="w-full flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-mystery-deep to-indigo-950 text-gold-light dark:from-gold dark:to-amber-500 dark:text-indigo-950 font-bold text-sm shadow-lg shadow-mystery-deep/15 dark:shadow-gold-dark/20 hover:shadow-xl hover:shadow-mystery-deep/25 dark:hover:shadow-gold/25 transition-all duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-60 ring-1 ring-gold/20 dark:ring-0"
+              variant="gold"
+              className="w-full h-11 text-sm font-bold gap-2"
             >
               {isAnimating ? (
                 <>
-                  <span className="material-icons-round text-sm animate-spin">autorenew</span>
+                  <Loader2 className="h-4 w-4 animate-spin" />
                   Đang phân tích...
                 </>
               ) : (
                 <>
                   Xem kết quả
-                  <span className="material-icons-round text-sm">arrow_forward</span>
+                  <ArrowRight className="h-4 w-4" />
                 </>
               )}
-            </button>
+            </Button>
           </div>
         </form>
       ) : (
-        <div className="glass-card-strong glass-shimmer glass-noise mystery-glow-border p-5 flex flex-col flex-1 animate-fade-scale">
+        <div className="glass-card-strong glass-shimmer glass-noise mystery-glow-border p-5 flex flex-col flex-1 animate-fade-scale rounded-2xl border border-border-light/60 dark:border-border-dark/60">
           {/* Result Header */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="material-icons-round text-3xl text-gold dark:text-gold-dark">auto_awesome</span>
+              <Sparkles className="h-6 w-6 text-gold dark:text-gold-dark" />
               <div>
                 <p className="label-standard text-text-secondary-light/70 dark:text-text-secondary-dark/70">
                   Lá số Tử Vi
@@ -254,13 +267,14 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
 
           {/* CTA to full chart */}
           <div className="mt-auto flex flex-col gap-2">
-            <button
+            <Button
               onClick={openTuViChart}
-              className="w-full flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-mystery-deep to-indigo-950 text-gold-light dark:from-gold dark:to-amber-500 dark:text-indigo-950 font-bold text-sm shadow-lg shadow-mystery-deep/15 dark:shadow-gold-dark/20 hover:shadow-xl hover:shadow-mystery-deep/25 dark:hover:shadow-gold/25 transition-all duration-300 hover:scale-[1.02] active:scale-95 ring-1 ring-gold/20 dark:ring-0"
+              variant="gold"
+              className="w-full h-11 text-sm font-bold gap-2"
             >
               Mở lá số Tử Vi
-              <span className="material-icons-round text-sm">arrow_forward</span>
-            </button>
+              <ArrowRight className="h-4 w-4" />
+            </Button>
             <button
               onClick={() => {
                 setResult(null);

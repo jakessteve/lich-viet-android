@@ -143,44 +143,63 @@ afterEach(() => {
 });
 
 describe('TuViSummaryPanel', () => {
-  it('shows the overview details with current Đại hạn Tam Tài scoreboard and switches between Simple and Advanced modes', () => {
+  it('shows streamlined overview and narrative in simple mode', () => {
     render(
       <MemoryRouter>
-        <TuViSummaryPanel chart={makeChart()} />
+        <TuViSummaryPanel chart={makeChart()} mode="simple" />
       </MemoryRouter>,
     );
 
     expect(screen.getByText('Tổng quan cấu trúc và Đại hạn')).toBeTruthy();
-    expect(screen.getByText('Bố cục chính tinh')).toBeTruthy();
-    expect(screen.getByText('Tứ Hóa hiện diện')).toBeTruthy();
+    expect(screen.queryByText('Cây Phân Loại Lá Số')).toBeNull();
+    expect(screen.getByText('Tứ Hóa Năm Sinh Toàn Bàn')).toBeTruthy();
     expect(screen.getByText(/Đại Hạn Hiện Tại:/i)).toBeTruthy();
-    expect(screen.getByText('Thiên Thời (Thái Tuế)')).toBeTruthy();
-    expect(screen.getByText('Địa Lợi (Cung Chi)')).toBeTruthy();
-    expect(screen.getByText('Nhân Hòa (Quý Nhân)')).toBeTruthy();
-    expect(screen.getByText('Khí Lực (Trường Sinh)')).toBeTruthy();
+    expect(screen.queryByText('Thiên Thời (Thái Tuế)')).toBeNull();
 
-    // Switch to Đại hạn tab (defaults to Simple mode)
+    // Switch to Đại hạn tab
     fireEvent.click(screen.getByRole('tab', { name: /Đại hạn/ }));
 
     expect(screen.getByText(/Dòng thời gian 12 Đại Hạn/i)).toBeTruthy();
     expect(screen.getByText('Tổng Quan Dòng Vận 10 Năm')).toBeTruthy();
     expect(screen.getByText('Sự Nghiệp & Tài Lộc')).toBeTruthy();
     expect(screen.getByText('Chiến Lược Hành Động Trọng Tâm')).toBeTruthy();
+    expect(screen.queryByText('Bố Cục Tọa Thủ & Tam Phương Tứ Chính')).toBeNull();
+    expect(screen.queryByText('Đánh Giá Tam Tài (Thiên Thời – Địa Lợi – Nhân Hòa)')).toBeNull();
+    expect(screen.queryByText(/Phân Kỳ Tiến Trình 5 Năm/i)).toBeNull();
+  });
 
-    // Switch to Chuyên sâu (Advanced) mode
-    fireEvent.click(screen.getByRole('tab', { name: /Chuyên sâu/ }));
+  it('shows full technical matrices in advanced mode', () => {
+    render(
+      <MemoryRouter>
+        <TuViSummaryPanel chart={makeChart()} mode="advanced" />
+      </MemoryRouter>,
+    );
 
+    expect(screen.getByText('Tổng quan cấu trúc và Đại hạn')).toBeTruthy();
+    expect(screen.getByText('Cây Phân Loại Lá Số')).toBeTruthy();
+    expect(screen.getByText('Tứ Hóa Năm Sinh Toàn Bàn')).toBeTruthy();
+    expect(screen.getByText(/Đại Hạn Hiện Tại:/i)).toBeTruthy();
+    expect(screen.getByText('Thiên Thời (Thái Tuế)')).toBeTruthy();
+    expect(screen.getByText('Địa Lợi (Nạp Âm)')).toBeTruthy();
+    expect(screen.getByText('Nhân Hòa (Cát/Sát)')).toBeTruthy();
+    expect(screen.getByText('Khí Lực (Tràng Sinh)')).toBeTruthy();
+
+    // Switch to Đại hạn tab
+    fireEvent.click(screen.getByRole('tab', { name: /Đại hạn/ }));
+
+    expect(screen.getByText(/Dòng thời gian 12 Đại Hạn/i)).toBeTruthy();
+    expect(screen.getByText('Tổng Quan Dòng Vận 10 Năm')).toBeTruthy();
+    expect(screen.getByText('Sự Nghiệp & Tài Lộc')).toBeTruthy();
+    expect(screen.getByText('Chiến Lược Hành Động Trọng Tâm')).toBeTruthy();
     expect(screen.getByText('Bố Cục Tọa Thủ & Tam Phương Tứ Chính')).toBeTruthy();
     expect(screen.getByText('Đánh Giá Tam Tài (Thiên Thời – Địa Lợi – Nhân Hòa)')).toBeTruthy();
-    expect(screen.getByText(/Cách Cục & Điểm Nhấn Nổi Bật/i)).toBeTruthy();
-    expect(screen.getByText('Lộ Trình 10 Năm & Dự Báo Toàn Diện')).toBeTruthy();
-    expect(screen.getByText(/Phân kỳ tiến trình 5 năm/i)).toBeTruthy();
+    expect(screen.getByText(/Phân Kỳ Tiến Trình 5 Năm/i)).toBeTruthy();
   });
 
   it('allows clicking different Đại Hạn chips in the timeline to update details', () => {
     render(
       <MemoryRouter>
-        <TuViSummaryPanel chart={makeChart()} />
+        <TuViSummaryPanel chart={makeChart()} mode="advanced" />
       </MemoryRouter>,
     );
 

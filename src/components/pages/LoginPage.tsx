@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { LockKeyholeOpen, User, Lock, Eye, EyeOff, AlertCircle, ArrowLeft, Info, Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import SuccessToast from '../shared/SuccessToast';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
+import { MotionFadeIn } from '@/components/ui/motion-primitives';
 
 // ══════════════════════════════════════════════════════════
 // LoginPage — Email/password login with optional 2FA
@@ -47,17 +53,17 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-12 sm:mt-20 px-4 animate-fade-in-up">
+    <MotionFadeIn className="max-w-md mx-auto mt-12 sm:mt-20 px-4">
       <SuccessToast
         message="Đăng nhập thành công. Chào mừng trở lại!"
         visible={showToast}
         onHide={() => setShowToast(false)}
       />
-      <div className="glass-card p-7 sm:p-8">
+      <Card variant="glass" className="p-7 sm:p-8">
         {/* Header */}
         <div className="text-center mb-7">
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-gold/15 to-amber-500/10 dark:from-gold-dark/12 dark:to-amber-400/8 flex items-center justify-center">
-            <span className="material-icons-round text-3xl text-gold dark:text-gold-dark">lock_open</span>
+            <LockKeyholeOpen className="h-8 w-8 text-gold dark:text-gold-dark" />
           </div>
           <h1 className="text-xl font-bold tracking-tight">Đăng nhập</h1>
           <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mt-1.5">
@@ -67,26 +73,19 @@ export default function LoginPage() {
 
         {/* Demo disclaimer */}
         <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-700/20 mb-5">
-          <span className="material-icons-round text-sm text-amber-500 dark:text-amber-400 mt-0.5 shrink-0">info</span>
-          <p className="text-xs leading-relaxed text-amber-700 dark:text-amber-300/80">
+          <Info className="h-4 w-4 text-amber-700 dark:text-amber-400 mt-0.5 shrink-0" />
+          <p className="text-xs leading-relaxed text-amber-900 dark:text-amber-200">
             <strong>Demo:</strong> Xác thực được lưu trên trình duyệt (localStorage). Không dùng mật khẩu thật.
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-4">
           {/* Username / Email */}
-          <div>
-            <label
-              htmlFor="login-email"
-              className="text-sm font-semibold tracking-wide text-text-secondary-light dark:text-text-secondary-dark block mb-1.5"
-            >
-              Tên đăng nhập / Email
-            </label>
+          <div className="space-y-1.5">
+            <Label htmlFor="login-email">Tên đăng nhập / Email</Label>
             <div className="relative">
-              <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3 top-1/2 -translate-y-1/2">
-                person
-              </span>
-              <input
+              <User className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Input
                 id="login-email"
                 type="text"
                 value={email}
@@ -96,24 +95,17 @@ export default function LoginPage() {
                 }}
                 placeholder="username hoặc email@example.com"
                 autoComplete="username"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/30 text-sm focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 outline-none transition-all placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60"
+                className="pl-10"
               />
             </div>
           </div>
 
           {/* Password */}
-          <div>
-            <label
-              htmlFor="login-password"
-              className="text-sm font-semibold tracking-wide text-text-secondary-light dark:text-text-secondary-dark block mb-1.5"
-            >
-              Mật khẩu
-            </label>
+          <div className="space-y-1.5">
+            <Label htmlFor="login-password">Mật khẩu</Label>
             <div className="relative">
-              <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3 top-1/2 -translate-y-1/2">
-                lock
-              </span>
-              <input
+              <Lock className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Input
                 id="login-password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
@@ -123,7 +115,7 @@ export default function LoginPage() {
                 }}
                 placeholder="••••••••"
                 autoComplete="current-password"
-                className="w-full pl-10 pr-12 py-2.5 rounded-xl bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/30 text-sm focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 outline-none transition-all placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60"
+                className="pl-10 pr-12"
               />
               <button
                 type="button"
@@ -131,7 +123,7 @@ export default function LoginPage() {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-white transition-colors"
                 aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
               >
-                <span className="material-icons-round text-lg">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
@@ -154,35 +146,36 @@ export default function LoginPage() {
           {/* Error */}
           {error && (
             <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-900/15 border border-red-200/50 dark:border-red-800/30 animate-scale-in">
-              <span className="material-icons-round text-sm text-red-500 dark:text-red-400">error</span>
+              <AlertCircle className="h-4 w-4 text-red-500 dark:text-red-400 shrink-0" />
               <p className="text-sm text-red-600 dark:text-red-400 font-medium">{error}</p>
             </div>
           )}
 
           {/* Submit */}
-          <button
+          <Button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 text-white font-semibold text-sm shadow-lg shadow-gold/15 dark:shadow-gold-dark/20 hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed btn-interact"
+            variant="gold"
+            className="w-full py-3 h-12 rounded-xl text-white font-semibold text-sm"
           >
             {isLoading ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
                 Đang đăng nhập...
               </span>
             ) : (
               'Đăng nhập'
             )}
-          </button>
+          </Button>
         </form>
 
         {/* Divider */}
         <div className="flex items-center gap-3 my-6">
-          <div className="flex-1 h-px bg-border-light/40 dark:bg-border-dark/30" />
+          <div className="flex-1 h-px bg-border-light/40 dark:border-border-dark/30" />
           <span className="text-xs uppercase tracking-widest font-bold text-text-secondary-light/60 dark:text-text-secondary-dark/60">
             hoặc
           </span>
-          <div className="flex-1 h-px bg-border-light/40 dark:bg-border-dark/30" />
+          <div className="flex-1 h-px bg-border-light/40 dark:border-border-dark/30" />
         </div>
 
         {/* Social login */}
@@ -209,7 +202,7 @@ export default function LoginPage() {
             Đăng ký ngay
           </button>
         </p>
-      </div>
+      </Card>
 
       {/* Back to app */}
       <div className="text-center mt-4">
@@ -217,11 +210,11 @@ export default function LoginPage() {
           onClick={() => navigate('/app/am-lich')}
           className="text-sm text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-white transition-colors inline-flex items-center gap-1"
         >
-          <span className="material-icons-round text-sm">arrow_back</span>
+          <ArrowLeft className="h-4 w-4" />
           Quay lại ứng dụng
         </button>
       </div>
-    </div>
+    </MotionFadeIn>
   );
 }
 

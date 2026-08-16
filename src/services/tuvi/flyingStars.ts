@@ -172,31 +172,40 @@ export function calculateFlyingStars(chart: TuViChart): FlyingStarSummary {
   const menhKhoa = menhFlying.find((h) => h.type === 'Khoa');
   const menhKy = menhFlying.find((h) => h.type === 'Kỵ');
 
+  const synthesisItems: Array<{ title: string; content: string }> = [];
   const synthesisParts: string[] = [];
-  synthesisParts.push(
-    `Phái Phi Tinh Tứ Hóa xác định toàn diện mạng lưới tương tác giữa 12 cung vị (toàn bàn có ${tuHoaCount} vị trí Tự Hóa nội cung).`,
-  );
+
+  const introText = `Phái Phi Tinh Tứ Hóa xác định toàn diện mạng lưới tương tác giữa 12 cung vị (toàn bàn có ${tuHoaCount} vị trí Tự Hóa nội cung).`;
+  synthesisParts.push(introText);
+  synthesisItems.push({
+    title: 'Tổng quan tương tác toàn bàn',
+    content: introText,
+  });
 
   // Mệnh xuất tứ hóa
   if (menhLoc) {
-    synthesisParts.push(
-      `Tâm thế hướng ngoại & thiện duyên: Mệnh phi Hóa Lộc nhập Cung ${menhLoc.targetPalaceName} (${menhLoc.starName}) biểu thị đương số luôn dành tình cảm, sự kỳ vọng và nguồn lực tích cực vào ${menhLoc.targetPalaceName.toLowerCase()}.`,
-    );
+    const title = 'Tâm thế hướng ngoại & thiện duyên';
+    const content = `Mệnh phi Hóa Lộc nhập Cung ${menhLoc.targetPalaceName} (${menhLoc.starName}) biểu thị đương số luôn dành tình cảm, sự kỳ vọng và nguồn lực tích cực vào ${menhLoc.targetPalaceName.toLowerCase()}.`;
+    synthesisParts.push(`${title}: ${content}`);
+    synthesisItems.push({ title, content });
   }
   if (menhQuyen) {
-    synthesisParts.push(
-      `Khát vọng chi phối: Mệnh phi Hóa Quyền nhập Cung ${menhQuyen.targetPalaceName} (${menhQuyen.starName}) thể hiện ý chí muốn khẳng định tầm ảnh hưởng, sự quyết đoán và chủ động dẫn dắt tại ${menhQuyen.targetPalaceName.toLowerCase()}.`,
-    );
+    const title = 'Khát vọng chi phối';
+    const content = `Mệnh phi Hóa Quyền nhập Cung ${menhQuyen.targetPalaceName} (${menhQuyen.starName}) thể hiện ý chí muốn khẳng định tầm ảnh hưởng, sự quyết đoán và chủ động dẫn dắt tại ${menhQuyen.targetPalaceName.toLowerCase()}.`;
+    synthesisParts.push(`${title}: ${content}`);
+    synthesisItems.push({ title, content });
   }
   if (menhKhoa) {
-    synthesisParts.push(
-      `Cầu thị & thanh danh: Mệnh phi Hóa Khoa nhập Cung ${menhKhoa.targetPalaceName} (${menhKhoa.starName}) cho thấy phong thái hòa nhã, chú trọng uy tín và tìm kiếm sự thấu hiểu từ ${menhKhoa.targetPalaceName.toLowerCase()}.`,
-    );
+    const title = 'Cầu thị & thanh danh';
+    const content = `Mệnh phi Hóa Khoa nhập Cung ${menhKhoa.targetPalaceName} (${menhKhoa.starName}) cho thấy phong thái hòa nhã, chú trọng uy tín và tìm kiếm sự thấu hiểu từ ${menhKhoa.targetPalaceName.toLowerCase()}.`;
+    synthesisParts.push(`${title}: ${content}`);
+    synthesisItems.push({ title, content });
   }
   if (menhKy) {
-    synthesisParts.push(
-      `Trọng tâm ràng buộc & duyên nợ: Mệnh phi Hóa Kỵ nhập Cung ${menhKy.targetPalaceName} (${menhKy.starName}) thể hiện mối bận tâm sâu sắc, trách nhiệm và tâm tư cống hiến lớn nhất gắn liền với ${menhKy.targetPalaceName.toLowerCase()}.`,
-    );
+    const title = 'Trọng tâm ràng buộc & duyên nợ';
+    const content = `Mệnh phi Hóa Kỵ nhập Cung ${menhKy.targetPalaceName} (${menhKy.starName}) thể hiện mối bận tâm sâu sắc, trách nhiệm và tâm tư cống hiến lớn nhất gắn liền với ${menhKy.targetPalaceName.toLowerCase()}.`;
+    synthesisParts.push(`${title}: ${content}`);
+    synthesisItems.push({ title, content });
   }
 
   // Cung phi nhập Mệnh
@@ -204,15 +213,17 @@ export function calculateFlyingStars(chart: TuViChart): FlyingStarSummary {
   const receivedKy = menhReceived.filter((h) => h.type === 'Kỵ');
   if (receivedLoc.length > 0) {
     const locNames = receivedLoc.map((h) => h.sourcePalaceName).join(', ');
-    synthesisParts.push(
-      `Nguồn trợ lực: Cung ${locNames} phi Hóa Lộc nhập Mệnh mang lại may mắn, quý nhân phù trợ và thiện cảm tự nhiên.`,
-    );
+    const title = 'Nguồn trợ lực';
+    const content = `Cung ${locNames} phi Hóa Lộc nhập Mệnh mang lại may mắn, quý nhân phù trợ và thiện cảm tự nhiên.`;
+    synthesisParts.push(`${title}: ${content}`);
+    synthesisItems.push({ title, content });
   }
   if (receivedKy.length > 0) {
     const kyNames = receivedKy.map((h) => h.sourcePalaceName).join(', ');
-    synthesisParts.push(
-      `Thử thách & áp lực: Cung ${kyNames} phi Hóa Kỵ nhập Mệnh tạo nên những ràng buộc, trách nhiệm hoặc áp lực mà đương số cần chủ động hóa giải.`,
-    );
+    const title = 'Thử thách & áp lực';
+    const content = `Cung ${kyNames} phi Hóa Kỵ nhập Mệnh tạo nên những ràng buộc, trách nhiệm hoặc áp lực mà đương số cần chủ động hóa giải.`;
+    synthesisParts.push(`${title}: ${content}`);
+    synthesisItems.push({ title, content });
   }
 
   // Kỵ Xung đối chiếu trọng yếu
@@ -221,10 +232,13 @@ export function calculateFlyingStars(chart: TuViChart): FlyingStarSummary {
     const xungUnique = Array.from(
       new Set(allXungs.map((x) => `trục ${x.sourcePalaceName} → xung ${x.targetPalaceName}`)),
     );
-    synthesisParts.push(`Cảnh báo Kỵ Xung: Cần lưu tâm ${xungUnique.slice(0, 3).join(', ')} để phòng ngừa biến động.`);
+    const title = 'Cảnh báo Kỵ Xung';
+    const content = `Cần lưu tâm ${xungUnique.slice(0, 3).join(', ')} để phòng ngừa biến động.`;
+    synthesisParts.push(`${title}: ${content}`);
+    synthesisItems.push({ title, content });
   }
 
-  const overallSynthesisVi = synthesisParts.join(' ');
+  const overallSynthesisVi = synthesisParts.join('\n\n');
 
   return {
     palaces: palacesFlyingMap,
@@ -236,5 +250,6 @@ export function calculateFlyingStars(chart: TuViChart): FlyingStarSummary {
       phuTheFlying,
     },
     overallSynthesisVi,
+    synthesisItems,
   };
 }

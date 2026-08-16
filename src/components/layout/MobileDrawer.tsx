@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { X, Check } from 'lucide-react';
 import { NAV_LINKS, ROUTE_TO_TAB, TAB_TO_ROUTE, type ActiveTab } from '@/router/constants';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 
 export default function MobileDrawer() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,53 +45,45 @@ export default function MobileDrawer() {
       className={`fixed inset-0 z-[60] md:hidden ${isClosing ? 'pointer-events-none' : ''}`}
       role="dialog"
       aria-modal="true"
-      aria-label="Menu điều hướng"
+      aria-label="Menu điều hướng di động"
     >
       {/* Backdrop */}
       <div
-        className={`absolute inset-0 bg-black/50 dark:bg-black/60 backdrop-blur-sm transition-opacity duration-200 ${isClosing ? 'opacity-0' : 'animate-fade-scale'}`}
+        className={`fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-250 ${
+          isClosing ? 'opacity-0' : 'animate-fade-in'
+        }`}
         onClick={handleClose}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handleClose();
-          }
-        }}
-        role="button"
-        tabIndex={-1}
         aria-hidden="true"
       />
-      {/* Drawer panel */}
+
+      {/* Drawer Panel */}
       <div
-        className={`absolute top-0 left-0 h-full w-64 min-[400px]:w-80 bg-white dark:bg-mystery-surface/95 dark:backdrop-blur-xl shadow-2xl dark:shadow-mystery-purple/10 flex flex-col transition-transform duration-250 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu ${
-          isClosing ? '-translate-x-full' : 'translate-x-0 animate-slide-left'
+        className={`fixed inset-y-0 left-0 w-4/5 max-w-xs bg-surface-light dark:bg-surface-dark shadow-2xl flex flex-col z-10 transition-transform duration-250 ease-out border-r border-border-light/40 dark:border-border-dark/40 ${
+          isClosing ? '-translate-x-full' : 'animate-slide-right'
         }`}
       >
-        {/* Drawer header */}
-        <div className="flex items-center justify-between h-14 px-4 border-b border-border-light dark:border-border-dark">
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border-light/50 dark:border-border-dark/50">
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                navigate('/');
-                setIsOpen(false);
-              }}
-              className="text-lg font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold via-gold-light to-amber-600 dark:from-gold-dark dark:via-amber-400 dark:to-yellow-300 tracking-tight hover:opacity-80 transition-opacity text-left cursor-pointer"
-              aria-label="Về trang chủ giới thiệu (Landing Page)"
-              title="Về trang giới thiệu Lịch Việt"
-            >
+            <span className="text-base font-bold bg-clip-text text-transparent bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-400">
               LỊCH VIỆT
-            </button>
+            </span>
+            <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-gold/10 text-gold dark:text-gold-dark">
+              v3
+            </span>
           </div>
           <button
             onClick={handleClose}
-            className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 text-text-secondary-light dark:text-text-secondary-dark transition-colors"
+            className="p-1.5 rounded-xl text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
             aria-label="Đóng menu"
           >
-            <span className="material-icons-round text-xl">close</span>
+            <X className="w-5 h-5" />
           </button>
         </div>
-        {/* Nav links */}
-        <nav className="flex-1 py-2 px-2 overflow-y-auto space-y-3" aria-label="Điều hướng chính">
-          {/* Section: Trang Chủ (Landing Page) */}
+
+        {/* Navigation links */}
+        <nav className="flex-1 overflow-y-auto px-3 py-3 space-y-4">
+          {/* Home Link */}
           <div>
             <button
               onClick={() => {
@@ -98,16 +92,15 @@ export default function MobileDrawer() {
               }}
               className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
                 location.pathname === '/'
-                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark font-semibold'
                   : 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
               }`}
               aria-current={location.pathname === '/' ? 'page' : undefined}
             >
-              <span
-                className={`material-icons-round text-xl mt-0.5 ${location.pathname === '/' ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
-              >
-                home
-              </span>
+              {renderDynamicIcon(
+                'home',
+                `h-5 w-5 mt-0.5 ${location.pathname === '/' ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`,
+              )}
               <div className="flex-1 min-w-0">
                 <span className="text-sm font-medium block">Trang chủ</span>
                 <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
@@ -115,7 +108,7 @@ export default function MobileDrawer() {
                 </span>
               </div>
               {location.pathname === '/' && (
-                <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                <Check className="ml-auto h-4 w-4 shrink-0 mt-1 text-gold dark:text-gold-dark" />
               )}
             </button>
           </div>
@@ -133,7 +126,7 @@ export default function MobileDrawer() {
                 }}
                 className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
                   activeTab === link.id && !isFullPage
-                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark font-semibold'
                     : link.enabled
                       ? 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
                       : 'text-gray-400 dark:text-gray-600 cursor-default'
@@ -142,11 +135,10 @@ export default function MobileDrawer() {
                 disabled={!link.enabled}
                 aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
               >
-                <span
-                  className={`material-icons-round text-xl mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
-                >
-                  {link.icon}
-                </span>
+                {renderDynamicIcon(
+                  link.icon,
+                  `h-5 w-5 mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`,
+                )}
                 <div className="flex-1 min-w-0">
                   <span className="text-sm font-medium block">{link.label}</span>
                   <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
@@ -154,7 +146,7 @@ export default function MobileDrawer() {
                   </span>
                 </div>
                 {activeTab === link.id && !isFullPage && (
-                  <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                  <Check className="ml-auto h-4 w-4 shrink-0 mt-1 text-gold dark:text-gold-dark" />
                 )}
               </button>
             ))}
@@ -176,14 +168,14 @@ export default function MobileDrawer() {
               {
                 id: 'chiem-tinh-tay-phuong',
                 path: '/app/chiem-tinh/tay-phuong',
-                icon: 'auto_graph',
+                icon: 'public',
                 label: 'Chiêm Tinh Tây Phương',
                 desc: 'Bản đồ sao Natal & Vận hạn',
               },
               {
                 id: 'chiem-tinh-vedic',
                 path: '/app/chiem-tinh/vedic',
-                icon: 'bubble_chart',
+                icon: 'sparkles',
                 label: 'Chiêm Tinh Ấn Độ (Vedic)',
                 desc: 'Jyotish, Dasha & Cung Vệ Đà',
               },
@@ -209,24 +201,23 @@ export default function MobileDrawer() {
                   }}
                   className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
                     isActive
-                      ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                      ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark font-semibold'
                       : 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
                   }`}
                   style={{ animationDelay: `${index * 30 + 90}ms` }}
                   aria-current={isActive ? 'page' : undefined}
                 >
-                  <span
-                    className={`material-icons-round text-xl mt-0.5 ${isActive ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
-                  >
-                    {link.icon}
-                  </span>
+                  {renderDynamicIcon(
+                    link.icon,
+                    `h-5 w-5 mt-0.5 ${isActive ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`,
+                  )}
                   <div className="flex-1 min-w-0">
                     <span className="text-sm font-medium block">{link.label}</span>
                     <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70 truncate">
                       {link.desc}
                     </span>
                   </div>
-                  {isActive && <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>}
+                  {isActive && <Check className="ml-auto h-4 w-4 shrink-0 mt-1 text-gold dark:text-gold-dark" />}
                 </button>
               );
             })}
@@ -245,7 +236,7 @@ export default function MobileDrawer() {
                 }}
                 className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
                   activeTab === link.id && !isFullPage
-                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                    ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark font-semibold'
                     : link.enabled
                       ? 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
                       : 'text-gray-400 dark:text-gray-600 cursor-default'
@@ -254,11 +245,10 @@ export default function MobileDrawer() {
                 disabled={!link.enabled}
                 aria-current={activeTab === link.id && !isFullPage ? 'page' : undefined}
               >
-                <span
-                  className={`material-icons-round text-xl mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
-                >
-                  {link.icon}
-                </span>
+                {renderDynamicIcon(
+                  link.icon,
+                  `h-5 w-5 mt-0.5 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`,
+                )}
                 <div className="flex-1 min-w-0">
                   <span className="text-sm font-medium block">{link.label}</span>
                   <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
@@ -266,7 +256,7 @@ export default function MobileDrawer() {
                   </span>
                 </div>
                 {activeTab === link.id && !isFullPage && (
-                  <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                  <Check className="ml-auto h-4 w-4 shrink-0 mt-1 text-gold dark:text-gold-dark" />
                 )}
               </button>
             ))}
@@ -293,15 +283,14 @@ export default function MobileDrawer() {
               }}
               className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 ${
                 location.pathname === link.path
-                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark font-semibold'
                   : 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
               }`}
             >
-              <span
-                className={`material-icons-round text-xl mt-0.5 ${location.pathname === link.path ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
-              >
-                {link.icon}
-              </span>
+              {renderDynamicIcon(
+                link.icon,
+                `h-5 w-5 mt-0.5 ${location.pathname === link.path ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`,
+              )}
               <div className="flex-1 min-w-0">
                 <span className="text-sm font-medium block">{link.label}</span>
                 <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
@@ -309,7 +298,7 @@ export default function MobileDrawer() {
                 </span>
               </div>
               {location.pathname === link.path && (
-                <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+                <Check className="ml-auto h-4 w-4 shrink-0 mt-1 text-gold dark:text-gold-dark" />
               )}
             </button>
           ))}

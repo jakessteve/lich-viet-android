@@ -557,11 +557,11 @@ function buildTuanTrietPalaceInterpretation(palace: TuViPalace): string | undefi
     );
   } else if (isTrietOnly) {
     parts.push(
-      'Cung vị ngộ Triệt Không (Triệt Lộ Không Vong — hành Kim): Mang tính chất bẻ gãy, ngăn chặn mạnh mẽ nhất ở tiền vận (trước 30–32 tuổi); sau 30 tuổi ảnh hưởng giảm dần, mở đường cho vận trình hanh thông.',
+      'Cung vị ngộ Triệt Không (Triệt Lộ Không Vong - hành Kim): Mang tính chất bẻ gãy, ngăn chặn mạnh mẽ nhất ở tiền vận (trước 30–32 tuổi); sau 30 tuổi ảnh hưởng giảm dần, mở đường cho vận trình hanh thông.',
     );
   } else if (isTuanOnly) {
     parts.push(
-      'Cung vị ngộ Tuần Không (Tuần Trung Không Vong — hành Hỏa): Mang tính chất kìm giữ, bao bọc, làm chậm nhịp độ và chi phối suốt đời, biểu hiện rõ nét và sâu sắc nhất từ trung niên (sau 30 tuổi) trở đi.',
+      'Cung vị ngộ Tuần Không (Tuần Trung Không Vong - hành Hỏa): Mang tính chất kìm giữ, bao bọc, làm chậm nhịp độ và chi phối suốt đời, biểu hiện rõ nét và sâu sắc nhất từ trung niên (sau 30 tuổi) trở đi.',
     );
   }
 

@@ -2,6 +2,7 @@ import React, { Suspense, useMemo } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { LoadingState } from '../shared';
+import { MotionPageTransition } from '@/components/ui/motion-primitives';
 
 const WesternAstrologyPage = React.lazy(() => import('./Western/WesternAstrologyPage'));
 const VedicAstrologyPage = React.lazy(() => import('./Vedic/VedicAstrologyPage'));
@@ -32,11 +33,11 @@ export default function ChiemTinhPage() {
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Subtab View without top bar menu */}
       <Suspense fallback={<LoadingState />}>
-        <div className="animate-fade-scale">
+        <MotionPageTransition key={activeTab}>
           {activeTab === 'tay-phuong' && <WesternAstrologyPage />}
           {activeTab === 'vedic' && <VedicAstrologyPage />}
           {activeTab === 'hop-la' && <SynastryPage />}
-        </div>
+        </MotionPageTransition>
       </Suspense>
     </div>
   );

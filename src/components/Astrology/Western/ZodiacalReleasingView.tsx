@@ -134,7 +134,7 @@ export const ZodiacalReleasingView: React.FC<ZodiacalReleasingViewProps> = ({ na
                       <h5 className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                         Tiểu Vận Cấp 2 (Level 2 Sub-Periods):
                       </h5>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                      <div className="space-y-2 text-xs">
                         {p.subPeriods.map((sub: ZodiacalPeriod, sIdx: number) => (
                           <div
                             key={sIdx}

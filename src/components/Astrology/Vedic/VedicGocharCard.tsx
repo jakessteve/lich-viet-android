@@ -34,7 +34,7 @@ export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) 
                   : gochar.luckTier === 'Khởi Sắc'
                     ? 'bg-info/15 text-info dark:text-info-dark border-info/40'
                     : gochar.luckTier === 'Bình Hòa'
-                      ? 'bg-gold/15 text-gold-light dark:text-gold-dark border-gold/40'
+                      ? 'bg-gold/15 text-gold dark:text-gold-dark border-gold/40'
                       : 'bg-bad/15 text-bad dark:text-bad-dark border-bad/40'
               }`}
             >
@@ -75,7 +75,7 @@ export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) 
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+          <div className="space-y-2.5">
             {gochar.transits.map((t, idx) => (
               <div
                 key={idx}

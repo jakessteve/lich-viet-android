@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
-import { BirthDataInput, ActionButton } from '../../shared';
+import { BirthDataInput, ActionButton, SavedChartsPicker } from '../../shared';
 import { ExecutiveSnapshotCards } from '../../shared/ExecutiveSnapshotCards';
 import { VedicChartDisplay } from './VedicChartDisplay';
 
@@ -37,6 +37,28 @@ export const VedicChartView: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      {/* Saved Charts Quick Picker */}
+      <SavedChartsPicker
+        storageKey="saved_vedic_charts_v1"
+        tone="purple"
+        currentInput={input}
+        onSelectChart={(entry) => {
+          setInput({
+            name: entry.name,
+            birthDate: new Date(entry.birthDate),
+            birthHour: entry.birthHour,
+            birthMinute: entry.birthMinute,
+            latitude: entry.latitude,
+            longitude: entry.longitude,
+            timezone: entry.timezone,
+            locationName: entry.locationName,
+            countryCode: entry.countryCode,
+            countryName: entry.countryName,
+          });
+          setTimeout(() => void runCalc(), 50);
+        }}
+      />
+
       {/* 30-Second Executive Snapshot Cards */}
       {result && !isCalculating && (
         <div ref={snapshotRef} className="animate-fade-scale scroll-mt-4">

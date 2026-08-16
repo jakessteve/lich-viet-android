@@ -13,6 +13,7 @@ import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
 import { useViewerLocation } from './hooks/useViewerLocation';
 import { getCivilDateForOffset } from '@/utils/geo';
+import { ArrowLeft } from 'lucide-react';
 
 // ══════════════════════════════════════════════════════════
 // App Layout — wraps the main app modules with nav/sidebar
@@ -108,13 +109,13 @@ function AppLayout() {
       >
         {isFullPage ? (
           /* Full-page routes with back-navigation */
-          <div>
+          <div key={location.pathname} className="animate-page-enter">
             {location.pathname !== '/app/cai-dat' && (
               <button
                 onClick={() => navigate('/app/am-lich')}
                 className="inline-flex items-center gap-1.5 mb-4 px-3 py-1.5 rounded-xl text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
               >
-                <span className="material-icons-round text-lg">arrow_back</span>
+                <ArrowLeft className="h-4 w-4" />
                 Quay lại ứng dụng
               </button>
             )}
@@ -131,13 +132,13 @@ function AppLayout() {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex-1 w-full min-w-0 order-2 md:order-2">
+            <div key={location.pathname} className="flex-1 w-full min-w-0 order-2 md:order-2 animate-page-enter">
               <Outlet />
             </div>
           </div>
         ) : (
           /* Non-calendar feature routes: Clean full-width workspace */
-          <div className="w-full min-w-0">
+          <div key={location.pathname} className="w-full min-w-0 animate-page-enter">
             <Outlet />
           </div>
         )}

@@ -21,7 +21,7 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
         <span className="badge-astral shrink-0">{patterns.length} mô hình</span>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2">
+      <div className="space-y-3.5">
         {patterns.map((pattern) => (
           <div
             key={pattern.id}
@@ -64,7 +64,7 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
                 <div className="space-y-1.5 pt-1 text-xs leading-relaxed">
                   <div className="rounded-lg bg-surface-container-low/60 p-2 space-y-1 border border-border-light/30 dark:border-border-dark/30">
                     <p className="text-text-primary-light dark:text-text-primary-dark font-medium">
-                      <span className="text-gold-light dark:text-gold-dark font-bold mr-1">✦ Thiên phú:</span>
+                      <span className="text-gold dark:text-gold-dark font-bold mr-1">✦ Thiên phú:</span>
                       {pattern.personalizedSynthesis.uniqueGiftVi}
                     </p>
                     <p className="text-text-secondary-light dark:text-text-secondary-dark">
@@ -75,11 +75,10 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
 
                   {pattern.resolutionPoint && (
                     <div className="rounded-lg bg-polarity-harmonious/10 p-2 border border-polarity-harmonious/25 text-polarity-harmonious dark:text-polarity-harmonious-dark text-xs">
-                      <span className="font-bold flex items-center gap-1 mb-0.5">
-                        <span className="material-icons-round text-xs">tune</span>
+                      <span className="font-bold block mb-0.5">
                         Điểm hóa giải (Resolution Point):
                         {pattern.resolutionPoint.oppositeHouse && (
-                          <span className="underline ml-0.5">
+                          <span className="underline ml-1">
                             Nhà {pattern.resolutionPoint.oppositeHouse} ({pattern.resolutionPoint.oppositeSignVi})
                           </span>
                         )}
@@ -102,21 +101,21 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
               {pattern.planets.map((p) => (
                 <span
                   key={p.id}
-                  className={`inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-micro font-medium ${
+                  className={`inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-micro font-medium shrink-0 leading-none ${
                     pattern.apexPlanet?.id === p.id
                       ? 'bg-rose-500/15 text-rose-700 font-bold dark:text-rose-300 border border-rose-500/30'
-                      : 'bg-surface-container text-text-primary-light dark:text-text-primary-dark'
+                      : 'bg-surface-container text-text-primary-light dark:text-text-primary-dark border border-border-light/30 dark:border-border-dark/30'
                   }`}
                 >
-                  <span>{p.symbol}</span>
-                  <span>{p.nameVi}</span>
+                  <span className="shrink-0 font-bold">{p.symbol}</span>
+                  <span className="shrink-0">{p.nameVi}</span>
                   {p.house && (
-                    <span className="text-micro text-text-secondary-light/70 dark:text-text-secondary-dark/70">
+                    <span className="text-micro text-text-secondary-light/70 dark:text-text-secondary-dark/70 shrink-0">
                       (N{p.house})
                     </span>
                   )}
                   {pattern.apexPlanet?.id === p.id && (
-                    <span className="text-micro text-rose-600 dark:text-rose-400 font-bold">(Đỉnh)</span>
+                    <span className="text-micro text-rose-600 dark:text-rose-400 font-bold shrink-0">(Đỉnh)</span>
                   )}
                 </span>
               ))}

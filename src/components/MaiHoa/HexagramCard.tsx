@@ -3,8 +3,11 @@
 // Clean, unified design with optional expandable metadata table.
 
 import React from 'react';
+import { ChevronDown } from 'lucide-react';
 import HexagramLines from './HexagramLines';
 import type { Hexagram, Trigram, HaoDetail } from '../../types/maiHoa';
+import { Card } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 interface HexagramCardProps {
   /** The hexagram to display */
@@ -34,7 +37,7 @@ export function HaoDetailTable({ haoDetails }: { readonly haoDetails: readonly H
     <div className="overflow-hidden rounded-lg border border-border-light/60 dark:border-border-dark/60">
       <table className="w-full text-[10px] sm:text-xs">
         <thead>
-          <tr className="bg-gray-50/80 dark:bg-white/5 text-text-secondary-light dark:text-text-secondary-dark">
+          <tr className="bg-surface-subtle-light dark:bg-white/5 text-text-secondary-light dark:text-text-secondary-dark">
             <th className="py-1.5 px-2 text-left font-semibold uppercase tracking-wider">Hào</th>
             <th className="py-1.5 px-2 text-left font-semibold uppercase tracking-wider">Nạp Giáp</th>
             <th className="py-1.5 px-2 text-left font-semibold uppercase tracking-wider">Hành</th>
@@ -46,7 +49,7 @@ export function HaoDetailTable({ haoDetails }: { readonly haoDetails: readonly H
           {sorted.map((d) => (
             <tr
               key={d.position}
-              className={`${d.isMoving ? 'bg-amber-50/60 dark:bg-amber-900/15' : ''} transition-colors`}
+              className={cn(d.isMoving && 'bg-amber-50/60 dark:bg-amber-900/15', 'transition-colors')}
             >
               <td className="py-1.5 px-2 font-medium text-text-primary-light dark:text-text-primary-dark">
                 {d.position}
@@ -56,7 +59,7 @@ export function HaoDetailTable({ haoDetails }: { readonly haoDetails: readonly H
                 {d.can} {d.chi}
               </td>
               <td className="py-1.5 px-2">
-                <span className="inline-block bg-gray-100 dark:bg-white/10 px-1.5 py-0.5 rounded text-text-secondary-light dark:text-text-secondary-dark font-medium">
+                <span className="inline-block bg-surface-subtle-light dark:bg-white/10 px-1.5 py-0.5 rounded text-text-secondary-light dark:text-text-secondary-dark font-medium">
                   {d.element}
                 </span>
               </td>
@@ -94,11 +97,11 @@ export default function HexagramCard({
   const hasDetails = haoDetails !== undefined && haoDetails.length > 0;
 
   return (
-    <div className="flex flex-col h-full rounded-xl sm:rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light/50 dark:border-border-dark/50 shadow-apple transition-[box-shadow,transform] duration-200 hover:shadow-apple-hover hover:-translate-y-0.5 overflow-hidden motion-gpu">
+    <Card className="flex flex-col h-full rounded-xl sm:rounded-2xl border border-border-light/50 dark:border-border-dark/50 shadow-apple transition-[box-shadow,transform] duration-200 hover:shadow-apple-hover hover:-translate-y-0.5 overflow-hidden motion-gpu">
       {/* ── Card Body: Centered Content ───────────────── */}
       <div className="flex flex-col items-center gap-1 sm:gap-2 p-1.5 sm:p-4 md:p-5 flex-1">
         {/* Label badge */}
-        <span className={`label-standard ${accentClass}`}>{label}</span>
+        <span className={cn('label-standard', accentClass)}>{label}</span>
 
         {/* Hexagram Name */}
         <h4 className="text-sm sm:text-base md:text-lg font-bold text-text-primary-light dark:text-text-primary-dark text-center leading-tight">
@@ -144,15 +147,15 @@ export default function HexagramCard({
           <button
             type="button"
             onClick={onToggleExpand}
-            className="w-full flex items-center justify-center gap-1.5 py-2 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer"
+            className="w-full flex items-center justify-center gap-1.5 py-2 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark hover:bg-surface-container-low dark:hover:bg-white/5 transition-colors cursor-pointer spring-press"
             aria-expanded={expanded}
           >
-            <span
-              className="material-icons-round text-sm transition-transform duration-200"
-              style={{ transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-            >
-              expand_more
-            </span>
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 transition-transform duration-200',
+                expanded && 'rotate-180',
+              )}
+            />
             {expanded ? 'Ẩn chi tiết hào' : 'Chi tiết hào'}
           </button>
 
@@ -163,6 +166,6 @@ export default function HexagramCard({
           )}
         </div>
       )}
-    </div>
+    </Card>
   );
 }

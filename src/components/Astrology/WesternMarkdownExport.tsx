@@ -6,6 +6,8 @@ import { formatVedicChartAsMarkdown } from '../../services/astrology/vedicMarkdo
 import { Capacitor } from '@capacitor/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Check, Copy, Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   system: 'western' | 'vedic';
@@ -76,29 +78,37 @@ export const WesternMarkdownExport: React.FC<Props> = ({ system }) => {
     }
   };
 
-  const btnBase =
-    'flex min-h-11 items-center justify-center gap-1.5 whitespace-nowrap px-3 py-1.5 rounded-xl text-sm text-text-secondary-light dark:text-text-secondary-dark hover:bg-surface-container-lowest transition-colors';
-
   return (
-    <div className="flex items-center justify-center gap-2 pt-4">
-      <button
+    <div className="w-full flex items-center gap-2.5 sm:gap-3 pt-2">
+      <Button
+        type="button"
+        variant={copied ? 'secondary' : 'outline'}
         onClick={handleCopy}
-        className={`${btnBase} ${
-          copied ? 'bg-green-500/20 text-green-600 dark:text-green-400' : ''
-        }`}
+        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
         title="Sao chép Markdown"
       >
-        <span className="material-icons-round text-base">{copied ? 'check' : 'content_copy'}</span>
-        {copied ? 'Đã chép!' : 'Sao chép MD'}
-      </button>
-      <button
+        {copied ? (
+          <>
+            <Check className="h-4 w-4 text-good dark:text-good-dark" />
+            <span className="text-good dark:text-good-dark">Đã chép!</span>
+          </>
+        ) : (
+          <>
+            <Copy className="h-4 w-4" />
+            <span>Sao chép Markdown</span>
+          </>
+        )}
+      </Button>
+      <Button
+        type="button"
+        variant="outline"
         onClick={handleDownload}
-        className={btnBase}
+        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
         title="Tải Markdown"
       >
-        <span className="material-icons-round text-base">download</span>
-        Tải MD
-      </button>
+        <Download className="h-4 w-4" />
+        <span>Tải file .md</span>
+      </Button>
     </div>
   );
 };

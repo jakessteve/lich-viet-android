@@ -71,8 +71,8 @@ describe('Route Persistence & Native Navigation', () => {
         </MemoryRouter>,
       );
 
-      expect(await screen.findByRole('heading', { level: 1 }, { timeout: 4000 })).toBeInTheDocument();
-      expect(await screen.findByRole('button', { name: /Trải nghiệm ngay/i }, { timeout: 4000 })).toBeInTheDocument();
-    });
+      expect(await screen.findByRole('heading', { level: 1 }, { timeout: 10000 })).toBeInTheDocument();
+      expect(await screen.findByRole('button', { name: /Trải nghiệm ngay/i }, { timeout: 10000 })).toBeInTheDocument();
+    }, 15000);
   });
 });

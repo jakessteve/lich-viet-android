@@ -162,7 +162,7 @@ export const ForecastView: React.FC = () => {
                           : forecastResult.monthlyTimeline.overallLuckTier === 'Khởi Sắc'
                             ? 'bg-info/15 text-info dark:text-info-dark border-info/40'
                             : forecastResult.monthlyTimeline.overallLuckTier === 'Bình Hòa'
-                              ? 'bg-gold/15 text-gold-light dark:text-gold-dark border-gold/40'
+                              ? 'bg-gold/15 text-gold dark:text-gold-dark border-gold/40'
                               : 'bg-orange/15 text-orange dark:text-orange-dark border-orange/40'
                       }`}
                     >
@@ -218,7 +218,7 @@ export const ForecastView: React.FC = () => {
                                   : m.luckTier === 'Khởi Sắc'
                                     ? 'bg-info/15 text-info dark:text-info-dark'
                                     : m.luckTier === 'Bình Hòa'
-                                      ? 'bg-gold/15 text-gold-light dark:text-gold-dark'
+                                      ? 'bg-gold/15 text-gold dark:text-gold-dark'
                                       : 'bg-orange/15 text-orange dark:text-orange-dark'
                               }`}
                             >

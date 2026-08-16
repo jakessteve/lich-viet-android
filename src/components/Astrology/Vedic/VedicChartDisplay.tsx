@@ -13,23 +13,22 @@ import { calculateVedicGochar } from '../../../services/astrology/gocharAnalysis
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { useShallow } from 'zustand/react/shallow';
 import { SegmentedControl, type SegmentedOption } from '../../shared';
-import { WesternMarkdownExport } from '../WesternMarkdownExport';
 
 type VedicViewMode = 'simple' | 'advanced';
 
 const STYLE_OPTIONS = [
-  { id: 'south', label: 'Nam Ấn (Vuông)', icon: 'grid_view', shortLabel: 'Nam Ấn' },
-  { id: 'north', label: 'Bắc Ấn (Kim Cương)', icon: 'crop_square', shortLabel: 'Bắc Ấn' },
+  { id: 'south', label: 'Nam Ấn (Vuông)', shortLabel: 'Nam Ấn' },
+  { id: 'north', label: 'Bắc Ấn (Kim Cương)', shortLabel: 'Bắc Ấn' },
 ] as const;
 
 const TYPE_OPTIONS = [
-  { id: 'D1', label: 'D1 Rasi (Bản Mệnh)', icon: 'auto_graph', shortLabel: 'D1 Rasi' },
-  { id: 'D9', label: 'D9 Navamsha (Hậu Vận)', icon: 'favorite', shortLabel: 'D9 Navamsha' },
+  { id: 'D1', label: 'D1 Rasi (Bản Mệnh)', shortLabel: 'D1 Rasi' },
+  { id: 'D9', label: 'D9 Navamsha (Hậu Vận)', shortLabel: 'D9 Navamsha' },
 ] as const;
 
 const VEDIC_VIEW_MODES: readonly SegmentedOption<VedicViewMode>[] = [
-  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản', icon: 'menu_book' },
-  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu', icon: 'psychology' },
+  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản' },
+  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu' },
 ];
 
 const BODY_LABELS: Record<string, string> = {
@@ -156,9 +155,6 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
         <VedicDiamondChart result={result} type={chartType} />
       )}
 
-      {/* Action buttons immediately below chart */}
-      <WesternMarkdownExport system="vedic" />
-
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
@@ -184,30 +180,34 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       </div>
 
       {/* Dual Tier Interpretation Toggle (Simple vs Advanced) */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-light/40 dark:border-border-dark/40">
-        <div>
-          <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
-            Luận Giải Chiêm Tinh Vệ Đà
-          </h4>
-          <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-            Chọn mức độ chi tiết phù hợp với nhu cầu tra cứu của bạn.
-          </p>
+      <div className="space-y-3 pt-3 border-t border-border-light/40 dark:border-border-dark/40">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <h4 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark">
+              Luận Giải Chiêm Tinh Vệ Đà
+            </h4>
+            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+              Chọn mức độ chi tiết phù hợp với nhu cầu tra cứu của bạn.
+            </p>
+          </div>
+          <div className="w-full sm:w-80">
+            <SegmentedControl
+              options={VEDIC_VIEW_MODES}
+              value={viewMode}
+              onChange={setViewMode}
+              ariaLabel="Chế độ xem luận giải Vệ Đà"
+              tone="purple"
+              className="w-full"
+            />
+          </div>
         </div>
-        <SegmentedControl
-          options={VEDIC_VIEW_MODES}
-          value={viewMode}
-          onChange={setViewMode}
-          ariaLabel="Chế độ xem luận giải Vệ Đà"
-          tone="purple"
-          className="w-auto"
-        />
       </div>
 
       {/* MODE 1: Cơ bản (Simple) */}
       {viewMode === 'simple' && (
         <div className="space-y-5 animate-fade-in">
-          {gocharReport && <VedicGocharCard gochar={gocharReport} />}
           <VedicInterpretationPanel result={result} mode="simple" />
+          {gocharReport && <VedicGocharCard gochar={gocharReport} />}
           {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas.slice(0, 3)} />}
           {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
         </div>
@@ -216,9 +216,6 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       {/* MODE 2: Chuyên sâu (Advanced & Technical) */}
       {viewMode === 'advanced' && (
         <div className="space-y-5 animate-fade-in">
-          {gocharReport && <VedicGocharCard gochar={gocharReport} />}
-          {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
-          {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas} />}
           <VedicInterpretationPanel result={result} mode="advanced" />
 
           {/* Sidereal Planets Table */}
@@ -226,7 +223,7 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
             <div className="card-header">
               <h3 className="section-title text-sm flex items-center gap-2">
                 <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">language</span>
-                Vị Trí Hành Tinh (Sidereal Lahiri)
+                Vị Trí Hành Tinh Chi Tiết (Sidereal Lahiri)
               </h3>
             </div>
             <div className="overflow-x-auto">
@@ -242,7 +239,7 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
                 </thead>
                 <tbody>
                   {result.planets
-                    .filter((p) => ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'].includes(p.body))
+                    .filter((p) => ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'].includes(p.body))
                     .map((planet) => (
                       <VedicPlanetRow key={planet.body} planet={planet} />
                     ))}
@@ -251,14 +248,12 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
             </div>
           </div>
 
-          <VedicTechnicalTables result={result} />
-
           {/* Houses */}
           <div className="glass-card overflow-hidden">
             <div className="card-header">
               <h3 className="section-title text-sm flex items-center gap-2">
                 <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">home</span>
-                12 Bhava (Nhà)
+                12 Bhava (Cung Vị Vệ Đà & Tọa Độ)
               </h3>
             </div>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 p-3">
@@ -268,10 +263,10 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
                 return (
                   <div
                     key={house.index}
-                    className="surface-card p-2 rounded-xl text-center border border-border-light/40 dark:border-border-dark/40"
+                    className="surface-card p-2.5 rounded-xl text-center border border-border-light/40 dark:border-border-dark/40"
                   >
-                    <p className="label-standard">Bhava {house.index}</p>
-                    <p className="text-xs font-semibold">
+                    <p className="label-standard text-purple-700 dark:text-purple-400 font-semibold">Bhava {house.index}</p>
+                    <p className="text-xs font-semibold mt-0.5">
                       {deg}°{min.toString().padStart(2, '0')}&apos; {house.sign}
                     </p>
                   </div>
@@ -279,6 +274,11 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
               })}
             </div>
           </div>
+
+          <VedicTechnicalTables result={result} />
+          {yogasAndDoshas.length > 0 && <VedicYogasCard items={yogasAndDoshas} />}
+          {dashaTimeline && <VimshottariDashaTimeline dasha={dashaTimeline} />}
+          {gocharReport && <VedicGocharCard gochar={gocharReport} />}
         </div>
       )}
     </div>

@@ -61,7 +61,7 @@ function Verdict({ score }: { score: number }) {
     );
   if (score >= 40)
     return (
-      <p className="text-sm font-semibold text-amber-600 dark:text-amber-400">
+      <p className="text-sm font-semibold text-amber-800 dark:text-amber-300">
         Trung bình — khác biệt cần đối thoại và kiên nhẫn
       </p>
     );
@@ -189,7 +189,7 @@ export const SynastryResultView: React.FC = () => {
                             {koota.nameVi}
                           </span>
                           <span
-                            className={`text-xs font-bold ${isPerfect ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-600 dark:text-amber-400'}`}
+                            className={`text-xs font-bold ${isPerfect ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-800 dark:text-amber-300'}`}
                           >
                             {score}/{koota.max}
                           </span>

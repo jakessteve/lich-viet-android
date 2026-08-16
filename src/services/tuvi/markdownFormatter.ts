@@ -89,7 +89,7 @@ export function formatPalacesAsMarkdown(palaces: TuViPalace[], includeBrightness
           }
           return s.name;
         })
-        .join(' ') || '—';
+        .join(' ') || '-';
 
     const phuTinh =
       palace.phuTinh
@@ -99,7 +99,7 @@ export function formatPalacesAsMarkdown(palaces: TuViPalace[], includeBrightness
           }
           return s.name;
         })
-        .join(', ') || '—';
+        .join(', ') || '-';
 
     const satTinh =
       palace.satTinh
@@ -109,16 +109,16 @@ export function formatPalacesAsMarkdown(palaces: TuViPalace[], includeBrightness
           }
           return s.name;
         })
-        .join(', ') || '—';
+        .join(', ') || '-';
 
-    const tuHoa = palace.tuHoa.map((th) => `Hóa ${th.type}`).join(', ') || '—';
+    const tuHoa = palace.tuHoa.map((th) => `Hóa ${th.type}`).join(', ') || '-';
 
     const ringsList: string[] = [];
     if (palace.rings?.truongSinh) ringsList.push(`Tr.Sinh: ${palace.rings.truongSinh}`);
     if (palace.rings?.thaiTue) ringsList.push(`Th.Tuế: ${palace.rings.thaiTue}`);
     if (palace.rings?.bacSi) ringsList.push(`B.Sĩ: ${palace.rings.bacSi}`);
     if (palace.rings?.tuongTinh) ringsList.push(`Tướng: ${palace.rings.tuongTinh}`);
-    const ringsText = ringsList.length > 0 ? ringsList.join(' · ') : '—';
+    const ringsText = ringsList.length > 0 ? ringsList.join(' · ') : '-';
 
     const khongVong =
       palace.hasTuan && palace.hasTriet
@@ -127,7 +127,7 @@ export function formatPalacesAsMarkdown(palaces: TuViPalace[], includeBrightness
           ? 'Tuần Không'
           : palace.hasTriet
             ? 'Triệt Không'
-            : '—';
+            : '-';
 
     return `| ${escapeMarkdown(palaceNameFull)} | ${palace.canChi} | ${escapeMarkdown(chinhTinh)} | ${escapeMarkdown(phuTinh)} | ${escapeMarkdown(satTinh)} | ${tuHoa} | ${escapeMarkdown(ringsText)} | ${khongVong} | ${palace.daiHanAgeRange} |`;
   });
@@ -181,13 +181,13 @@ export function formatHanContextAsMarkdown(chart: TuViChart, customHan?: TuViHan
 
   const lines: string[] = ['## Vận Hạn & Lưu Niên Chi Tiết'];
   lines.push(`- **Thời điểm tra cứu**: Năm ${han.viewYear} (Âm lịch), Tháng ${han.viewMonth}, Tuổi mụ: ${han.viewAge} tuổi`);
-  lines.push(`- **Đại Hạn Đang Đi (10 năm)**: Cung ${han.daiHanPalaceName || activeDaiHan?.palaceName || '—'} (${han.daiHanAgeRange || activeDaiHan?.ageRange || '—'})`);
+  lines.push(`- **Đại Hạn Đang Đi (10 năm)**: Cung ${han.daiHanPalaceName || activeDaiHan?.palaceName || '-'} (${han.daiHanAgeRange || activeDaiHan?.ageRange || '-'})`);
   
   const tieuHanPalace = han.tieuHanPalaceIndex !== null ? chart.palaces[han.tieuHanPalaceIndex] : null;
-  lines.push(`- **Tiểu Hạn Năm ${han.viewYear}**: Cung ${tieuHanPalace ? `${tieuHanPalace.name} (${tieuHanPalace.canChi})` : '—'}`);
+  lines.push(`- **Tiểu Hạn Năm ${han.viewYear}**: Cung ${tieuHanPalace ? `${tieuHanPalace.name} (${tieuHanPalace.canChi})` : '-'}`);
 
   const nguyetHanPalace = han.nguyetHanPalaceIndex !== null ? chart.palaces[han.nguyetHanPalaceIndex] : null;
-  lines.push(`- **Nguyệt Hạn Tháng ${han.viewMonth}**: Cung ${nguyetHanPalace ? `${nguyetHanPalace.name} (${nguyetHanPalace.canChi})` : '—'}`);
+  lines.push(`- **Nguyệt Hạn Tháng ${han.viewMonth}**: Cung ${nguyetHanPalace ? `${nguyetHanPalace.name} (${nguyetHanPalace.canChi})` : '-'}`);
 
   // 1. Table of 12 Major Luck Periods
   lines.push('\n### Bảng 12 Thập Niên Đại Hạn Cuộc Đời');
@@ -235,7 +235,7 @@ export function formatHanContextAsMarkdown(chart: TuViChart, customHan?: TuViHan
     for (let idx = 0; idx < 12; idx++) {
       const p = chart.palaces[idx];
       const movingStars = han.luuDieuByPalace[idx] ?? [];
-      const movingText = movingStars.map((s) => s.name).join(', ') || '—';
+      const movingText = movingStars.map((s) => s.name).join(', ') || '-';
       lines.push(`| ${p.name} | ${p.canChi} | ${escapeMarkdown(movingText)} |`);
     }
   }
@@ -309,7 +309,7 @@ export function formatCombinationsAsMarkdown(combinations: TuViCombination[]): s
   combinations.forEach((c) => {
     const purityLabel = c.purity === 'thuần' ? 'Thuần Cách' : c.purity === 'bán' ? 'Bán Cách' : 'Phá Cách';
     const catLabel = c.category === 'cat' ? 'Đại Cát' : c.category === 'hung' ? 'Hung Cách' : 'Trung Tính';
-    lines.push(`\n### ${c.name} (${c.nameHanViet}) — [${purityLabel} · ${catLabel} · Độ mạnh: ${c.strength}/10]`);
+    lines.push(`\n### ${c.name} (${c.nameHanViet}) - [${purityLabel} · ${catLabel} · Độ mạnh: ${c.strength}/10]`);
     lines.push(`- **Sao hội tụ**: ${c.involvedStars.join(', ')} tại Cung ${c.involvedCung.join(', ')}.`);
     lines.push(`- **Cơ chế hình thành**: ${c.detectionReason}`);
     lines.push(`- **Luận giải cổ điển**: ${c.note}`);
@@ -353,15 +353,15 @@ export function formatFlyingStarsAsMarkdown(chart: TuViChart): string {
   lines.push('|---|---|---|---|---|---|---|');
 
   flying.palaces.forEach((p) => {
-    const loc = p.flyingHuas['Lộc'] ? `${p.flyingHuas['Lộc'].targetPalaceName} (${p.flyingHuas['Lộc'].starName})` : '—';
+    const loc = p.flyingHuas['Lộc'] ? `${p.flyingHuas['Lộc'].targetPalaceName} (${p.flyingHuas['Lộc'].starName})` : '-';
     const quyen = p.flyingHuas['Quyền']
       ? `${p.flyingHuas['Quyền'].targetPalaceName} (${p.flyingHuas['Quyền'].starName})`
-      : '—';
+      : '-';
     const khoa = p.flyingHuas['Khoa']
       ? `${p.flyingHuas['Khoa'].targetPalaceName} (${p.flyingHuas['Khoa'].starName})`
-      : '—';
-    const ky = p.flyingHuas['Kỵ'] ? `${p.flyingHuas['Kỵ'].targetPalaceName} (${p.flyingHuas['Kỵ'].starName})` : '—';
-    const tuHoa = p.tuHuas.length > 0 ? p.tuHuas.map((th) => th.type).join(', ') : '—';
+      : '-';
+    const ky = p.flyingHuas['Kỵ'] ? `${p.flyingHuas['Kỵ'].targetPalaceName} (${p.flyingHuas['Kỵ'].starName})` : '-';
+    const tuHoa = p.tuHuas.length > 0 ? p.tuHuas.map((th) => th.type).join(', ') : '-';
     lines.push(`| ${p.palaceName} | ${p.can} ${p.chi} | ${escapeMarkdown(loc)} | ${escapeMarkdown(quyen)} | ${escapeMarkdown(khoa)} | ${escapeMarkdown(ky)} | ${tuHoa} |`);
   });
 

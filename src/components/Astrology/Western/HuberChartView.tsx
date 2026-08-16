@@ -159,7 +159,7 @@ export const HuberChartView: React.FC<HuberChartViewProps> = ({ natalResult, bir
             Lá số sở hữu các đường góc đơn lẻ, tạo nên phong cách tự do và phân tán linh hoạt.
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="space-y-3">
             {figures.map((fig, i) => (
               <div
                 key={i}

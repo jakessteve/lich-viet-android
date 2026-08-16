@@ -7,7 +7,6 @@ import { ElementBalanceCard } from './ElementBalanceCard';
 import { AspectPatternsCard } from './AspectPatternsCard';
 import { WesternSimplifiedExplanation } from './WesternSimplifiedExplanation';
 import { WesternNatalTechnicalDisplay } from './WesternNatalTechnicalDisplay';
-import { WesternMarkdownExport } from '../WesternMarkdownExport';
 import { SegmentedControl, type SegmentedOption } from '../../shared';
 
 type WesternViewMode = 'simple' | 'advanced';
@@ -15,8 +14,8 @@ type WesternViewMode = 'simple' | 'advanced';
 const ZOOM_LEVELS = [1, 1.25, 1.5, 2] as const;
 
 const WESTERN_VIEW_MODES: readonly SegmentedOption<WesternViewMode>[] = [
-  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản', icon: 'menu_book' },
-  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu', icon: 'psychology' },
+  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản' },
+  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu' },
 ];
 
 export const WesternNatalChartDisplay: React.FC = () => {
@@ -135,9 +134,6 @@ export const WesternNatalChartDisplay: React.FC = () => {
       <p className="sr-only" aria-live="polite">
         Mức thu phóng {Math.round(zoom * 100)}%
       </p>
-
-      {/* Action buttons immediately below chart */}
-      <WesternMarkdownExport system="western" />
 
       {/* Dual Tier Interpretation Selector */}
       <div className="space-y-2.5 pt-2 border-t border-border-light/40 dark:border-border-dark/40">

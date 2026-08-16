@@ -5,6 +5,7 @@
  * MaiHoaView and other engine views.
  */
 import React from 'react';
+import { AlertCircle } from 'lucide-react';
 
 interface ErrorStateProps {
   /** The error message to display. */
@@ -24,11 +25,9 @@ export default function ErrorState({
   retryLabel = '← Thử lại',
 }: ErrorStateProps) {
   return (
-    <div className="card-surface p-5">
-      <div className="flex items-center gap-3 text-red-600 dark:text-red-400">
-        <span className="material-icons-round text-2xl shrink-0" aria-hidden="true">
-          error
-        </span>
+    <div className="card-surface p-5 rounded-2xl border border-red-500/20 bg-red-500/5">
+      <div className="flex items-center gap-3 text-bad dark:text-bad-dark">
+        <AlertCircle className="h-6 w-6 shrink-0" aria-hidden="true" />
         <div>
           <h3 className="font-bold text-sm">{title}</h3>
           <p className="text-sm mt-0.5 opacity-80">{message}</p>

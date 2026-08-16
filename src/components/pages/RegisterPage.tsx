@@ -1,8 +1,29 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  UserPlus,
+  User,
+  Mail,
+  Lock,
+  RotateCcw,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+  ArrowLeft,
+  Info,
+  Eye,
+  EyeOff,
+  Loader2,
+} from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
 import type { AuthProvider } from '../../types/auth';
 import SuccessToast from '../shared/SuccessToast';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
+import { MotionFadeIn } from '@/components/ui/motion-primitives';
+import { cn } from '@/lib/utils';
 
 // ══════════════════════════════════════════════════════════
 // RegisterPage — Email + Social (Google, Facebook) signup
@@ -102,15 +123,13 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-8 sm:mt-16 px-4 animate-fade-in-up">
+    <MotionFadeIn className="max-w-md mx-auto mt-8 sm:mt-16 px-4">
       <SuccessToast message={toastMsg} visible={showToast} onHide={() => setShowToast(false)} />
-      <div className="glass-card p-7 sm:p-8">
+      <Card variant="glass" className="p-7 sm:p-8">
         {/* Header */}
         <div className="text-center mb-6">
           <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-mystery-purple/15 to-mystery-blue/10 dark:from-mystery-purple/12 dark:to-mystery-blue/8 flex items-center justify-center">
-            <span className="material-icons-round text-3xl text-mystery-purple dark:text-mystery-purple-light">
-              person_add
-            </span>
+            <UserPlus className="h-8 w-8 text-mystery-purple dark:text-mystery-purple-light" />
           </div>
           <h1 className="text-xl font-bold tracking-tight">Tạo tài khoản</h1>
           <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mt-1.5">
@@ -120,8 +139,8 @@ export default function RegisterPage() {
 
         {/* Demo disclaimer */}
         <div className="flex items-start gap-2 p-3 rounded-xl bg-amber-50 dark:bg-amber-900/10 border border-amber-200/50 dark:border-amber-700/20 mb-5">
-          <span className="material-icons-round text-sm text-amber-500 dark:text-amber-400 mt-0.5 shrink-0">info</span>
-          <p className="text-xs leading-relaxed text-amber-700 dark:text-amber-300/80">
+          <Info className="h-4 w-4 text-amber-700 dark:text-amber-400 mt-0.5 shrink-0" />
+          <p className="text-xs leading-relaxed text-amber-900 dark:text-amber-200">
             <strong>Demo:</strong> Dữ liệu lưu trên trình duyệt (localStorage). Không nên dùng mật khẩu thật.
           </p>
         </div>
@@ -129,18 +148,11 @@ export default function RegisterPage() {
         {/* Register Form */}
         <form onSubmit={handleRegister} className="space-y-3.5">
           {/* Display name */}
-          <div>
-            <label
-              htmlFor="reg-name"
-              className="text-sm font-semibold tracking-wide text-text-secondary-light dark:text-text-secondary-dark block mb-1.5"
-            >
-              Tên hiển thị
-            </label>
+          <div className="space-y-1.5">
+            <Label htmlFor="reg-name">Tên hiển thị</Label>
             <div className="relative">
-              <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3 top-1/2 -translate-y-1/2">
-                badge
-              </span>
-              <input
+              <User className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Input
                 id="reg-name"
                 type="text"
                 value={displayName}
@@ -150,24 +162,17 @@ export default function RegisterPage() {
                 }}
                 placeholder="Nguyễn Văn A"
                 autoComplete="name"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/30 text-sm focus:ring-2 focus:ring-mystery-purple/30 dark:focus:ring-mystery-purple-light/30 outline-none transition-all placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60"
+                className="pl-10"
               />
             </div>
           </div>
 
           {/* Email */}
-          <div>
-            <label
-              htmlFor="reg-email"
-              className="text-sm font-semibold tracking-wide text-text-secondary-light dark:text-text-secondary-dark block mb-1.5"
-            >
-              Email
-            </label>
+          <div className="space-y-1.5">
+            <Label htmlFor="reg-email">Email</Label>
             <div className="relative">
-              <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3 top-1/2 -translate-y-1/2">
-                mail
-              </span>
-              <input
+              <Mail className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Input
                 id="reg-email"
                 type="email"
                 value={email}
@@ -177,24 +182,17 @@ export default function RegisterPage() {
                 }}
                 placeholder="email@example.com"
                 autoComplete="email"
-                className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/30 text-sm focus:ring-2 focus:ring-mystery-purple/30 dark:focus:ring-mystery-purple-light/30 outline-none transition-all placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60"
+                className="pl-10"
               />
             </div>
           </div>
 
           {/* Password */}
-          <div>
-            <label
-              htmlFor="reg-password"
-              className="text-sm font-semibold tracking-wide text-text-secondary-light dark:text-text-secondary-dark block mb-1.5"
-            >
-              Mật khẩu
-            </label>
+          <div className="space-y-1.5">
+            <Label htmlFor="reg-password">Mật khẩu</Label>
             <div className="relative">
-              <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3 top-1/2 -translate-y-1/2">
-                lock
-              </span>
-              <input
+              <Lock className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Input
                 id="reg-password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
@@ -204,7 +202,7 @@ export default function RegisterPage() {
                 }}
                 placeholder="Ít nhất 6 ký tự"
                 autoComplete="new-password"
-                className="w-full pl-10 pr-12 py-2.5 rounded-xl bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/30 text-sm focus:ring-2 focus:ring-mystery-purple/30 dark:focus:ring-mystery-purple-light/30 outline-none transition-all placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60"
+                className="pl-10 pr-12"
               />
               <button
                 type="button"
@@ -212,7 +210,7 @@ export default function RegisterPage() {
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-white transition-colors"
                 aria-label={showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'}
               >
-                <span className="material-icons-round text-lg">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
 
@@ -223,30 +221,24 @@ export default function RegisterPage() {
                   {[1, 2, 3, 4].map((level) => (
                     <div
                       key={level}
-                      className={`flex-1 h-1 rounded-full transition-all duration-300 ${
-                        level <= passwordStrength.level ? passwordStrength.color : 'bg-gray-200 dark:bg-gray-700'
-                      }`}
+                      className={cn(
+                        'flex-1 h-1 rounded-full transition-all duration-300',
+                        level <= passwordStrength.level ? passwordStrength.color : 'bg-gray-200 dark:bg-gray-700',
+                      )}
                     />
                   ))}
                 </div>
-                <p className={`text-xs font-medium ${passwordStrength.textColor}`}>{passwordStrength.label}</p>
+                <p className={cn('text-xs font-medium', passwordStrength.textColor)}>{passwordStrength.label}</p>
               </div>
             )}
           </div>
 
           {/* Confirm password */}
-          <div>
-            <label
-              htmlFor="reg-confirm"
-              className="text-sm font-semibold tracking-wide text-text-secondary-light dark:text-text-secondary-dark block mb-1.5"
-            >
-              Xác nhận mật khẩu
-            </label>
+          <div className="space-y-1.5">
+            <Label htmlFor="reg-confirm">Xác nhận mật khẩu</Label>
             <div className="relative">
-              <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3 top-1/2 -translate-y-1/2">
-                lock_reset
-              </span>
-              <input
+              <RotateCcw className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <Input
                 id="reg-confirm"
                 type={showPassword ? 'text' : 'password'}
                 value={confirmPassword}
@@ -256,21 +248,19 @@ export default function RegisterPage() {
                 }}
                 placeholder="Nhập lại mật khẩu"
                 autoComplete="new-password"
-                className={`w-full pl-10 pr-10 py-2.5 rounded-xl bg-surface-subtle-light dark:bg-surface-subtle-dark border text-sm focus:ring-2 outline-none transition-all placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60 ${
-                  confirmPassword && confirmPassword !== password
-                    ? 'border-red-300 dark:border-red-700/50 focus:ring-red-500/20'
-                    : confirmPassword && confirmPassword === password
-                      ? 'border-green-300 dark:border-green-700/50 focus:ring-green-500/20'
-                      : 'border-border-light/30 dark:border-border-dark/30 focus:ring-mystery-purple/30 dark:focus:ring-mystery-purple-light/30'
-                }`}
+                className={cn(
+                  'pl-10 pr-10',
+                  confirmPassword && confirmPassword !== password && 'border-red-300 dark:border-red-700/50',
+                  confirmPassword && confirmPassword === password && 'border-green-300 dark:border-green-700/50',
+                )}
               />
               {confirmPassword && (
-                <span
-                  className={`material-icons-round text-lg absolute right-3 top-1/2 -translate-y-1/2 ${
-                    confirmPassword === password ? 'text-good dark:text-good-dark' : 'text-bad dark:text-bad-dark'
-                  }`}
-                >
-                  {confirmPassword === password ? 'check_circle' : 'cancel'}
+                <span className="absolute right-3.5 top-1/2 -translate-y-1/2">
+                  {confirmPassword === password ? (
+                    <CheckCircle2 className="h-4 w-4 text-good dark:text-good-dark" />
+                  ) : (
+                    <XCircle className="h-4 w-4 text-bad dark:text-bad-dark" />
+                  )}
                 </span>
               )}
             </div>
@@ -302,26 +292,27 @@ export default function RegisterPage() {
           {/* Error */}
           {error && (
             <div className="flex items-center gap-2 p-3 rounded-xl bg-red-50 dark:bg-red-900/15 border border-red-200/50 dark:border-red-800/30 animate-scale-in">
-              <span className="material-icons-round text-sm text-red-500 dark:text-red-400">error</span>
+              <AlertCircle className="h-4 w-4 text-red-500 dark:text-red-400 shrink-0" />
               <p className="text-sm text-red-600 dark:text-red-400 font-medium">{error}</p>
             </div>
           )}
 
           {/* Submit */}
-          <button
+          <Button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-gradient-to-r from-mystery-purple to-mystery-blue text-white font-semibold text-sm shadow-lg shadow-mystery-purple/15 dark:shadow-mystery-purple/25 hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed btn-interact"
+            variant="default"
+            className="w-full py-3 h-12 rounded-xl text-white font-semibold text-sm bg-gradient-to-r from-mystery-purple to-mystery-blue shadow-lg shadow-mystery-purple/15 dark:shadow-mystery-purple/25 hover:shadow-xl"
           >
             {isLoading ? (
               <span className="flex items-center justify-center gap-2">
-                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <Loader2 className="w-4 h-4 animate-spin" />
                 Đang tạo tài khoản...
               </span>
             ) : (
               'Tạo tài khoản'
             )}
-          </button>
+          </Button>
         </form>
 
         {/* Divider */}
@@ -333,7 +324,7 @@ export default function RegisterPage() {
           <div className="flex-1 h-px bg-border-light/40 dark:bg-border-dark/30" />
         </div>
 
-        {/* Social login buttons — after the form */}
+        {/* Social login buttons */}
         <div className="space-y-2.5">
           <SocialButton
             provider="google"
@@ -361,7 +352,7 @@ export default function RegisterPage() {
             Đăng nhập
           </button>
         </p>
-      </div>
+      </Card>
 
       {/* Back to app */}
       <div className="text-center mt-4 mb-8">
@@ -369,11 +360,11 @@ export default function RegisterPage() {
           onClick={() => navigate('/app/am-lich')}
           className="text-sm text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-white transition-colors inline-flex items-center gap-1"
         >
-          <span className="material-icons-round text-sm">arrow_back</span>
+          <ArrowLeft className="h-4 w-4" />
           Quay lại ứng dụng
         </button>
       </div>
-    </div>
+    </MotionFadeIn>
   );
 }
 
@@ -398,7 +389,7 @@ function getPasswordStrength(password: string): { level: number; label: string; 
       level: 2,
       label: 'Trung bình',
       color: 'bg-amber-400 dark:bg-amber-500',
-      textColor: 'text-amber-500 dark:text-amber-400',
+      textColor: 'text-amber-800 dark:text-amber-300',
     };
   if (score <= 3)
     return {
@@ -471,7 +462,10 @@ function SocialButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 btn-interact disabled:opacity-50 disabled:cursor-not-allowed ${styles[provider]}`}
+      className={cn(
+        'w-full flex items-center justify-center gap-3 py-3 rounded-xl text-sm font-medium transition-all duration-200 btn-interact disabled:opacity-50 disabled:cursor-not-allowed',
+        styles[provider],
+      )}
     >
       {loading ? (
         <span className="w-5 h-5 border-2 border-current/30 border-t-current rounded-full animate-spin" />

@@ -154,9 +154,10 @@ function normalizeBirthProfile(input = {}) {
   const birthInput = input.birthProfile ?? input;
   const birthDate = normalizeDate({
     timestamp: birthInput.birthTimestamp ?? birthInput.timestamp,
-    isoDate: birthInput.birthIsoDate ?? birthInput.isoDate
+    isoDate: birthInput.birthIsoDate ?? birthInput.isoDate ?? (birthInput.birthDate instanceof Date ? birthInput.birthDate.toISOString() : (typeof birthInput.birthDate === 'string' ? birthInput.birthDate : undefined)),
+    date: birthInput.date ?? (birthInput.birthDate instanceof Date ? birthInput.birthDate : undefined)
   });
-  const birthLocation = normalizeLocation(birthInput);
+  const birthLocation = normalizeLocation(birthInput.birthLocation ?? birthInput);
 
   return {
     profileId: birthInput.profileId ?? "anonymous",
@@ -176,6 +177,15 @@ function normalizeBirthProfile(input = {}) {
 }
 
 function normalizeDate(input = {}) {
+  if (input instanceof Date) {
+    return input;
+  }
+  if (input.date instanceof Date) {
+    return input.date;
+  }
+  if (input.birthDate instanceof Date) {
+    return input.birthDate;
+  }
   if (input.timestamp !== undefined) {
     assertFiniteNumber(input.timestamp, "timestamp");
     return new Date(input.timestamp);
@@ -185,6 +195,14 @@ function normalizeDate(input = {}) {
     const date = new Date(input.isoDate);
     if (!Number.isFinite(date.getTime())) {
       throw new RangeError("isoDate must be a valid date string");
+    }
+    return date;
+  }
+
+  if (typeof input.birthDate === "string" && input.birthDate.trim() !== "") {
+    const date = new Date(input.birthDate);
+    if (!Number.isFinite(date.getTime())) {
+      throw new RangeError("birthDate must be a valid date string");
     }
     return date;
   }
@@ -875,16 +893,16 @@ export function createWesternChart(input = {}) {
   // Phase 5: House systems
   const houseSystem = input.houseSystem ?? "equal";
   let houseCusps;
-  if (houseSystem === "placidus") {
+  if (houseSystem === "placidus" && typeof computePlacidusCusps === "function") {
     houseCusps = computePlacidusCusps(astronomy.observer);
-  } else if (houseSystem === "koch") {
+  } else if (houseSystem === "koch" && typeof computeKochCusps === "function") {
     houseCusps = computeKochCusps(astronomy.observer);
   } else {
     houseCusps = {
-      system: "equal",
-      cusps: houses.map(h => h.cuspLongitude),
+      system: houseSystem,
+      cusps: astronomy.houses?.cusps ?? houses.map(h => h.cuspLongitude),
       ascendant: ascendant,
-      midheaven: astronomy.houses.midheaven
+      midheaven: astronomy.houses?.midheaven ?? 0
     };
   }
   

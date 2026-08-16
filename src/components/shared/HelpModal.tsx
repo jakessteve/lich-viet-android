@@ -1,4 +1,13 @@
 import React from 'react';
+import { HelpCircle, Calendar, CalendarCheck, Sparkles, Dices, SlidersHorizontal } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 interface HelpModalProps {
   isOpen: boolean;
@@ -6,40 +15,23 @@ interface HelpModalProps {
 }
 
 export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
-  if (!isOpen) return null;
-
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-scale"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="help-modal-title"
-    >
-      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
-      <div className="relative w-full max-w-2xl bg-white dark:bg-mystery-surface rounded-2xl shadow-2xl border border-border-light dark:border-mystery-purple/20 max-h-[85vh] flex flex-col overflow-hidden animate-scale-in z-10">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-2xl p-0 overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-border-light dark:border-border-dark">
-          <div className="flex items-center gap-2.5">
-            <span className="material-icons-round text-gold dark:text-gold-dark text-2xl">help_outline</span>
-            <h2 id="help-modal-title" className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
-              Hướng dẫn sử dụng & Trợ giúp
-            </h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-lg text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Đóng"
-          >
-            <span className="material-icons-round text-xl">close</span>
-          </button>
-        </div>
+        <DialogHeader className="px-6 py-4 border-b border-border-light dark:border-border-dark flex-row items-center gap-2.5 space-y-0 text-left">
+          <HelpCircle className="text-gold dark:text-gold-dark h-5 w-5 shrink-0" />
+          <DialogTitle className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
+            Hướng dẫn sử dụng & Trợ giúp
+          </DialogTitle>
+        </DialogHeader>
 
         {/* Content */}
         <div className="p-6 overflow-y-auto space-y-6 text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
           {/* Section 1 */}
           <div className="space-y-2">
             <h3 className="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-base text-gold dark:text-gold-dark">calendar_month</span>
+              <Calendar className="h-4 w-4 text-gold dark:text-gold-dark" />
               1. Âm Lịch & Dụng Sự Hàng Ngày
             </h3>
             <p>
@@ -52,7 +44,7 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
           {/* Section 2 */}
           <div className="space-y-2">
             <h3 className="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-base text-emerald-500">event_available</span>
+              <CalendarCheck className="h-4 w-4 text-emerald-500" />
               2. Chọn Ngày Tốt (Electional Engine)
             </h3>
             <p>
@@ -64,7 +56,7 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
           {/* Section 3 */}
           <div className="space-y-2">
             <h3 className="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-base text-indigo-500">auto_awesome</span>
+              <Sparkles className="h-4 w-4 text-indigo-500" />
               3. Tử Vi & Chiêm Tinh Học
             </h3>
             <p>
@@ -77,7 +69,7 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
           {/* Section 4 */}
           <div className="space-y-2">
             <h3 className="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-base text-purple-500">casino</span>
+              <Dices className="h-4 w-4 text-purple-500" />
               4. Gieo Quẻ Dịch Số
             </h3>
             <p>
@@ -88,8 +80,8 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
 
           {/* Section 5: Cá nhân hóa */}
           <div className="p-4 rounded-xl bg-gold/10 dark:bg-gold-dark/10 border border-gold/20 text-text-primary-light dark:text-text-primary-dark space-y-1.5">
-            <span className="font-semibold flex items-center gap-1.5 text-gold-dark dark:text-gold">
-              <span className="material-icons-round text-sm">tune</span> Mẹo Cá Nhân Hóa
+            <span className="font-semibold flex items-center gap-1.5 text-gold dark:text-gold-dark">
+              <SlidersHorizontal className="h-4 w-4" /> Mẹo Cá Nhân Hóa
             </span>
             <p className="text-xs">
               Vào mục <strong>Cài đặt &gt; Hồ sơ</strong> hoặc đăng nhập để lưu năm sinh và vị trí. Ứng dụng sẽ tự động
@@ -99,15 +91,16 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3.5 bg-gray-50 dark:bg-surface-subtle-dark border-t border-border-light dark:border-border-dark flex justify-end">
-          <button
+        <DialogFooter className="px-6 py-3.5 bg-surface-subtle-light/50 dark:bg-surface-subtle-dark/50 border-t border-border-light dark:border-border-dark flex justify-end">
+          <Button
+            variant="default"
             onClick={onClose}
-            className="px-5 py-2 rounded-xl text-sm font-semibold bg-primary text-white hover:bg-primary-hover transition-colors"
+            className="px-5 py-2 font-semibold"
           >
             Đã hiểu
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

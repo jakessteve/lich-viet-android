@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Calendar, CalendarCheck, Sparkles, Globe, Dices, type LucideIcon } from 'lucide-react';
 
 /**
  * Landing Page Data & Utilities
@@ -11,10 +12,22 @@ import { useEffect, useRef, useState } from 'react';
 // Feature Data
 // ══════════════════════════════════════════════════════════
 
-export const FEATURES = [
+export interface FeatureItem {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+  highlight: string;
+  glowColor: string;
+  iconBg: string;
+  iconColor: string;
+  tier: string;
+}
+
+export const FEATURES: FeatureItem[] = [
   {
     id: 'am-lich',
-    icon: 'calendar_month',
+    icon: Calendar,
     title: 'Âm Lịch',
     desc: 'Tra cứu ngày âm lịch chính xác, giờ hoàng đạo, hướng xuất hành, tiết khí, can chi và tab Dụng Sự.',
     highlight: '24 tiết khí',
@@ -25,7 +38,7 @@ export const FEATURES = [
   },
   {
     id: 'ngay-tot',
-    icon: 'event_available',
+    icon: CalendarCheck,
     title: 'Ngày Tốt',
     desc: 'Tìm ngày giờ tốt cho hôn lễ, khai trương, xây dựng — dựa trên chấm điểm Đông-Tây-Ấn.',
     highlight: '3 hệ chấm điểm',
@@ -36,7 +49,7 @@ export const FEATURES = [
   },
   {
     id: 'tu-vi',
-    icon: 'auto_awesome',
+    icon: Sparkles,
     title: 'Tử Vi',
     desc: 'Lập lá số Tử Vi Đẩu Số theo trường phái Thiên Lương, Phi Tinh, Nam Phái với bố cục trực quan.',
     highlight: '12 cung & phi tinh',
@@ -47,7 +60,7 @@ export const FEATURES = [
   },
   {
     id: 'chiem-tinh',
-    icon: 'public',
+    icon: Globe,
     title: 'Chiêm Tinh',
     desc: 'Chiêm tinh Tây phương, Vedic (Jyotish) và so sánh lá số hợp duyên — đa hệ, toàn diện.',
     highlight: 'Đa hệ chiêm tinh',
@@ -58,7 +71,7 @@ export const FEATURES = [
   },
   {
     id: 'gieo-que',
-    icon: 'casino',
+    icon: Dices,
     title: 'Gieo Quẻ',
     desc: 'Mai Hoa Dịch Số & Tam Thức — giải quẻ toàn diện với Thể Dụng, Hỗ Quái và Nạp Giáp.',
     highlight: '64 quẻ dịch',

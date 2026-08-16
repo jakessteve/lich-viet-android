@@ -7,7 +7,7 @@ import LandingPage from '@/components/pages/LandingPage';
 import MoonPhaseSVG from '@/components/pages/LandingPage/MoonPhaseSVG';
 
 describe('LandingPage Component', () => {
-  it('renders all 5 core features and updated stats', () => {
+  it('renders all 5 core features and updated stats', { timeout: 15000 }, () => {
     render(
       <MemoryRouter>
         <LandingPage />

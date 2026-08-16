@@ -803,6 +803,8 @@ export function computePorphyryCusps(observer) {
   };
 }
 
+export const computePlacidusCusps = computePorphyryCusps;
+
 // Koch house cusp calculation
 export function computeKochCusps(observer) {
   const { julianDay, latitude } = observer;

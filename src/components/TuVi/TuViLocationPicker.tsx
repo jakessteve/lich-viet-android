@@ -1,6 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { TuViBirthLocation } from '../../types/tuvi';
 import { estimateTimezoneOffsetHours } from '@/utils/geo';
+import { Search, LocateFixed, Loader2 } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface TuViLocationPickerProps {
   value?: TuViBirthLocation;
@@ -72,6 +76,14 @@ const QUICK_LOCATIONS: TuViBirthLocation[] = [
   },
 ];
 
+const formatDisplayName = (result: NominatimResult): string => {
+  const parts = [
+    result.address?.city || result.address?.town || result.address?.village || result.address?.state,
+    result.address?.country,
+  ].filter(Boolean);
+  return parts.length > 0 ? parts.join(', ') : result.display_name;
+};
+
 const createBirthLocation = (result: NominatimResult, lat: number, lng: number): TuViBirthLocation => ({
   locationName: formatDisplayName(result),
   lat: Number.isFinite(lat) ? lat : 0,
@@ -98,16 +110,9 @@ async function reverseGeocodeLocation(lat: number, lng: number): Promise<TuViBir
     throw new Error('Không tìm được địa điểm.');
   }
 
-  const data = (await response.json()) as NominatimResult;
-  return createBirthLocation(data, lat, lng);
+  const result = (await response.json()) as NominatimResult;
+  return createBirthLocation(result, lat, lng);
 }
-
-const formatDisplayName = (result: NominatimResult): string => {
-  const address = result.address;
-  const locality = address?.city ?? address?.town ?? address?.village ?? address?.state;
-  const country = address?.country;
-  return [locality, country].filter(Boolean).join(', ') || result.display_name;
-};
 
 export const TuViLocationPicker: React.FC<TuViLocationPickerProps> = ({ value, onChange }) => {
   const [query, setQuery] = useState('');
@@ -115,67 +120,53 @@ export const TuViLocationPicker: React.FC<TuViLocationPickerProps> = ({ value, o
   const [isSearching, setIsSearching] = useState(false);
   const [error, setError] = useState('');
 
-  const selectedName = value?.locationName ?? '';
+  const selectedQuickIndex = useMemo(() => {
+    if (!value) return -1;
+    return QUICK_LOCATIONS.findIndex((loc) => loc.locationName === value.locationName);
+  }, [value]);
 
-  const selectedQuickIndex = useMemo(
-    () => QUICK_LOCATIONS.findIndex((location) => location.locationName === selectedName),
-    [selectedName],
-  );
+  const selectedName = value?.locationName || '';
 
   useEffect(() => {
-    const trimmed = query.trim();
-    if (trimmed.length < 2) {
+    if (!query.trim() || query.trim().length < 2) {
       setResults([]);
       setIsSearching(false);
       return;
     }
 
-    const controller = new AbortController();
-    const timer = window.setTimeout(async () => {
+    const timer = setTimeout(async () => {
       setIsSearching(true);
       setError('');
       try {
         const params = new URLSearchParams({
-          q: trimmed,
+          q: query.trim(),
           format: 'jsonv2',
           addressdetails: '1',
           limit: '5',
           'accept-language': 'vi',
         });
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?${params}`, {
-          signal: controller.signal,
+        const res = await fetch(`https://nominatim.openstreetmap.org/search?${params}`, {
           headers: { Accept: 'application/json' },
         });
-
-        if (!response.ok) {
-          throw new Error('Không tìm được địa điểm.');
-        }
-
-        const data = (await response.json()) as NominatimResult[];
-        const nextResults = data.map((item) => {
-          const lat = Number(item.lat);
-          const lng = Number(item.lon);
-          if (!Number.isFinite(lat) || !Number.isFinite(lng)) {
-            return null;
-          }
-          return createBirthLocation(item, lat, lng);
+        if (!res.ok) throw new Error('Không thể tìm địa điểm.');
+        const rawResults = (await res.json()) as NominatimResult[];
+        const mapped = rawResults.map((r) => {
+          const lat = parseFloat(r.lat);
+          const lng = parseFloat(r.lon);
+          return createBirthLocation(r, lat, lng);
         });
-        setResults(nextResults.filter((location): location is TuViBirthLocation => location !== null));
-      } catch (err) {
-        if (err instanceof DOMException && err.name === 'AbortError') return;
-        setError(err instanceof Error ? err.message : 'Không tìm được địa điểm.');
+        setResults(mapped);
+      } catch {
+        setError('Lỗi khi tìm kiếm địa điểm.');
       } finally {
         setIsSearching(false);
       }
-    }, 350);
+    }, 450);
 
-    return () => {
-      controller.abort();
-      window.clearTimeout(timer);
-    };
+    return () => clearTimeout(timer);
   }, [query]);
 
-  const useCurrentLocation = async () => {
+  const useCurrentLocation = () => {
     if (!navigator.geolocation) {
       setError('Trình duyệt không hỗ trợ định vị.');
       return;
@@ -223,11 +214,12 @@ export const TuViLocationPicker: React.FC<TuViLocationPickerProps> = ({ value, o
             key={location.locationName}
             type="button"
             onClick={() => onChange(location)}
-            className={`rounded-xl border px-3 py-2 text-xs font-semibold transition-all ${
+            className={cn(
+              'rounded-xl border px-3 py-2 text-xs font-semibold transition-all spring-press',
               selectedQuickIndex === index
-                ? 'border-gold-light bg-gold/10 text-gold dark:border-gold dark:bg-gold/20 dark:text-gold-light'
-                : 'surface-control text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10'
-            }`}
+                ? 'border-gold-light bg-gold/10 text-gold dark:border-gold dark:bg-gold/20 dark:text-gold-light shadow-sm'
+                : 'surface-control text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10',
+            )}
           >
             {location.locationName.replace(', Việt Nam', '')}
           </button>
@@ -236,26 +228,26 @@ export const TuViLocationPicker: React.FC<TuViLocationPickerProps> = ({ value, o
 
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <span className="material-icons-round pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base text-text-secondary-light/70 dark:text-text-secondary-dark/70">
-            travel_explore
-          </span>
-          <input
+          <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary-light/70 dark:text-text-secondary-dark/70" />
+          <Input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Tìm tỉnh/thành, quốc gia sinh..."
-            className="surface-control w-full rounded-xl py-2.5 pl-9 pr-3 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gold/40"
+            className="w-full pl-9 text-sm"
           />
         </div>
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="icon"
           onClick={useCurrentLocation}
-          className="surface-control inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10"
+          className="h-10 w-10 shrink-0 rounded-xl"
           title="Dùng vị trí hiện tại"
           aria-label="Dùng vị trí hiện tại"
         >
-          <span className="material-icons-round text-base">my_location</span>
-        </button>
+          <LocateFixed className="h-4 w-4" />
+        </Button>
       </div>
 
       {selectedName && (
@@ -272,10 +264,10 @@ export const TuViLocationPicker: React.FC<TuViLocationPickerProps> = ({ value, o
       )}
 
       {(isSearching || error || results.length > 0) && (
-        <div className="surface-panel p-2">
+        <div className="surface-panel p-2 rounded-xl border border-border-light/60 dark:border-border-dark/60">
           {isSearching && (
             <div className="flex items-center gap-2 px-2 py-1.5 text-xs text-text-secondary-light dark:text-text-secondary-dark">
-              <span className="material-icons-round text-sm animate-spin">progress_activity</span>
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-gold" />
               Đang tìm địa điểm...
             </div>
           )}

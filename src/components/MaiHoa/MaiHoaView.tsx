@@ -4,6 +4,7 @@
 // interpretation, and result display with animations and responsive layout.
 
 import React, { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { Flower2, Calendar, AlertCircle, Sparkles, ChevronDown } from 'lucide-react';
 
 import InputForm from './InputForm';
 import HexagramCard, { HaoDetailTable } from './HexagramCard';
@@ -11,6 +12,9 @@ import SummaryCard from './SummaryCard';
 import TheoryCard from './TheoryCard';
 import { MaiHoaErrorBoundary } from './MaiHoaErrorBoundary';
 import QmdjCrossRef from './QmdjCrossRef';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 import type { Trigram, DivinationResult, DivineReadingSummary, CalendarMode } from '../../types/maiHoa';
 
@@ -82,7 +86,7 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
     }
   }, [result]);
 
-  /** Preload hexagram data (201 KB) on mount so divination is instant. */
+  /** Preload hexagram data on mount so divination is instant. */
   useEffect(() => {
     ensureHexagramsLoaded();
   }, []);
@@ -95,7 +99,6 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
 
   /**
    * Simulates a brief loading state before showing results.
-   * Makes the divination feel deliberate rather than instant.
    */
   const showResultWithDelay = useCallback((resultData: ResultState) => {
     setIsLoading(true);
@@ -179,23 +182,23 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
     <MaiHoaErrorBoundary>
       <div className="space-y-6">
         {/* ── Header & Input Card ────────────────────── */}
-        <div className="card-surface">
-          <div className="card-header">
-            <div className="text-center w-full space-y-1">
-              <h2 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark flex items-center justify-center gap-2">
-                <span className="material-icons-round text-xl text-amber-500 dark:text-amber-400">spa</span>
+        <Card className="rounded-2xl border border-border-light/60 dark:border-border-dark/60 overflow-hidden shadow-apple">
+          <CardHeader className="text-center pb-2 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-subtle-light dark:bg-surface-subtle-dark">
+            <div className="flex items-center justify-center gap-2">
+              <Flower2 className="h-5 w-5 text-amber-500 dark:text-amber-400" />
+              <CardTitle className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark">
                 Mai Hoa Dịch Số
-              </h2>
-              <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                Gieo quẻ theo phương pháp Mai Hoa Dịch Số — Thiệu Ung
-              </p>
+              </CardTitle>
             </div>
-          </div>
+            <CardDescription className="text-xs sm:text-sm text-text-secondary-light dark:text-text-secondary-dark">
+              Gieo quẻ theo phương pháp Mai Hoa Dịch Số — Thiệu Ung
+            </CardDescription>
+          </CardHeader>
 
-          <div className="p-4 sm:p-5">
+          <CardContent className="p-4 sm:p-5">
             {/* Lunar date context */}
             <div className="mb-4 text-sm text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-2">
-              <span className="material-icons-round text-base">calendar_today</span>
+              <Calendar className="h-4 w-4" />
               <span>
                 Âm lịch: ngày{' '}
                 <span className="font-bold text-text-primary-light dark:text-text-primary-dark">{lunarDate.day}</span>{' '}
@@ -210,30 +213,25 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
             </div>
 
             <InputForm onDivineByTime={handleDivineByTime} onDivineByNumbers={handleDivineByNumbers} />
-          </div>
+          </CardContent>
 
           {/* Error display */}
           {errorMsg && (
             <div
-              className="mx-4 sm:mx-5 mb-4 sm:mb-5 p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-bad dark:text-bad-dark flex items-start gap-2"
+              className="mx-4 sm:mx-5 mb-4 sm:mb-5 p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-red-600 dark:text-red-400 flex items-start gap-2"
               role="alert"
             >
-              <span className="material-icons-round text-base mt-0.5">error</span>
+              <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
               {errorMsg}
             </div>
           )}
-        </div>
+        </Card>
 
         {/* ── Loading State ──────────────────────────── */}
         {isLoading && (
-          <div className="card-surface p-8 flex flex-col items-center gap-4 animate-scale-in motion-gpu">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-accent-main/20 via-accent-mutual/20 to-amber-500/20 dark:from-accent-main-dark/20 dark:to-accent-mutual-dark/20 flex items-center justify-center animate-glow-breathe">
-              <span
-                className="material-icons-round text-3xl text-accent-main dark:text-accent-main-dark animate-spin"
-                style={{ animationDuration: '2s' }}
-              >
-                auto_awesome
-              </span>
+          <Card className="p-8 flex flex-col items-center gap-4 animate-scale-in motion-gpu rounded-2xl border border-border-light/60 dark:border-border-dark/60">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500/20 to-purple-500/20 flex items-center justify-center animate-glow-breathe">
+              <Sparkles className="h-8 w-8 text-gold dark:text-gold-dark animate-spin" />
             </div>
             <div className="text-center">
               <p className="font-semibold text-text-primary-light dark:text-text-primary-dark">Đang khởi quẻ...</p>
@@ -247,7 +245,7 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
                 style={{ width: '100%' }}
               />
             </div>
-          </div>
+          </Card>
         )}
 
         {/* ── Results ────────────────────────────────── */}
@@ -255,13 +253,13 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
           <div className="space-y-6" ref={resultsRef}>
             {/* Three Hexagram Cards — visible to ALL users (visual hook) */}
             <div className="flex gap-2 sm:gap-2 md:gap-3 overflow-x-auto pb-2 sm:pb-0 sm:grid sm:grid-cols-3 sm:overflow-visible items-stretch -mx-1 px-1 sm:mx-0 sm:px-0 snap-x snap-mandatory sm:snap-none">
-              {HEXAGRAM_CARDS.map((card, index) => {
+              {HEXAGRAM_CARDS.map((card) => {
                 const { hexagram, haoDetails } = getCardData(card.key);
                 if (!hexagram) return null;
                 return (
                   <div
                     key={card.key}
-                    className={`min-w-[72%] sm:min-w-0 h-full snap-center animate-fade-in-up animate-delay-${index + 1}`}
+                    className="min-w-[72%] sm:min-w-0 h-full snap-center animate-fade-in-up"
                   >
                     <HexagramCard
                       hexagram={hexagram}
@@ -281,20 +279,21 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
             {/* ── Mobile-only Detail Panel below cards ─────── */}
             {(result.divination.mainHaoDetails || result.divination.changedHaoDetails) && (
               <div className="md:hidden">
-                <button
+                <Button
                   type="button"
+                  variant="outline"
                   onClick={toggleHaoExpand}
-                  className="w-full flex items-center justify-center gap-1.5 py-2.5 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark card-surface hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer shadow-sm !rounded-xl"
+                  className="w-full flex items-center justify-center gap-1.5 py-2.5 px-4 text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark rounded-xl h-10"
                   aria-expanded={haoExpanded}
                 >
-                  <span
-                    className="material-icons-round text-sm transition-transform duration-200"
-                    style={{ transform: haoExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                  >
-                    expand_more
-                  </span>
+                  <ChevronDown
+                    className={cn(
+                      'h-4 w-4 transition-transform duration-200',
+                      haoExpanded && 'rotate-180',
+                    )}
+                  />
                   {haoExpanded ? 'Ẩn chi tiết hào' : 'Chi tiết hào'}
-                </button>
+                </Button>
 
                 {haoExpanded && (
                   <div className="mt-2 space-y-3 animate-fade-in-up">
@@ -319,8 +318,7 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
               </div>
             )}
 
-            {/* Interpretation */}
-            {/* Summary Card (Verdict & Bottom-Line Answer) */}
+            {/* Interpretation Summary */}
             <SummaryCard
               summary={result.summary}
               theLabel={theLabel}
@@ -332,7 +330,7 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
             {/* QMDJ Cross-Reference */}
             <QmdjCrossRef date={selectedDate} />
 
-            {/* Theory Card — fully visible */}
+            {/* Theory Card */}
             <TheoryCard
               mainHexagram={result.divination.mainHexagram}
               mutualHexagram={result.divination.mutualHexagram}

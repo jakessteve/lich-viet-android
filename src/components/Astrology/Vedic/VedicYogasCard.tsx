@@ -21,7 +21,7 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
         </span>
       </div>
 
-      <div className="grid gap-3.5 sm:grid-cols-2">
+      <div className="space-y-3.5">
         {items.map((item) => {
           const isYoga = item.type === 'yoga';
           return (

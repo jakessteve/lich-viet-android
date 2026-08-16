@@ -10,6 +10,14 @@ import { toPng, toJpeg } from 'html-to-image';
 import { sanitizePlainText } from '@/utils/security';
 import { Capacitor } from '@capacitor/core';
 import { Clipboard } from '@capacitor/clipboard';
+import { Sparkles, CheckCircle2, Download, Share2, RotateCcw, Camera, Loader2 } from 'lucide-react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 
 interface StoryCardExportModalProps {
   isOpen: boolean;
@@ -39,8 +47,6 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
   const [exportedImageUrl, setExportedImageUrl] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [copiedToast, setCopiedToast] = useState(false);
-
-  if (!isOpen) return null;
 
   const safeName = sanitizePlainText(name, 40) || 'Bản Thân';
 
@@ -98,85 +104,65 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
     let currentUrl = exportedImageUrl;
     if (!currentUrl) {
       currentUrl = await handleGenerateImage();
-      if (!currentUrl) return;
     }
+    if (!currentUrl) return;
 
-    const shareTitle = `Bản Mệnh — ${safeName}`;
-    const shareText = `Khám phá tiềm năng bản sắc cốt lõi và vận trình trên Lịch Việt!`;
+    const shareText = `✦ Bản Mệnh Tổng Hợp của ${safeName} (${solarDate}) ✦\n- Tây Phương: ${westernArchetype}\n- Tử Vi: ${tuViArchetype}\n- Vệ Đà: ${vedicArchetype}\n\n🌟 Bản sắc cốt lõi: ${superpower}\n🚀 Trọng tâm 2026: ${actionCompass}\n\nKhám phá tại LichViet.app`;
 
-    // 1. Try Web Share API with Image File
+    // 1. Web Share API (if supported)
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
-        if (currentUrl && navigator.canShare) {
-          const response = await fetch(currentUrl);
-          const blob = await response.blob();
-          const file = new File([blob], `${safeName}_ban_menh.png`, { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              title: shareTitle,
-              text: shareText,
-              files: [file],
-            });
-            return;
-          }
-        }
-      } catch (err: unknown) {
-        if (err instanceof Error && err.name === 'AbortError') {
-          return; // User cancelled share sheet
-        }
-      }
+        // Try file sharing if Blob creation succeeds
+        const blob = await (await fetch(currentUrl)).blob();
+        const file = new File([blob], `${safeName}_story.png`, { type: 'image/png' });
 
-      // 2. Fallback to Web Share API with text/URL
-      try {
-        await navigator.share({
-          title: shareTitle,
-          text: shareText,
-          url: window.location.href,
-        });
-        return;
-      } catch (err: unknown) {
-        if (err instanceof Error && err.name === 'AbortError') {
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            title: `Bản Mệnh ${safeName}`,
+            text: shareText,
+            files: [file],
+          });
+          return;
+        } else {
+          await navigator.share({
+            title: `Bản Mệnh ${safeName}`,
+            text: shareText,
+          });
           return;
         }
+      } catch (err) {
+        if ((err as Error).name === 'AbortError') return;
       }
     }
 
-    // 3. Fallback: Copy info to clipboard and trigger download
+    // 2. Capacitor native Clipboard or Browser fallback
     try {
-      const shareContent = `${shareTitle}\n${shareText}\n${window.location.href}`;
       if (Capacitor.isNativePlatform()) {
-        await Clipboard.write({ string: shareContent });
-      } else if (navigator.clipboard) {
-        await navigator.clipboard.writeText(shareContent);
+        await Clipboard.write({ string: shareText });
+      } else {
+        await navigator.clipboard.writeText(shareText);
       }
       setCopiedToast(true);
-      setTimeout(() => setCopiedToast(false), 2500);
-    } catch (_err) {
-      // Clipboard write failed or is unsupported
+      setTimeout(() => setCopiedToast(false), 3000);
+    } catch {
+      handleDownload();
     }
-
-    handleDownload();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md overflow-y-auto">
-      <div className="relative w-full max-w-sm rounded-3xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 p-4 sm:p-5 shadow-2xl space-y-4 animate-scale-in">
-        {/* Header */}
-        <div className="flex items-center justify-between">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="max-w-md p-5 sm:p-6 space-y-4">
+        <DialogHeader className="space-y-1 text-left">
           <div className="flex items-center gap-2">
-            <span className="material-icons-round text-amber-500 text-lg">auto_awesome</span>
-            <h3 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
-              Ảnh Tổng Quan Bản Mệnh (9:16)
-            </h3>
+            <Sparkles className="h-5 w-5 text-amber-500" />
+            <DialogTitle className="text-base font-bold text-text-primary-light dark:text-text-primary-dark">
+              Xuất Story 9:16 (Instagram / TikTok)
+            </DialogTitle>
           </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="p-1 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark"
-          >
-            <span className="material-icons-round text-base">close</span>
-          </button>
-        </div>
+          <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+            Tạo ảnh thẻ tổng hợp bản sắc cá nhân chuẩn tỉ lệ dọc 9:16 sắc nét để lưu trữ hoặc chia sẻ.
+          </p>
+        </DialogHeader>
 
         {errorMessage && (
           <div className="p-2.5 rounded-xl bg-red-50 dark:bg-red-900/20 text-xs text-red-600 dark:text-red-400">
@@ -186,7 +172,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
 
         {copiedToast && (
           <div className="p-2.5 rounded-xl bg-green-50 dark:bg-green-900/20 text-xs text-green-700 dark:text-green-300 flex items-center gap-1.5 font-medium">
-            <span className="material-icons-round text-sm">check_circle</span>
+            <CheckCircle2 className="h-4 w-4" />
             Đã sao chép nội dung & thông tin bản mệnh vào bộ nhớ tạm!
           </div>
         )}
@@ -250,45 +236,47 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
         {/* Actions */}
         <div className="flex gap-2">
           {!exportedImageUrl ? (
-            <button
+            <Button
               type="button"
               onClick={handleGenerateImage}
               disabled={isExporting}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-2.5 text-xs font-bold text-black shadow-lg shadow-amber-500/25 hover:opacity-90 transition-opacity"
+              variant="gold"
+              className="flex-1 gap-1.5 text-xs font-bold text-black"
             >
-              <span className="material-icons-round text-base">{isExporting ? 'hourglass_top' : 'photo_camera'}</span>
+              {isExporting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
               {isExporting ? 'Đang tạo ảnh...' : 'Tạo Ảnh Bản Mệnh'}
-            </button>
+            </Button>
           ) : (
             <>
-              <button
+              <Button
                 type="button"
                 onClick={handleDownload}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-2.5 text-xs font-bold text-white shadow-lg shadow-emerald-600/25 hover:bg-emerald-500 transition-colors"
+                className="flex-1 gap-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold"
               >
-                <span className="material-icons-round text-base">download</span>
-                Lưu Ảnh Về Máy
-              </button>
-              <button
+                <Download className="h-4 w-4" />
+                Lưu Ảnh
+              </Button>
+              <Button
                 type="button"
                 onClick={handleShare}
-                className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 px-3 py-2.5 text-xs font-bold text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-500 transition-colors"
+                className="flex-1 gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold"
               >
-                <span className="material-icons-round text-base">share</span>
+                <Share2 className="h-4 w-4" />
                 Chia Sẻ
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
+                variant="outline"
+                size="icon"
                 onClick={handleGenerateImage}
-                className="inline-flex items-center justify-center p-2.5 rounded-xl bg-surface-container-low border border-border-light/60 dark:border-border-dark/60 text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark"
                 title="Tạo lại ảnh"
               >
-                <span className="material-icons-round text-base">refresh</span>
-              </button>
+                <RotateCcw className="h-4 w-4" />
+              </Button>
             </>
           )}
         </div>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 };

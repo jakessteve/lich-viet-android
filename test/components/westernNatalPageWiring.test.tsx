@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { WesternChartView } from '@/components/Astrology/Western/WesternChartView';
 import { WesternMarkdownExport } from '@/components/Astrology/WesternMarkdownExport';
@@ -37,12 +37,12 @@ describe('Western natal page wiring', () => {
     );
 
     const western = render(<WesternMarkdownExport system="western" />);
-    expect(screen.getByRole('button', { name: /Sao chép MD/i })).not.toBeNull();
-    expect(screen.getByRole('button', { name: /Tải MD/i })).not.toBeNull();
+    expect(screen.getByRole('button', { name: /Sao chép/i })).not.toBeNull();
+    expect(screen.getByRole('button', { name: /Tải/i })).not.toBeNull();
     western.unmount();
 
     render(<WesternMarkdownExport system="vedic" />);
-    expect(screen.getByRole('button', { name: /Sao chép MD/i })).not.toBeNull();
-    expect(screen.getByRole('button', { name: /Tải MD/i })).not.toBeNull();
+    expect(screen.getByRole('button', { name: /Sao chép/i })).not.toBeNull();
+    expect(screen.getByRole('button', { name: /Tải/i })).not.toBeNull();
   });
 });

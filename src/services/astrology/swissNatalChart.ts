@@ -1,4 +1,3 @@
-import { SwissEphemeris } from '@swisseph/browser';
 import { Asteroid, CalculationFlag, HouseSystem, LunarPoint, Planet, type CelestialBody } from '@swisseph/core';
 import type { WesternChartInput } from '../../types/astrology';
 import type {
@@ -602,6 +601,7 @@ export function createRetryableSwissEphemerisLoader(
 
 export async function initializeBundledSwissNatalEphemeris(assetBaseUrl?: string): Promise<SwissNatalEphemeris> {
   try {
+    const { SwissEphemeris } = await import('@swisseph/browser');
     const ephemeris = new SwissEphemeris();
     await ephemeris.init(assetUrl(assetBaseUrl, 'swisseph.wasm'));
     await ephemeris.loadEphemerisFiles(
@@ -1090,7 +1090,7 @@ export async function calculateSwissNatalChart(
             type: 'fall',
             labelVi: 'Suy vị (Fall)',
             symbol: '🔻',
-            badgeClass: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30',
+            badgeClass: 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/30',
             score: -4,
           };
         }

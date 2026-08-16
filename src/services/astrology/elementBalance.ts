@@ -34,10 +34,10 @@ export interface ElementModalityBalanceResult {
 }
 
 const ELEMENT_INFO: Record<ZodiacElement, { nameVi: string; nameEn: string; color: string; traitsVi: string }> = {
-  fire: { nameVi: 'Lửa', nameEn: 'Fire', color: '#E74C3C', traitsVi: 'Nhiệt huyết, tự tin, năng động và tiên phong' },
-  earth: { nameVi: 'Đất', nameEn: 'Earth', color: '#27AE60', traitsVi: 'Thực tế, kiên định, trách nhiệm và vững vàng' },
-  air: { nameVi: 'Khí', nameEn: 'Air', color: '#3498DB', traitsVi: 'Trí tuệ, giao tiếp, khách quan và kết nối' },
-  water: { nameVi: 'Nước', nameEn: 'Water', color: '#8E44AD', traitsVi: 'Cảm xúc, trực giác, đồng cảm và thấu hiểu' },
+  fire: { nameVi: 'Lửa', nameEn: 'Fire', color: '#EF4444', traitsVi: 'Nhiệt huyết, tự tin, năng động và tiên phong' },
+  earth: { nameVi: 'Đất', nameEn: 'Earth', color: '#10B981', traitsVi: 'Thực tế, kiên định, trách nhiệm và vững vàng' },
+  air: { nameVi: 'Khí', nameEn: 'Air', color: '#F59E0B', traitsVi: 'Trí tuệ, giao tiếp, khách quan và kết nối' },
+  water: { nameVi: 'Nước', nameEn: 'Water', color: '#3B82F6', traitsVi: 'Cảm xúc, trực giác, đồng cảm và thấu hiểu' },
 };
 
 const MODALITY_INFO: Record<ZodiacModality, { nameVi: string; nameEn: string; color: string; traitsVi: string }> = {

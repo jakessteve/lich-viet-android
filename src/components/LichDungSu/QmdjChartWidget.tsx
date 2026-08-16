@@ -36,7 +36,7 @@ const AUSPICIOUS_COLORS: Record<string, { bg: string; text: string; border: stri
   },
   trung_binh: {
     bg: 'bg-amber-50/80 dark:bg-amber-900/15',
-    text: 'text-amber-700 dark:text-amber-400',
+    text: 'text-amber-800 dark:text-amber-300',
     border: 'border-amber-200/60 dark:border-amber-700/30',
     dot: 'bg-amber-500',
   },
@@ -152,7 +152,7 @@ const QmdjChartWidget: React.FC<QmdjChartWidgetProps> = ({ date, hourChi }) => {
               {palace.door ? (
                 <span className={`text-sm font-bold ${doorColors.text} leading-none`}>{palace.door.nameVi}</span>
               ) : (
-                <span className="text-sm font-bold text-amber-600 dark:text-amber-400 leading-none">Trung Cung</span>
+                <span className="text-sm font-bold text-amber-800 dark:text-amber-300 leading-none">Trung Cung</span>
               )}
 
               {/* Star */}

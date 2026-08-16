@@ -48,7 +48,7 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
       </div>
 
       {/* 2. Almuten Figuris & Arabic Lots Card */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="space-y-4">
         <div className="glass-card p-4 sm:p-5 space-y-3">
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
             <span className="material-icons-round text-amber-500 text-base">military_tech</span>
@@ -101,6 +101,12 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
               <span className="font-medium">{arabicLots.eros.name}:</span>
               <span className="font-bold text-indigo-600 dark:text-indigo-400">
                 {arabicLots.eros.degree}° {arabicLots.eros.signVi}
+              </span>
+            </div>
+            <div className="flex justify-between p-2 rounded-lg bg-surface-subtle-light dark:bg-white/5">
+              <span className="font-medium">{arabicLots.necessity.name}:</span>
+              <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                {arabicLots.necessity.degree}° {arabicLots.necessity.signVi}
               </span>
             </div>
           </div>
@@ -232,7 +238,7 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
           </span>
           Chu Kỳ Vận Hạn Firdaria (75 Năm Trung Cổ)
         </h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
+        <div className="space-y-2.5">
           {firdaria.periods.map((per) => (
             <div
               key={per.periodLabel}

@@ -38,7 +38,7 @@ function getHourColor(
     if (score >= 50)
       return {
         bg: 'bg-amber-50/60 dark:bg-amber-900/10',
-        text: 'text-amber-600 dark:text-amber-400',
+        text: 'text-amber-800 dark:text-amber-300',
         ring: 'ring-amber-300/40 dark:ring-amber-600/30',
         dot: 'bg-amber-500',
       };
@@ -134,7 +134,7 @@ const HourPickerGrid: React.FC<HourPickerGridProps> = ({
               title={isCurrentHour ? 'Giờ hiện tại' : undefined}
             >
               {isCurrentHour && !isSelected && (
-                <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded-full border border-gold/20 bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold text-gold-dark shadow-sm dark:border-gold-dark/20 dark:bg-black/20 dark:text-gold-dark">
+                <span className="absolute left-1.5 top-1.5 inline-flex items-center gap-1 rounded-full border border-gold/20 bg-white/90 px-1.5 py-0.5 text-[10px] font-semibold text-gold dark:text-gold-dark shadow-sm dark:border-gold-dark/20 dark:bg-black/20">
                   <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
                   Hiện tại
                 </span>

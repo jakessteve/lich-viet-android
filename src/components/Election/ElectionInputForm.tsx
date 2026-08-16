@@ -1,9 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useShallow } from 'zustand/react/shallow';
+import { Search, Loader2 } from 'lucide-react';
 import { useElectionStore } from '../../stores/electionStore';
-import { ActionButton, SegmentedControl, type SegmentedOption } from '../shared';
+import { SegmentedControl, type SegmentedOption } from '../shared';
 import type { ElectionActivityType, ElectionInput } from '../../types/election';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
 
 const ACTIVITY_OPTIONS: readonly SegmentedOption<ElectionActivityType>[] = [
   { id: 'cuoi-hoi', label: 'Cưới hỏi', icon: 'favorite' },
@@ -102,24 +107,24 @@ export const ElectionInputForm: React.FC = () => {
   };
 
   return (
-    <div className="glass-card">
+    <Card variant="glass">
       <div className="p-4 sm:p-5 space-y-5">
         {/* Date Range */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label className="label-standard mb-1.5 block">Từ ngày</label>
-            <input
+          <div className="space-y-1.5">
+            <Label htmlFor="election-start-date">Từ ngày</Label>
+            <Input
+              id="election-start-date"
               type="date"
-              className="surface-control w-full p-3 font-medium text-text-primary-light dark:text-text-primary-dark"
               value={startStr}
               onChange={handleStartChange}
             />
           </div>
-          <div>
-            <label className="label-standard mb-1.5 block">Đến ngày</label>
-            <input
+          <div className="space-y-1.5">
+            <Label htmlFor="election-end-date">Đến ngày</Label>
+            <Input
+              id="election-end-date"
               type="date"
-              className="surface-control w-full p-3 font-medium text-text-primary-light dark:text-text-primary-dark"
               value={endStr}
               onChange={handleEndChange}
               min={startStr}
@@ -128,8 +133,8 @@ export const ElectionInputForm: React.FC = () => {
         </div>
 
         {/* Activity Type */}
-        <div>
-          <label className="label-standard mb-2.5 block">Mục đích (Sự kiện)</label>
+        <div className="space-y-2">
+          <Label>Mục đích (Sự kiện)</Label>
           <div className="overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 scrollbar-hide">
             <SegmentedControl
               options={ACTIVITY_OPTIONS}
@@ -142,13 +147,13 @@ export const ElectionInputForm: React.FC = () => {
         </div>
 
         {/* Optional Birth Year */}
-        <div>
-          <label className="label-standard mb-1.5 block">Năm sinh người chủ sự (Tùy chọn)</label>
-          <input
+        <div className="space-y-1.5">
+          <Label htmlFor="election-birth-year">Năm sinh người chủ sự (Tùy chọn)</Label>
+          <Input
+            id="election-birth-year"
             type="number"
             min="1900"
             max="2100"
-            className="surface-control w-full p-3 font-medium transition-colors"
             placeholder="Nhập năm sinh (VD: 1990) để xem tuổi xung khắc"
             value={input.birthYear || ''}
             onChange={(e) => setInput({ birthYear: e.target.value ? Number(e.target.value) : undefined })}
@@ -156,19 +161,28 @@ export const ElectionInputForm: React.FC = () => {
         </div>
 
         <div className="pt-2">
-          <ActionButton
+          <Button
             onClick={() => {
               void runScan();
             }}
             disabled={isScanning}
-            icon={isScanning ? 'hourglass_empty' : 'search'}
-            variant="primary"
-            className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white"
+            variant="default"
+            className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white font-bold gap-2"
           >
-            Tìm Ngày Tốt
-          </ActionButton>
+            {isScanning ? (
+              <>
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Đang quét...
+              </>
+            ) : (
+              <>
+                <Search className="h-5 w-5" />
+                Tìm Ngày Tốt
+              </>
+            )}
+          </Button>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };

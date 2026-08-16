@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { ArrowUp } from 'lucide-react';
 import { useAppStore } from '@/stores/appStore';
+import { cn } from '@/lib/utils';
 
 interface ScrollToTopButtonProps {
   threshold?: number;
@@ -51,11 +53,12 @@ export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ threshold 
       onClick={scrollToTop}
       aria-label="Cuộn lên đầu trang"
       title="Cuộn lên đầu trang"
-      className={`fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-surface-card/90 dark:bg-mystery-surface/90 text-text-primary-light dark:text-text-primary-dark backdrop-blur-xl border border-border-light/60 dark:border-border-dark/60 shadow-apple hover:shadow-apple-hover hover:scale-105 active:scale-95 transition-all duration-200 animate-fade-scale group ${className}`}
+      className={cn(
+        'fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-surface-card/90 dark:bg-mystery-surface/90 text-text-primary-light dark:text-text-primary-dark backdrop-blur-xl border border-border-light/60 dark:border-border-dark/60 shadow-apple hover:shadow-apple-hover hover:scale-105 active:scale-95 transition-all duration-200 animate-fade-scale group spring-press',
+        className,
+      )}
     >
-      <span className="material-icons-round text-xl text-gold-light dark:text-gold-dark group-hover:-translate-y-0.5 transition-transform duration-200">
-        arrow_upward
-      </span>
+      <ArrowUp className="h-5 w-5 text-gold dark:text-gold-dark group-hover:-translate-y-0.5 transition-transform duration-200" />
     </button>
   );
 };

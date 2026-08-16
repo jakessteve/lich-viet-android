@@ -65,6 +65,10 @@ function getSeededAdminUser(): StoredUser {
 }
 
 function ensureSeededAdmin(users: StoredUser[]): StoredUser[] {
+  // Only inject seed admin in development mode or test environments
+  if (typeof import.meta !== 'undefined' && import.meta.env && !import.meta.env.DEV && !import.meta.env.VITEST) {
+    return users;
+  }
   const hasAdmin = users.some((entry) => entry.user?.email?.toLowerCase() === ADMIN_SEED_EMAIL);
   if (hasAdmin) return users;
 

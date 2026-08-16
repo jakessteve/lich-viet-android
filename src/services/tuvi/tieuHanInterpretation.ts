@@ -482,15 +482,15 @@ function synthesizeTieuHanGuidance(
   // Dynamic Headline
   let themeHeadlineVi = `Tiểu Hạn năm ${yearCan} ${yearChi} (${viewYear}) nhập Cung ${palace.name} [${palace.chi}] (${viewAge} tuổi)`;
   if (resonance.type === 'dong_cung') {
-    themeHeadlineVi += ` — Đại Tiểu Hạn Trùng Phùng Đắc Vận`;
+    themeHeadlineVi += ` - Đại Tiểu Hạn Trùng Phùng Đắc Vận`;
   } else if (hasSongLoc) {
-    themeHeadlineVi += ` — Song Lộc Tụ Hội, Vận Tài Khởi Sắc`;
+    themeHeadlineVi += ` - Song Lộc Tụ Hội, Vận Tài Khởi Sắc`;
   } else if (hasSongKy) {
-    themeHeadlineVi += ` — Thận Trọng Ứng Biến, Giữ Vững Cốt Lõi`;
+    themeHeadlineVi += ` - Thận Trọng Ứng Biến, Giữ Vững Cốt Lõi`;
   } else if (luckTier === 'Đại Cát' || luckTier === 'Khởi Sắc') {
-    themeHeadlineVi += ` — Thiên Thời Địa Lợi, Hanh Thông Khởi Sắc`;
+    themeHeadlineVi += ` - Thiên Thời Địa Lợi, Hanh Thông Khởi Sắc`;
   } else {
-    themeHeadlineVi += ` — Củng Cố Nền Tảng, Vững Vàng Tích Lũy`;
+    themeHeadlineVi += ` - Củng Cố Nền Tảng, Vững Vàng Tích Lũy`;
   }
 
   // 1. General Vibe

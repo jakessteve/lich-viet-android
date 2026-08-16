@@ -1,5 +1,8 @@
 import React from 'react';
 import { HolidayEntry } from '../../hooks/useHolidays';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { CalendarHeart } from 'lucide-react';
 
 interface HolidaysCardProps {
   holidays: HolidayEntry[];
@@ -21,15 +24,16 @@ const HolidaysCard: React.FC<HolidaysCardProps> = ({ holidays, isLoading, countr
   }
 
   return (
-    <div className="card-surface">
+    <Card className="rounded-2xl border border-border-light/60 dark:border-border-dark/60 overflow-hidden shadow-apple">
       {/* Header */}
-      <div className="card-header !py-3">
-        <h3 className="font-semibold text-sm tracking-tight text-text-primary-light dark:text-text-primary-dark">
+      <CardHeader className="py-3 px-5 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-subtle-light dark:bg-surface-subtle-dark">
+        <CardTitle className="font-semibold text-sm tracking-tight text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+          <CalendarHeart className="h-4 w-4 text-gold dark:text-gold-dark" />
           Ngày lễ{countryName && !isVietnam ? ` — ${countryName}` : ''}
-        </h3>
-      </div>
+        </CardTitle>
+      </CardHeader>
       {/* Body */}
-      <div className="px-5 py-4 space-y-3">
+      <CardContent className="px-5 py-4 space-y-3">
         {isLoading ? (
           <div className="flex items-center gap-3 py-2 animate-pulse">
             <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700" />
@@ -46,30 +50,31 @@ const HolidaysCard: React.FC<HolidaysCardProps> = ({ holidays, isLoading, countr
                 <p className="font-semibold text-sm sm:text-base text-text-primary-light dark:text-text-primary-dark leading-snug">
                   {h.name}
                 </p>
-                <div className="flex items-center gap-2 mt-0.5">
-                  <span
-                    className={`text-xs font-medium px-1.5 py-0.5 rounded-full ${
+                <div className="flex items-center gap-2 mt-1">
+                  <Badge
+                    variant={
                       h.source === 'vn-lunar'
-                        ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-400'
+                        ? 'gold'
                         : h.source === 'vn-solar'
-                          ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400'
-                          : 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400'
-                    }`}
+                          ? 'good'
+                          : 'info'
+                    }
+                    className="text-[11px] px-2 py-0.5 rounded-full"
                   >
                     {SOURCE_LABELS[h.source]}
-                  </span>
+                  </Badge>
                   {h.daysOff && (
-                    <span className="text-xs font-medium px-1.5 py-0.5 rounded-full bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-400">
+                    <Badge variant="bad" className="text-[11px] px-2 py-0.5 rounded-full">
                       Nghỉ lễ
-                    </span>
+                    </Badge>
                   )}
                 </div>
               </div>
             </div>
           ))
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 };
 

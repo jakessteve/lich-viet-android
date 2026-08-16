@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import { VedicChartView } from './VedicChartView';
+import { Sparkles } from 'lucide-react';
 
 export const VedicAstrologyPage: React.FC = () => {
   usePageTitle('Chiêm Tinh Ấn Độ');
@@ -43,7 +44,7 @@ export const VedicAstrologyPage: React.FC = () => {
     <div className="space-y-6 max-w-4xl mx-auto">
       <div className="text-center space-y-1">
         <h2 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark flex items-center justify-center gap-2">
-          <span className="material-icons-round text-xl text-purple-500 dark:text-purple-400">bubble_chart</span>
+          <Sparkles className="h-5 w-5 text-purple-500 dark:text-purple-400" />
           Chiêm Tinh Ấn Độ (Vedic)
         </h2>
       </div>

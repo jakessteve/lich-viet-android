@@ -1,23 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
-import { BirthDataInput, ActionButton, SegmentedControl } from '../../shared';
+import { BirthDataInput, ActionButton, SegmentedControl, SavedChartsPicker } from '../../shared';
 import { ExecutiveSnapshotCards } from '../../shared/ExecutiveSnapshotCards';
 import { WesternNatalChartDisplay } from './WesternNatalChartDisplay';
-import { SavedChartsPicker } from './SavedChartsPicker';
 import { TraditionalChartView } from './TraditionalChartView';
 import { HuberChartView } from './HuberChartView';
-import { ThematicChartView } from './ThematicChartView';
 import { ZodiacalReleasingView } from './ZodiacalReleasingView';
-import { HoraryView } from './HoraryView';
 
 const VIEW_TABS = [
-  { id: 'natal', label: 'Bản Đồ Gốc', icon: 'auto_graph', shortLabel: 'Lá Số' },
-  { id: 'traditional', label: 'Cổ Điển & Lots', icon: 'military_tech', shortLabel: 'Cổ Điển' },
-  { id: 'huber', label: 'Tâm Lý Huber 72n', icon: 'schedule', shortLabel: 'Huber' },
-  { id: 'thematic', label: 'Chuyên Sâu', icon: 'psychology', shortLabel: 'Chuyên Sâu' },
-  { id: 'releasing', label: 'Vận Hạn Hy Lạp', icon: 'timeline', shortLabel: 'Hy Lạp' },
-  { id: 'horary', label: 'Hỏi Nhanh Horary', icon: 'help_outline', shortLabel: 'Horary' },
+  { id: 'natal', label: 'Bản Đồ Gốc', shortLabel: 'Lá Số' },
+  { id: 'traditional', label: 'Cổ Điển & Lots', shortLabel: 'Cổ Điển' },
+  { id: 'huber', label: 'Tâm Lý Huber 72n', shortLabel: 'Huber' },
+  { id: 'releasing', label: 'Vận Hạn Hy Lạp', shortLabel: 'Hy Lạp' },
 ] as const;
 
 type ViewTab = (typeof VIEW_TABS)[number]['id'];
@@ -58,9 +53,22 @@ export const WesternChartView: React.FC = () => {
     <div className="space-y-6">
       {/* Saved Charts Quick Picker */}
       <SavedChartsPicker
+        storageKey="saved_western_charts_v1"
+        tone="astral"
         currentInput={input}
-        onSelectChart={(newInput) => {
-          setInput(newInput);
+        onSelectChart={(entry) => {
+          setInput({
+            name: entry.name,
+            birthDate: new Date(entry.birthDate),
+            birthHour: entry.birthHour,
+            birthMinute: entry.birthMinute,
+            latitude: entry.latitude,
+            longitude: entry.longitude,
+            timezone: entry.timezone,
+            locationName: entry.locationName,
+            countryCode: entry.countryCode,
+            countryName: entry.countryName,
+          });
           setTimeout(() => void runCalc(), 50);
         }}
       />
@@ -106,7 +114,7 @@ export const WesternChartView: React.FC = () => {
                 <option value="wholesign">Whole Sign (Cung Toàn Phần - Hy Lạp Cổ)</option>
                 <option value="koch">Koch (Địa Bàn Sinh Nhật)</option>
                 <option value="equal">Equal (Cung Đều 30°)</option>
-                <option value="regiomontanus">Regiomontanus (Chuẩn Horary & Trung Cổ)</option>
+                <option value="regiomontanus">Regiomontanus</option>
                 <option value="campanus">Campanus (Không gian Thấu Kính)</option>
                 <option value="porphyry">Porphyry (Chia Đều Góc)</option>
                 <option value="morinus">Morinus (Hệ Thống Xích Đạo)</option>
@@ -192,9 +200,7 @@ export const WesternChartView: React.FC = () => {
           {activeTab === 'natal' && <WesternNatalChartDisplay />}
           {activeTab === 'traditional' && <TraditionalChartView natalResult={result} birthDate={birthDateObj} />}
           {activeTab === 'huber' && <HuberChartView natalResult={result} birthDate={birthDateObj} />}
-          {activeTab === 'thematic' && <ThematicChartView natalResult={result} />}
           {activeTab === 'releasing' && <ZodiacalReleasingView natalResult={result} birthDate={birthDateObj} />}
-          {activeTab === 'horary' && <HoraryView currentInput={input} />}
         </div>
       )}
     </div>

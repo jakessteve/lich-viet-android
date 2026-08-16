@@ -1,10 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useTuViStore } from '../../stores/tuviStore';
 import { useAuthStore } from '../../stores/authStore';
 import type { TuViGender } from '../../types/tuvi';
 import { TuViLocationPicker } from './TuViLocationPicker';
 import { buildTuViInputFromUser, getUserBirthProfile } from '@/utils/userBirthProfile';
+import { Sparkles, Loader2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
 
 const getTimezoneForLocation = (utcOffset: number) => {
   if (utcOffset === 7) return 'Asia/Ho_Chi_Minh';
@@ -31,15 +36,14 @@ export const TuViInputForm: React.FC = () => {
   const didPrefill = useRef(false);
   const userBirthProfile = useMemo(() => getUserBirthProfile(user), [user]);
 
-  // Local string state for date inputs — allows free typing without
-  // intermediate invalid Date construction
+  // Local string state for date inputs
   const [dayStr, setDayStr] = useState(String(input.solarDate.getDate()));
   const [monthStr, setMonthStr] = useState(String(input.solarDate.getMonth() + 1));
   const [yearStr, setYearStr] = useState(String(input.solarDate.getFullYear()));
   const [hourStr, setHourStr] = useState(String(input.birthClockHour ?? 0));
   const [minuteStr, setMinuteStr] = useState(String(input.birthMinute ?? 0));
 
-  // Sync local strings when the store date changes externally (e.g. prefill)
+  // Sync local strings when the store date changes externally
   useEffect(() => {
     setDayStr(String(input.solarDate.getDate()));
     setMonthStr(String(input.solarDate.getMonth() + 1));
@@ -56,11 +60,10 @@ export const TuViInputForm: React.FC = () => {
     const d = parseInt(dayStr, 10);
     const m = parseInt(monthStr, 10);
     const y = parseInt(yearStr, 10);
-    if (!d || !m || !y) return; // incomplete — don't commit
+    if (!d || !m || !y) return;
     const normalizedHour = clampTimePart(hourStr, 23);
     const normalizedMinute = clampTimePart(minuteStr, 59);
     const date = new Date(y, m - 1, d, normalizedHour, normalizedMinute);
-    // If the Date auto-corrected (e.g. Feb 31 → Mar 3), sync back
     const actualDay = date.getDate();
     const actualMonth = date.getMonth() + 1;
     const actualYear = date.getFullYear();
@@ -98,64 +101,92 @@ export const TuViInputForm: React.FC = () => {
     const y = parseInt(yearStr, 10);
 
     if (!d || !m || !y) {
-      setError('Vui lòng chọn đầy đủ ngày, tháng, năm sinh.');
+      setError('Vui lòng nhập đầy đủ ngày, tháng, năm sinh hợp lệ.');
+      return;
+    }
+    if (d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2100) {
+      setError('Ngày tháng năm sinh không hợp lệ (1900 - 2100).');
       return;
     }
 
-    // Commit the date before calculating
     const normalizedHour = clampTimePart(hourStr, 23);
     const normalizedMinute = clampTimePart(minuteStr, 59);
-    const date = new Date(y, m - 1, d, normalizedHour, normalizedMinute);
-    const nextInput = {
-      solarDate: date,
+    const validatedDate = new Date(y, m - 1, d, normalizedHour, normalizedMinute);
+
+    if (
+      validatedDate.getFullYear() !== y ||
+      validatedDate.getMonth() !== m - 1 ||
+      validatedDate.getDate() !== d
+    ) {
+      setError('Ngày không tồn tại trong tháng này.');
+      return;
+    }
+
+    setInput({
+      solarDate: validatedDate,
       birthClockHour: normalizedHour,
       birthMinute: normalizedMinute,
       birthHour: getChiHourFromClockHour(normalizedHour),
-    };
-    setHourStr(String(normalizedHour));
-    setMinuteStr(String(normalizedMinute));
-    setInput(nextInput);
-    calculateChart(nextInput);
+    });
+
+    calculateChart();
   };
 
+  const handleApplySavedProfile = useCallback(() => {
+    if (!user) return;
+    const profileInput = buildTuViInputFromUser(user);
+    if (!profileInput) return;
+    setInput(profileInput);
+    calculateChart();
+  }, [user, setInput, calculateChart]);
+
   useEffect(() => {
-    if (didPrefill.current || !user) return;
-
-    const nextInput = buildTuViInputFromUser(user, input);
-    if (nextInput) {
-      setInput(nextInput);
-    } else if (user.displayName && !input.name) {
-      setInput({ name: user.displayName });
+    if (didPrefill.current) return;
+    if (userBirthProfile?.birthYear) {
+      handleApplySavedProfile();
+      didPrefill.current = true;
     }
+  }, [userBirthProfile?.birthYear, handleApplySavedProfile]);
 
-    didPrefill.current = true;
-  }, [input, setInput, user, userBirthProfile]);
-
-  const labelBase =
-    'block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-2 tracking-wide';
-  const infoLabelBase =
-    'block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-1 tracking-wide';
   const profileDateControl =
-    'surface-control px-3 py-2.5 text-sm text-center focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none';
+    'surface-control w-full rounded-xl px-2.5 py-2 text-center text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-gold/40 border border-border-light/60 dark:border-border-dark/60';
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-5">
-      <div>
-        <label htmlFor="tuvi-name" className={labelBase}>
-          Họ và tên (Tuỳ chọn)
-        </label>
-        <input
-          id="tuvi-name"
+    <form onSubmit={handleSubmit} className="space-y-4">
+      {userBirthProfile?.birthYear && (
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-gold/25 bg-gold/10 p-3 text-xs text-gold dark:border-gold/30 dark:bg-gold/15 dark:text-gold-dark">
+          <div className="flex items-center gap-2">
+            <Sparkles className="h-4 w-4 shrink-0 text-gold dark:text-gold-dark" />
+            <span>
+              Đang có hồ sơ: <strong>{user?.displayName || 'Tài khoản'}</strong>
+            </span>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handleApplySavedProfile}
+            className="h-7 text-xs font-semibold rounded-lg"
+          >
+            Điền nhanh hồ sơ
+          </Button>
+        </div>
+      )}
+
+      <div className="space-y-1.5">
+        <Label htmlFor="tuviName">Họ và tên</Label>
+        <Input
+          id="tuviName"
           type="text"
-          value={input.name ?? ''}
+          value={input.name}
           onChange={(e) => setInput({ name: e.target.value })}
           placeholder="VD: Nguyễn Văn A"
-          className="surface-control w-full rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-gold/40 placeholder:text-gray-400 dark:placeholder:text-gray-400"
+          className="w-full"
         />
       </div>
 
-      <div>
-        <label className={labelBase}>Ngày giờ sinh (Dương lịch)</label>
+      <div className="space-y-1.5">
+        <Label>Ngày giờ sinh (Dương lịch)</Label>
         <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
           <input
             type="text"
@@ -188,7 +219,7 @@ export const TuViInputForm: React.FC = () => {
             value={yearStr}
             onChange={(e) => setYearStr(e.target.value)}
             onBlur={commitDate}
-            className={`${profileDateControl} col-span-2 sm:col-span-1`}
+            className={cn(profileDateControl, 'col-span-2 sm:col-span-1')}
           />
           <input
             type="text"
@@ -217,22 +248,23 @@ export const TuViInputForm: React.FC = () => {
             className={profileDateControl}
           />
         </div>
-        <p className="mt-1.5 text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/70">
+        <p className="mt-1 text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/70">
           Giờ Tử Vi được tự động quy đổi từ giờ đồng hồ.
         </p>
       </div>
 
-      <div>
-        <label className={labelBase}>Giới tính</label>
+      <div className="space-y-1.5">
+        <Label>Giới tính</Label>
         <div className="surface-panel grid grid-cols-2 gap-2 rounded-2xl p-1">
           {(['nam', 'nữ'] as TuViGender[]).map((g) => (
             <label
               key={g}
-              className={`flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 transition-all duration-200 ${
+              className={cn(
+                'flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 transition-all duration-200 spring-press',
                 input.gender === g
-                  ? 'bg-white text-gold shadow-sm dark:bg-white/15 dark:text-gold-light'
-                  : 'text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10'
-              }`}
+                  ? 'bg-white text-gold shadow-sm dark:bg-white/15 dark:text-gold-light font-semibold'
+                  : 'text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10',
+              )}
             >
               <input
                 type="radio"
@@ -248,8 +280,8 @@ export const TuViInputForm: React.FC = () => {
         </div>
       </div>
 
-      <div>
-        <label className={labelBase}>Nơi sinh</label>
+      <div className="space-y-1.5">
+        <Label>Nơi sinh</Label>
         <TuViLocationPicker
           value={input.birthLocation}
           onChange={(birthLocation) =>
@@ -261,42 +293,30 @@ export const TuViInputForm: React.FC = () => {
         />
       </div>
 
-      <div className="surface-panel rounded-2xl p-3">
-        <div className="flex items-start gap-2">
-          <span className="material-icons-round mt-0.5 text-base text-gold">schedule</span>
-          <div className="min-w-0">
-            <p className={infoLabelBase}>Cách tính giờ</p>
-            <p className="text-xs leading-5 text-text-secondary-light/75 dark:text-text-secondary-dark/75">
-              Giờ Tử Vi được quy đổi tự động theo lịch sử Việt Nam, với lớp Swiss engine hỗ trợ hiệu chỉnh true solar
-              khi khả dụng.
-            </p>
-          </div>
-        </div>
-      </div>
-
       {error && (
         <p className="text-sm text-red-500 dark:text-red-400 text-center" role="alert">
           {error}
         </p>
       )}
 
-      <button
+      <Button
         type="submit"
         disabled={isCalculating}
-        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white font-bold text-sm shadow-md hover:shadow-lg hover:brightness-110 active:scale-[0.98] transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+        variant="gold"
+        className="w-full py-3.5 h-12 text-sm font-bold shadow-md hover:shadow-lg gap-2"
       >
         {isCalculating ? (
           <>
-            <span className="material-icons-round text-base animate-spin">auto_awesome</span>
+            <Loader2 className="h-4 w-4 animate-spin" />
             Đang tính lá số...
           </>
         ) : (
           <>
-            <span className="material-icons-round text-base">auto_awesome</span>
+            <Sparkles className="h-4 w-4" />
             Xem Lá Số
           </>
         )}
-      </button>
+      </Button>
     </form>
   );
 };

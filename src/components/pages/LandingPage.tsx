@@ -23,24 +23,25 @@ import HeroAuspiciousArt from './LandingPage/HeroAuspiciousArt';
 import MysticBackgroundPattern from './LandingPage/MysticBackgroundPattern';
 import LandingNav from './LandingPage/LandingNav';
 import { ActionButton } from '../shared';
+import { CheckCircle2, ShieldCheck, Lock, Crown, ArrowRight, Calendar, Clock, Sun, ChevronDown, Compass, Atom, AlertTriangle, Info } from 'lucide-react';
 
 const TRUST_VALUES = [
   {
-    icon: 'verified',
+    icon: <CheckCircle2 className="h-6 w-6" />,
     title: 'Chuẩn học thuật',
     desc: 'Thuật toán được đối chiếu với các tài liệu cổ học uy tín — đảm bảo chính xác từng con số.',
     accent: 'from-blue-400/25 to-blue-600/10',
     iconColor: 'text-blue-500 dark:text-blue-400',
   },
   {
-    icon: 'block',
+    icon: <ShieldCheck className="h-6 w-6" />,
     title: 'Tôn trọng trải nghiệm',
     desc: 'Không popup, không banner, không theo dõi. Trải nghiệm sạch sẽ như ứng dụng bạn xứng đáng.',
     accent: 'from-emerald-400/25 to-emerald-600/10',
     iconColor: 'text-emerald-500 dark:text-emerald-400',
   },
   {
-    icon: 'lock',
+    icon: <Lock className="h-6 w-6" />,
     title: 'Dữ liệu không rời thiết bị',
     desc: 'Ngày sinh, lá số, kết quả — tất cả chỉ nằm trên trình duyệt. Không gửi đến máy chủ nào.',
     accent: 'from-purple-400/25 to-purple-600/10',
@@ -86,12 +87,12 @@ export default function LandingPage() {
 
   const isGoodDay = today.quality === 'Good';
   const qualityLabel = isGoodDay ? 'Ngày Hoàng Đạo' : today.quality === 'Bad' ? 'Ngày Hắc Đạo' : 'Ngày Bình Thường';
-  const qualityIcon = isGoodDay ? 'verified' : today.quality === 'Bad' ? 'dangerous' : 'info';
+  const QualityIconComponent = isGoodDay ? CheckCircle2 : today.quality === 'Bad' ? AlertTriangle : Info;
   const qualityColor = isGoodDay
     ? 'text-emerald-500 dark:text-emerald-400 bg-emerald-500/8 dark:bg-emerald-400/8 border-emerald-500/15 dark:border-emerald-400/15'
     : today.quality === 'Bad'
       ? 'text-red-500 dark:text-red-400 bg-red-500/8 dark:bg-red-400/8 border-red-500/15 dark:border-red-400/15'
-      : 'text-amber-500 dark:text-amber-400 bg-amber-500/8 dark:bg-amber-400/8 border-amber-500/15 dark:border-amber-400/15';
+      : 'text-amber-800 dark:text-amber-300 bg-amber-500/8 dark:bg-amber-400/8 border-amber-500/15 dark:border-amber-400/15';
 
   return (
     <div className="min-h-screen overflow-x-hidden relative">
@@ -153,7 +154,7 @@ export default function LandingPage() {
           <div className="text-left max-w-3xl mb-16 relative z-10">
             {/* Authority badge */}
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-surface-container-low dark:bg-gold-dark/6 mb-5 backdrop-blur-sm">
-              <span className="material-icons-round text-xs text-gold dark:text-gold-dark">science</span>
+              <Atom className="h-3.5 w-3.5 text-gold dark:text-gold-dark" />
               <span className="text-xs font-medium text-gold dark:text-gold-dark tracking-wide">
                 Tính toán thiên văn chính xác
               </span>
@@ -180,7 +181,7 @@ export default function LandingPage() {
             </p>
 
             {/* CTA buttons */}
-            <div className="flex flex-wrap items-center justify-start gap-4">
+            <div className="flex flex-wrap items-center justify-start gap-4 transform-gpu will-change-transform">
               <ActionButton
                 onClick={() => navigate('/app/am-lich')}
                 className="px-5 py-3 font-medium"
@@ -193,7 +194,7 @@ export default function LandingPage() {
                 variant="secondary"
                 className="px-5 py-3 font-medium"
               >
-                <span className="material-icons-round text-sm">workspace_premium</span>
+                <Crown className="h-4 w-4 mr-1.5" />
                 Xem các gói
               </ActionButton>
             </div>
@@ -206,7 +207,7 @@ export default function LandingPage() {
             {/* ── Card 1: Today's Details ── */}
             <button
               onClick={() => navigate('/app/am-lich')}
-              className="group glass-card glass-noise p-5 text-left hover-lift cursor-pointer flex flex-col"
+              className="group glass-card glass-noise p-5 text-left hover-lift cursor-pointer flex flex-col rounded-2xl border border-border-light/60 dark:border-border-dark/60"
             >
               {/* Card header */}
               <div className="flex items-center justify-between mb-4">
@@ -217,13 +218,11 @@ export default function LandingPage() {
                   <span
                     className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold border ${qualityColor}`}
                   >
-                    <span className="material-icons-round text-xs">{qualityIcon}</span>
+                    <QualityIconComponent className="h-3 w-3" />
                     {qualityLabel}
                   </span>
                 </div>
-                <span className="material-icons-round text-sm text-text-secondary-light/60 dark:text-text-secondary-dark/60 group-hover:text-gold dark:group-hover:text-gold-dark transition-colors">
-                  arrow_forward
-                </span>
+                <ArrowRight className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 group-hover:text-gold dark:group-hover:text-gold-dark transition-colors" />
               </div>
 
               {/* Moon + date */}
@@ -244,9 +243,7 @@ export default function LandingPage() {
               {/* Details grid */}
               <div className="mt-auto space-y-2 pt-3 border-t border-border-light/15 dark:border-white/[0.04]">
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="material-icons-round text-xs text-gold/50 dark:text-gold-dark/40">
-                    calendar_today
-                  </span>
+                  <Calendar className="h-3.5 w-3.5 text-gold/50 dark:text-gold-dark/40" />
                   <span className="text-text-secondary-light dark:text-text-secondary-dark">
                     {today.canChiDay}
                     {today.napAm && (
@@ -257,13 +254,13 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="material-icons-round text-xs text-gold/50 dark:text-gold-dark/40">schedule</span>
+                  <Clock className="h-3.5 w-3.5 text-gold/50 dark:text-gold-dark/40" />
                   <span className="text-text-secondary-light dark:text-text-secondary-dark">
                     {today.auspiciousHoursCount} giờ hoàng đạo
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs">
-                  <span className="material-icons-round text-xs text-gold/50 dark:text-gold-dark/40">wb_sunny</span>
+                  <Sun className="h-3.5 w-3.5 text-gold/50 dark:text-gold-dark/40" />
                   <span className="text-text-secondary-light dark:text-text-secondary-dark">
                     {today.solarTerm || 'Tiết khí đang cập nhật'}
                   </span>
@@ -281,14 +278,15 @@ export default function LandingPage() {
           </div>
 
           {/* Scroll indicator */}
-          <div className="flex justify-center mt-12">
+          <div className="flex justify-center mt-10 sm:mt-12 py-2">
             <button
+              type="button"
               onClick={() => document.getElementById('stats-section')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex flex-col items-center gap-1 text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-gold dark:hover:text-gold-dark transition-colors"
+              className="flex flex-col items-center gap-1.5 text-text-secondary-light/70 dark:text-text-secondary-dark/70 hover:text-gold dark:hover:text-gold-dark transition-colors cursor-pointer select-none group"
               aria-label="Cuộn xuống để xem thêm"
             >
-              <span className="text-xs font-medium tracking-wider uppercase">Khám phá thêm</span>
-              <span className="material-icons-round text-lg animate-bounce">expand_more</span>
+              <span className="text-xs font-semibold tracking-wider uppercase">Khám phá thêm</span>
+              <ChevronDown className="h-4 w-4 animate-bounce group-hover:translate-y-0.5 transition-transform" />
             </button>
           </div>
         </div>
@@ -323,7 +321,7 @@ export default function LandingPage() {
               <button
                 key={f.id}
                 onClick={() => navigate(`/app/${f.id}`)}
-                className="surface-interactive group relative w-full h-full flex flex-col justify-start items-start text-left p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright"
+                className="surface-interactive group relative w-full h-full flex flex-col justify-start items-start text-left p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright rounded-2xl border border-border-light/60 dark:border-border-dark/60"
               >
                 <div
                   className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${f.glowColor} dark:opacity-100 opacity-0 transition-opacity duration-200 group-hover:opacity-100 pointer-events-none`}
@@ -332,7 +330,7 @@ export default function LandingPage() {
                   <div
                     className={`w-10 h-10 rounded-xl ${f.iconBg} flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-200`}
                   >
-                    <span className={`material-icons-round text-lg ${f.iconColor}`}>{f.icon}</span>
+                    <f.icon className={`h-5 w-5 ${f.iconColor}`} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
@@ -346,9 +344,7 @@ export default function LandingPage() {
                     </p>
                   </div>
                 </div>
-                <span className="absolute top-4 right-3 material-icons-round text-sm text-text-secondary-light/60 dark:text-text-secondary-dark/60 group-hover:text-gold dark:group-hover:text-gold-dark group-hover:translate-x-0.5 transition-all">
-                  arrow_forward
-                </span>
+                <ArrowRight className="absolute top-4 right-3 h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60 group-hover:text-gold dark:group-hover:text-gold-dark group-hover:translate-x-0.5 transition-all" />
               </button>
             ))}
           </div>
@@ -366,12 +362,12 @@ export default function LandingPage() {
               {TRUST_VALUES.map((v) => (
                 <div
                   key={v.title}
-                  className="surface-interactive group p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright"
+                  className="surface-interactive group p-6 bg-surface-container-lowest dark:bg-surface-dark hover:bg-surface-bright rounded-2xl border border-border-light/60 dark:border-border-dark/60"
                 >
                   <div
-                    className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${v.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200`}
+                    className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${v.accent} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-200 ${v.iconColor}`}
                   >
-                    <span className={`material-icons-round text-xl ${v.iconColor}`}>{v.icon}</span>
+                    {v.icon}
                   </div>
                   <h4 className="text-sm font-bold mb-1.5">{v.title}</h4>
                   <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
@@ -394,12 +390,12 @@ export default function LandingPage() {
          ════════════════════════════════════════════════════════ */}
       <section className="py-14 sm:py-20 px-5 relative z-10">
         <div className="max-w-xl mx-auto text-center">
-          <div className="surface-card rounded-3xl p-10 sm:p-12 relative overflow-hidden">
+          <div className="surface-card rounded-3xl p-10 sm:p-12 relative overflow-hidden border border-border-light/60 dark:border-border-dark/60">
             <div className="absolute -top-20 -right-20 w-40 h-40 bg-gradient-radial from-mystery-purple/8 dark:from-mystery-purple/12 to-transparent rounded-full blur-2xl pointer-events-none" />
             <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-gradient-radial from-gold/6 dark:from-gold/10 to-transparent rounded-full blur-2xl pointer-events-none" />
             <div className="relative">
               <div className="w-12 h-12 rounded-2xl bg-gold/10 dark:bg-gold-dark/8 flex items-center justify-center mx-auto mb-4">
-                <span className="material-icons-round text-2xl text-gold dark:text-gold-dark">explore</span>
+                <Compass className="h-6 w-6 text-gold dark:text-gold-dark" />
               </div>
               <h2 className="text-xl sm:text-2xl font-bold tracking-tight mb-2">Sẵn sàng khám phá vận mệnh?</h2>
               <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark mb-4">
@@ -407,7 +403,7 @@ export default function LandingPage() {
               </p>
               {isGoodDay && (
                 <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium mb-4 inline-flex items-center gap-1">
-                  <span className="material-icons-round text-xs">verified</span>
+                  <CheckCircle2 className="h-3.5 w-3.5" />
                   Hôm nay là ngày Hoàng Đạo — thời điểm tốt để bắt đầu!
                 </p>
               )}

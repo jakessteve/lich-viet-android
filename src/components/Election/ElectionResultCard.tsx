@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Clock, ArrowRight } from 'lucide-react';
 import type { ElectionCandidate } from '../../types/election';
 import CollapsibleCard from '../CollapsibleCard';
 
@@ -16,7 +17,7 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
   // Simple scoring colors
   const getScoreColor = (score: number) => {
     if (score >= 80) return 'text-emerald-600 dark:text-emerald-400';
-    if (score >= 50) return 'text-amber-500 dark:text-amber-400';
+    if (score >= 50) return 'text-amber-800 dark:text-amber-300';
     return 'text-red-500 dark:text-red-400';
   };
 
@@ -34,7 +35,7 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
             {date.toLocaleDateString('vi-VN', { weekday: 'long', day: 'numeric', month: 'numeric', year: 'numeric' })}
           </span>
           <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-1.5">
-            <span className="material-icons-round text-sm">schedule</span>
+            <Clock className="h-3.5 w-3.5" />
             {date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })} — {result.dayLabel}
           </span>
         </div>
@@ -54,7 +55,7 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
         {/* Visual Bar */}
         <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
           <div
-            className={`h-full ${getScoreBg(result.totalScore)}`}
+            className={`h-full ${getScoreBg(result.totalScore)} transition-all duration-500`}
             style={{ width: `${Math.min(100, Math.max(0, result.totalScore))}%` }}
           />
         </div>
@@ -113,7 +114,7 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
                   key={hIdx}
                   className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200/60 dark:border-emerald-800/50 text-emerald-700 dark:text-emerald-300 text-xs font-medium"
                 >
-                  <span className="material-icons-round text-xs">access_time</span>
+                  <Clock className="h-3 w-3" />
                   <strong>{item.hourInfo.name}</strong> ({item.hourInfo.timeRange}) — {Math.round(item.activityScore)}đ
                 </span>
               ))}
@@ -128,7 +129,7 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
             className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center justify-end gap-1 w-full"
           >
             Xem chi tiết ngày này
-            <span className="material-icons-round text-base">arrow_forward</span>
+            <ArrowRight className="h-4 w-4" />
           </button>
         </div>
       </div>

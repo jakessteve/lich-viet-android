@@ -79,6 +79,9 @@ const CATEGORY_LABELS: readonly {
   { key: 'nguoiRaDi', label: 'Người ra đi', icon: 'directions_walk' },
 ];
 
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+
 function CollapsibleSection({
   title,
   icon,
@@ -94,27 +97,29 @@ function CollapsibleSection({
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="border border-border-light/50 dark:border-border-dark/50 rounded-xl overflow-hidden">
-      <button
-        type="button"
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark transition-colors cursor-pointer"
-      >
-        <span className={`material-icons-round text-lg ${accentClass}`}>{icon}</span>
-        <h4 className="text-base font-semibold text-text-primary-light dark:text-text-primary-dark flex-1">{title}</h4>
-        <span
-          className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200"
-          style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
+    <Collapsible
+      open={open}
+      onOpenChange={setOpen}
+      className="border border-border-light/50 dark:border-border-dark/50 rounded-xl overflow-hidden"
+    >
+      <CollapsibleTrigger asChild>
+        <button
+          type="button"
+          className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark transition-colors cursor-pointer"
         >
-          expand_more
-        </span>
-      </button>
-      {open && (
-        <div className="px-4 pb-4 pt-1 border-t border-border-light/30 dark:border-border-dark/30 animate-fade-in-up">
-          {children}
-        </div>
-      )}
-    </div>
+          <span className={`material-icons-round text-lg ${accentClass}`}>{icon}</span>
+          <h4 className="text-base font-semibold text-text-primary-light dark:text-text-primary-dark flex-1">{title}</h4>
+          <ChevronDown
+            className={`h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200 ${
+              open ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+      </CollapsibleTrigger>
+      <CollapsibleContent className="px-4 pb-4 pt-1 border-t border-border-light/30 dark:border-border-dark/30 animate-fade-in-up">
+        {children}
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
 
@@ -143,7 +148,7 @@ function HaoAnalysisRow({
           {posName}
         </span>
         {isMoving && (
-          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 bg-amber-100 dark:bg-amber-900/40 px-1.5 py-0.5 rounded">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/40 px-1.5 py-0.5 rounded">
             Hào Động
           </span>
         )}

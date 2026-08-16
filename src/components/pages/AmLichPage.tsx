@@ -6,10 +6,12 @@
  */
 
 import React, { useState, Suspense } from 'react';
+import { Calendar, CalendarCheck } from 'lucide-react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useAppStore } from '@/stores/appStore';
 import DetailedDayView from '../DetailedDayView';
 import { LoadingState, SegmentedControl, type SegmentedOption } from '../shared';
+import { MotionPageTransition } from '@/components/ui/motion-primitives';
 
 // Lazy-load heavier modules
 const DungSuView = React.lazy(() => import('../LichDungSu/DungSuView'));
@@ -17,8 +19,8 @@ const DungSuView = React.lazy(() => import('../LichDungSu/DungSuView'));
 type SubTab = 'am-lich' | 'dung-su';
 
 const SUB_TABS: readonly SegmentedOption<SubTab>[] = [
-  { id: 'am-lich', label: 'Lịch Ngày', icon: 'calendar_month', shortLabel: 'Lịch Ngày' },
-  { id: 'dung-su', label: 'Dụng Sự Ngày', icon: 'event_available', shortLabel: 'Dụng Sự' },
+  { id: 'am-lich', label: 'Lịch Ngày', icon: <Calendar className="h-4 w-4" /> as unknown as string, shortLabel: 'Lịch Ngày' },
+  { id: 'dung-su', label: 'Dụng Sự Ngày', icon: <CalendarCheck className="h-4 w-4" /> as unknown as string, shortLabel: 'Dụng Sự' },
 ];
 
 export default function AmLichPage() {
@@ -33,14 +35,14 @@ export default function AmLichPage() {
       <SegmentedControl options={SUB_TABS} value={activeTab} onChange={setActiveTab} ariaLabel="Chức năng Âm Lịch" />
 
       {/* Tab content */}
-      <div className="animate-fade-scale">
+      <MotionPageTransition key={activeTab}>
         {activeTab === 'am-lich' && <DetailedDayView date={selectedDate} data={data} />}
         {activeTab === 'dung-su' && (
           <Suspense fallback={<LoadingState />}>
             <DungSuView selectedDate={selectedDate} data={data} onSelectDate={setSelectedDate} />
           </Suspense>
         )}
-      </div>
+      </MotionPageTransition>
     </div>
   );
 }

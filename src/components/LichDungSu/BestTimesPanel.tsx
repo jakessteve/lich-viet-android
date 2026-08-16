@@ -55,7 +55,7 @@ const BestTimesPanel: React.FC<BestTimesPanelProps> = ({ bestHours, activityName
                   entry.activityScore >= 70
                     ? 'text-emerald-600 dark:text-emerald-400'
                     : entry.activityScore >= 50
-                      ? 'text-amber-600 dark:text-amber-400'
+                      ? 'text-amber-800 dark:text-amber-300'
                       : 'text-red-600 dark:text-red-400'
                 }`}
               >

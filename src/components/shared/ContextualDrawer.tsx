@@ -6,6 +6,8 @@
  */
 
 import React, { useState } from 'react';
+import { ChevronUp, ChevronDown, X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface ContextualDrawerProps {
   isOpen: boolean;
@@ -23,7 +25,7 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
   title,
   subtitle,
   badge,
-  badgeClass = 'bg-gold/15 text-gold-light dark:text-gold-dark',
+  badgeClass = 'bg-gold/15 text-gold dark:text-gold-dark',
   children,
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -32,21 +34,25 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
 
   return (
     <div
-      className={`fixed sm:relative inset-x-0 bottom-0 z-40 sm:z-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col ${
-        isExpanded ? 'h-[80vh]' : 'h-[44vh] sm:h-auto'
-      } max-h-[85vh] bg-surface-card/95 backdrop-blur-md sm:backdrop-blur-none border-t sm:border border-border-light/80 dark:border-border-dark/80 rounded-t-3xl sm:rounded-2xl shadow-2xl sm:shadow-md overflow-hidden motion-gpu animate-slide-up`}
+      className={cn(
+        'fixed sm:relative inset-x-0 bottom-0 z-40 sm:z-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col max-h-[85vh] bg-surface-card/95 backdrop-blur-md sm:backdrop-blur-none border-t sm:border border-border-light/80 dark:border-border-dark/80 rounded-t-3xl sm:rounded-2xl shadow-2xl sm:shadow-md overflow-hidden motion-gpu animate-slide-up',
+        isExpanded ? 'h-[80vh]' : 'h-[44vh] sm:h-auto',
+      )}
       role="region"
       aria-label={title}
     >
       {/* Drag Handle & Header */}
       <div className="flex-shrink-0 px-4 pt-3 pb-2.5 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-container-low/80 select-none">
         {/* Mobile Handle bar */}
-        <div
-          className="flex justify-center sm:hidden pb-2 cursor-grab active:cursor-grabbing"
+        <button
+          type="button"
+          aria-label={isExpanded ? 'Thu nhỏ ngăn kéo' : 'Mở rộng ngăn kéo'}
+          aria-expanded={isExpanded}
+          className="flex justify-center sm:hidden pb-2 w-full cursor-grab active:cursor-grabbing focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/50"
           onClick={() => setIsExpanded((prev) => !prev)}
         >
           <div className="w-10 h-1.5 rounded-full bg-border-light dark:bg-border-dark transition-transform hover:scale-110 active:scale-95" />
-        </div>
+        </button>
 
         <div className="flex items-center justify-between gap-2">
           <div className="min-w-0 flex-1">
@@ -55,7 +61,7 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
                 {title}
               </h3>
               {badge && (
-                <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${badgeClass}`}>{badge}</span>
+                <span className={cn('rounded-full px-2 py-0.5 text-[10px] font-bold', badgeClass)}>{badge}</span>
               )}
             </div>
             {subtitle && (
@@ -73,9 +79,7 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
               className="p-1.5 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark sm:hidden spring-press"
               title={isExpanded ? 'Thu nhỏ' : 'Mở rộng'}
             >
-              <span className="material-icons-round text-base transition-transform duration-200">
-                {isExpanded ? 'unfold_less' : 'unfold_more'}
-              </span>
+              {isExpanded ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
             </button>
 
             {/* Close Button */}
@@ -85,7 +89,7 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
               className="p-1.5 rounded-lg text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark transition-colors spring-press"
               title="Đóng ngăn kéo"
             >
-              <span className="material-icons-round text-base">close</span>
+              <X className="h-4 w-4" />
             </button>
           </div>
         </div>

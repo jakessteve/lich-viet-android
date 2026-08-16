@@ -11,18 +11,16 @@ import React, { Suspense } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useSearchParams } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
-import { LoadingState, SegmentedControl, type SegmentedOption } from '../shared';
+import { LoadingState } from '../shared';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { MotionFadeIn } from '@/components/ui/motion-primitives';
+import { Flower2, Moon } from 'lucide-react';
 
 // Lazy-load the sub-views
 const MaiHoaView = React.lazy(() => import('../MaiHoa/MaiHoaView'));
 const TamThucView = React.lazy(() => import('../TamThuc/TamThucView'));
 
 type DivinationMethod = 'mai-hoa' | 'tam-thuc';
-
-const METHODS: readonly SegmentedOption<DivinationMethod>[] = [
-  { id: 'mai-hoa', label: 'Mai Hoa Dịch Số', icon: 'local_florist', shortLabel: 'Mai Hoa' },
-  { id: 'tam-thuc', label: 'Tam Thức', icon: 'brightness_3', shortLabel: 'Tam Thức' },
-];
 
 export default function GieoQueView() {
   usePageTitle('Gieo Quẻ');
@@ -32,7 +30,7 @@ export default function GieoQueView() {
   // URL is the single source of truth — no local state, no sync loops
   const activeMethod: DivinationMethod = searchParams.get('method') === 'tam-thuc' ? 'tam-thuc' : 'mai-hoa';
 
-  const handleMethodChange = (method: DivinationMethod) => {
+  const handleMethodChange = (method: string) => {
     if (method === 'tam-thuc') {
       setSearchParams({ method: 'tam-thuc' }, { replace: true });
     } else {
@@ -41,14 +39,21 @@ export default function GieoQueView() {
   };
 
   return (
-    <div className="space-y-5">
-      <SegmentedControl
-        options={METHODS}
-        value={activeMethod}
-        onChange={handleMethodChange}
-        ariaLabel="Phương pháp gieo quẻ"
-        tone="purple"
-      />
+    <MotionFadeIn className="space-y-5">
+      <Tabs value={activeMethod} onValueChange={handleMethodChange} className="w-full">
+        <TabsList className="w-full justify-start p-1.5 gap-1.5">
+          <TabsTrigger value="mai-hoa" tone="purple" className="flex-1 gap-2">
+            <Flower2 className="h-4 w-4" />
+            <span className="hidden sm:inline">Mai Hoa Dịch Số</span>
+            <span className="sm:hidden text-xs">Mai Hoa</span>
+          </TabsTrigger>
+          <TabsTrigger value="tam-thuc" tone="purple" className="flex-1 gap-2">
+            <Moon className="h-4 w-4" />
+            <span className="hidden sm:inline">Tam Thức</span>
+            <span className="sm:hidden text-xs">Tam Thức</span>
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
 
       {/* Active Method View */}
       <Suspense fallback={<LoadingState />}>
@@ -58,6 +63,6 @@ export default function GieoQueView() {
           <TamThucView selectedDate={selectedDate} />
         )}
       </Suspense>
-    </div>
+    </MotionFadeIn>
   );
 }

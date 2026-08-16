@@ -662,6 +662,7 @@ export interface FlyingStarSummary {
     phuTheFlying: FlyingTuHoa[];
   };
   overallSynthesisVi: string;
+  synthesisItems?: Array<{ title: string; content: string }>;
 }
 
 // ── Chart Classification Tree (Cây Phân Loại Lá Số) ───────────

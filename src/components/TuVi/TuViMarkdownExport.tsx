@@ -4,6 +4,8 @@ import { formatTuViChartAsMarkdown } from '../../services/tuvi/markdownFormatter
 import { Capacitor } from '@capacitor/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Check, Copy, Download } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export const TuViMarkdownExport: React.FC = () => {
   const { chart } = useTuViStore();
@@ -56,32 +58,36 @@ export const TuViMarkdownExport: React.FC = () => {
     }
   };
 
-  const btnBase =
-    'surface-control flex min-h-11 items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all duration-200 btn-interact';
-
   return (
-    <div className="flex flex-wrap gap-2">
-      <button
+    <div className="w-full flex items-center gap-2.5 sm:gap-3 pt-2">
+      <Button
         type="button"
+        variant={copied ? 'secondary' : 'outline'}
         onClick={handleCopy}
-        className={`${btnBase} ${
-          copied
-            ? 'bg-green-500/20 text-green-600 dark:text-green-400'
-            : 'hover:bg-surface-container-lowest dark:hover:bg-white/10'
-        }`}
+        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
       >
-        <span className="material-icons-round text-sm">{copied ? 'check' : 'content_copy'}</span>
-        {copied ? 'Đã chép!' : 'Sao chép Markdown'}
-      </button>
+        {copied ? (
+          <>
+            <Check className="h-4 w-4 text-good dark:text-good-dark" />
+            <span className="text-good dark:text-good-dark">Đã chép!</span>
+          </>
+        ) : (
+          <>
+            <Copy className="h-4 w-4" />
+            <span>Sao chép Markdown</span>
+          </>
+        )}
+      </Button>
 
-      <button
+      <Button
         type="button"
+        variant="outline"
         onClick={handleDownload}
-        className={`${btnBase} hover:bg-surface-container-lowest dark:hover:bg-white/10`}
+        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
       >
-        <span className="material-icons-round text-sm">download</span>
-        Tải .md
-      </button>
+        <Download className="h-4 w-4" />
+        <span>Tải file .md</span>
+      </Button>
     </div>
   );
 };

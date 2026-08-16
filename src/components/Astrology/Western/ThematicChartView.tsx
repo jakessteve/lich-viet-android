@@ -164,7 +164,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
             <div className="p-3 rounded-xl bg-surface-subtle-light dark:bg-white/5 border border-border-light dark:border-border-dark/40 space-y-2">
-              <h4 className="font-bold text-amber-600 dark:text-amber-400">Kế Đô (☋) & Bài Học Tiền Kiếp:</h4>
+              <h4 className="font-bold text-amber-800 dark:text-amber-300">Kế Đô (☋) & Bài Học Tiền Kiếp:</h4>
               <ul className="space-y-1 text-text-secondary-light dark:text-text-secondary-dark list-disc list-inside">
                 {karmic.pastLifePatterns.map((pat, i) => (
                   <li key={i}>{pat}</li>

@@ -1,48 +1,58 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
+import { Button as ShadcnButton } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { IconButton as ShadcnIconButton, type IconButtonProps as ShadcnIconButtonProps } from '@/components/ui/icon-button';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
+import { Badge, type BadgeProps } from '@/components/ui/badge';
 
-type Tone = 'gold' | 'purple' | 'indigo' | 'emerald' | 'astral';
+export { Badge };
+export type { BadgeProps };
 
-function cx(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter(Boolean).join(' ');
-}
-
-export interface SegmentedOption<T extends string> {
+export interface SegmentedOption<T extends string = string> {
   id: T;
   label: string;
-  icon?: string;
   shortLabel?: string;
+  icon?: React.ReactNode | string;
 }
 
-interface SegmentedControlProps<T extends string> {
-  options: readonly SegmentedOption<T>[];
+export interface SegmentedControlProps<T extends string = string> {
+  options: readonly SegmentedOption<T>[] | SegmentedOption<T>[];
   value: T;
   onChange: (value: T) => void;
-  ariaLabel: string;
-  tone?: Tone;
+  ariaLabel?: string;
   className?: string;
+  tone?: 'gold' | 'indigo' | 'purple' | 'emerald' | 'astral';
 }
 
-const activeTone: Record<Tone, string> = {
-  gold: 'bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white shadow-md shadow-gold/20',
-  purple: 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/20',
-  indigo: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/20',
-  astral: 'bg-astral-primary text-white shadow-md shadow-astral-glow',
-  emerald: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/20',
-};
-
-export function SegmentedControl<T extends string>({
+export function SegmentedControl<T extends string = string>({
   options,
   value,
   onChange,
   ariaLabel,
-  tone = 'gold',
   className,
+  tone = 'gold',
 }: SegmentedControlProps<T>) {
+  const activeTone = {
+    gold: 'bg-gold/15 dark:bg-gold-dark/15 text-amber-950 dark:text-gold-dark font-semibold shadow-xs border border-gold/30 dark:border-gold-dark/30',
+    indigo:
+      'bg-indigo-500/15 dark:bg-indigo-400/15 text-indigo-950 dark:text-indigo-300 font-semibold shadow-xs border border-indigo-500/30 dark:border-indigo-400/30',
+    astral:
+      'bg-indigo-500/15 dark:bg-indigo-400/15 text-indigo-950 dark:text-indigo-300 font-semibold shadow-xs border border-indigo-500/30 dark:border-indigo-400/30',
+    purple:
+      'bg-purple-500/15 dark:bg-purple-400/15 text-purple-950 dark:text-purple-300 font-semibold shadow-xs border border-purple-500/30 dark:border-purple-400/30',
+    emerald:
+      'bg-emerald-500/15 dark:bg-emerald-400/15 text-emerald-950 dark:text-emerald-300 font-semibold shadow-xs border border-emerald-500/30 dark:border-emerald-400/30',
+  };
+
   return (
     <div
-      className={cx('surface-card p-1.5 flex gap-1 overflow-x-auto hide-scrollbar flex-nowrap motion-gpu', className)}
       role="tablist"
       aria-label={ariaLabel}
+      className={cn(
+        'flex rounded-2xl p-1.5 bg-surface-subtle-light/80 dark:bg-surface-subtle-dark/70 border border-border-light/50 dark:border-border-dark/50 gap-1 overflow-x-auto scrollbar-none',
+        className,
+      )}
     >
       {options.map((option) => {
         const active = option.id === value;
@@ -54,14 +64,14 @@ export function SegmentedControl<T extends string>({
             aria-selected={active}
             aria-current={active ? 'page' : undefined}
             onClick={() => onChange(option.id)}
-            className={cx(
-              'flex-1 min-w-max flex-shrink-0 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-[background-color,color,transform,box-shadow] duration-200 min-h-11 spring-press',
+            className={cn(
+              'flex-1 min-w-0 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-[background-color,color,transform,box-shadow] duration-200 min-h-11 spring-press',
               active
                 ? activeTone[tone]
                 : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-white/5',
             )}
           >
-            {option.icon && <span className="material-icons-round text-base">{option.icon}</span>}
+            {renderDynamicIcon(option.icon, 'h-4 w-4 shrink-0')}
             <span className="hidden sm:inline">{option.label}</span>
             <span className="sm:hidden text-xs">{option.shortLabel ?? option.label}</span>
           </button>
@@ -71,38 +81,14 @@ export function SegmentedControl<T extends string>({
   );
 }
 
-interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: string;
-  label: string;
-  iconClassName?: string;
+export type IconButtonProps = ShadcnIconButtonProps;
+
+export function IconButton(props: IconButtonProps) {
+  return <ShadcnIconButton {...props} />;
 }
 
-export function IconButton({ icon, label, iconClassName, className, type = 'button', ...props }: IconButtonProps) {
-  return (
-    <button
-      type={type}
-      className={cx(
-        'inline-flex h-11 w-11 min-h-11 min-w-11 items-center justify-center rounded-lg text-text-secondary-light dark:text-text-secondary-dark transition-[background-color,color,transform] duration-150 hover:bg-surface-container-low dark:hover:bg-white/8 focus:outline-none focus:ring-2 focus:ring-gold/35 dark:focus:ring-gold-dark/30 spring-press',
-        className,
-      )}
-      aria-label={label}
-      {...props}
-    >
-      <span
-        className={cx(
-          'material-icons-round block text-xl leading-none transition-transform duration-200',
-          iconClassName,
-        )}
-        aria-hidden="true"
-      >
-        {icon}
-      </span>
-    </button>
-  );
-}
-
-interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  icon?: string;
+export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  icon?: React.ReactNode | string;
   variant?: 'primary' | 'secondary';
 }
 
@@ -115,24 +101,15 @@ export function ActionButton({
   ...props
 }: ActionButtonProps) {
   return (
-    <button
+    <ShadcnButton
       type={type}
-      className={cx(
-        'inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl px-6 py-3 text-sm font-bold transition-[background-color,color,transform,box-shadow] duration-200 spring-press motion-gpu',
-        variant === 'primary'
-          ? 'bg-gradient-to-r from-mystery-deep to-indigo-950 text-gold-light ring-1 ring-gold/20 hover:shadow-xl hover:shadow-mystery-deep/20 dark:from-gold dark:to-amber-500 dark:text-indigo-950 dark:ring-0 dark:hover:shadow-gold-dark/25'
-          : 'text-text-secondary-light/70 hover:text-text-primary-light dark:text-text-secondary-dark/70 dark:hover:text-white',
-        className,
-      )}
+      variant={variant === 'primary' ? 'primary' : 'ghost'}
+      className={cn('rounded-2xl px-6 py-3 text-sm font-bold gap-2', className)}
       {...props}
     >
       {children}
-      {icon && (
-        <span className="material-icons-round text-lg" aria-hidden="true">
-          {icon}
-        </span>
-      )}
-    </button>
+      {renderDynamicIcon(icon, 'h-4 w-4 shrink-0')}
+    </ShadcnButton>
   );
 }
 
@@ -144,72 +121,27 @@ export interface ToggleProps {
   disabled?: boolean;
 }
 
-export interface BadgeProps {
-  children: React.ReactNode;
-  variant?: 'gold' | 'good' | 'bad' | 'purple' | 'orange' | 'info' | 'neutral' | 'astral';
-  size?: 'sm' | 'md';
-  pip?: boolean;
-  className?: string;
-}
-
-const badgeVariants: Record<string, string> = {
-  gold: 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark border-gold/30 dark:border-gold-dark/25',
-  good: 'bg-good/10 dark:bg-good-dark/10 text-good dark:text-good-dark border-good/30 dark:border-good-dark/25',
-  bad: 'bg-bad/10 dark:bg-bad-dark/10 text-bad dark:text-bad-dark border-bad/30 dark:border-bad-dark/25',
-  purple: 'bg-purple/10 dark:bg-purple-dark/10 text-purple dark:text-purple-dark border-purple/30 dark:border-purple-dark/25',
-  orange: 'bg-orange/10 dark:bg-orange-dark/10 text-orange dark:text-orange-dark border-orange/30 dark:border-orange-dark/25',
-  info: 'bg-info/10 dark:bg-info-dark/10 text-info dark:text-info-dark border-info/30 dark:border-info-dark/25',
-  astral: 'bg-astral-primary/10 dark:bg-astral-primary-dark/15 text-astral-primary dark:text-astral-primary-dark border-astral-border-light dark:border-astral-border-dark',
-  neutral: 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border-border-light dark:border-border-dark/40',
-};
-
-const pipVariants: Record<string, string> = {
-  gold: 'bg-gold dark:bg-gold-dark',
-  good: 'bg-good dark:bg-good-dark',
-  bad: 'bg-bad dark:bg-bad-dark',
-  purple: 'bg-purple dark:bg-purple-dark',
-  orange: 'bg-orange dark:bg-orange-dark',
-  info: 'bg-info dark:bg-info-dark',
-  astral: 'bg-astral-primary dark:bg-astral-primary-dark',
-  neutral: 'bg-text-secondary-light/40 dark:text-text-secondary-dark/40',
-};
-
-export function Badge({ children, variant = 'neutral', size = 'sm', pip = false, className }: BadgeProps) {
-  return (
-    <span
-      className={cx(
-        'inline-flex items-center gap-1.5 font-semibold rounded-full border tracking-wide select-none transition-colors duration-150',
-        size === 'sm' ? 'px-2.5 py-0.5 text-xs' : 'px-3 py-1 text-sm',
-        badgeVariants[variant],
-        className,
-      )}
-    >
-      {pip && <span className={cx('indicator-pip-sm animate-glow-breathe', pipVariants[variant])} aria-hidden="true" />}
-      {children}
-    </span>
-  );
-}
-
 export function Toggle({ checked, onChange, id, className, disabled = false }: ToggleProps) {
   return (
     <button
       id={id}
+      type="button"
       role="switch"
       aria-checked={checked}
       disabled={disabled}
       onClick={(e) => onChange(!checked, e)}
-      className={cx(
-        'relative w-14 h-8 min-h-11 rounded-full transition-[background-color,border-color,box-shadow,transform] duration-200 spring-press motion-gpu disabled:opacity-40 disabled:cursor-not-allowed',
-        checked
-          ? 'bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 shadow-sm shadow-gold/20 dark:shadow-gold-dark/25'
-          : 'bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light dark:border-border-dark/60',
+      className={cn(
+        'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 dark:focus:ring-offset-surface-dark disabled:cursor-not-allowed disabled:opacity-40 min-h-11 min-w-11 items-center justify-center p-0 spring-press',
+        checked ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-600',
         className,
       )}
     >
+      <span className="sr-only">Toggle</span>
       <span
-        className={cx(
-          'absolute top-0.5 left-0.5 w-7 h-7 rounded-full bg-white dark:bg-gray-200 shadow-sm transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu',
-          checked ? 'translate-x-6' : 'translate-x-0',
+        aria-hidden="true"
+        className={cn(
+          'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-md ring-0 transition-transform duration-200 ease-in-out',
+          checked ? 'translate-x-2.5' : '-translate-x-2.5',
         )}
       />
     </button>
@@ -217,7 +149,7 @@ export function Toggle({ checked, onChange, id, className, disabled = false }: T
 }
 
 export interface SettingRowProps {
-  icon: string;
+  icon?: React.ReactNode | string;
   label: string;
   description?: string;
   children: React.ReactNode;
@@ -227,18 +159,17 @@ export interface SettingRowProps {
 export function SettingRow({ icon, label, description, children, className }: SettingRowProps) {
   return (
     <div
-      className={cx(
+      className={cn(
         'flex items-center justify-between gap-4 py-3.5 border-b border-border-light/20 dark:border-border-dark/20 last:border-0',
         className,
       )}
     >
       <div className="flex items-start gap-3 flex-1 min-w-0">
-        <span
-          className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5 shrink-0"
-          aria-hidden="true"
-        >
-          {icon}
-        </span>
+        {icon && (
+          <div className="text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5 shrink-0">
+            {renderDynamicIcon(icon, 'h-4 w-4 shrink-0')}
+          </div>
+        )}
         <div className="min-w-0">
           <p className="text-sm font-medium">{label}</p>
           {description && (
@@ -274,7 +205,7 @@ export function Select({ value, onChange, options, id, className, disabled = fal
       value={value}
       disabled={disabled}
       onChange={(e) => onChange(e.target.value)}
-      className={cx(
+      className={cn(
         'text-xs px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/40 dark:border-border-dark/40 text-text-primary-light dark:text-text-primary-dark focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 outline-none transition-colors disabled:opacity-40 spring-press',
         className,
       )}
@@ -289,7 +220,7 @@ export function Select({ value, onChange, options, id, className, disabled = fal
 }
 
 export interface SectionCardProps {
-  icon?: string;
+  icon?: React.ReactNode | string;
   title: string;
   children: React.ReactNode;
   className?: string;
@@ -297,16 +228,16 @@ export interface SectionCardProps {
 
 export function SectionCard({ icon, title, children, className }: SectionCardProps) {
   return (
-    <div className={cx('surface-card p-5 sm:p-6 rounded-2xl', className)}>
+    <Card className={cn('p-5 sm:p-6', className)}>
       <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-border-light/40 dark:border-border-dark/40">
         {icon && (
-          <span className="material-icons-round text-xl text-gold dark:text-gold-dark" aria-hidden="true">
-            {icon}
-          </span>
+          <div className="text-gold dark:text-gold-dark shrink-0">
+            {renderDynamicIcon(icon, 'h-5 w-5 shrink-0')}
+          </div>
         )}
         <h2 className="text-base font-bold tracking-tight">{title}</h2>
       </div>
       <div>{children}</div>
-    </div>
+    </Card>
   );
 }

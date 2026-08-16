@@ -15,11 +15,11 @@ export interface WesternSimplifiedExplanationProps {
   mode?: 'simple' | 'advanced';
 }
 
-const TABS: Array<{ id: TabKey; label: string; icon: string; shortLabel: string }> = [
-  { id: 'big-three', label: 'Tam Trụ Bản Mệnh', icon: 'auto_awesome', shortLabel: 'Tam Trụ' },
-  { id: 'personal', label: 'Tư Duy & Tình Cảm', icon: 'psychology', shortLabel: 'Cá Nhân' },
-  { id: 'growth-karma', label: 'Vận Hội & Nghiệp Lực', icon: 'military_tech', shortLabel: 'Nghiệp Lực' },
-  { id: 'houses', label: 'Trọng Tâm Cuộc Đời', icon: 'account_balance', shortLabel: 'Lĩnh Vực' },
+const TABS: Array<{ id: TabKey; label: string; shortLabel: string }> = [
+  { id: 'big-three', label: 'Tam Trụ Bản Mệnh', shortLabel: 'Tam Trụ' },
+  { id: 'personal', label: 'Tư Duy & Tình Cảm', shortLabel: 'Cá Nhân' },
+  { id: 'growth-karma', label: 'Vận Hội & Nghiệp Lực', shortLabel: 'Nghiệp Lực' },
+  { id: 'houses', label: 'Trọng Tâm Cuộc Đời', shortLabel: 'Lĩnh Vực' },
 ];
 
 const ASPECT_META: Record<string, { labelVi: string; symbol: string }> = {
@@ -146,7 +146,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
     const objSynth = synthesized.objectSyntheses[obj.id];
 
     return (
-      <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3">
+      <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3.5">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
             <div
@@ -155,22 +155,23 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
               {icon}
             </div>
             <div>
-              <div className="flex items-center gap-1.5 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
                   {obj.nameVi} ở {obj.signVi}
                 </h4>
                 {obj.retrograde && (
-                  <span className="rounded-md bg-rose-500/10 px-1.5 py-0.5 text-xs font-bold text-rose-600 dark:text-rose-400">
+                  <span className="rounded-md bg-rose-500/10 px-1.5 py-0.5 text-xs font-bold text-rose-600 dark:text-rose-400 shrink-0">
                     Rx (Nghịch hành)
                   </span>
                 )}
                 {mode === 'advanced' && obj.dignity && obj.dignity.type !== 'peregrine' && (
-                  <span className={`rounded-md border px-1.5 py-0.5 text-xs font-medium ${obj.dignity.badgeClass}`}>
-                    {obj.dignity.symbol} {obj.dignity.labelVi}
+                  <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium shrink-0 leading-none ${obj.dignity.badgeClass}`}>
+                    <span className="shrink-0">{obj.dignity.symbol}</span>
+                    <span>{obj.dignity.labelVi}</span>
                   </span>
                 )}
               </div>
-              <p className="text-xs font-medium text-astral-primary dark:text-astral-primary-dark">
+              <p className="text-xs font-medium text-astral-primary dark:text-astral-primary-dark mt-0.5">
                 {roleTitle} · Tọa độ Nhà {obj.house} ({obj.degree}°{obj.minute.toString().padStart(2, '0')}′)
               </p>
             </div>
@@ -224,27 +225,27 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
               )}
 
               {aspects.length > 0 && (
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <span className="text-micro font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
                     Các Góc Chiếu Nổi Bật ({aspects.length}):
                   </span>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-2">
                     {aspects.slice(0, 5).map((asp, idx) => {
                       const otherName = asp.objectAId === obj.id ? asp.objectBName : asp.objectAName;
                       const meta = ASPECT_META[asp.name.toLowerCase()] ?? { labelVi: asp.name, symbol: '•' };
                       return (
                         <span
                           key={idx}
-                          className="inline-flex items-center gap-1 rounded-md bg-surface-container-low px-2 py-0.5 text-[11px] font-medium border border-border-light/40 dark:border-border-dark/40"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-surface-container-low px-2.5 py-1 text-[11px] font-medium border border-border-light/40 dark:border-border-dark/40 leading-none shrink-0"
                           title={`${meta.labelVi} với ${otherName} (Sai số ${(asp.orbDifference ?? 0).toFixed(1)}°)`}
                         >
-                          <span className="text-astral-primary dark:text-astral-primary-dark font-bold">
+                          <span className="text-astral-primary dark:text-astral-primary-dark font-bold shrink-0">
                             {meta.symbol}
                           </span>
-                          <span>
+                          <span className="shrink-0">
                             {meta.labelVi} {otherName}
                           </span>
-                          <span className="text-text-secondary-light/80 dark:text-text-secondary-dark/80 text-[10px]">
+                          <span className="text-text-secondary-light/80 dark:text-text-secondary-dark/80 text-[10px] shrink-0">
                             ({(asp.orbDifference ?? 0).toFixed(1)}°)
                           </span>
                         </span>
@@ -272,7 +273,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
     desc: string,
     advancedDetails?: React.ReactNode,
   ) => (
-    <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3">
+    <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3.5">
       <div className="flex items-center gap-3">
         <div
           className={`flex h-11 w-11 shrink-0 items-center justify-center text-center leading-none select-none rounded-2xl ${bgClass} ${colorClass} text-sm font-bold shadow-inner`}
@@ -293,22 +294,19 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
 
   return (
     <div className="space-y-4">
-      {/* Subtabs */}
-      <div className="flex rounded-xl bg-surface-container-lowest p-1 border border-border-light/40 dark:border-border-dark/40">
+      {/* Subtabs with generous gap and clean styling */}
+      <div className="flex gap-1.5 sm:gap-2 rounded-2xl bg-surface-container-lowest p-1.5 border border-border-light/40 dark:border-border-dark/40">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`flex flex-1 items-center justify-center gap-1.5 rounded-lg py-2 text-xs transition-all ${
+            className={`flex flex-1 items-center justify-center py-2.5 px-2 rounded-xl text-xs font-semibold transition-all ${
               activeTab === tab.id
-                ? 'bg-surface-elevated text-astral-primary shadow-sm dark:text-astral-primary-dark font-bold'
+                ? 'bg-surface-elevated text-astral-primary shadow-sm dark:text-astral-primary-dark font-bold ring-1 ring-astral-primary/30'
                 : 'text-text-secondary-light hover:text-text-primary-light dark:text-text-secondary-dark dark:hover:text-text-primary-dark'
             }`}
           >
-            <span className="material-icons-round text-sm" aria-hidden="true">
-              {tab.icon}
-            </span>
             <span className="hidden sm:inline">{tab.label}</span>
             <span className="sm:hidden">{tab.shortLabel}</span>
           </button>
@@ -317,18 +315,13 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
 
       {/* Tab Content: The Big Three & Angles */}
       {activeTab === 'big-three' && (
-        <div className="space-y-3">
+        <div className="space-y-4 sm:space-y-5">
           {sun && moon && asc && (
-            <div className="astral-card p-4 sm:p-5 shadow-sm space-y-3">
+            <div className="astral-card p-4 sm:p-5 shadow-sm space-y-3.5">
               <div className="flex items-center justify-between gap-2 border-b border-border-light/40 pb-2.5 dark:border-border-dark/40">
-                <div className="flex items-center gap-2">
-                  <span className="material-icons-round text-lg text-astral-primary dark:text-astral-primary-dark">
-                    psychology
-                  </span>
-                  <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
-                    Bức Tranh Tổng Hợp Tam Trụ Bản Mệnh (Core Triad Dynamic)
-                  </h4>
-                </div>
+                <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+                  Bức Tranh Tổng Hợp Tam Trụ Bản Mệnh (Core Triad Dynamic)
+                </h4>
                 <span className="badge-astral">{synthesized.sect.isDiurnal ? '☀️ Ban Ngày' : '🌙 Ban Đêm'}</span>
               </div>
 
@@ -401,7 +394,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                     const meta = ASPECT_META[aspectKey] ?? { labelVi: sunMoonAspect.name, symbol: '•' };
                     return (
                       <div className="rounded-xl bg-amber-500/5 p-2.5 border border-amber-500/20 text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                        <span className="font-bold text-amber-600 dark:text-amber-400">
+                        <span className="font-bold text-amber-800 dark:text-amber-300">
                           ✦ Tương Tác Nhật - Nguyệt ({meta.labelVi}):
                         </span>{' '}
                         {aspectKey === 'conjunction' &&
@@ -431,7 +424,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
           {renderPlanetCard(
             sun,
             'Cái Tôi, Bản Sắc & Mục Tiêu Cốt Lõi',
-            'text-amber-600 dark:text-amber-400',
+            'text-amber-800 dark:text-amber-300',
             'bg-amber-500/10 dark:bg-amber-500/20',
             '☉',
           )}
@@ -489,7 +482,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
 
       {/* Tab Content: Personal Drivers */}
       {activeTab === 'personal' && (
-        <div className="space-y-3">
+        <div className="space-y-4 sm:space-y-5">
           {renderPlanetCard(
             mercury,
             'Tư Duy Logic, Giao Tiếp & Tiếp Nhận Thông Tin',
@@ -516,7 +509,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
 
       {/* Tab Content: Growth & Karma */}
       {activeTab === 'growth-karma' && (
-        <div className="space-y-3">
+        <div className="space-y-4 sm:space-y-5">
           {renderPlanetCard(
             jupiter,
             'Vận May, Sự Mở Rộng & Phước Lành',
@@ -607,12 +600,9 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
       {/* Tab Content: Dominant Houses */}
       {activeTab === 'houses' && (
         <div className="space-y-4">
-          <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3">
+          <div className="surface-card rounded-2xl border border-border-light/60 p-4 sm:p-5 dark:border-border-dark/60 shadow-sm space-y-3.5">
             <div className="flex items-center justify-between gap-2">
-              <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-                <span className="material-icons-round text-base text-astral-primary dark:text-astral-primary-dark">
-                  pie_chart
-                </span>
+              <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
                 Phân Bổ Hành Tinh Trong 12 Cung Địa Bàn
               </h4>
               {mode === 'advanced' && <span className="badge-astral">Phân Tích Cấu Trúc Nhà</span>}
@@ -637,7 +627,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                   </span>
                 </div>
                 <div className="rounded-xl bg-surface-container-low p-2 border border-border-light/40 dark:border-border-dark/40">
-                  <strong className="block text-amber-600 dark:text-amber-400 text-xs">Biến Đổi (3, 6, 9, 12)</strong>
+                  <strong className="block text-amber-800 dark:text-amber-300 text-xs">Biến Đổi (3, 6, 9, 12)</strong>
                   <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">
                     Học hỏi & Thích nghi
                   </span>
@@ -645,7 +635,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
               </div>
             )}
 
-            <div className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="space-y-3">
               {result.houses.map((h) => {
                 const planetsInHouse = result.objects.filter((o) => o.house === h.number && o.category === 'planet');
                 const ruler = result.houseRulers?.find((r) => r.houseNumber === h.number);
@@ -655,7 +645,7 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                 return (
                   <div
                     key={h.number}
-                    className={`rounded-xl border p-3 flex flex-col justify-between transition-all ${
+                    className={`rounded-xl border p-3.5 flex flex-col justify-between transition-all ${
                       isStellium
                         ? 'border-amber-500/50 bg-amber-500/5 dark:border-amber-500/40 shadow-sm'
                         : isFocused
@@ -664,8 +654,8 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between gap-1 mb-1">
-                        <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
+                      <div className="flex items-center justify-between gap-1 mb-1.5">
+                        <span className="text-xs sm:text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
                           Nhà {h.number} · {h.signVi}
                           {mode === 'advanced' && (
                             <span className="ml-1 text-[10px] font-normal text-text-secondary-light dark:text-text-secondary-dark">
@@ -674,19 +664,19 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                           )}
                         </span>
                         {isStellium ? (
-                          <span className="rounded-full bg-amber-500/20 px-1.5 py-0.5 text-micro font-bold text-amber-700 dark:text-amber-300">
+                          <span className="rounded-full bg-amber-500/20 px-2 py-0.5 text-micro font-bold text-amber-800 dark:text-amber-300">
                             Stellium ({planetsInHouse.length})
                           </span>
                         ) : isFocused ? (
                           <span className="badge-astral">Trọng tâm ({planetsInHouse.length})</span>
                         ) : null}
                       </div>
-                      <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark line-clamp-2">
+                      <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                         {getHouseInterpretation(h.number)}
                       </p>
                     </div>
 
-                    <div className="mt-2 pt-2 border-t border-border-light/30 dark:border-border-dark/30 text-micro text-text-secondary-light dark:text-text-secondary-dark space-y-1">
+                    <div className="mt-2.5 pt-2 border-t border-border-light/30 dark:border-border-dark/30 text-micro text-text-secondary-light dark:text-text-secondary-dark space-y-1">
                       {ruler && (
                         <div>
                           Chủ tinh:{' '}

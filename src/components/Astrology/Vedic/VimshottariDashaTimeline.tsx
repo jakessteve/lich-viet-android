@@ -117,7 +117,7 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="space-y-2">
                 {selectedPeriod.antardashas.map((sub, idx) => (
                   <div
                     key={idx}

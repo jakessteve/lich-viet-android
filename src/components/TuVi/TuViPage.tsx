@@ -6,26 +6,28 @@ import { useTuViStore } from '../../stores/tuviStore';
 import { TuViInputForm } from './TuViInputForm';
 import { TuViChart } from './TuViChart';
 import { TuViSummaryPanel } from './TuViSummaryPanel';
-import { TuViMarkdownExport } from './TuViMarkdownExport';
-import { IconButton, SegmentedControl, type SegmentedOption } from '../shared';
+import { IconButton, SegmentedControl, SavedChartsPicker, type SegmentedOption } from '../shared';
 import { TuViPalaceInlineDetail } from './TuViPalaceInlineDetail';
 import { ExecutiveSnapshotCards } from '../shared/ExecutiveSnapshotCards';
 import { interpretPalace } from '@/services/tuvi/palaceInterpretation';
-import type { TuViSchool } from '../../types/tuvi';
+import type { TuViSchool, TuViInput } from '../../types/tuvi';
+import { ArrowDown, Sparkles, ArrowUp, Network, History, Calendar, CalendarDays, Compass, ArrowLeftRight, Heart, User, AlertCircle, X } from 'lucide-react';
 import './tuviChart.css';
 import { getDatePartsInTimeZone, VIETNAM_TIME_ZONE } from '@/services/tuvi/timeNormalization';
 
+const getChiHourFromClockHour = (hour: number) => (hour === 23 ? 0 : Math.floor((hour + 1) / 2) % 12);
+
 const MONTH_LABELS = Array.from({ length: 12 }, (_, index) => index + 1);
 const SCHOOL_OPTIONS: readonly SegmentedOption<TuViSchool>[] = [
-  { id: 'nam-phai', label: 'Nam phái', icon: 'south' },
-  { id: 'thien-luong', label: 'Thiên Lương', icon: 'auto_awesome' },
-  { id: 'bac-phai', label: 'Bắc phái', icon: 'north' },
-  { id: 'phi-tinh', label: 'Phi Tinh', icon: 'hub' },
+  { id: 'nam-phai', label: 'Nam phái', icon: <ArrowDown className="h-4 w-4" /> as unknown as string },
+  { id: 'thien-luong', label: 'Thiên Lương', icon: <Sparkles className="h-4 w-4" /> as unknown as string },
+  { id: 'bac-phai', label: 'Bắc phái', icon: <ArrowUp className="h-4 w-4" /> as unknown as string },
+  { id: 'phi-tinh', label: 'Phi Tinh', icon: <Network className="h-4 w-4" /> as unknown as string },
 ];
 
 const TUVI_VIEW_MODES: readonly SegmentedOption<'simple' | 'advanced'>[] = [
-  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản', icon: 'menu_book' },
-  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu', icon: 'psychology' },
+  { id: 'simple', label: 'Luận Giải Cơ Bản', shortLabel: 'Cơ bản' },
+  { id: 'advanced', label: 'Chuyên Sâu & Kỹ Thuật', shortLabel: 'Chuyên sâu' },
 ];
 
 export const TuViPage: React.FC = () => {
@@ -41,6 +43,8 @@ export const TuViPage: React.FC = () => {
     error,
     clearError,
     input,
+    setInput,
+    calculateChart,
     setSchool,
     interpretationMode,
     setInterpretationMode,
@@ -55,6 +59,8 @@ export const TuViPage: React.FC = () => {
       error: state.error,
       clearError: state.clearError,
       input: state.input,
+      setInput: state.setInput,
+      calculateChart: state.calculateChart,
       setSchool: state.setSchool,
       interpretationMode: state.interpretationMode,
       setInterpretationMode: state.setInterpretationMode,
@@ -118,10 +124,41 @@ export const TuViPage: React.FC = () => {
       {/* Header */}
       <div className="text-center space-y-1">
         <h2 className="text-xl font-bold text-text-primary-light dark:text-text-primary-dark flex items-center justify-center gap-2">
-          <span className="material-icons-round text-xl text-amber-500 dark:text-amber-400">auto_awesome</span>
+          <Sparkles className="h-5 w-5 text-amber-500 dark:text-amber-400" />
           Tử Vi Đẩu Số
         </h2>
       </div>
+
+      {/* Saved Charts Quick Picker */}
+      <SavedChartsPicker
+        storageKey="saved_tuvi_charts_v1"
+        tone="gold"
+        currentInput={input}
+        onSelectChart={(entry) => {
+          const birthDate = new Date(entry.birthDate);
+          const clockHour = entry.birthHour ?? 0;
+          const minute = entry.birthMinute ?? 0;
+          const nextInput: Partial<TuViInput> = {
+            name: entry.name,
+            solarDate: birthDate,
+            birthClockHour: clockHour,
+            birthMinute: minute,
+            birthHour: getChiHourFromClockHour(clockHour),
+            gender: (entry.gender === 'nữ' || entry.gender === 'female' || entry.gender === 'nu' ? 'nữ' : 'nam'),
+            birthLocation: {
+              locationName: entry.locationName || 'Hà Nội, Việt Nam',
+              lat: entry.latitude || 21.028511,
+              lng: entry.longitude || 105.804817,
+              timezone: entry.timezone || 7,
+              countryCode: entry.countryCode,
+              countryName: entry.countryName,
+            },
+            ...(entry.school ? { school: entry.school as TuViSchool } : {}),
+          };
+          setInput(nextInput);
+          calculateChart(nextInput);
+        }}
+      />
 
       {/* 30-Second Executive Snapshot Cards */}
       {chart && (
@@ -142,7 +179,7 @@ export const TuViPage: React.FC = () => {
       <div className="glass-card">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2">
-            <span className="material-icons-round text-gold-light dark:text-gold-dark text-base">person</span>
+            <User className="h-4 w-4 text-gold dark:text-gold-dark" />
             Thông Tin Lá Số
           </h3>
         </div>
@@ -157,14 +194,14 @@ export const TuViPage: React.FC = () => {
           className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-bad dark:text-bad-dark flex items-start gap-2"
           role="alert"
         >
-          <span className="material-icons-round text-base mt-0.5">error</span>
+          <AlertCircle className="h-4 w-4 mt-0.5 shrink-0" />
           <span className="flex-1">{error}</span>
           <button
             onClick={clearError}
             className="p-0.5 rounded hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
             aria-label="Đóng lỗi"
           >
-            <span className="material-icons-round text-sm">close</span>
+            <X className="h-4 w-4" />
           </button>
         </div>
       )}
@@ -173,7 +210,7 @@ export const TuViPage: React.FC = () => {
       {chart && (
         <div className="surface-panel flex flex-wrap items-end justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-2">
-            <span className="material-icons-round text-base text-gold-light dark:text-gold-dark">history</span>
+            <History className="h-4 w-4 text-gold dark:text-gold-dark" />
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-text-secondary-light dark:text-text-secondary-dark">
                 Xem hạn
@@ -185,7 +222,7 @@ export const TuViPage: React.FC = () => {
           <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
             <IconButton onClick={() => setHanView(viewYear - 1, viewMonth)} icon="chevron_left" label="Lùi một năm" />
             <label className="surface-control flex min-h-11 items-center gap-2 px-3 py-2 text-sm font-medium">
-              <span className="material-icons-round text-base text-gold-light dark:text-gold-dark">calendar_month</span>
+              <CalendarDays className="h-4 w-4 text-gold dark:text-gold-dark" />
               <input
                 type="number"
                 min={1}
@@ -218,9 +255,9 @@ export const TuViPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setHanView(currentYear, currentMonth)}
-              className="surface-control inline-flex h-11 items-center gap-1.5 px-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-gold-light dark:hover:text-gold-dark"
+              className="surface-control inline-flex h-11 items-center gap-1.5 px-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-gold dark:hover:text-gold-dark"
             >
-              <span className="material-icons-round text-base">today</span>
+              <Calendar className="h-4 w-4" />
               Hôm nay
             </button>
           </div>
@@ -230,8 +267,8 @@ export const TuViPage: React.FC = () => {
       {chart && (
         <div className="surface-panel flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold-light dark:text-gold-dark">
-              <span className="material-icons-round text-lg">account_tree</span>
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold dark:text-gold-dark">
+              <Network className="h-4 w-4" />
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-text-secondary-light dark:text-text-secondary-dark">
@@ -264,7 +301,7 @@ export const TuViPage: React.FC = () => {
                       : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-white/5'
                   }`}
                 >
-                  {option.icon && <span className="material-icons-round text-base">{option.icon}</span>}
+                  {option.icon as unknown as React.ReactNode}
                   <span>{option.label}</span>
                 </button>
               );
@@ -315,36 +352,34 @@ export const TuViPage: React.FC = () => {
         />
       )}
 
-      {chart && <TuViMarkdownExport />}
-
       {chart && <TuViSummaryPanel chart={chart} mode={interpretationMode} onModeChange={setInterpretationMode} />}
 
       {chart && (
-        <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm">
-          <span className="text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-1 font-medium">
-            <span className="material-icons-round text-base text-indigo-500">sync_alt</span>
+        <div className="surface-panel flex flex-wrap items-center justify-between gap-3 px-4 py-3 text-xs sm:text-sm rounded-2xl border border-border-light/50 dark:border-border-dark/40">
+          <span className="text-text-secondary-light dark:text-text-secondary-dark flex items-center gap-1.5 font-medium">
+            <ArrowLeftRight className="h-4 w-4 text-indigo-500" />
             Khám phá đa hệ cho lá số này:
           </span>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => navigate('/app/chiem-tinh/tay-phuong')}
-              className="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+              className="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1.5"
             >
-              <span className="material-icons-round text-sm">auto_graph</span>
+              <Compass className="h-3.5 w-3.5" />
               Chiêm Tinh Tây Phương
             </button>
             <button
               onClick={() => navigate('/app/chiem-tinh/vedic')}
-              className="px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+              className="px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1.5"
             >
-              <span className="material-icons-round text-sm">bubble_chart</span>
+              <Sparkles className="h-3.5 w-3.5" />
               Chiêm Tinh Ấn Độ
             </button>
             <button
               onClick={() => navigate('/app/chiem-tinh/hop-la')}
-              className="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1"
+              className="px-3 py-1.5 rounded-lg bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 font-semibold hover:opacity-80 transition-opacity inline-flex items-center gap-1.5"
             >
-              <span className="material-icons-round text-sm">favorite</span>
+              <Heart className="h-3.5 w-3.5" />
               Hợp Lá Số
             </button>
           </div>

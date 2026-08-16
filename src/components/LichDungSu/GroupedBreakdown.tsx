@@ -43,7 +43,7 @@ function quantifyScore(value: number, maxValue: number): { text: string; colorCl
   const ratio = maxValue > 0 ? value / maxValue : 0;
   if (ratio >= 0.7) return { text: 'Rất tốt', colorClass: 'text-emerald-600 dark:text-emerald-400' };
   if (ratio >= 0.4) return { text: 'Tốt vừa', colorClass: 'text-green-600 dark:text-green-400' };
-  if (ratio >= 0.05) return { text: 'Bình thường', colorClass: 'text-amber-600 dark:text-amber-400' };
+  if (ratio >= 0.05) return { text: 'Bình thường', colorClass: 'text-amber-800 dark:text-amber-300' };
   if (ratio >= -0.3) return { text: 'Xấu', colorClass: 'text-orange-600 dark:text-orange-400' };
   return { text: 'Rất Xấu', colorClass: 'text-red-600 dark:text-red-400' };
 }
