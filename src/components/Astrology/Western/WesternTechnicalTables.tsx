@@ -1,38 +1,48 @@
 import React, { useState } from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
-import { getSignInterpretation, getPlanetInSignInterpretation, getHouseInterpretation, getPlanetInHouseInterpretation } from '../../../services/astrology/interpretations';
+import {
+  getSignInterpretation,
+  getPlanetInSignInterpretation,
+  getHouseInterpretation,
+  getPlanetInHouseInterpretation,
+} from '../../../services/astrology/interpretations';
 
 const BODY_LABELS: Record<string, string> = {
-  sun: 'Mặt Trời', moon: 'Mặt Trăng', mercury: 'Sao Thủy', venus: 'Sao Kim',
-  mars: 'Sao Hỏa', jupiter: 'Sao Mộc', saturn: 'Sao Thổ', uranus: 'Thiên Vương Tinh',
-  neptune: 'Hải Vương Tinh', pluto: 'Diêm Vương Tinh',
-  northnode: 'La Hầu (Bắc Giao)', southnode: 'Kế Đô (Nam Giao)',
-  chiron: 'Chiron'
+  sun: 'Mặt Trời',
+  moon: 'Mặt Trăng',
+  mercury: 'Sao Thủy',
+  venus: 'Sao Kim',
+  mars: 'Sao Hỏa',
+  jupiter: 'Sao Mộc',
+  saturn: 'Sao Thổ',
+  uranus: 'Thiên Vương Tinh',
+  neptune: 'Hải Vương Tinh',
+  pluto: 'Diêm Vương Tinh',
+  northnode: 'La Hầu (Bắc Giao)',
+  southnode: 'Kế Đô (Nam Giao)',
+  chiron: 'Chiron',
 };
 
 const BODY_ICONS: Record<string, string> = {
-  sun: '☉', moon: '☽', mercury: '☿', venus: '♀',
-  mars: '♂', jupiter: '♃', saturn: '♄', uranus: '♅',
-  neptune: '♆', pluto: '♇', northnode: '☊', southnode: '☋',
-  chiron: '⚷'
-};
-
-const ASPECT_LABELS: Record<string, string> = {
-  conjunction: 'Trùng Tụ (Conjunction)',
-  opposition: 'Đối Đỉnh (Opposition)',
-  trine: 'Tam Hợp (Trine)',
-  square: 'Vuông Góc (Square)',
-  sextile: 'Lục Hợp (Sextile)',
-};
-
-const ASPECT_ICONS: Record<string, string> = {
-  conjunction: '☌', opposition: '☍', trine: '△', square: '□', sextile: '⚹',
+  sun: '☉',
+  moon: '☽',
+  mercury: '☿',
+  venus: '♀',
+  mars: '♂',
+  jupiter: '♃',
+  saturn: '♄',
+  uranus: '♅',
+  neptune: '♆',
+  pluto: '♇',
+  northnode: '☊',
+  southnode: '☋',
+  chiron: '⚷',
 };
 
 export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = ({ result }) => {
   const [activeTab, setActiveTab] = useState<'planets' | 'houses'>('planets');
-  const mainPlanets = result.planets.filter(p => BODY_LABELS[p.body]);
-  
+  const mainPlanets = result.planets.filter((p) => BODY_LABELS[p.body]);
+
   const formattedDeg = (deg: number, min: number) => `${deg}°${min.toString().padStart(2, '0')}'`;
 
   return (
@@ -99,7 +109,8 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
               {result.houses.map((h) => {
                 const hdeg = Math.floor(h.longitude % 30);
                 const hmin = Math.floor(((h.longitude % 30) - hdeg) * 60);
-                const label = h.index === 1 ? 'Nhà 1 (Ascendant)' : h.index === 10 ? 'Nhà 10 (Midheaven)' : `Nhà ${h.index}`;
+                const label =
+                  h.index === 1 ? 'Nhà 1 (Ascendant)' : h.index === 10 ? 'Nhà 10 (Midheaven)' : `Nhà ${h.index}`;
                 return (
                   <tr key={h.index} className="border-b border-border-light/40 dark:border-border-dark/40">
                     <td className="py-2 px-3 text-sm font-semibold">{label}</td>
@@ -113,7 +124,6 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
         </div>
       </div>
 
-
       {/* Diễn giải cơ bản */}
       <div className="glass-card overflow-hidden">
         <div className="card-header border-b border-border-light/40 dark:border-border-dark/40">
@@ -123,13 +133,13 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
               Luận Giải Chi Tiết
             </h3>
             <div className="flex bg-surface-light dark:bg-surface-dark rounded-lg p-1">
-              <button 
+              <button
                 onClick={() => setActiveTab('planets')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${activeTab === 'planets' ? 'bg-blue-500 text-white shadow-sm' : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-black/5 dark:hover:bg-white/5'}`}
               >
                 Hành Tinh
               </button>
-              <button 
+              <button
                 onClick={() => setActiveTab('houses')}
                 className={`px-3 py-1.5 text-xs font-medium rounded-md transition-all ${activeTab === 'houses' ? 'bg-blue-500 text-white shadow-sm' : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-black/5 dark:hover:bg-white/5'}`}
               >
@@ -138,30 +148,34 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
             </div>
           </div>
         </div>
-        
+
         <div className="p-4 space-y-6">
           {activeTab === 'planets' && (
             <>
               <div className="space-y-2">
                 <h4 className="font-bold text-lg text-blue-600 dark:text-blue-400">
-                  Cung Mọc (Ascendant) - {result.houses.find(h => h.index === 1)?.sign}
+                  Cung Mọc (Ascendant) - {result.houses.find((h) => h.index === 1)?.sign}
                 </h4>
                 <p className="text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark opacity-90">
-                  {getSignInterpretation(result.houses.find(h => h.index === 1)?.sign || '') || 'Cung Mọc là vỏ bọc, cách bạn tiếp cận thế giới và ấn tượng đầu tiên bạn tạo ra với người khác.'}
+                  {getSignInterpretation(result.houses.find((h) => h.index === 1)?.sign || '') ||
+                    'Cung Mọc là vỏ bọc, cách bạn tiếp cận thế giới và ấn tượng đầu tiên bạn tạo ra với người khác.'}
                 </p>
               </div>
 
-              {mainPlanets.map(p => {
+              {mainPlanets.map((p) => {
                 const inSign = getPlanetInSignInterpretation(p.body, p.sign);
                 const inHouse = getPlanetInHouseInterpretation(p.body, p.house);
                 if (!inSign && !inHouse) return null;
                 return (
-                  <div key={p.body + 'interp'} className="space-y-3 bg-surface-light dark:bg-surface-dark p-3 rounded-xl">
+                  <div
+                    key={p.body + 'interp'}
+                    className="space-y-3 bg-surface-light dark:bg-surface-dark p-3 rounded-xl"
+                  >
                     <h4 className="font-bold text-md text-blue-600 dark:text-blue-400 flex items-center gap-2">
                       <span>{BODY_ICONS[p.body]}</span>
                       {BODY_LABELS[p.body]}
                     </h4>
-                    
+
                     {inSign && (
                       <div className="space-y-1">
                         <p className="text-xs font-semibold uppercase text-text-secondary-light dark:text-text-secondary-dark tracking-wider">
@@ -172,7 +186,7 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
                         </p>
                       </div>
                     )}
-                    
+
                     {inHouse && (
                       <div className="space-y-1">
                         <p className="text-xs font-semibold uppercase text-text-secondary-light dark:text-text-secondary-dark tracking-wider">
@@ -191,11 +205,14 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
 
           {activeTab === 'houses' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {result.houses.map(h => {
+              {result.houses.map((h) => {
                 const meaning = getHouseInterpretation(h.index);
                 if (!meaning) return null;
                 return (
-                  <div key={'house' + h.index} className="bg-surface-light dark:bg-surface-dark p-3 rounded-xl border border-border-light/20 dark:border-border-dark/20">
+                  <div
+                    key={'house' + h.index}
+                    className="bg-surface-light dark:bg-surface-dark p-3 rounded-xl border border-border-light/20 dark:border-border-dark/20"
+                  >
                     <h4 className="font-bold text-md text-blue-600 dark:text-blue-400 mb-2">
                       Nhà {h.index} ({h.sign})
                     </h4>

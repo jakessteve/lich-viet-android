@@ -4,12 +4,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
-import {
-  getSavedRoute,
-  saveCurrentRoute,
-  LAST_ACTIVE_ROUTE_KEY,
-  LandingRoute,
-} from '@/router/routes';
+import { getSavedRoute, saveCurrentRoute, LAST_ACTIVE_ROUTE_KEY, LandingRoute } from '@/router/routes';
 
 vi.mock('@capacitor/core', () => ({
   Capacitor: {
@@ -78,7 +73,7 @@ describe('Route Persistence & Native Navigation', () => {
             <Route path="/" element={<LandingRoute />} />
             <Route path="/app/tu-vi" element={<div>Tu Vi Page Target</div>} />
           </Routes>
-        </MemoryRouter>
+        </MemoryRouter>,
       );
 
       expect(screen.getByText('Tu Vi Page Target')).toBeInTheDocument();
@@ -93,7 +88,7 @@ describe('Route Persistence & Native Navigation', () => {
             <Route path="/" element={<LandingRoute />} />
             <Route path="/app/am-lich" element={<div>Am Lich Default Target</div>} />
           </Routes>
-        </MemoryRouter>
+        </MemoryRouter>,
       );
 
       expect(screen.getByText('Am Lich Default Target')).toBeInTheDocument();

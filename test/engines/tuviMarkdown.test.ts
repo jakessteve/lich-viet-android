@@ -37,6 +37,13 @@ describe('Markdown Formatter', () => {
     expect(markdown).toContain('## Cách Cục Đặc Biệt');
   });
 
+  it('should include Flying Stars (Phi Tinh Tứ Hóa) analysis in markdown export', () => {
+    const chart = generateChart(input);
+    const markdown = formatTuViChartAsMarkdown(chart);
+    expect(markdown).toContain('## Phi Tinh Tứ Hóa 12 Cung');
+    expect(markdown).toContain('Bảng Tứ Hóa Phi Xuất 12 Cung');
+  });
+
   it('should generate a prompt header', () => {
     const chart = generateChart(input);
     const header = generatePromptHeader(chart);

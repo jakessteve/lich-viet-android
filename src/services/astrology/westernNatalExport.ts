@@ -1,8 +1,4 @@
-import type {
-  SwissNatalAspect,
-  SwissNatalChartResult,
-  SwissNatalObject,
-} from './swissNatalChart';
+import type { SwissNatalAspect, SwissNatalChartResult, SwissNatalObject } from './swissNatalChart';
 
 export type WesternNatalTheme = 'light' | 'dark';
 export type WesternNatalExportFormat = 'svg' | 'png';
@@ -67,7 +63,20 @@ export const WESTERN_NATAL_PALETTES: Record<WesternNatalTheme, WesternNatalPalet
 const VIEWBOX_SIZE = 1000;
 const CENTER = VIEWBOX_SIZE / 2;
 const SIGN_SYMBOLS = ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'];
-const SIGN_NAMES_VI = ['Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải', 'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp', 'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư'];
+const SIGN_NAMES_VI = [
+  'Bạch Dương',
+  'Kim Ngưu',
+  'Song Tử',
+  'Cự Giải',
+  'Sư Tử',
+  'Xử Nữ',
+  'Thiên Bình',
+  'Bọ Cạp',
+  'Nhân Mã',
+  'Ma Kết',
+  'Bảo Bình',
+  'Song Ngư',
+];
 // Small, self-contained vector marks keep exports readable when a host lacks
 // the Unicode astrology font. They are intentionally distinct by object
 // family rather than a single generic placeholder.
@@ -117,7 +126,7 @@ function chartAngle(longitude: number, ascendant: number): number {
 }
 
 function point(angle: number, radius: number): { x: number; y: number } {
-  const radians = angle * Math.PI / 180;
+  const radians = (angle * Math.PI) / 180;
   return {
     x: CENTER + Math.cos(radians) * radius,
     y: CENTER + Math.sin(radians) * radius,
@@ -143,11 +152,7 @@ function objectById(result: SwissNatalChartResult): Map<string, SwissNatalObject
   return new Map(result.objects.map((object) => [object.id, object]));
 }
 
-function renderAspect(
-  aspect: SwissNatalAspect,
-  objects: Map<string, SwissNatalObject>,
-  ascendant: number,
-): string {
+function renderAspect(aspect: SwissNatalAspect, objects: Map<string, SwissNatalObject>, ascendant: number): string {
   const first = objects.get(aspect.objectAId);
   const second = objects.get(aspect.objectBId);
   if (!first || !second) return '';
@@ -155,7 +160,7 @@ function renderAspect(
   const secondPoint = point(chartAngle(second.longitude, ascendant), 250);
   const common = `data-role="aspect" data-aspect-type="${escapeXml(aspect.id)}" data-object-a="${escapeXml(first.id)}" data-object-b="${escapeXml(second.id)}"`;
   if (aspect.id === 'conjunction') {
-    const signedDifference = (second.longitude - first.longitude + 540) % 360 - 180;
+    const signedDifference = ((second.longitude - first.longitude + 540) % 360) - 180;
     const midpointLongitude = normalize(first.longitude + signedDifference / 2);
     const markerAngle = chartAngle(midpointLongitude, ascendant);
     const marker = point(markerAngle, 250);
@@ -165,12 +170,21 @@ function renderAspect(
   return `<g ${common}><line x1="${finite(firstPoint.x)}" y1="${finite(firstPoint.y)}" x2="${finite(secondPoint.x)}" y2="${finite(secondPoint.y)}" stroke="${escapeXml(aspect.color)}" stroke-width="${finite(aspect.width)}" opacity="${finite(aspect.opacity * 0.72)}"${dash}/></g>`;
 }
 
-interface LabelBox { x: number; y: number; width: number; height: number }
+interface LabelBox {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
 function boxesOverlap(first: LabelBox, second: LabelBox): boolean {
   const gap = 2;
-  return !(first.x + first.width + gap <= second.x || second.x + second.width + gap <= first.x
-    || first.y + first.height + gap <= second.y || second.y + second.height + gap <= first.y);
+  return !(
+    first.x + first.width + gap <= second.x ||
+    second.x + second.width + gap <= first.x ||
+    first.y + first.height + gap <= second.y ||
+    second.y + second.height + gap <= first.y
+  );
 }
 
 function renderObjects(result: SwissNatalChartResult, palette: WesternNatalPalette): string {
@@ -179,59 +193,63 @@ function renderObjects(result: SwissNatalChartResult, palette: WesternNatalPalet
     .map((object, index) => ({ object, index, angle: normalize(chartAngle(object.longitude, ascendant)) }))
     .sort((first, second) => first.angle - second.angle || first.index - second.index);
   const placed: LabelBox[] = [];
-  return sorted.map(({ object, angle }) => {
-    const position = `${SIGN_SYMBOLS[Math.floor(object.longitude / 30)]} ${object.degree}°${object.minute.toString().padStart(2, '0')}′${object.retrograde ? ' Rx' : ''}`;
-    const width = Math.max(82, Math.min(174, Math.max(object.nameVi.length + 3, position.length) * 5.7));
-    const height = 25;
-    const offsets = [0, ...Array.from({ length: 12 }, (_, index) => [4 * (index + 1), -4 * (index + 1)]).flat()];
-    let placement: { angle: number; radius: number; box: LabelBox; onRight: boolean } | undefined;
-    for (const radius of [318, 338, 358, 378]) {
-      for (const offsetAngle of offsets) {
-        const displayAngle = angle + offsetAngle;
-        const labelPoint = point(displayAngle, radius);
-        const onRight = Math.cos(displayAngle * Math.PI / 180) >= 0;
-        const box = {
-          x: onRight ? labelPoint.x + 7 : labelPoint.x - 7 - width,
-          y: labelPoint.y - 13,
-          width,
-          height,
-        };
-        if (box.x < 5 || box.y < 5 || box.x + box.width > 995 || box.y + box.height > 995) continue;
-        if (placed.every((existing) => !boxesOverlap(existing, box))) {
-          placement = { angle: displayAngle, radius, box, onRight };
-          break;
+  return sorted
+    .map(({ object, angle }) => {
+      const position = `${SIGN_SYMBOLS[Math.floor(object.longitude / 30)]} ${object.degree}°${object.minute.toString().padStart(2, '0')}′${object.retrograde ? ' Rx' : ''}`;
+      const width = Math.max(82, Math.min(174, Math.max(object.nameVi.length + 3, position.length) * 5.7));
+      const height = 25;
+      const offsets = [0, ...Array.from({ length: 12 }, (_, index) => [4 * (index + 1), -4 * (index + 1)]).flat()];
+      let placement: { angle: number; radius: number; box: LabelBox; onRight: boolean } | undefined;
+      for (const radius of [318, 338, 358, 378]) {
+        for (const offsetAngle of offsets) {
+          const displayAngle = angle + offsetAngle;
+          const labelPoint = point(displayAngle, radius);
+          const onRight = Math.cos((displayAngle * Math.PI) / 180) >= 0;
+          const box = {
+            x: onRight ? labelPoint.x + 7 : labelPoint.x - 7 - width,
+            y: labelPoint.y - 13,
+            width,
+            height,
+          };
+          if (box.x < 5 || box.y < 5 || box.x + box.width > 995 || box.y + box.height > 995) continue;
+          if (placed.every((existing) => !boxesOverlap(existing, box))) {
+            placement = { angle: displayAngle, radius, box, onRight };
+            break;
+          }
         }
+        if (placement) break;
       }
-      if (placement) break;
-    }
-    if (!placement) throw new Error(`Western natal label layout could not place ${object.id}`);
-    placed.push(placement.box);
-    const truePoint = point(angle, 267);
-    const leaderEnd = point(placement.angle, placement.radius - 12);
-    const label = point(placement.angle, placement.radius);
-    const anchor = placement.onRight ? 'start' : 'end';
-    const offset = placement.onRight ? 7 : -7;
-    return `<g data-role="object" data-object-id="${escapeXml(object.id)}" data-category="${escapeXml(object.category)}" data-house="${object.house}" data-track="${placement.radius}" data-bbox-x="${finite(placement.box.x)}" data-bbox-y="${finite(placement.box.y)}" data-bbox-width="${finite(placement.box.width)}" data-bbox-height="${finite(placement.box.height)}">
+      if (!placement) throw new Error(`Western natal label layout could not place ${object.id}`);
+      placed.push(placement.box);
+      const truePoint = point(angle, 267);
+      const leaderEnd = point(placement.angle, placement.radius - 12);
+      const label = point(placement.angle, placement.radius);
+      const anchor = placement.onRight ? 'start' : 'end';
+      const offset = placement.onRight ? 7 : -7;
+      return `<g data-role="object" data-object-id="${escapeXml(object.id)}" data-category="${escapeXml(object.category)}" data-house="${object.house}" data-track="${placement.radius}" data-bbox-x="${finite(placement.box.x)}" data-bbox-y="${finite(placement.box.y)}" data-bbox-width="${finite(placement.box.width)}" data-bbox-height="${finite(placement.box.height)}">
       <line data-role="true-position-leader" x1="${finite(truePoint.x)}" y1="${finite(truePoint.y)}" x2="${finite(leaderEnd.x)}" y2="${finite(leaderEnd.y)}" stroke="${palette.leader}" stroke-width="0.8" opacity="0.72"/>
       <circle cx="${finite(truePoint.x)}" cy="${finite(truePoint.y)}" r="2.1" fill="${palette.ink}"/>
       <use data-role="symbol-path-fallback" data-symbol-id="${escapeXml(object.id)}" href="#natal-symbol-${escapeXml(object.id.replaceAll(':', '-'))}" transform="translate(${finite(label.x)} ${finite(label.y - 5)})" fill="none" stroke="${palette.ink}" stroke-width="0.8"/>
       <text x="${finite(label.x + offset)}" y="${finite(label.y - 1)}" text-anchor="${anchor}" fill="${palette.ink}" font-size="11" font-weight="650"><tspan>${escapeXml(object.symbol)} ${escapeXml(object.nameVi)}</tspan><tspan x="${finite(label.x + offset)}" dy="12" fill="${palette.muted}" font-size="9.5">${escapeXml(position)}</tspan></text>
     </g>`;
-  }).join('');
+    })
+    .join('');
 }
 
 function renderPrimaryAngles(result: SwissNatalChartResult, palette: WesternNatalPalette): string {
   const ascendant = result.angles.Ascendant.longitude;
-  return Object.values(result.angles).map((angle) => {
-    const screenAngle = chartAngle(angle.longitude, ascendant);
-    const end = point(screenAngle, 468);
-    const label = point(screenAngle, 231);
-    const width = angle.id === 'angle:ascendant' ? 2.8 : 1.4;
-    return `<g data-role="primary-angle" data-angle-id="${escapeXml(angle.id)}">
+  return Object.values(result.angles)
+    .map((angle) => {
+      const screenAngle = chartAngle(angle.longitude, ascendant);
+      const end = point(screenAngle, 468);
+      const label = point(screenAngle, 231);
+      const width = angle.id === 'angle:ascendant' ? 2.8 : 1.4;
+      return `<g data-role="primary-angle" data-angle-id="${escapeXml(angle.id)}">
       <line x1="${CENTER}" y1="${CENTER}" x2="${finite(end.x)}" y2="${finite(end.y)}" stroke="${palette.outer}" stroke-width="${width}" opacity="0.94"/>
       <text x="${finite(label.x)}" y="${finite(label.y)}" text-anchor="middle" dominant-baseline="middle" fill="${palette.ink}" font-size="10" font-weight="750">${escapeXml(angle.symbol)} · ${SIGN_SYMBOLS[Math.floor(angle.longitude / 30)]} ${angle.degree}°${angle.minute.toString().padStart(2, '0')}′</text>
     </g>`;
-  }).join('');
+    })
+    .join('');
 }
 
 function renderZodiac(result: SwissNatalChartResult, palette: WesternNatalPalette): string {
@@ -245,15 +263,17 @@ function renderZodiac(result: SwissNatalChartResult, palette: WesternNatalPalett
 
 function renderHouses(result: SwissNatalChartResult, palette: WesternNatalPalette): string {
   const ascendant = result.angles.Ascendant.longitude;
-  return result.houses.map((house, index) => {
-    const next = result.houses[(index + 1) % result.houses.length];
-    const span = normalize(next.longitude - house.longitude) || 30;
-    const startAngle = chartAngle(house.longitude, ascendant);
-    const cuspInner = point(startAngle, 250);
-    const cuspOuter = point(startAngle, 416);
-    const label = point(startAngle + span / 2, 386);
-    return `<g data-role="house" data-house="${house.number}"><path d="${annularSector(startAngle, span, 250, 416)}" fill="${index % 2 === 0 ? palette.houseA : palette.houseB}"/><line x1="${finite(cuspInner.x)}" y1="${finite(cuspInner.y)}" x2="${finite(cuspOuter.x)}" y2="${finite(cuspOuter.y)}" stroke="${palette.houseLine}" stroke-width="${house.number === 1 ? 1.8 : 0.8}"/><text x="${finite(label.x)}" y="${finite(label.y)}" text-anchor="middle" dominant-baseline="middle" fill="${palette.gold}" font-size="12" font-weight="750">${house.number}</text></g>`;
-  }).join('');
+  return result.houses
+    .map((house, index) => {
+      const next = result.houses[(index + 1) % result.houses.length];
+      const span = normalize(next.longitude - house.longitude) || 30;
+      const startAngle = chartAngle(house.longitude, ascendant);
+      const cuspInner = point(startAngle, 250);
+      const cuspOuter = point(startAngle, 416);
+      const label = point(startAngle + span / 2, 386);
+      return `<g data-role="house" data-house="${house.number}"><path d="${annularSector(startAngle, span, 250, 416)}" fill="${index % 2 === 0 ? palette.houseA : palette.houseB}"/><line x1="${finite(cuspInner.x)}" y1="${finite(cuspInner.y)}" x2="${finite(cuspOuter.x)}" y2="${finite(cuspOuter.y)}" stroke="${palette.houseLine}" stroke-width="${house.number === 1 ? 1.8 : 0.8}"/><text x="${finite(label.x)}" y="${finite(label.y)}" text-anchor="middle" dominant-baseline="middle" fill="${palette.gold}" font-size="12" font-weight="750">${house.number}</text></g>`;
+    })
+    .join('');
 }
 
 function renderTicks(palette: WesternNatalPalette): string {
@@ -275,10 +295,7 @@ function validateOptions(options: WesternNatalRenderOptions): { theme: WesternNa
   return { theme, size: Math.round(size) };
 }
 
-export function renderWesternNatalSvg(
-  result: SwissNatalChartResult,
-  options: WesternNatalRenderOptions = {},
-): string {
+export function renderWesternNatalSvg(result: SwissNatalChartResult, options: WesternNatalRenderOptions = {}): string {
   const { theme, size } = validateOptions(options);
   if (result.objects.length !== 20 || result.houses.length !== 12 || Object.keys(result.angles).length !== 4) {
     throw new Error('Western natal SVG requires 20 objects, 12 houses, and four primary angles');
@@ -289,11 +306,17 @@ export function renderWesternNatalSvg(
     .sort((first, second) => first.layer - second.layer)
     .map((aspect) => renderAspect(aspect, objectById(result), ascendant))
     .join('');
-  const location = result.birth.locationName ?? `${result.birth.latitude.toFixed(4)}, ${result.birth.longitude.toFixed(4)}`;
+  const location =
+    result.birth.locationName ?? `${result.birth.latitude.toFixed(4)}, ${result.birth.longitude.toFixed(4)}`;
   const ariaLabel = 'Lá số chiêm tinh Tây phương';
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${VIEWBOX_SIZE} ${VIEWBOX_SIZE}" role="img" aria-label="${ariaLabel}" data-theme="${theme}" data-chart="western-natal">
     <title>${ariaLabel}</title><desc>Lá số Placidus gồm 20 thiên thể, 12 nhà, bốn góc chính và các góc chiếu Swiss Ephemeris.</desc>
-    <defs>${Object.entries(SYMBOL_PATHS).map(([id, path]) => `<path id="natal-symbol-${escapeXml(id.replaceAll(':', '-'))}" data-role="symbol-path-fallback-def" data-symbol-id="${escapeXml(id)}" d="${path}"/>`).join('')}</defs>
+    <defs>${Object.entries(SYMBOL_PATHS)
+      .map(
+        ([id, path]) =>
+          `<path id="natal-symbol-${escapeXml(id.replaceAll(':', '-'))}" data-role="symbol-path-fallback-def" data-symbol-id="${escapeXml(id)}" d="${path}"/>`,
+      )
+      .join('')}</defs>
     <g id="layer-background"><rect data-role="background" width="${VIEWBOX_SIZE}" height="${VIEWBOX_SIZE}" fill="${palette.background}"/><circle cx="${CENTER}" cy="${CENTER}" r="474" fill="none" stroke="${palette.outer}" stroke-width="7"/></g>
     <g id="layer-houses">${renderHouses(result, palette)}</g>
     <g id="layer-aspects">${aspects}</g>
@@ -309,7 +332,9 @@ async function rasterizeSvg(svg: string, size: number): Promise<Blob> {
   try {
     await document.fonts?.ready;
   } catch (error) {
-    throw new Error(`Western natal PNG font readiness stage failed: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(
+      `Western natal PNG font readiness stage failed: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
   const source = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
   const url = URL.createObjectURL(source);
@@ -328,7 +353,10 @@ async function rasterizeSvg(svg: string, size: number): Promise<Blob> {
     if (!context) throw new Error('Western natal PNG canvas stage failed: 2D context unavailable');
     context.drawImage(image, 0, 0, size, size);
     return await new Promise<Blob>((resolve, reject) => {
-      canvas.toBlob((blob) => blob ? resolve(blob) : reject(new Error('Western natal PNG encoding stage failed')), 'image/png');
+      canvas.toBlob(
+        (blob) => (blob ? resolve(blob) : reject(new Error('Western natal PNG encoding stage failed'))),
+        'image/png',
+      );
     });
   } finally {
     URL.revokeObjectURL(url);
@@ -345,7 +373,9 @@ async function validatePng(blob: Blob, expectedSize: number): Promise<void> {
   const width = view.getUint32(16);
   const height = view.getUint32(20);
   if (width !== expectedSize || height !== expectedSize) {
-    throw new Error(`Western natal PNG validation stage failed: expected ${expectedSize}x${expectedSize} dimensions, received ${width}x${height}`);
+    throw new Error(
+      `Western natal PNG validation stage failed: expected ${expectedSize}x${expectedSize} dimensions, received ${width}x${height}`,
+    );
   }
 }
 
@@ -368,7 +398,9 @@ export async function createWesternNatalExport(
       png = await (options.rasterize ?? rasterizeSvg)(svg, rasterSize);
     } catch (error) {
       if (error instanceof Error && error.message.includes('stage failed')) throw error;
-      throw new Error(`Western natal PNG rasterization stage failed: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Western natal PNG rasterization stage failed: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
     await validatePng(png, rasterSize);
     return png;

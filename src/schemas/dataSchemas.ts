@@ -83,45 +83,51 @@ export const VietnameseHolidaysSchema = z.object({
 
 export const VtMappingSchema = z.record(z.string(), nonEmptyString);
 
-export const TrigramsSchema = z.array(
-  z.object({
-    id: z.number().int().min(1).max(8),
-    name: nonEmptyString,
-    element: nonEmptyString,
-    lines: z.array(z.boolean()).length(3),
-    nature: nonEmptyString,
-  }),
-).length(8);
-
-export const HexagramsSchema = z.array(
-  z.object({
-    id: z.number().int().min(1).max(64),
-    name: nonEmptyString,
-    upper: z.number().int().min(1).max(8),
-    lower: z.number().int().min(1).max(8),
-    chineseName: nonEmptyString.optional(),
-    fullChineseName: nonEmptyString.optional(),
-    briefExplanation: nonEmptyString.optional(),
-    meaning: nonEmptyString,
-    image: nonEmptyString,
-    thoanTu: z.object({
-      original: nonEmptyString,
-      meaning: nonEmptyString,
-      hanViet: nonEmptyString.optional(),
-      humanInterpretation: nonEmptyString.optional(),
-      application: nonEmptyString.optional(),
+export const TrigramsSchema = z
+  .array(
+    z.object({
+      id: z.number().int().min(1).max(8),
+      name: nonEmptyString,
+      element: nonEmptyString,
+      lines: z.array(z.boolean()).length(3),
+      nature: nonEmptyString,
     }),
-    haoTexts: z.array(
-      z.object({
-        position: z.number().int().min(1).max(6),
+  )
+  .length(8);
+
+export const HexagramsSchema = z
+  .array(
+    z.object({
+      id: z.number().int().min(1).max(64),
+      name: nonEmptyString,
+      upper: z.number().int().min(1).max(8),
+      lower: z.number().int().min(1).max(8),
+      chineseName: nonEmptyString.optional(),
+      fullChineseName: nonEmptyString.optional(),
+      briefExplanation: nonEmptyString.optional(),
+      meaning: nonEmptyString,
+      image: nonEmptyString,
+      thoanTu: z.object({
         original: nonEmptyString,
         meaning: nonEmptyString,
-        commentary: nonEmptyString,
+        hanViet: nonEmptyString.optional(),
+        humanInterpretation: nonEmptyString.optional(),
+        application: nonEmptyString.optional(),
       }),
-    ).length(6),
-    commentary: nonEmptyString,
-  }),
-).length(64);
+      haoTexts: z
+        .array(
+          z.object({
+            position: z.number().int().min(1).max(6),
+            original: nonEmptyString,
+            meaning: nonEmptyString,
+            commentary: nonEmptyString,
+          }),
+        )
+        .length(6),
+      commentary: nonEmptyString,
+    }),
+  )
+  .length(64);
 
 export const NguHanhInteractionSchema = z.object({
   interactionMatrix: z.record(z.string(), z.record(z.string(), z.union([z.number(), nonEmptyString]))),

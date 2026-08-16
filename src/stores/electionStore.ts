@@ -23,7 +23,7 @@ const ACTIVITY_MAP: Record<ElectionActivityType, string> = {
   'xay-dung': 'xay-dung',
   'nhap-trach': 'nhap-trach',
   'xuat-hanh': 'xuat-hanh',
-  'khac': 'hop-tac-lam-an',
+  khac: 'hop-tac-lam-an',
 };
 
 const getToday = () => {
@@ -79,7 +79,7 @@ export const useElectionStore = create<ElectionState>((set, get) => ({
 
       let birthYearChi: Chi | undefined;
       if (input.birthYear && Number.isFinite(input.birthYear)) {
-        const chiIndex = ((input.birthYear - 4) % 12 + 12) % 12;
+        const chiIndex = (((input.birthYear - 4) % 12) + 12) % 12;
         birthYearChi = CHI[chiIndex] as Chi;
       }
 

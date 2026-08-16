@@ -171,9 +171,9 @@ export default function LandingPage() {
             </h1>
 
             <p className="text-base sm:text-lg text-text-secondary-light dark:text-text-secondary-dark leading-relaxed mb-8 max-w-xl">
-              3 công cụ cốt lõi trong một ứng dụng.
+              5 phân hệ cốt lõi trong một ứng dụng.
               <br className="hidden sm:block" />
-              Âm Lịch có tab Dụng Sự, cùng Gieo Quẻ và Tử Vi —{' '}
+              Âm Lịch (kèm Dụng Sự), Ngày Tốt, Tử Vi, Chiêm Tinh và Gieo Quẻ —{' '}
               <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
                 chính xác theo chuẩn học thuật.
               </span>
@@ -309,19 +309,17 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto relative z-10">
           <div className="text-center mb-12">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold dark:text-gold-dark mb-2">
-              Tính năng
+              Phân Hệ Tính Năng
             </p>
-            <h2 className="text-h2 mystery-text-glow mb-3">
-              3 công cụ trong một ứng dụng
-            </h2>
+            <h2 className="text-h2 mystery-text-glow mb-3">5 phân hệ trong một ứng dụng</h2>
             <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark max-w-lg mx-auto">
-              Kết hợp lịch âm, Dụng Sự, gieo quẻ và Tử Vi trong một không gian gọn gàng.
+              Hội tụ Lịch Âm & Dụng Sự, Ngày Tốt Tam Hệ, Tử Vi Đẩu Số, Chiêm Tinh Học và Gieo Quẻ Mai Hoa.
             </p>
           </div>
 
           {/* Features grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-16">
-            {FEATURES.filter((f) => f.tier === 'Cơ bản').map((f) => (
+            {FEATURES.map((f) => (
               <button
                 key={f.id}
                 onClick={() => navigate(`/app/${f.id}`)}
@@ -359,7 +357,9 @@ export default function LandingPage() {
           <div className="pt-8 border-t border-border-light/20 dark:border-border-dark/20">
             <div className="text-center mb-8">
               <h3 className="text-lg sm:text-xl font-bold tracking-tight mb-2">Được xây dựng vì người dùng</h3>
-              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">Quyền riêng tư và độ chính xác là ưu tiên hàng đầu.</p>
+              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                Quyền riêng tư và độ chính xác là ưu tiên hàng đầu.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -411,11 +411,7 @@ export default function LandingPage() {
                   Hôm nay là ngày Hoàng Đạo — thời điểm tốt để bắt đầu!
                 </p>
               )}
-              <ActionButton
-                onClick={() => navigate('/app/am-lich')}
-                className="px-8 py-3.5"
-                icon="arrow_forward"
-              >
+              <ActionButton onClick={() => navigate('/app/am-lich')} className="px-8 py-3.5" icon="arrow_forward">
                 Mở Lịch Việt
               </ActionButton>
             </div>
@@ -445,9 +441,10 @@ export default function LandingPage() {
               <ul className="space-y-1.5">
                 {[
                   { label: 'Âm Lịch', path: '/app/am-lich' },
-                  { label: 'Dụng Sự', path: '/app/am-lich' },
-                  { label: 'Gieo Quẻ', path: '/app/gieo-que' },
+                  { label: 'Ngày Tốt', path: '/app/ngay-tot' },
                   { label: 'Tử Vi', path: '/app/tu-vi' },
+                  { label: 'Chiêm Tinh', path: '/app/chiem-tinh' },
+                  { label: 'Gieo Quẻ', path: '/app/gieo-que' },
                 ].map((f) => (
                   <li key={f.label}>
                     <button

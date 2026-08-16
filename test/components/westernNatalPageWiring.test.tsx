@@ -10,12 +10,14 @@ describe('Western natal page wiring', () => {
 
   it('shows the normalized standalone chart instead of the legacy Western wheel', () => {
     const fixture = createWesternNatalFixture();
-    act(() => useAstrologyStore.setState({
+    act(() =>
+      useAstrologyStore.setState({
         westernNatalResult: fixture,
         westernResult: fixture.legacyResult,
         isCalculating: false,
         error: null,
-      }));
+      }),
+    );
 
     const { container } = render(<WesternChartView />);
 
@@ -26,11 +28,13 @@ describe('Western natal page wiring', () => {
 
   it('offers one accessible Western chart download menu while retaining Vedic image export', () => {
     const fixture = createWesternNatalFixture();
-    act(() => useAstrologyStore.setState({
+    act(() =>
+      useAstrologyStore.setState({
         westernNatalResult: fixture,
         westernResult: fixture.legacyResult,
         vedicResult: fixture.legacyResult,
-      }));
+      }),
+    );
 
     const western = render(<WesternMarkdownExport system="western" />);
     const trigger = screen.getByRole('button', { name: /Tải lá số/i });

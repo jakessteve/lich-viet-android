@@ -68,7 +68,10 @@ export function formatCivilDateYmd(date: Date): string {
  * This is used when we need the wall-clock values for a given timezone without
  * depending on locale-specific string parsing.
  */
-export function getDatePartsInTimeZone(date: Date, timeZone: string): {
+export function getDatePartsInTimeZone(
+  date: Date,
+  timeZone: string,
+): {
   year: number;
   month: number;
   day: number;
@@ -155,10 +158,7 @@ function isVietnamBirthLocation(birthLocation?: TuViBirthLocation): boolean {
 
   if (typeof birthLocation.lat === 'number' && typeof birthLocation.lng === 'number') {
     const inVietnamBounds =
-      birthLocation.lat >= 8.0 &&
-      birthLocation.lat <= 24.0 &&
-      birthLocation.lng >= 102.0 &&
-      birthLocation.lng <= 110.8;
+      birthLocation.lat >= 8.0 && birthLocation.lat <= 24.0 && birthLocation.lng >= 102.0 && birthLocation.lng <= 110.8;
     return inVietnamBounds;
   }
 

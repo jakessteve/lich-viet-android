@@ -56,19 +56,19 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
                 selectedPeriod?.lord === p.lord
                   ? 'border-purple-500 bg-purple-500/10 dark:bg-purple-900/30 shadow-sm'
                   : p.isCurrent
-                  ? 'border-purple-300 dark:border-purple-700 bg-surface-container-lowest/80'
-                  : 'border-border-light/40 bg-surface-container-lowest/40 dark:border-border-dark/40 opacity-70 hover:opacity-100'
+                    ? 'border-purple-300 dark:border-purple-700 bg-surface-container-lowest/80'
+                    : 'border-border-light/40 bg-surface-container-lowest/40 dark:border-border-dark/40 opacity-70 hover:opacity-100'
               }`}
             >
               <div className="flex items-center gap-1.5">
-                <span className="text-xs" style={{ color: p.color }}>{p.symbol}</span>
+                <span className="text-xs" style={{ color: p.color }}>
+                  {p.symbol}
+                </span>
                 <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark truncate">
                   {p.lordVi.split(' ')[0]}
                 </span>
                 {p.isCurrent && (
-                  <span className="rounded bg-purple-500 text-micro font-bold text-white px-1">
-                    Hiện tại
-                  </span>
+                  <span className="rounded bg-purple-500 text-micro font-bold text-white px-1">Hiện tại</span>
                 )}
               </div>
               <div className="text-micro text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
@@ -84,7 +84,9 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
         <div className="rounded-xl border border-purple-500/30 bg-purple-500/5 p-3.5 dark:bg-purple-900/10 space-y-2">
           <div className="flex items-center justify-between gap-2 flex-wrap">
             <div className="flex items-center gap-2">
-              <span className="text-xl" style={{ color: selectedPeriod.color }}>{selectedPeriod.symbol}</span>
+              <span className="text-xl" style={{ color: selectedPeriod.color }}>
+                {selectedPeriod.symbol}
+              </span>
               <h5 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
                 Đại Vận {selectedPeriod.lordVi}
               </h5>

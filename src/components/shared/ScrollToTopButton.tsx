@@ -6,10 +6,7 @@ interface ScrollToTopButtonProps {
   className?: string;
 }
 
-export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({
-  threshold = 300,
-  className = '',
-}) => {
+export const ScrollToTopButton: React.FC<ScrollToTopButtonProps> = ({ threshold = 300, className = '' }) => {
   const showScrollToTopButton = useAppStore((s) => s.showScrollToTopButton);
   const [isVisible, setIsVisible] = useState(false);
 

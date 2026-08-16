@@ -10,12 +10,12 @@
 }
 
 .tuvi-chart {
-  --tuvi-line: #b8860b;
-  --tuvi-paper: #ffffff;
-  --tuvi-paper-soft: #faf7ef;
-  --tuvi-ink: #1b1c19;
-  --tuvi-muted: #5f5a50;
-  --tuvi-red: #b91c1c;
+  --tuvi-line: var(--color-eastern-line, #b8860b);
+  --tuvi-paper: var(--color-surface-light, #ffffff);
+  --tuvi-paper-soft: var(--color-surface-container-low, #faf7ef);
+  --tuvi-ink: var(--color-text-primary-light, #1b1c19);
+  --tuvi-muted: var(--color-text-secondary-light, #5f5a50);
+  --tuvi-red: var(--color-bad, #b91c1c);
 
   display: grid;
   position: relative;
@@ -29,7 +29,7 @@
   margin: 0 auto;
   background: var(--tuvi-line);
   border: 1px solid var(--tuvi-line);
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: none;
   font-family: var(--font-sans);
   font-size: 0.95rem;
@@ -37,12 +37,12 @@
 }
 
 .dark .tuvi-chart {
-  --tuvi-line: #a16207;
-  --tuvi-paper: #131424;
-  --tuvi-paper-soft: #18192d;
-  --tuvi-ink: #f3f4f6;
-  --tuvi-muted: #9ca3af;
-  --tuvi-red: #f87171;
+  --tuvi-line: var(--color-eastern-line-dark, #a16207);
+  --tuvi-paper: var(--color-surface-dark, #1a1a2e);
+  --tuvi-paper-soft: var(--color-surface-elevated-dark, #24243f);
+  --tuvi-ink: var(--color-text-primary-dark, #f5f5f7);
+  --tuvi-muted: var(--color-text-secondary-dark, #bfb0a0);
+  --tuvi-red: var(--color-bad-dark, #f87171);
   background: var(--tuvi-line);
   border-color: var(--tuvi-line);
 }
@@ -366,9 +366,15 @@
   white-space: nowrap;
 }
 
-.tuvi-ring-label.thai-tue { color: #831843; }
-.tuvi-ring-label.bac-si { color: #1e3a8a; }
-.tuvi-ring-label.truong-sinh { color: #6b4f1d; }
+.tuvi-ring-label.thai-tue {
+  color: #831843;
+}
+.tuvi-ring-label.bac-si {
+  color: #1e3a8a;
+}
+.tuvi-ring-label.truong-sinh {
+  color: #6b4f1d;
+}
 
 .tuvi-tieu-han-badge {
   display: inline-flex;
@@ -552,7 +558,7 @@
 
 .tuvi-triangle-line {
   stroke: rgba(90, 90, 90, 0.4);
-  stroke-width: 1.0;
+  stroke-width: 1;
   stroke-dasharray: 2 2;
   vector-effect: non-scaling-stroke;
 }
@@ -713,25 +719,25 @@
   .tuvi-can-chi {
     font-size: 0.6rem;
   }
-  
+
   .tuvi-chinh-tinh {
     font-size: 1rem;
     min-height: 40px;
   }
-  
+
   .tuvi-palace-title {
     font-size: 0.9rem;
   }
-  
+
   .tuvi-phu-tinh-grid {
     font-size: 0.68rem;
     gap: 4px;
   }
-  
+
   .tuvi-center-title h3 {
     font-size: 0.95rem;
   }
-  
+
   .tuvi-center-row {
     font-size: 0.75rem;
   }
@@ -743,13 +749,12 @@
     /* Center space is split by the hinge */
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 20px minmax(0, 1fr) minmax(0, 1fr);
   }
-  
+
   .tuvi-chart > *:nth-child(n) {
     /* Add logic to map 4x4 into 5x4 grid avoiding center col, etc... */
     /* For simplicity right now, we just rely on the main body hinge avoidance */
   }
 }
-
 
 .tuvi-palace-detail-overlay {
   position: absolute;
@@ -767,7 +772,7 @@
   max-width: 400px;
   max-height: 90%;
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -885,9 +890,15 @@
   color: #f87171;
 }
 
-.dark .tuvi-ring-label.thai-tue { color: #f472b6; }
-.dark .tuvi-ring-label.bac-si { color: #93c5fd; }
-.dark .tuvi-ring-label.truong-sinh { color: #fbbf24; }
+.dark .tuvi-ring-label.thai-tue {
+  color: #f472b6;
+}
+.dark .tuvi-ring-label.bac-si {
+  color: #93c5fd;
+}
+.dark .tuvi-ring-label.truong-sinh {
+  color: #fbbf24;
+}
 
 .dark .tuvi-connection-line,
 .dark .tuvi-triangle-line {

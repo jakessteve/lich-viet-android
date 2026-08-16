@@ -49,6 +49,30 @@
   --color-gold-light: #d97706;
   --color-gold-dark: #ffdea1;
 
+  /* ── Eastern Domain Tokens ─────────────────────────────── */
+  --color-eastern-gold: #92400e;
+  --color-eastern-gold-light: #d97706;
+  --color-eastern-gold-dark: #ffdea1;
+  --color-eastern-line: #b8860b;
+  --color-eastern-line-dark: #a16207;
+
+  /* ── Astral (Western/Vedic) Domain Tokens ──────────────── */
+  --color-astral-primary: #4f46e5;
+  --color-astral-primary-dark: #818cf8;
+  --color-astral-surface-light: #eef2ff;
+  --color-astral-surface-dark: rgba(79, 70, 229, 0.15);
+  --color-astral-border-light: rgba(99, 102, 241, 0.25);
+  --color-astral-border-dark: rgba(129, 140, 248, 0.25);
+  --color-astral-glow: rgba(79, 70, 229, 0.15);
+
+  /* ── Aspect & Star Polarity Tokens ─────────────────────── */
+  --color-polarity-harmonious: #059669;
+  --color-polarity-harmonious-dark: #34d399;
+  --color-polarity-tension: #dc2626;
+  --color-polarity-tension-dark: #f87171;
+  --color-polarity-neutral: #2563eb;
+  --color-polarity-neutral-dark: #60a5fa;
+
   /* ── Mystery Palette ───────────────────────────────────── */
   --color-mystery-deep: #0a0a1a;
   --color-mystery-surface: #1a1a2e;
@@ -91,7 +115,9 @@
     @apply bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark font-sans antialiased;
     line-height: 1.6;
     letter-spacing: 0;
-    transition: background-color 250ms cubic-bezier(0.16, 1, 0.3, 1), color 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 250ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Noto Sans font-feature-settings for improved readability */
@@ -133,10 +159,11 @@
   .glass-card,
   .surface-elevated {
     @apply rounded-2xl overflow-hidden;
-    transition: background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -167,23 +194,26 @@
   .surface-panel,
   .surface-default {
     @apply rounded-xl border border-border-light/40 dark:border-border-dark/35 bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/45;
-    transition: background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .surface-control {
     @apply rounded-lg border border-border-light/40 dark:border-border-dark/40 bg-white/85 dark:bg-surface-elevated-dark/60 text-text-primary-light dark:text-text-primary-dark;
-    transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-                color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .surface-interactive {
     @apply rounded-xl;
-    transition: background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-                color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-                transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .surface-interactive:hover {
@@ -207,10 +237,11 @@
   /* Stronger glass variant for prominent sections */
   .glass-card-strong {
     @apply rounded-2xl overflow-hidden;
-    transition: background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -236,10 +267,61 @@
       inset 0 0 80px rgba(124, 58, 237, 0.04);
   }
 
+  /* ── Domain Specialized Cards & Surfaces ─────────────────── */
+  .surface-dock {
+    @apply rounded-2xl border border-border-light/60 dark:border-border-dark/60 bg-surface-light/95 dark:bg-surface-dark/95 backdrop-blur-md shadow-lg;
+    transition:
+      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .astral-card {
+    @apply rounded-2xl border border-astral-border-light dark:border-astral-border-dark bg-astral-surface-light/60 dark:bg-astral-surface-dark/40;
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .table-technical {
+    @apply w-full text-left text-xs;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  .table-technical th {
+    @apply px-3 py-2 font-semibold text-text-secondary-light dark:text-text-secondary-dark border-b border-border-light/60 dark:border-border-dark/60 bg-surface-subtle-light/50 dark:bg-surface-elevated-dark/50;
+  }
+
+  .table-technical td {
+    @apply px-3 py-2 text-text-primary-light dark:text-text-primary-dark border-b border-border-light/30 dark:border-border-dark/30;
+  }
+
+  .table-technical tr:hover td {
+    @apply bg-surface-subtle-light/40 dark:bg-white/5;
+  }
+
+  /* ── Aspect & Star Polarity Badges ──────────────────────── */
+  .badge-polarity-positive {
+    @apply inline-flex items-center rounded-md px-2 py-0.5 text-micro font-semibold bg-polarity-harmonious/15 text-polarity-harmonious dark:text-polarity-harmonious-dark border border-polarity-harmonious/30;
+  }
+
+  .badge-polarity-negative {
+    @apply inline-flex items-center rounded-md px-2 py-0.5 text-micro font-semibold bg-polarity-tension/15 text-polarity-tension dark:text-polarity-tension-dark border border-polarity-tension/30;
+  }
+
+  .badge-polarity-neutral {
+    @apply inline-flex items-center rounded-md px-2 py-0.5 text-micro font-semibold bg-polarity-neutral/15 text-polarity-neutral dark:text-polarity-neutral-dark border border-polarity-neutral/30;
+  }
+
+  .badge-astral {
+    @apply inline-flex items-center rounded-md px-2 py-0.5 text-micro font-semibold bg-astral-primary/15 text-astral-primary dark:text-astral-primary-dark border border-astral-primary/30;
+  }
+
   /* Glass Navigation */
   .glass-nav {
-    transition: background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
-                border-color 250ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition:
+      background-color 250ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 250ms cubic-bezier(0.16, 1, 0.3, 1);
     padding-top: env(safe-area-inset-top, 0px);
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(20px);
@@ -821,11 +903,17 @@
   /* ── Responsive Medium Breakpoint Adjustments ────────── */
   @media (min-width: 768px) and (max-width: 1023px) {
     /* Reduce excessive paddings on tablets and foldables */
-    .p-4 { padding: 0.75rem; }
-    .p-5 { padding: 1rem; }
-    
+    .p-4 {
+      padding: 0.75rem;
+    }
+    .p-5 {
+      padding: 1rem;
+    }
+
     /* Make calendar touch targets comfortable for medium screens */
-    .aspect-square { min-height: 3.25rem; }
+    .aspect-square {
+      min-height: 3.25rem;
+    }
   }
 
   /* ── Foldable Display Hinge Avoidance ────────────────── */
@@ -856,13 +944,21 @@
 }
 
 @keyframes theme-fade-out {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes theme-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 html.theme-transitioning,
@@ -893,10 +989,11 @@ html.theme-transitioning h3,
 html.theme-transitioning h4,
 html.theme-transitioning h5,
 html.theme-transitioning h6 {
-  transition: background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-              color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+  transition:
+    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1) !important;
   transition-delay: 0s !important;
 }
 
@@ -904,18 +1001,33 @@ html.theme-transitioning h6 {
    CELESTIAL MICRO-ANIMATIONS & INTERACTION REFINEMENTS
    ═══════════════════════════════════════════════════════════ */
 @keyframes celestial-pulse {
-  0% { transform: scale(0.95); opacity: 0.85; }
-  100% { transform: scale(1.08); opacity: 0; }
+  0% {
+    transform: scale(0.95);
+    opacity: 0.85;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 0;
+  }
 }
 
 @keyframes celestial-glow-breathe {
-  0%, 100% { box-shadow: 0 0 8px rgba(212, 168, 67, 0.15); }
-  50% { box-shadow: 0 0 18px rgba(212, 168, 67, 0.4); }
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(212, 168, 67, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 18px rgba(212, 168, 67, 0.4);
+  }
 }
 
 @keyframes card-sheen {
-  0% { transform: translateX(-100%) rotate(45deg); }
-  100% { transform: translateX(200%) rotate(45deg); }
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(200%) rotate(45deg);
+  }
 }
 
 .animate-celestial-pulse {
@@ -967,4 +1079,3 @@ html.theme-transitioning h6 {
     transform: none !important;
   }
 }
-

@@ -77,7 +77,6 @@ export default function InputForm({
   const tabInactiveClass =
     'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white';
 
-
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-5">
       {/* Mode Selector */}
@@ -108,18 +107,18 @@ export default function InputForm({
 
       {/* Calendar Mode Toggle */}
       <div className="flex flex-col gap-2 px-1">
-                  <div className="flex items-center gap-1">
-            <span className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
-              Hệ lịch: Âm Lịch
-            </span>
-            <span
-              className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark cursor-help"
-              title="Mai Hoa Dịch Số tính tháng theo chu kỳ Mặt Trăng (Âm Lịch)."
-            >
-              info_outline
-            </span>
-          </div>
+        <div className="flex items-center gap-1">
+          <span className="text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark">
+            Hệ lịch: Âm Lịch
+          </span>
+          <span
+            className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark cursor-help"
+            title="Mai Hoa Dịch Số tính tháng theo chu kỳ Mặt Trăng (Âm Lịch)."
+          >
+            info_outline
+          </span>
         </div>
+      </div>
 
       {/* Query Input */}
       <div>

@@ -8,7 +8,6 @@
 import type { Can, Chi } from './calendar';
 export type { Can, Chi } from './calendar';
 
-
 // ── Core Enums & Base Types ─────────────────────────────────
 
 /**
@@ -21,7 +20,7 @@ export type BrightnessLevel = 'Miếu' | 'Vượng' | 'Đắc' | 'Địa' | 'L�
 export type TuViGender = 'nam' | 'nữ';
 
 /** Calculation school / phái used for star placement variants */
-export type TuViSchool = 'nam-phai' | 'thien-luong' | 'bac-phai';
+export type TuViSchool = 'nam-phai' | 'thien-luong' | 'bac-phai' | 'phi-tinh';
 
 /** Supported engine generation for compatibility and audit metadata */
 export type TuViEngineVersion = 'legacy-v3' | 'accuracy-v4';
@@ -190,6 +189,25 @@ export interface TuViInput {
   school?: TuViSchool;
 }
 
+/** Star grade in academic hierarchy (Giáp/Ất/Bính/Đinh/Mậu) */
+export type StarGrade = 'giap' | 'at' | 'binh' | 'dinh' | 'mau';
+
+/** Positional interaction semantic type */
+export type PositionalSemanticType = 'toa' | 'cu' | 'trieu' | 'xung' | 'cung' | 'hiep' | 'hiepHung';
+
+/** Positional semantic detail */
+export interface PositionalSemantic {
+  type: PositionalSemanticType;
+  label: string;
+  stars: string[];
+  sourcePalaces: string[];
+  description: string;
+  hostStars?: string[];
+  classicalPattern?: string;
+  nature?: 'cat' | 'hung' | 'trung-hoa' | 'kich-phat';
+  actionableHint?: string;
+}
+
 // ── Stars ───────────────────────────────────────────────────
 
 /**
@@ -203,6 +221,8 @@ export interface TuViStar {
   name: string;
   /** Category of the star */
   type: StarType;
+  /** Academic grade hierarchy: Giáp (A), Ất (B), Bính (C), Đinh (D), Mậu (E) */
+  grade?: StarGrade;
   /** Ngũ Hành element, e.g. "Âm Thổ", "Dương Kim" */
   nguHanh: string;
   /** Brightness level in this palace */
@@ -272,6 +292,16 @@ export interface TuViPalace {
   isMenh: boolean;
   /** Whether this palace is the Thân palace */
   isThan: boolean;
+  /** Whether this palace is a Cường Cung (Mệnh, Phúc, Phu Thê, Quan, Tài, Di) */
+  isCuongCung?: boolean;
+  /** Hậu Thiên Bát Quái associated with this palace branch */
+  trigram?: {
+    name: string;
+    hanTu: string;
+    nguHanh: string;
+  };
+  /** Nhị Hợp (Lục Hợp) paired palace index (0–11) */
+  nhiHopPalaceIndex?: number;
   /** Whether this palace falls under Tuần Không (旬空) */
   hasTuan: boolean;
   /** Whether this palace falls under Triệt Không (截空) */
@@ -596,4 +626,55 @@ export interface DaiHanInterpretationResult {
   };
 }
 
+// ── Flying Stars (Tử Vi Phi Tinh Tứ Hóa) ─────────────────────────
 
+export interface FlyingTuHoa {
+  type: TuHoaType;
+  starName: string;
+  sourcePalaceId: number;
+  sourcePalaceName: string;
+  sourceCan: Can;
+  targetPalaceId: number;
+  targetPalaceName: string;
+  isTuHoa: boolean; // Tự Hóa (source == target)
+  isXung: boolean; // Phi Xung Đối Cung
+  descriptionVi: string;
+}
+
+export interface PalaceFlyingStars {
+  palaceId: number;
+  palaceName: string;
+  can: Can;
+  chi: Chi;
+  flyingHuas: Record<TuHoaType, FlyingTuHoa>;
+  tuHuas: FlyingTuHoa[]; // Các Tự Hóa tại bản cung
+  receivedHuas: FlyingTuHoa[]; // Các Tứ Hóa phi nhập từ cung khác
+  xungHuas: FlyingTuHoa[]; // Các Tứ Hóa phi xung (Kỵ xung)
+}
+
+export interface FlyingStarSummary {
+  palaces: PalaceFlyingStars[];
+  tuHuaList: FlyingTuHoa[];
+  keyInteractions: {
+    menhFlying: FlyingTuHoa[];
+    menhReceived: FlyingTuHoa[];
+    taiQuanFlying: FlyingTuHoa[];
+    phuTheFlying: FlyingTuHoa[];
+  };
+  overallSynthesisVi: string;
+}
+
+// ── Chart Classification Tree (Cây Phân Loại Lá Số) ───────────
+
+export interface TuViChartClassification {
+  gender: TuViGender;
+  amDuongNamNu: string; // Dương Nam, Âm Nữ, Âm Nam, Dương Nữ
+  cucName: string; // Thủy Nhị Cục, Mộc Tam Cục...
+  menhChi: Chi; // Tý, Sửu, Dần...
+  thanChi: Chi; // Tý, Sửu, Dần...
+  thanCuCung: string; // Thân cư Mệnh, Thân cư Phúc Đức...
+  menhMajorStars: string[];
+  menhStructureType: string; // 'Tử Vi Cư Ngọ', 'Sát Phá Tham', 'Cơ Nguyệt Đồng Lương', 'Vô Chính Diệu'...
+  classificationPath: string[]; // ['Dương Nam', 'Thủy Nhị Cục', 'Mệnh tại Tý', 'Tử Vi Cư Tý', 'Thân cư Thê']
+  patternSummaryVi: string;
+}

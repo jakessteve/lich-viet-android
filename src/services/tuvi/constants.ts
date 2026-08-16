@@ -81,130 +81,138 @@ export const CUC_LOOKUP_TABLE: string[][] = [
   ['Mộc Tam Cục', 'Kim Tứ Cục', 'Thổ Ngũ Cục', 'Thủy Nhị Cục', 'Mộc Tam Cục', 'Thủy Nhị Cục'],
 ];
 
+import type { StarGrade } from '../../types/tuvi';
+
 // ── Chính Tinh (14 Main Stars) ────────────────────────────────
-/** The 14 main stars with their Ngũ Hành and group affiliation. */
+/** The 14 main stars with their Ngũ Hành, group affiliation, and academic grade. */
 export const CHINH_TINH_LIST: Array<{
   name: string;
   nguHanh: string;
   group: 'bacDau' | 'namDau' | 'trungThien';
+  grade: StarGrade;
 }> = [
-  { name: 'Tử Vi', nguHanh: 'Dương Thổ', group: 'bacDau' },
-  { name: 'Thiên Cơ', nguHanh: 'Âm Mộc', group: 'bacDau' },
-  { name: 'Thái Dương', nguHanh: 'Dương Hỏa', group: 'trungThien' },
-  { name: 'Vũ Khúc', nguHanh: 'Âm Kim', group: 'bacDau' },
-  { name: 'Thiên Đồng', nguHanh: 'Dương Thủy', group: 'bacDau' },
-  { name: 'Liêm Trinh', nguHanh: 'Âm Hỏa', group: 'bacDau' },
-  { name: 'Thiên Phủ', nguHanh: 'Dương Thổ', group: 'namDau' },
-  { name: 'Thái Âm', nguHanh: 'Âm Thủy', group: 'trungThien' },
-  { name: 'Tham Lang', nguHanh: 'Âm Thủy', group: 'bacDau' },
-  { name: 'Cự Môn', nguHanh: 'Âm Thủy', group: 'bacDau' },
-  { name: 'Thiên Tướng', nguHanh: 'Dương Thủy', group: 'namDau' },
-  { name: 'Thiên Lương', nguHanh: 'Âm Mộc', group: 'namDau' },
-  { name: 'Thất Sát', nguHanh: 'Dương Kim', group: 'namDau' },
-  { name: 'Phá Quân', nguHanh: 'Âm Thủy', group: 'bacDau' },
+  { name: 'Tử Vi', nguHanh: 'Dương Thổ', group: 'bacDau', grade: 'giap' },
+  { name: 'Thiên Cơ', nguHanh: 'Âm Mộc', group: 'bacDau', grade: 'giap' },
+  { name: 'Thái Dương', nguHanh: 'Dương Hỏa', group: 'trungThien', grade: 'giap' },
+  { name: 'Vũ Khúc', nguHanh: 'Âm Kim', group: 'bacDau', grade: 'giap' },
+  { name: 'Thiên Đồng', nguHanh: 'Dương Thủy', group: 'bacDau', grade: 'giap' },
+  { name: 'Liêm Trinh', nguHanh: 'Âm Hỏa', group: 'bacDau', grade: 'giap' },
+  { name: 'Thiên Phủ', nguHanh: 'Dương Thổ', group: 'namDau', grade: 'giap' },
+  { name: 'Thái Âm', nguHanh: 'Âm Thủy', group: 'trungThien', grade: 'giap' },
+  { name: 'Tham Lang', nguHanh: 'Âm Thủy', group: 'bacDau', grade: 'giap' },
+  { name: 'Cự Môn', nguHanh: 'Âm Thủy', group: 'bacDau', grade: 'giap' },
+  { name: 'Thiên Tướng', nguHanh: 'Dương Thủy', group: 'namDau', grade: 'giap' },
+  { name: 'Thiên Lương', nguHanh: 'Âm Mộc', group: 'namDau', grade: 'giap' },
+  { name: 'Thất Sát', nguHanh: 'Dương Kim', group: 'namDau', grade: 'giap' },
+  { name: 'Phá Quân', nguHanh: 'Âm Thủy', group: 'bacDau', grade: 'giap' },
 ];
 
 // ── Phụ Tinh (Auxiliary Stars) ────────────────────────────────
-/** Key auxiliary stars with their Ngũ Hành, type, and placement rule. */
+/** Key auxiliary stars with their Ngũ Hành, type, academic grade, and placement rule. */
 export const PHU_TINH_LIST: Array<{
   name: string;
   nguHanh: string;
   type: 'cat' | 'sat' | 'hoa';
+  grade: StarGrade;
   placementRule: string;
 }> = [
-  // Lục Cát Tinh (6 Auspicious)
-  { name: 'Văn Xương', nguHanh: 'Dương Kim', type: 'cat', placementRule: 'hourBranch' },
-  { name: 'Văn Khúc', nguHanh: 'Âm Thủy', type: 'cat', placementRule: 'hourBranch' },
-  { name: 'Tả Phụ', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Hữu Bật', nguHanh: 'Âm Thủy', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Thiên Khôi', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'yearCan' },
-  { name: 'Thiên Việt', nguHanh: 'Âm Hỏa', type: 'cat', placementRule: 'yearCan' },
-  // Lục Sát Tinh (6 Malefic)
-  { name: 'Kình Dương', nguHanh: 'Dương Kim', type: 'sat', placementRule: 'yearCan' },
-  { name: 'Đà La', nguHanh: 'Âm Kim', type: 'sat', placementRule: 'yearCan' },
-  { name: 'Hỏa Tinh', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'yearBranchHourBranch' },
-  { name: 'Linh Tinh', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'yearBranchHourBranch' },
-  { name: 'Địa Không', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'hourBranch' },
-  { name: 'Địa Kiếp', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'hourBranch' },
-  // Other important stars
-  { name: 'Lộc Tồn', nguHanh: 'Âm Thổ', type: 'cat', placementRule: 'yearCan' },
-  { name: 'Thiên Mã', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'yearBranch' },
-  { name: 'Đào Hoa', nguHanh: 'Âm Thủy', type: 'hoa', placementRule: 'yearBranch' },
-  { name: 'Hồng Loan', nguHanh: 'Âm Thủy', type: 'hoa', placementRule: 'yearBranch' },
-  { name: 'Thiên Hỉ', nguHanh: 'Dương Thủy', type: 'cat', placementRule: 'yearBranch' },
-  { name: 'Thiên Đức', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Nguyệt Đức', nguHanh: 'Âm Thủy', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Tam Thai', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'dayFromTaPhu' },
-  { name: 'Bát Tọa', nguHanh: 'Âm Thổ', type: 'cat', placementRule: 'dayFromHuuBat' },
-  { name: 'Ân Quang', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'dayFromVanXuong' },
-  { name: 'Thiên Quý', nguHanh: 'Âm Thổ', type: 'cat', placementRule: 'dayFromVanKhuc' },
-  { name: 'Đài Phụ', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'hourBranch' },
-  { name: 'Phong Cáo', nguHanh: 'Âm Thổ', type: 'cat', placementRule: 'hourBranch' },
-  { name: 'Đẩu Quân', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'yearBranchMonthHour' },
-  { name: 'Thiên Y', nguHanh: 'Âm Thổ', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Hoa Cái', nguHanh: 'Dương Kim', type: 'cat', placementRule: 'yearBranch' },
-  { name: 'Cô Thần', nguHanh: 'Âm Thổ', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Quả Tú', nguHanh: 'Âm Thổ', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Thiên Tài', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'yearBranchMenh' },
-  { name: 'Thiên Thọ', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'yearBranchThan' },
-  { name: 'Thiên Trù', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'yearCan' },
-  { name: 'Phá Toái', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Phi Liêm', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Long Trì', nguHanh: 'Dương Thủy', type: 'cat', placementRule: 'yearBranch' },
-  { name: 'Phượng Các', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'yearBranch' },
-  { name: 'Thiên Khốc', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Thiên Hư', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Thiên Quan', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'yearCan' },
-  { name: 'Thiên Phúc', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'yearCan' },
-  { name: 'Thiên Không', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Thiên Thương', nguHanh: 'Âm Thổ', type: 'sat', placementRule: 'menhPalace' },
-  { name: 'Thiên Sứ', nguHanh: 'Âm Thủy', type: 'sat', placementRule: 'menhPalace' },
-  { name: 'Kiếp Sát', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'yearBranch' },
-  { name: 'Giải Thần', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'yearBranchMonth' },
-  { name: 'Thiên Diêu', nguHanh: 'Âm Thủy', type: 'hoa', placementRule: 'monthBranch' },
-  { name: 'Thiên Hình', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'monthBranch' },
-  { name: 'Âm Sát', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'monthBranch' },
-  { name: 'Thiên Nguyệt', nguHanh: 'Âm Thủy', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Thiên Vu', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Thiên Giải', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'monthBranch' },
-  { name: 'Lưu Hà', nguHanh: 'Âm Thủy', type: 'sat', placementRule: 'yearCan' },
-  { name: 'Đường Phù', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'locTon' },
-  { name: 'Quốc Ấn', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'locTon' },
-  { name: 'Thiên La', nguHanh: 'Âm Thổ', type: 'sat', placementRule: 'fixed' },
-  { name: 'Địa Võng', nguHanh: 'Âm Thổ', type: 'sat', placementRule: 'fixed' },
-  { name: 'Thái Tuế', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Thiếu Dương', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'thaiTue12' },
-  { name: 'Tang Môn', nguHanh: 'Âm Mộc', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Thiếu Âm', nguHanh: 'Âm Thủy', type: 'cat', placementRule: 'thaiTue12' },
-  { name: 'Quan Phù', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Tử Phù', nguHanh: 'Âm Thổ', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Tuế Phá', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Long Đức', nguHanh: 'Dương Thủy', type: 'cat', placementRule: 'thaiTue12' },
-  { name: 'Bạch Hổ', nguHanh: 'Dương Kim', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Phúc Đức', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'thaiTue12' },
-  { name: 'Điếu Khách', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Trực Phù', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'thaiTue12' },
-  { name: 'Bác Sỹ', nguHanh: 'Dương Thủy', type: 'cat', placementRule: 'bacSi12' },
-  { name: 'Lực Sỹ', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'bacSi12' },
-  { name: 'Thanh Long', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'bacSi12' },
-  { name: 'Tiểu Hao', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'bacSi12' },
-  { name: 'Tướng Quân', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'bacSi12' },
-  { name: 'Tấu Thư', nguHanh: 'Dương Kim', type: 'cat', placementRule: 'bacSi12' },
-  { name: 'Hỷ Thần', nguHanh: 'Dương Hỏa', type: 'cat', placementRule: 'bacSi12' },
-  { name: 'Bệnh Phù', nguHanh: 'Âm Thổ', type: 'sat', placementRule: 'bacSi12' },
-  { name: 'Đại Hao', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'bacSi12' },
-  { name: 'Phục Binh', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'bacSi12' },
-  { name: 'Quan Phủ', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'bacSi12' },
-  { name: 'Tướng Tinh', nguHanh: 'Dương Mộc', type: 'cat', placementRule: 'tuongTinh12' },
-  { name: 'Phan Án', nguHanh: 'Dương Thổ', type: 'cat', placementRule: 'tuongTinh12' },
-  { name: 'Tuế Dịch', nguHanh: 'Âm Mộc', type: 'sat', placementRule: 'tuongTinh12' },
-  { name: 'Tức Thần', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'tuongTinh12' },
-  { name: 'Tai Sát', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'tuongTinh12' },
-  { name: 'Thiên Sát', nguHanh: 'Dương Hỏa', type: 'sat', placementRule: 'tuongTinh12' },
-  { name: 'Chỉ Bối', nguHanh: 'Âm Thủy', type: 'sat', placementRule: 'tuongTinh12' },
-  { name: 'Hàm Trì', nguHanh: 'Âm Thủy', type: 'hoa', placementRule: 'tuongTinh12' },
-  { name: 'Nguyệt Sát', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'tuongTinh12' },
-  { name: 'Vong Thần', nguHanh: 'Âm Hỏa', type: 'sat', placementRule: 'tuongTinh12' },
+  // Lục Cát Tinh (6 Auspicious - Giáp cấp)
+  { name: 'Văn Xương', nguHanh: 'Dương Kim', type: 'cat', grade: 'giap', placementRule: 'hourBranch' },
+  { name: 'Văn Khúc', nguHanh: 'Âm Thủy', type: 'cat', grade: 'giap', placementRule: 'hourBranch' },
+  { name: 'Tả Phụ', nguHanh: 'Dương Thổ', type: 'cat', grade: 'giap', placementRule: 'monthBranch' },
+  { name: 'Hữu Bật', nguHanh: 'Âm Thủy', type: 'cat', grade: 'giap', placementRule: 'monthBranch' },
+  { name: 'Thiên Khôi', nguHanh: 'Dương Hỏa', type: 'cat', grade: 'giap', placementRule: 'yearCan' },
+  { name: 'Thiên Việt', nguHanh: 'Âm Hỏa', type: 'cat', grade: 'giap', placementRule: 'yearCan' },
+  // Lục Sát Tinh (6 Malefic - Giáp cấp)
+  { name: 'Kình Dương', nguHanh: 'Dương Kim', type: 'sat', grade: 'giap', placementRule: 'yearCan' },
+  { name: 'Đà La', nguHanh: 'Âm Kim', type: 'sat', grade: 'giap', placementRule: 'yearCan' },
+  { name: 'Hỏa Tinh', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'giap', placementRule: 'yearBranchHourBranch' },
+  { name: 'Linh Tinh', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'giap', placementRule: 'yearBranchHourBranch' },
+  { name: 'Địa Không', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'giap', placementRule: 'hourBranch' },
+  { name: 'Địa Kiếp', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'giap', placementRule: 'hourBranch' },
+  // 2 Trợ tinh Đệ Nhất (Giáp cấp)
+  { name: 'Lộc Tồn', nguHanh: 'Âm Thổ', type: 'cat', grade: 'giap', placementRule: 'yearCan' },
+  { name: 'Thiên Mã', nguHanh: 'Dương Hỏa', type: 'cat', grade: 'giap', placementRule: 'yearBranch' },
+  // Ất cấp tinh (Grade B)
+  { name: 'Đào Hoa', nguHanh: 'Âm Thủy', type: 'hoa', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Hồng Loan', nguHanh: 'Âm Thủy', type: 'hoa', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Thiên Hỉ', nguHanh: 'Dương Thủy', type: 'cat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Thiên Đức', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Nguyệt Đức', nguHanh: 'Âm Thủy', type: 'cat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Tam Thai', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'dayFromTaPhu' },
+  { name: 'Bát Tọa', nguHanh: 'Âm Thổ', type: 'cat', grade: 'at', placementRule: 'dayFromHuuBat' },
+  { name: 'Ân Quang', nguHanh: 'Dương Mộc', type: 'cat', grade: 'at', placementRule: 'dayFromVanXuong' },
+  { name: 'Thiên Quý', nguHanh: 'Âm Thổ', type: 'cat', grade: 'at', placementRule: 'dayFromVanKhuc' },
+  { name: 'Đài Phụ', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'hourBranch' },
+  { name: 'Phong Cáo', nguHanh: 'Âm Thổ', type: 'cat', grade: 'at', placementRule: 'hourBranch' },
+  { name: 'Đẩu Quân', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'at', placementRule: 'yearBranchMonthHour' },
+  { name: 'Thiên Y', nguHanh: 'Âm Thổ', type: 'cat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Hoa Cái', nguHanh: 'Dương Kim', type: 'cat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Cô Thần', nguHanh: 'Âm Thổ', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Quả Tú', nguHanh: 'Âm Thổ', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Thiên Tài', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'yearBranchMenh' },
+  { name: 'Thiên Thọ', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'yearBranchThan' },
+  { name: 'Thiên Trù', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'yearCan' },
+  { name: 'Phá Toái', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Phi Liêm', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Long Trì', nguHanh: 'Dương Thủy', type: 'cat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Phượng Các', nguHanh: 'Dương Mộc', type: 'cat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Thiên Khốc', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Thiên Hư', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Thiên Quan', nguHanh: 'Dương Hỏa', type: 'cat', grade: 'at', placementRule: 'yearCan' },
+  { name: 'Thiên Phúc', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'yearCan' },
+  { name: 'Thiên Không', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Thiên Thương', nguHanh: 'Âm Thổ', type: 'sat', grade: 'at', placementRule: 'menhPalace' },
+  { name: 'Thiên Sứ', nguHanh: 'Âm Thủy', type: 'sat', grade: 'at', placementRule: 'menhPalace' },
+  { name: 'Kiếp Sát', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'at', placementRule: 'yearBranch' },
+  { name: 'Giải Thần', nguHanh: 'Dương Mộc', type: 'cat', grade: 'at', placementRule: 'yearBranchMonth' },
+  { name: 'Thiên Diêu', nguHanh: 'Âm Thủy', type: 'hoa', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Thiên Hình', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Âm Sát', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Thiên Nguyệt', nguHanh: 'Âm Thủy', type: 'cat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Thiên Vu', nguHanh: 'Dương Mộc', type: 'cat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Thiên Giải', nguHanh: 'Dương Hỏa', type: 'cat', grade: 'at', placementRule: 'monthBranch' },
+  { name: 'Lưu Hà', nguHanh: 'Âm Thủy', type: 'sat', grade: 'at', placementRule: 'yearCan' },
+  { name: 'Đường Phù', nguHanh: 'Dương Mộc', type: 'cat', grade: 'at', placementRule: 'locTon' },
+  { name: 'Quốc Ấn', nguHanh: 'Dương Thổ', type: 'cat', grade: 'at', placementRule: 'locTon' },
+  { name: 'Thiên La', nguHanh: 'Âm Thổ', type: 'sat', grade: 'at', placementRule: 'fixed' },
+  { name: 'Địa Võng', nguHanh: 'Âm Thổ', type: 'sat', grade: 'at', placementRule: 'fixed' },
+  // Mậu cấp tinh (Vòng Thái Tuế)
+  { name: 'Thái Tuế', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Thiếu Dương', nguHanh: 'Dương Hỏa', type: 'cat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Tang Môn', nguHanh: 'Âm Mộc', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Thiếu Âm', nguHanh: 'Âm Thủy', type: 'cat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Quan Phù', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Tử Phù', nguHanh: 'Âm Thổ', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Tuế Phá', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Long Đức', nguHanh: 'Dương Thủy', type: 'cat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Bạch Hổ', nguHanh: 'Dương Kim', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Phúc Đức', nguHanh: 'Dương Thổ', type: 'cat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Điếu Khách', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  { name: 'Trực Phù', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'mau', placementRule: 'thaiTue12' },
+  // Bính cấp tinh (Vòng Bác Sĩ)
+  { name: 'Bác Sỹ', nguHanh: 'Dương Thủy', type: 'cat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Lực Sỹ', nguHanh: 'Dương Hỏa', type: 'cat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Thanh Long', nguHanh: 'Dương Mộc', type: 'cat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Tiểu Hao', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Tướng Quân', nguHanh: 'Dương Mộc', type: 'cat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Tấu Thư', nguHanh: 'Dương Kim', type: 'cat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Hỷ Thần', nguHanh: 'Dương Hỏa', type: 'cat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Bệnh Phù', nguHanh: 'Âm Thổ', type: 'sat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Đại Hao', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Phục Binh', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'binh', placementRule: 'bacSi12' },
+  { name: 'Quan Phủ', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'binh', placementRule: 'bacSi12' },
+  // Đinh cấp tinh (Vòng Tướng Tinh)
+  { name: 'Tướng Tinh', nguHanh: 'Dương Mộc', type: 'cat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Phan Án', nguHanh: 'Dương Thổ', type: 'cat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Tuế Dịch', nguHanh: 'Âm Mộc', type: 'sat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Tức Thần', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Tai Sát', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Thiên Sát', nguHanh: 'Dương Hỏa', type: 'sat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Chỉ Bối', nguHanh: 'Âm Thủy', type: 'sat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Hàm Trì', nguHanh: 'Âm Thủy', type: 'hoa', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Nguyệt Sát', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'dinh', placementRule: 'tuongTinh12' },
+  { name: 'Vong Thần', nguHanh: 'Âm Hỏa', type: 'sat', grade: 'dinh', placementRule: 'tuongTinh12' },
 ];
 
 // ── Palace Geometry ─────────────────────────────────────────────
@@ -234,6 +242,67 @@ export const DOI_CUNG_MAP: Record<number, number> = {
   10: 4, // Tuất ↔ Thìn
   11: 5, // Hợi ↔ Tỵ
 };
+
+/**
+ * 6 Nhị Hợp (Lục Hợp) palace pairs in classical Tử Vi geometry.
+ * Symmetrical bilateral pairing across the vertical chart axis.
+ */
+export const NHI_HOP_MAP: Record<number, number> = {
+  0: 1, // Tý ↔ Sửu
+  1: 0, // Sửu ↔ Tý
+  2: 11, // Dần ↔ Hợi
+  3: 10, // Mão ↔ Tuất
+  4: 9, // Thìn ↔ Dậu
+  5: 8, // Tỵ ↔ Thân
+  6: 7, // Ngọ ↔ Mùi
+  7: 6, // Mùi ↔ Ngọ
+  8: 5, // Thân ↔ Tỵ
+  9: 4, // Dậu ↔ Thìn
+  10: 3, // Tuất ↔ Mão
+  11: 2, // Hợi ↔ Dần
+};
+
+/** 6 Cường Cung (Primary/Strong Palaces) in academic Tử Vi */
+export const CUONG_CUNG_NAMES = ['Mệnh', 'Phúc Đức', 'Quan Lộc', 'Tài Bạch', 'Thiên Di', 'Phu Thê'] as const;
+
+export const CUONG_CUNG_SET = new Set<string>(CUONG_CUNG_NAMES);
+
+/**
+ * Hậu Thiên Bát Quái (Later Heaven Trigram) mapping for 12 Địa Chi.
+ */
+export const PALACE_TRIGRAM_MAP: Record<number, { name: string; hanTu: string; nguHanh: string; symbol: string }> = {
+  0: { name: 'Khảm', hanTu: '坎', nguHanh: 'Thủy', symbol: '☵' }, // Tý (Chính Bắc)
+  1: { name: 'Cấn', hanTu: '艮', nguHanh: 'Thổ', symbol: '☶' }, // Sửu (Đông Bắc)
+  2: { name: 'Cấn', hanTu: '艮', nguHanh: 'Thổ', symbol: '☶' }, // Dần (Đông Bắc)
+  3: { name: 'Chấn', hanTu: '震', nguHanh: 'Mộc', symbol: '☳' }, // Mão (Chính Đông)
+  4: { name: 'Tốn', hanTu: '巽', nguHanh: 'Mộc', symbol: '☴' }, // Thìn (Đông Nam)
+  5: { name: 'Tốn', hanTu: '巽', nguHanh: 'Mộc', symbol: '☴' }, // Tỵ (Đông Nam)
+  6: { name: 'Ly', hanTu: '離', nguHanh: 'Hỏa', symbol: '☲' }, // Ngọ (Chính Nam)
+  7: { name: 'Khôn', hanTu: '坤', nguHanh: 'Thổ', symbol: '☷' }, // Mùi (Tây Nam)
+  8: { name: 'Khôn', hanTu: '坤', nguHanh: 'Thổ', symbol: '☷' }, // Thân (Tây Nam)
+  9: { name: 'Đoài', hanTu: '兌', nguHanh: 'Kim', symbol: '☱' }, // Dậu (Chính Tây)
+  10: { name: 'Càn', hanTu: '乾', nguHanh: 'Kim', symbol: '☰' }, // Tuất (Tây Bắc)
+  11: { name: 'Càn', hanTu: '乾', nguHanh: 'Kim', symbol: '☰' }, // Hợi (Tây Bắc)
+};
+
+/**
+ * Positional interaction semantics (Tọa, Cứ, Triều, Xung, Củng, Hiệp, Hiếp)
+ */
+export const POSITIONAL_SEMANTICS_INFO = {
+  toa: { label: 'Tọa (坐)', desc: 'Cát tinh/Chính tinh nhập thủ bản cung, định hình tính cách và nền tảng cốt lõi.' },
+  cu: {
+    label: 'Cứ (据)',
+    desc: 'Hung sát tinh nhập thủ bản cung, tạo ra biến động, thử thách trực tiếp tại đương cung.',
+  },
+  trieu: { label: 'Triều (朝)', desc: 'Cát tinh từ cung đối diện (Xung cung) rọi sáng chiếu về bản cung.' },
+  xung: {
+    label: 'Xung (冲)',
+    desc: 'Hung sát tinh từ cung đối diện trực xung kích động, gây áp lực từ môi trường ngoài.',
+  },
+  cung: { label: 'Củng (拱)', desc: 'Cát tinh ở các cung Tam Phương (Tam Hợp) hợp lực vây quanh nâng đỡ bản cung.' },
+  hiep: { label: 'Hiệp (夹)', desc: 'Cát tinh ở 2 cung liền kề kẹp bản cung (Quân thần phò tá hai bên).' },
+  hiepHung: { label: 'Hiếp (胁)', desc: 'Hung sát tinh từ các phương vị cùng vây hãm, gây áp lực lên bản cung.' },
+} as const;
 
 // ── Nạp Âm (60 Can-Chi Sounding) ──────────────────────────────
 /**

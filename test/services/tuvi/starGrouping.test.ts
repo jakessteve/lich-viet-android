@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { CHINH_TINH_LIST } from '@/services/tuvi/constants';
-import { formatPalaceStars, getNguHanhElement, getStarBrightnessMarker, getStarColor } from '@/services/tuvi/starGrouping';
+import {
+  formatPalaceStars,
+  getNguHanhElement,
+  getStarBrightnessMarker,
+  getStarColor,
+} from '@/services/tuvi/starGrouping';
 import type { TuViPalace } from '@/types/tuvi';
 
 function makePalace(overrides: Partial<TuViPalace> = {}): TuViPalace {

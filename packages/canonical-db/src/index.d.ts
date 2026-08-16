@@ -8,7 +8,7 @@ export declare const HTZC_RULES: ReadonlyArray<{
 export declare function resolveVietnamHistoricalTimezone(input: {
   timestamp: number;
   latitude?: number;
-  controlZone?: "occupied" | "resistance";
+  controlZone?: 'occupied' | 'resistance';
 }): {
   ruleId: string;
   offsetHours: number;
@@ -90,7 +90,7 @@ export interface DungSuScoringProfile {
   event_id: string;
   scoring_profile_id: string;
   category: string;
-  accuracy_tier: "complete" | "bounded_specialist_ready" | "specialist_required";
+  accuracy_tier: 'complete' | 'bounded_specialist_ready' | 'specialist_required';
   source_coverage_percent: number;
   generic_weight: number;
   cross_system_weight: number;
@@ -100,15 +100,11 @@ export interface DungSuScoringProfile {
   specialist_ref: string | null;
 }
 
-export declare function listDungSuScoringProfiles(input?: {
-  accuracyTier?: string;
-}): DungSuScoringProfile[];
+export declare function listDungSuScoringProfiles(input?: { accuracyTier?: string }): DungSuScoringProfile[];
 
 export declare function getDungSuScoringProfile(eventId: string): DungSuScoringProfile;
 
-export declare function listAstrologyConcepts(input?: {
-  tradition?: string;
-}): Array<{
+export declare function listAstrologyConcepts(input?: { tradition?: string }): Array<{
   concept_id: string;
   tradition: string;
   label: string;
@@ -123,9 +119,7 @@ export declare function listCalculationSources(): Array<{
   url: string;
 }>;
 
-export declare function listCalculationMethods(input?: {
-  domain?: string;
-}): Array<{
+export declare function listCalculationMethods(input?: { domain?: string }): Array<{
   method_id: string;
   label: string;
   domain: string;
@@ -152,7 +146,7 @@ export declare function createUserOverrideRecord(
     custom_element?: string;
     custom_weight?: number;
   },
-  now?: () => string
+  now?: () => string,
 ): {
   school_id: string;
   entity_id: string;
@@ -175,7 +169,7 @@ export declare function createOverrideAuditEntry(
     };
     reason: string;
   },
-  now?: () => string
+  now?: () => string,
 ): {
   audit_id: string;
   school_id: string;
@@ -188,12 +182,14 @@ export declare function createOverrideAuditEntry(
   created_at: string;
 };
 
-export declare function applyUserOverrides(overrides: Array<{
-  school_id: string;
-  entity_id: string;
-  custom_element?: string;
-  custom_weight?: number;
-}>): {
+export declare function applyUserOverrides(
+  overrides: Array<{
+    school_id: string;
+    entity_id: string;
+    custom_element?: string;
+    custom_weight?: number;
+  }>,
+): {
   records: Array<{
     school_id: string;
     entity_id: string;
@@ -239,12 +235,11 @@ export declare function buildPhase2FixtureBundle(): {
     label: string;
     timestamp: number;
     latitude: number;
-    resolved:
-      {
-        ruleId: string;
-        offsetHours: number;
-        ambiguous: false;
-      };
+    resolved: {
+      ruleId: string;
+      offsetHours: number;
+      ambiguous: false;
+    };
     shiftedTimestamp: number | null;
   }>;
   overrideFixtures: ReturnType<typeof applyUserOverrides>;

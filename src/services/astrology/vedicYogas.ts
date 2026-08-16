@@ -25,9 +25,18 @@ export interface VedicPlanetPosition {
 }
 
 const SIGN_NAMES_VI = [
-  'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',
-  'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp',
-  'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư',
+  'Bạch Dương',
+  'Kim Ngưu',
+  'Song Tử',
+  'Cự Giải',
+  'Sư Tử',
+  'Xử Nữ',
+  'Thiên Bình',
+  'Bọ Cạp',
+  'Nhân Mã',
+  'Ma Kết',
+  'Bảo Bình',
+  'Song Ngư',
 ];
 
 function classifyBhava(houses: number[]): string {
@@ -50,7 +59,7 @@ function checkCombustion(planet: VedicPlanetPosition, sun?: VedicPlanetPosition,
 
 export function detectVedicYogasAndDoshas(
   planets: VedicPlanetPosition[],
-  ascendantLongitude: number
+  _ascendantLongitude: number,
 ): VedicYogaDoshaItem[] {
   const items: VedicYogaDoshaItem[] = [];
 
@@ -63,7 +72,7 @@ export function detectVedicYogasAndDoshas(
 
   // 1. Gaja Kesari Yoga (Jupiter in Kendra 1, 4, 7, 10 from Moon)
   if (moon && jupiter) {
-    const houseDiff = (((jupiter.house - moon.house) % 12) + 12) % 12 + 1;
+    const houseDiff = ((((jupiter.house - moon.house) % 12) + 12) % 12) + 1;
     if ([1, 4, 7, 10].includes(houseDiff)) {
       const involvedHouses = [moon.house, jupiter.house];
       const bhavaClass = classifyBhava(involvedHouses);
@@ -88,7 +97,8 @@ export function detectVedicYogasAndDoshas(
             ? 'Sao Mộc nằm tại góc Kendra của Cung Mọc giúp kích hoạt năng lực lãnh đạo, danh vọng và tài năng học thuật xuất sắc.'
             : 'Vị trí tương hỗ giữa Trăng và Mộc mang lại sự bình an nội tâm, trực giác cao quý và hậu vận thịnh vượng.'
         }`,
-        remedyOrAdviceVi: 'Hãy phát huy tối đa tinh thần học hỏi, mở rộng tri thức, làm việc thiện nguyện và giữ gìn phẩm hạnh chính trực.',
+        remedyOrAdviceVi:
+          'Hãy phát huy tối đa tinh thần học hỏi, mở rộng tri thức, làm việc thiện nguyện và giữ gìn phẩm hạnh chính trực.',
       });
     }
   }
@@ -118,7 +128,8 @@ export function detectVedicYogasAndDoshas(
             ? 'Sao Thủy ở vị trí rất gần Mặt Trời (Astangata), đòi hỏi đương số rèn luyện sự khiêm tốn và lắng nghe để trí tuệ đạt đến độ chín muồi.'
             : 'Sao Thủy được Mặt Trời chiếu rọi rực rỡ, ban tặng tư duy sắc bén, khả năng đàm phán xuất chúng và năng lực phân tích chiến lược vượt bậc.'
         }`,
-        remedyOrAdviceVi: 'Tận dụng khả năng giao tiếp và tư duy phân tích trong đàm phán, hoạch định chiến lược và quản lý tài chính.',
+        remedyOrAdviceVi:
+          'Tận dụng khả năng giao tiếp và tư duy phân tích trong đàm phán, hoạch định chiến lược và quản lý tài chính.',
       });
     }
   }
@@ -140,11 +151,12 @@ export function detectVedicYogasAndDoshas(
         planetsInvolved: ['Sao Hỏa (Mangala)'],
         bhavaHouses: [mars.house],
         bhavaClassificationVi: bhavaClass,
-        dashaActivationVi: 'Cần chú ý giữ hòa khí trong gia đạo trong các giai đoạn Mahadasha/Antardasha của Sao Hỏa (Mangala).',
-        descriptionVi:
-          `Sao Hỏa đóng tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}), tạo ra năng lượng nhiệt huyết, bộc trực nhưng có thể gây ra những thử thách về tính kiên nhẫn trong các mối quan hệ tình cảm và hôn nhân.`,
+        dashaActivationVi:
+          'Cần chú ý giữ hòa khí trong gia đạo trong các giai đoạn Mahadasha/Antardasha của Sao Hỏa (Mangala).',
+        descriptionVi: `Sao Hỏa đóng tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}), tạo ra năng lượng nhiệt huyết, bộc trực nhưng có thể gây ra những thử thách về tính kiên nhẫn trong các mối quan hệ tình cảm và hôn nhân.`,
         personalizedSynthesisVi: `Sao Hỏa tọa thủ tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}). Đương số có cá tính mạnh mẽ, dám nghĩ dám làm và ý chí kiên định; tuy nhiên cần học cách làm dịu năng lượng Hỏa để xây dựng mối quan hệ đối tác và hôn nhân bền vững.`,
-        remedyOrAdviceVi: 'Học cách kiềm chế sự nóng nảy, tôn trọng không gian riêng của đối phương, tập thể thao lành mạnh và kết hôn khi đã đủ chín chắn.',
+        remedyOrAdviceVi:
+          'Học cách kiềm chế sự nóng nảy, tôn trọng không gian riêng của đối phương, tập thể thao lành mạnh và kết hôn khi đã đủ chín chắn.',
       });
     }
   }
@@ -167,7 +179,8 @@ export function detectVedicYogasAndDoshas(
         descriptionVi:
           'Sự kết hợp giữa cảm xúc trực giác và ý chí hành động dũng cảm giúp người sở hữu có năng lực kiếm tiền vượt trội, nhạy bén trong kinh doanh và đầu tư bất động sản.',
         personalizedSynthesisVi: `Liên kết giữa Mặt Trăng tại Nhà ${moon.house} và Sao Hỏa tại Nhà ${mars.house} tạo nên sự nhạy bén thương mại, năng lực xoay chuyển nguồn vốn và khả năng nắm bắt thời cơ nhanh chóng.`,
-        remedyOrAdviceVi: 'Kiểm soát cảm xúc bốc đồng khi tiêu xài hoặc đầu tư mạo hiểm; hướng nguồn lực vào các tài sản mang giá trị thực chất.',
+        remedyOrAdviceVi:
+          'Kiểm soát cảm xúc bốc đồng khi tiêu xài hoặc đầu tư mạo hiểm; hướng nguồn lực vào các tài sản mang giá trị thực chất.',
       });
     }
   }
@@ -190,7 +203,8 @@ export function detectVedicYogasAndDoshas(
         descriptionVi:
           'Năng lượng hành động mạnh mẽ của Hỏa Tinh được dẫn dắt bởi trí tuệ và đạo đức của Mộc Tinh, tạo nên phong thái chính trực, thành công trong quản lý và tổ chức.',
         personalizedSynthesisVi: `Hội tụ tại Nhà ${jupiter.house} (${SIGN_NAMES_VI[jupiter.signIndex]}), mang lại phong thái đĩnh đạc, khả năng tổ chức kỷ luật và được cấp dưới tôn kính.`,
-        remedyOrAdviceVi: 'Duy trì sự công tâm, liêm chính trong quản trị và dùng sức mạnh để bảo vệ, nâng đỡ người khác.',
+        remedyOrAdviceVi:
+          'Duy trì sự công tâm, liêm chính trong quản trị và dùng sức mạnh để bảo vệ, nâng đỡ người khác.',
       });
     }
   }
@@ -209,15 +223,16 @@ export function detectVedicYogasAndDoshas(
         planetsInvolved: ['Sao Thổ (Shani)', 'Mặt Trăng (Chandra)'],
         bhavaHouses: involvedHouses,
         bhavaClassificationVi: classifyBhava(involvedHouses),
-        dashaActivationVi: 'Cần chú ý chăm sóc sức khỏe tinh thần trong vận hạn của Sao Thổ (Shani) hoặc Mặt Trăng (Chandra).',
+        dashaActivationVi:
+          'Cần chú ý chăm sóc sức khỏe tinh thần trong vận hạn của Sao Thổ (Shani) hoặc Mặt Trăng (Chandra).',
         descriptionVi:
           'Thổ Tinh và Mặt Trăng đồng cung tạo ra một thế giới nội tâm sâu sắc nhưng đôi khi có xu hướng lo âu, cảm thấy cô đơn hoặc gánh nặng trách nhiệm đè nặng.',
         personalizedSynthesisVi: `Đồng cung tại Nhà ${saturn.house} (${SIGN_NAMES_VI[saturn.signIndex]}). Đương số có chiều sâu tâm lý phi thường, khả năng chịu đựng bền bỉ và dễ đạt thành tựu lớn trong nghiên cứu, triết học hoặc tâm linh sau khi vượt qua thử thách nội tâm.`,
-        remedyOrAdviceVi: 'Thực hành thiền định, hòa mình vào thiên nhiên, duy trì suy nghĩ tích cực và chia sẻ tâm sự với những người thân tín.',
+        remedyOrAdviceVi:
+          'Thực hành thiền định, hòa mình vào thiên nhiên, duy trì suy nghĩ tích cực và chia sẻ tâm sự với những người thân tín.',
       });
     }
   }
 
   return items;
 }
-

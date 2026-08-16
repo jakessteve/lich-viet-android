@@ -133,7 +133,8 @@ export const TuViInputForm: React.FC = () => {
 
   const labelBase =
     'block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-2 tracking-wide';
-  const infoLabelBase = 'block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-1 tracking-wide';
+  const infoLabelBase =
+    'block text-sm font-semibold text-text-secondary-light dark:text-text-secondary-dark mb-1 tracking-wide';
   const profileDateControl =
     'surface-control px-3 py-2.5 text-sm text-center focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none';
 
@@ -266,7 +267,8 @@ export const TuViInputForm: React.FC = () => {
           <div className="min-w-0">
             <p className={infoLabelBase}>Cách tính giờ</p>
             <p className="text-xs leading-5 text-text-secondary-light/75 dark:text-text-secondary-dark/75">
-              Giờ Tử Vi được quy đổi tự động theo lịch sử Việt Nam, với lớp Swiss engine hỗ trợ hiệu chỉnh true solar khi khả dụng.
+              Giờ Tử Vi được quy đổi tự động theo lịch sử Việt Nam, với lớp Swiss engine hỗ trợ hiệu chỉnh true solar
+              khi khả dụng.
             </p>
           </div>
         </div>

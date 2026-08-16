@@ -26,7 +26,7 @@ async function saveToDocuments(dataUrl: string, filename: string): Promise<void>
         await Filesystem.writeFile({
           path: filename,
           data: base64,
-          directory: Directory.Documents
+          directory: Directory.Documents,
         });
         window.alert(`Đã lưu ảnh vào thư mục Documents/${filename}`);
         resolve();

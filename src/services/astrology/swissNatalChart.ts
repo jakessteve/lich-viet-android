@@ -1,12 +1,5 @@
 import { SwissEphemeris } from '@swisseph/browser';
-import {
-  Asteroid,
-  CalculationFlag,
-  HouseSystem,
-  LunarPoint,
-  Planet,
-  type CelestialBody,
-} from '@swisseph/core';
+import { Asteroid, CalculationFlag, HouseSystem, LunarPoint, Planet, type CelestialBody } from '@swisseph/core';
 import type { WesternChartInput } from '../../types/astrology';
 import type {
   AspectResult,
@@ -19,13 +12,7 @@ import { calculateElementModalityBalance, type ElementModalityBalanceResult } fr
 import { calculateBirthMoonPhase, type MoonPhaseResult } from './moonPhase';
 import { measureAsync } from '@/utils/performanceTracker';
 
-export type SwissNatalObjectCategory =
-  | 'planet'
-  | 'centaur'
-  | 'lunar_point'
-  | 'asteroid'
-  | 'arabic_part'
-  | 'angle';
+export type SwissNatalObjectCategory = 'planet' | 'centaur' | 'lunar_point' | 'asteroid' | 'arabic_part' | 'angle';
 
 export type EssentialDignityType = 'domicile' | 'exaltation' | 'detriment' | 'fall' | 'peregrine';
 
@@ -137,7 +124,7 @@ export interface SwissNatalChartResult {
     longitude: number;
     fixedUtcOffsetHours: number;
     locationName?: string;
-    houseSystem: 'placidus';
+    houseSystem: string;
   };
   metadata: {
     engine: '@swisseph/browser';
@@ -166,26 +153,203 @@ export interface SwissNatalChartResult {
 }
 
 export const REQUIRED_OBJECT_SCHEMA: readonly SwissNatalObjectSchemaEntry[] = [
-  { id: 'planet:sun', name: 'Sun', nameVi: 'Mặt Trời', symbol: '☉', category: 'planet', isAngle: false, swissBody: Planet.Sun, legacyBody: 'sun' },
-  { id: 'planet:moon', name: 'Moon', nameVi: 'Mặt Trăng', symbol: '☽', category: 'planet', isAngle: false, swissBody: Planet.Moon, legacyBody: 'moon' },
-  { id: 'planet:mercury', name: 'Mercury', nameVi: 'Sao Thủy', symbol: '☿', category: 'planet', isAngle: false, swissBody: Planet.Mercury, legacyBody: 'mercury' },
-  { id: 'planet:venus', name: 'Venus', nameVi: 'Sao Kim', symbol: '♀', category: 'planet', isAngle: false, swissBody: Planet.Venus, legacyBody: 'venus' },
-  { id: 'planet:mars', name: 'Mars', nameVi: 'Sao Hỏa', symbol: '♂', category: 'planet', isAngle: false, swissBody: Planet.Mars, legacyBody: 'mars' },
-  { id: 'planet:jupiter', name: 'Jupiter', nameVi: 'Sao Mộc', symbol: '♃', category: 'planet', isAngle: false, swissBody: Planet.Jupiter, legacyBody: 'jupiter' },
-  { id: 'planet:saturn', name: 'Saturn', nameVi: 'Sao Thổ', symbol: '♄', category: 'planet', isAngle: false, swissBody: Planet.Saturn, legacyBody: 'saturn' },
-  { id: 'planet:uranus', name: 'Uranus', nameVi: 'Thiên Vương', symbol: '♅', category: 'planet', isAngle: false, swissBody: Planet.Uranus, legacyBody: 'uranus' },
-  { id: 'planet:neptune', name: 'Neptune', nameVi: 'Hải Vương', symbol: '♆', category: 'planet', isAngle: false, swissBody: Planet.Neptune, legacyBody: 'neptune' },
-  { id: 'planet:pluto', name: 'Pluto', nameVi: 'Diêm Vương', symbol: '♇', category: 'planet', isAngle: false, swissBody: Planet.Pluto, legacyBody: 'pluto' },
-  { id: 'centaur:chiron', name: 'Chiron', nameVi: 'Chiron', symbol: '⚷', category: 'centaur', isAngle: false, swissBody: Asteroid.Chiron, legacyBody: 'chiron' },
-  { id: 'lunar-point:mean-lilith', name: 'Mean Lilith', nameVi: 'Lilith Trung Bình', symbol: '⚸', category: 'lunar_point', isAngle: false, swissBody: LunarPoint.MeanApogee, legacyBody: 'lilith' },
-  { id: 'lunar-point:true-north-node', name: 'True Node', nameVi: 'La Hầu', symbol: '☊', category: 'lunar_point', isAngle: false, swissBody: LunarPoint.TrueNode, legacyBody: 'northnode' },
-  { id: 'derived:true-south-node', name: 'South Node', nameVi: 'Kế Đô', symbol: '☋', category: 'lunar_point', isAngle: false, legacyBody: 'southnode' },
-  { id: 'derived:part-of-fortune', name: 'Part of Fortune', nameVi: 'Điểm May Mắn', symbol: '⊗', category: 'arabic_part', isAngle: false, legacyBody: 'partoffortune' },
-  { id: 'angle:vertex', name: 'Vertex', nameVi: 'Vertex', symbol: 'Vx', category: 'angle', isAngle: true, legacyBody: 'vertex' },
-  { id: 'asteroid:ceres', name: 'Ceres', nameVi: 'Ceres', symbol: '⚳', category: 'asteroid', isAngle: false, swissBody: Asteroid.Ceres, legacyBody: 'ceres' },
-  { id: 'asteroid:pallas', name: 'Pallas', nameVi: 'Pallas', symbol: '⚴', category: 'asteroid', isAngle: false, swissBody: Asteroid.Pallas, legacyBody: 'pallas' },
-  { id: 'asteroid:juno', name: 'Juno', nameVi: 'Juno', symbol: '⚵', category: 'asteroid', isAngle: false, swissBody: Asteroid.Juno, legacyBody: 'juno' },
-  { id: 'asteroid:vesta', name: 'Vesta', nameVi: 'Vesta', symbol: '⚶', category: 'asteroid', isAngle: false, swissBody: Asteroid.Vesta, legacyBody: 'vesta' },
+  {
+    id: 'planet:sun',
+    name: 'Sun',
+    nameVi: 'Mặt Trời',
+    symbol: '☉',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Sun,
+    legacyBody: 'sun',
+  },
+  {
+    id: 'planet:moon',
+    name: 'Moon',
+    nameVi: 'Mặt Trăng',
+    symbol: '☽',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Moon,
+    legacyBody: 'moon',
+  },
+  {
+    id: 'planet:mercury',
+    name: 'Mercury',
+    nameVi: 'Sao Thủy',
+    symbol: '☿',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Mercury,
+    legacyBody: 'mercury',
+  },
+  {
+    id: 'planet:venus',
+    name: 'Venus',
+    nameVi: 'Sao Kim',
+    symbol: '♀',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Venus,
+    legacyBody: 'venus',
+  },
+  {
+    id: 'planet:mars',
+    name: 'Mars',
+    nameVi: 'Sao Hỏa',
+    symbol: '♂',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Mars,
+    legacyBody: 'mars',
+  },
+  {
+    id: 'planet:jupiter',
+    name: 'Jupiter',
+    nameVi: 'Sao Mộc',
+    symbol: '♃',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Jupiter,
+    legacyBody: 'jupiter',
+  },
+  {
+    id: 'planet:saturn',
+    name: 'Saturn',
+    nameVi: 'Sao Thổ',
+    symbol: '♄',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Saturn,
+    legacyBody: 'saturn',
+  },
+  {
+    id: 'planet:uranus',
+    name: 'Uranus',
+    nameVi: 'Thiên Vương',
+    symbol: '♅',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Uranus,
+    legacyBody: 'uranus',
+  },
+  {
+    id: 'planet:neptune',
+    name: 'Neptune',
+    nameVi: 'Hải Vương',
+    symbol: '♆',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Neptune,
+    legacyBody: 'neptune',
+  },
+  {
+    id: 'planet:pluto',
+    name: 'Pluto',
+    nameVi: 'Diêm Vương',
+    symbol: '♇',
+    category: 'planet',
+    isAngle: false,
+    swissBody: Planet.Pluto,
+    legacyBody: 'pluto',
+  },
+  {
+    id: 'centaur:chiron',
+    name: 'Chiron',
+    nameVi: 'Chiron',
+    symbol: '⚷',
+    category: 'centaur',
+    isAngle: false,
+    swissBody: Asteroid.Chiron,
+    legacyBody: 'chiron',
+  },
+  {
+    id: 'lunar-point:mean-lilith',
+    name: 'Mean Lilith',
+    nameVi: 'Lilith Trung Bình',
+    symbol: '⚸',
+    category: 'lunar_point',
+    isAngle: false,
+    swissBody: LunarPoint.MeanApogee,
+    legacyBody: 'lilith',
+  },
+  {
+    id: 'lunar-point:true-north-node',
+    name: 'True Node',
+    nameVi: 'La Hầu',
+    symbol: '☊',
+    category: 'lunar_point',
+    isAngle: false,
+    swissBody: LunarPoint.TrueNode,
+    legacyBody: 'northnode',
+  },
+  {
+    id: 'derived:true-south-node',
+    name: 'South Node',
+    nameVi: 'Kế Đô',
+    symbol: '☋',
+    category: 'lunar_point',
+    isAngle: false,
+    legacyBody: 'southnode',
+  },
+  {
+    id: 'derived:part-of-fortune',
+    name: 'Part of Fortune',
+    nameVi: 'Điểm May Mắn',
+    symbol: '⊗',
+    category: 'arabic_part',
+    isAngle: false,
+    legacyBody: 'partoffortune',
+  },
+  {
+    id: 'angle:vertex',
+    name: 'Vertex',
+    nameVi: 'Vertex',
+    symbol: 'Vx',
+    category: 'angle',
+    isAngle: true,
+    legacyBody: 'vertex',
+  },
+  {
+    id: 'asteroid:ceres',
+    name: 'Ceres',
+    nameVi: 'Ceres',
+    symbol: '⚳',
+    category: 'asteroid',
+    isAngle: false,
+    swissBody: Asteroid.Ceres,
+    legacyBody: 'ceres',
+  },
+  {
+    id: 'asteroid:pallas',
+    name: 'Pallas',
+    nameVi: 'Pallas',
+    symbol: '⚴',
+    category: 'asteroid',
+    isAngle: false,
+    swissBody: Asteroid.Pallas,
+    legacyBody: 'pallas',
+  },
+  {
+    id: 'asteroid:juno',
+    name: 'Juno',
+    nameVi: 'Juno',
+    symbol: '⚵',
+    category: 'asteroid',
+    isAngle: false,
+    swissBody: Asteroid.Juno,
+    legacyBody: 'juno',
+  },
+  {
+    id: 'asteroid:vesta',
+    name: 'Vesta',
+    nameVi: 'Vesta',
+    symbol: '⚶',
+    category: 'asteroid',
+    isAngle: false,
+    swissBody: Asteroid.Vesta,
+    legacyBody: 'vesta',
+  },
 ] as const;
 
 export interface SwissNatalAspectDefinition {
@@ -201,17 +365,127 @@ export interface SwissNatalAspectDefinition {
 }
 
 export const ASPECT_DEFINITIONS: readonly SwissNatalAspectDefinition[] = [
-  { id: 'conjunction', name: 'Conjunction', angle: 0, orb: 8, color: '#7A4E9D', opacity: 0.72, width: 1.35, dashPattern: 'solid', layer: 5 },
-  { id: 'opposition', name: 'Opposition', angle: 180, orb: 8, color: '#D1495B', opacity: 0.78, width: 1.3, dashPattern: 'solid', layer: 4 },
-  { id: 'trine', name: 'Trine', angle: 120, orb: 7, color: '#315FA8', opacity: 0.74, width: 1.15, dashPattern: 'solid', layer: 3 },
-  { id: 'square', name: 'Square', angle: 90, orb: 7, color: '#D1495B', opacity: 0.76, width: 1.2, dashPattern: 'solid', layer: 4 },
-  { id: 'sextile', name: 'Sextile', angle: 60, orb: 6, color: '#2E8B73', opacity: 0.7, width: 1.05, dashPattern: 'solid', layer: 2 },
-  { id: 'quincunx', name: 'Quincunx', angle: 150, orb: 3, color: '#8A5CA8', opacity: 0.58, width: 0.95, dashPattern: '5 4', layer: 1 },
-  { id: 'semi-sextile', name: 'Semi-sextile', angle: 30, orb: 2, color: '#7C8796', opacity: 0.42, width: 0.8, dashPattern: '2 4', layer: 0 },
-  { id: 'semi-square', name: 'Semi-square', angle: 45, orb: 2, color: '#C56A75', opacity: 0.48, width: 0.85, dashPattern: '3 3', layer: 1 },
-  { id: 'sesquiquadrate', name: 'Sesquiquadrate', angle: 135, orb: 2, color: '#C56A75', opacity: 0.48, width: 0.85, dashPattern: '3 3', layer: 1 },
-  { id: 'quintile', name: 'Quintile', angle: 72, orb: 2, color: '#8A6BBE', opacity: 0.5, width: 0.85, dashPattern: '1 3', layer: 1 },
-  { id: 'bi-quintile', name: 'Bi-quintile', angle: 144, orb: 2, color: '#8A6BBE', opacity: 0.5, width: 0.85, dashPattern: '1 3', layer: 1 },
+  {
+    id: 'conjunction',
+    name: 'Conjunction',
+    angle: 0,
+    orb: 8,
+    color: '#7A4E9D',
+    opacity: 0.72,
+    width: 1.35,
+    dashPattern: 'solid',
+    layer: 5,
+  },
+  {
+    id: 'opposition',
+    name: 'Opposition',
+    angle: 180,
+    orb: 8,
+    color: '#D1495B',
+    opacity: 0.78,
+    width: 1.3,
+    dashPattern: 'solid',
+    layer: 4,
+  },
+  {
+    id: 'trine',
+    name: 'Trine',
+    angle: 120,
+    orb: 7,
+    color: '#315FA8',
+    opacity: 0.74,
+    width: 1.15,
+    dashPattern: 'solid',
+    layer: 3,
+  },
+  {
+    id: 'square',
+    name: 'Square',
+    angle: 90,
+    orb: 7,
+    color: '#D1495B',
+    opacity: 0.76,
+    width: 1.2,
+    dashPattern: 'solid',
+    layer: 4,
+  },
+  {
+    id: 'sextile',
+    name: 'Sextile',
+    angle: 60,
+    orb: 6,
+    color: '#2E8B73',
+    opacity: 0.7,
+    width: 1.05,
+    dashPattern: 'solid',
+    layer: 2,
+  },
+  {
+    id: 'quincunx',
+    name: 'Quincunx',
+    angle: 150,
+    orb: 3,
+    color: '#8A5CA8',
+    opacity: 0.58,
+    width: 0.95,
+    dashPattern: '5 4',
+    layer: 1,
+  },
+  {
+    id: 'semi-sextile',
+    name: 'Semi-sextile',
+    angle: 30,
+    orb: 2,
+    color: '#7C8796',
+    opacity: 0.42,
+    width: 0.8,
+    dashPattern: '2 4',
+    layer: 0,
+  },
+  {
+    id: 'semi-square',
+    name: 'Semi-square',
+    angle: 45,
+    orb: 2,
+    color: '#C56A75',
+    opacity: 0.48,
+    width: 0.85,
+    dashPattern: '3 3',
+    layer: 1,
+  },
+  {
+    id: 'sesquiquadrate',
+    name: 'Sesquiquadrate',
+    angle: 135,
+    orb: 2,
+    color: '#C56A75',
+    opacity: 0.48,
+    width: 0.85,
+    dashPattern: '3 3',
+    layer: 1,
+  },
+  {
+    id: 'quintile',
+    name: 'Quintile',
+    angle: 72,
+    orb: 2,
+    color: '#8A6BBE',
+    opacity: 0.5,
+    width: 0.85,
+    dashPattern: '1 3',
+    layer: 1,
+  },
+  {
+    id: 'bi-quintile',
+    name: 'Bi-quintile',
+    angle: 144,
+    orb: 2,
+    color: '#8A6BBE',
+    opacity: 0.5,
+    width: 0.85,
+    dashPattern: '1 3',
+    layer: 1,
+  },
 ] as const;
 
 export const LOCAL_EPHEMERIS_FILES = [
@@ -223,17 +497,8 @@ export const LOCAL_EPHEMERIS_FILES = [
 export interface SwissNatalEphemeris {
   version(): string;
   dateToJulianDay(date: Date): number;
-  calculatePosition(
-    julianDay: number,
-    body: CelestialBody,
-    flags?: number,
-  ): SwissPositionResult;
-  calculateHouses(
-    julianDay: number,
-    latitude: number,
-    longitude: number,
-    houseSystem?: HouseSystem,
-  ): SwissHouseResult;
+  calculatePosition(julianDay: number, body: CelestialBody, flags?: number): SwissPositionResult;
+  calculateHouses(julianDay: number, latitude: number, longitude: number, houseSystem?: HouseSystem): SwissHouseResult;
 }
 
 export interface SwissPositionResult {
@@ -265,8 +530,34 @@ export interface CalculateSwissNatalOptions {
 
 const REQUIRED_FLAGS = CalculationFlag.SwissEphemeris | CalculationFlag.Speed;
 const EQUATORIAL_FLAGS = REQUIRED_FLAGS | CalculationFlag.Equatorial;
-const SIGN_NAMES = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'] as const;
-const SIGN_NAMES_VI = ['Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải', 'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp', 'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư'] as const;
+const SIGN_NAMES = [
+  'Aries',
+  'Taurus',
+  'Gemini',
+  'Cancer',
+  'Leo',
+  'Virgo',
+  'Libra',
+  'Scorpio',
+  'Sagittarius',
+  'Capricorn',
+  'Aquarius',
+  'Pisces',
+] as const;
+const SIGN_NAMES_VI = [
+  'Bạch Dương',
+  'Kim Ngưu',
+  'Song Tử',
+  'Cự Giải',
+  'Sư Tử',
+  'Xử Nữ',
+  'Thiên Bình',
+  'Bọ Cạp',
+  'Nhân Mã',
+  'Ma Kết',
+  'Bảo Bình',
+  'Song Ngư',
+] as const;
 const MOTION_EPSILON = 1e-12;
 const MIN_LOCAL_DATE = Date.UTC(1800, 0, 2);
 const MAX_LOCAL_DATE = Date.UTC(2399, 11, 31);
@@ -281,7 +572,7 @@ function normalize(longitude: number): number {
 }
 
 function degreesToRadians(degrees: number): number {
-  return degrees * Math.PI / 180;
+  return (degrees * Math.PI) / 180;
 }
 
 function publicAssetUrl(path: string): string {
@@ -309,9 +600,7 @@ export function createRetryableSwissEphemerisLoader(
   };
 }
 
-export async function initializeBundledSwissNatalEphemeris(
-  assetBaseUrl?: string,
-): Promise<SwissNatalEphemeris> {
+export async function initializeBundledSwissNatalEphemeris(assetBaseUrl?: string): Promise<SwissNatalEphemeris> {
   try {
     const ephemeris = new SwissEphemeris();
     await ephemeris.init(assetUrl(assetBaseUrl, 'swisseph.wasm'));
@@ -323,22 +612,18 @@ export async function initializeBundledSwissNatalEphemeris(
       version: () => ephemeris.version(),
       dateToJulianDay: (date) => ephemeris.dateToJulianDay(date),
       calculatePosition: (julianDay, body, flags) => ephemeris.calculatePosition(julianDay, body, flags),
-      calculateHouses: (julianDay, latitude, longitude, houseSystem) => ephemeris.calculateHouses(
-        julianDay,
-        latitude,
-        longitude,
-        houseSystem as never,
-      ) as SwissHouseResult,
+      calculateHouses: (julianDay, latitude, longitude, houseSystem) =>
+        ephemeris.calculateHouses(julianDay, latitude, longitude, houseSystem as never) as SwissHouseResult,
     };
     return adapter;
   } catch (error) {
-    throw new Error(`Unable to load the bundled Swiss Ephemeris assets: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(
+      `Unable to load the bundled Swiss Ephemeris assets: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 }
 
-const loadDefaultEphemeris = createRetryableSwissEphemerisLoader(
-  () => initializeBundledSwissNatalEphemeris(),
-);
+const loadDefaultEphemeris = createRetryableSwissEphemerisLoader(() => initializeBundledSwissNatalEphemeris());
 
 function validateInput(input: WesternChartInput): void {
   if (!Number.isFinite(input.latitude) || input.latitude < -90 || input.latitude > 90) {
@@ -369,8 +654,7 @@ export function fixedOffsetBirthToUtc(input: WesternChartInput): Date {
   if (localDate < MIN_LOCAL_DATE || localDate > MAX_LOCAL_DATE) {
     throw new Error('Birth date is outside the bundled Swiss Ephemeris range (1800-01-02 through 2399-12-31)');
   }
-  const utcMillis = Date.UTC(year, month, day, input.birthHour, input.birthMinute)
-    - input.timezone * 3_600_000;
+  const utcMillis = Date.UTC(year, month, day, input.birthHour, input.birthMinute) - input.timezone * 3_600_000;
   const utc = new Date(utcMillis);
   if (Number.isNaN(utc.getTime())) throw new Error('Birth date and fixed UTC offset are invalid');
   if (utcMillis < MIN_UTC_INSTANT || utcMillis > MAX_UTC_INSTANT) {
@@ -409,17 +693,19 @@ function assignHouse(longitude: number, cusps: readonly number[]): number {
 function assertPosition(name: string, position: SwissPositionResult): void {
   const values = [position.longitude, position.latitude, position.distance, position.longitudeSpeed];
   if (!values.every(Number.isFinite)) throw new Error(`${name}: Swiss Ephemeris returned non-finite position data`);
-  if ((position.flags & CalculationFlag.SwissEphemeris) === 0
-    || (position.flags & CalculationFlag.Speed) === 0
-    || (position.flags & CalculationFlag.MoshierEphemeris) !== 0) {
+  if (
+    (position.flags & CalculationFlag.SwissEphemeris) === 0 ||
+    (position.flags & CalculationFlag.Speed) === 0 ||
+    (position.flags & CalculationFlag.MoshierEphemeris) !== 0
+  ) {
     throw new Error(`${name}: Swiss Ephemeris files and speed data are required; fallback output was rejected`);
   }
 }
 
 function makeObject(
   schema: SwissNatalObjectSchemaEntry,
-  position: Pick<SwissPositionResult, 'longitude' | 'latitude' | 'distance' | 'longitudeSpeed'>
-    & Partial<Pick<SwissPositionResult, 'latitudeSpeed' | 'distanceSpeed'>>,
+  position: Pick<SwissPositionResult, 'longitude' | 'latitude' | 'distance' | 'longitudeSpeed'> &
+    Partial<Pick<SwissPositionResult, 'latitudeSpeed' | 'distanceSpeed'>>,
   cusps: readonly number[],
   motionKnown = true,
   equatorial?: Pick<SwissPositionResult, 'longitude' | 'latitude'>,
@@ -437,12 +723,8 @@ function makeObject(
     latitude: position.latitude,
     distance: Number.isFinite(position.distance) ? position.distance : null,
     speed,
-    latitudeSpeed: motionKnown && Number.isFinite(position.latitudeSpeed)
-      ? position.latitudeSpeed as number
-      : null,
-    distanceSpeed: motionKnown && Number.isFinite(position.distanceSpeed)
-      ? position.distanceSpeed as number
-      : null,
+    latitudeSpeed: motionKnown && Number.isFinite(position.latitudeSpeed) ? (position.latitudeSpeed as number) : null,
+    distanceSpeed: motionKnown && Number.isFinite(position.distanceSpeed) ? (position.distanceSpeed as number) : null,
     rightAscension: equatorial && Number.isFinite(equatorial.longitude) ? normalize(equatorial.longitude) : null,
     declination: equatorial && Number.isFinite(equatorial.latitude) ? equatorial.latitude : null,
     sign: zodiac.sign,
@@ -462,20 +744,45 @@ function makeAngle(
   longitude: number,
 ): SwissNatalAngle {
   const zodiac = zodiacPosition(longitude);
-  return { id, name, nameVi, symbol, longitude: zodiac.longitude, sign: zodiac.sign, signVi: zodiac.signVi, degree: zodiac.degree, minute: zodiac.minute, isAngle: true };
+  return {
+    id,
+    name,
+    nameVi,
+    symbol,
+    longitude: zodiac.longitude,
+    sign: zodiac.sign,
+    signVi: zodiac.signVi,
+    degree: zodiac.degree,
+    minute: zodiac.minute,
+    isAngle: true,
+  };
 }
 
-function solarAltitudeFromEquatorial(julianDay: number, latitude: number, longitude: number, rightAscension: number, declination: number): number {
+function solarAltitudeFromEquatorial(
+  julianDay: number,
+  latitude: number,
+  longitude: number,
+  rightAscension: number,
+  declination: number,
+): number {
   const centuries = (julianDay - 2_451_545) / 36_525;
-  const gmst = normalize(280.46061837 + 360.98564736629 * (julianDay - 2_451_545)
-    + 0.000387933 * centuries * centuries - centuries * centuries * centuries / 38_710_000);
+  const gmst = normalize(
+    280.46061837 +
+      360.98564736629 * (julianDay - 2_451_545) +
+      0.000387933 * centuries * centuries -
+      (centuries * centuries * centuries) / 38_710_000,
+  );
   const hourAngle = degreesToRadians(normalize(gmst + longitude - rightAscension));
   const observerLatitude = degreesToRadians(latitude);
   const declinationRadians = degreesToRadians(declination);
-  return Math.asin(
-    Math.sin(observerLatitude) * Math.sin(declinationRadians)
-    + Math.cos(observerLatitude) * Math.cos(declinationRadians) * Math.cos(hourAngle),
-  ) * 180 / Math.PI;
+  return (
+    (Math.asin(
+      Math.sin(observerLatitude) * Math.sin(declinationRadians) +
+        Math.cos(observerLatitude) * Math.cos(declinationRadians) * Math.cos(hourAngle),
+    ) *
+      180) /
+    Math.PI
+  );
 }
 
 export function isDayChartFromSolarAltitude(altitude: number): boolean {
@@ -498,7 +805,7 @@ function motionState(
   const relativeMotion = second.speed - first.speed;
   if (Math.abs(relativeMotion) <= MOTION_EPSILON) return 'unknown';
   if (orbDifference <= MOTION_EPSILON) return 'separating';
-  const signedDifference = (second.longitude - first.longitude + 540) % 360 - 180;
+  const signedDifference = ((second.longitude - first.longitude + 540) % 360) - 180;
   const separation = Math.abs(signedDifference);
   const separationDerivative = (signedDifference > 0 ? 1 : -1) * relativeMotion;
   const orbDerivative = (separation > definition.angle ? 1 : -1) * separationDerivative;
@@ -511,8 +818,11 @@ function calculateAspects(objects: readonly SwissNatalObject[]): SwissNatalAspec
     const first = objects[firstIndex];
     for (const second of objects.slice(firstIndex + 1)) {
       const separation = angularSeparation(first.longitude, second.longitude);
-      const matches = ASPECT_DEFINITIONS
-        .map((definition, index) => ({ definition, index, orbDifference: Math.abs(separation - definition.angle) }))
+      const matches = ASPECT_DEFINITIONS.map((definition, index) => ({
+        definition,
+        index,
+        orbDifference: Math.abs(separation - definition.angle),
+      }))
         .filter(({ definition, orbDifference }) => orbDifference <= definition.orb + 1e-12)
         .sort((a, b) => a.orbDifference / a.definition.orb - b.orbDifference / b.definition.orb || a.index - b.index);
       const match = matches[0];
@@ -589,7 +899,11 @@ function buildLegacyResult(
     aspects: legacyAspects,
     dispositorTree: null,
     chartShape: null,
-    partOfFortune: { longitude: fortune.longitude, sign: fortune.signVi, signIndex: SIGN_NAMES.indexOf(fortune.sign as (typeof SIGN_NAMES)[number]) },
+    partOfFortune: {
+      longitude: fortune.longitude,
+      sign: fortune.signVi,
+      signIndex: SIGN_NAMES.indexOf(fortune.sign as (typeof SIGN_NAMES)[number]),
+    },
     ascendant,
     midheaven,
   };
@@ -605,231 +919,315 @@ export async function calculateSwissNatalChart(
       const utc = fixedOffsetBirthToUtc(input);
       const ephemeris = options.ephemeris ?? (await loadDefaultEphemeris());
       const julianDay = ephemeris.dateToJulianDay(utc);
-  if (!Number.isFinite(julianDay)) throw new Error('Swiss Ephemeris returned an invalid Julian day');
+      if (!Number.isFinite(julianDay)) throw new Error('Swiss Ephemeris returned an invalid Julian day');
 
-  const houseData = ephemeris.calculateHouses(julianDay, input.latitude, input.longitude, HouseSystem.Placidus);
-  if (houseData.houseSystem !== HouseSystem.Placidus) {
-    throw new Error(`Swiss Ephemeris returned house system ${String(houseData.houseSystem)} instead of Placidus`);
-  }
-  const angleValues = [houseData.ascendant, houseData.mc, houseData.vertex];
-  if (!angleValues.every(Number.isFinite)) {
-    throw new Error('Swiss Ephemeris returned non-finite primary angle data');
-  }
-  const rawCusps = houseData.cusps.length >= 13 ? houseData.cusps.slice(1, 13) : houseData.cusps.slice(0, 12);
-  if (rawCusps.length !== 12 || !rawCusps.every(Number.isFinite)) {
-    throw new Error('Swiss Ephemeris did not return twelve finite Placidus house cusps');
-  }
-  const cusps = rawCusps.map(normalize);
-  const calculatedById = new Map<string, SwissNatalObject>();
-  const returnedFlags: Record<string, number> = {};
-  const returnedEquatorialFlags: Record<string, number> = {};
-  for (const schema of REQUIRED_OBJECT_SCHEMA) {
-    if (schema.swissBody === undefined) continue;
-    let position: SwissPositionResult;
-    try {
-      position = ephemeris.calculatePosition(julianDay, schema.swissBody, REQUIRED_FLAGS);
-    } catch (error) {
-      throw new Error(`${schema.name}: Swiss Ephemeris calculation failed: ${error instanceof Error ? error.message : String(error)}`);
-    }
-    assertPosition(schema.name, position);
-    returnedFlags[schema.id] = position.flags;
-    let equatorial: SwissPositionResult;
-    try {
-      equatorial = ephemeris.calculatePosition(julianDay, schema.swissBody, EQUATORIAL_FLAGS);
-    } catch (error) {
-      throw new Error(`${schema.name}: Swiss equatorial calculation failed: ${error instanceof Error ? error.message : String(error)}`);
-    }
-    assertPosition(`${schema.name} equatorial`, equatorial);
-    if ((equatorial.flags & CalculationFlag.Equatorial) === 0) {
-      throw new Error(`${schema.name}: Swiss equatorial coordinates were requested but not returned`);
-    }
-    returnedEquatorialFlags[schema.id] = equatorial.flags;
-    calculatedById.set(schema.id, makeObject(schema, position, cusps, true, equatorial));
-  }
+      const houseSystemMap: Record<string, HouseSystem> = {
+        placidus: HouseSystem.Placidus,
+        wholesign: HouseSystem.WholeSign,
+        koch: HouseSystem.Koch,
+        equal: HouseSystem.Equal,
+        regiomontanus: HouseSystem.Regiomontanus,
+        campanus: HouseSystem.Campanus,
+        porphyry: HouseSystem.Porphyrius,
+        morinus: HouseSystem.Morinus,
+      };
+      const selectedHouseSystem = houseSystemMap[input.houseSystem || 'placidus'] || HouseSystem.Placidus;
+      const houseData = ephemeris.calculateHouses(julianDay, input.latitude, input.longitude, selectedHouseSystem);
+      const angleValues = [houseData.ascendant, houseData.mc, houseData.vertex];
+      if (!angleValues.every(Number.isFinite)) {
+        throw new Error('Swiss Ephemeris returned non-finite primary angle data');
+      }
+      const rawCusps = houseData.cusps.length >= 13 ? houseData.cusps.slice(1, 13) : houseData.cusps.slice(0, 12);
+      if (rawCusps.length !== 12 || !rawCusps.every(Number.isFinite)) {
+        throw new Error('Swiss Ephemeris did not return twelve finite house cusps');
+      }
+      const cusps = rawCusps.map(normalize);
+      const calculatedById = new Map<string, SwissNatalObject>();
+      const returnedFlags: Record<string, number> = {};
+      const returnedEquatorialFlags: Record<string, number> = {};
+      for (const schema of REQUIRED_OBJECT_SCHEMA) {
+        if (schema.swissBody === undefined) continue;
+        let position: SwissPositionResult;
+        try {
+          position = ephemeris.calculatePosition(julianDay, schema.swissBody, REQUIRED_FLAGS);
+        } catch (error) {
+          throw new Error(
+            `${schema.name}: Swiss Ephemeris calculation failed: ${error instanceof Error ? error.message : String(error)}`,
+          );
+        }
+        assertPosition(schema.name, position);
+        returnedFlags[schema.id] = position.flags;
+        let equatorial: SwissPositionResult;
+        try {
+          equatorial = ephemeris.calculatePosition(julianDay, schema.swissBody, EQUATORIAL_FLAGS);
+        } catch (error) {
+          throw new Error(
+            `${schema.name}: Swiss equatorial calculation failed: ${error instanceof Error ? error.message : String(error)}`,
+          );
+        }
+        assertPosition(`${schema.name} equatorial`, equatorial);
+        if ((equatorial.flags & CalculationFlag.Equatorial) === 0) {
+          throw new Error(`${schema.name}: Swiss equatorial coordinates were requested but not returned`);
+        }
+        returnedEquatorialFlags[schema.id] = equatorial.flags;
+        calculatedById.set(schema.id, makeObject(schema, position, cusps, true, equatorial));
+      }
 
-  const northNode = calculatedById.get('lunar-point:true-north-node');
-  const sun = calculatedById.get('planet:sun');
-  const moon = calculatedById.get('planet:moon');
-  if (!northNode || !sun || !moon) throw new Error('Swiss Ephemeris required bodies were not assembled');
+      const northNode = calculatedById.get('lunar-point:true-north-node');
+      const sun = calculatedById.get('planet:sun');
+      const moon = calculatedById.get('planet:moon');
+      if (!northNode || !sun || !moon) throw new Error('Swiss Ephemeris required bodies were not assembled');
 
-  const southSchema = REQUIRED_OBJECT_SCHEMA.find((entry) => entry.id === 'derived:true-south-node');
-  const fortuneSchema = REQUIRED_OBJECT_SCHEMA.find((entry) => entry.id === 'derived:part-of-fortune');
-  const vertexSchema = REQUIRED_OBJECT_SCHEMA.find((entry) => entry.id === 'angle:vertex');
-  if (!southSchema || !fortuneSchema || !vertexSchema) throw new Error('Western natal object registry is incomplete');
-  calculatedById.set(southSchema.id, makeObject(southSchema, {
-    longitude: normalize(northNode.longitude + 180),
-    latitude: -northNode.latitude,
-    distance: northNode.distance ?? Number.NaN,
-    longitudeSpeed: northNode.speed ?? Number.NaN,
-  }, cusps));
-  if (sun.rightAscension === null || sun.declination === null) {
-    throw new Error('Sun equatorial coordinates are required for Part of Fortune day/night classification');
-  }
-  const solarAltitude = solarAltitudeFromEquatorial(
-    julianDay,
-    input.latitude,
-    input.longitude,
-    sun.rightAscension,
-    sun.declination,
-  );
-  const isDayChart = isDayChartFromSolarAltitude(solarAltitude);
-  const fortuneLongitude = isDayChart
-    ? normalize(houseData.ascendant + moon.longitude - sun.longitude)
-    : normalize(houseData.ascendant + sun.longitude - moon.longitude);
-  calculatedById.set(fortuneSchema.id, makeObject(fortuneSchema, {
-    longitude: fortuneLongitude,
-    latitude: 0,
-    distance: Number.NaN,
-    longitudeSpeed: Number.NaN,
-  }, cusps, false));
-  calculatedById.set(vertexSchema.id, makeObject(vertexSchema, {
-    longitude: houseData.vertex,
-    latitude: 0,
-    distance: Number.NaN,
-    longitudeSpeed: Number.NaN,
-  }, cusps, false));
+      const southSchema = REQUIRED_OBJECT_SCHEMA.find((entry) => entry.id === 'derived:true-south-node');
+      const fortuneSchema = REQUIRED_OBJECT_SCHEMA.find((entry) => entry.id === 'derived:part-of-fortune');
+      const vertexSchema = REQUIRED_OBJECT_SCHEMA.find((entry) => entry.id === 'angle:vertex');
+      if (!southSchema || !fortuneSchema || !vertexSchema)
+        throw new Error('Western natal object registry is incomplete');
+      calculatedById.set(
+        southSchema.id,
+        makeObject(
+          southSchema,
+          {
+            longitude: normalize(northNode.longitude + 180),
+            latitude: -northNode.latitude,
+            distance: northNode.distance ?? Number.NaN,
+            longitudeSpeed: northNode.speed ?? Number.NaN,
+          },
+          cusps,
+        ),
+      );
+      if (sun.rightAscension === null || sun.declination === null) {
+        throw new Error('Sun equatorial coordinates are required for Part of Fortune day/night classification');
+      }
+      const solarAltitude = solarAltitudeFromEquatorial(
+        julianDay,
+        input.latitude,
+        input.longitude,
+        sun.rightAscension,
+        sun.declination,
+      );
+      const isDayChart = isDayChartFromSolarAltitude(solarAltitude);
+      const fortuneLongitude = isDayChart
+        ? normalize(houseData.ascendant + moon.longitude - sun.longitude)
+        : normalize(houseData.ascendant + sun.longitude - moon.longitude);
+      calculatedById.set(
+        fortuneSchema.id,
+        makeObject(
+          fortuneSchema,
+          {
+            longitude: fortuneLongitude,
+            latitude: 0,
+            distance: Number.NaN,
+            longitudeSpeed: Number.NaN,
+          },
+          cusps,
+          false,
+        ),
+      );
+      calculatedById.set(
+        vertexSchema.id,
+        makeObject(
+          vertexSchema,
+          {
+            longitude: houseData.vertex,
+            latitude: 0,
+            distance: Number.NaN,
+            longitudeSpeed: Number.NaN,
+          },
+          cusps,
+          false,
+        ),
+      );
 
-  const DIGNITIES: Record<string, { domicile: number[]; exaltation: number[]; detriment: number[]; fall: number[] }> = {
-    'planet:sun': { domicile: [4], exaltation: [0], detriment: [10], fall: [6] },
-    'planet:moon': { domicile: [3], exaltation: [1], detriment: [9], fall: [7] },
-    'planet:mercury': { domicile: [2, 5], exaltation: [5], detriment: [8, 11], fall: [11] },
-    'planet:venus': { domicile: [1, 6], exaltation: [11], detriment: [7, 0], fall: [5] },
-    'planet:mars': { domicile: [0, 7], exaltation: [9], detriment: [6, 1], fall: [3] },
-    'planet:jupiter': { domicile: [8, 11], exaltation: [3], detriment: [2, 5], fall: [9] },
-    'planet:saturn': { domicile: [9, 10], exaltation: [6], detriment: [3, 4], fall: [0] },
-    'planet:uranus': { domicile: [10], exaltation: [7], detriment: [4], fall: [1] },
-    'planet:neptune': { domicile: [11], exaltation: [3, 8], detriment: [5], fall: [2] },
-    'planet:pluto': { domicile: [7], exaltation: [4], detriment: [1], fall: [10] },
-  };
+      const DIGNITIES: Record<
+        string,
+        { domicile: number[]; exaltation: number[]; detriment: number[]; fall: number[] }
+      > = {
+        'planet:sun': { domicile: [4], exaltation: [0], detriment: [10], fall: [6] },
+        'planet:moon': { domicile: [3], exaltation: [1], detriment: [9], fall: [7] },
+        'planet:mercury': { domicile: [2, 5], exaltation: [5], detriment: [8, 11], fall: [11] },
+        'planet:venus': { domicile: [1, 6], exaltation: [11], detriment: [7, 0], fall: [5] },
+        'planet:mars': { domicile: [0, 7], exaltation: [9], detriment: [6, 1], fall: [3] },
+        'planet:jupiter': { domicile: [8, 11], exaltation: [3], detriment: [2, 5], fall: [9] },
+        'planet:saturn': { domicile: [9, 10], exaltation: [6], detriment: [3, 4], fall: [0] },
+        'planet:uranus': { domicile: [10], exaltation: [7], detriment: [4], fall: [1] },
+        'planet:neptune': { domicile: [11], exaltation: [3, 8], detriment: [5], fall: [2] },
+        'planet:pluto': { domicile: [7], exaltation: [4], detriment: [1], fall: [10] },
+      };
 
-  function getEssentialDignity(objectId: string, signIndex: number): EssentialDignityInfo | undefined {
-    const d = DIGNITIES[objectId];
-    if (!d) return undefined;
-    if (d.domicile.includes(signIndex)) {
-      return { type: 'domicile', labelVi: 'Chính vị (Ruler)', symbol: '🌟', badgeClass: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30', score: 5 };
-    }
-    if (d.exaltation.includes(signIndex)) {
-      return { type: 'exaltation', labelVi: 'Đắc địa (Exalted)', symbol: '👑', badgeClass: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/30', score: 4 };
-    }
-    if (d.detriment.includes(signIndex)) {
-      return { type: 'detriment', labelVi: 'Nghịch vị (Detriment)', symbol: '⚠️', badgeClass: 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30', score: -5 };
-    }
-    if (d.fall.includes(signIndex)) {
-      return { type: 'fall', labelVi: 'Suy vị (Fall)', symbol: '🔻', badgeClass: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30', score: -4 };
-    }
-    return { type: 'peregrine', labelVi: 'Bình hòa', symbol: '○', badgeClass: 'bg-surface-container text-text-secondary-light dark:text-text-secondary-dark border-transparent', score: 0 };
-  }
+      function getEssentialDignity(objectId: string, signIndex: number): EssentialDignityInfo | undefined {
+        const d = DIGNITIES[objectId];
+        if (!d) return undefined;
+        if (d.domicile.includes(signIndex)) {
+          return {
+            type: 'domicile',
+            labelVi: 'Chính vị (Ruler)',
+            symbol: '🌟',
+            badgeClass: 'bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/30',
+            score: 5,
+          };
+        }
+        if (d.exaltation.includes(signIndex)) {
+          return {
+            type: 'exaltation',
+            labelVi: 'Đắc địa (Exalted)',
+            symbol: '👑',
+            badgeClass: 'bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/30',
+            score: 4,
+          };
+        }
+        if (d.detriment.includes(signIndex)) {
+          return {
+            type: 'detriment',
+            labelVi: 'Nghịch vị (Detriment)',
+            symbol: '⚠️',
+            badgeClass: 'bg-rose-500/10 text-rose-700 dark:text-rose-300 border-rose-500/30',
+            score: -5,
+          };
+        }
+        if (d.fall.includes(signIndex)) {
+          return {
+            type: 'fall',
+            labelVi: 'Suy vị (Fall)',
+            symbol: '🔻',
+            badgeClass: 'bg-amber-500/10 text-amber-700 dark:text-amber-300 border-amber-500/30',
+            score: -4,
+          };
+        }
+        return {
+          type: 'peregrine',
+          labelVi: 'Bình hòa',
+          symbol: '○',
+          badgeClass: 'bg-surface-container text-text-secondary-light dark:text-text-secondary-dark border-transparent',
+          score: 0,
+        };
+      }
 
-  const TRADITIONAL_RULERS_BY_SIGN: Array<{ id: string; nameVi: string; symbol: string }> = [
-    { id: 'planet:mars', nameVi: 'Sao Hỏa', symbol: '♂' },
-    { id: 'planet:venus', nameVi: 'Sao Kim', symbol: '♀' },
-    { id: 'planet:mercury', nameVi: 'Sao Thủy', symbol: '☿' },
-    { id: 'planet:moon', nameVi: 'Mặt Trăng', symbol: '☽' },
-    { id: 'planet:sun', nameVi: 'Mặt Trời', symbol: '☉' },
-    { id: 'planet:mercury', nameVi: 'Sao Thủy', symbol: '☿' },
-    { id: 'planet:venus', nameVi: 'Sao Kim', symbol: '♀' },
-    { id: 'planet:mars', nameVi: 'Sao Hỏa', symbol: '♂' },
-    { id: 'planet:jupiter', nameVi: 'Sao Mộc', symbol: '♃' },
-    { id: 'planet:saturn', nameVi: 'Sao Thổ', symbol: '♄' },
-    { id: 'planet:saturn', nameVi: 'Sao Thổ', symbol: '♄' },
-    { id: 'planet:jupiter', nameVi: 'Sao Mộc', symbol: '♃' },
-  ];
+      const TRADITIONAL_RULERS_BY_SIGN: Array<{ id: string; nameVi: string; symbol: string }> = [
+        { id: 'planet:mars', nameVi: 'Sao Hỏa', symbol: '♂' },
+        { id: 'planet:venus', nameVi: 'Sao Kim', symbol: '♀' },
+        { id: 'planet:mercury', nameVi: 'Sao Thủy', symbol: '☿' },
+        { id: 'planet:moon', nameVi: 'Mặt Trăng', symbol: '☽' },
+        { id: 'planet:sun', nameVi: 'Mặt Trời', symbol: '☉' },
+        { id: 'planet:mercury', nameVi: 'Sao Thủy', symbol: '☿' },
+        { id: 'planet:venus', nameVi: 'Sao Kim', symbol: '♀' },
+        { id: 'planet:mars', nameVi: 'Sao Hỏa', symbol: '♂' },
+        { id: 'planet:jupiter', nameVi: 'Sao Mộc', symbol: '♃' },
+        { id: 'planet:saturn', nameVi: 'Sao Thổ', symbol: '♄' },
+        { id: 'planet:saturn', nameVi: 'Sao Thổ', symbol: '♄' },
+        { id: 'planet:jupiter', nameVi: 'Sao Mộc', symbol: '♃' },
+      ];
 
-  const objects = REQUIRED_OBJECT_SCHEMA.map((schema) => {
-    const object = calculatedById.get(schema.id);
-    if (!object) throw new Error(`${schema.name}: required Western natal object is missing`);
-    const signIdx = SIGN_NAMES.indexOf(object.sign as (typeof SIGN_NAMES)[number]);
-    const dignity = getEssentialDignity(object.id, signIdx);
-    return { ...object, dignity };
-  });
-  const houses: SwissNatalHouse[] = cusps.map((longitude, index) => {
-    const zodiac = zodiacPosition(longitude);
-    return { number: index + 1, longitude, sign: zodiac.sign, signVi: zodiac.signVi, degree: zodiac.degree, minute: zodiac.minute };
-  });
-  const angles: Record<SwissNatalAngleName, SwissNatalAngle> = {
-    Ascendant: makeAngle('angle:ascendant', 'Ascendant', 'Cung Mọc', 'ASC', houseData.ascendant),
-    Descendant: makeAngle('angle:descendant', 'Descendant', 'Cung Lặn', 'DSC', houseData.ascendant + 180),
-    Midheaven: makeAngle('angle:midheaven', 'Midheaven', 'Thiên Đỉnh', 'MC', houseData.mc),
-    'Imum Coeli': makeAngle('angle:imum-coeli', 'Imum Coeli', 'Thiên Đế', 'IC', houseData.mc + 180),
-  };
-  const aspects = calculateAspects(objects);
+      const objects = REQUIRED_OBJECT_SCHEMA.map((schema) => {
+        const object = calculatedById.get(schema.id);
+        if (!object) throw new Error(`${schema.name}: required Western natal object is missing`);
+        const signIdx = SIGN_NAMES.indexOf(object.sign as (typeof SIGN_NAMES)[number]);
+        const dignity = getEssentialDignity(object.id, signIdx);
+        return { ...object, dignity };
+      });
+      const houses: SwissNatalHouse[] = cusps.map((longitude, index) => {
+        const zodiac = zodiacPosition(longitude);
+        return {
+          number: index + 1,
+          longitude,
+          sign: zodiac.sign,
+          signVi: zodiac.signVi,
+          degree: zodiac.degree,
+          minute: zodiac.minute,
+        };
+      });
+      const angles: Record<SwissNatalAngleName, SwissNatalAngle> = {
+        Ascendant: makeAngle('angle:ascendant', 'Ascendant', 'Cung Mọc', 'ASC', houseData.ascendant),
+        Descendant: makeAngle('angle:descendant', 'Descendant', 'Cung Lặn', 'DSC', houseData.ascendant + 180),
+        Midheaven: makeAngle('angle:midheaven', 'Midheaven', 'Thiên Đỉnh', 'MC', houseData.mc),
+        'Imum Coeli': makeAngle('angle:imum-coeli', 'Imum Coeli', 'Thiên Đế', 'IC', houseData.mc + 180),
+      };
+      const aspects = calculateAspects(objects);
 
-  // Additional Astrological Metrics (Aspect Patterns, Elements/Modalities, Moon Phase, House Rulers)
-  const patternPlanets = objects
-    .filter((o) => o.category === 'planet' || o.id.includes('node') || o.id.includes('chiron'))
-    .map((o) => ({
-      id: o.id,
-      name: o.name,
-      nameVi: o.nameVi,
-      symbol: o.symbol,
-      longitude: o.longitude,
-      signVi: o.signVi,
-      house: o.house,
-    }));
-  const aspectPatterns = detectAspectPatterns(patternPlanets);
+      // Additional Astrological Metrics (Aspect Patterns, Elements/Modalities, Moon Phase, House Rulers)
+      const patternPlanets = objects
+        .filter((o) => o.category === 'planet' || o.id.includes('node') || o.id.includes('chiron'))
+        .map((o) => ({
+          id: o.id,
+          name: o.name,
+          nameVi: o.nameVi,
+          symbol: o.symbol,
+          longitude: o.longitude,
+          signVi: o.signVi,
+          house: o.house,
+        }));
+      const aspectPatterns = detectAspectPatterns(patternPlanets);
 
-  const balancePoints = [
-    ...objects.filter((o) => o.category === 'planet').map((o) => ({ id: o.id, nameVi: o.nameVi, symbol: o.symbol, longitude: o.longitude })),
-    { id: 'angle:ascendant', nameVi: 'Cung Mọc', symbol: 'ASC', longitude: angles.Ascendant.longitude },
-    { id: 'angle:midheaven', nameVi: 'Thiên Đỉnh', symbol: 'MC', longitude: angles.Midheaven.longitude },
-  ];
-  const elementBalance = calculateElementModalityBalance(balancePoints);
+      const balancePoints = [
+        ...objects
+          .filter((o) => o.category === 'planet')
+          .map((o) => ({ id: o.id, nameVi: o.nameVi, symbol: o.symbol, longitude: o.longitude })),
+        { id: 'angle:ascendant', nameVi: 'Cung Mọc', symbol: 'ASC', longitude: angles.Ascendant.longitude },
+        { id: 'angle:midheaven', nameVi: 'Thiên Đỉnh', symbol: 'MC', longitude: angles.Midheaven.longitude },
+      ];
+      const elementBalance = calculateElementModalityBalance(balancePoints);
 
-  const moonPhase = calculateBirthMoonPhase(sun.longitude, moon.longitude);
+      const moonPhase = calculateBirthMoonPhase(sun.longitude, moon.longitude);
 
-  const objectById = new Map(objects.map((o) => [o.id, o]));
-  const houseRulers: SwissHouseRuler[] = houses.map((h) => {
-    const signIdx = SIGN_NAMES.indexOf(h.sign as (typeof SIGN_NAMES)[number]);
-    const rulerInfo = TRADITIONAL_RULERS_BY_SIGN[signIdx] ?? TRADITIONAL_RULERS_BY_SIGN[0];
-    const rulerObj = objectById.get(rulerInfo.id);
-    return {
-      houseNumber: h.number,
-      sign: h.sign,
-      signVi: h.signVi,
-      degree: h.degree,
-      minute: h.minute,
-      traditionalRulerId: rulerInfo.id,
-      traditionalRulerVi: rulerInfo.nameVi,
-      traditionalRulerSymbol: rulerInfo.symbol,
-      rulerHouse: rulerObj?.house,
-      rulerSignVi: rulerObj?.signVi,
-    };
-  });
+      const objectById = new Map(objects.map((o) => [o.id, o]));
+      const houseRulers: SwissHouseRuler[] = houses.map((h) => {
+        const signIdx = SIGN_NAMES.indexOf(h.sign as (typeof SIGN_NAMES)[number]);
+        const rulerInfo = TRADITIONAL_RULERS_BY_SIGN[signIdx] ?? TRADITIONAL_RULERS_BY_SIGN[0];
+        const rulerObj = objectById.get(rulerInfo.id);
+        return {
+          houseNumber: h.number,
+          sign: h.sign,
+          signVi: h.signVi,
+          degree: h.degree,
+          minute: h.minute,
+          traditionalRulerId: rulerInfo.id,
+          traditionalRulerVi: rulerInfo.nameVi,
+          traditionalRulerSymbol: rulerInfo.symbol,
+          rulerHouse: rulerObj?.house,
+          rulerSignVi: rulerObj?.signVi,
+        };
+      });
 
-  return {
-    birth: {
-      utc: utc.toISOString(),
-      julianDayUt: julianDay,
-      latitude: input.latitude,
-      longitude: input.longitude,
-      fixedUtcOffsetHours: input.timezone,
-      ...(input.locationName ? { locationName: input.locationName } : {}),
-      houseSystem: 'placidus',
-    },
-    metadata: {
-      engine: '@swisseph/browser',
-      version: ephemeris.version(),
-      ephemeris: 'Swiss Ephemeris files',
-      fixedUtcOffsetHours: input.timezone,
-      requestedFlags: REQUIRED_FLAGS,
-      returnedFlags,
-      requestedEquatorialFlags: EQUATORIAL_FLAGS,
-      returnedEquatorialFlags,
-      objectPolicyVersion: 'western-natal-20-v1',
-      aspectPolicyVersion: 'western-aspects-11-v1',
-      timePolicy: 'fixed-utc-offset-v1',
-      partOfFortuneAltitudePolicy: 'geocentric-equatorial-altitude-v1',
-      partOfFortuneSolarAltitudeDeg: solarAltitude,
-    },
-    objects,
-    houses,
-    angles,
-    aspects,
-    aspectPatterns,
-    elementBalance,
+      return {
+        birth: {
+          utc: utc.toISOString(),
+          julianDayUt: julianDay,
+          latitude: input.latitude,
+          longitude: input.longitude,
+          fixedUtcOffsetHours: input.timezone,
+          ...(input.locationName ? { locationName: input.locationName } : {}),
+          houseSystem: input.houseSystem || 'placidus',
+        },
+        metadata: {
+          engine: '@swisseph/browser',
+          version: ephemeris.version(),
+          ephemeris: 'Swiss Ephemeris files',
+          fixedUtcOffsetHours: input.timezone,
+          requestedFlags: REQUIRED_FLAGS,
+          returnedFlags,
+          requestedEquatorialFlags: EQUATORIAL_FLAGS,
+          returnedEquatorialFlags,
+          objectPolicyVersion: 'western-natal-20-v1',
+          aspectPolicyVersion: 'western-aspects-11-v1',
+          timePolicy: 'fixed-utc-offset-v1',
+          partOfFortuneAltitudePolicy: 'geocentric-equatorial-altitude-v1',
+          partOfFortuneSolarAltitudeDeg: solarAltitude,
+        },
+        objects,
+        houses,
+        angles,
+        aspects,
+        aspectPatterns,
+        elementBalance,
         moonPhase,
         houseRulers,
-        legacyResult: buildLegacyResult(objects, houses, aspects, angles.Ascendant.longitude, angles.Midheaven.longitude),
+        legacyResult: buildLegacyResult(
+          objects,
+          houses,
+          aspects,
+          angles.Ascendant.longitude,
+          angles.Midheaven.longitude,
+        ),
       };
     },
     { location: input.locationName || 'unknown' },

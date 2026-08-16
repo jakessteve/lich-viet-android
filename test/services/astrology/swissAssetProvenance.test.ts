@@ -11,7 +11,9 @@ describe('bundled Swiss asset provenance', () => {
     }
     const checksums = readFileSync(resolve(directory, 'CHECKSUMS.sha256'), 'utf8');
     for (const filename of ['sepl_18.se1', 'semo_18.se1', 'seas_18.se1']) {
-      const digest = createHash('sha256').update(readFileSync(resolve(directory, filename))).digest('hex');
+      const digest = createHash('sha256')
+        .update(readFileSync(resolve(directory, filename)))
+        .digest('hex');
       expect(checksums).toContain(`${digest}  ${filename}`);
     }
   });

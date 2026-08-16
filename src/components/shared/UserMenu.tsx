@@ -11,12 +11,7 @@ interface UserMenuProps {
   className?: string;
 }
 
-export default function UserMenu({
-  showFontSizeControl = false,
-  onOpenHelp,
-  onOpenAbout,
-  className,
-}: UserMenuProps) {
+export default function UserMenu({ showFontSizeControl = false, onOpenHelp, onOpenAbout, className }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();

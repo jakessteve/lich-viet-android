@@ -8,7 +8,7 @@ import { ElectionResultCard } from './ElectionResultCard';
 export const ElectionPage: React.FC = () => {
   usePageTitle('Chọn Ngày Tốt');
   const [filterCatOnly, setFilterCatOnly] = React.useState(false);
-  
+
   const { results, isScanning, error, clearError } = useElectionStore(
     useShallow((state) => ({
       results: state.results,
@@ -72,7 +72,9 @@ export const ElectionPage: React.FC = () => {
         <div className="space-y-4 animate-fade-in-up">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-light dark:border-border-dark pb-2">
             <h3 className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span>Kết quả đề xuất ({filteredResults.length}/{results.length})</span>
+              <span>
+                Kết quả đề xuất ({filteredResults.length}/{results.length})
+              </span>
             </h3>
             <div className="flex items-center gap-1.5">
               <button
@@ -104,7 +106,8 @@ export const ElectionPage: React.FC = () => {
           {filteredResults.length === 0 ? (
             <div className="text-center py-8 px-4 glass-card">
               <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
-                Không có ngày nào đạt mức điểm Cát lợi (≥ 70đ) trong khoảng đã chọn. Bạn có thể chọn tab &quot;Tất cả&quot; để xem chi tiết các ngày khác.
+                Không có ngày nào đạt mức điểm Cát lợi (≥ 70đ) trong khoảng đã chọn. Bạn có thể chọn tab &quot;Tất
+                cả&quot; để xem chi tiết các ngày khác.
               </p>
             </div>
           ) : (

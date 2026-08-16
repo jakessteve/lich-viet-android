@@ -39,4 +39,3 @@ export const NAV_LINKS: NavLink[] = [
   { id: 'chiem-tinh', label: 'Chiêm Tinh', icon: 'auto_graph', desc: 'Tây Phương · Ấn Độ · Hợp lá số', enabled: true },
   { id: 'gieo-que', label: 'Gieo quẻ', icon: 'casino', desc: 'Mai Hoa & Tam Thức', enabled: true },
 ];
-

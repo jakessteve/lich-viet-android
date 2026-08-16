@@ -46,7 +46,6 @@ export interface AspectPattern {
   lifeAreasVi?: string[];
 }
 
-
 const norm = (deg: number) => ((deg % 360) + 360) % 360;
 
 function angleDiff(a: number, b: number): number {
@@ -58,7 +57,20 @@ function isAspect(a: number, b: number, targetAngle: number, orb: number): boole
   return Math.abs(angleDiff(a, b) - targetAngle) <= orb;
 }
 
-const ELEMENT_BY_SIGN_INDEX = ['fire', 'earth', 'air', 'water', 'fire', 'earth', 'air', 'water', 'fire', 'earth', 'air', 'water'] as const;
+const ELEMENT_BY_SIGN_INDEX = [
+  'fire',
+  'earth',
+  'air',
+  'water',
+  'fire',
+  'earth',
+  'air',
+  'water',
+  'fire',
+  'earth',
+  'air',
+  'water',
+] as const;
 const ELEMENT_NAMES_VI: Record<string, string> = {
   fire: 'Lửa',
   earth: 'Đất',
@@ -66,7 +78,20 @@ const ELEMENT_NAMES_VI: Record<string, string> = {
   water: 'Nước',
 };
 
-const MODALITY_BY_SIGN_INDEX = ['cardinal', 'fixed', 'mutable', 'cardinal', 'fixed', 'mutable', 'cardinal', 'fixed', 'mutable', 'cardinal', 'fixed', 'mutable'] as const;
+const MODALITY_BY_SIGN_INDEX = [
+  'cardinal',
+  'fixed',
+  'mutable',
+  'cardinal',
+  'fixed',
+  'mutable',
+  'cardinal',
+  'fixed',
+  'mutable',
+  'cardinal',
+  'fixed',
+  'mutable',
+] as const;
 const MODALITY_NAMES_VI: Record<string, string> = {
   cardinal: 'Thống Lĩnh',
   fixed: 'Kiên Định',
@@ -76,16 +101,31 @@ const MODALITY_NAMES_VI: Record<string, string> = {
 export const HOUSE_THEMES_VI: Record<number, { domain: string; description: string }> = {
   1: { domain: 'Bản thân & Diện mạo', description: 'Cá tính độc lập, phong thái lãnh đạo và cách tiếp cận thế giới' },
   2: { domain: 'Tài chính & Giá trị', description: 'Năng lực tài chính, của cải vật chất và giá trị tự thân' },
-  3: { domain: 'Tư duy & Giao tiếp', description: 'Trí tuệ thực hành, ngôn ngữ, kỹ năng thích ứng và quan hệ thân cận' },
+  3: {
+    domain: 'Tư duy & Giao tiếp',
+    description: 'Trí tuệ thực hành, ngôn ngữ, kỹ năng thích ứng và quan hệ thân cận',
+  },
   4: { domain: 'Gia đình & Cội nguồn', description: 'Nền tảng nội tâm, mái ấm gia đình và sự bình yên cội rễ' },
   5: { domain: 'Sáng tạo & Tình cảm', description: 'Tài năng nghệ thuật, con cái, tình yêu và niềm vui tỏa sáng' },
   6: { domain: 'Sức khỏe & Phụng sự', description: 'Kỷ luật công việc, sự chu đáo, thói quen sinh hoạt và sức khỏe' },
   7: { domain: 'Hôn nhân & Đối tác', description: 'Quan hệ cộng tác, bạn đời, sự cân bằng và thấu hiểu tha nhân' },
-  8: { domain: 'Chuyển hóa & Nguồn lực chung', description: 'Tài chính hợp tác, tâm lý học sâu sắc, sự tái sinh và vượt ngưỡng' },
-  9: { domain: 'Triết lý & Khám phá', description: 'Học vấn bậc cao, du hành mở rộng tầm nhìn, niềm tin và thế giới quan' },
-  10: { domain: 'Sự nghiệp & Danh vọng', description: 'Địa vị xã hội, hoài bão lớn, đỉnh cao danh tiếng và trách nhiệm cộng đồng' },
+  8: {
+    domain: 'Chuyển hóa & Nguồn lực chung',
+    description: 'Tài chính hợp tác, tâm lý học sâu sắc, sự tái sinh và vượt ngưỡng',
+  },
+  9: {
+    domain: 'Triết lý & Khám phá',
+    description: 'Học vấn bậc cao, du hành mở rộng tầm nhìn, niềm tin và thế giới quan',
+  },
+  10: {
+    domain: 'Sự nghiệp & Danh vọng',
+    description: 'Địa vị xã hội, hoài bão lớn, đỉnh cao danh tiếng và trách nhiệm cộng đồng',
+  },
   11: { domain: 'Cộng đồng & Khát vọng', description: 'Mạng lưới kết nối, bạn bè chí hướng, lý tưởng tiến bộ xã hội' },
-  12: { domain: 'Tiềm thức & Tâm linh', description: 'Trực giác thần bí, sự buông bỏ vị kỷ, năng lực chữa lành và thế giới nội tâm' },
+  12: {
+    domain: 'Tiềm thức & Tâm linh',
+    description: 'Trực giác thần bí, sự buông bỏ vị kỷ, năng lực chữa lành và thế giới nội tâm',
+  },
 };
 
 const OPPOSITE_SIGN_MAP: Record<string, string> = {
@@ -110,7 +150,7 @@ function getOppositeHouse(house?: number): number | undefined {
 
 function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
   const houses = Array.from(
-    new Set(pattern.planets.map((p) => p.house).filter((h): h is number => typeof h === 'number' && h >= 1 && h <= 12))
+    new Set(pattern.planets.map((p) => p.house).filter((h): h is number => typeof h === 'number' && h >= 1 && h <= 12)),
   ).sort((a, b) => a - b);
 
   pattern.activatedHouses = houses;
@@ -154,8 +194,7 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
   }
 
   // Generate multi-layered deeply personalized synthesis
-  const planetDetails = pattern.planets.map((p) => `${p.nameVi} (${p.signVi}${p.house ? ` - Nhà ${p.house}` : ''})`).join(', ');
-  const houseSummary = houses.length > 0 ? `tại các Nhà [${houses.join(', ')}]` : '';
+  const houseSummary = houses.length > 0 ? `tại các Nhà **${houses.join(', ')}**` : '';
 
   switch (pattern.type) {
     case 't_square': {
@@ -164,7 +203,9 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
       const p2 = oppPlanets[1];
       const p1Desc = p1 ? `${p1.nameVi} (${p1.signVi}${p1.house ? ` - Nhà ${p1.house}` : ''})` : '';
       const p2Desc = p2 ? `${p2.nameVi} (${p2.signVi}${p2.house ? ` - Nhà ${p2.house}` : ''})` : '';
-      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'hành tinh đỉnh';
+      const apexDesc = apex
+        ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})`
+        : 'hành tinh đỉnh';
 
       const p1Theme = p1?.house ? HOUSE_THEMES_VI[p1.house]?.domain : 'nội lực';
       const p2Theme = p2?.house ? HOUSE_THEMES_VI[p2.house]?.domain : 'môi trường bên ngoài';
@@ -173,22 +214,27 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
       pattern.personalizedSynthesis = {
         coreChallengeVi: `Áp lực và trục đối kháng giữa ${p1Desc} và ${p2Desc} tạo ra sự giằng xé giữa ${p1Theme} và ${p2Theme}, dồn toàn bộ sức ép góc vuông (90°) lên đỉnh ${apexDesc}.`,
         uniqueGiftVi: `Nguồn động lực thép và ý chí chịu áp lực phi thường: Khi thuần phục được năng lượng tại ${apexDesc}, bạn sẽ bứt phá ngoạn mục và dẫn đầu trong phương diện ${apexTheme}.`,
-        actionableAdviceVi: pattern.resolutionPoint?.adviceVi ?? `Giải phóng xung đột bằng cách rèn luyện phẩm chất của cung đối trọng và tạo khoảng nghỉ tĩnh tâm.`,
+        actionableAdviceVi:
+          pattern.resolutionPoint?.adviceVi ??
+          `Giải phóng xung đột bằng cách rèn luyện phẩm chất của cung đối trọng và tạo khoảng nghỉ tĩnh tâm.`,
       };
       break;
     }
     case 'grand_trine': {
-      const pList = pattern.planets.map((p) => `${p.nameVi} (${p.signVi}${p.house ? ` - Nhà ${p.house}` : ''})`).join(' · ');
+      const pList = pattern.planets
+        .map((p) => `${p.nameVi} (${p.signVi}${p.house ? ` - Nhà ${p.house}` : ''})`)
+        .join(' · ');
       pattern.personalizedSynthesis = {
-        coreChallengeVi: `Dòng chảy quá êm ả giữa [${pList}] có thể ru ngủ ý chí, khiến bạn dễ bằng lòng với vùng an toàn nếu không tự đặt ra các thách thức lớn hơn.`,
+        coreChallengeVi: `Dòng chảy quá êm ả giữa **${pList}** có thể ru ngủ ý chí, khiến bạn dễ bằng lòng với vùng an toàn nếu không tự đặt ra các thách thức lớn hơn.`,
         uniqueGiftVi: `Thiên phú tự nhiên và phúc duyên lớn thuộc nguyên tố ${pattern.elementOrModality ?? 'hòa hợp'}, giúp kết nối liền mạch tài năng bẩm sinh qua các trục ${houseSummary}.`,
         actionableAdviceVi: `Chủ động thiết lập kỷ luật và dự án thực tế để chuyển hóa vận may tự nhiên thành thành tựu bền vững suốt đời.`,
       };
       break;
     }
     case 'kite': {
-      const trinePlanets = pattern.planets.filter((p) => p.id !== apex?.id);
-      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'mũi tên hành động';
+      const apexDesc = apex
+        ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})`
+        : 'mũi tên hành động';
       const apexTheme = apex?.house ? HOUSE_THEMES_VI[apex.house]?.domain : 'trọng tâm khai phóng';
       pattern.personalizedSynthesis = {
         coreChallengeVi: `Cần điều phối áp lực từ trục đối đỉnh để mũi nhọn ${apexDesc} không bị quá tải hay bộc phát nóng vội.`,
@@ -217,11 +263,15 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
       break;
     }
     case 'yod': {
-      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'ngón tay của số phận';
+      const apexDesc = apex
+        ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})`
+        : 'ngón tay của số phận';
       pattern.personalizedSynthesis = {
         coreChallengeVi: `Cảm giác bất định và những bước ngoặt mang tính định mệnh buộc bạn phải liên tục thanh lọc và tái định hình bản thân tại ${apexDesc}.`,
         uniqueGiftVi: `Trực giác tâm linh thấu thị và năng lực giải quyết các bài toán phức tạp bằng góc nhìn vượt ra ngoài khuôn khổ thông thường.`,
-        actionableAdviceVi: pattern.resolutionPoint?.adviceVi ?? `Lắng nghe trực giác bên trong và bình thản đón nhận những bước ngoặt tái sinh của cuộc đời.`,
+        actionableAdviceVi:
+          pattern.resolutionPoint?.adviceVi ??
+          `Lắng nghe trực giác bên trong và bình thản đón nhận những bước ngoặt tái sinh của cuộc đời.`,
       };
       break;
     }
@@ -250,7 +300,7 @@ export function detectAspectPatterns(
     oppositionOrb?: number;
     sextileOrb?: number;
     quincunxOrb?: number;
-  } = {}
+  } = {},
 ): AspectPattern[] {
   const trineOrb = options.trineOrb ?? 6;
   const squareOrb = options.squareOrb ?? 6;
@@ -273,7 +323,20 @@ export function detectAspectPatterns(
 
   signGroups.forEach((group, signIdx) => {
     if (group.length >= 3) {
-      const signNames = ['Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải', 'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp', 'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư'];
+      const signNames = [
+        'Bạch Dương',
+        'Kim Ngưu',
+        'Song Tử',
+        'Cự Giải',
+        'Sư Tử',
+        'Xử Nữ',
+        'Thiên Bình',
+        'Bọ Cạp',
+        'Nhân Mã',
+        'Ma Kết',
+        'Bảo Bình',
+        'Song Ngư',
+      ];
       rawPatterns.push({
         id: `stellium-${signIdx}`,
         type: 'stellium',
@@ -287,7 +350,12 @@ export function detectAspectPatterns(
   });
 
   // 2. Grand Trines & Kites
-  const grandTrines: Array<{ p1: AspectPatternPlanet; p2: AspectPatternPlanet; p3: AspectPatternPlanet; element: string }> = [];
+  const grandTrines: Array<{
+    p1: AspectPatternPlanet;
+    p2: AspectPatternPlanet;
+    p3: AspectPatternPlanet;
+    element: string;
+  }> = [];
   for (let i = 0; i < n; i++) {
     for (let j = i + 1; j < n; j++) {
       if (!isAspect(planets[i].longitude, planets[j].longitude, 120, trineOrb)) continue;
@@ -356,7 +424,12 @@ export function detectAspectPatterns(
   });
 
   // 3. T-Squares
-  const tSquares: Array<{ p1: AspectPatternPlanet; p2: AspectPatternPlanet; apex: AspectPatternPlanet; modality: string }> = [];
+  const tSquares: Array<{
+    p1: AspectPatternPlanet;
+    p2: AspectPatternPlanet;
+    apex: AspectPatternPlanet;
+    modality: string;
+  }> = [];
   for (let i = 0; i < n; i++) {
     for (let j = i + 1; j < n; j++) {
       if (!isAspect(planets[i].longitude, planets[j].longitude, 180, oppOrb)) continue;
@@ -449,12 +522,19 @@ export function detectAspectPatterns(
       for (let k = j + 1; k < n; k++) {
         for (let m = k + 1; m < n; m++) {
           if (!isAspect(planets[k].longitude, planets[m].longitude, 180, oppOrb)) continue;
-          const p1 = planets[i], p2 = planets[j], p3 = planets[k], p4 = planets[m];
+          const p1 = planets[i],
+            p2 = planets[j],
+            p3 = planets[k],
+            p4 = planets[m];
           const hasTrineAndSextile =
-            (isAspect(p1.longitude, p3.longitude, 120, trineOrb) && isAspect(p1.longitude, p4.longitude, 60, sexOrb) &&
-             isAspect(p2.longitude, p4.longitude, 120, trineOrb) && isAspect(p2.longitude, p3.longitude, 60, sexOrb)) ||
-            (isAspect(p1.longitude, p4.longitude, 120, trineOrb) && isAspect(p1.longitude, p3.longitude, 60, sexOrb) &&
-             isAspect(p2.longitude, p3.longitude, 120, trineOrb) && isAspect(p2.longitude, p4.longitude, 60, sexOrb));
+            (isAspect(p1.longitude, p3.longitude, 120, trineOrb) &&
+              isAspect(p1.longitude, p4.longitude, 60, sexOrb) &&
+              isAspect(p2.longitude, p4.longitude, 120, trineOrb) &&
+              isAspect(p2.longitude, p3.longitude, 60, sexOrb)) ||
+            (isAspect(p1.longitude, p4.longitude, 120, trineOrb) &&
+              isAspect(p1.longitude, p3.longitude, 60, sexOrb) &&
+              isAspect(p2.longitude, p3.longitude, 120, trineOrb) &&
+              isAspect(p2.longitude, p4.longitude, 60, sexOrb));
 
           if (hasTrineAndSextile) {
             rawPatterns.push({
@@ -473,4 +553,3 @@ export function detectAspectPatterns(
 
   return rawPatterns.map(enrichPatternDetails);
 }
-

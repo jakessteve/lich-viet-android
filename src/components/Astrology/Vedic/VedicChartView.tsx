@@ -15,7 +15,7 @@ export const VedicChartView: React.FC = () => {
       isCalculating: state.isCalculating,
       error: state.error,
       result: state.vedicResult,
-    }))
+    })),
   );
 
   const [showStoryModal, setShowStoryModal] = useState(false);
@@ -83,18 +83,14 @@ export const VedicChartView: React.FC = () => {
           </h3>
         </div>
         <div className="p-4 sm:p-5 space-y-4">
-          <BirthDataInput
-            value={input}
-            onChange={setInput}
-            showName={false}
-          />
+          <BirthDataInput value={input} onChange={setInput} showName={false} />
           <div className="pt-2">
             <ActionButton
               onClick={() => {
                 void runCalc();
               }}
               disabled={isCalculating}
-              icon={isCalculating ? "hourglass_empty" : "bubble_chart"}
+              icon={isCalculating ? 'hourglass_empty' : 'bubble_chart'}
               variant="primary"
               className="w-full h-12 bg-purple-600 hover:bg-purple-700 text-white"
             >

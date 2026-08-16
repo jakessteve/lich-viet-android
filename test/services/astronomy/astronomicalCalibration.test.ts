@@ -1,17 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import {
-  getSunLongitude,
-  getSolarTerm,
-  getJDN,
-  calculateFoundationalLayer,
-  findSolarTermStart,
-} from '@/utils/foundationalLayer';
-import {
-  computeAyanamsa,
-  convertTropicalToSidereal,
-  computeTrueLunarPosition,
-  computeDeltaT,
-} from '@omce/core-logic';
+import { getSunLongitude, getSolarTerm, getJDN, findSolarTermStart } from '@/utils/foundationalLayer';
+import { computeAyanamsa, computeTrueLunarPosition, computeDeltaT } from '@omce/core-logic';
 import { calculateWesternChartForJulianDay } from '@/services/astrology/westernCalculator';
 
 describe('Astronomical Cross-Validation Suite', () => {

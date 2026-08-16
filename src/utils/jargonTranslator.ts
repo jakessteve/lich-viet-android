@@ -15,11 +15,12 @@ export interface DualLayerTerm {
 
 export const DUAL_LAYER_TERMS_DICTIONARY: Record<string, DualLayerTerm> = {
   // ── Western Astrology ─────────────────────────────────────────
-  'Apex': {
+  Apex: {
     classicalTerm: 'Apex (Hành Tinh Đỉnh)',
     category: 'western',
     plainSubtitleVi: 'Điểm gánh áp lực lớn nhất & bộc phát năng lượng',
-    psychologicalMeaningVi: 'Nơi tập trung mọi căng thẳng từ góc đối đỉnh và chuyển hóa thành động lực hành động mạnh mẽ.',
+    psychologicalMeaningVi:
+      'Nơi tập trung mọi căng thẳng từ góc đối đỉnh và chuyển hóa thành động lực hành động mạnh mẽ.',
     actionableHintVi: 'Tập trung năng lượng vào các mục tiêu sáng tạo hoặc thể thao để giải tỏa áp lực lành mạnh.',
   },
   'Empty Leg': {
@@ -33,7 +34,8 @@ export const DUAL_LAYER_TERMS_DICTIONARY: Record<string, DualLayerTerm> = {
     classicalTerm: 'T-Square (Mô Hình Chữ T Vuông)',
     category: 'western',
     plainSubtitleVi: 'Cấu trúc tạo sức bật từ áp lực nội tâm',
-    psychologicalMeaningVi: 'Sự kết hợp giữa 1 góc đối đỉnh (180°) và 2 góc vuông (90°) tạo nên động lực vươn lên phi thường.',
+    psychologicalMeaningVi:
+      'Sự kết hợp giữa 1 góc đối đỉnh (180°) và 2 góc vuông (90°) tạo nên động lực vươn lên phi thường.',
     actionableHintVi: 'Biến cảm giác bất an thành năng suất lao động và thành tựu thực tế.',
   },
   'Grand Trine': {
@@ -98,30 +100,34 @@ export const DUAL_LAYER_TERMS_DICTIONARY: Record<string, DualLayerTerm> = {
     classicalTerm: 'Hóa Kỵ (Nút Thắt Chuyển Hóa & Áp Lực)',
     category: 'tuvi',
     plainSubtitleVi: 'Vùng thử thách đòi hỏi sự nhẫn nại & chiều sâu',
-    psychologicalMeaningVi: 'Nơi tiềm thức chứa đựng sự lo âu hoặc vướng bận, nhưng cũng là mỏ vàng kinh nghiệm nếu vượt qua.',
+    psychologicalMeaningVi:
+      'Nơi tiềm thức chứa đựng sự lo âu hoặc vướng bận, nhưng cũng là mỏ vàng kinh nghiệm nếu vượt qua.',
     actionableHintVi: 'Gỡ rối từng bước với thái độ điềm tĩnh, tránh phản ứng cảm xúc bộc phát.',
   },
 
   // ── Vedic Jyotish ─────────────────────────────────────────────
-  'Atmakaraka': {
+  Atmakaraka: {
     classicalTerm: 'Atmakaraka (Hành Tinh Chủ Linh Hồn)',
     category: 'vedic',
     plainSubtitleVi: 'Ngôi sao đại diện cho khát vọng sâu thẳm của linh hồn',
-    psychologicalMeaningVi: 'Hành tinh có độ dài cao nhất trong lá số, thể hiện bài học tiến hóa tâm linh lớn nhất trong kiếp sống này.',
+    psychologicalMeaningVi:
+      'Hành tinh có độ dài cao nhất trong lá số, thể hiện bài học tiến hóa tâm linh lớn nhất trong kiếp sống này.',
     actionableHintVi: 'Sống chân thật với giá trị cốt lõi mà hành tinh này đại diện.',
   },
   'Vimshottari Dasha': {
     classicalTerm: 'Vimshottari Dasha (Chu Kỳ Thời Vận 120 Năm)',
     category: 'vedic',
     plainSubtitleVi: 'Dòng thời gian kích hoạt các giai đoạn cuộc đời',
-    psychologicalMeaningVi: 'Hệ thống vận hạn thiên văn chỉ ra hành tinh nào đang nắm quyền điều khiển thời vận hiện tại.',
+    psychologicalMeaningVi:
+      'Hệ thống vận hạn thiên văn chỉ ra hành tinh nào đang nắm quyền điều khiển thời vận hiện tại.',
     actionableHintVi: 'Thuận theo chu kỳ năng lượng của hành tinh đại vận để gặt hái thành quả tối ưu.',
   },
-  'Astangata': {
+  Astangata: {
     classicalTerm: 'Astangata (Hiện Tượng Thiêu Đốt Bởi Mặt Trời)',
     category: 'vedic',
     plainSubtitleVi: 'Năng lượng hành tinh bị tôi luyện dưới sức nóng Mặt Trời',
-    psychologicalMeaningVi: 'Khi hành tinh ở quá gần Mặt Trời (< 3°), biểu hiện bên ngoài có thể bị che khuất nhưng nội lực bên trong rất mãnh liệt.',
+    psychologicalMeaningVi:
+      'Khi hành tinh ở quá gần Mặt Trời (< 3°), biểu hiện bên ngoài có thể bị che khuất nhưng nội lực bên trong rất mãnh liệt.',
     actionableHintVi: 'Tránh khoe khoang bên ngoài, tập trung phát triển chiều sâu chuyên môn bí mật.',
   },
 };

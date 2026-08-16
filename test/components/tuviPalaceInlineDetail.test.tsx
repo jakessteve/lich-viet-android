@@ -21,13 +21,7 @@ const mockInterpretation: PalaceInterpretationResult = {
 
 describe('TuViPalaceInlineDetail (Hybrid Adaptive Display)', () => {
   it('renders inline static card when not zoomed', () => {
-    render(
-      <TuViPalaceInlineDetail
-        interpretation={mockInterpretation}
-        onClose={() => {}}
-        isZoomed={false}
-      />
-    );
+    render(<TuViPalaceInlineDetail interpretation={mockInterpretation} onClose={() => {}} isZoomed={false} />);
 
     expect(screen.getByText(/Luận Giải Chi Tiết Cung Mệnh \(Thìn\)/i)).toBeDefined();
     expect(screen.getByText(/Hội tụ Tử Vi, Thiên Phủ/i)).toBeDefined();
@@ -35,13 +29,7 @@ describe('TuViPalaceInlineDetail (Hybrid Adaptive Display)', () => {
   });
 
   it('renders compact pill HUD when zoomed', () => {
-    render(
-      <TuViPalaceInlineDetail
-        interpretation={mockInterpretation}
-        onClose={() => {}}
-        isZoomed={true}
-      />
-    );
+    render(<TuViPalaceInlineDetail interpretation={mockInterpretation} onClose={() => {}} isZoomed={true} />);
 
     expect(screen.getByText(/Cung Mệnh \(Thìn\)/i)).toBeDefined();
     expect(screen.getByText(/Chi tiết/i)).toBeDefined();

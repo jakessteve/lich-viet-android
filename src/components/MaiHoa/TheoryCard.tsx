@@ -420,12 +420,16 @@ export default function TheoryCard({
                     </p>
                   )}
                   <p className="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
-                    <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">Dịch nghĩa: </span>
+                    <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">
+                      Dịch nghĩa:{' '}
+                    </span>
                     {summary.thoanTu.meaning}
                   </p>
                   {summary.thoanTu.humanInterpretation && (
                     <p className="text-sm mt-2 text-text-primary-light dark:text-text-primary-dark leading-relaxed">
-                      <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">Luận giải bản chất: </span>
+                      <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">
+                        Luận giải bản chất:{' '}
+                      </span>
                       {summary.thoanTu.humanInterpretation}
                     </p>
                   )}

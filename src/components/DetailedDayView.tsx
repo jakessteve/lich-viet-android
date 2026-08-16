@@ -30,12 +30,10 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
   const isPersonalized = useAppStore((s) => s.isPersonalized);
   const togglePersonalization = useAppStore((s) => s.togglePersonalization);
   const [sortByScore, setSortByScore] = useState(false);
-  
+
   const computedProfile = useMemo(() => {
     return getUserBirthProfile(user);
   }, [user]);
-
-
 
   const dayChi = data.canChi?.day?.chi;
 
@@ -189,7 +187,6 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
       ky: renderTextListWithPercents(normalized.ky, 'không có việc gì kỵ đặc biệt'),
     };
   };
-
 
   return (
     <div className="w-full space-y-4 animate-fade-scale" data-testid="detailed-day-view">
@@ -397,17 +394,17 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               </div>
             )}
           </div>
-          
+
           <div className="px-4 sm:px-6 py-3 border-t border-border-light dark:border-border-dark text-right">
             <button
               onClick={() => {
                 const d = new Date(date);
                 const startStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-                
+
                 const end = new Date(date);
                 end.setDate(end.getDate() + 7);
                 const endStr = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`;
-                
+
                 navigate(`/app/ngay-tot?start=${startStr}&end=${endStr}`);
               }}
               className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
@@ -621,9 +618,8 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 const isAuspiciousCurrent = currentScore >= 60;
                 const positiveModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '+');
                 const negativeModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '-');
-                const scoreToneClass = currentScore >= 50
-                    ? 'text-good dark:text-good-dark'
-                    : 'text-bad dark:text-bad-dark';
+                const scoreToneClass =
+                  currentScore >= 50 ? 'text-good dark:text-good-dark' : 'text-bad dark:text-bad-dark';
                 const normalizedHourDungSu = renderNormalizedDungSu(h.nghi, h.ky);
 
                 return (

@@ -10,7 +10,7 @@ describe('MobileDrawer Component', () => {
     render(
       <MemoryRouter initialEntries={['/app/am-lich']}>
         <MobileDrawer />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     // Trigger open event inside act
@@ -26,6 +26,10 @@ describe('MobileDrawer Component', () => {
     expect(screen.getByText('Chiêm Tinh Tây Phương')).toBeInTheDocument();
     expect(screen.getByText('Chiêm Tinh Ấn Độ (Vedic)')).toBeInTheDocument();
     expect(screen.getByText('Hợp Lá Số (Synastry)')).toBeInTheDocument();
+
+    // Check Home item
+    expect(screen.getByText('Trang chủ')).toBeInTheDocument();
+    expect(screen.getByText('Giới thiệu & Tổng quan Lịch Việt')).toBeInTheDocument();
 
     // Check other groups
     expect(screen.getByText('Âm lịch')).toBeInTheDocument();

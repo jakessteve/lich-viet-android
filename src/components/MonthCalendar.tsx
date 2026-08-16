@@ -184,12 +184,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
         </div>
 
         <div className="hidden md:flex items-center justify-between w-full">
-          <IconButton
-            onClick={prevMonth}
-            className="z-10 shrink-0"
-            icon="chevron_left"
-            label="Tháng trước"
-          />
+          <IconButton onClick={prevMonth} className="z-10 shrink-0" icon="chevron_left" label="Tháng trước" />
 
           <div className="flex-1 flex justify-center py-1.5">
             <div className="flex items-center gap-1 sm:gap-2 font-semibold text-sm sm:text-sm">
@@ -222,12 +217,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
           </div>
 
           <div className="z-10 flex items-center gap-1 shrink-0">
-            <IconButton
-              onClick={nextMonth}
-              className="shrink-0"
-              icon="chevron_right"
-              label="Tháng sau"
-            />
+            <IconButton onClick={nextMonth} className="shrink-0" icon="chevron_right" label="Tháng sau" />
             <IconButton
               onClick={() => {
                 const today = viewerLocation
@@ -339,17 +329,19 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
               <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-red-500 dark:bg-red-400" />
               Hắc Đạo
             </span>
-            {isPersonalized && (<>
-            {/* Personal score indicators */}
-            <span className="flex items-center gap-1">
-              <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-sm bg-purple-500" />
-              Cát theo tuổi
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-amber-500 ring-1 ring-amber-700/25 dark:bg-amber-400 dark:ring-amber-200/20" />
-              Hung theo tuổi
-            </span>
-          </>)}
+            {isPersonalized && (
+              <>
+                {/* Personal score indicators */}
+                <span className="flex items-center gap-1">
+                  <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-sm bg-purple-500" />
+                  Cát theo tuổi
+                </span>
+                <span className="flex items-center gap-1">
+                  <span className="inline-block h-1.5 w-1.5 shrink-0 rotate-45 bg-amber-500 ring-1 ring-amber-700/25 dark:bg-amber-400 dark:ring-amber-200/20" />
+                  Hung theo tuổi
+                </span>
+              </>
+            )}
           </div>
         </div>
       </div>

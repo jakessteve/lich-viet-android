@@ -15,11 +15,7 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
       aria-modal="true"
       aria-labelledby="help-modal-title"
     >
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
       <div className="relative w-full max-w-2xl bg-white dark:bg-mystery-surface rounded-2xl shadow-2xl border border-border-light dark:border-mystery-purple/20 max-h-[85vh] flex flex-col overflow-hidden animate-scale-in z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border-light dark:border-border-dark">
@@ -47,7 +43,9 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
               1. Âm Lịch & Dụng Sự Hàng Ngày
             </h3>
             <p>
-              Xem thông tin ngày âm lịch, can chi, tiết khí, trực, nhị thập bát tú, sao tốt sao xấu. Thẻ <strong>Dụng Sự</strong> giúp bạn tra nhanh các việc nên làm và kiêng cữ trong ngày, cùng bảng giờ hoàng đạo và hướng xuất hành hỷ thần/tài thần.
+              Xem thông tin ngày âm lịch, can chi, tiết khí, trực, nhị thập bát tú, sao tốt sao xấu. Thẻ{' '}
+              <strong>Dụng Sự</strong> giúp bạn tra nhanh các việc nên làm và kiêng cữ trong ngày, cùng bảng giờ hoàng
+              đạo và hướng xuất hành hỷ thần/tài thần.
             </p>
           </div>
 
@@ -58,7 +56,8 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
               2. Chọn Ngày Tốt (Electional Engine)
             </h3>
             <p>
-              Dành cho việc hệ trọng (cưới hỏi, khai trương, làm nhà, xuất hành xa). Hệ thống tự động quét và chấm điểm tổng hợp qua nhiều hệ thuật toán để chọn ngày tối ưu nhất trong khoảng thời gian mong muốn.
+              Dành cho việc hệ trọng (cưới hỏi, khai trương, làm nhà, xuất hành xa). Hệ thống tự động quét và chấm điểm
+              tổng hợp qua nhiều hệ thuật toán để chọn ngày tối ưu nhất trong khoảng thời gian mong muốn.
             </p>
           </div>
 
@@ -69,7 +68,9 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
               3. Tử Vi & Chiêm Tinh Học
             </h3>
             <p>
-              Lập lá số <strong>Tử Vi Đẩu Số</strong> (Nam phái, Thiên Lương, Bắc phái) và hệ thống <strong>Chiêm Tinh</strong> (Tây Phương, Ấn Độ Vedic, Hợp Lá Số). Hỗ trợ chuẩn hóa giờ sinh theo kinh độ và múi giờ quốc tế chính xác.
+              Lập lá số <strong>Tử Vi Đẩu Số</strong> (Nam phái, Thiên Lương, Bắc phái) và hệ thống{' '}
+              <strong>Chiêm Tinh</strong> (Tây Phương, Ấn Độ Vedic, Hợp Lá Số). Hỗ trợ chuẩn hóa giờ sinh theo kinh độ
+              và múi giờ quốc tế chính xác.
             </p>
           </div>
 
@@ -80,7 +81,8 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
               4. Gieo Quẻ Dịch Số
             </h3>
             <p>
-              Bao gồm <strong>Mai Hoa Dịch Số</strong> gieo quẻ theo thời khắc hoặc số ngẫu nhiên, và phương pháp <strong>Tam Thức</strong> (Thái Ất, Kì Môn Độn Giáp, Lục Nhâm Đại Độn) tra cứu điềm hung cát.
+              Bao gồm <strong>Mai Hoa Dịch Số</strong> gieo quẻ theo thời khắc hoặc số ngẫu nhiên, và phương pháp{' '}
+              <strong>Tam Thức</strong> (Thái Ất, Kì Môn Độn Giáp, Lục Nhâm Đại Độn) tra cứu điềm hung cát.
             </p>
           </div>
 
@@ -90,7 +92,8 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
               <span className="material-icons-round text-sm">tune</span> Mẹo Cá Nhân Hóa
             </span>
             <p className="text-xs">
-              Vào mục <strong>Cài đặt &gt; Hồ sơ</strong> hoặc đăng nhập để lưu năm sinh và vị trí. Ứng dụng sẽ tự động tính điểm cát hung riêng theo tuổi và làm nổi bật các giờ vượng tài cho bạn.
+              Vào mục <strong>Cài đặt &gt; Hồ sơ</strong> hoặc đăng nhập để lưu năm sinh và vị trí. Ứng dụng sẽ tự động
+              tính điểm cát hung riêng theo tuổi và làm nổi bật các giờ vượng tài cho bạn.
             </p>
           </div>
         </div>

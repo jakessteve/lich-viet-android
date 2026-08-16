@@ -284,9 +284,9 @@ describe('Star Placement Engine', () => {
       expect(byChi.get('Ngọ')?.brightness['Tử Vi']).toBe('Miếu');
       expect(byChi.get('Ngọ')?.brightness['Hỏa Tinh']).toBe('Đắc');
       expect(byChi.get('Ngọ')?.brightness['Văn Xương']).toBe('Bình');
-      expect(
-        chart.palaces.flatMap((palace) => palace.chinhTinh).find((star) => star.name === 'Cự Môn')?.nguHanh,
-      ).toBe('Âm Thủy');
+      expect(chart.palaces.flatMap((palace) => palace.chinhTinh).find((star) => star.name === 'Cự Môn')?.nguHanh).toBe(
+        'Âm Thủy',
+      );
       expect(
         chart.palaces.flatMap((palace) => palace.chinhTinh).find((star) => star.name === 'Thiên Lương')?.nguHanh,
       ).toBe('Âm Mộc');
@@ -462,9 +462,14 @@ describe('Star Placement Engine', () => {
       Object.assign(allStarPositions, phuMap);
 
       const counts = Array.from({ length: 12 }, (_, palaceIndex) => {
-        const main = Object.values(chinhMap).reduce((sum, positions) => sum + positions.filter((pos) => pos === palaceIndex).length, 0);
+        const main = Object.values(chinhMap).reduce(
+          (sum, positions) => sum + positions.filter((pos) => pos === palaceIndex).length,
+          0,
+        );
         const nonMajorBase = Object.values(phuMap).filter((pos) => pos === palaceIndex).length;
-        const tuHoaCount = Object.values(tuHoaRaw).filter((entry) => allStarPositions[entry.starName] === palaceIndex).length;
+        const tuHoaCount = Object.values(tuHoaRaw).filter(
+          (entry) => allStarPositions[entry.starName] === palaceIndex,
+        ).length;
         return {
           chi: palaceIndex,
           main,

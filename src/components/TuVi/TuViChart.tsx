@@ -4,7 +4,6 @@ import { TuViPalaceCell } from './TuViPalaceCell';
 import { TuViCenterPanel } from './TuViCenterPanel';
 import { GRID_MAP } from './tuviChartLayout';
 
-
 interface TuViChartProps {
   chart: TuViChartType;
   selectedPalaceIndex: number | null;
@@ -69,12 +68,7 @@ function getInnerAnchor(chiIndex: number): { x: number; y: number } | null {
   return { x, y };
 }
 
-export const TuViChart: React.FC<TuViChartProps> = ({
-  chart,
-  selectedPalaceIndex,
-  onSelectPalace,
-  onZoomChange,
-}) => {
+export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex, onSelectPalace, onZoomChange }) => {
   const shellRef = useRef<HTMLDivElement>(null);
   const chartLegendRef = useRef<HTMLDivElement>(null);
   const brightnessLegendRef = useRef<HTMLDivElement>(null);
@@ -247,9 +241,7 @@ export const TuViChart: React.FC<TuViChartProps> = ({
             className="surface-control inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-gold-light dark:hover:text-gold-dark transition-colors"
             aria-label={mobileZoomed ? 'Thu nhỏ lá số' : 'Phóng to lá số'}
           >
-            <span className="material-icons-round text-lg">
-              {mobileZoomed ? 'zoom_out_map' : 'zoom_in_map'}
-            </span>
+            <span className="material-icons-round text-lg">{mobileZoomed ? 'zoom_out_map' : 'zoom_in_map'}</span>
           </button>
         </div>
       )}

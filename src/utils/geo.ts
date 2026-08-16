@@ -48,13 +48,5 @@ export function getCivilDateForOffset(date: Date, offsetHours: number): Date {
     return new Date(date.getTime());
   }
   const parts = getDatePartsInOffset(date, offsetHours);
-  return new Date(
-    parts.year,
-    parts.month - 1,
-    parts.day,
-    parts.hour,
-    parts.minute,
-    parts.second,
-    parts.millisecond,
-  );
+  return new Date(parts.year, parts.month - 1, parts.day, parts.hour, parts.minute, parts.second, parts.millisecond);
 }

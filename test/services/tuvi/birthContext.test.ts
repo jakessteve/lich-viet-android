@@ -170,4 +170,24 @@ describe('Tu Vi birth context', () => {
 
     expect(() => buildTuViBirthContext(input, resolveTuViSchoolProfile('thien-luong'))).not.toThrow();
   });
+
+  it('correctly shifts hour branch when timezone correction crosses branch boundary', () => {
+    // Born in 1968 Saigon (South VN, GMT+8) at 01:15 (clock hour 1 = Sửu, branch 1).
+    // In ICT (GMT+7), time is 00:15 (clock hour 0 = Tý, branch 0).
+    const input = {
+      name: 'Shifted branch sample',
+      solarDate: new Date(1968, 5, 1, 1, 15),
+      birthHour: 1, // Sửu branch from uncorrected clock hour
+      birthClockHour: 1,
+      birthMinute: 15,
+      gender: 'nam' as const,
+      timezone: 'Asia/Ho_Chi_Minh',
+      school: 'thien-luong' as const,
+    };
+
+    const context = buildTuViBirthContext(input, resolveTuViSchoolProfile('thien-luong'));
+    expect(context.correctedDate.getHours()).toBe(0);
+    expect(context.hourBranchIndex).toBe(0); // Tý branch (0) after -1h correction
+    expect(context.canChi.hour.chi).toBe('Tý');
+  });
 });

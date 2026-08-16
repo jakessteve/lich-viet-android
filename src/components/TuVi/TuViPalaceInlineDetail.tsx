@@ -34,7 +34,6 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
     majorStarsAnalysisVi,
     cachCucAnalysisVi,
     tuHoaAnalysisVi,
-    auxiliaryAndMaleficVi,
     tuanTrietAnalysisVi,
     tamPhuongTuChinhVi,
     actionableGuidanceVi,
@@ -123,21 +122,25 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                       {cachCucAnalysisVi.purity}
                     </span>
                   </div>
-                  <p className="font-medium text-text-primary-light dark:text-text-primary-dark">{cachCucAnalysisVi.description}</p>
-                  <p className="text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/20">{cachCucAnalysisVi.synthesisVi}</p>
+                  <p className="font-medium text-text-primary-light dark:text-text-primary-dark">
+                    {cachCucAnalysisVi.description}
+                  </p>
+                  <p className="text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/20">
+                    {cachCucAnalysisVi.synthesisVi}
+                  </p>
                 </div>
               )}
 
-              <div className="rounded-xl bg-amber-500/5 dark:bg-amber-500/[0.03] border border-amber-500/20 p-3 space-y-1">
-                <div className="font-bold text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
+              <div className="rounded-xl bg-gold/10 border border-gold/25 p-3 space-y-1">
+                <div className="font-bold text-gold-light dark:text-gold-dark flex items-center gap-1.5">
                   <span className="material-icons-round text-sm">stars</span>
                   Chính Tinh & Cốt Cách
                 </div>
                 <p>{majorStarsAnalysisVi}</p>
               </div>
 
-              <div className="rounded-xl bg-indigo-500/10 border border-indigo-500/20 p-3 space-y-1">
-                <div className="font-bold text-indigo-700 dark:text-indigo-300 flex items-center gap-1.5">
+              <div className="rounded-xl bg-purple/10 border border-purple/25 p-3 space-y-1">
+                <div className="font-bold text-purple dark:text-purple-dark flex items-center gap-1.5">
                   <span className="material-icons-round text-sm">hub</span>
                   Tam Phương Tứ Chính & Hội Chiếu
                 </div>
@@ -145,8 +148,8 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               </div>
 
               {tuHoaAnalysisVi.length > 0 && (
-                <div className="rounded-xl bg-purple-500/10 border border-purple-500/20 p-3 space-y-1">
-                  <div className="font-bold text-purple-700 dark:text-purple-300 flex items-center gap-1.5">
+                <div className="rounded-xl bg-purple/10 border border-purple/25 p-3 space-y-1">
+                  <div className="font-bold text-purple dark:text-purple-dark flex items-center gap-1.5">
                     <span className="material-icons-round text-sm">bolt</span>
                     Tứ Hóa Tác Động
                   </div>
@@ -159,8 +162,8 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               )}
 
               {tuanTrietAnalysisVi && (
-                <div className="rounded-xl bg-rose-500/10 border border-rose-500/20 p-3 space-y-1">
-                  <div className="font-bold text-rose-700 dark:text-rose-300 flex items-center gap-1.5">
+                <div className="rounded-xl bg-bad/10 border border-bad/25 p-3 space-y-1">
+                  <div className="font-bold text-bad dark:text-bad-dark flex items-center gap-1.5">
                     <span className="material-icons-round text-sm">shield</span>
                     Ảnh Hưởng Tuần / Triệt
                   </div>
@@ -168,8 +171,31 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                 </div>
               )}
 
-              <div className="rounded-xl bg-sky-500/10 border border-sky-500/20 p-3 space-y-1">
-                <div className="font-bold text-sky-700 dark:text-sky-300 flex items-center gap-1.5">
+              {(interpretation.truongSinhAnalysisVi || interpretation.nhiHopAnalysisVi) && (
+                <div className="rounded-xl bg-good/10 border border-good/25 p-3 space-y-1">
+                  <div className="font-bold text-good dark:text-good-dark flex items-center gap-1.5">
+                    <span className="material-icons-round text-sm">spa</span>
+                    Khí Trường Vòng Tràng Sinh & Nhị Hợp
+                  </div>
+                  {interpretation.truongSinhAnalysisVi && <p>🌱 {interpretation.truongSinhAnalysisVi}</p>}
+                  {interpretation.nhiHopAnalysisVi && <p>🔗 {interpretation.nhiHopAnalysisVi}</p>}
+                </div>
+              )}
+
+              {interpretation.positionalSemanticsVi && (
+                <div className="rounded-xl bg-gold/10 border border-gold/25 p-3 space-y-1">
+                  <div className="font-bold text-gold-light dark:text-gold-dark flex items-center gap-1.5">
+                    <span className="material-icons-round text-sm">compass_calibration</span>
+                    Tương Tác Cung Vị (Tọa, Cứ, Triều, Xung, Củng, Hiệp)
+                  </div>
+                  <div className="space-y-1 text-text-secondary-light dark:text-text-secondary-dark whitespace-pre-line">
+                    {interpretation.positionalSemanticsVi}
+                  </div>
+                </div>
+              )}
+
+              <div className="rounded-xl bg-info/10 border border-info/25 p-3 space-y-1">
+                <div className="font-bold text-info dark:text-info-dark flex items-center gap-1.5">
                   <span className="material-icons-round text-sm">lightbulb</span>
                   Định Hướng Ứng Dụng Thực Tế
                 </div>
@@ -233,31 +259,27 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
       {/* Content Grid */}
       <div className="grid gap-3 sm:grid-cols-2 text-xs leading-relaxed text-text-primary-light dark:text-text-primary-dark">
         {/* 1. Chính Tinh */}
-        <div className="rounded-2xl bg-amber-500/5 dark:bg-amber-500/[0.03] border border-amber-500/20 p-3.5 space-y-1.5">
-          <div className="font-bold text-amber-700 dark:text-amber-300 text-xs flex items-center gap-1.5">
+        <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5">
+          <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
             <span className="material-icons-round text-sm">stars</span>
             Chính Tinh Tọa Thủ
           </div>
-          <p className="text-text-secondary-light dark:text-text-secondary-dark">
-            {majorStarsAnalysisVi}
-          </p>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">{majorStarsAnalysisVi}</p>
         </div>
 
         {/* 2. Tam Phương Tứ Chính */}
-        <div className="rounded-2xl bg-indigo-500/5 dark:bg-indigo-500/[0.03] border border-indigo-500/20 p-3.5 space-y-1.5">
-          <div className="font-bold text-indigo-700 dark:text-indigo-300 text-xs flex items-center gap-1.5">
+        <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5">
+          <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
             <span className="material-icons-round text-sm">hub</span>
             Tam Phương Tứ Chính & Hội Chiếu
           </div>
-          <p className="text-text-secondary-light dark:text-text-secondary-dark">
-            {tamPhuongTuChinhVi}
-          </p>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">{tamPhuongTuChinhVi}</p>
         </div>
 
         {/* 3. Tứ Hóa & Tuần Triệt */}
         {(tuHoaAnalysisVi.length > 0 || tuanTrietAnalysisVi) && (
-          <div className="rounded-2xl bg-purple-500/5 dark:bg-purple-500/[0.03] border border-purple-500/20 p-3.5 space-y-1.5 sm:col-span-2">
-            <div className="font-bold text-purple-700 dark:text-purple-300 text-xs flex items-center gap-1.5">
+          <div className="rounded-2xl bg-purple/10 border border-purple/25 p-3.5 space-y-1.5 sm:col-span-2">
+            <div className="font-bold text-purple dark:text-purple-dark text-xs flex items-center gap-1.5">
               <span className="material-icons-round text-sm">bolt</span>
               Tác Động Tứ Hóa & Biến Chuyển Thời Vận
             </div>
@@ -267,22 +289,51 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               </p>
             ))}
             {tuanTrietAnalysisVi && (
-              <p className="text-rose-700 dark:text-rose-300 font-medium pt-1">
-                🛡️ {tuanTrietAnalysisVi}
+              <p className="text-bad dark:text-bad-dark font-medium pt-1">🛡️ {tuanTrietAnalysisVi}</p>
+            )}
+          </div>
+        )}
+
+        {/* 4. Khí Lực Tràng Sinh & Nhị Hợp */}
+        {(interpretation.truongSinhAnalysisVi || interpretation.nhiHopAnalysisVi) && (
+          <div className="rounded-2xl bg-good/10 border border-good/25 p-3.5 space-y-1.5 sm:col-span-2">
+            <div className="font-bold text-good dark:text-good-dark text-xs flex items-center gap-1.5">
+              <span className="material-icons-round text-sm">spa</span>
+              Khí Trường Vòng Tràng Sinh & Nhị Hợp Cung Vị
+            </div>
+            {interpretation.truongSinhAnalysisVi && (
+              <p className="text-text-secondary-light dark:text-text-secondary-dark">
+                🌱 {interpretation.truongSinhAnalysisVi}
+              </p>
+            )}
+            {interpretation.nhiHopAnalysisVi && (
+              <p className="text-text-secondary-light dark:text-text-secondary-dark">
+                🔗 {interpretation.nhiHopAnalysisVi}
               </p>
             )}
           </div>
         )}
 
-        {/* 4. Lời Khuyên Hành Động */}
-        <div className="rounded-2xl bg-sky-500/5 dark:bg-sky-500/[0.03] border border-sky-500/20 p-3.5 space-y-1.5 sm:col-span-2">
-          <div className="font-bold text-sky-700 dark:text-sky-300 text-xs flex items-center gap-1.5">
+        {/* 5. Tương Tác Cung Vị Cổ Điển */}
+        {interpretation.positionalSemanticsVi && (
+          <div className="rounded-2xl bg-gold/10 border border-gold/25 p-3.5 space-y-1.5 sm:col-span-2">
+            <div className="font-bold text-gold-light dark:text-gold-dark text-xs flex items-center gap-1.5">
+              <span className="material-icons-round text-sm">compass_calibration</span>
+              Tương Tác Cung Vị (Tọa, Cứ, Triều, Xung, Củng, Hiệp)
+            </div>
+            <div className="space-y-1 text-text-secondary-light dark:text-text-secondary-dark whitespace-pre-line">
+              {interpretation.positionalSemanticsVi}
+            </div>
+          </div>
+        )}
+
+        {/* 6. Lời Khuyên Hành Động */}
+        <div className="rounded-2xl bg-info/10 border border-info/25 p-3.5 space-y-1.5 sm:col-span-2">
+          <div className="font-bold text-info dark:text-info-dark text-xs flex items-center gap-1.5">
             <span className="material-icons-round text-sm">lightbulb</span>
             Định Hướng & Lời Khuyên Hành Động
           </div>
-          <p className="text-text-secondary-light dark:text-text-secondary-dark">
-            {actionableGuidanceVi}
-          </p>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">{actionableGuidanceVi}</p>
         </div>
       </div>
     </section>

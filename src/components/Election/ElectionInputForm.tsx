@@ -104,12 +104,11 @@ export const ElectionInputForm: React.FC = () => {
   return (
     <div className="glass-card">
       <div className="p-4 sm:p-5 space-y-5">
-        
         {/* Date Range */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="label-standard mb-1.5 block">Từ ngày</label>
-            <input 
+            <input
               type="date"
               className="surface-control w-full p-3 font-medium text-text-primary-light dark:text-text-primary-dark"
               value={startStr}
@@ -118,7 +117,7 @@ export const ElectionInputForm: React.FC = () => {
           </div>
           <div>
             <label className="label-standard mb-1.5 block">Đến ngày</label>
-            <input 
+            <input
               type="date"
               className="surface-control w-full p-3 font-medium text-text-primary-light dark:text-text-primary-dark"
               value={endStr}
@@ -162,7 +161,7 @@ export const ElectionInputForm: React.FC = () => {
               void runScan();
             }}
             disabled={isScanning}
-            icon={isScanning ? "hourglass_empty" : "search"}
+            icon={isScanning ? 'hourglass_empty' : 'search'}
             variant="primary"
             className="w-full h-12 bg-emerald-600 hover:bg-emerald-700 text-white"
           >

@@ -2,11 +2,11 @@ import type {
   AsyncCalculationRequest,
   DungSuEventScore,
   HybridElectionTimeline,
-  ScoringMetrics
-} from "@omce/contracts";
+  ScoringMetrics,
+} from '@omce/contracts';
 
 export interface OmceWorkerOptions {
-  controlZone?: "occupied" | "resistance";
+  controlZone?: 'occupied' | 'resistance';
   chunkHours?: number;
   strictMode?: boolean;
   guardrails?: {
@@ -31,7 +31,7 @@ export interface OmceAstronomyInput {
   altitudeMeters: number;
   targetSolarLongitude?: number;
   civilTimestamp?: number;
-  controlZone?: "occupied" | "resistance";
+  controlZone?: 'occupied' | 'resistance';
 }
 
 export interface OmceAstronomyOutput {
@@ -41,13 +41,12 @@ export interface OmceAstronomyOutput {
     longitude: number;
     altitudeMeters: number;
   };
-  timezone:
-    {
-      ruleId: string;
-      offsetHours: number;
-      ambiguous: false;
-      shiftedTimestamp: number;
-    };
+  timezone: {
+    ruleId: string;
+    offsetHours: number;
+    ambiguous: false;
+    shiftedTimestamp: number;
+  };
   solarTerm: {
     targetLongitude: number;
     julianDay: number;
@@ -73,12 +72,14 @@ export interface OmceAstronomyOutput {
 }
 
 export declare function executeWasmAstronomyPipeline(input: OmceAstronomyInput): OmceAstronomyOutput;
-export declare function deriveWasmTopocentricSnapshot(input: OmceAstronomyInput): OmceAstronomyOutput["planetarySnapshot"];
+export declare function deriveWasmTopocentricSnapshot(
+  input: OmceAstronomyInput,
+): OmceAstronomyOutput['planetarySnapshot'];
 
 export interface OmceWorkerProgressMessage {
-  type: "omce:progress";
+  type: 'omce:progress';
   payload: {
-    phase: "validating" | "timezone" | "scanning" | "scoring" | "complete";
+    phase: 'validating' | 'timezone' | 'scanning' | 'scoring' | 'complete';
     progress: number;
     taskId: string;
     completedChunks: number;
@@ -95,7 +96,7 @@ export interface OmceWorkerChunkSummary {
 }
 
 export interface OmceWorkerChunkMessage {
-  type: "omce:chunk";
+  type: 'omce:chunk';
   payload: {
     taskId: string;
     summary: OmceWorkerChunkSummary;
@@ -105,13 +106,12 @@ export interface OmceWorkerChunkMessage {
 export interface OmceWorkerResultPayload {
   request: AsyncCalculationRequest;
   generatedAt: number;
-  status: "completed" | "short_circuited" | "cancelled";
-  timezone:
-    {
-      ruleId: string;
-      offsetHours: number;
-      ambiguous: false;
-    };
+  status: 'completed' | 'short_circuited' | 'cancelled';
+  timezone: {
+    ruleId: string;
+    offsetHours: number;
+    ambiguous: false;
+  };
   coarseWindowCount: number;
   chunkCount: number;
   latitudeGuardTriggered: boolean;
@@ -156,12 +156,12 @@ export interface OmceWorkerResultPayload {
 }
 
 export interface OmceWorkerResultMessage {
-  type: "omce:result";
+  type: 'omce:result';
   payload: OmceWorkerResultPayload;
 }
 
 export interface OmceWorkerErrorMessage {
-  type: "omce:error";
+  type: 'omce:error';
   payload: {
     taskId?: string;
     message: string;
@@ -169,14 +169,14 @@ export interface OmceWorkerErrorMessage {
 }
 
 export interface OmceWorkerCancelledMessage {
-  type: "omce:cancelled";
+  type: 'omce:cancelled';
   payload: {
     taskId: string;
   };
 }
 
 export interface OmceWorkerRequestMessage {
-  type: "omce:calculate";
+  type: 'omce:calculate';
   payload: {
     request: AsyncCalculationRequest;
     options?: OmceWorkerOptions;
@@ -184,7 +184,7 @@ export interface OmceWorkerRequestMessage {
 }
 
 export interface OmceWorkerCancelRequestMessage {
-  type: "omce:cancel";
+  type: 'omce:cancel';
   payload: {
     taskId: string;
   };
@@ -192,13 +192,10 @@ export interface OmceWorkerCancelRequestMessage {
 
 export declare function createWorkerRequestMessage(
   request: AsyncCalculationRequest,
-  options?: OmceWorkerOptions
+  options?: OmceWorkerOptions,
 ): OmceWorkerRequestMessage;
 export declare function createWorkerCancelMessage(taskId: string): OmceWorkerCancelRequestMessage;
-export declare function createChunkPlan(input: {
-  request: AsyncCalculationRequest;
-  chunkHours?: number;
-}): Array<{
+export declare function createChunkPlan(input: { request: AsyncCalculationRequest; chunkHours?: number }): Array<{
   chunkIndex: number;
   totalChunks: number;
   timestampStart: number;
@@ -206,7 +203,7 @@ export declare function createChunkPlan(input: {
 }>;
 export declare function runElectionScan(input: {
   request: AsyncCalculationRequest;
-  controlZone?: "occupied" | "resistance";
+  controlZone?: 'occupied' | 'resistance';
   chunkHours?: number;
   strictMode?: boolean;
   guardrails?: {
@@ -224,13 +221,7 @@ export declare function runElectionScan(input: {
   }>;
   now?: () => number;
 }): OmceWorkerResultPayload;
-export declare function registerOmceWorker(
-  workerScope: {
-    postMessage: (message: unknown, transfer?: Transferable[]) => void;
-    onmessage:
-      | ((
-          event: MessageEvent<OmceWorkerRequestMessage | OmceWorkerCancelRequestMessage>
-        ) => void)
-      | null;
-  }
-): void;
+export declare function registerOmceWorker(workerScope: {
+  postMessage: (message: unknown, transfer?: Transferable[]) => void;
+  onmessage: ((event: MessageEvent<OmceWorkerRequestMessage | OmceWorkerCancelRequestMessage>) => void) | null;
+}): void;

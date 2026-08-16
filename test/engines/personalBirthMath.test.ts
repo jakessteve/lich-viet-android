@@ -54,7 +54,14 @@ describe('personalBirthMath', () => {
   });
 
   it('uses the birth hour when it is available', () => {
-    const base = calculatePersonalHourModifier(1983, 11, 13, { can: 'Bính', chi: 'Dậu' }, referenceDayCanChi, referenceDate);
+    const base = calculatePersonalHourModifier(
+      1983,
+      11,
+      13,
+      { can: 'Bính', chi: 'Dậu' },
+      referenceDayCanChi,
+      referenceDate,
+    );
     const adjusted = calculatePersonalHourModifier(
       1983,
       11,

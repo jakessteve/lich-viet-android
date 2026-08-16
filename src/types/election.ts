@@ -8,9 +8,7 @@ export interface ElectionInput {
   location?: { lat: number; lng: number; timezone: number };
 }
 
-export type ElectionActivityType =
-  | 'cuoi-hoi' | 'khai-truong' | 'xay-dung'
-  | 'xuat-hanh' | 'nhap-trach' | 'khac';
+export type ElectionActivityType = 'cuoi-hoi' | 'khai-truong' | 'xay-dung' | 'xuat-hanh' | 'nhap-trach' | 'khac';
 
 export interface ElectionCandidate {
   timestamp: number;
@@ -24,4 +22,3 @@ export interface ElectionCandidate {
   solarTerm: string;
   bestHours?: HourScoreEntry[];
 }
-

@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Tone = 'gold' | 'purple' | 'indigo' | 'emerald';
+type Tone = 'gold' | 'purple' | 'indigo' | 'emerald' | 'astral';
 
 function cx(...classes: Array<string | false | null | undefined>): string {
   return classes.filter(Boolean).join(' ');
@@ -26,6 +26,7 @@ const activeTone: Record<Tone, string> = {
   gold: 'bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white shadow-md shadow-gold/20',
   purple: 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/20',
   indigo: 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-md shadow-indigo-500/20',
+  astral: 'bg-astral-primary text-white shadow-md shadow-astral-glow',
   emerald: 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-md shadow-emerald-500/20',
 };
 
@@ -38,7 +39,11 @@ export function SegmentedControl<T extends string>({
   className,
 }: SegmentedControlProps<T>) {
   return (
-    <div className={cx('surface-card p-1.5 flex gap-1', className)} role="tablist" aria-label={ariaLabel}>
+    <div
+      className={cx('surface-card p-1.5 flex gap-1 overflow-x-auto hide-scrollbar flex-nowrap', className)}
+      role="tablist"
+      aria-label={ariaLabel}
+    >
       {options.map((option) => {
         const active = option.id === value;
         return (
@@ -50,7 +55,7 @@ export function SegmentedControl<T extends string>({
             aria-current={active ? 'page' : undefined}
             onClick={() => onChange(option.id)}
             className={cx(
-              'flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 min-h-11 active:scale-[0.98]',
+              'flex-1 min-w-max flex-shrink-0 flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 min-h-11 active:scale-[0.98]',
               active
                 ? activeTone[tone]
                 : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-white/5',
@@ -84,7 +89,10 @@ export function IconButton({ icon, label, iconClassName, className, type = 'butt
       {...props}
     >
       <span
-        className={cx('material-icons-round block text-xl leading-none transition-transform duration-300', iconClassName)}
+        className={cx(
+          'material-icons-round block text-xl leading-none transition-transform duration-300',
+          iconClassName,
+        )}
         aria-hidden="true"
       >
         {icon}
@@ -98,7 +106,14 @@ interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement
   variant?: 'primary' | 'secondary';
 }
 
-export function ActionButton({ icon, variant = 'primary', className, children, type = 'button', ...props }: ActionButtonProps) {
+export function ActionButton({
+  icon,
+  variant = 'primary',
+  className,
+  children,
+  type = 'button',
+  ...props
+}: ActionButtonProps) {
   return (
     <button
       type={type}
@@ -165,7 +180,12 @@ export interface SettingRowProps {
 
 export function SettingRow({ icon, label, description, children, className }: SettingRowProps) {
   return (
-    <div className={cx('flex items-center justify-between gap-4 py-3.5 border-b border-border-light/20 dark:border-border-dark/20 last:border-0', className)}>
+    <div
+      className={cx(
+        'flex items-center justify-between gap-4 py-3.5 border-b border-border-light/20 dark:border-border-dark/20 last:border-0',
+        className,
+      )}
+    >
       <div className="flex items-start gap-3 flex-1 min-w-0">
         <span className="material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5 shrink-0">
           {icon}
@@ -237,4 +257,3 @@ export function SectionCard({ icon, title, children, className }: SectionCardPro
     </div>
   );
 }
-

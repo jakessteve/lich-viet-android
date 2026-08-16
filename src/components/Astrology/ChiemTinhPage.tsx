@@ -25,11 +25,7 @@ export default function ChiemTinhPage() {
   }, [location.pathname, searchParams]);
 
   usePageTitle(
-    activeTab === 'vedic'
-      ? 'Chiêm Tinh Ấn Độ'
-      : activeTab === 'hop-la'
-        ? 'Hợp Lá Số'
-        : 'Chiêm Tinh Tây Phương'
+    activeTab === 'vedic' ? 'Chiêm Tinh Ấn Độ' : activeTab === 'hop-la' ? 'Hợp Lá Số' : 'Chiêm Tinh Tây Phương',
   );
 
   return (

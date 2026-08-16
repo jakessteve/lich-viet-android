@@ -74,8 +74,10 @@ export function resolvePersonalBirthMoment(
   }
 
   const yearCanChi = parseCanChi(getCanChiYear(birthYear));
-  const hasExactBirthDate = Number.isFinite(birthDetails?.birthMonth ?? NaN) && Number.isFinite(birthDetails?.birthDay ?? NaN);
-  const hasExactBirthTime = Number.isFinite(birthDetails?.birthHour ?? NaN) || Number.isFinite(birthDetails?.birthMinute ?? NaN);
+  const hasExactBirthDate =
+    Number.isFinite(birthDetails?.birthMonth ?? NaN) && Number.isFinite(birthDetails?.birthDay ?? NaN);
+  const hasExactBirthTime =
+    Number.isFinite(birthDetails?.birthHour ?? NaN) || Number.isFinite(birthDetails?.birthMinute ?? NaN);
 
   if (!hasExactBirthDate) {
     return {
@@ -99,7 +101,7 @@ export function resolvePersonalBirthMoment(
   }
 
   const correctedDate = applyBirthLocationCorrection(civilBirthDate, birthDetails?.birthLocation);
-  
+
   const dayCanChiStr = getCanChiDay(correctedDate);
 
   const dayCanChi = parseCanChi(dayCanChiStr);

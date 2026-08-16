@@ -1,111 +1,103 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
-import { getVedicSignInterpretation, getVedicAtmakarakaInterpretation, getVedicPlanetInSignInterpretation } from '../../../services/astrology/interpretations';
-
-const SIGNS_SIDEREAL = [
-  'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',
-  'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp',
-  'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư',
-];
+import { synthesizeVedicReading } from '../../../services/astrology/vedicSynthesisEngine';
 
 export const VedicInterpretationPanel: React.FC<{ result: WesternChartResult }> = ({ result }) => {
-  const moon = result.planets.find(p => p.body === 'moon');
-  
-  const ascIdx = Math.floor(((result.ascendant % 360) + 360) % 360 / 30);
-  const ascSign = SIGNS_SIDEREAL[ascIdx];
-  
-  // Calculate Atmakaraka (Planet with highest degree, excluding Rahu/Ketu/Uranus/Neptune/Pluto)
-  const mainPlanets = result.planets.filter(p => ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn'].includes(p.body));
-  let atmakaraka = mainPlanets[0];
-  for (const p of mainPlanets) {
-    if (p.degreeInSign > atmakaraka.degreeInSign) {
-      atmakaraka = p;
-    }
-  }
-
-  const BODY_LABELS: Record<string, string> = {
-    sun: 'Mặt Trời',
-    moon: 'Mặt Trăng',
-    mercury: 'Sao Thủy',
-    venus: 'Sao Kim',
-    mars: 'Sao Hỏa',
-    jupiter: 'Sao Mộc',
-    saturn: 'Sao Thổ',
-  };
-
-  const getInterpretation = (point: string, key: string, fallback: string) => {
-    if (point === 'lagna') return getVedicSignInterpretation(key) || fallback;
-    if (point === 'moon') return getVedicPlanetInSignInterpretation('moon', key) || fallback;
-    if (point === 'atmakaraka') return getVedicAtmakarakaInterpretation(key) || fallback;
-    return fallback;
-  };
-
-  const moonSignName = moon ? SIGNS_SIDEREAL[Math.floor(moon.siderealLongitude / 30)] : '';
+  const reading = useMemo(() => synthesizeVedicReading(result), [result]);
 
   return (
     <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
-      <div className="card-header bg-purple-50/50 dark:bg-purple-900/10">
-        <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400">
+      <div className="card-header bg-purple-50/50 dark:bg-purple-900/10 flex items-center justify-between">
+        <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400 font-bold">
           <span className="material-icons-round text-base">psychology</span>
-          Diễn Giải Nhanh (Jyotish Pillars)
+          Diễn Giải Toàn Diện (Jyotish Synthesis)
         </h3>
+        <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
+          Sidereal Lahiri
+        </span>
       </div>
       <div className="p-4 space-y-4">
-        
+        {/* Lagna & Moon Nakshatra */}
         <div className="flex gap-3">
           <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm">
             AS
           </div>
           <div>
-            <h4 className="font-semibold text-sm">Lagna (Cung Mọc) ở {ascSign}</h4>
+            <h4 className="font-semibold text-sm">Lagna (Cung Mọc Vệ Đà)</h4>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-              {getInterpretation('lagna', ascSign, 'Điểm quan trọng nhất trong lá số Vệ Đà. Đại diện cho bản ngã, con đường cuộc đời, cơ thể vật lý và cách bạn tiếp cận thế giới.')}
+              {reading.lagnaReadingVi}
             </p>
           </div>
         </div>
 
-        {moon && (
-          <div className="flex gap-3">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 text-xl font-bold">
-              ☽
-            </div>
-            <div>
-              <h4 className="font-semibold text-sm">Rasi (Mặt Trăng) ở {moonSignName}</h4>
-              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-                {getInterpretation('moon', moonSignName, 'Đại diện cho tâm trí (Manas) và cảm xúc. Rasi là nền tảng để xem xét các vận hạn (Gochara) trong cuộc sống hàng ngày.')}
-              </p>
+        <div className="flex gap-3">
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xl font-bold">
+            ☽
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm">Tâm Trí & Janma Nakshatra (Chòm Sao Sinh)</h4>
+            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
+              {reading.moonNakshatraReadingVi}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold text-sm">
+            AK
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm">Atmakaraka (Chủ Tinh Linh Hồn & Nghiệp Lực)</h4>
+            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
+              {reading.atmakarakaReadingVi}
+            </p>
+          </div>
+        </div>
+
+        {/* Active Yogas */}
+        {reading.activeYogasSummaryVi.length > 0 && (
+          <div className="p-3.5 rounded-2xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 space-y-2">
+            <h4 className="font-semibold text-xs text-purple-700 dark:text-purple-400 flex items-center gap-1.5">
+              <span className="material-icons-round text-sm">stars</span>
+              Cát Cách & Thế Trận Đặc Biệt (Yogas & Formations)
+            </h4>
+            <div className="space-y-1.5">
+              {reading.activeYogasSummaryVi.map((y, idx) => (
+                <p
+                  key={idx}
+                  className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed"
+                >
+                  • {y}
+                </p>
+              ))}
             </div>
           </div>
         )}
 
-        {moon && moon.nakshatra && (
-          <div className="flex gap-3">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400 text-xl font-bold">
-              ★
-            </div>
-            <div>
-              <h4 className="font-semibold text-sm">Janma Nakshatra: {moon.nakshatra} {moon.pada != null ? `(Pada ${moon.pada + 1})` : ''}</h4>
-              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-                Chòm sao nơi Mặt Trăng ngự trị khi sinh. Quyết định khung tâm trí bẩm sinh và là điểm bắt đầu của chu kỳ đại vận Vimshottari Dasha.
-              </p>
-            </div>
+        {/* Active Dasha & Bhava Matrix */}
+        {reading.activeDashaReadingVi && (
+          <div className="p-3.5 rounded-2xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 space-y-1.5">
+            <h4 className="font-semibold text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+              <span className="material-icons-round text-sm">timeline</span>
+              Thời Vận Hiện Tại (Vimshottari Dasha Activation)
+            </h4>
+            <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+              {reading.activeDashaReadingVi}
+            </p>
+            <p className="text-[11px] text-text-tertiary-light dark:text-text-tertiary-dark mt-1">
+              {reading.bhavaMatrixReadingVi}
+            </p>
           </div>
         )}
 
-        {atmakaraka && (
-          <div className="flex gap-3">
-            <div className="flex-shrink-0 w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center text-rose-600 dark:text-rose-400 font-bold text-sm">
-              AK
-            </div>
-            <div>
-              <h4 className="font-semibold text-sm">Atmakaraka: {BODY_LABELS[atmakaraka.body] || atmakaraka.body}</h4>
-              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1 leading-relaxed">
-                {getInterpretation('atmakaraka', atmakaraka.body, 'Hành tinh có độ số cao nhất trong cung. Đại diện cho "chủ tinh linh hồn", chỉ ra khát vọng sâu sắc nhất và bài học nghiệp quả chính trong kiếp này.')}
-              </p>
-            </div>
-          </div>
-        )}
-
+        {/* Actionable Guidance */}
+        <div className="p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-xs text-purple-900 dark:text-purple-200 leading-relaxed font-medium">
+          <span className="font-bold flex items-center gap-1 mb-1">
+            <span className="material-icons-round text-sm">tips_and_updates</span>
+            Kim Chỉ Nam Vệ Đà
+          </span>
+          {reading.actionableGuidanceVi}
+        </div>
       </div>
     </div>
   );

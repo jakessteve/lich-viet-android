@@ -213,7 +213,9 @@ export default function SummaryCard({
                 </p>
               )}
               <p className="text-sm text-text-primary-light dark:text-text-primary-dark leading-relaxed">
-                <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">Dịch nghĩa: </span>
+                <span className="font-semibold text-text-secondary-light dark:text-text-secondary-dark">
+                  Dịch nghĩa:{' '}
+                </span>
                 {summary.thoanTu.meaning}
               </p>
               {summary.thoanTu.application && (
@@ -266,9 +268,7 @@ export default function SummaryCard({
                     payments
                   </span>
                   <div>
-                    <span className="label-standard text-emerald-600/80 dark:text-emerald-400/80 block">
-                      Tài lộc
-                    </span>
+                    <span className="label-standard text-emerald-600/80 dark:text-emerald-400/80 block">Tài lộc</span>
                     <span className="text-xs text-text-primary-light dark:text-text-primary-dark">
                       {summary.categoryPredictions.taiLoc}
                     </span>
@@ -279,9 +279,7 @@ export default function SummaryCard({
                 <div className="flex items-start gap-2 p-2.5 rounded-lg bg-blue-50/50 dark:bg-blue-900/15 border border-blue-100/50 dark:border-blue-800/30">
                   <span className="material-icons-round text-xs text-blue-500 dark:text-blue-400 mt-0.5">work</span>
                   <div>
-                    <span className="label-standard text-blue-600/80 dark:text-blue-400/80 block">
-                      Sự nghiệp
-                    </span>
+                    <span className="label-standard text-blue-600/80 dark:text-blue-400/80 block">Sự nghiệp</span>
                     <span className="text-xs text-text-primary-light dark:text-text-primary-dark">
                       {summary.categoryPredictions.suNghiep}
                     </span>
@@ -292,9 +290,7 @@ export default function SummaryCard({
                 <div className="flex items-start gap-2 p-2.5 rounded-lg bg-pink-50/50 dark:bg-pink-900/15 border border-pink-100/50 dark:border-pink-800/30">
                   <span className="material-icons-round text-xs text-pink-500 dark:text-pink-400 mt-0.5">favorite</span>
                   <div>
-                    <span className="label-standard text-pink-600/80 dark:text-pink-400/80 block">
-                      Tình yêu
-                    </span>
+                    <span className="label-standard text-pink-600/80 dark:text-pink-400/80 block">Tình yêu</span>
                     <span className="text-xs text-text-primary-light dark:text-text-primary-dark">
                       {summary.categoryPredictions.tinhYeu}
                     </span>
@@ -374,10 +370,7 @@ function FormattedDetailedExplanation({ text }: { text: string }): React.ReactEl
         {sections.map((sec, idx) => {
           const theme = getSectionTheme(sec.title);
           return (
-            <div
-              key={idx}
-              className={`rounded-xl p-3.5 border transition-colors ${theme.cardClass}`}
-            >
+            <div key={idx} className={`rounded-xl p-3.5 border transition-colors ${theme.cardClass}`}>
               <div className="flex items-center justify-between gap-2 mb-1.5">
                 <div className={`flex items-center gap-1.5 font-bold text-xs ${theme.titleClass}`}>
                   <span className="material-icons-round text-sm">{theme.icon}</span>
@@ -394,4 +387,3 @@ function FormattedDetailedExplanation({ text }: { text: string }): React.ReactEl
     </div>
   );
 }
-

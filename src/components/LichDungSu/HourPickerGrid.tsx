@@ -129,7 +129,7 @@ const HourPickerGrid: React.FC<HourPickerGridProps> = ({
                   ? 'bg-gold/15 dark:bg-gold-dark/15 border-gold/40 dark:border-gold-dark/40 ring-1 ring-gold/30 dark:ring-gold-dark/30 shadow-sm scale-[0.97]'
                   : isCurrentHour
                     ? 'bg-gradient-to-br from-amber-50 via-white to-gold/10 dark:from-gold-dark/15 dark:via-white/5 dark:to-transparent border-gold/70 dark:border-gold-dark/50 ring-1 ring-gold/10 dark:ring-gold-dark/10 shadow-sm'
-                  : `${colors.bg} border-transparent hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-sm`
+                    : `${colors.bg} border-transparent hover:border-gray-200 dark:hover:border-gray-700 hover:shadow-sm`
               }`}
               title={isCurrentHour ? 'Giờ hiện tại' : undefined}
             >

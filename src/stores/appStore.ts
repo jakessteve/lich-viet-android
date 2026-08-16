@@ -213,7 +213,7 @@ export const useAppStore = create<AppStore>()((set) => ({
   togglePersonalization: () =>
     set((state) => {
       analytics.trackEvent({
-        name: "personalization_toggle",
+        name: 'personalization_toggle',
         properties: { is_personalized: !state.isPersonalized },
       });
       return { isPersonalized: !state.isPersonalized };

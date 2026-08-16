@@ -59,7 +59,7 @@ export const ForecastView: React.FC = () => {
       error: state.error,
       calculateForecast: state.calculateForecast,
       selectLunarReturn: state.selectLunarReturn,
-    }))
+    })),
   );
   const [yearStr, setYearStr] = useState(String(forecastYear));
   const hasBirthInput = Boolean(
@@ -87,8 +87,8 @@ export const ForecastView: React.FC = () => {
                 onClick={() => setYearStr(String(year))}
                 className={`flex-1 min-w-[56px] py-2 px-3 rounded-xl text-sm font-semibold transition-all shrink-0 sm:shrink ${
                   yearStr === String(year)
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'bg-surface-subtle-light dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark hover:bg-indigo-50 dark:hover:bg-white/15'
+                    ? 'bg-astral-primary text-white shadow-md'
+                    : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark hover:bg-astral-surface-light dark:hover:bg-astral-surface-dark'
                 }`}
               >
                 {year}
@@ -104,7 +104,7 @@ export const ForecastView: React.FC = () => {
             disabled={isCalculating || !hasBirthInput}
             icon={isCalculating ? 'hourglass_empty' : 'wb_twilight'}
             variant="primary"
-            className="w-full h-12 bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="w-full h-12 bg-astral-primary hover:bg-astral-primary/90 text-white shadow-md"
           >
             Xem Vận Hạn {yearStr}
           </ActionButton>
@@ -152,7 +152,9 @@ export const ForecastView: React.FC = () => {
                   })}
                 </div>
               ) : (
-                <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Không có góc chiếu lớn nào đáng kể hôm nay.</p>
+                <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                  Không có góc chiếu lớn nào đáng kể hôm nay.
+                </p>
               )}
             </div>
           </CollapsibleCard>
@@ -166,7 +168,8 @@ export const ForecastView: React.FC = () => {
             <div className="space-y-3 p-2">
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark px-2">
                 1 ngày sau khi sinh = 1 năm cuộc đời. Ngày tiến trình hiện tại:{' '}
-                <strong>{forecastResult.progressions.dateLabel}</strong> (tuổi {forecastResult.progressions.ageYears.toFixed(1)}).
+                <strong>{forecastResult.progressions.dateLabel}</strong> (tuổi{' '}
+                {forecastResult.progressions.ageYears.toFixed(1)}).
               </p>
               <WesternChartDisplay result={forecastResult.progressions.chart} />
             </div>
@@ -181,8 +184,8 @@ export const ForecastView: React.FC = () => {
             {forecastResult.solarReturn ? (
               <div className="space-y-3 p-2">
                 <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark px-2">
-                  Mặt Trời trở về đúng vị trí ngày sinh vào <strong>{forecastResult.solarReturn.dateLabel}</strong> —
-                  mở ra chủ đề của cả năm {forecastResult.year}.
+                  Mặt Trời trở về đúng vị trí ngày sinh vào <strong>{forecastResult.solarReturn.dateLabel}</strong> — mở
+                  ra chủ đề của cả năm {forecastResult.year}.
                 </p>
                 <WesternChartDisplay result={forecastResult.solarReturn.chart} />
               </div>
@@ -203,7 +206,8 @@ export const ForecastView: React.FC = () => {
               <div className="space-y-3 p-2">
                 <div className="flex flex-wrap gap-2 px-2">
                   {forecastResult.lunarReturns.map((entry) => {
-                    const active = forecastResult.selectedLunarReturn &&
+                    const active =
+                      forecastResult.selectedLunarReturn &&
                       Math.abs(forecastResult.selectedLunarReturn.julianDay - entry.julianDay) < 0.5;
                     return (
                       <button
@@ -212,8 +216,8 @@ export const ForecastView: React.FC = () => {
                         onClick={() => selectLunarReturn(entry.julianDay)}
                         className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
                           active
-                            ? 'bg-indigo-600 text-white shadow-md'
-                            : 'bg-surface-subtle-light dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark hover:bg-indigo-50 dark:hover:bg-white/15'
+                            ? 'bg-astral-primary text-white shadow-md'
+                            : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark hover:bg-astral-surface-light dark:hover:bg-astral-surface-dark'
                         }`}
                       >
                         Chu kỳ {entry.index} · {entry.dateLabel}

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { interpretPalace } from '@/services/tuvi/palaceInterpretation';
-import type { TuViPalace } from '@/types/tuvi';
+import type { TuViPalace, TuViCenterInfo } from '@/types/tuvi';
 
 function makeTestPalace(overrides: Partial<TuViPalace> & { id: number; name: string }): TuViPalace {
   return {
@@ -69,7 +69,7 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
 
   it('correctly reports Tuần / Triệt influence', () => {
     const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
-    
+
     // 1. Triệt only
     const quanPalace = makeTestPalace({
       id: 4,
@@ -111,9 +111,7 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
   });
 
   it('generates rich, personalized Tam Phương Tứ Chính analysis including projecting stars and Tứ Hóa', () => {
-    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) =>
-      makeTestPalace({ id: i, name: `Cung ${i}` })
-    );
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
 
     // Mệnh at palace 0 (Tý)
     const menhPalace = makeTestPalace({
@@ -166,9 +164,7 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
   });
 
   it('generates personalized actionable guidance with risk mitigation when sát tinh are present', () => {
-    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) =>
-      makeTestPalace({ id: i, name: `Cung ${i}` })
-    );
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
 
     const taiBachPalace = makeTestPalace({
       id: 8,
@@ -187,5 +183,95 @@ describe('interpretPalace (Tử Vi 12-Palace SCTE Engine)', () => {
       result.actionableGuidanceVi.includes('Địa Không') || result.actionableGuidanceVi.includes('kỷ luật tài chính'),
     ).toBe(true);
     expect(result.actionableGuidanceVi).toContain('dự phòng');
+  });
+
+  it('generates Tràng Sinh phase energy, Nhị Hợp, and Positional Semantics synthesis', () => {
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
+
+    const menhPalace = makeTestPalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      isCuongCung: true,
+      rings: { truongSinh: 'Đế Vượng' },
+      nhiHopPalaceIndex: 1,
+      chinhTinh: [{ name: 'Tử Vi', type: 'chinhTinh', nguHanh: 'Thổ', brightness: 'Miếu' }],
+    });
+    allPalaces[0] = menhPalace;
+    allPalaces[1] = makeTestPalace({
+      id: 1,
+      name: 'Huynh Đệ',
+      chinhTinh: [{ name: 'Thiên Cơ', type: 'chinhTinh', nguHanh: 'Mộc', brightness: 'Miếu' }],
+    });
+
+    const result = interpretPalace(menhPalace, allPalaces);
+
+    expect(result.coreThemeVi).toContain('Cường Cung');
+    expect(result.isCuongCung).toBe(true);
+    expect(result.truongSinhAnalysisVi).toContain('Đế Vượng');
+    expect(result.truongSinhAnalysisVi).toContain('Đỉnh cao phong độ');
+    expect(result.nhiHopAnalysisVi).toContain('Huynh Đệ');
+    expect(result.positionalSemanticsVi).toContain('Tọa');
+  });
+
+  it('generates rich positional semantics with classical pattern and actionable hint for special palace layouts', () => {
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
+
+    // Cung Mệnh (Thiên Tướng)
+    const menhPalace = makeTestPalace({
+      id: 0,
+      name: 'Mệnh',
+      chi: 'Tý',
+      isMenh: true,
+      chinhTinh: [{ name: 'Thiên Tướng', type: 'chinhTinh', nguHanh: 'Thủy', brightness: 'Vượng' }],
+    });
+    allPalaces[0] = menhPalace;
+
+    // Giáp Left (Phụ Mẫu at 11): Thiên Lương
+    allPalaces[11] = makeTestPalace({
+      id: 11,
+      name: 'Phụ Mẫu',
+      chi: 'Hợi',
+      chinhTinh: [{ name: 'Thiên Lương', type: 'chinhTinh', nguHanh: 'Mộc', brightness: 'Miếu' }],
+    });
+
+    // Giáp Right (Huynh Đệ at 1): Hóa Lộc
+    allPalaces[1] = makeTestPalace({
+      id: 1,
+      name: 'Huynh Đệ',
+      chi: 'Sửu',
+      tuHoa: [{ type: 'Lộc', starName: 'Vũ Khúc' }],
+    });
+
+    const result = interpretPalace(menhPalace, allPalaces);
+
+    expect(result.positionalSemanticsVi).toBeDefined();
+    expect(result.positionalSemanticsVi).toContain('Tài Ấm Giáp Ấn');
+    expect(result.positionalSemanticsVi).toContain('💡 Gợi ý');
+  });
+
+  it('incorporates centerInfo (Âm Dương Thuận/Nghịch lý & Mệnh Cục) into actionable guidance', () => {
+    const allPalaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makeTestPalace({ id: i, name: `Cung ${i}` }));
+    const menhPalace = makeTestPalace({
+      id: 0,
+      name: 'Mệnh',
+      chi: 'Dần',
+      isMenh: true,
+      chinhTinh: [{ name: 'Tử Vi', type: 'chinhTinh', nguHanh: 'Thổ', brightness: 'Miếu' }],
+    });
+    allPalaces[0] = menhPalace;
+
+    const mockCenterInfo: Partial<TuViCenterInfo> = {
+      amDuongLabel: 'Dương Nam (Âm Dương Thuận Lý)',
+      menhNapAm: 'Đại Hải Thủy',
+      cuc: 'Thủy Nhị Cục',
+      thanCung: 'Thân cư Quan Lộc',
+    };
+
+    const result = interpretPalace(menhPalace, allPalaces, mockCenterInfo as TuViCenterInfo);
+
+    expect(result.actionableGuidanceVi).toContain('Âm Dương Thuận Lý');
+    expect(result.actionableGuidanceVi).toContain('Đại Hải Thủy');
+    expect(result.actionableGuidanceVi).toContain('Thủy Nhị Cục');
   });
 });

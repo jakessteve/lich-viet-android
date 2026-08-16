@@ -44,7 +44,9 @@ describe('Western natal store integration', () => {
 
   it('invalidates the previous chart when inputs change or recalculation fails', async () => {
     const normalizedResult = { objects: Array.from({ length: 20 }), legacyResult: {} };
-    calculateSwissNatalChart.mockResolvedValueOnce(normalizedResult).mockRejectedValueOnce(new Error('engine unavailable'));
+    calculateSwissNatalChart
+      .mockResolvedValueOnce(normalizedResult)
+      .mockRejectedValueOnce(new Error('engine unavailable'));
     await useAstrologyStore.getState().calculateWestern();
     expect(useAstrologyStore.getState().westernNatalResult).toBe(normalizedResult);
     useAstrologyStore.getState().setWesternInput({ birthMinute: 1 });

@@ -62,4 +62,28 @@ describe('Synastry Engine Academic Validation', () => {
     const hasNapAmInsight = result.engines.tuVi.insights.some((i: string) => i.includes('Nạp Âm'));
     expect(hasNapAmInsight).toBe(true);
   });
+
+  it('supports customizable and same-gender synastry profiles without error', () => {
+    const profileA = generateUnifiedBirthProfile({
+      birthTimestamp: new Date('1995-03-15T08:00:00+07:00').getTime(),
+      latitude: 21.0285,
+      longitude: 105.8542,
+      gender: 'female',
+      timezone: 7,
+    });
+
+    const profileB = generateUnifiedBirthProfile({
+      birthTimestamp: new Date('1996-07-20T11:30:00+07:00').getTime(),
+      latitude: 10.8231,
+      longitude: 106.6297,
+      gender: 'female',
+      timezone: 7,
+    });
+
+    const result = calculateSynastry(profileA, profileB);
+    expect(result).toBeDefined();
+    expect(result.combinedScore).toBeGreaterThanOrEqual(0);
+    expect(result.engines.tuVi.insights.length).toBeGreaterThan(0);
+    expect(result.engines.western.insights.length).toBeGreaterThan(0);
+  });
 });

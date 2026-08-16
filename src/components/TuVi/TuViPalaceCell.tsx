@@ -61,7 +61,12 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
     const element = getNguHanhElement(star.nguHanh);
     const starClass = [className, 'tuvi-star', `star-${element.toLowerCase()}`].filter(Boolean).join(' ');
     return (
-      <span key={star.name} className={starClass} style={{ color }} title={`${star.name} ${star.nguHanh} • ${star.brightness}`}>
+      <span
+        key={star.name}
+        className={starClass}
+        style={{ color }}
+        title={`${star.name} ${star.nguHanh} • ${star.brightness}`}
+      >
         {star.name}
         {marker && <small>{marker}</small>}
       </span>
@@ -143,7 +148,9 @@ export const TuViPalaceCell: React.FC<TuViPalaceCellProps> = ({
         <div className="tuvi-footer-primary">
           <span className="tuvi-branch-label">{palace.chi}</span>
           {hanContext?.tieuHanPalaceIndex === palace.id && (
-            <span className="tuvi-tieu-han-badge" title={`Tiểu hạn năm ${hanContext.viewYear}`}>TH</span>
+            <span className="tuvi-tieu-han-badge" title={`Tiểu hạn năm ${hanContext.viewYear}`}>
+              TH
+            </span>
           )}
           {nguyetHanMonth ? (
             <span className={isNguyetHanPalace ? 'tuvi-nguyet-han active' : 'tuvi-nguyet-han'}>

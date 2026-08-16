@@ -46,7 +46,8 @@ function makeChart(): TuViChart {
       purity: 'thuần',
       strength: 7,
       note: '',
-      description: 'Cách cục vô cùng mạnh mẽ, đại diện cho sự khai sáng, tiên phong và những biến động lớn trong cuộc đời.',
+      description:
+        'Cách cục vô cùng mạnh mẽ, đại diện cho sự khai sáng, tiên phong và những biến động lớn trong cuộc đời.',
       category: 'hung',
       sourcePatternId: 'sat-pha-lang',
     },

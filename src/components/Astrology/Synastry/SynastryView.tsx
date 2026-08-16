@@ -17,7 +17,7 @@ export const SynastryView: React.FC = () => {
       isCalculating: state.isCalculating,
       error: state.error,
       result: state.synastryResult,
-    }))
+    })),
   );
 
   React.useEffect(() => {
@@ -58,8 +58,8 @@ export const SynastryView: React.FC = () => {
         <div className="glass-card">
           <div className="card-header bg-rose-50 dark:bg-rose-900/10">
             <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-rose-500 text-base">face</span>
-              Người Nam (A)
+              <span className="material-icons-round text-rose-500 text-base">person</span>
+              Người Thứ Nhất (A)
             </h3>
           </div>
           <div className="p-4 sm:p-5">
@@ -67,6 +67,7 @@ export const SynastryView: React.FC = () => {
               value={input.profileA}
               onChange={(val) => setInput({ profileA: { ...val, name: val.name || '' } })}
               showName={true}
+              showGender={true}
             />
           </div>
         </div>
@@ -74,8 +75,8 @@ export const SynastryView: React.FC = () => {
         <div className="glass-card">
           <div className="card-header bg-pink-50 dark:bg-pink-900/10">
             <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-pink-500 text-base">face_3</span>
-              Người Nữ (B)
+              <span className="material-icons-round text-pink-500 text-base">person_outline</span>
+              Người Thứ Hai (B)
             </h3>
           </div>
           <div className="p-4 sm:p-5">
@@ -83,18 +84,19 @@ export const SynastryView: React.FC = () => {
               value={input.profileB}
               onChange={(val) => setInput({ profileB: { ...val, name: val.name || '' } })}
               showName={true}
+              showGender={true}
             />
           </div>
         </div>
       </div>
-      
+
       <div className="pt-2">
         <ActionButton
           onClick={() => {
             void runCalc();
           }}
           disabled={isCalculating}
-          icon={isCalculating ? "hourglass_empty" : "favorite"}
+          icon={isCalculating ? 'hourglass_empty' : 'favorite'}
           variant="primary"
           className="w-full h-12 bg-rose-600 hover:bg-rose-700 text-white"
         >

@@ -29,7 +29,9 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-light/50 pb-3 dark:border-border-dark/50">
         <div>
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-            <span className="material-icons-round text-base text-indigo-500">balance</span>
+            <span className="material-icons-round text-base text-astral-primary dark:text-astral-primary-dark">
+              balance
+            </span>
             Cân Bằng Nguyên Tố & Tính Chất
           </h4>
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
@@ -37,12 +39,8 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="rounded-lg bg-indigo-500/10 px-2.5 py-1 text-xs font-semibold text-indigo-700 dark:text-indigo-300">
-            Trội: {balance.dominantElementLabelVi}
-          </span>
-          <span className="rounded-lg bg-purple-500/10 px-2.5 py-1 text-xs font-semibold text-purple-700 dark:text-purple-300">
-            {balance.dominantModalityLabelVi}
-          </span>
+          <span className="badge-astral">Trội: {balance.dominantElementLabelVi}</span>
+          <span className="badge-polarity-neutral">{balance.dominantModalityLabelVi}</span>
         </div>
       </div>
 
@@ -50,11 +48,16 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
       <div className="space-y-2.5">
         <div className="flex items-center justify-between text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider">
           <span>4 Nguyên Tố (Elements)</span>
-          <span className="text-micro lowercase text-text-secondary-light/70 dark:text-text-secondary-dark/70">tỷ lệ %</span>
+          <span className="text-micro lowercase text-text-secondary-light/70 dark:text-text-secondary-dark/70">
+            tỷ lệ %
+          </span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
           {elements.map((elem) => (
-            <div key={elem.key} className="rounded-xl bg-surface-container-lowest/60 dark:bg-surface-container-lowest/30 p-2.5 border border-border-light/40 dark:border-border-dark/40 flex flex-col justify-between">
+            <div
+              key={elem.key}
+              className="rounded-xl bg-surface-container-lowest/60 dark:bg-surface-container-lowest/30 p-2.5 border border-border-light/40 dark:border-border-dark/40 flex flex-col justify-between"
+            >
               <div className="flex items-center justify-between gap-1 mb-1.5">
                 <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
                   <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: elem.color }} />
@@ -72,11 +75,17 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
               </div>
               <div className="flex flex-wrap gap-1 min-h-[20px]">
                 {elem.planets.map((p) => (
-                  <span key={p.id} className="text-micro text-text-secondary-light dark:text-text-secondary-dark" title={`${p.nameVi}`}>
+                  <span
+                    key={p.id}
+                    className="text-micro text-text-secondary-light dark:text-text-secondary-dark"
+                    title={`${p.nameVi}`}
+                  >
                     {p.symbol}
                   </span>
                 ))}
-                {elem.planets.length === 0 && <span className="text-micro text-text-secondary-light/50 italic">trống</span>}
+                {elem.planets.length === 0 && (
+                  <span className="text-micro text-text-secondary-light/50 italic">trống</span>
+                )}
               </div>
             </div>
           ))}
@@ -90,7 +99,10 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
         </div>
         <div className="grid grid-cols-3 gap-2.5">
           {modalities.map((mod) => (
-            <div key={mod.key} className="rounded-xl bg-surface-container-lowest/60 dark:bg-surface-container-lowest/30 p-2.5 border border-border-light/40 dark:border-border-dark/40">
+            <div
+              key={mod.key}
+              className="rounded-xl bg-surface-container-lowest/60 dark:bg-surface-container-lowest/30 p-2.5 border border-border-light/40 dark:border-border-dark/40"
+            >
               <div className="flex items-center justify-between gap-1 mb-1.5">
                 <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
                   <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: mod.color }} />
@@ -108,7 +120,11 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
               </div>
               <div className="flex flex-wrap gap-1">
                 {mod.planets.map((p) => (
-                  <span key={p.id} className="text-micro text-text-secondary-light dark:text-text-secondary-dark" title={`${p.nameVi}`}>
+                  <span
+                    key={p.id}
+                    className="text-micro text-text-secondary-light dark:text-text-secondary-dark"
+                    title={`${p.nameVi}`}
+                  >
                     {p.symbol}
                   </span>
                 ))}
@@ -118,7 +134,7 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
         </div>
       </div>
 
-      <div className="rounded-xl bg-indigo-500/5 p-3 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark border border-indigo-500/10">
+      <div className="astral-card p-3 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
         💡 <strong>Tổng quan năng lượng:</strong> {balance.summaryVi}
       </div>
     </div>

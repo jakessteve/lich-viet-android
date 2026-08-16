@@ -5,21 +5,31 @@
  */
 
 export default function MoonPhaseSVG({ lunarDay }: { lunarDay: number }) {
-  // Approximate moon phase from lunar day (1–30)
-  // 1 = new moon, 8 = first quarter, 15 = full, 22 = third quarter, 30 = new
-  const phase = lunarDay / 30; // 0–1
+  // Normalize lunar day (1–30)
+  const day = Math.min(30, Math.max(1, Math.round(lunarDay)));
   const r = 32;
   const cx = 40;
   const cy = 40;
 
-  // Calculate the illumination curve
-  // Shadow mask using two arcs to create the lit/dark boundary
-  const illumination = Math.abs(Math.cos(phase * Math.PI * 2));
-  const isWaxing = phase < 0.5;
-  const isFullish = illumination < 0.1 && phase > 0.3 && phase < 0.7;
+  // Exact moon phase geometry
+  const isFull = day === 15 || day === 16;
+  const isNew = day === 1 || day === 30;
+  const isWaxing = day < 15;
 
-  // Control point for the terminator curve
-  const terminatorX = cx + (isWaxing ? -1 : 1) * r * (1 - illumination * 2);
+  // Normalized phase: 0 (new) to 0.5 (full) to 1 (new)
+  const rx = Math.max(0.1, Math.abs(r * Math.cos((day / 30) * 2 * Math.PI)));
+
+  // SVG Path for illuminated portion
+  let pathD = '';
+  if (isWaxing) {
+    // Semicircle on right, terminator returning on left/right depending on crescent/gibbous
+    const sweepFlag = day < 7.5 ? 0 : 1;
+    pathD = `M ${cx} ${cy - r} A ${r} ${r} 0 0 1 ${cx} ${cy + r} A ${rx} ${r} 0 0 ${sweepFlag} ${cx} ${cy - r}`;
+  } else {
+    // Semicircle on left, terminator returning on right/left depending on gibbous/crescent
+    const sweepFlag = day < 22.5 ? 0 : 1;
+    pathD = `M ${cx} ${cy - r} A ${r} ${r} 0 0 0 ${cx} ${cy + r} A ${rx} ${r} 0 0 ${sweepFlag} ${cx} ${cy - r}`;
+  }
 
   return (
     <svg
@@ -48,17 +58,10 @@ export default function MoonPhaseSVG({ lunarDay }: { lunarDay: number }) {
       <circle cx={cx} cy={cy} r={r} fill="#2a2a3e" />
 
       {/* Illuminated portion */}
-      {isFullish ? (
+      {isFull ? (
         <circle cx={cx} cy={cy} r={r} fill="url(#moonSurface)" />
-      ) : (
-        <path
-          d={`
-            M ${cx} ${cy - r}
-            A ${r} ${r} 0 0 ${isWaxing ? 1 : 0} ${cx} ${cy + r}
-            Q ${terminatorX} ${cy} ${cx} ${cy - r}
-          `}
-          fill="url(#moonSurface)"
-        />
+      ) : isNew ? null : (
+        <path d={pathD} fill="url(#moonSurface)" />
       )}
 
       {/* Subtle crater marks */}

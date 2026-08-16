@@ -2,11 +2,11 @@ import type {
   AsyncCalculationRequest,
   DungSuEventScore,
   HybridElectionTimeline,
-  ScoringMetrics
-} from "@omce/contracts";
+  ScoringMetrics,
+} from '@omce/contracts';
 
 export interface OmceBackendOptions {
-  controlZone?: "occupied" | "resistance";
+  controlZone?: 'occupied' | 'resistance';
   chunkHours?: number;
   strictMode?: boolean;
   overrides?: Array<{
@@ -35,17 +35,17 @@ export interface OmceBackendEnvelope {
   }>;
   events: Array<
     | {
-        type: "omce:progress";
+        type: 'omce:progress';
         payload: {
           taskId: string;
-          phase: "validating" | "timezone" | "scanning" | "scoring" | "complete";
+          phase: 'validating' | 'timezone' | 'scanning' | 'scoring' | 'complete';
           progress: number;
           completedChunks: number;
           totalChunks: number;
         };
       }
     | {
-        type: "omce:chunk";
+        type: 'omce:chunk';
         payload: {
           taskId: string;
           summary: {
@@ -58,17 +58,16 @@ export interface OmceBackendEnvelope {
         };
       }
     | {
-        type: "omce:result";
+        type: 'omce:result';
         payload: {
           request: AsyncCalculationRequest;
           generatedAt: number;
-          status: "completed" | "short_circuited" | "cancelled";
-          timezone:
-            {
-              ruleId: string;
-              offsetHours: number;
-              ambiguous: false;
-            };
+          status: 'completed' | 'short_circuited' | 'cancelled';
+          timezone: {
+            ruleId: string;
+            offsetHours: number;
+            ambiguous: false;
+          };
           coarseWindowCount: number;
           chunkCount: number;
           latitudeGuardTriggered: boolean;
@@ -95,13 +94,12 @@ export interface OmceBackendEnvelope {
   result: {
     request: AsyncCalculationRequest;
     generatedAt: number;
-    status: "completed" | "short_circuited" | "cancelled";
-    timezone:
-      {
-        ruleId: string;
-        offsetHours: number;
-        ambiguous: false;
-      };
+    status: 'completed' | 'short_circuited' | 'cancelled';
+    timezone: {
+      ruleId: string;
+      offsetHours: number;
+      ambiguous: false;
+    };
     coarseWindowCount: number;
     chunkCount: number;
     latitudeGuardTriggered: boolean;
@@ -126,13 +124,12 @@ export interface OmceBackendEnvelope {
   response: {
     request: AsyncCalculationRequest;
     generatedAt: number;
-    status: "completed" | "short_circuited" | "cancelled";
-    timezone:
-      {
-        ruleId: string;
-        offsetHours: number;
-        ambiguous: false;
-      };
+    status: 'completed' | 'short_circuited' | 'cancelled';
+    timezone: {
+      ruleId: string;
+      offsetHours: number;
+      ambiguous: false;
+    };
     coarseWindowCount: number;
     chunkCount: number;
     latitudeGuardTriggered: boolean;
@@ -171,7 +168,7 @@ export interface FrontendReadinessInput {
   altitudeMeters?: number;
   alt?: number;
   timezone?: number;
-  controlZone?: "occupied" | "resistance";
+  controlZone?: 'occupied' | 'resistance';
   eventId?: string;
   dungSuEventId?: string;
   eventType?: string;

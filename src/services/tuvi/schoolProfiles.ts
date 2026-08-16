@@ -75,6 +75,18 @@ export const TU_VI_SCHOOL_PROFILES: Record<TuViSchool, TuViSchoolProfile> = {
     timePolicy: 'historical-vietnam',
     tuHoaTable: TRUNG_CHAU_TU_HOA,
   },
+  'phi-tinh': {
+    id: 'phi-tinh',
+    label: 'Phi Tinh Tứ Hóa',
+    shortLabel: 'Phi Tinh',
+    description: 'Phái Phi Tinh Tứ Hóa — Tập trung vào Tứ Hóa phi xuất, phi nhập, tự hóa và xung chiếu giữa 12 cung.',
+    kinhDaRule: 'fixed',
+    khoiVietRule: 'standard',
+    thaiTueRingRule: 'vietnamese',
+    leapMonthPolicy: 'raw',
+    timePolicy: 'historical-vietnam',
+    tuHoaTable: TRUNG_CHAU_TU_HOA,
+  },
 };
 
 export const DEFAULT_TU_VI_SCHOOL: TuViSchool = 'thien-luong';

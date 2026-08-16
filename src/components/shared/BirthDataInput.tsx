@@ -10,12 +10,14 @@ export interface BirthDataInputProps {
     longitude: number;
     timezone: number;
     name?: string;
+    gender?: 'nam' | 'nu' | 'male' | 'female';
     locationName?: string;
     countryCode?: string;
     countryName?: string;
   };
   onChange: (value: BirthDataInputProps['value']) => void;
   showName?: boolean;
+  showGender?: boolean;
 }
 
 const clampTimePart = (value: string, max: number) => {
@@ -23,7 +25,12 @@ const clampTimePart = (value: string, max: number) => {
   return Math.min(max, Math.max(0, Number(value)));
 };
 
-export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange, showName = false }) => {
+export const BirthDataInput: React.FC<BirthDataInputProps> = ({
+  value,
+  onChange,
+  showName = false,
+  showGender = false,
+}) => {
   const [dayStr, setDayStr] = useState(String(value.birthDate.getDate()));
   const [monthStr, setMonthStr] = useState(String(value.birthDate.getMonth() + 1));
   const [yearStr, setYearStr] = useState(String(value.birthDate.getFullYear()));
@@ -70,17 +77,50 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
 
   return (
     <div className="space-y-4">
-      {showName && (
-        <div>
-          <label className="label-standard mb-1.5 block">Họ và tên</label>
-          <input
-            type="text"
-            className="surface-control w-full p-3 font-medium transition-colors"
-            placeholder="Nhập họ và tên..."
-            value={nameStr}
-            onChange={(e) => setNameStr(e.target.value)}
-            onBlur={commitDate}
-          />
+      {(showName || showGender) && (
+        <div className={`grid grid-cols-1 ${showName && showGender ? 'sm:grid-cols-2' : ''} gap-4`}>
+          {showName && (
+            <div>
+              <label className="label-standard mb-1.5 block">Họ và tên</label>
+              <input
+                type="text"
+                className="surface-control w-full p-3 font-medium transition-colors"
+                placeholder="Nhập họ và tên..."
+                value={nameStr}
+                onChange={(e) => setNameStr(e.target.value)}
+                onBlur={commitDate}
+              />
+            </div>
+          )}
+          {showGender && (
+            <div>
+              <label className="label-standard mb-1.5 block">Giới tính</label>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => onChange({ ...value, gender: 'nam' })}
+                  className={`flex-1 py-2.5 px-3 rounded-xl text-sm font-semibold border transition-all ${
+                    (value.gender ?? 'nam') === 'nam' || value.gender === 'male'
+                      ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/40 ring-2 ring-blue-500/20'
+                      : 'bg-surface-subtle-light/60 dark:bg-surface-elevated-dark/40 border-border-light/60 dark:border-border-dark/60 text-text-secondary-light dark:text-text-secondary-dark'
+                  }`}
+                >
+                  Nam
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onChange({ ...value, gender: 'nu' })}
+                  className={`flex-1 py-2.5 px-3 rounded-xl text-sm font-semibold border transition-all ${
+                    value.gender === 'nu' || value.gender === 'female'
+                      ? 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/40 ring-2 ring-rose-500/20'
+                      : 'bg-surface-subtle-light/60 dark:bg-surface-elevated-dark/40 border-border-light/60 dark:border-border-dark/60 text-text-secondary-light dark:text-text-secondary-dark'
+                  }`}
+                >
+                  Nữ
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -100,7 +140,9 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitDate}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Ngày</span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+                  Ngày
+                </span>
               </div>
             </div>
             <div className="relative flex-1">
@@ -115,7 +157,9 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitDate}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Tháng</span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+                  Tháng
+                </span>
               </div>
             </div>
             <div className="relative flex-[1.5]">
@@ -130,7 +174,9 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitDate}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Năm</span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+                  Năm
+                </span>
               </div>
             </div>
           </div>
@@ -151,7 +197,9 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitTime}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Giờ</span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+                  Giờ
+                </span>
               </div>
             </div>
             <div className="flex items-center justify-center font-bold text-gray-400 pb-1">:</div>
@@ -167,7 +215,9 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({ value, onChange,
                 onBlur={commitTime}
               />
               <div className="absolute inset-x-0 -bottom-5 text-center">
-                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">Phút</span>
+                <span className="text-[10px] uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+                  Phút
+                </span>
               </div>
             </div>
           </div>

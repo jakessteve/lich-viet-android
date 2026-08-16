@@ -10,7 +10,7 @@ export interface ScoringMetrics {
 export interface DungSuEventScore {
   eventId: string;
   auspiciousnessPercent: number;
-  accuracyTier: "complete" | "bounded_specialist_ready" | "specialist_required";
+  accuracyTier: 'complete' | 'bounded_specialist_ready' | 'specialist_required';
   sourceCoveragePercent: number;
   componentScores: {
     genericHkbfsScore: number;

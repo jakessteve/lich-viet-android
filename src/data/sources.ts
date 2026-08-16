@@ -61,7 +61,8 @@ export const SOURCE_CATALOG: SourceRecord[] = [
     edition: 'Tứ Khố Toàn Thư Bản (1741)',
     language: 'lzh/vi',
     sourceType: 'primary',
-    notes: 'Classic standard for Trạch Nhật (date selection): Thập Nhị Trực, Thần Sát (Cát/Hung), Hoàng Đạo/Hắc Đạo, Nhị Thập Bát Tú.',
+    notes:
+      'Classic standard for Trạch Nhật (date selection): Thập Nhị Trực, Thần Sát (Cát/Hung), Hoàng Đạo/Hắc Đạo, Nhị Thập Bát Tú.',
   },
   {
     sourceId: 'ngoc-hap-thong-thu',

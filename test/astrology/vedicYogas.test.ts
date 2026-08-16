@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  detectVedicYogasAndDoshas,
-  type VedicPlanetPosition,
-} from '@/services/astrology/vedicYogas';
+import { detectVedicYogasAndDoshas, type VedicPlanetPosition } from '@/services/astrology/vedicYogas';
 
 describe('detectVedicYogasAndDoshas', () => {
   it('detects Gaja Kesari Yoga with Kendra Bhava classification', () => {

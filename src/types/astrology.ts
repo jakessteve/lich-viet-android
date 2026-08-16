@@ -8,6 +8,9 @@ export interface WesternChartInput {
   locationName?: string;
   countryCode?: string;
   countryName?: string;
+  gender?: 'nam' | 'nu' | 'male' | 'female';
+  houseSystem?: 'placidus' | 'wholesign' | 'koch' | 'equal' | 'regiomontanus' | 'campanus' | 'porphyry' | 'morinus';
+  zodiacMode?: 'tropical' | 'draconic' | 'sidereal';
 }
 
 export interface VedicChartInput extends WesternChartInput {

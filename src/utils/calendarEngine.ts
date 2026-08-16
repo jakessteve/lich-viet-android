@@ -678,144 +678,150 @@ export function getDetailedDayData(date: Date, location?: SwissGeoLocation): Day
       const lunar = getLunarDate(normalized, location);
       const dayCanChi = parseCanChi(getCanChiDay(normalized));
 
-  // 2. Foundational Layer
-  const foundational = calculateFoundationalLayer(normalized, lunar, dayCanChi, getCanChiMonth, getCanChiYear);
-  const solarTermYear = getSolarTermYear(normalized, foundational.solarMonth);
-  const yearCanChi = parseCanChi(getCanChiYear(solarTermYear));
-  const monthCanChi = parseCanChi(getCanChiMonth(foundational.solarMonth, solarTermYear));
+      // 2. Foundational Layer
+      const foundational = calculateFoundationalLayer(normalized, lunar, dayCanChi, getCanChiMonth, getCanChiYear);
+      const solarTermYear = getSolarTermYear(normalized, foundational.solarMonth);
+      const yearCanChi = parseCanChi(getCanChiYear(solarTermYear));
+      const monthCanChi = parseCanChi(getCanChiMonth(foundational.solarMonth, solarTermYear));
 
-  // 3. Moon Phase (Tháng đủ/thiếu)
-  const tempDate = new Date(normalized);
-  tempDate.setDate(tempDate.getDate() + (30 - lunar.day));
-  const tempLunar = getLunarDate(tempDate, location);
-  const isDu = tempLunar.day === 30;
-  const thangAmThieuDu = `Tháng ${lunar.month} ${isDu ? 'đủ' : 'thiếu'} kiên ${monthCanChi.can} ${monthCanChi.chi}`;
+      // 3. Moon Phase (Tháng đủ/thiếu)
+      const tempDate = new Date(normalized);
+      tempDate.setDate(tempDate.getDate() + (30 - lunar.day));
+      const tempLunar = getLunarDate(tempDate, location);
+      const isDu = tempLunar.day === 30;
+      const thangAmThieuDu = `Tháng ${lunar.month} ${isDu ? 'đủ' : 'thiếu'} kiên ${monthCanChi.can} ${monthCanChi.chi}`;
 
-  // 4. Modifying Layer + Extra Stars integration
-  const modifying = calculateModifyingLayer(normalized, lunar, dayCanChi, foundational.solarMonth);
-  const extra = getExtraStars(
-    lunar.month,
-    lunar.day,
-    dayCanChi.can,
-    dayCanChi.chi,
-    modifying.trucDetail.name,
-    isDu,
-    yearCanChi.can,
-  );
-  const masterCat = (catThanData as unknown as { stars: StarData[] }).stars || [];
-  const masterHung = (hungThanData as unknown as { stars: StarData[] }).stars || [];
-  modifying.stars = integrateExtraStars({
-    modifyingStars: modifying.stars,
-    extraGoodStars: extra.goodStars,
-    extraBadStars: extra.badStars,
-    masterCat,
-    masterHung,
-  });
+      // 4. Modifying Layer + Extra Stars integration
+      const modifying = calculateModifyingLayer(normalized, lunar, dayCanChi, foundational.solarMonth);
+      const extra = getExtraStars(
+        lunar.month,
+        lunar.day,
+        dayCanChi.can,
+        dayCanChi.chi,
+        modifying.trucDetail.name,
+        isDu,
+        yearCanChi.can,
+      );
+      const masterCat = (catThanData as unknown as { stars: StarData[] }).stars || [];
+      const masterHung = (hungThanData as unknown as { stars: StarData[] }).stars || [];
+      modifying.stars = integrateExtraStars({
+        modifyingStars: modifying.stars,
+        extraGoodStars: extra.goodStars,
+        extraBadStars: extra.badStars,
+        masterCat,
+        masterHung,
+      });
 
-  // 5. Dụng Sự
-  const dayCanNguHanh = NGU_HANH_MAPPING[dayCanChi.can as Can];
-  const dungSu = generateDungSu(modifying, dayCanNguHanh, normalized);
+      // 5. Dụng Sự
+      const dayCanNguHanh = NGU_HANH_MAPPING[dayCanChi.can as Can];
+      const dungSu = generateDungSu(modifying, dayCanNguHanh, normalized);
 
-  // 6. Ngũ Hành Interaction
-  const nguHanh = calculateNguHanhInteraction(dayCanChi);
+      // 6. Ngũ Hành Interaction
+      const nguHanh = calculateNguHanhInteraction(dayCanChi);
 
-  // 7. Final Score & Grade
-  const { finalScore, dayGrade } = calculateFinalScore(
-    foundational.baseScore,
-    modifying.stars,
-    modifying.trucDetail.quality,
-    modifying.tuDetail.quality,
-    nguHanh.nguHanhScore,
-  );
+      // 7. Final Score & Grade
+      const { finalScore, dayGrade } = calculateFinalScore(
+        foundational.baseScore,
+        modifying.stars,
+        modifying.trucDetail.quality,
+        modifying.tuDetail.quality,
+        nguHanh.nguHanhScore,
+      );
 
-  // 8. Formatting helpers
-  const jd = getJDN(normalized.getDate(), normalized.getMonth() + 1, normalized.getFullYear());
+      // 8. Formatting helpers
+      const jd = getJDN(normalized.getDate(), normalized.getMonth() + 1, normalized.getFullYear());
 
-  // 9. Buddhist year
-  let buddhistYear = normalized.getFullYear() + BUDDHIST_YEAR_OFFSET;
-  if (lunar.month < VESAK_MONTH || (lunar.month === VESAK_MONTH && lunar.day < VESAK_DAY)) {
-    buddhistYear -= 1;
-  }
+      // 9. Buddhist year
+      let buddhistYear = normalized.getFullYear() + BUDDHIST_YEAR_OFFSET;
+      if (lunar.month < VESAK_MONTH || (lunar.month === VESAK_MONTH && lunar.day < VESAK_DAY)) {
+        buddhistYear -= 1;
+      }
 
-  // 10. Tiết Khí detail
-  const currentStart = findSolarTermStart(normalized);
-  const prevTempDate = new Date(currentStart.date);
-  prevTempDate.setDate(prevTempDate.getDate() - 1);
-  const prevStart = findSolarTermStart(prevTempDate);
-  const tietKhiDetail = `Tiết ${prevStart.term} khởi ngày ${prevStart.date.getDate()}/${prevStart.date.getMonth() + 1}/${prevStart.date.getFullYear()}; Tiết khí ${currentStart.term} khởi ngày ${currentStart.date.getDate()}/${currentStart.date.getMonth() + 1}/${currentStart.date.getFullYear()}`;
+      // 10. Tiết Khí detail
+      const currentStart = findSolarTermStart(normalized);
+      const prevTempDate = new Date(currentStart.date);
+      prevTempDate.setDate(prevTempDate.getDate() - 1);
+      const prevStart = findSolarTermStart(prevTempDate);
+      const tietKhiDetail = `Tiết ${prevStart.term} khởi ngày ${prevStart.date.getDate()}/${prevStart.date.getMonth() + 1}/${prevStart.date.getFullYear()}; Tiết khí ${currentStart.term} khởi ngày ${currentStart.date.getDate()}/${currentStart.date.getMonth() + 1}/${currentStart.date.getFullYear()}`;
 
-  // 11. Nạp Âm & Can Chi interaction texts
-  const napAmInteraction = buildNapAmInteraction(dayCanChi);
-  const canChiXungHop = buildCanChiXungHop(dayCanChi.chi);
+      // 11. Nạp Âm & Can Chi interaction texts
+      const napAmInteraction = buildNapAmInteraction(dayCanChi);
+      const canChiXungHop = buildCanChiXungHop(dayCanChi.chi);
 
-  // 12. Star lists
-  const starLists = collectStarLists(foundational.thanSat, modifying.stars, modifying.trucDetail, modifying.tuDetail);
+      // 12. Star lists
+      const starLists = collectStarLists(
+        foundational.thanSat,
+        modifying.stars,
+        modifying.trucDetail,
+        modifying.tuDetail,
+      );
 
-  // 13. Assemble result
-  const result: DayDetailsData = {
-    solarDate: solarDateStr,
-    dayOfWeek: getDayOfWeekName(normalized),
-    lunarDate: {
-      day: lunar.day,
-      month: lunar.month,
-      year: lunar.year,
-      isLeapMonth: lunar.isLeap,
-    },
-    buddhistYear,
-    canChi: {
-      year: yearCanChi,
-      month: monthCanChi,
-      day: dayCanChi,
-    },
-    startHour: getHourCanChi(dayCanChi.can, 'Tý'),
-    solarTerm: getSolarTerm(jd),
-    fiveElements: {
-      napAm: NAP_AM_MAPPING[`${dayCanChi.can} ${dayCanChi.chi}`] || '',
-      napAmMonth: NAP_AM_MAPPING[`${monthCanChi.can} ${monthCanChi.chi}`] || '',
-      napAmYear: NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`] || '',
-      nguHanh: dayCanNguHanh,
-    },
-    truc: `${modifying.trucDetail.name} (${modifying.trucDetail.description})`,
-    tu: `${modifying.tuDetail.name} (${modifying.tuDetail.description})`,
-    year: `${yearCanChi.can} ${yearCanChi.chi} (${NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`] || ''})`,
-    allHours: getAllHours(normalized),
-    auspiciousHours: getAuspiciousHours(normalized),
-    inauspiciousHours: getInauspiciousHours(normalized),
-    goodStars: starLists.goodStars,
-    badStars: starLists.badStars,
-    dayGrade,
-    deityStatus: foundational.isAuspiciousDay ? 'Ngày Hoàng Đạo' : 'Ngày Hắc Đạo',
-    nguHanhGrade: nguHanh.nguHanhGrade || undefined,
-    dayScore: finalScore,
-    fengShuiDirections: foundational.auspiciousDirections,
-    canChiInteractions: [],
-    nguHanhInteraction: nguHanh.nguHanhInteraction,
-    napAmInteraction,
-    canChiXungHop,
-    tietKhiDetail,
-    thangAmThieuDu,
-    advancedIndicators: [],
-    foundationalLayer: {
-      baseScore: foundational.baseScore,
-      thanSat: foundational.thanSat,
-      auspiciousDirections: foundational.auspiciousDirections,
-    },
-    modifyingLayer: modifying,
-    dungSu,
-    banhTo: {
-      can: (banhToData.can as Record<string, string>)[dayCanChi.can] || '',
-      chi: (banhToData.chi as Record<string, string>)[dayCanChi.chi] || '',
-    },
-    yearlyStars: getYearlyStars(yearCanChi.chi, lunar.year),
-    napAmCompatibility: (() => {
-      const dayNaIdx = getNapAmIndex(dayCanChi.can, dayCanChi.chi);
-      const yearNaIdx = getNapAmIndex(yearCanChi.can, yearCanChi.chi);
-      const comp = checkNapAmCompatibility(dayNaIdx, yearNaIdx);
-      if (comp === 1) return `Hợp với ngũ hành của năm (${NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`]})`;
-      if (comp === -1) return `Khắc với ngũ hành của năm (${NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`]})`;
-      return 'Bình hòa với ngũ hành của năm';
-    })(),
-  };
+      // 13. Assemble result
+      const result: DayDetailsData = {
+        solarDate: solarDateStr,
+        dayOfWeek: getDayOfWeekName(normalized),
+        lunarDate: {
+          day: lunar.day,
+          month: lunar.month,
+          year: lunar.year,
+          isLeapMonth: lunar.isLeap,
+        },
+        buddhistYear,
+        canChi: {
+          year: yearCanChi,
+          month: monthCanChi,
+          day: dayCanChi,
+        },
+        startHour: getHourCanChi(dayCanChi.can, 'Tý'),
+        solarTerm: getSolarTerm(jd),
+        fiveElements: {
+          napAm: NAP_AM_MAPPING[`${dayCanChi.can} ${dayCanChi.chi}`] || '',
+          napAmMonth: NAP_AM_MAPPING[`${monthCanChi.can} ${monthCanChi.chi}`] || '',
+          napAmYear: NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`] || '',
+          nguHanh: dayCanNguHanh,
+        },
+        truc: `${modifying.trucDetail.name} (${modifying.trucDetail.description})`,
+        tu: `${modifying.tuDetail.name} (${modifying.tuDetail.description})`,
+        year: `${yearCanChi.can} ${yearCanChi.chi} (${NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`] || ''})`,
+        allHours: getAllHours(normalized),
+        auspiciousHours: getAuspiciousHours(normalized),
+        inauspiciousHours: getInauspiciousHours(normalized),
+        goodStars: starLists.goodStars,
+        badStars: starLists.badStars,
+        dayGrade,
+        deityStatus: foundational.isAuspiciousDay ? 'Ngày Hoàng Đạo' : 'Ngày Hắc Đạo',
+        nguHanhGrade: nguHanh.nguHanhGrade || undefined,
+        dayScore: finalScore,
+        fengShuiDirections: foundational.auspiciousDirections,
+        canChiInteractions: [],
+        nguHanhInteraction: nguHanh.nguHanhInteraction,
+        napAmInteraction,
+        canChiXungHop,
+        tietKhiDetail,
+        thangAmThieuDu,
+        advancedIndicators: [],
+        foundationalLayer: {
+          baseScore: foundational.baseScore,
+          thanSat: foundational.thanSat,
+          auspiciousDirections: foundational.auspiciousDirections,
+        },
+        modifyingLayer: modifying,
+        dungSu,
+        banhTo: {
+          can: (banhToData.can as Record<string, string>)[dayCanChi.can] || '',
+          chi: (banhToData.chi as Record<string, string>)[dayCanChi.chi] || '',
+        },
+        yearlyStars: getYearlyStars(yearCanChi.chi, lunar.year),
+        napAmCompatibility: (() => {
+          const dayNaIdx = getNapAmIndex(dayCanChi.can, dayCanChi.chi);
+          const yearNaIdx = getNapAmIndex(yearCanChi.can, yearCanChi.chi);
+          const comp = checkNapAmCompatibility(dayNaIdx, yearNaIdx);
+          if (comp === 1) return `Hợp với ngũ hành của năm (${NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`]})`;
+          if (comp === -1)
+            return `Khắc với ngũ hành của năm (${NAP_AM_MAPPING[`${yearCanChi.can} ${yearCanChi.chi}`]})`;
+          return 'Bình hòa với ngũ hành của năm';
+        })(),
+      };
 
       if (detailedDayDataCache.size >= DETAIL_DATE_CACHE_LIMIT) {
         const oldestKey = detailedDayDataCache.keys().next().value;

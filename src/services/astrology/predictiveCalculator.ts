@@ -19,16 +19,31 @@ import {
 import type { WesternChartInput } from '../../types/astrology';
 
 const SIGNS = [
-  'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',
-  'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp',
-  'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư',
+  'Bạch Dương',
+  'Kim Ngưu',
+  'Song Tử',
+  'Cự Giải',
+  'Sư Tử',
+  'Xử Nữ',
+  'Thiên Bình',
+  'Bọ Cạp',
+  'Nhân Mã',
+  'Ma Kết',
+  'Bảo Bình',
+  'Song Ngư',
 ];
 
 const norm = (v: number) => ((v % 360) + 360) % 360;
 
 const toJulianDay = (date: Date) => unixMsToJulianDay(date.getTime());
 const fromDate = (date: Date) =>
-  date.toLocaleDateString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit', year: 'numeric' });
+  date.toLocaleDateString('vi-VN', {
+    hour: '2-digit',
+    minute: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
 
 function signOf(longitude: number) {
   const normalized = norm(longitude);
@@ -79,15 +94,10 @@ export interface ReturnChartResult {
   chart: WesternChartResult;
 }
 
-export function calculateSolarReturnChart(
-  input: WesternChartInput,
-  targetYear: number,
-): ReturnChartResult | null {
+export function calculateSolarReturnChart(input: WesternChartInput, targetYear: number): ReturnChartResult | null {
   const { sun } = natalSnapshot(input);
   const yearStart = toJulianDay(new Date(targetYear, 0, 1));
-  const sr =
-    computeSolarReturn(sun, targetYear, yearStart - 2) ??
-    computeSolarReturn(sun, targetYear, yearStart - 35);
+  const sr = computeSolarReturn(sun, targetYear, yearStart - 2) ?? computeSolarReturn(sun, targetYear, yearStart - 35);
   if (!sr) return null;
   const yearEnd = toJulianDay(new Date(targetYear + 1, 0, 1));
   if (sr.solarReturnJulianDay < yearStart - 2 || sr.solarReturnJulianDay >= yearEnd) return null;
@@ -303,7 +313,11 @@ export function calculateCompositeResult(inputA: WesternChartInput, inputB: West
     chartA.planets.map((p) => ({ body: p.body, tropicalLongitude: p.tropicalLongitude })),
     chartB.planets.map((p) => ({ body: p.body, tropicalLongitude: p.tropicalLongitude })),
   );
-  return buildCompositeResult(compositePlanets, midpoint(chartA.ascendant, chartB.ascendant), midpoint(chartA.midheaven, chartB.midheaven));
+  return buildCompositeResult(
+    compositePlanets,
+    midpoint(chartA.ascendant, chartB.ascendant),
+    midpoint(chartA.midheaven, chartB.midheaven),
+  );
 }
 
 export interface DavisonResult {

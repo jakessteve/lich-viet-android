@@ -26,7 +26,7 @@ async function saveToDocuments(dataUrl: string, filename: string): Promise<void>
         await Filesystem.writeFile({
           path: filename,
           data: base64,
-          directory: Directory.Documents
+          directory: Directory.Documents,
         });
         window.alert(`Đã lưu ảnh vào thư mục Documents/${filename}`);
         resolve();
@@ -38,10 +38,7 @@ async function saveToDocuments(dataUrl: string, filename: string): Promise<void>
   });
 }
 
-export async function downloadChartAsImage(
-  selector: string,
-  filename: string,
-): Promise<void> {
+export async function downloadChartAsImage(selector: string, filename: string): Promise<void> {
   const container = document.querySelector<HTMLElement>(selector);
   if (!container) {
     throw new Error('Không tìm thấy biểu đồ để xuất ảnh.');

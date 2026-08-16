@@ -96,15 +96,7 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
       <svg className="w-full h-full" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg">
         {defs}
         {/* Ambient celestial frame */}
-        <circle
-          cx="400"
-          cy="400"
-          r="360"
-          stroke={mysticGoldUrl}
-          strokeWidth="1"
-          strokeDasharray="3 9"
-          opacity="0.3"
-        />
+        <circle cx="400" cy="400" r="360" stroke={mysticGoldUrl} strokeWidth="1" strokeDasharray="3 9" opacity="0.3" />
         <circle cx="400" cy="400" r="200" stroke={mysticGoldUrl} strokeWidth="0.5" opacity="0.15" />
 
         {/* The Pole Star (Tử Vi) - Fixed or counter-rotating */}
@@ -247,11 +239,7 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
   };
 
   return (
-    <div
-      className={`pointer-events-none select-none ${className}`}
-      style={{ contain: 'strict' }}
-      aria-hidden="true"
-    >
+    <div className={`pointer-events-none select-none ${className}`} style={{ contain: 'strict' }} aria-hidden="true">
       {variant === 'luoshu' && renderLuoshu()}
       {variant === 'dipper' && renderDipper()}
       {variant === 'four-symbols' && renderFourSymbols()}

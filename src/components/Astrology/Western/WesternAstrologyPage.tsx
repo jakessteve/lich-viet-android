@@ -26,8 +26,13 @@ export const WesternAstrologyPage: React.FC = () => {
     if (prefilled.current || !user) return;
     const profile = getUserBirthProfile(user);
     if (profile?.birthYear && profile?.birthMonth && profile?.birthDay) {
-      const birthDate = new Date(profile.birthYear, profile.birthMonth - 1, profile.birthDay,
-        profile.birthHour ?? 12, profile.birthMinute ?? 0);
+      const birthDate = new Date(
+        profile.birthYear,
+        profile.birthMonth - 1,
+        profile.birthDay,
+        profile.birthHour ?? 12,
+        profile.birthMinute ?? 0,
+      );
       setWesternInput({
         birthDate,
         birthHour: profile.birthHour ?? 12,

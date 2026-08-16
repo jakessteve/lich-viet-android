@@ -84,9 +84,14 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
 
               <div className="pt-2 border-t border-border-light/40 dark:border-border-dark/40 space-y-1.5 text-micro">
                 <div className="flex flex-wrap gap-1 items-center">
-                  <span className="font-semibold text-text-secondary-light/80 dark:text-text-secondary-dark/80">Hành tinh:</span>
+                  <span className="font-semibold text-text-secondary-light/80 dark:text-text-secondary-dark/80">
+                    Hành tinh:
+                  </span>
                   {item.planetsInvolved.map((p) => (
-                    <span key={p} className="rounded bg-surface-container px-1.5 py-0.5 font-medium text-text-primary-light dark:text-text-primary-dark">
+                    <span
+                      key={p}
+                      className="rounded bg-surface-container px-1.5 py-0.5 font-medium text-text-primary-light dark:text-text-primary-dark"
+                    >
                       {p}
                     </span>
                   ))}
@@ -98,7 +103,11 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
                 </div>
                 {item.remedyOrAdviceVi && (
                   <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs">
-                    💡 <strong className="font-medium text-text-primary-light dark:text-text-primary-dark">Lời khuyên & Hóa giải (Upaya):</strong> {item.remedyOrAdviceVi}
+                    💡{' '}
+                    <strong className="font-medium text-text-primary-light dark:text-text-primary-dark">
+                      Lời khuyên & Hóa giải (Upaya):
+                    </strong>{' '}
+                    {item.remedyOrAdviceVi}
                   </p>
                 )}
               </div>
@@ -109,4 +118,3 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
     </div>
   );
 };
-

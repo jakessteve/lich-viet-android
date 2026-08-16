@@ -15,17 +15,16 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
       aria-modal="true"
       aria-labelledby="about-modal-title"
     >
-      <div
-        className="fixed inset-0"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0" onClick={onClose} aria-hidden="true" />
       <div className="relative w-full max-w-lg bg-white dark:bg-mystery-surface rounded-2xl shadow-2xl border border-border-light dark:border-mystery-purple/20 max-h-[85vh] flex flex-col overflow-hidden animate-scale-in z-10">
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-border-light dark:border-border-dark">
           <div className="flex items-center gap-2.5">
             <span className="material-icons-round text-gold dark:text-gold-dark text-2xl">info</span>
-            <h2 id="about-modal-title" className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
+            <h2
+              id="about-modal-title"
+              className="text-lg font-bold text-text-primary-light dark:text-text-primary-dark"
+            >
               Về Lịch Việt
             </h2>
           </div>
@@ -54,7 +53,8 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
           </div>
 
           <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Ứng dụng tra cứu Âm Lịch, Dụng Sự, Tử Vi Đẩu Số, Chiêm Tinh Học và Gieo Quẻ Kinh Dịch đa nền tảng hiện đại. Tích hợp thuật toán chuẩn thiên văn Thụy Sĩ và tri thức cổ học Á Đông.
+            Ứng dụng tra cứu Âm Lịch, Dụng Sự, Tử Vi Đẩu Số, Chiêm Tinh Học và Gieo Quẻ Kinh Dịch đa nền tảng hiện đại.
+            Tích hợp thuật toán chuẩn thiên văn Thụy Sĩ và tri thức cổ học Á Đông.
           </p>
 
           {/* Highlights */}

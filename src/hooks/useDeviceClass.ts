@@ -23,14 +23,14 @@ function getDeviceState(): DeviceState {
 
   const width = window.innerWidth;
   const height = window.innerHeight;
-  
+
   // Media query checks
   const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-  
+
   // Foldable hinge check (if browser supports it)
   // Fallback heuristic: 768px-1023px width but relatively short (e.g. aspect ratio close to square)
   const hasHinge = window.matchMedia('(horizontal-viewport-segments: 2)').matches;
-  const isLikelyFoldableInner = (width >= 768 && width < 1024) && (hasHinge || height < 850);
+  const isLikelyFoldableInner = width >= 768 && width < 1024 && (hasHinge || height < 850);
 
   let deviceClass: DeviceClass;
 

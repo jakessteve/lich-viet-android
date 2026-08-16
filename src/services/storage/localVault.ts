@@ -53,7 +53,9 @@ function openDB(): Promise<IDBDatabase> {
 /**
  * Saves or updates a profile in the IndexedDB Local Vault.
  */
-export async function saveVaultProfile(profile: Omit<VaultProfile, 'id' | 'createdAt' | 'updatedAt'> & { id?: string }): Promise<VaultProfile> {
+export async function saveVaultProfile(
+  profile: Omit<VaultProfile, 'id' | 'createdAt' | 'updatedAt'> & { id?: string },
+): Promise<VaultProfile> {
   const now = Date.now();
   const fullProfile: VaultProfile = {
     id: profile.id || `profile_${now}_${Math.random().toString(36).slice(2, 8)}`,

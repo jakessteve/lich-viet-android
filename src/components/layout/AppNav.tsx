@@ -1,8 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
 import { useAppStore } from '@/stores/appStore';
-import { useAuthStore } from '@/stores/authStore';
 import { NAV_LINKS, ROUTE_TO_TAB, TAB_TO_ROUTE, type ActiveTab } from '@/router/constants';
 
 import HelpModal from '../shared/HelpModal';
@@ -17,7 +15,6 @@ export default function AppNav() {
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const isNative = Capacitor.isNativePlatform();
 
   const activeTab: ActiveTab = ROUTE_TO_TAB[location.pathname] || 'am-lich';
   const isFullPage = location.pathname === '/app/cai-dat';

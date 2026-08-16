@@ -80,38 +80,40 @@ const DASHA_METAS: Record<string, { nameVi: string; symbol: string; color: strin
 export function calculateVedicDashaTimeline(
   moonSiderealLongitude: number,
   birthYear: number,
-  currentYear: number = new Date().getFullYear()
+  currentYear: number = new Date().getFullYear(),
 ): VimshottariDashaResult {
   const rawDashas = computeVimshottariDasha(moonSiderealLongitude, 0, birthYear);
 
-  const periods: DashaPeriod[] = rawDashas.map((d: { lord: string; startYear: number; endYear: number; duration: number }) => {
-    const meta = DASHA_METAS[d.lord.toLowerCase()] ?? {
-      nameVi: d.lord,
-      symbol: '★',
-      color: '#9E9E9E',
-      descVi: 'Giai đoạn đại vận hành tinh.',
-    };
+  const periods: DashaPeriod[] = rawDashas.map(
+    (d: { lord: string; startYear: number; endYear: number; duration: number }) => {
+      const meta = DASHA_METAS[d.lord.toLowerCase()] ?? {
+        nameVi: d.lord,
+        symbol: '★',
+        color: '#9E9E9E',
+        descVi: 'Giai đoạn đại vận hành tinh.',
+      };
 
-    const sYear = Math.round(d.startYear * 10) / 10;
-    const eYear = Math.round(d.endYear * 10) / 10;
-    const isCurrent = currentYear >= sYear && currentYear < eYear;
+      const sYear = Math.round(d.startYear * 10) / 10;
+      const eYear = Math.round(d.endYear * 10) / 10;
+      const isCurrent = currentYear >= sYear && currentYear < eYear;
 
-    const startAge = Math.max(0, Math.round(sYear - birthYear));
-    const endAge = Math.round(eYear - birthYear);
+      const startAge = Math.max(0, Math.round(sYear - birthYear));
+      const endAge = Math.round(eYear - birthYear);
 
-    return {
-      lord: d.lord,
-      lordVi: meta.nameVi,
-      symbol: meta.symbol,
-      color: meta.color,
-      startYear: sYear,
-      endYear: eYear,
-      durationYears: Math.round(d.duration * 10) / 10,
-      isCurrent,
-      ageRange: `${startAge} - ${endAge} tuổi`,
-      descriptionVi: meta.descVi,
-    };
-  });
+      return {
+        lord: d.lord,
+        lordVi: meta.nameVi,
+        symbol: meta.symbol,
+        color: meta.color,
+        startYear: sYear,
+        endYear: eYear,
+        durationYears: Math.round(d.duration * 10) / 10,
+        isCurrent,
+        ageRange: `${startAge} - ${endAge} tuổi`,
+        descriptionVi: meta.descVi,
+      };
+    },
+  );
 
   const currentPeriod = periods.find((p) => p.isCurrent) ?? periods[0] ?? null;
   const nakshatraIndex = Math.floor((((moonSiderealLongitude % 360) + 360) % 360) / (360 / 27));

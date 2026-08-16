@@ -113,10 +113,10 @@ src/
 ├── router/                 # Routes, redirects, and constants
 ├── services/               # Specialized domain and orchestration services
 │   ├── astronomy/          # Swiss Ephemeris wrapper and solar math
+│   ├── astrology/          # Western & Vedic synthesis engines, dialectical synthesis, aspect patterns
 │   ├── personalization/    # Birth math and personalized scoring
-│   ├── tuvi/               # Complete Tử Vi star placement and rules
-│   ├── western/            # Western chart, aspect calculations, declinations
-│   └── vedic/              # Vedic charts, D9 Navamsha, Nakshatras
+│   ├── tuvi/               # Complete Tử Vi SCTE engine, palace interpretations, star placement
+│   └── storage/            # Offline vault and profile storage
 ├── stores/                 # Zustand state stores
 ├── types/                  # Shared TypeScript interfaces
 └── utils/                  # Core calculation engines and math helpers
@@ -127,8 +127,11 @@ packages/
 └── [submodules]/           # Domain reference modules and database seeds
 
 test/
+├── astrology/              # Western, Vedic, Dialectical, Moon Phase, and Synastry engine tests
 ├── components/             # React component tests
 ├── engines/                # Mathematical engine and golden fixture tests
+├── fixtures/               # Test fixtures and chart baselines
+├── hooks/                  # Custom hook tests
 ├── services/               # Service integration tests
 ├── stores/                 # Zustand store tests
 └── utils/                  # Utility tests
@@ -141,6 +144,6 @@ test/
 | Quality Gate | Command | Result |
 | --- | --- | --- |
 | **TypeScript Typecheck** | `npm run typecheck` | **Passed (0 errors)** with `strict: true` |
-| **Unit & Engine Tests** | `npm test` | **Passed 59 / 59 test files (463 / 463 tests)** |
-| **ESLint & Code Quality** | `npm run lint` | **Passed (0 errors, clean code standard)** |
-| **Production Build** | `npm run build` | **Passed (Clean Vite + PWA build in ~8.6s)** |
+| **Unit & Engine Tests** | `npm test` | **Passed 80 / 80 test files (563 / 563 tests)** |
+| **ESLint & Code Quality** | `npm run lint` | **Passed (0 errors, 0 warnings)** |
+| **Production Build** | `npm run build` | **Passed (Clean Vite + PWA build in ~9.8s)** |

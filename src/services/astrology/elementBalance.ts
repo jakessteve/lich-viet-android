@@ -41,25 +41,52 @@ const ELEMENT_INFO: Record<ZodiacElement, { nameVi: string; nameEn: string; colo
 };
 
 const MODALITY_INFO: Record<ZodiacModality, { nameVi: string; nameEn: string; color: string; traitsVi: string }> = {
-  cardinal: { nameVi: 'Thống Lĩnh', nameEn: 'Cardinal', color: '#D35400', traitsVi: 'Khởi xướng, định hướng và dẫn dắt' },
+  cardinal: {
+    nameVi: 'Thống Lĩnh',
+    nameEn: 'Cardinal',
+    color: '#D35400',
+    traitsVi: 'Khởi xướng, định hướng và dẫn dắt',
+  },
   fixed: { nameVi: 'Kiên Định', nameEn: 'Fixed', color: '#2980B9', traitsVi: 'Bền bỉ, tập trung và duy trì ổn định' },
-  mutable: { nameVi: 'Biến Đổi', nameEn: 'Mutable', color: '#16A085', traitsVi: 'Linh hoạt, thích nghi và khéo léo biến hóa' },
+  mutable: {
+    nameVi: 'Biến Đổi',
+    nameEn: 'Mutable',
+    color: '#16A085',
+    traitsVi: 'Linh hoạt, thích nghi và khéo léo biến hóa',
+  },
 };
 
 // 0: Aries (Fire/Cardinal), 1: Taurus (Earth/Fixed), 2: Gemini (Air/Mutable), 3: Cancer (Water/Cardinal)
 // 4: Leo (Fire/Fixed), 5: Virgo (Earth/Mutable), 6: Libra (Air/Cardinal), 7: Scorpio (Water/Fixed)
 // 8: Sagittarius (Fire/Mutable), 9: Capricorn (Earth/Cardinal), 10: Aquarius (Air/Fixed), 11: Pisces (Water/Mutable)
 const SIGN_ELEMENTS: readonly ZodiacElement[] = [
-  'fire', 'earth', 'air', 'water',
-  'fire', 'earth', 'air', 'water',
-  'fire', 'earth', 'air', 'water'
+  'fire',
+  'earth',
+  'air',
+  'water',
+  'fire',
+  'earth',
+  'air',
+  'water',
+  'fire',
+  'earth',
+  'air',
+  'water',
 ];
 
 const SIGN_MODALITIES: readonly ZodiacModality[] = [
-  'cardinal', 'fixed', 'mutable',
-  'cardinal', 'fixed', 'mutable',
-  'cardinal', 'fixed', 'mutable',
-  'cardinal', 'fixed', 'mutable'
+  'cardinal',
+  'fixed',
+  'mutable',
+  'cardinal',
+  'fixed',
+  'mutable',
+  'cardinal',
+  'fixed',
+  'mutable',
+  'cardinal',
+  'fixed',
+  'mutable',
 ];
 
 export interface BalanceCalculationPoint {
@@ -79,17 +106,20 @@ function getPointWeight(id: string): number {
   return 1;
 }
 
-export function calculateElementModalityBalance(
-  points: BalanceCalculationPoint[]
-): ElementModalityBalanceResult {
+export function calculateElementModalityBalance(points: BalanceCalculationPoint[]): ElementModalityBalanceResult {
   const elemPoints: Record<ZodiacElement, number> = { fire: 0, earth: 0, air: 0, water: 0 };
   const modPoints: Record<ZodiacModality, number> = { cardinal: 0, fixed: 0, mutable: 0 };
 
   const elemPlanets: Record<ZodiacElement, Array<{ id: string; nameVi: string; symbol: string }>> = {
-    fire: [], earth: [], air: [], water: [],
+    fire: [],
+    earth: [],
+    air: [],
+    water: [],
   };
   const modPlanets: Record<ZodiacModality, Array<{ id: string; nameVi: string; symbol: string }>> = {
-    cardinal: [], fixed: [], mutable: [],
+    cardinal: [],
+    fixed: [],
+    mutable: [],
   };
 
   let totalElemWeight = 0;

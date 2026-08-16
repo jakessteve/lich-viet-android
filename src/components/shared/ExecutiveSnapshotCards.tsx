@@ -108,7 +108,8 @@ export const ExecutiveSnapshotCards: React.FC<ExecutiveSnapshotCardsProps> = ({
       <div className="flex items-center gap-2 rounded-xl bg-surface-container-low/60 px-3 py-2 text-xs text-text-secondary-light dark:text-text-secondary-dark/90 border border-border-light/40 dark:border-border-dark/40 select-none">
         <span className="material-icons-round text-amber-500 text-sm animate-bounce">touch_app</span>
         <span>
-          <strong className="text-gold-light dark:text-gold-dark">Mẹo tương tác:</strong> Chạm vào bất kỳ Cung hoặc Ngôi sao nào trên bảng lá số để xem phân tích chi tiết liền mạch phía dưới.
+          <strong className="text-gold-light dark:text-gold-dark">Mẹo tương tác:</strong> Chạm vào bất kỳ Cung hoặc Ngôi
+          sao nào trên bảng lá số để xem phân tích chi tiết liền mạch phía dưới.
         </span>
       </div>
     </section>

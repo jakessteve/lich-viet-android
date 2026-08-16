@@ -1,7 +1,6 @@
 import React, { useState, useRef, useMemo } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
 import { useAppStore } from '../../stores/appStore';
 import { useAuthStore } from '../../stores/authStore';
 import { useTuViStore } from '@/stores/tuviStore';
@@ -225,12 +224,7 @@ export default function SettingsPage() {
     <div className="mx-auto max-w-5xl animate-fade-in-up">
       {/* Page Header */}
       <div className="flex items-center gap-3 mb-5">
-        <IconButton
-          onClick={() => navigate(-1)}
-          className="rounded-xl"
-          icon="arrow_back"
-          label="Quay lại"
-        />
+        <IconButton onClick={() => navigate(-1)} className="rounded-xl" icon="arrow_back" label="Quay lại" />
         <div>
           <h1 className="text-xl font-bold tracking-tight">Cài đặt</h1>
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">Tùy chỉnh trải nghiệm</p>
@@ -240,20 +234,20 @@ export default function SettingsPage() {
       <div className="md:hidden mb-4">
         <div className="relative">
           <div className="flex items-center gap-1 overflow-x-auto pb-1 pr-10 scrollbar-hide snap-x snap-mandatory">
-          {SECTIONS.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => setActiveSection(s.id)}
-              className={`flex shrink-0 snap-start items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
-                activeSection === s.id
-                  ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/12 dark:to-amber-400/8 text-gold dark:text-gold-dark shadow-sm'
-                  : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5'
-              }`}
-            >
-              <span className="material-icons-round text-sm">{s.icon}</span>
-              <span>{s.label}</span>
-            </button>
-          ))}
+            {SECTIONS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => setActiveSection(s.id)}
+                className={`flex shrink-0 snap-start items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                  activeSection === s.id
+                    ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/12 dark:to-amber-400/8 text-gold dark:text-gold-dark shadow-sm'
+                    : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5'
+                }`}
+              >
+                <span className="material-icons-round text-sm">{s.icon}</span>
+                <span>{s.label}</span>
+              </button>
+            ))}
           </div>
           <div
             className="pointer-events-none absolute inset-y-0 right-0 flex items-center justify-end pr-1 pl-6 bg-gradient-to-l from-surface-light via-surface-light/90 to-transparent dark:from-surface-dark dark:via-surface-dark/90"
@@ -957,7 +951,11 @@ export default function SettingsPage() {
       </div>{' '}
       {/* end 2-column flex */}
       <div className="h-6" />
-      <SuccessToast message="Thông tin cá nhân đã được cập nhật" visible={showSaveToast} onHide={() => setShowSaveToast(false)} />
+      <SuccessToast
+        message="Thông tin cá nhân đã được cập nhật"
+        visible={showSaveToast}
+        onHide={() => setShowSaveToast(false)}
+      />
     </div>
   );
 }

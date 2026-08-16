@@ -8,7 +8,7 @@ import type {
 } from '../../types/tuvi';
 import { CAN, CHI } from '../../utils/constants';
 import { getCanChiDay, getLunarDate } from '../../utils/calendarEngine';
-import { getDatePartsInTimeZone, normalizeBirthTimeWithPolicy } from './timeNormalization';
+import { getDatePartsInTimeZone, getHourBranch, normalizeBirthTimeWithPolicy } from './timeNormalization';
 import type { TuViSchoolProfile } from './schoolProfiles';
 import {
   getSwissEphemerisInstance,
@@ -57,11 +57,11 @@ function resolveCivilBirthDate(input: TuViInput): Date | null {
     utcHourBranch === expectedHourBranch &&
     localHourBranch !== expectedHourBranch;
 
-  const clockHour = input.birthClockHour ?? (shouldReadUtcByBranch ? input.solarDate.getUTCHours() : input.solarDate.getHours());
+  const clockHour =
+    input.birthClockHour ?? (shouldReadUtcByBranch ? input.solarDate.getUTCHours() : input.solarDate.getHours());
   const clockMinute =
     input.birthMinute ?? (shouldReadUtcByBranch ? input.solarDate.getUTCMinutes() : input.solarDate.getMinutes());
-  const localMatchesClock =
-    input.solarDate.getHours() === clockHour && input.solarDate.getMinutes() === clockMinute;
+  const localMatchesClock = input.solarDate.getHours() === clockHour && input.solarDate.getMinutes() === clockMinute;
   const utcMatchesClock =
     input.solarDate.getUTCHours() === clockHour && input.solarDate.getUTCMinutes() === clockMinute;
 
@@ -139,10 +139,7 @@ export interface TuViBirthContext {
   warnings: string[];
 }
 
-export function buildTuViBirthContext(
-  input: TuViInput,
-  schoolProfile: TuViSchoolProfile,
-): TuViBirthContext {
+export function buildTuViBirthContext(input: TuViInput, schoolProfile: TuViSchoolProfile): TuViBirthContext {
   const zonedDate = resolveCivilBirthDate(input) ?? normalizeToIanaTimezone(input.solarDate, input.timezone);
   const timePolicy = schoolProfile.timePolicy;
   const trueSolarDate = applyTrueSolarTimeLayer(zonedDate, input.birthLocation);
@@ -166,7 +163,8 @@ export function buildTuViBirthContext(
   const dayCanIndex = CAN.indexOf(dayCan);
   const dayChiIndex = CHI.indexOf(dayChi);
 
-  const hourBranchIndex = mod12(input.birthHour);
+  const hourBranchIndex =
+    input.birthClockHour !== undefined ? getHourBranch(correctedDate.getHours()) : mod12(input.birthHour);
   const hourCanIndex = mod10(dayCanIndex * 2 + hourBranchIndex);
   const hourCan = CAN[hourCanIndex];
   const hourChi = CHI[hourBranchIndex];

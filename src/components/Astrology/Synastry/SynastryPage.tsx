@@ -20,4 +20,3 @@ export const SynastryPage: React.FC = () => {
 };
 
 export default SynastryPage;
-

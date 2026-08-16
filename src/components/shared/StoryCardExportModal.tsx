@@ -49,7 +49,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
 
     // Run toPng with 3.5s timeout safety
     const timeoutPromise = new Promise<never>((_, reject) =>
-      setTimeout(() => reject(new Error('Quá thời gian tạo ảnh, vui lòng thử lại')), 3500)
+      setTimeout(() => reject(new Error('Quá thời gian tạo ảnh, vui lòng thử lại')), 3500),
     );
 
     const renderPromise = (async () => {
@@ -151,7 +151,9 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
       }
       setCopiedToast(true);
       setTimeout(() => setCopiedToast(false), 2500);
-    } catch {}
+    } catch (_err) {
+      // Clipboard write failed or is unsupported
+    }
 
     handleDownload();
   };
@@ -204,12 +206,8 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
               <div className="text-[9px] font-bold uppercase tracking-[0.25em] text-amber-400">
                 ✦ LỊCH VIỆT · TỔNG QUAN BẢN MỆNH ✦
               </div>
-              <h2 className="text-lg font-extrabold text-white tracking-wide pt-1">
-                {safeName}
-              </h2>
-              <p className="text-[10px] text-gray-400">
-                {solarDate}
-              </p>
+              <h2 className="text-lg font-extrabold text-white tracking-wide pt-1">{safeName}</h2>
+              <p className="text-[10px] text-gray-400">{solarDate}</p>
             </div>
 
             {/* 3 Pillars Badge Row */}
@@ -230,12 +228,8 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
 
             {/* Core Trait Highlight */}
             <div className="rounded-xl bg-gradient-to-br from-amber-500/10 to-purple-500/10 border border-amber-500/30 p-3 text-center space-y-1 relative z-10">
-              <div className="text-[9px] font-bold uppercase tracking-wider text-amber-400">
-                🌟 BẢN SẮC CỐT LÕI
-              </div>
-              <p className="text-[11px] leading-relaxed font-medium text-gray-100">
-                {superpower}
-              </p>
+              <div className="text-[9px] font-bold uppercase tracking-wider text-amber-400">🌟 BẢN SẮC CỐT LÕI</div>
+              <p className="text-[11px] leading-relaxed font-medium text-gray-100">{superpower}</p>
             </div>
 
             {/* 2026 Action Focus */}
@@ -243,9 +237,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
               <div className="text-[9px] font-bold uppercase tracking-wider text-sky-400">
                 🚀 ĐỊNH HƯỚNG TRỌNG TÂM 2026
               </div>
-              <p className="text-[10px] leading-relaxed text-gray-300">
-                {actionCompass}
-              </p>
+              <p className="text-[10px] leading-relaxed text-gray-300">{actionCompass}</p>
             </div>
 
             {/* Card Footer Watermark */}
@@ -264,9 +256,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
               disabled={isExporting}
               className="flex-1 inline-flex items-center justify-center gap-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-2.5 text-xs font-bold text-black shadow-lg shadow-amber-500/25 hover:opacity-90 transition-opacity"
             >
-              <span className="material-icons-round text-base">
-                {isExporting ? 'hourglass_top' : 'photo_camera'}
-              </span>
+              <span className="material-icons-round text-base">{isExporting ? 'hourglass_top' : 'photo_camera'}</span>
               {isExporting ? 'Đang tạo ảnh...' : 'Tạo Ảnh Bản Mệnh'}
             </button>
           ) : (

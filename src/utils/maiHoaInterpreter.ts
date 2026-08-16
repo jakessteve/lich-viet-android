@@ -396,8 +396,12 @@ function buildDetailedExplanation(
 
   // 3. Tương Tác Thể - Dụng & Thời Vận
   parts.push(`\n【Tương Tác Thể - Dụng & Thời Vận】:`);
-  parts.push(`• Cục diện: Thể (${theElement}) gặp Dụng (${dungElement}) tạo thành "${assessment.relationship}" — ${assessment.meaning}`);
-  parts.push(`• Thời vận: Hành ${theElement} trong mùa ${season} ở trạng thái "${strength}" (${STRENGTH_DESCRIPTIONS[strength]}).`);
+  parts.push(
+    `• Cục diện: Thể (${theElement}) gặp Dụng (${dungElement}) tạo thành "${assessment.relationship}" — ${assessment.meaning}`,
+  );
+  parts.push(
+    `• Thời vận: Hành ${theElement} trong mùa ${season} ở trạng thái "${strength}" (${STRENGTH_DESCRIPTIONS[strength]}).`,
+  );
 
   if (assessment.verdict === 'Cát' && STRONG_STRENGTHS.includes(strength)) {
     parts.push(`→ Tổng kết: Đại Cát. Thể được sinh trợ và đắc thời vượng khí, mưu sự đại thành.`);

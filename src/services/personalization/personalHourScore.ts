@@ -220,7 +220,10 @@ export function calculatePersonalHourModifier(
       totalModifier -= 6;
       flags.push('xung_gio_sinh');
       breakdowns.push('Lục Xung với giờ sinh (-6%)');
-    } else if (isLucHop(resolvedBirth.hourCanChi.chi, hourCanChi.chi) || isTamHop(resolvedBirth.hourCanChi.chi, hourCanChi.chi)) {
+    } else if (
+      isLucHop(resolvedBirth.hourCanChi.chi, hourCanChi.chi) ||
+      isTamHop(resolvedBirth.hourCanChi.chi, hourCanChi.chi)
+    ) {
       totalModifier += 5;
       flags.push('hop_gio_sinh');
       breakdowns.push('Tương hợp với giờ sinh (+5%)');

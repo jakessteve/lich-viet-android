@@ -149,10 +149,10 @@ export function scoreActivity(
   const nghiSet = buildLowerSet(dayData.dungSu.suitable);
   const kySet = buildLowerSet(dayData.dungSu.unsuitable);
   const { suitableIds, unsuitableIds } = mapDungSuToActivityIds(dayData.dungSu.suitable, dayData.dungSu.unsuitable);
-  const {
-    suitableIds: oracleSuitableIds,
-    unsuitableIds: oracleUnsuitableIds,
-  } = mapDungSuToActivityIds(dayData.dungSu.oracleSuitable || [], dayData.dungSu.oracleUnsuitable || []);
+  const { suitableIds: oracleSuitableIds, unsuitableIds: oracleUnsuitableIds } = mapDungSuToActivityIds(
+    dayData.dungSu.oracleSuitable || [],
+    dayData.dungSu.oracleUnsuitable || [],
+  );
   const hasOracleSupport = oracleSuitableIds.has(activityId);
   const hasOracleBlock = oracleUnsuitableIds.has(activityId);
   const hasOracleSignal = hasOracleSupport || hasOracleBlock;

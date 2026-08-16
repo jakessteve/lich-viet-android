@@ -1,40 +1,71 @@
 import type { WesternChartResult, DignityResult, AspectResult } from './westernCalculator';
 
 const SIGNS = [
-  'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',
-  'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp',
-  'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư',
+  'Bạch Dương',
+  'Kim Ngưu',
+  'Song Tử',
+  'Cự Giải',
+  'Sư Tử',
+  'Xử Nữ',
+  'Thiên Bình',
+  'Bọ Cạp',
+  'Nhân Mã',
+  'Ma Kết',
+  'Bảo Bình',
+  'Song Ngư',
 ];
 
 const SIGN_EMOJI: Record<string, string> = {
-  'Bạch Dương': '♈', 'Kim Ngưu': '♉', 'Song Tử': '♊', 'Cự Giải': '♋',
-  'Sư Tử': '♌', 'Xử Nữ': '♍', 'Thiên Bình': '♎', 'Bọ Cạp': '♏',
-  'Nhân Mã': '♐', 'Ma Kết': '♑', 'Bảo Bình': '♒', 'Song Ngư': '♓',
+  'Bạch Dương': '♈',
+  'Kim Ngưu': '♉',
+  'Song Tử': '♊',
+  'Cự Giải': '♋',
+  'Sư Tử': '♌',
+  'Xử Nữ': '♍',
+  'Thiên Bình': '♎',
+  'Bọ Cạp': '♏',
+  'Nhân Mã': '♐',
+  'Ma Kết': '♑',
+  'Bảo Bình': '♒',
+  'Song Ngư': '♓',
 };
 
 const PLANET_LABELS: Record<string, string> = {
-  sun: 'Mặt Trời ☉', moon: 'Mặt Trăng ☽', mercury: 'Sao Thủy ☿',
-  venus: 'Sao Kim ♀', mars: 'Sao Hỏa ♂', jupiter: 'Sao Mộc ♃', saturn: 'Sao Thổ ♄',
+  sun: 'Mặt Trời ☉',
+  moon: 'Mặt Trăng ☽',
+  mercury: 'Sao Thủy ☿',
+  venus: 'Sao Kim ♀',
+  mars: 'Sao Hỏa ♂',
+  jupiter: 'Sao Mộc ♃',
+  saturn: 'Sao Thổ ♄',
 };
 
 const ASPECT_LABELS: Record<string, string> = {
-  conjunction: 'Hợp (0°)', opposition: 'Xung (180°)', trine: 'Tam Hợp (120°)',
-  square: 'Vuông (90°)', sextile: 'Lục Hợp (60°)', quincunx: '150°',
-  semisextile: 'Bán Lục Hợp (30°)', semisquare: 'Bán Vuông (45°)',
-  sesquisquare: 'Sesqui-Vuông (135°)', quintile: 'Ngũ Phân (72°)',
+  conjunction: 'Hợp (0°)',
+  opposition: 'Xung (180°)',
+  trine: 'Tam Hợp (120°)',
+  square: 'Vuông (90°)',
+  sextile: 'Lục Hợp (60°)',
+  quincunx: '150°',
+  semisextile: 'Bán Lục Hợp (30°)',
+  semisquare: 'Bán Vuông (45°)',
+  sesquisquare: 'Sesqui-Vuông (135°)',
+  quintile: 'Ngũ Phân (72°)',
   biquintile: 'Song Ngũ Phân (144°)',
 };
 
 const _DIGNITY_LABELS: Record<string, string> = {
-  domicile: 'Cư (Domicile)', exaltation: 'Vượng (Exaltation)',
-  detriment: 'Hãm (Detriment)', fall: 'Suy (Fall)',
+  domicile: 'Cư (Domicile)',
+  exaltation: 'Vượng (Exaltation)',
+  detriment: 'Hãm (Detriment)',
+  fall: 'Suy (Fall)',
 };
 
 const PLANET_ORDER = ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn'];
 
 function formatDegMin(longitude: number): string {
-  const deg = Math.floor(((longitude % 360) + 360) % 360 % 30);
-  const min = Math.floor((((longitude % 360) + 360) % 360 % 30 - deg) * 60);
+  const deg = Math.floor((((longitude % 360) + 360) % 360) % 30);
+  const min = Math.floor((((((longitude % 360) + 360) % 360) % 30) - deg) * 60);
   return `${deg}°${min.toString().padStart(2, '0')}'`;
 }
 
@@ -88,33 +119,42 @@ function formatAspects(aspects: AspectResult[]): string {
   return lines.join('\n');
 }
 
-function formatDispositorTree(tree: Record<string, { ruler: string; sign: string; dispositorSign?: string }> | null): string {
+function formatDispositorTree(
+  tree: Record<string, { ruler: string; sign: string; dispositorSign?: string }> | null,
+): string {
   if (!tree) return '';
   const lines: string[] = ['## Chuỗi Dispositor', ''];
   for (const [planet, data] of Object.entries(tree)) {
     const name = PLANET_LABELS[planet] || planet;
-    lines.push(`- **${name}** → ${data.ruler} (${data.sign})${data.dispositorSign ? ` → dispositor tại ${data.dispositorSign}` : ''}`);
+    lines.push(
+      `- **${name}** → ${data.ruler} (${data.sign})${data.dispositorSign ? ` → dispositor tại ${data.dispositorSign}` : ''}`,
+    );
   }
   return lines.join('\n');
 }
 
-export function formatWesternChartAsMarkdown(result: WesternChartResult, system: 'western' | 'vedic' = 'western'): string {
+export function formatWesternChartAsMarkdown(
+  result: WesternChartResult,
+  system: 'western' | 'vedic' = 'western',
+): string {
   const parts: string[] = [];
 
   const title = system === 'vedic' ? '# Lá Số Chiêm Tinh Ấn Độ (Vedic Jyotish)' : '# Lá Số Chiêm Tinh Tây Phương';
   parts.push(title);
 
   // Basic info
-  const ascSignIdx = Math.floor(((result.ascendant % 360) + 360) % 360 / 30);
+  const ascSignIdx = Math.floor((((result.ascendant % 360) + 360) % 360) / 30);
   const ascSign = SIGNS[ascSignIdx];
-  const mcSignIdx = Math.floor(((result.midheaven % 360) + 360) % 360 / 30);
+  const mcSignIdx = Math.floor((((result.midheaven % 360) + 360) % 360) / 30);
   const mcSign = SIGNS[mcSignIdx];
 
   parts.push('');
   parts.push('## Thông Tin Cơ Bản');
   parts.push(`- **Ascendant (Cung Mọc):** ${formatDegMin(result.ascendant)} ${ascSign} ${SIGN_EMOJI[ascSign] || ''}`);
   parts.push(`- **Midheaven (Thiên Đỉnh):** ${formatDegMin(result.midheaven)} ${mcSign} ${SIGN_EMOJI[mcSign] || ''}`);
-  parts.push(`- **Part of Fortune (Cung Mọc):** ${formatDegMin(result.partOfFortune.longitude)} ${result.partOfFortune.sign}`);
+  parts.push(
+    `- **Part of Fortune (Cung Mọc):** ${formatDegMin(result.partOfFortune.longitude)} ${result.partOfFortune.sign}`,
+  );
   if (result.chartShape) {
     parts.push(`- **Hình Dáng Lá Số:** ${result.chartShape.shape} (${result.chartShape.reason})`);
   }
@@ -130,15 +170,13 @@ export function formatWesternChartAsMarkdown(result: WesternChartResult, system:
   parts.push('| Hành Tinh | Cung | Độ | Nhà |');
   parts.push('|-----------|------|----|-----|');
 
-  const sortedPlanets = [...result.planets].sort(
-    (a, b) => PLANET_ORDER.indexOf(a.body) - PLANET_ORDER.indexOf(b.body)
-  );
+  const sortedPlanets = [...result.planets].sort((a, b) => PLANET_ORDER.indexOf(a.body) - PLANET_ORDER.indexOf(b.body));
 
   for (const planet of sortedPlanets) {
     const name = PLANET_LABELS[planet.body] || planet.body;
     const emoji = SIGN_EMOJI[planet.sign] || '';
     const lon = system === 'vedic' ? planet.siderealLongitude : planet.tropicalLongitude;
-    const signIdx = Math.floor(((lon % 360) + 360) % 360 / 30);
+    const signIdx = Math.floor((((lon % 360) + 360) % 360) / 30);
     const signName = SIGNS[signIdx];
     parts.push(`| ${name} | ${signName} ${emoji} | ${formatDegMin(lon)} | Nhà ${planet.house} |`);
 

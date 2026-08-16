@@ -37,7 +37,8 @@ const PHASES: Array<{
     minAngle: 0,
     maxAngle: 45,
     descriptionVi: 'Mặt Trời và Mặt Trăng trùng tụ, khởi đầu chu kỳ mới trong bóng tối tĩnh lặng.',
-    personalityTraitsVi: 'Bản tính tiên phong, thuần khiết và hành động theo bản năng. Bạn mang tâm thế của người khai phá những khởi đầu mới.',
+    personalityTraitsVi:
+      'Bản tính tiên phong, thuần khiết và hành động theo bản năng. Bạn mang tâm thế của người khai phá những khởi đầu mới.',
   },
   {
     key: 'waxing_crescent',
@@ -47,7 +48,8 @@ const PHASES: Array<{
     minAngle: 45,
     maxAngle: 90,
     descriptionVi: 'Ánh trăng dần xuất hiện, mầm sống bắt đầu vươn mình đón ánh sáng.',
-    personalityTraitsVi: 'Nhiệt huyết, kiên trì và luôn hướng về tương lai. Bạn có khát vọng mạnh mẽ để vượt qua những định kiến cũ và khẳng định bản thân.',
+    personalityTraitsVi:
+      'Nhiệt huyết, kiên trì và luôn hướng về tương lai. Bạn có khát vọng mạnh mẽ để vượt qua những định kiến cũ và khẳng định bản thân.',
   },
   {
     key: 'first_quarter',
@@ -57,7 +59,8 @@ const PHASES: Array<{
     minAngle: 90,
     maxAngle: 135,
     descriptionVi: 'Mặt Trăng vuông góc Mặt Trời, thời điểm của hành động quyết liệt và vượt chướng ngại vật.',
-    personalityTraitsVi: 'Ý chí kiên cường, dũng cảm đối mặt với thử thách và khủng hoảng để định hình con đường riêng.',
+    personalityTraitsVi:
+      'Ý chí kiên cường, dũng cảm đối mặt với thử thách và khủng hoảng để định hình con đường riêng.',
   },
   {
     key: 'waxing_gibbous',
@@ -67,7 +70,8 @@ const PHASES: Array<{
     minAngle: 135,
     maxAngle: 180,
     descriptionVi: 'Ánh trăng gần tròn, giai đoạn tích lũy, hoàn thiện và trau chuốt.',
-    personalityTraitsVi: 'Tư duy hoàn thiện, tinh thần học hỏi không ngừng và khát khao đóng góp giá trị hữu ích cho cộng đồng.',
+    personalityTraitsVi:
+      'Tư duy hoàn thiện, tinh thần học hỏi không ngừng và khát khao đóng góp giá trị hữu ích cho cộng đồng.',
   },
   {
     key: 'full_moon',
@@ -77,7 +81,8 @@ const PHASES: Array<{
     minAngle: 180,
     maxAngle: 225,
     descriptionVi: 'Mặt Trăng và Mặt Trời đối đỉnh, ánh sáng rực rỡ và đỉnh cao nhận thức.',
-    personalityTraitsVi: 'Cảm xúc phong phú, trực giác thấu suốt và nhận thức sâu sắc về sự cân bằng giữa bản thân và các mối quan hệ.',
+    personalityTraitsVi:
+      'Cảm xúc phong phú, trực giác thấu suốt và nhận thức sâu sắc về sự cân bằng giữa bản thân và các mối quan hệ.',
   },
   {
     key: 'waning_gibbous',
@@ -87,7 +92,8 @@ const PHASES: Array<{
     minAngle: 225,
     maxAngle: 270,
     descriptionVi: 'Ánh trăng bắt đầu thu lại, thời điểm chia sẻ tri thức và gieo mầm bài học.',
-    personalityTraitsVi: 'Tố chất người thầy, thích truyền cảm hứng, lan tỏa kiến thức và chia sẻ kinh nghiệm sống cho người khác.',
+    personalityTraitsVi:
+      'Tố chất người thầy, thích truyền cảm hứng, lan tỏa kiến thức và chia sẻ kinh nghiệm sống cho người khác.',
   },
   {
     key: 'last_quarter',
@@ -97,7 +103,8 @@ const PHASES: Array<{
     minAngle: 270,
     maxAngle: 315,
     descriptionVi: 'Mặt Trăng vuông góc Mặt Trời chiều tàn, thời điểm buông bỏ và đánh giá lại.',
-    personalityTraitsVi: 'Tư duy phản biện độc lập, khả năng buông bỏ những điều không còn phù hợp để tái định hình giá trị cuộc sống.',
+    personalityTraitsVi:
+      'Tư duy phản biện độc lập, khả năng buông bỏ những điều không còn phù hợp để tái định hình giá trị cuộc sống.',
   },
   {
     key: 'waning_crescent',
@@ -107,7 +114,8 @@ const PHASES: Array<{
     minAngle: 315,
     maxAngle: 360,
     descriptionVi: 'Ánh trăng mỏng manh cuối chu kỳ, thời khắc chiêm nghiệm và tĩnh lặng tâm linh.',
-    personalityTraitsVi: 'Trực giác tâm linh sâu sắc, trí tuệ già dặn trước tuổi và khả năng khép lại những chu kỳ cũ để chuẩn bị cho tương lai.',
+    personalityTraitsVi:
+      'Trực giác tâm linh sâu sắc, trí tuệ già dặn trước tuổi và khả năng khép lại những chu kỳ cũ để chuẩn bị cho tương lai.',
   },
 ];
 
@@ -115,14 +123,10 @@ export function calculateBirthMoonPhase(sunLongitude: number, moonLongitude: num
   const normSun = ((sunLongitude % 360) + 360) % 360;
   const normMoon = ((moonLongitude % 360) + 360) % 360;
 
-  const phaseAngle = ((normMoon - normSun + 360) % 360);
-  const illuminationPercentage = Math.round(
-    ((1 - Math.cos((phaseAngle * Math.PI) / 180)) / 2) * 100
-  );
+  const phaseAngle = (normMoon - normSun + 360) % 360;
+  const illuminationPercentage = Math.round(((1 - Math.cos((phaseAngle * Math.PI) / 180)) / 2) * 100);
 
-  const matched = PHASES.find(
-    (p) => phaseAngle >= p.minAngle && phaseAngle < p.maxAngle
-  ) ?? PHASES[0];
+  const matched = PHASES.find((p) => phaseAngle >= p.minAngle && phaseAngle < p.maxAngle) ?? PHASES[0];
 
   return {
     key: matched.key,

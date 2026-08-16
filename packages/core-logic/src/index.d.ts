@@ -20,7 +20,7 @@ export declare function computeWeightedScore(
       western: number;
       vedic: number;
     }>;
-  }
+  },
 ): {
   totalScore: number;
   easternScore: number;
@@ -51,12 +51,12 @@ export declare function rankCandidateWindows<
     metrics: {
       totalScore: number;
     };
-  }
+  },
 >(
   candidates: T[],
   options?: {
     limit?: number;
-  }
+  },
 ): T[];
 
 export declare function summarizeChunkCandidates<
@@ -67,7 +67,7 @@ export declare function summarizeChunkCandidates<
       totalScore: number;
       isShortCircuited: boolean;
     };
-  }
+  },
 >(input: {
   chunkPlan: Array<{
     chunkIndex: number;
@@ -91,7 +91,7 @@ export declare function downsampleTimelineEntries<T>(
   entries: T[],
   options?: {
     maxEntries?: number;
-  }
+  },
 ): {
   entries: T[];
   downsampled: boolean;
@@ -103,7 +103,7 @@ export declare function applyTimelineGuardrails<T>(
   options?: {
     maxEntries?: number;
     maxTransferBytes?: number;
-  }
+  },
 ): {
   entries: T[];
   diagnostics: {
@@ -166,7 +166,7 @@ export declare function computeTopocentricPlanetarySnapshot(
     longitude: number;
     altitudeMeters: number;
   },
-  ayanamsaMode?: string
+  ayanamsaMode?: string,
 ): Array<{
   body: string;
   tropicalLongitude: number;
@@ -226,12 +226,10 @@ export declare function deriveKyMonChietBoState(input: {
   deltaMinutes: number;
   isPostBoundary: boolean;
   minuteSwitchActive: boolean;
-  phase: "new_cycle" | "previous_cycle";
+  phase: 'new_cycle' | 'previous_cycle';
 };
 
-export declare function deriveDaiLucNhamMonthlyGeneral(input: {
-  solarLongitude: number;
-}): {
+export declare function deriveDaiLucNhamMonthlyGeneral(input: { solarLongitude: number }): {
   monthIndex: number;
   branch: string;
   label: string;
@@ -256,13 +254,12 @@ export declare function evaluateVoidOfCourseGuard(input: {
 export declare function evaluateElectionCandidate(input: {
   timestamp: number;
   astronomy: {
-    timezone:
-      {
-        ruleId: string;
-        offsetHours: number;
-        ambiguous: false;
-        shiftedTimestamp: number;
-      };
+    timezone: {
+      ruleId: string;
+      offsetHours: number;
+      ambiguous: false;
+      shiftedTimestamp: number;
+    };
     solarTerm: {
       targetLongitude: number;
       julianDay: number;
@@ -311,7 +308,7 @@ export declare function evaluateElectionCandidate(input: {
       deltaMinutes: number;
       isPostBoundary: boolean;
       minuteSwitchActive: boolean;
-      phase: "new_cycle" | "previous_cycle";
+      phase: 'new_cycle' | 'previous_cycle';
     };
     monthlyGeneral: {
       monthIndex: number;
@@ -335,7 +332,7 @@ export declare function evaluateElectionCandidate(input: {
 export interface DungSuEventScore {
   eventId: string;
   auspiciousnessPercent: number;
-  accuracyTier: "complete" | "bounded_specialist_ready" | "specialist_required";
+  accuracyTier: 'complete' | 'bounded_specialist_ready' | 'specialist_required';
   sourceCoveragePercent: number;
   componentScores: {
     genericHkbfsScore: number;
@@ -353,7 +350,7 @@ export declare function calculateDungSuEventScore(input: {
   eventProfile: {
     event_id: string;
     category: string;
-    accuracy_tier: "complete" | "bounded_specialist_ready" | "specialist_required";
+    accuracy_tier: 'complete' | 'bounded_specialist_ready' | 'specialist_required';
     source_coverage_percent: number;
     generic_weight: number;
     cross_system_weight: number;
@@ -425,7 +422,11 @@ export declare function calculateTuViCucNumber(yearCanIndex: number, menhPalaceI
 
 export declare function calculateMenhCungPosition(lunarMonth: number, birthHourBranch: number): number;
 
-export declare function calculateThanCungPosition(menhPosition: number, birthMonth: number, birthHourBranch?: number): number;
+export declare function calculateThanCungPosition(
+  menhPosition: number,
+  birthMonth: number,
+  birthHourBranch?: number,
+): number;
 
 export declare function placeTuViStar(cucNumber: number, lunarDay: number): number;
 
@@ -439,7 +440,7 @@ export declare function placePhuTinh(input: {
   hourBranch: number;
   menhPosition: number;
   thanPosition: number;
-  thuanNghich?: "Thuận" | "Nghịch";
+  thuanNghich?: 'Thuận' | 'Nghịch';
 }): Record<string, number>;
 
 export declare function createTuViStarChart(input: {
@@ -453,15 +454,15 @@ export declare function createTuViStarChart(input: {
   thanPalaceIndex?: number;
   cucNumber?: number;
 }): {
-  status: "v1_backed_star_chart_ready";
+  status: 'v1_backed_star_chart_ready';
   lineageProfile: {
     id: string;
     label: string;
     claimScope: string;
-    synthesisStatus: "bounded_lineage_profile_ready";
+    synthesisStatus: 'bounded_lineage_profile_ready';
   };
-  amDuong: "Dương" | "Âm";
-  thuanNghich: "Thuận" | "Nghịch";
+  amDuong: 'Dương' | 'Âm';
+  thuanNghich: 'Thuận' | 'Nghịch';
   menhPalaceIndex: number;
   thanPalaceIndex: number;
   menhCanIndex: number;
@@ -487,9 +488,9 @@ export declare function resolveTuViBirthContext(input: {
     timezone?: number;
     countryCode?: string;
     countryName?: string;
-    historicalRegion?: "north" | "south";
+    historicalRegion?: 'north' | 'south';
   };
-  timePolicy?: "civil" | "historical-vietnam" | "true-solar";
+  timePolicy?: 'civil' | 'historical-vietnam' | 'true-solar';
 }): {
   correctedDate: Date;
   metaphysicalDate: Date;
@@ -499,16 +500,22 @@ export declare function resolveTuViBirthContext(input: {
   trueSolarCorrectionMinutes: number;
 };
 
-export declare function getBranchRelationship(branchA: string | number, branchB: string | number): "xung" | "hai" | "hop_tam" | "hop_luc" | "tu_hinh" | "binh_hoa";
+export declare function getBranchRelationship(
+  branchA: string | number,
+  branchB: string | number,
+): 'xung' | 'hai' | 'hop_tam' | 'hop_luc' | 'tu_hinh' | 'binh_hoa';
 
-export declare function calculateTarabala(natalNakshatraIndex: number, transitNakshatraIndex: number): {
+export declare function calculateTarabala(
+  natalNakshatraIndex: number,
+  transitNakshatraIndex: number,
+): {
   tarabala: number;
   scoreDelta: number;
 };
 
 export declare function calculateWesternTransitAspects(
   natalPlanets: Array<{ body: string; tropicalLongitude: number }>,
-  transitPlanets: Array<{ body: string; tropicalLongitude: number }>
+  transitPlanets: Array<{ body: string; tropicalLongitude: number }>,
 ): number;
 
 export declare function getLunarDate(
@@ -518,9 +525,9 @@ export declare function getLunarDate(
     longitude?: number;
     countryCode?: string;
     timezone?: number;
-    historicalRegion?: "north" | "south";
+    historicalRegion?: 'north' | 'south';
   } | null,
-  fallbackTimezoneOffset?: number
+  fallbackTimezoneOffset?: number,
 ): {
   day: number;
   month: number;
@@ -577,10 +584,20 @@ export declare function computeAshtakoot(maleMoon: number, femaleMoon: number): 
 // Western-enhanced astrology functions (from western-enhanced.js)
 export function computeDignity(body: string, tropicalLongitude: number): any;
 export function detectMinorAspects(planets: any[], orbMultiplier?: number): any[];
-export function computePorphyryCusps(observer: any): { system: string; cusps: number[]; ascendant: number; midheaven: number };
+export function computePorphyryCusps(observer: any): {
+  system: string;
+  cusps: number[];
+  ascendant: number;
+  midheaven: number;
+};
 export function computeDispositorTree(planets: any[]): any;
 export function detectChartShape(planets: any[]): any;
-export function computePartOfFortune(sunLongitude: number, moonLongitude: number, ascendantLongitude: number, isDayBirth?: boolean): number;
+export function computePartOfFortune(
+  sunLongitude: number,
+  moonLongitude: number,
+  ascendantLongitude: number,
+  isDayBirth?: boolean,
+): number;
 export function computeTrueLunarPosition(julianDay: number): {
   longitude: number;
   latitude: number;
@@ -590,7 +607,7 @@ export function computeTrueLunarPosition(julianDay: number): {
 export function computeSolarReturn(
   birthSunLongitude: number,
   year: number,
-  startJulianDay: number
+  startJulianDay: number,
 ): {
   solarReturnJulianDay: number;
   solarReturnLongitude: number;
@@ -599,7 +616,7 @@ export function computeSolarReturn(
 } | null;
 export function computeLunarReturn(
   birthMoonLongitude: number,
-  startJulianDay: number
+  startJulianDay: number,
 ): {
   lunarReturnJulianDay: number;
   lunarReturnLongitude: number;
@@ -610,21 +627,21 @@ export function computeProgressedDate(birthJulianDay: number, ageYears: number):
 export function computeProgressedPlanets(
   observer: any,
   birthObserver: any,
-  ageYears: number
+  ageYears: number,
 ): { progressedDate: number; progressedObserver: any; note: string };
 export function computeCompositeChart(
   planetsA: Array<{ body: string; tropicalLongitude: number }>,
-  planetsB: Array<{ body: string; tropicalLongitude: number }>
+  planetsB: Array<{ body: string; tropicalLongitude: number }>,
 ): Array<{ body: string; tropicalLongitude: number; midpointType: string }>;
 export function computeDavisonChart(
   birthA: { julianDay: number; latitude: number; longitude: number },
-  birthB: { julianDay: number; latitude: number; longitude: number }
+  birthB: { julianDay: number; latitude: number; longitude: number },
 ): { julianDay: number; latitude: number; longitude: number; note: string };
 export function calculateSynastry(
   profileA: any,
   profileB: any,
   westernSynastryData?: any,
-  vedicSynastryData?: any
+  vedicSynastryData?: any,
 ): {
   combinedScore: number;
   engines: {
@@ -633,3 +650,74 @@ export function calculateSynastry(
     vedic: { score: number; insights: string[]; rawBreakdown: Record<string, number> };
   };
 };
+
+// Traditional & Hellenistic
+export declare const ZODIAC_SIGNS: readonly string[];
+export declare const ZODIAC_SIGNS_VI: readonly string[];
+export declare function calculateChartSect(
+  sunLongitude: number,
+  ascendantLongitude: number,
+): {
+  isDay: boolean;
+  sectLabel: string;
+  sectLabelVi: string;
+  beneficOfSect: string;
+  maleficOfSect: string;
+  outOfSectMalefic: string;
+};
+export declare function calculateEssentialDignities(
+  planet: string,
+  sign: string,
+  degree: number,
+  isDayChart: boolean,
+): any;
+export declare function calculateAccidentalDignities(
+  planet: string,
+  house: number,
+  sunLongitude: number,
+  planetLongitude: number,
+  isRetrograde?: boolean,
+): any;
+export declare function calculateArabicLots(
+  sunLong: number,
+  moonLong: number,
+  ascLong: number,
+  venusLong: number,
+  isDay: boolean,
+): any;
+export declare function calculateAlmutenFiguris(
+  planets: Array<{ body: string; tropicalLongitude: number }>,
+  ascLongitude: number,
+  fortuneLongitude: number,
+  isDay: boolean,
+): any;
+export declare function calculateFirdaria(birthDate: Date, isDay: boolean): any;
+
+// Huber Method
+export declare const HUBER_COLOR_ENERGIES: Record<string, { labelVi: string; color: string; keywords: string[] }>;
+export declare function calculateHuberAgePoint(
+  ageYears: number,
+  houseCusps: number[],
+  planets: Array<{ body: string; tropicalLongitude: number }>,
+): any;
+export declare function detectHuberAspectFigures(
+  planets: Array<{ body: string; tropicalLongitude: number }>,
+  aspects: Array<{ id: string; planetA: string; planetB: string }>,
+): any[];
+
+// Zodiacal Releasing
+export declare function calculateZodiacalReleasing(
+  lotSign: string,
+  birthDate: Date,
+  fortuneSign: string,
+  maxYears?: number,
+): any[];
+
+// Horary
+export declare const HORARY_TOPICS: readonly Array<{ id: string; nameVi: string; house: number; desc: string }>;
+export declare function judgeHoraryChart(input: {
+  topicId: string;
+  houseCusps: number[];
+  planets: Array<{ body: string; tropicalLongitude: number; house?: number }>;
+  ascendantLongitude: number;
+}): any;

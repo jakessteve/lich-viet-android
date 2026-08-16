@@ -6,7 +6,7 @@ import CollapsibleCard from '../CollapsibleCard';
 export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ result }) => {
   const navigate = useNavigate();
   const date = new Date(result.timestamp);
-  
+
   // Format MM-DD for daily view link
   const m = String(date.getMonth() + 1).padStart(2, '0');
   const d = String(date.getDate()).padStart(2, '0');
@@ -53,9 +53,9 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
       <div className="p-4 space-y-4">
         {/* Visual Bar */}
         <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-          <div 
-            className={`h-full ${getScoreBg(result.totalScore)}`} 
-            style={{ width: `${Math.min(100, Math.max(0, result.totalScore))}%` }} 
+          <div
+            className={`h-full ${getScoreBg(result.totalScore)}`}
+            style={{ width: `${Math.min(100, Math.max(0, result.totalScore))}%` }}
           />
         </div>
 
@@ -65,19 +65,25 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
             <div className={`text-sm font-bold ${getScoreColor(result.easternScore)}`}>
               {Math.round(result.easternScore)}
             </div>
-            <div className="text-micro uppercase text-text-secondary-light dark:text-text-secondary-dark mt-0.5">Đông Phương</div>
+            <div className="text-micro uppercase text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
+              Đông Phương
+            </div>
           </div>
           <div className="border-l border-r border-border-light dark:border-border-dark">
             <div className={`text-sm font-bold ${getScoreColor(result.westernScore)}`}>
               {Math.round(result.westernScore)}
             </div>
-            <div className="text-micro uppercase text-text-secondary-light dark:text-text-secondary-dark mt-0.5">Tây Phương</div>
+            <div className="text-micro uppercase text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
+              Tây Phương
+            </div>
           </div>
           <div>
             <div className={`text-sm font-bold ${getScoreColor(result.vedicScore)}`}>
               {Math.round(result.vedicScore)}
             </div>
-            <div className="text-micro uppercase text-text-secondary-light dark:text-text-secondary-dark mt-0.5">Ấn Độ (Vedic)</div>
+            <div className="text-micro uppercase text-text-secondary-light dark:text-text-secondary-dark mt-0.5">
+              Ấn Độ (Vedic)
+            </div>
           </div>
         </div>
 

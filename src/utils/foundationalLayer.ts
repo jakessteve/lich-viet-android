@@ -309,4 +309,3 @@ export function findSolarTermStart(d: Date): { term: string; date: Date } {
   solarTermStartCache.set(cacheKey, { term: result.term, date: new Date(result.date) });
   return result;
 }
-

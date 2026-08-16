@@ -76,22 +76,15 @@ function getTimezoneForLocation(utcOffset: number): string {
   return `Etc/GMT${utcOffset >= 0 ? '-' : '+'}${Math.abs(utcOffset)}`;
 }
 
-export function buildTuViInputFromUser(
-  user?: User | null,
-  fallback?: Partial<TuViInput>,
-): TuViInput | null {
+export function buildTuViInputFromUser(user?: User | null, fallback?: Partial<TuViInput>): TuViInput | null {
   const profile = getUserBirthProfile(user);
   if (!profile?.birthYear || !profile.birthMonth || !profile.birthDay) return null;
 
-  const birthClockHour = typeof profile.birthHour === 'number' ? profile.birthHour : fallback?.birthClockHour ?? 0;
-  const birthMinute = typeof profile.birthMinute === 'number' ? profile.birthMinute : fallback?.birthMinute ?? 0;
+  const birthClockHour = typeof profile.birthHour === 'number' ? profile.birthHour : (fallback?.birthClockHour ?? 0);
+  const birthMinute = typeof profile.birthMinute === 'number' ? profile.birthMinute : (fallback?.birthMinute ?? 0);
   const birthLocation = profile.birthLocation ?? fallback?.birthLocation;
   const gender: TuViGender =
-    profile.gender === 'female'
-      ? 'nữ'
-      : profile.gender === 'male'
-        ? 'nam'
-        : fallback?.gender ?? 'nam';
+    profile.gender === 'female' ? 'nữ' : profile.gender === 'male' ? 'nam' : (fallback?.gender ?? 'nam');
 
   return {
     name: user?.displayName ?? fallback?.name ?? '',
@@ -100,7 +93,9 @@ export function buildTuViInputFromUser(
     birthClockHour,
     birthMinute,
     gender,
-    timezone: birthLocation ? getTimezoneForLocation(birthLocation.timezone) : fallback?.timezone ?? 'Asia/Ho_Chi_Minh',
+    timezone: birthLocation
+      ? getTimezoneForLocation(birthLocation.timezone)
+      : (fallback?.timezone ?? 'Asia/Ho_Chi_Minh'),
     birthLocation,
     isLeapMonth: fallback?.isLeapMonth,
     timePolicy: (fallback?.timePolicy as TuViTimePolicy | undefined) ?? 'historical-vietnam',

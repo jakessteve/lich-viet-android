@@ -2,8 +2,11 @@ import { describe, it, expect } from 'vitest';
 import {
   detectTamHopPalaces,
   detectDoiCung,
+  detectNhiHopPalace,
   getStarsInPalace,
   getStarsInTamHop,
+  getStarsInNhiHop,
+  detectPositionalSemantics,
   checkCombinationPurity,
   calculateCombinationStrength,
   detectCombinations,
@@ -535,6 +538,208 @@ describe('detectCombinations', () => {
     const impact = tuPhu?.contextualDetails?.tuanTrietImpact;
     expect(impact).toContain('Cung Mệnh ngộ cả Tuần lẫn Triệt');
   });
+
+  it('detects Nhị Hợp geometry correctly for all 12 palaces', () => {
+    expect(detectNhiHopPalace(0)).toBe(1); // Tý ↔ Sửu
+    expect(detectNhiHopPalace(1)).toBe(0); // Sửu ↔ Tý
+    expect(detectNhiHopPalace(2)).toBe(11); // Dần ↔ Hợi
+    expect(detectNhiHopPalace(11)).toBe(2); // Hợi ↔ Dần
+    expect(detectNhiHopPalace(6)).toBe(7); // Ngọ ↔ Mùi
+    expect(detectNhiHopPalace(7)).toBe(6); // Mùi ↔ Ngọ
+
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[1] = makePalace({
+      id: 1,
+      chinhTinh: [makeStar('Vũ Khúc', 'chinhTinh', 'Miếu')],
+    });
+    const stars = getStarsInNhiHop(palaces, 0);
+    expect(stars).toContain('Vũ Khúc');
+  });
+
+  it('detects Positional Semantics (Tọa, Cứ, Triều, Xung, Củng, Hiệp)', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+
+    // Palace 0: Mệnh with Tử Vi (Tọa), Kình Dương (Cứ)
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      chinhTinh: [makeStar('Tử Vi', 'chinhTinh', 'Miếu')],
+      satTinh: [makeStar('Kình Dương', 'satTinh', 'Hãm')],
+    });
+    // Palace 6: Đối Cung with Thái Dương (Triều)
+    palaces[6] = makePalace({
+      id: 6,
+      name: 'Thiên Di',
+      chinhTinh: [makeStar('Thái Dương', 'chinhTinh', 'Miếu')],
+    });
+
+    const semantics = detectPositionalSemantics(palaces[0], palaces);
+    expect(semantics.some((s) => s.type === 'toa')).toBe(true);
+    expect(semantics.some((s) => s.type === 'cu')).toBe(true);
+    expect(semantics.some((s) => s.type === 'trieu')).toBe(true);
+  });
+
+  it('detects Thạch Trung Ẩn Ngọc combination', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[0] = makePalace({
+      id: 0,
+      chi: 'Tý',
+      name: 'Mệnh',
+      isMenh: true,
+      chinhTinh: [makeStar('Cự Môn', 'chinhTinh', 'Vượng')],
+      phuTinh: [makeStar('Lộc Tồn', 'phuTinh', 'Miếu')],
+    });
+
+    const results = detectCombinations(palaces);
+    const thachTrung = results.find((r) => r.name === 'Thạch Trung Ẩn Ngọc');
+    expect(thachTrung).toBeDefined();
+    expect(thachTrung?.category).toBe('cat');
+  });
+
+  it('detects Song Lộc Triều Viên combination', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      phuTinh: [makeStar('Lộc Tồn', 'phuTinh', 'Miếu')],
+      tuHoa: [{ type: 'Lộc', starName: 'Vũ Khúc' }],
+    });
+
+    const results = detectCombinations(palaces);
+    const songLoc = results.find((r) => r.name === 'Song Lộc Triều Viên');
+    expect(songLoc).toBeDefined();
+  });
+
+  it('detects Tài Ấm Giáp Ấn bracket interaction for Thiên Tướng', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    // Palace 0: Cung Mệnh có Thiên Tướng
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      chinhTinh: [makeStar('Thiên Tướng', 'chinhTinh', 'Vượng')],
+    });
+    // Palace 11 (Left / Giáp): Thiên Lương
+    palaces[11] = makePalace({
+      id: 11,
+      name: 'Phụ Mẫu',
+      chinhTinh: [makeStar('Thiên Lương', 'chinhTinh', 'Miếu')],
+    });
+    // Palace 1 (Right / Giáp): Hóa Lộc
+    palaces[1] = makePalace({
+      id: 1,
+      name: 'Huynh Đệ',
+      tuHoa: [{ type: 'Lộc', starName: 'Vũ Khúc' }],
+    });
+
+    const semantics = detectPositionalSemantics(palaces[0], palaces);
+    const taiAm = semantics.find((s) => s.classicalPattern?.includes('Tài Ấm Giáp Ấn'));
+    expect(taiAm).toBeDefined();
+    expect(taiAm?.nature).toBe('cat');
+    expect(taiAm?.description).toContain('Tài Ấm Giáp Ấn');
+  });
+
+  it('detects Hình Kỵ Giáp Ấn bracket interaction for Thiên Tướng', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Mệnh',
+      isMenh: true,
+      chinhTinh: [makeStar('Thiên Tướng', 'chinhTinh', 'Đắc')],
+    });
+    palaces[11] = makePalace({
+      id: 11,
+      name: 'Phụ Mẫu',
+      tuHoa: [{ type: 'Kỵ', starName: 'Cự Môn' }],
+    });
+    palaces[1] = makePalace({
+      id: 1,
+      name: 'Huynh Đệ',
+      satTinh: [makeStar('Kình Dương', 'satTinh', 'Hãm')],
+    });
+
+    const semantics = detectPositionalSemantics(palaces[0], palaces);
+    const hinhKy = semantics.find((s) => s.classicalPattern?.includes('Hình Kỵ Giáp Ấn'));
+    expect(hinhKy).toBeDefined();
+    expect(hinhKy?.nature).toBe('hung');
+    expect(hinhKy?.description).toContain('Hình Kỵ Giáp Ấn');
+  });
+
+  it('detects Hóa Ám Vi Minh opposition interaction for Cự Môn and Thái Dương', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    // Palace 0 (Tý): Cự Môn
+    palaces[0] = makePalace({
+      id: 0,
+      chi: 'Tý',
+      name: 'Mệnh',
+      isMenh: true,
+      chinhTinh: [makeStar('Cự Môn', 'chinhTinh', 'Vượng')],
+    });
+    // Palace 6 (Ngọ - Đối Cung): Thái Dương Miếu
+    palaces[6] = makePalace({
+      id: 6,
+      chi: 'Ngọ',
+      name: 'Thiên Di',
+      chinhTinh: [makeStar('Thái Dương', 'chinhTinh', 'Miếu')],
+    });
+
+    const semantics = detectPositionalSemantics(palaces[0], palaces);
+    const hoaAm = semantics.find((s) => s.classicalPattern?.includes('Hóa Ám Vi Minh'));
+    expect(hoaAm).toBeDefined();
+    expect(hoaAm?.nature).toBe('cat');
+    expect(hoaAm?.description).toContain('Hóa Ám Vi Minh');
+  });
+
+  it('detects Quân Thần Khánh Hội trine interaction for Tử Vi and Tả Phụ Hữu Bật', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    // Palace 0 (Tý): Tử Vi
+    palaces[0] = makePalace({
+      id: 0,
+      chi: 'Tý',
+      name: 'Mệnh',
+      isMenh: true,
+      chinhTinh: [makeStar('Tử Vi', 'chinhTinh', 'Bình')],
+    });
+    // Palace 4 (Thìn - Tam Hợp): Tả Phụ
+    palaces[4] = makePalace({
+      id: 4,
+      chi: 'Thìn',
+      name: 'Quan Lộc',
+      phuTinh: [makeStar('Tả Phụ', 'phuTinh', 'Miếu')],
+    });
+    // Palace 8 (Thân - Tam Hợp): Hữu Bật
+    palaces[8] = makePalace({
+      id: 8,
+      chi: 'Thân',
+      name: 'Tài Bạch',
+      phuTinh: [makeStar('Hữu Bật', 'phuTinh', 'Miếu')],
+    });
+
+    const semantics = detectPositionalSemantics(palaces[0], palaces);
+    const quanThan = semantics.find((s) => s.classicalPattern?.includes('Quân Thần Khánh Hội'));
+    expect(quanThan).toBeDefined();
+    expect(quanThan?.nature).toBe('cat');
+    expect(quanThan?.description).toContain('Quân Thần Khánh Hội');
+  });
+
+  it('detects Lộc Phùng Xung Phá when host Lộc Tồn is opposed by Địa Không', () => {
+    const palaces: TuViPalace[] = Array.from({ length: 12 }, (_, i) => makePalace({ id: i, name: `Cung ${i}` }));
+    palaces[0] = makePalace({
+      id: 0,
+      name: 'Tài Bạch',
+      phuTinh: [makeStar('Lộc Tồn', 'phuTinh', 'Miếu')],
+    });
+    palaces[6] = makePalace({
+      id: 6,
+      name: 'Phúc Đức',
+      satTinh: [makeStar('Địa Không', 'satTinh', 'Hãm')],
+    });
+
+    const semantics = detectPositionalSemantics(palaces[0], palaces);
+    const locXungPha = semantics.find((s) => s.classicalPattern?.includes('Lộc Phùng Xung Phá'));
+    expect(locXungPha).toBeDefined();
+    expect(locXungPha?.nature).toBe('hung');
+  });
 });
-
-

@@ -146,4 +146,3 @@ describe('daiHanInterpretation engine (calculation-grounded)', () => {
     expect(resBoth.starStructure.vcdSpecialNote).toContain('cả Tuần lẫn Triệt');
   });
 });
-

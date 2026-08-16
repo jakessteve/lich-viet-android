@@ -58,7 +58,8 @@ export default function UpgradePage() {
             Thuật toán Offline
           </h3>
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-            Tính toán Lịch Âm, Tiết Khí, Tử Vi và Chiêm Tinh trực tiếp trên máy với độ trễ 0ms, không phụ thuộc kết nối mạng.
+            Tính toán Lịch Âm, Tiết Khí, Tử Vi và Chiêm Tinh trực tiếp trên máy với độ trễ 0ms, không phụ thuộc kết nối
+            mạng.
           </p>
         </div>
 
@@ -66,9 +67,7 @@ export default function UpgradePage() {
           <div className="w-10 h-10 rounded-xl bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
             <span className="material-icons-round text-xl">folder_special</span>
           </div>
-          <h3 className="font-bold text-base text-text-primary-light dark:text-text-primary-dark">
-            Lưu Trữ Lá Số
-          </h3>
+          <h3 className="font-bold text-base text-text-primary-light dark:text-text-primary-dark">Lưu Trữ Lá Số</h3>
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
             Lưu trữ và phân loại danh sách lá số gia đình, bạn bè và đối tác. Tự động liên kết khi tra cứu hợp tuổi.
           </p>
@@ -89,4 +88,3 @@ export default function UpgradePage() {
     </div>
   );
 }
-

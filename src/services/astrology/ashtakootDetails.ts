@@ -19,26 +19,63 @@ export interface AshtakootDetailedResult {
 }
 
 const KOOTA_METAS: Record<string, { nameVi: string; nameSanskrit: string; maxScore: number; areaVi: string }> = {
-  varna: { nameVi: 'Tâm Hồn & Bản Ngã', nameSanskrit: 'Varna', maxScore: 1, areaVi: 'Sự tương thích về vị thế tâm hồn và cái tôi cá nhân' },
-  vashya: { nameVi: 'Sức Hút & Gắn Kết', nameSanskrit: 'Vashya', maxScore: 2, areaVi: 'Sự thu hút tự nhiên và mức độ kiểm soát, gắn bó' },
-  tara: { nameVi: 'Vận May & Định Mệnh', nameSanskrit: 'Tara', maxScore: 3, areaVi: 'Sự may mắn và hỗ trợ lẫn nhau trong cuộc sống' },
-  yoni: { nameVi: 'Hòa Hợp Thể Xác', nameSanskrit: 'Yoni', maxScore: 4, areaVi: 'Sự tương hợp về cảm xúc sinh lý và tình cảm gắn bó sâu sắc' },
-  grahaMaitri: { nameVi: 'Tình Bạn & Thấu Hiểu', nameSanskrit: 'Graha Maitri', maxScore: 5, areaVi: 'Mức độ hòa hợp về tư duy, phong cách sống và tình bạn' },
-  gana: { nameVi: 'Khí Chất & Tính Cách', nameSanskrit: 'Gana', maxScore: 6, areaVi: 'Sự hòa hợp giữa 3 nhóm khí chất: Thần (Deva), Người (Manushya), Quỷ (Rakshasa)' },
-  bhakoot: { nameVi: 'Gia Đạo & Thịnh Vượng', nameSanskrit: 'Bhakoot', maxScore: 7, areaVi: 'Hạnh phúc hôn nhân, sự thịnh vượng kinh tế và gia đình hòa thuận' },
-  nadi: { nameVi: 'Sức Khỏe & Con Cái', nameSanskrit: 'Nadi', maxScore: 8, areaVi: 'Gen di truyền, sức khỏe thể chất và sự tương hợp thế hệ sau' },
+  varna: {
+    nameVi: 'Tâm Hồn & Bản Ngã',
+    nameSanskrit: 'Varna',
+    maxScore: 1,
+    areaVi: 'Sự tương thích về vị thế tâm hồn và cái tôi cá nhân',
+  },
+  vashya: {
+    nameVi: 'Sức Hút & Gắn Kết',
+    nameSanskrit: 'Vashya',
+    maxScore: 2,
+    areaVi: 'Sự thu hút tự nhiên và mức độ kiểm soát, gắn bó',
+  },
+  tara: {
+    nameVi: 'Vận May & Định Mệnh',
+    nameSanskrit: 'Tara',
+    maxScore: 3,
+    areaVi: 'Sự may mắn và hỗ trợ lẫn nhau trong cuộc sống',
+  },
+  yoni: {
+    nameVi: 'Hòa Hợp Thể Xác',
+    nameSanskrit: 'Yoni',
+    maxScore: 4,
+    areaVi: 'Sự tương hợp về cảm xúc sinh lý và tình cảm gắn bó sâu sắc',
+  },
+  grahaMaitri: {
+    nameVi: 'Tình Bạn & Thấu Hiểu',
+    nameSanskrit: 'Graha Maitri',
+    maxScore: 5,
+    areaVi: 'Mức độ hòa hợp về tư duy, phong cách sống và tình bạn',
+  },
+  gana: {
+    nameVi: 'Khí Chất & Tính Cách',
+    nameSanskrit: 'Gana',
+    maxScore: 6,
+    areaVi: 'Sự hòa hợp giữa 3 nhóm khí chất: Thần (Deva), Người (Manushya), Quỷ (Rakshasa)',
+  },
+  bhakoot: {
+    nameVi: 'Gia Đạo & Thịnh Vượng',
+    nameSanskrit: 'Bhakoot',
+    maxScore: 7,
+    areaVi: 'Hạnh phúc hôn nhân, sự thịnh vượng kinh tế và gia đình hòa thuận',
+  },
+  nadi: {
+    nameVi: 'Sức Khỏe & Con Cái',
+    nameSanskrit: 'Nadi',
+    maxScore: 8,
+    areaVi: 'Gen di truyền, sức khỏe thể chất và sự tương hợp thế hệ sau',
+  },
 };
 
-export function getDetailedAshtakoot(
-  moonA: number,
-  moonB: number
-): AshtakootDetailedResult {
+export function getDetailedAshtakoot(moonA: number, moonB: number): AshtakootDetailedResult {
   const raw = computeAshtakoot(moonA, moonB);
-  const breakdown = (raw && raw.breakdown) ? raw.breakdown : {};
+  const breakdown = raw && raw.breakdown ? raw.breakdown : {};
 
   const items: AshtakootItem[] = Object.keys(KOOTA_METAS).map((key) => {
     const meta = KOOTA_METAS[key];
-    const score = typeof breakdown[key] === 'number' ? breakdown[key] : (typeof raw?.[key] === 'number' ? raw[key] : 0);
+    const score = typeof breakdown[key] === 'number' ? breakdown[key] : typeof raw?.[key] === 'number' ? raw[key] : 0;
     const ratio = meta.maxScore > 0 ? score / meta.maxScore : 0;
 
     let verdictVi = 'Hoàn hảo';

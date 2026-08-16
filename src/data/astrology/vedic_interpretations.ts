@@ -1,42 +1,70 @@
 export const VEDIC_PLANET_IN_SIGN: Record<string, Record<string, string>> = {
   lagna: {
-    'Bạch Dương': 'Bản ngã mạnh mẽ, năng động và ưa hành động. Con đường cuộc đời xoay quanh việc khẳng định bản thân và chinh phục chướng ngại.',
-    'Kim Ngưu': 'Kiên định, hướng về giá trị vật chất và sự ổn định. Bạn tìm kiếm sự an toàn và những trải nghiệm thực tế trong đời.',
-    'Song Tử': 'Linh hoạt, ham học hỏi và ưa giao tiếp. Cuộc đời là một hành trình thu thập kiến thức và trải nghiệm đa dạng.',
-    'Cự Giải': 'Nhạy cảm, hướng về gia đình và sự bao bọc. Bạn tìm thấy ý nghĩa sống qua việc nuôi dưỡng và bảo vệ những người thân yêu.',
-    'Sư Tử': 'Tự trọng cao, ấm áp và có sức hút lãnh đạo. Con đường của bạn là tỏa sáng, sáng tạo và để lại di sản cá nhân.',
-    'Xử Nữ': 'Phân tích, tỉ mỉ và mang tinh thần phục vụ. Bạn hoàn thiện bản thân thông qua công việc, sức khỏe và sự hữu ích cho cộng đồng.',
-    'Thiên Bình': 'Hòa nhã, trọng công lý và các mối quan hệ. Bài học cuộc đời nằm ở việc tìm ra sự cân bằng giữa bản ngã và người khác.',
-    'Bọ Cạp': 'Nội tâm sâu sắc, mãnh liệt và đầy tính biến đổi. Cuộc sống thường trải qua những giai đoạn tái sinh và khám phá bí ẩn.',
-    'Nhân Mã': 'Hướng ngoại, lạc quan và đam mê triết học. Con đường của bạn là tìm kiếm chân lý, niềm tin và sự tự do.',
-    'Ma Kết': 'Kiên nhẫn, thực tế và tham vọng. Bạn xây dựng cuộc sống từng bước vững chắc để đạt đến đỉnh cao danh vọng và địa vị.',
-    'Bảo Bình': 'Độc lập, tư duy vượt thời đại và hướng về nhân sinh. Bạn tìm kiếm ý nghĩa qua việc cống hiến cho những lý tưởng lớn lao.',
-    'Song Ngư': 'Trực giác, vị tha và giàu mộng tưởng. Con đường của bạn liên quan đến sự chữa lành, tâm linh và vượt lên trên vật chất.'
+    'Bạch Dương':
+      'Bản ngã mạnh mẽ, năng động và ưa hành động. Con đường cuộc đời xoay quanh việc khẳng định bản thân và chinh phục chướng ngại.',
+    'Kim Ngưu':
+      'Kiên định, hướng về giá trị vật chất và sự ổn định. Bạn tìm kiếm sự an toàn và những trải nghiệm thực tế trong đời.',
+    'Song Tử':
+      'Linh hoạt, ham học hỏi và ưa giao tiếp. Cuộc đời là một hành trình thu thập kiến thức và trải nghiệm đa dạng.',
+    'Cự Giải':
+      'Nhạy cảm, hướng về gia đình và sự bao bọc. Bạn tìm thấy ý nghĩa sống qua việc nuôi dưỡng và bảo vệ những người thân yêu.',
+    'Sư Tử':
+      'Tự trọng cao, ấm áp và có sức hút lãnh đạo. Con đường của bạn là tỏa sáng, sáng tạo và để lại di sản cá nhân.',
+    'Xử Nữ':
+      'Phân tích, tỉ mỉ và mang tinh thần phục vụ. Bạn hoàn thiện bản thân thông qua công việc, sức khỏe và sự hữu ích cho cộng đồng.',
+    'Thiên Bình':
+      'Hòa nhã, trọng công lý và các mối quan hệ. Bài học cuộc đời nằm ở việc tìm ra sự cân bằng giữa bản ngã và người khác.',
+    'Bọ Cạp':
+      'Nội tâm sâu sắc, mãnh liệt và đầy tính biến đổi. Cuộc sống thường trải qua những giai đoạn tái sinh và khám phá bí ẩn.',
+    'Nhân Mã':
+      'Hướng ngoại, lạc quan và đam mê triết học. Con đường của bạn là tìm kiếm chân lý, niềm tin và sự tự do.',
+    'Ma Kết':
+      'Kiên nhẫn, thực tế và tham vọng. Bạn xây dựng cuộc sống từng bước vững chắc để đạt đến đỉnh cao danh vọng và địa vị.',
+    'Bảo Bình':
+      'Độc lập, tư duy vượt thời đại và hướng về nhân sinh. Bạn tìm kiếm ý nghĩa qua việc cống hiến cho những lý tưởng lớn lao.',
+    'Song Ngư':
+      'Trực giác, vị tha và giàu mộng tưởng. Con đường của bạn liên quan đến sự chữa lành, tâm linh và vượt lên trên vật chất.',
   },
   moon: {
-    'Bạch Dương': 'Tâm trí (Manas) hoạt động nhanh, bốc đồng. Bạn phản ứng với thế giới một cách trực diện và cần sự mới mẻ liên tục.',
-    'Kim Ngưu': 'Tâm trí ổn định, vững vàng (Mặt Trăng vượng). Bạn tìm thấy sự bình yên khi mọi thứ diễn ra theo trật tự tự nhiên và đầy đủ.',
-    'Song Tử': 'Tâm trí tò mò, hay phân tích nhưng đôi khi thiếu tập trung. Bạn cần những kích thích trí tuệ để không bị nhàm chán.',
-    'Cự Giải': 'Tâm trí nhạy cảm, sâu sắc (Mặt Trăng cư miếu). Bạn gắn bó mạnh mẽ với ký ức, cội nguồn và có trực giác rất bén nhạy.',
-    'Sư Tử': 'Tâm trí kiêu hãnh, tự tin và hướng thiện. Bạn khao khát được yêu thương và tôn trọng trong các mối quan hệ.',
-    'Xử Nữ': 'Tâm trí thực tế, hay lo âu về chi tiết. Bạn cảm thấy an tâm khi có kế hoạch rõ ràng và giải quyết được các vấn đề.',
-    'Thiên Bình': 'Tâm trí tìm kiếm sự hài hòa và cái đẹp. Bạn thường cân nhắc nhiều khía cạnh trước khi đưa ra quyết định cảm xúc.',
-    'Bọ Cạp': 'Tâm trí sâu thẳm, nhiều sóng gió (Mặt Trăng suy). Bạn trải nghiệm cảm xúc cực đoan nhưng có khả năng thấu thị tâm linh mạnh mẽ.',
-    'Nhân Mã': 'Tâm trí rộng mở, lạc quan và luôn hướng về tương lai. Bạn tin tưởng vào vận may và những triết lý cao cả.',
-    'Ma Kết': 'Tâm trí kỷ luật, đôi khi bi quan hoặc áp lực. Bạn học cách kìm nén cảm xúc để tập trung vào trách nhiệm thực tế.',
-    'Bảo Bình': 'Tâm trí độc đáo, khách quan. Bạn thường suy nghĩ về những khái niệm vĩ mô thay vì vướng mắc vào cảm xúc cá nhân.',
-    'Song Ngư': 'Tâm trí mơ màng, dễ thấu cảm và vị tha. Bạn dễ dàng hòa nhịp với cảm xúc của vạn vật và cần sự tĩnh lặng để tái tạo.'
+    'Bạch Dương':
+      'Tâm trí (Manas) hoạt động nhanh, bốc đồng. Bạn phản ứng với thế giới một cách trực diện và cần sự mới mẻ liên tục.',
+    'Kim Ngưu':
+      'Tâm trí ổn định, vững vàng (Mặt Trăng vượng). Bạn tìm thấy sự bình yên khi mọi thứ diễn ra theo trật tự tự nhiên và đầy đủ.',
+    'Song Tử':
+      'Tâm trí tò mò, hay phân tích nhưng đôi khi thiếu tập trung. Bạn cần những kích thích trí tuệ để không bị nhàm chán.',
+    'Cự Giải':
+      'Tâm trí nhạy cảm, sâu sắc (Mặt Trăng cư miếu). Bạn gắn bó mạnh mẽ với ký ức, cội nguồn và có trực giác rất bén nhạy.',
+    'Sư Tử':
+      'Tâm trí kiêu hãnh, tự tin và hướng thiện. Bạn khao khát được yêu thương và tôn trọng trong các mối quan hệ.',
+    'Xử Nữ':
+      'Tâm trí thực tế, hay lo âu về chi tiết. Bạn cảm thấy an tâm khi có kế hoạch rõ ràng và giải quyết được các vấn đề.',
+    'Thiên Bình':
+      'Tâm trí tìm kiếm sự hài hòa và cái đẹp. Bạn thường cân nhắc nhiều khía cạnh trước khi đưa ra quyết định cảm xúc.',
+    'Bọ Cạp':
+      'Tâm trí sâu thẳm, nhiều sóng gió (Mặt Trăng suy). Bạn trải nghiệm cảm xúc cực đoan nhưng có khả năng thấu thị tâm linh mạnh mẽ.',
+    'Nhân Mã':
+      'Tâm trí rộng mở, lạc quan và luôn hướng về tương lai. Bạn tin tưởng vào vận may và những triết lý cao cả.',
+    'Ma Kết':
+      'Tâm trí kỷ luật, đôi khi bi quan hoặc áp lực. Bạn học cách kìm nén cảm xúc để tập trung vào trách nhiệm thực tế.',
+    'Bảo Bình':
+      'Tâm trí độc đáo, khách quan. Bạn thường suy nghĩ về những khái niệm vĩ mô thay vì vướng mắc vào cảm xúc cá nhân.',
+    'Song Ngư':
+      'Tâm trí mơ màng, dễ thấu cảm và vị tha. Bạn dễ dàng hòa nhịp với cảm xúc của vạn vật và cần sự tĩnh lặng để tái tạo.',
   },
   atmakaraka: {
-    'sun': 'Bài học linh hồn về sự Khiêm nhường, Từ bỏ cái tôi kiêu hãnh, và học cách tỏa sáng vì lợi ích chung thay vì danh vọng cá nhân.',
-    'moon': 'Bài học linh hồn về Sự thấu cảm, Kiểm soát cảm xúc, Tình mẫu tử và học cách chăm sóc người khác bằng tình yêu thương thuần khiết.',
-    'mars': 'Bài học linh hồn về Sự bất bạo động (Ahimsa), Kiểm soát cơn giận, và sử dụng sức mạnh để bảo vệ kẻ yếu thay vì tranh đoạt.',
-    'mercury': 'Bài học linh hồn về Sự chân thật, Làm chủ lời nói, và sử dụng trí tuệ để kết nối mọi người thay vì thao túng.',
-    'jupiter': 'Bài học linh hồn về Tôn trọng người khác, Sự bao dung, và truyền đạt trí tuệ tâm linh thay vì áp đặt niềm tin của mình.',
-    'venus': 'Bài học linh hồn về Sự tiết dục, Làm chủ đam mê vật chất/tình ái, và tìm kiếm tình yêu thiêng liêng thay vì thỏa mãn nhục dục.',
-    'saturn': 'Bài học linh hồn về Chấp nhận đau thương, Sự kiên nhẫn, và học cách chia sẻ gánh nặng của người khác với tấm lòng vô tư.',
-    'rahu': 'Bài học linh hồn về Vượt qua sự ảo tưởng, Làm chủ những ham muốn vật chất vô độ và tìm thấy sự thật đằng sau những dục vọng thế gian.'
-  }
+    sun: 'Bài học linh hồn về sự Khiêm nhường, Từ bỏ cái tôi kiêu hãnh, và học cách tỏa sáng vì lợi ích chung thay vì danh vọng cá nhân.',
+    moon: 'Bài học linh hồn về Sự thấu cảm, Kiểm soát cảm xúc, Tình mẫu tử và học cách chăm sóc người khác bằng tình yêu thương thuần khiết.',
+    mars: 'Bài học linh hồn về Sự bất bạo động (Ahimsa), Kiểm soát cơn giận, và sử dụng sức mạnh để bảo vệ kẻ yếu thay vì tranh đoạt.',
+    mercury:
+      'Bài học linh hồn về Sự chân thật, Làm chủ lời nói, và sử dụng trí tuệ để kết nối mọi người thay vì thao túng.',
+    jupiter:
+      'Bài học linh hồn về Tôn trọng người khác, Sự bao dung, và truyền đạt trí tuệ tâm linh thay vì áp đặt niềm tin của mình.',
+    venus:
+      'Bài học linh hồn về Sự tiết dục, Làm chủ đam mê vật chất/tình ái, và tìm kiếm tình yêu thiêng liêng thay vì thỏa mãn nhục dục.',
+    saturn:
+      'Bài học linh hồn về Chấp nhận đau thương, Sự kiên nhẫn, và học cách chia sẻ gánh nặng của người khác với tấm lòng vô tư.',
+    rahu: 'Bài học linh hồn về Vượt qua sự ảo tưởng, Làm chủ những ham muốn vật chất vô độ và tìm thấy sự thật đằng sau những dục vọng thế gian.',
+  },
 };
 
 export const VEDIC_BHAVA_MEANING: Record<number, string> = {
@@ -51,7 +79,7 @@ export const VEDIC_BHAVA_MEANING: Record<number, string> = {
   9: 'Dharma Bhava (Tôn giáo, Phước báu): Tượng trưng cho người cha, người thầy (Guru), tôn giáo, những chuyến đi xa, triết học và may mắn (Bhagya).',
   10: 'Karma Bhava (Sự nghiệp, Địa vị): Hành động và nghiệp quả trong xã hội. Đại diện cho nghề nghiệp, quyền lực, danh tiếng và sự thành đạt.',
   11: 'Labha Bhava (Lợi nhuận, Bạn bè): Thu nhập, lợi nhuận, sự hoàn thành ước mơ, mạng lưới bạn bè lớn và những người anh chị lớn.',
-  12: 'Vyaya Bhava (Mất mát, Tâm linh): Sự giải thoát (Moksha), các khoản chi tiêu, mất mát, sự giam cầm, những vùng đất xa xôi và tiềm thức.'
+  12: 'Vyaya Bhava (Mất mát, Tâm linh): Sự giải thoát (Moksha), các khoản chi tiêu, mất mát, sự giam cầm, những vùng đất xa xôi và tiềm thức.',
 };
 
 export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
@@ -67,7 +95,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Surya ở Nhà 9: Sự gắn kết mạnh mẽ với tôn giáo, cha hoặc các bậc thầy. Bạn có lý tưởng cao đẹp và thường gặp may mắn khi đi xa.',
     10: 'Surya ở Nhà 10: Vị trí cực kỳ tốt lành (Dik Bala), mang lại quyền lực, danh tiếng và sự nghiệp thành công. Bạn sinh ra để trở thành người lãnh đạo.',
     11: 'Surya ở Nhà 11: Có nhiều bạn bè quyền thế và thu nhập ổn định. Các ước mơ và tham vọng của bạn thường dễ dàng được hiện thực hóa.',
-    12: 'Surya ở Nhà 12: Xu hướng tìm kiếm sự ẩn dật hoặc hướng về tâm linh. Có thể làm việc trong các bệnh viện, nhà tù hoặc định cư ở nước ngoài.'
+    12: 'Surya ở Nhà 12: Xu hướng tìm kiếm sự ẩn dật hoặc hướng về tâm linh. Có thể làm việc trong các bệnh viện, nhà tù hoặc định cư ở nước ngoài.',
   },
   moon: {
     1: 'Chandra ở Nhà 1: Tính cách dịu dàng, nhạy cảm và vô cùng lãng mạn. Trực giác bén nhạy nhưng tâm trạng thường xuyên thay đổi.',
@@ -81,7 +109,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Chandra ở Nhà 9: Tín tâm mạnh mẽ, thích đi du lịch và khám phá các triết lý sống. Sự may mắn thường đến một cách tự nhiên.',
     10: 'Chandra ở Nhà 10: Sự nghiệp liên quan đến công chúng, dịch vụ, chăm sóc hoặc truyền thông. Sự nghiệp có nhiều biến đổi nhưng được lòng mọi người.',
     11: 'Chandra ở Nhà 11: Mạng lưới xã hội rộng lớn và có nhiều bạn bè nữ. Dễ dàng đạt được những ước mơ và có thu nhập từ nhiều nguồn.',
-    12: 'Chandra ở Nhà 12: Đời sống tâm linh sâu sắc, thích sự tĩnh lặng. Bạn có sự đồng cảm lớn với nỗi khổ của thế gian và thích làm từ thiện.'
+    12: 'Chandra ở Nhà 12: Đời sống tâm linh sâu sắc, thích sự tĩnh lặng. Bạn có sự đồng cảm lớn với nỗi khổ của thế gian và thích làm từ thiện.',
   },
   mars: {
     1: 'Mangal ở Nhà 1: Rất năng động, độc lập và can đảm. Tạo thành Kuja Dosha (khắc khẩu), bạn có xu hướng nóng nảy và cần kiểm soát sự hung hăng.',
@@ -95,7 +123,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Mangal ở Nhà 9: Ý chí bảo vệ niềm tin và lý tưởng rất cao. Có thể có quan điểm cứng rắn về tôn giáo và thích tranh luận triết lý.',
     10: 'Mangal ở Nhà 10: Nhận được Dig Bala (sức mạnh hướng), tạo ra một nhà lãnh đạo xuất chúng. Sự nghiệp thành đạt nhờ sự quyết tâm và nỗ lực phi thường.',
     11: 'Mangal ở Nhà 11: Có khả năng đạt được lợi ích vật chất thông qua nỗ lực và tính quyết đoán. Bạn bè thường là những người mạnh mẽ, có thế lực.',
-    12: 'Mangal ở Nhà 12: Kuja Dosha, hành động có phần bí mật hoặc kìm nén. Năng lượng dễ bị tiêu hao vào những tranh chấp ngầm hoặc chi tiêu ngoài dự kiến.'
+    12: 'Mangal ở Nhà 12: Kuja Dosha, hành động có phần bí mật hoặc kìm nén. Năng lượng dễ bị tiêu hao vào những tranh chấp ngầm hoặc chi tiêu ngoài dự kiến.',
   },
   mercury: {
     1: 'Budha ở Nhà 1: Rất thông minh, giao tiếp tốt và có khiếu hài hước. Nhận được Dig Bala, bạn toát lên sự trẻ trung và học hỏi rất nhanh.',
@@ -109,7 +137,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Budha ở Nhà 9: Tư duy triết lý, thích nghiên cứu về tôn giáo và văn hóa. Việc học lên cao và đi du lịch mang lại cho bạn nhiều niềm vui.',
     10: 'Budha ở Nhà 10: Sự nghiệp thường liên quan đến thương mại, viết lách, kế toán hoặc truyền thông. Bạn có khả năng làm nhiều việc cùng lúc.',
     11: 'Budha ở Nhà 11: Có mạng lưới xã hội lớn, tham gia nhiều hội nhóm và sử dụng thông tin để mở rộng các cơ hội tài chính.',
-    12: 'Budha ở Nhà 12: Trực giác mạnh mẽ, thích nghiên cứu trong im lặng. Suy nghĩ mang tính tâm linh nhưng đôi khi gặp khó khăn trong việc bộc lộ ý tưởng.'
+    12: 'Budha ở Nhà 12: Trực giác mạnh mẽ, thích nghiên cứu trong im lặng. Suy nghĩ mang tính tâm linh nhưng đôi khi gặp khó khăn trong việc bộc lộ ý tưởng.',
   },
   jupiter: {
     1: 'Guru ở Nhà 1: Mang lại sự bảo vệ lớn lao (nhận Dig Bala). Bạn thông thái, lạc quan, bao dung và luôn hướng thiện.',
@@ -123,7 +151,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Guru ở Nhà 9: Vị trí tự nhiên cực kỳ tốt. Niềm tin tôn giáo sâu sắc, được hướng dẫn bởi những bậc thầy giỏi và luôn gặp may mắn trong đời.',
     10: 'Guru ở Nhà 10: Sự nghiệp thành đạt nhờ đạo đức và sự thông thái. Dễ trở thành giáo viên, người hướng dẫn hoặc giữ vị trí đáng kính trong xã hội.',
     11: 'Guru ở Nhà 11: Mọi tham vọng và ước mơ đều dễ dàng đạt được. Mạng lưới bạn bè bao gồm những người trí thức và mang lại nhiều lợi ích.',
-    12: 'Guru ở Nhà 12: Đời sống tâm linh phát triển cao. Bạn thích làm việc thiện nguyện ẩn danh và có sự giải thoát (Moksha) sâu sắc.'
+    12: 'Guru ở Nhà 12: Đời sống tâm linh phát triển cao. Bạn thích làm việc thiện nguyện ẩn danh và có sự giải thoát (Moksha) sâu sắc.',
   },
   venus: {
     1: 'Shukra ở Nhà 1: Ngoại hình vô cùng quyến rũ, có gu thẩm mỹ và tính cách hòa nhã. Bạn tỏa ra năng lượng nghệ thuật và sự lãng mạn.',
@@ -137,7 +165,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Shukra ở Nhà 9: Tình yêu với du lịch, triết học và nghệ thuật. Hôn nhân có thể đến từ một người ở xa hoặc có nền văn hóa khác biệt.',
     10: 'Shukra ở Nhà 10: Sự nghiệp liên quan đến nghệ thuật, thời trang, làm đẹp hoặc ngoại giao. Bạn rất được yêu mến trong công việc.',
     11: 'Shukra ở Nhà 11: Bạn bè rất yêu quý bạn, nhiều mối quan hệ xã hội tốt mang lại lợi ích tài chính và sự thỏa mãn cá nhân.',
-    12: 'Shukra ở Nhà 12: Vị trí xuất sắc cho sự tận hưởng các thú vui chăn gối và sự thoải mái cá nhân. Cũng mang lại sự đóng góp âm thầm cho nghệ thuật.'
+    12: 'Shukra ở Nhà 12: Vị trí xuất sắc cho sự tận hưởng các thú vui chăn gối và sự thoải mái cá nhân. Cũng mang lại sự đóng góp âm thầm cho nghệ thuật.',
   },
   saturn: {
     1: 'Shani ở Nhà 1: Cuộc sống đòi hỏi sự nghiêm túc, làm việc chăm chỉ và trưởng thành sớm. Thành công đến chậm nhưng cực kỳ bền vững.',
@@ -151,7 +179,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Shani ở Nhà 9: Niềm tin và tôn giáo được xây dựng qua những bài học thực tế. Thường theo đuổi những giá trị truyền thống, bảo thủ.',
     10: 'Shani ở Nhà 10: Nghiệp quả nghề nghiệp rất mạnh. Đạt được quyền lực và địa vị nhờ sự bền bỉ, tính kỷ luật và làm việc chăm chỉ không ngừng.',
     11: 'Shani ở Nhà 11: Vị trí cực kỳ thuận lợi, mong muốn được đáp ứng sau quá trình lao động dài hạn. Mạng lưới bạn bè vững chắc và chọn lọc.',
-    12: 'Shani ở Nhà 12: Chi tiêu cẩn thận, có xu hướng thích sự ẩn dật. Có thể tìm thấy thành công và sự bình yên qua việc đi xa hoặc tu tập tâm linh.'
+    12: 'Shani ở Nhà 12: Chi tiêu cẩn thận, có xu hướng thích sự ẩn dật. Có thể tìm thấy thành công và sự bình yên qua việc đi xa hoặc tu tập tâm linh.',
   },
   rahu: {
     1: 'Rahu ở Nhà 1: Khát khao thể hiện bản thân và đạt được danh tiếng. Bạn có sức hút kỳ lạ, nhưng đôi khi có xu hướng theo đuổi các giá trị ảo tưởng.',
@@ -165,7 +193,7 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Rahu ở Nhà 9: Khám phá những hệ thống tín ngưỡng độc đáo hoặc phi truyền thống. Sự nghiệp học thuật hoặc du lịch nước ngoài gặp nhiều trải nghiệm lạ.',
     10: 'Rahu ở Nhà 10: Tham vọng quyền lực và địa vị tột đỉnh. Dễ dàng đạt được thành tựu lớn trong sự nghiệp, chính trị hoặc công nghệ.',
     11: 'Rahu ở Nhà 11: Vị trí thuận lợi mang lại lợi ích tài chính khổng lồ và hoàn thành mọi ước mơ. Mạng lưới bạn bè rộng rãi và có nhiều người từ nền văn hóa khác.',
-    12: 'Rahu ở Nhà 12: Đời sống tưởng tượng phong phú, có thể xuất ngoại làm việc. Đôi khi chi tiêu quá mức vào những thứ khó kiểm soát.'
+    12: 'Rahu ở Nhà 12: Đời sống tưởng tượng phong phú, có thể xuất ngoại làm việc. Đôi khi chi tiêu quá mức vào những thứ khó kiểm soát.',
   },
   ketu: {
     1: 'Ketu ở Nhà 1: Trực giác mạnh mẽ, tính cách bí ẩn và có phần tách biệt. Thường không quan tâm nhiều đến vẻ bề ngoài hay danh vọng cá nhân.',
@@ -179,6 +207,6 @@ export const VEDIC_PLANET_IN_BHAVA: Record<string, Record<number, string>> = {
     9: 'Ketu ở Nhà 9: Tín tâm bẩm sinh và hiểu biết triết học sâu sắc. Có thể không theo các tôn giáo chính thống mà tìm ra con đường tâm linh riêng.',
     10: 'Ketu ở Nhà 10: Thờ ơ với danh vọng và quyền lực thế tục. Thường đổi nghề nhiều lần hoặc tìm kiếm công việc có ý nghĩa cống hiến thực sự.',
     11: 'Ketu ở Nhà 11: Không đòi hỏi nhiều từ bạn bè hoặc các ước mơ vật chất. Thường có ít bạn bè nhưng lại đạt được sự viên mãn từ nội tâm.',
-    12: 'Ketu ở Nhà 12: Vị trí mạnh nhất (Moksha Karaka), hướng đến sự giải thoát. Trải nghiệm tâm linh sâu sắc, giấc mơ tiên tri và sự bình yên tuyệt đối khi cách ly thế gian.'
-  }
+    12: 'Ketu ở Nhà 12: Vị trí mạnh nhất (Moksha Karaka), hướng đến sự giải thoát. Trải nghiệm tâm linh sâu sắc, giấc mơ tiên tri và sự bình yên tuyệt đối khi cách ly thế gian.',
+  },
 };

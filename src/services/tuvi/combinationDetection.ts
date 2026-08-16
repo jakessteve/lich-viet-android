@@ -5,9 +5,9 @@
  * in a Tử Vi chart. No React dependencies.
  */
 
-import type { TuViPalace, TuViCombination, CombinationPurity } from '../../types/tuvi';
+import type { TuViPalace, TuViCombination, CombinationPurity, PositionalSemantic } from '../../types/tuvi';
 import combinationsData from '../../data/tuvi/combinations.json';
-import { TAM_HOP_GROUPS, DOI_CUNG_MAP } from './constants';
+import { TAM_HOP_GROUPS, DOI_CUNG_MAP, NHI_HOP_MAP } from './constants';
 
 // ── Type Definitions ──────────────────────────────────────────
 
@@ -21,7 +21,10 @@ type CustomMatchKind =
   | 'minhChau'
   | 'sunMoonBright'
   | 'menhBranchMalefic'
-  | 'hamPair';
+  | 'hamPair'
+  | 'thachTrungAnNgoc'
+  | 'songLocTrieuVien'
+  | 'phongVanTeHoi';
 
 interface CombinationDefinition {
   id: string;
@@ -87,6 +90,13 @@ export function detectDoiCung(palaceIndex: number): number {
   return DOI_CUNG_MAP[palaceIndex];
 }
 
+/**
+ * Returns the index of the Nhị Hợp (symmetrical harmonic pair) palace.
+ */
+export function detectNhiHopPalace(palaceIndex: number): number {
+  return NHI_HOP_MAP[palaceIndex];
+}
+
 // ── Star Extraction ───────────────────────────────────────────
 
 /**
@@ -98,6 +108,14 @@ export function getStarsInPalace(palace: TuViPalace): string[] {
     ...palace.phuTinh.map((s) => s.name),
     ...palace.satTinh.map((s) => s.name),
   ];
+}
+
+/**
+ * Returns all star names in the Nhị Hợp paired palace.
+ */
+export function getStarsInNhiHop(palaces: TuViPalace[], palaceIndex: number): string[] {
+  const nhiHopIdx = detectNhiHopPalace(palaceIndex);
+  return palaces[nhiHopIdx] ? getStarsInPalace(palaces[nhiHopIdx]) : [];
 }
 
 /**
@@ -241,6 +259,15 @@ export function detectCombinations(palaces: TuViPalace[]): TuViCombination[] {
       case 'hamPair':
         detectHamPair(palaces, def, results, seenKeys);
         break;
+      case 'thachTrungAnNgoc':
+        detectThachTrungAnNgoc(palaces, def, results, seenKeys);
+        break;
+      case 'songLocTrieuVien':
+        detectSongLocTrieuVien(palaces, def, results, seenKeys);
+        break;
+      case 'phongVanTeHoi':
+        detectPhongVanTeHoi(palaces, def, results, seenKeys);
+        break;
       default:
         switch (def.palaceConstraint) {
           case 'sameCung':
@@ -302,7 +329,7 @@ function buildContextualCombinationDetails(
   involvedCung: string[],
   involvedStars: string[],
   purity: CombinationPurity,
-  palaces: TuViPalace[]
+  palaces: TuViPalace[],
 ): TuViCombination['contextualDetails'] {
   const involvedPalaceObjs = palaces.filter((p) => involvedCung.includes(p.name));
   const isMenhThanInvolved = involvedPalaceObjs.some((p) => p.isMenh || p.isThan);
@@ -313,7 +340,7 @@ function buildContextualCombinationDetails(
   const quanPalace = involvedPalaceObjs.find((p) => p.name === 'Quan Lộc');
   const taiPalace = involvedPalaceObjs.find((p) => p.name === 'Tài Bạch');
   const primaryPalace = menhPalace ?? thanPalace ?? quanPalace ?? taiPalace ?? involvedPalaceObjs[0];
-  const primaryPalaceName = primaryPalace ? primaryPalace.name : involvedCung[0] ?? 'Bản Cung';
+  const primaryPalaceName = primaryPalace ? primaryPalace.name : (involvedCung[0] ?? 'Bản Cung');
 
   // Tứ Hóa effects
   const tuHoaEffects: string[] = [];
@@ -321,13 +348,21 @@ function buildContextualCombinationDetails(
     p.tuHoa.forEach((th) => {
       if (involvedStars.includes(th.starName)) {
         if (th.type === 'Lộc') {
-          tuHoaEffects.push(`Hóa Lộc tại ${th.starName} (Cung ${p.name}): Kích hoạt tài vận dồi dào, cơ hội sinh lời và sự trợ lực từ quý nhân.`);
+          tuHoaEffects.push(
+            `Hóa Lộc tại ${th.starName} (Cung ${p.name}): Kích hoạt tài vận dồi dào, cơ hội sinh lời và sự trợ lực từ quý nhân.`,
+          );
         } else if (th.type === 'Quyền') {
-          tuHoaEffects.push(`Hóa Quyền tại ${th.starName} (Cung ${p.name}): Tăng cường uy quyền, năng lực quản trị, sự quyết đoán và vai trò dẫn dắt.`);
+          tuHoaEffects.push(
+            `Hóa Quyền tại ${th.starName} (Cung ${p.name}): Tăng cường uy quyền, năng lực quản trị, sự quyết đoán và vai trò dẫn dắt.`,
+          );
         } else if (th.type === 'Khoa') {
-          tuHoaEffects.push(`Hóa Khoa tại ${th.starName} (Cung ${p.name}): Mang lại danh tiếng, học vấn thông tuệ, khả năng giải cứu hung họa và sự kính trọng xã hội.`);
+          tuHoaEffects.push(
+            `Hóa Khoa tại ${th.starName} (Cung ${p.name}): Mang lại danh tiếng, học vấn thông tuệ, khả năng giải cứu hung họa và sự kính trọng xã hội.`,
+          );
         } else if (th.type === 'Kỵ') {
-          tuHoaEffects.push(`Hóa Kỵ tại ${th.starName} (Cung ${p.name}): Cảnh báo những biến động tâm lý, trở ngại hoặc đàm tiếu thị phi cần sự cẩn trọng.`);
+          tuHoaEffects.push(
+            `Hóa Kỵ tại ${th.starName} (Cung ${p.name}): Cảnh báo những biến động tâm lý, trở ngại hoặc đàm tiếu thị phi cần sự cẩn trọng.`,
+          );
         }
       }
     });
@@ -374,7 +409,12 @@ function buildContextualCombinationDetails(
   }
 
   // Dynamic Synthesis
-  const purityLabel = purity === 'thuần' ? 'cách cục thuần túy, đắc lực' : purity === 'bán' ? 'cách cục có sự hòa lẫn cát hung' : 'cách cục bị sát tinh phân tán, cần tôi luyện vượt khó';
+  const purityLabel =
+    purity === 'thuần'
+      ? 'cách cục thuần túy, đắc lực'
+      : purity === 'bán'
+        ? 'cách cục có sự hòa lẫn cát hung'
+        : 'cách cục bị sát tinh phân tán, cần tôi luyện vượt khó';
   const dynamicSynthesisVi = `Cách cục ${def.name} (${def.nameHanViet}) định hình tại Cung ${involvedCung.join(', ')} (${purityLabel}). ${tuHoaEffects.length > 0 ? tuHoaEffects.join(' ') : ''} ${tuanTrietImpact ?? ''}`;
 
   return {
@@ -708,9 +748,7 @@ function detectMenhBracketStars(
   const leftHasSecond = hasStar(leftPalace, secondStar);
   const rightHasFirst = hasStar(rightPalace, firstStar);
 
-  const matched =
-    (leftHasFirst && rightHasSecond) ||
-    (leftHasSecond && rightHasFirst);
+  const matched = (leftHasFirst && rightHasSecond) || (leftHasSecond && rightHasFirst);
 
   if (!matched) return;
 
@@ -746,9 +784,7 @@ function detectMenhBracketMutagen(
   const leftHasMutagen = hasMutagen(leftPalace, requiredTuHoa);
   const rightHasMutagen = hasMutagen(rightPalace, requiredTuHoa);
 
-  const matched =
-    (leftHasStar && rightHasMutagen) ||
-    (rightHasStar && leftHasMutagen);
+  const matched = (leftHasStar && rightHasMutagen) || (rightHasStar && leftHasMutagen);
 
   if (!matched) return;
 
@@ -866,8 +902,12 @@ function detectHamPair(
   const [firstStar, secondStar] = def.stars;
   if (!firstStar || !secondStar) return;
 
-  const firstPalaces = groupPalaces.filter((palace) => palace.brightness[firstStar] === 'Hãm' || palace.brightness[firstStar] === 'Bất');
-  const secondPalaces = groupPalaces.filter((palace) => palace.brightness[secondStar] === 'Hãm' || palace.brightness[secondStar] === 'Bất');
+  const firstPalaces = groupPalaces.filter(
+    (palace) => palace.brightness[firstStar] === 'Hãm' || palace.brightness[firstStar] === 'Bất',
+  );
+  const secondPalaces = groupPalaces.filter(
+    (palace) => palace.brightness[secondStar] === 'Hãm' || palace.brightness[secondStar] === 'Bất',
+  );
 
   if (firstPalaces.length === 0 || secondPalaces.length === 0) return;
 
@@ -882,4 +922,137 @@ function detectHamPair(
     results,
     seenKeys,
   );
+}
+
+function detectThachTrungAnNgoc(
+  palaces: TuViPalace[],
+  def: CombinationDefinition,
+  results: TuViCombination[],
+  seenKeys: Set<string>,
+): void {
+  const menhPalace = getMenhPalace(palaces);
+  if (!menhPalace) return;
+  if (!['Tý', 'Ngọ'].includes(menhPalace.chi)) return;
+  if (!hasStar(menhPalace, 'Cự Môn')) return;
+
+  const tamHopIndices = detectTamHopPalaces(menhPalace.id);
+  const doiCungIdx = detectDoiCung(menhPalace.id);
+  const groupPalaces = [menhPalace, ...tamHopIndices.map((idx) => palaces[idx]), palaces[doiCungIdx]];
+
+  const hasLocTon = groupPalaces.some((p) => hasStar(p, 'Lộc Tồn'));
+  const hasHoaLoc = groupPalaces.some((p) => p.tuHoa.some((th) => th.type === 'Lộc'));
+  const hasHoaQuyenOrKhoa = groupPalaces.some((p) => p.tuHoa.some((th) => th.type === 'Quyền' || th.type === 'Khoa'));
+
+  if (!hasLocTon && !hasHoaLoc && !hasHoaQuyenOrKhoa) return;
+
+  const involvedPalaces = groupPalaces.filter(
+    (p) => hasStar(p, 'Cự Môn') || hasStar(p, 'Lộc Tồn') || p.tuHoa.length > 0,
+  );
+  addCombination(
+    def,
+    involvedPalaces.map((p) => p.name),
+    ['Cự Môn', ...(hasLocTon ? ['Lộc Tồn'] : [])],
+    `Cự Môn thủ Mệnh tại ${menhPalace.chi} hội tụ cát hóa (Lộc/Quyền/Khoa)`,
+    checkCombinationPurity(groupPalaces),
+    palaces,
+    results,
+    seenKeys,
+  );
+}
+
+function detectSongLocTrieuVien(
+  palaces: TuViPalace[],
+  def: CombinationDefinition,
+  results: TuViCombination[],
+  seenKeys: Set<string>,
+): void {
+  const menhPalace = getMenhPalace(palaces);
+  if (!menhPalace) return;
+
+  const tamHopIndices = detectTamHopPalaces(menhPalace.id);
+  const doiCungIdx = detectDoiCung(menhPalace.id);
+  const groupPalaces = [menhPalace, ...tamHopIndices.map((idx) => palaces[idx]), palaces[doiCungIdx]];
+
+  const hasLocTon = groupPalaces.some((p) => hasStar(p, 'Lộc Tồn'));
+  const hasHoaLoc = groupPalaces.some((p) => p.tuHoa.some((th) => th.type === 'Lộc'));
+
+  if (!hasLocTon || !hasHoaLoc) return;
+
+  const involvedPalaces = groupPalaces.filter((p) => hasStar(p, 'Lộc Tồn') || p.tuHoa.some((th) => th.type === 'Lộc'));
+  addCombination(
+    def,
+    involvedPalaces.map((p) => p.name),
+    ['Lộc Tồn', 'Hóa Lộc'],
+    `Song Lộc (Lộc Tồn & Hóa Lộc) cùng hội tụ tại Tam Phương Tứ Chính chầu về ${menhPalace.name}`,
+    checkCombinationPurity(groupPalaces),
+    palaces,
+    results,
+    seenKeys,
+  );
+}
+
+function detectPhongVanTeHoi(
+  palaces: TuViPalace[],
+  def: CombinationDefinition,
+  results: TuViCombination[],
+  seenKeys: Set<string>,
+): void {
+  const menhPalace = getMenhPalace(palaces);
+  if (!menhPalace) return;
+
+  const tamHopIndices = detectTamHopPalaces(menhPalace.id);
+  const doiCungIdx = detectDoiCung(menhPalace.id);
+  const groupPalaces = [menhPalace, ...tamHopIndices.map((idx) => palaces[idx]), palaces[doiCungIdx]];
+  const groupStars = groupPalaces.flatMap((p) => getStarsInPalace(p));
+
+  const lucCat = ['Thiên Khôi', 'Thiên Việt', 'Tả Phụ', 'Hữu Bật', 'Văn Xương', 'Văn Khúc'];
+  const presentCat = lucCat.filter((s) => groupStars.includes(s));
+
+  if (presentCat.length < 4) return;
+
+  const involvedPalaces = groupPalaces.filter((p) => getStarsInPalace(p).some((s) => presentCat.includes(s)));
+  addCombination(
+    def,
+    involvedPalaces.map((p) => p.name),
+    presentCat,
+    `Hội tụ ${presentCat.length} cát tinh quý trợ (${presentCat.join(', ')}) trong Tam Phương Tứ Chính`,
+    checkCombinationPurity(groupPalaces),
+    palaces,
+    results,
+    seenKeys,
+  );
+}
+
+// ── Positional Semantics (Tọa, Cứ, Triều, Xung, Củng, Hiệp, Hiếp) ──
+
+import {
+  evaluateResidentInteractions,
+  evaluateOppositionInteractions,
+  evaluateTrineInteractions,
+  evaluateBracketInteractions,
+} from './starInteractionRules';
+
+/**
+ * Evaluates the 7 classical positional interaction dynamics for a given palace
+ * in relation to its surrounding geometry (Bản cung, Đối cung, Tam hợp, Giáp cung).
+ */
+export function detectPositionalSemantics(palace: TuViPalace, palaces: TuViPalace[]): PositionalSemantic[] {
+  const residentSemantics = evaluateResidentInteractions(palace);
+  const oppSemantics = evaluateOppositionInteractions(palace, palaces);
+  const trineSemantics = evaluateTrineInteractions(palace, palaces);
+  const bracketSemantics = evaluateBracketInteractions(palace, palaces);
+
+  const all = [...residentSemantics, ...oppSemantics, ...trineSemantics, ...bracketSemantics];
+
+  const typeOrder: Record<string, number> = {
+    toa: 1,
+    cu: 2,
+    trieu: 3,
+    xung: 4,
+    cung: 5,
+    hiep: 6,
+    hiepHung: 7,
+  };
+
+  return all.sort((a, b) => (typeOrder[a.type] ?? 99) - (typeOrder[b.type] ?? 99));
 }

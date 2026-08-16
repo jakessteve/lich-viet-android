@@ -88,6 +88,37 @@ export default function MobileDrawer() {
         </div>
         {/* Nav links */}
         <nav className="flex-1 py-2 px-2 overflow-y-auto space-y-3" aria-label="Điều hướng chính">
+          {/* Section: Trang Chủ (Landing Page) */}
+          <div>
+            <button
+              onClick={() => {
+                navigate('/');
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-start gap-3 px-4 py-2.5 rounded-xl text-left transition-all duration-200 mb-0.5 animate-slide-up ${
+                location.pathname === '/'
+                  ? 'bg-gold/10 dark:bg-gold-dark/10 text-gold-light dark:text-gold-dark font-semibold'
+                  : 'text-text-primary-light dark:text-text-primary-dark hover:bg-gray-50 dark:hover:bg-gray-700/50'
+              }`}
+              aria-current={location.pathname === '/' ? 'page' : undefined}
+            >
+              <span
+                className={`material-icons-round text-xl mt-0.5 ${location.pathname === '/' ? 'text-gold dark:text-gold-dark' : 'text-text-secondary-light dark:text-text-secondary-dark'}`}
+              >
+                home
+              </span>
+              <div className="flex-1 min-w-0">
+                <span className="text-sm font-medium block">Trang chủ</span>
+                <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark block mt-0.5 opacity-70">
+                  Giới thiệu & Tổng quan Lịch Việt
+                </span>
+              </div>
+              {location.pathname === '/' && (
+                <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
+              )}
+            </button>
+          </div>
+
           {/* Group 1: Lịch & Dụng Sự */}
           <div>
             <span className="px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark opacity-60 block">
@@ -194,9 +225,7 @@ export default function MobileDrawer() {
                       {link.desc}
                     </span>
                   </div>
-                  {isActive && (
-                    <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>
-                  )}
+                  {isActive && <span className="ml-auto material-icons-round text-base shrink-0 mt-0.5">check</span>}
                 </button>
               );
             })}
@@ -247,7 +276,13 @@ export default function MobileDrawer() {
 
           {/* Settings link */}
           {[
-            { id: 'cai-dat', icon: 'settings', label: 'Cài đặt', desc: 'Tùy chỉnh ứng dụng & hồ sơ', path: '/app/cai-dat' },
+            {
+              id: 'cai-dat',
+              icon: 'settings',
+              label: 'Cài đặt',
+              desc: 'Tùy chỉnh ứng dụng & hồ sơ',
+              path: '/app/cai-dat',
+            },
           ].map((link) => (
             <button
               key={link.id}

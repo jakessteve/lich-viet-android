@@ -1,5 +1,13 @@
-import { WESTERN_PLANET_IN_SIGN, WESTERN_HOUSES_MEANING, WESTERN_PLANET_IN_HOUSE } from '../../data/astrology/western_interpretations';
-import { VEDIC_PLANET_IN_SIGN, VEDIC_BHAVA_MEANING, VEDIC_PLANET_IN_BHAVA } from '../../data/astrology/vedic_interpretations';
+import {
+  WESTERN_PLANET_IN_SIGN,
+  WESTERN_HOUSES_MEANING,
+  WESTERN_PLANET_IN_HOUSE,
+} from '../../data/astrology/western_interpretations';
+import {
+  VEDIC_PLANET_IN_SIGN,
+  VEDIC_BHAVA_MEANING,
+  VEDIC_PLANET_IN_BHAVA,
+} from '../../data/astrology/vedic_interpretations';
 
 // --- WESTERN INTERPRETATIONS ---
 

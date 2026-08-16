@@ -22,7 +22,14 @@ interface NominatimResult {
 }
 
 const QUICK_LOCATIONS: TuViBirthLocation[] = [
-  { locationName: 'Hà Nội, Việt Nam', lat: 21.028511, lng: 105.804817, timezone: 7, countryCode: 'VN', countryName: 'Việt Nam' },
+  {
+    locationName: 'Hà Nội, Việt Nam',
+    lat: 21.028511,
+    lng: 105.804817,
+    timezone: 7,
+    countryCode: 'VN',
+    countryName: 'Việt Nam',
+  },
   {
     locationName: 'TP. Hồ Chí Minh, Việt Nam',
     lat: 10.776889,
@@ -31,10 +38,38 @@ const QUICK_LOCATIONS: TuViBirthLocation[] = [
     countryCode: 'VN',
     countryName: 'Việt Nam',
   },
-  { locationName: 'Đà Nẵng, Việt Nam', lat: 16.047079, lng: 108.20623, timezone: 7, countryCode: 'VN', countryName: 'Việt Nam' },
-  { locationName: 'Huế, Việt Nam', lat: 16.463713, lng: 107.590866, timezone: 7, countryCode: 'VN', countryName: 'Việt Nam' },
-  { locationName: 'Hải Phòng, Việt Nam', lat: 20.844912, lng: 106.688084, timezone: 7, countryCode: 'VN', countryName: 'Việt Nam' },
-  { locationName: 'Cần Thơ, Việt Nam', lat: 10.045162, lng: 105.746857, timezone: 7, countryCode: 'VN', countryName: 'Việt Nam' },
+  {
+    locationName: 'Đà Nẵng, Việt Nam',
+    lat: 16.047079,
+    lng: 108.20623,
+    timezone: 7,
+    countryCode: 'VN',
+    countryName: 'Việt Nam',
+  },
+  {
+    locationName: 'Huế, Việt Nam',
+    lat: 16.463713,
+    lng: 107.590866,
+    timezone: 7,
+    countryCode: 'VN',
+    countryName: 'Việt Nam',
+  },
+  {
+    locationName: 'Hải Phòng, Việt Nam',
+    lat: 20.844912,
+    lng: 106.688084,
+    timezone: 7,
+    countryCode: 'VN',
+    countryName: 'Việt Nam',
+  },
+  {
+    locationName: 'Cần Thơ, Việt Nam',
+    lat: 10.045162,
+    lng: 105.746857,
+    timezone: 7,
+    countryCode: 'VN',
+    countryName: 'Việt Nam',
+  },
 ];
 
 const createBirthLocation = (result: NominatimResult, lat: number, lng: number): TuViBirthLocation => ({

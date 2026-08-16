@@ -58,7 +58,7 @@ export const WesternNatalChartDisplay: React.FC = () => {
   const zoomOut = useCallback(() => setZoomIndex((current) => Math.max(0, current - 1)), []);
   const zoomIn = useCallback(() => setZoomIndex((current) => Math.min(ZOOM_LEVELS.length - 1, current + 1)), []);
   const fitChart = useCallback(() => setZoomIndex(0), []);
-  const toggleDetailZoom = useCallback(() => setZoomIndex((current) => current === 0 ? 2 : 0), []);
+  const toggleDetailZoom = useCallback(() => setZoomIndex((current) => (current === 0 ? 2 : 0)), []);
 
   if (!result) return null;
 
@@ -68,7 +68,9 @@ export const WesternNatalChartDisplay: React.FC = () => {
         <header className="flex items-center justify-between gap-3 border-b border-border-light/50 px-3 py-2.5 dark:border-border-dark/50 sm:px-4">
           <div className="min-w-0">
             <h3 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">Bản đồ sao</h3>
-            <p className="truncate text-xs text-text-secondary-light dark:text-text-secondary-dark">Chạm hai lần để xem chi tiết</p>
+            <p className="truncate text-xs text-text-secondary-light dark:text-text-secondary-dark">
+              Chạm hai lần để xem chi tiết
+            </p>
           </div>
           <div className="flex shrink-0 items-center gap-1" aria-label="Điều khiển thu phóng">
             <button
@@ -78,7 +80,9 @@ export const WesternNatalChartDisplay: React.FC = () => {
               className="surface-control inline-flex h-11 w-11 items-center justify-center rounded-xl text-text-secondary-light transition-colors hover:text-indigo-600 disabled:cursor-not-allowed disabled:opacity-35 dark:text-text-secondary-dark dark:hover:text-indigo-300"
               aria-label="Thu nhỏ lá số"
             >
-              <span className="material-icons-round text-xl" aria-hidden="true">zoom_out</span>
+              <span className="material-icons-round text-xl" aria-hidden="true">
+                zoom_out
+              </span>
             </button>
             <button
               type="button"
@@ -96,7 +100,9 @@ export const WesternNatalChartDisplay: React.FC = () => {
               className="surface-control inline-flex h-11 w-11 items-center justify-center rounded-xl text-text-secondary-light transition-colors hover:text-indigo-600 disabled:cursor-not-allowed disabled:opacity-35 dark:text-text-secondary-dark dark:hover:text-indigo-300"
               aria-label="Phóng to lá số"
             >
-              <span className="material-icons-round text-xl" aria-hidden="true">zoom_in</span>
+              <span className="material-icons-round text-xl" aria-hidden="true">
+                zoom_in
+              </span>
             </button>
           </div>
         </header>
@@ -117,11 +123,7 @@ export const WesternNatalChartDisplay: React.FC = () => {
           tabIndex={0}
           aria-label={`Lá số ở mức thu phóng ${Math.round(zoom * 100)}%`}
         >
-          <div
-            data-western-chart-stage
-            className="aspect-square origin-top-left"
-            style={{ width: `${zoom * 100}%` }}
-          >
+          <div data-western-chart-stage className="aspect-square origin-top-left" style={{ width: `${zoom * 100}%` }}>
             <div
               data-western-natal-chart
               data-western-chart-export
@@ -131,7 +133,9 @@ export const WesternNatalChartDisplay: React.FC = () => {
           </div>
         </div>
       </div>
-      <p className="sr-only" aria-live="polite">Mức thu phóng {Math.round(zoom * 100)}%</p>
+      <p className="sr-only" aria-live="polite">
+        Mức thu phóng {Math.round(zoom * 100)}%
+      </p>
 
       {/* Action buttons immediately below chart */}
       <WesternMarkdownExport system="western" />

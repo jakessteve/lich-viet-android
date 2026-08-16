@@ -60,7 +60,15 @@ describe('detectAspectPatterns', () => {
   it('generates rich dynamic contextual synthesis with houses and resolution point for T-Square', () => {
     const planets: AspectPatternPlanet[] = [
       { id: 'planet:sun', name: 'Sun', nameVi: 'Mặt Trời', symbol: '☉', longitude: 0, signVi: 'Bạch Dương', house: 1 },
-      { id: 'planet:moon', name: 'Moon', nameVi: 'Mặt Trăng', symbol: '☽', longitude: 180, signVi: 'Thiên Bình', house: 7 },
+      {
+        id: 'planet:moon',
+        name: 'Moon',
+        nameVi: 'Mặt Trăng',
+        symbol: '☽',
+        longitude: 180,
+        signVi: 'Thiên Bình',
+        house: 7,
+      },
       { id: 'planet:mars', name: 'Mars', nameVi: 'Sao Hỏa', symbol: '♂', longitude: 90, signVi: 'Cự Giải', house: 10 },
     ];
 
@@ -91,4 +99,3 @@ describe('detectAspectPatterns', () => {
     expect(ts.personalizedSynthesis?.actionableAdviceVi).toBeDefined();
   });
 });
-

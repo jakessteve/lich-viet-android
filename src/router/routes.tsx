@@ -45,8 +45,16 @@ const UpgradePage = React.lazy(() => import('../components/pages/UpgradePage'));
 const LoginPage = React.lazy(() => import('../components/pages/LoginPage'));
 const RegisterPage = React.lazy(() => import('../components/pages/RegisterPage'));
 const TuViPage = React.lazy(() => import('../components/TuVi/TuViPage').then((m) => ({ default: m.TuViPage })));
-const ElectionPage = React.lazy(() => import('../components/Election/ElectionPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Ngày Tốt...</div> })));
-const ChiemTinhPage = React.lazy(() => import('../components/Astrology/ChiemTinhPage').catch(() => ({ default: () => <div className="p-4 text-center">Đang phát triển Chiêm Tinh...</div> })));
+const ElectionPage = React.lazy(() =>
+  import('../components/Election/ElectionPage').catch(() => ({
+    default: () => <div className="p-4 text-center">Đang phát triển Ngày Tốt...</div>,
+  })),
+);
+const ChiemTinhPage = React.lazy(() =>
+  import('../components/Astrology/ChiemTinhPage').catch(() => ({
+    default: () => <div className="p-4 text-center">Đang phát triển Chiêm Tinh...</div>,
+  })),
+);
 
 // ══════════════════════════════════════════════════════════
 // Landing Route (standalone, no app chrome)

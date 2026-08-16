@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { calculateElementModalityBalance, type BalanceCalculationPoint } from '../../src/services/astrology/elementBalance';
+import {
+  calculateElementModalityBalance,
+  type BalanceCalculationPoint,
+} from '../../src/services/astrology/elementBalance';
 
 describe('calculateElementModalityBalance', () => {
   it('correctly classifies fire and earth dominance', () => {

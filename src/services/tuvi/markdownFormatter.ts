@@ -7,6 +7,7 @@
 import type { TuViChart, TuViCenterInfo, TuViPalace, TuViCombination, TuViMarkdownOptions } from '../../types/tuvi';
 import { getStarBrightnessMarker } from './starGrouping';
 import { formatCivilDateYmd } from './timeNormalization';
+import { calculateFlyingStars } from './flyingStars';
 
 function escapeMarkdown(text: string): string {
   return text.replace(/\|/g, '\\|');
@@ -41,37 +42,40 @@ export function formatCenterInfoAsMarkdown(centerInfo: TuViCenterInfo): string {
 export function formatPalacesAsMarkdown(palaces: TuViPalace[], includeBrightness: boolean): string {
   const header = `## Thập Nhị Cung
 | Cung | Can Chi | Chính Tinh | Phụ Tinh | Sát Tinh | Tứ Hóa | Đại Hạn |
-|------|---------|------------|----------|---------|--------|---------|`;
+|---|---|---|---|---|---|---|`;
 
   const rows = palaces.map((palace) => {
-    const chinhTinh = palace.chinhTinh
-      .map((star) => {
-        if (includeBrightness) {
-          return `${star.name}${getStarBrightnessMarker(star)}`;
-        }
-        return star.name;
-      })
-      .join(' ');
+    const chinhTinh =
+      palace.chinhTinh
+        .map((s) => {
+          if (includeBrightness) {
+            return `${s.name}${getStarBrightnessMarker(s)}`;
+          }
+          return s.name;
+        })
+        .join(' ') || '—';
 
-    const phuTinh = palace.phuTinh
-      .map((star) => {
-        if (includeBrightness) {
-          return `${star.name}${getStarBrightnessMarker(star)}`;
-        }
-        return star.name;
-      })
-      .join(', ');
+    const phuTinh =
+      palace.phuTinh
+        .map((s) => {
+          if (includeBrightness) {
+            return `${s.name}${getStarBrightnessMarker(s)}`;
+          }
+          return s.name;
+        })
+        .join(', ') || '—';
 
-    const satTinh = palace.satTinh
-      .map((star) => {
-        if (includeBrightness) {
-          return `${star.name}${getStarBrightnessMarker(star)}`;
-        }
-        return star.name;
-      })
-      .join(', ');
+    const satTinh =
+      palace.satTinh
+        .map((s) => {
+          if (includeBrightness) {
+            return `${s.name}${getStarBrightnessMarker(s)}`;
+          }
+          return s.name;
+        })
+        .join(', ') || '—';
 
-    const tuHoa = palace.tuHoa.map((t) => t.type).join(', ');
+    const tuHoa = palace.tuHoa.map((th) => `Hóa ${th.type}`).join(', ') || '—';
 
     return `| ${palace.name} | ${palace.canChi} | ${escapeMarkdown(chinhTinh)} | ${escapeMarkdown(phuTinh)} | ${escapeMarkdown(satTinh)} | ${tuHoa} | ${palace.daiHanAgeRange} |`;
   });
@@ -89,10 +93,52 @@ export function formatCombinationsAsMarkdown(combinations: TuViCombination[]): s
 
   const lines = combinations.map((c) => {
     const purityLabel = c.purity === 'thuần' ? 'Thuần' : c.purity === 'bán' ? 'Bán' : 'Phá';
-    return `- **${c.name}** (${c.nameHanViet}): ${c.involvedStars.join(', ')} in ${c.involvedCung.join(', ')}. ${purityLabel}. Strength: ${c.strength}/10. ${c.note}`;
+    return `- **${c.name}** (${c.nameHanViet}): ${c.involvedStars.join(', ')} tại ${c.involvedCung.join(', ')}. ${purityLabel}. Độ mạnh: ${c.strength}/10. ${c.note}`;
   });
 
   return `## Cách Cục Đặc Biệt\n${lines.join('\n')}`;
+}
+
+/**
+ * Formats Flying Stars (Phi Tinh Tứ Hóa) interactions into Markdown.
+ */
+export function formatFlyingStarsAsMarkdown(chart: TuViChart): string {
+  const flying = calculateFlyingStars(chart);
+  const lines: string[] = ['## Phi Tinh Tứ Hóa 12 Cung'];
+  lines.push(`- **Tổng quan phi tinh**: ${flying.overallSynthesisVi}`);
+
+  if (flying.keyInteractions.menhFlying.length > 0) {
+    lines.push('- **Cung Mệnh phi xuất Tứ Hóa**:');
+    flying.keyInteractions.menhFlying.forEach((h) => {
+      lines.push(`  - Hóa ${h.type} (${h.starName}) → Cung ${h.targetPalaceName}: ${h.descriptionVi}`);
+    });
+  }
+
+  if (flying.keyInteractions.menhReceived.length > 0) {
+    lines.push('- **Các cung phi nhập Cung Mệnh**:');
+    flying.keyInteractions.menhReceived.forEach((h) => {
+      lines.push(`  - Từ Cung ${h.sourcePalaceName} (Hóa ${h.type} - ${h.starName}): ${h.descriptionVi}`);
+    });
+  }
+
+  lines.push('\n### Bảng Tứ Hóa Phi Xuất 12 Cung');
+  lines.push('| Cung Vị | Can Chi | Hóa Lộc | Hóa Quyền | Hóa Khoa | Hóa Kỵ | Tự Hóa |');
+  lines.push('|---|---|---|---|---|---|---|');
+
+  flying.palaces.forEach((p) => {
+    const loc = p.flyingHuas['Lộc'] ? `${p.flyingHuas['Lộc'].targetPalaceName} (${p.flyingHuas['Lộc'].starName})` : '—';
+    const quyen = p.flyingHuas['Quyền']
+      ? `${p.flyingHuas['Quyền'].targetPalaceName} (${p.flyingHuas['Quyền'].starName})`
+      : '—';
+    const khoa = p.flyingHuas['Khoa']
+      ? `${p.flyingHuas['Khoa'].targetPalaceName} (${p.flyingHuas['Khoa'].starName})`
+      : '—';
+    const ky = p.flyingHuas['Kỵ'] ? `${p.flyingHuas['Kỵ'].targetPalaceName} (${p.flyingHuas['Kỵ'].starName})` : '—';
+    const tuHoa = p.tuHuas.length > 0 ? p.tuHuas.map((th) => th.type).join(', ') : '—';
+    lines.push(`| ${p.palaceName} | ${p.can} ${p.chi} | ${loc} | ${quyen} | ${khoa} | ${ky} | ${tuHoa} |`);
+  });
+
+  return lines.join('\n');
 }
 
 /**
@@ -171,6 +217,9 @@ ${meta.warnings.map((warning) => `- ${warning}`).join('\n')}`);
   if (opts.includeCombinations) {
     parts.push(formatCombinationsAsMarkdown(chart.combinations));
   }
+
+  // Include Flying Stars (Phi Tinh Tứ Hóa) analysis in Markdown export
+  parts.push(formatFlyingStarsAsMarkdown(chart));
 
   parts.push(`## Cảnh Báo
 - Kết quả dựa trên trường phái Thiên Lương (天梁). Các trường phái khác có thể cho kết quả khác biệt.

@@ -51,9 +51,18 @@ const BODY_ICONS: Record<string, string> = {
 };
 
 const SIGNS_SIDEREAL = [
-  'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải',
-  'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Bọ Cạp',
-  'Nhân Mã', 'Ma Kết', 'Bảo Bình', 'Song Ngư',
+  'Bạch Dương',
+  'Kim Ngưu',
+  'Song Tử',
+  'Cự Giải',
+  'Sư Tử',
+  'Xử Nữ',
+  'Thiên Bình',
+  'Bọ Cạp',
+  'Nhân Mã',
+  'Ma Kết',
+  'Bảo Bình',
+  'Song Ngư',
 ];
 
 function VedicPlanetRow({ planet }: { planet: PlanetPosition }) {
@@ -68,7 +77,9 @@ function VedicPlanetRow({ planet }: { planet: PlanetPosition }) {
         <span className="mr-1.5">{BODY_ICONS[planet.body] || '●'}</span>
         <span className="font-semibold">{BODY_LABELS[planet.body] || planet.body}</span>
       </td>
-      <td className="py-2 px-3 text-sm text-center">{deg}°{min.toString().padStart(2, '0')}&apos; {SIGNS_SIDEREAL[signIndex]}</td>
+      <td className="py-2 px-3 text-sm text-center">
+        {deg}°{min.toString().padStart(2, '0')}&apos; {SIGNS_SIDEREAL[signIndex]}
+      </td>
       <td className="py-2 px-3 text-sm text-center">{planet.nakshatra || '—'}</td>
       <td className="py-2 px-3 text-sm text-center">{planet.pada != null ? `Pada ${planet.pada + 1}` : '—'}</td>
       <td className="py-2 px-3 text-sm text-center font-mono">{planet.house}</td>
@@ -84,13 +95,16 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       setChartStyle: state.setVedicChartStyle,
       setChartType: state.setVedicChartType,
       vedicInput: state.vedicInput,
-    }))
+    })),
   );
 
   const [viewMode, setViewMode] = useState<VedicViewMode>('simple');
 
   const moon = result.planets.find((p) => p.body === 'moon');
-  const birthYear = vedicInput.birthDate instanceof Date ? vedicInput.birthDate.getFullYear() : new Date(vedicInput.birthDate).getFullYear();
+  const birthYear =
+    vedicInput.birthDate instanceof Date
+      ? vedicInput.birthDate.getFullYear()
+      : new Date(vedicInput.birthDate).getFullYear();
 
   const dashaTimeline = useMemo(() => {
     if (!moon) return null;
@@ -107,7 +121,7 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
     return detectVedicYogasAndDoshas(positions, result.ascendant);
   }, [result]);
 
-  const ascSignIndex = Math.floor(((result.ascendant % 360) + 360) % 360 / 30);
+  const ascSignIndex = Math.floor((((result.ascendant % 360) + 360) % 360) / 30);
   const ascDeg = Math.floor(result.ascendant % 30);
   const ascMin = Math.floor(((result.ascendant % 30) - ascDeg) * 60);
 
@@ -143,14 +157,14 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
           <p className="label-standard">Lagna (Cung Mọc)</p>
-          <p className="text-sm font-bold">{ascDeg}°{ascMin.toString().padStart(2, '0')}&apos; {SIGNS_SIDEREAL[ascSignIndex]}</p>
+          <p className="text-sm font-bold">
+            {ascDeg}°{ascMin.toString().padStart(2, '0')}&apos; {SIGNS_SIDEREAL[ascSignIndex]}
+          </p>
         </div>
         {moon && (
           <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
             <p className="label-standard">Mặt Trăng (Rasi)</p>
-            <p className="text-sm font-bold">
-              {moon.nakshatra || '—'}
-            </p>
+            <p className="text-sm font-bold">{moon.nakshatra || '—'}</p>
           </div>
         )}
         <div className="surface-card p-3 rounded-2xl border border-border-light/60 dark:border-border-dark/60 text-center">
@@ -246,9 +260,14 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
                 const deg = Math.floor(house.longitude % 30);
                 const min = Math.floor(((house.longitude % 30) - deg) * 60);
                 return (
-                  <div key={house.index} className="surface-card p-2 rounded-xl text-center border border-border-light/40 dark:border-border-dark/40">
+                  <div
+                    key={house.index}
+                    className="surface-card p-2 rounded-xl text-center border border-border-light/40 dark:border-border-dark/40"
+                  >
                     <p className="label-standard">Bhava {house.index}</p>
-                    <p className="text-xs font-semibold">{deg}°{min.toString().padStart(2, '0')}&apos; {house.sign}</p>
+                    <p className="text-xs font-semibold">
+                      {deg}°{min.toString().padStart(2, '0')}&apos; {house.sign}
+                    </p>
                   </div>
                 );
               })}

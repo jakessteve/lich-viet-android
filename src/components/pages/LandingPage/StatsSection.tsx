@@ -5,7 +5,7 @@ export const StatsSection: React.FC = () => {
   const statsSection = useInView(0.2);
   const lookupCount = useCountUp(12480, 1400, statsSection.inView);
   const dataCount = useCountUp(85000, 1600, statsSection.inView);
-  const toolsCount = useCountUp(3, 1000, statsSection.inView);
+  const toolsCount = useCountUp(5, 1000, statsSection.inView);
 
   const stats = useMemo(
     () => [
@@ -27,7 +27,7 @@ export const StatsSection: React.FC = () => {
       },
       {
         value: toolsCount.toLocaleString('vi-VN'),
-        suffix: ' công cụ',
+        suffix: ' phân hệ',
         label: 'Đang hoạt động',
         icon: 'auto_awesome',
         iconTint: 'text-purple-500/60 dark:text-purple-400/50',

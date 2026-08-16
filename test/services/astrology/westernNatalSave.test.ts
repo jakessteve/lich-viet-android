@@ -68,15 +68,17 @@ describe('Western natal web/native save helper', () => {
   it('fails closed without writing when legacy Android storage permission is denied', async () => {
     const writeNative = vi.fn();
 
-    await expect(saveWesternNatalChart(createWesternNatalFixture(), 'svg', {
-      environment: {
-        native: true,
-        platform: 'android',
-        checkPublicStorage: async () => 'denied',
-        requestPublicStorage: async () => 'denied',
-        writeNative,
-      },
-    })).rejects.toThrow(/storage permission/i);
+    await expect(
+      saveWesternNatalChart(createWesternNatalFixture(), 'svg', {
+        environment: {
+          native: true,
+          platform: 'android',
+          checkPublicStorage: async () => 'denied',
+          requestPublicStorage: async () => 'denied',
+          writeNative,
+        },
+      }),
+    ).rejects.toThrow(/storage permission/i);
 
     expect(writeNative).not.toHaveBeenCalled();
   });

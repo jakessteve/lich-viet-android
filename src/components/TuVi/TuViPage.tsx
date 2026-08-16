@@ -21,6 +21,7 @@ const SCHOOL_OPTIONS: readonly SegmentedOption<TuViSchool>[] = [
   { id: 'nam-phai', label: 'Nam phái', icon: 'south' },
   { id: 'thien-luong', label: 'Thiên Lương', icon: 'auto_awesome' },
   { id: 'bac-phai', label: 'Bắc phái', icon: 'north' },
+  { id: 'phi-tinh', label: 'Phi Tinh', icon: 'hub' },
 ];
 
 export const TuViPage: React.FC = () => {
@@ -58,15 +59,21 @@ export const TuViPage: React.FC = () => {
   const [showStoryModal, setShowStoryModal] = useState(false);
   const [isChartZoomed, setIsChartZoomed] = useState(false);
   const snapshotRef = useRef<HTMLDivElement>(null);
+  const lastScrolledInputRef = useRef<string>('');
+
+  const inputFingerprint = chart?.input
+    ? `${chart.input.name || ''}_${chart.input.solarDate instanceof Date ? chart.input.solarDate.getTime() : String(chart.input.solarDate)}_${chart.input.birthHour}_${chart.input.gender}_${chart.input.birthMinute || 0}`
+    : '';
 
   useEffect(() => {
-    if (chart) {
+    if (chart && inputFingerprint && inputFingerprint !== lastScrolledInputRef.current) {
+      lastScrolledInputRef.current = inputFingerprint;
       const timer = setTimeout(() => {
         snapshotRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 120);
       return () => clearTimeout(timer);
     }
-  }, [chart]);
+  }, [chart, inputFingerprint]);
 
   // Derive executive snapshot traits from chart
   const menhPalace = chart?.palaces.find((p) => p.isMenh);
@@ -178,11 +185,7 @@ export const TuViPage: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-            <IconButton
-              onClick={() => setHanView(viewYear - 1, viewMonth)}
-              icon="chevron_left"
-              label="Lùi một năm"
-            />
+            <IconButton onClick={() => setHanView(viewYear - 1, viewMonth)} icon="chevron_left" label="Lùi một năm" />
             <label className="surface-control flex min-h-11 items-center gap-2 px-3 py-2 text-sm font-medium">
               <span className="material-icons-round text-base text-gold-light dark:text-gold-dark">calendar_month</span>
               <input
@@ -199,11 +202,7 @@ export const TuViPage: React.FC = () => {
                 aria-label="Năm xem hạn"
               />
             </label>
-            <IconButton
-              onClick={() => setHanView(viewYear + 1, viewMonth)}
-              icon="chevron_right"
-              label="Tăng một năm"
-            />
+            <IconButton onClick={() => setHanView(viewYear + 1, viewMonth)} icon="chevron_right" label="Tăng một năm" />
 
             <select
               value={viewMonth}
@@ -266,18 +265,21 @@ export const TuViPage: React.FC = () => {
       )}
 
       {/* Hybrid Palace Detail (Inline when fit, Compact HUD when zoomed) */}
-      {chart && selectedPalaceIndex !== null && chart.palaces[selectedPalaceIndex] && (() => {
-        const palace = chart.palaces[selectedPalaceIndex];
-        const interpretation = interpretPalace(palace, chart.palaces, chart.centerInfo);
+      {chart &&
+        selectedPalaceIndex !== null &&
+        chart.palaces[selectedPalaceIndex] &&
+        (() => {
+          const palace = chart.palaces[selectedPalaceIndex];
+          const interpretation = interpretPalace(palace, chart.palaces, chart.centerInfo);
 
-        return (
-          <TuViPalaceInlineDetail
-            interpretation={interpretation}
-            onClose={() => selectPalace(null as unknown as number)}
-            isZoomed={isChartZoomed}
-          />
-        );
-      })()}
+          return (
+            <TuViPalaceInlineDetail
+              interpretation={interpretation}
+              onClose={() => selectPalace(null as unknown as number)}
+              isZoomed={isChartZoomed}
+            />
+          );
+        })()}
 
       {chart && <TuViMarkdownExport />}
 

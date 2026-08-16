@@ -18,6 +18,11 @@ export {
   PHU_TINH_LIST,
   TAM_HOP_GROUPS,
   DOI_CUNG_MAP,
+  NHI_HOP_MAP,
+  CUONG_CUNG_NAMES,
+  CUONG_CUNG_SET,
+  PALACE_TRIGRAM_MAP,
+  POSITIONAL_SEMANTICS_INFO,
   NAP_AM_NAMES,
   CAN_AM_DUONG,
   NGU_HANH_SINH,
@@ -71,26 +76,42 @@ export {
   isSatTinh,
 } from './starGrouping';
 
-// ── Combination Detection ──────────────────────────────────────
+// ── Combination Detection & Geometry ───────────────────────────
 export {
   detectCombinations,
   detectTamHopPalaces,
   detectDoiCung,
+  detectNhiHopPalace,
   getStarsInPalace,
   getStarsInTamHop,
+  getStarsInNhiHop,
+  detectPositionalSemantics,
   checkCombinationPurity,
   calculateCombinationStrength,
 } from './combinationDetection';
 
+// ── Star-to-Star & Positional Interaction Rules ────────────────
+export {
+  evaluateBracketInteractions,
+  evaluateOppositionInteractions,
+  evaluateTrineInteractions,
+  evaluateResidentInteractions,
+  evaluateNhiHopBranchInteraction,
+  getElementRelation,
+} from './starInteractionRules';
+
 // ── Mệnh-Cục Relation ──────────────────────────────────────────
 export { calculateMenhCucRelation, getMenhHanh, getCucHanh } from './menhCucRelation';
 
+// ── Palace Interpretation ──────────────────────────────────────
+export { interpretPalace } from './palaceInterpretation';
+
 // ── Đại Hạn Interpretation ─────────────────────────────────────
-export {
-  interpretDaiHan,
-  getAllDaiHanInterpretations,
-  getCurrentDaiHan,
-} from './daiHanInterpretation';
+export { interpretDaiHan, getAllDaiHanInterpretations, getCurrentDaiHan } from './daiHanInterpretation';
+
+// ── Flying Stars & Classification (Phase 4) ────────────────────
+export { calculateFlyingStars } from './flyingStars';
+export { classifyTuViChart } from './chartClassification';
 
 // ── Markdown Formatter ─────────────────────────────────────────
 export {
@@ -98,6 +119,6 @@ export {
   formatCenterInfoAsMarkdown,
   formatPalacesAsMarkdown,
   formatCombinationsAsMarkdown,
+  formatFlyingStarsAsMarkdown,
   generatePromptHeader,
 } from './markdownFormatter';
-

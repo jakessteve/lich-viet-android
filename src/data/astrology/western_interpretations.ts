@@ -1,88 +1,160 @@
 export const WESTERN_PLANET_IN_SIGN: Record<string, Record<string, string>> = {
   sun: {
-    'Bạch Dương': 'Cái tôi mạnh mẽ, tiên phong, độc lập và đầy nhiệt huyết. Bạn luôn muốn dẫn đầu, hành động dứt khoát và không ngại đương đầu thử thách trong mọi lĩnh vực.',
-    'Kim Ngưu': 'Đáng tin cậy, kiên định và yêu thích sự ổn định. Bạn đánh giá cao giá trị vật chất, sự an toàn tài chính và tận hưởng cuộc sống qua các giác quan.',
-    'Song Tử': 'Linh hoạt, tò mò và giao tiếp tốt. Cái tôi của bạn gắn liền với trí tuệ, việc thu thập thông tin và sự đa dạng trong các mối quan hệ xã hội.',
-    'Cự Giải': 'Nhạy cảm, bao bọc và giàu cảm xúc. Trọng tâm cuộc sống của bạn là gia đình, sự an toàn và những kết nối tình cảm thâm sâu.',
-    'Sư Tử': 'Tự tin, ấm áp và tỏa sáng. Bạn mang phong thái lãnh đạo bẩm sinh, thích sự chú ý, có trái tim rộng lượng và luôn muốn tự hào về bản thân.',
-    'Xử Nữ': 'Thực tế, chi tiết và cẩn trọng. Bạn hướng tới sự hoàn hảo, phân tích logic và tìm kiếm ý nghĩa qua tinh thần phục vụ người khác một cách hiệu quả.',
-    'Thiên Bình': 'Hòa nhã, duyên dáng và yêu chuộng cái đẹp. Cái tôi của bạn tỏa sáng nhất khi ở trong các mối quan hệ đối tác, sự công bằng và sự hài hòa tổng thể.',
-    'Bọ Cạp': 'Mãnh liệt, sắc sảo và sâu sắc. Bạn sở hữu sức mạnh nội tâm lớn, khả năng chuyển hóa tận gốc rễ và ý chí kiên cường trước nghịch cảnh.',
-    'Nhân Mã': 'Lạc quan, khao khát tự do và ưa khám phá. Bạn luôn tìm kiếm ý nghĩa triết học, sự mở rộng chân trời tri thức và những cuộc phiêu lưu mới mẻ.',
-    'Ma Kết': 'Kỷ luật, tham vọng và thực tế. Bạn xây dựng cuộc đời dựa trên sự nỗ lực không ngừng, tinh thần trách nhiệm cao và mong muốn đạt được thành tựu vững chắc.',
-    'Bảo Bình': 'Độc đáo, đổi mới và mang tinh thần tập thể. Bạn đề cao lý tưởng, sự tự do cá nhân và tư duy vượt thời đại, thường quan tâm đến lợi ích nhân loại.',
-    'Song Ngư': 'Trực giác, mộng mơ và giàu lòng trắc ẩn. Cái tôi của bạn hòa quyện với nghệ thuật, tâm linh, sự vị tha và sự thấu cảm sâu sắc với nỗi đau của người khác.'
+    'Bạch Dương':
+      'Cái tôi mạnh mẽ, tiên phong, độc lập và đầy nhiệt huyết. Bạn luôn muốn dẫn đầu, hành động dứt khoát và không ngại đương đầu thử thách trong mọi lĩnh vực.',
+    'Kim Ngưu':
+      'Đáng tin cậy, kiên định và yêu thích sự ổn định. Bạn đánh giá cao giá trị vật chất, sự an toàn tài chính và tận hưởng cuộc sống qua các giác quan.',
+    'Song Tử':
+      'Linh hoạt, tò mò và giao tiếp tốt. Cái tôi của bạn gắn liền với trí tuệ, việc thu thập thông tin và sự đa dạng trong các mối quan hệ xã hội.',
+    'Cự Giải':
+      'Nhạy cảm, bao bọc và giàu cảm xúc. Trọng tâm cuộc sống của bạn là gia đình, sự an toàn và những kết nối tình cảm thâm sâu.',
+    'Sư Tử':
+      'Tự tin, ấm áp và tỏa sáng. Bạn mang phong thái lãnh đạo bẩm sinh, thích sự chú ý, có trái tim rộng lượng và luôn muốn tự hào về bản thân.',
+    'Xử Nữ':
+      'Thực tế, chi tiết và cẩn trọng. Bạn hướng tới sự hoàn hảo, phân tích logic và tìm kiếm ý nghĩa qua tinh thần phục vụ người khác một cách hiệu quả.',
+    'Thiên Bình':
+      'Hòa nhã, duyên dáng và yêu chuộng cái đẹp. Cái tôi của bạn tỏa sáng nhất khi ở trong các mối quan hệ đối tác, sự công bằng và sự hài hòa tổng thể.',
+    'Bọ Cạp':
+      'Mãnh liệt, sắc sảo và sâu sắc. Bạn sở hữu sức mạnh nội tâm lớn, khả năng chuyển hóa tận gốc rễ và ý chí kiên cường trước nghịch cảnh.',
+    'Nhân Mã':
+      'Lạc quan, khao khát tự do và ưa khám phá. Bạn luôn tìm kiếm ý nghĩa triết học, sự mở rộng chân trời tri thức và những cuộc phiêu lưu mới mẻ.',
+    'Ma Kết':
+      'Kỷ luật, tham vọng và thực tế. Bạn xây dựng cuộc đời dựa trên sự nỗ lực không ngừng, tinh thần trách nhiệm cao và mong muốn đạt được thành tựu vững chắc.',
+    'Bảo Bình':
+      'Độc đáo, đổi mới và mang tinh thần tập thể. Bạn đề cao lý tưởng, sự tự do cá nhân và tư duy vượt thời đại, thường quan tâm đến lợi ích nhân loại.',
+    'Song Ngư':
+      'Trực giác, mộng mơ và giàu lòng trắc ẩn. Cái tôi của bạn hòa quyện với nghệ thuật, tâm linh, sự vị tha và sự thấu cảm sâu sắc với nỗi đau của người khác.',
   },
   moon: {
-    'Bạch Dương': 'Cảm xúc bùng nổ, bộc trực và nhanh quên. Bạn cần sự hành động, sự cạnh tranh và tính độc lập để cảm thấy an toàn từ bên trong.',
-    'Kim Ngưu': 'Cảm xúc ổn định, cần sự an toàn vật chất. Bạn tìm thấy sự bình yên qua những thú vui bình dị, đồ ăn ngon và một môi trường quen thuộc, vững chãi.',
-    'Song Tử': 'Cảm xúc thay đổi nhanh, cần sự giao tiếp. Việc trò chuyện, trao đổi thông tin và chia sẻ suy nghĩ giúp xoa dịu thế giới nội tâm bận rộn của bạn.',
-    'Cự Giải': 'Cảm xúc vô cùng sâu sắc và nhạy bén. Nhà, cội nguồn và những người thân yêu là nơi nương tựa vững chắc nhất của bạn; bạn nuôi dưỡng người khác để thấy an tâm.',
-    'Sư Tử': 'Nhu cầu được công nhận và tôn trọng tình cảm. Bạn thể hiện cảm xúc một cách kịch tính, tự hào nhưng rất chân thành và hào phóng.',
-    'Xử Nữ': 'Tìm kiếm sự an toàn qua việc giữ mọi thứ ngăn nắp. Cảm xúc thường được lý trí hóa, bạn xoa dịu bản thân bằng việc giải quyết vấn đề và dọn dẹp.',
-    'Thiên Bình': 'Cần sự bình yên và hòa hợp trong các mối quan hệ. Cảm xúc của bạn dễ bị ảnh hưởng bởi môi trường xung quanh, ghét sự xung đột và thô lỗ.',
-    'Bọ Cạp': 'Cảm xúc mãnh liệt, thâm sâu và có phần giữ kẽ. Bạn khát khao sự kết nối chân thật đến tận cùng và không bao giờ thỏa mãn với sự hời hợt.',
-    'Nhân Mã': 'Cảm xúc tích cực, không thích bị trói buộc. Bạn tìm thấy sự an ủi qua những trải nghiệm mới mẻ, tự do và thái độ lạc quan trong mọi tình huống.',
-    'Ma Kết': 'Kiểm soát cảm xúc tốt, thường giấu kín tâm sự. Bạn cảm thấy an toàn khi mọi thứ nằm trong tầm kiểm soát, có cấu trúc và được xã hội tôn trọng.',
-    'Bảo Bình': 'Trực giác nhạy bén nhưng tiếp cận cảm xúc một cách khách quan. Bạn cần không gian riêng, sự độc lập và thích quan sát tình cảm của mình như một người ngoài cuộc.',
-    'Song Ngư': 'Cực kỳ nhạy cảm và dễ thấu cảm với người khác. Bạn dễ bị choáng ngợp bởi cảm xúc của môi trường và cần không gian yên tĩnh để thanh lọc tinh thần.'
+    'Bạch Dương':
+      'Cảm xúc bùng nổ, bộc trực và nhanh quên. Bạn cần sự hành động, sự cạnh tranh và tính độc lập để cảm thấy an toàn từ bên trong.',
+    'Kim Ngưu':
+      'Cảm xúc ổn định, cần sự an toàn vật chất. Bạn tìm thấy sự bình yên qua những thú vui bình dị, đồ ăn ngon và một môi trường quen thuộc, vững chãi.',
+    'Song Tử':
+      'Cảm xúc thay đổi nhanh, cần sự giao tiếp. Việc trò chuyện, trao đổi thông tin và chia sẻ suy nghĩ giúp xoa dịu thế giới nội tâm bận rộn của bạn.',
+    'Cự Giải':
+      'Cảm xúc vô cùng sâu sắc và nhạy bén. Nhà, cội nguồn và những người thân yêu là nơi nương tựa vững chắc nhất của bạn; bạn nuôi dưỡng người khác để thấy an tâm.',
+    'Sư Tử':
+      'Nhu cầu được công nhận và tôn trọng tình cảm. Bạn thể hiện cảm xúc một cách kịch tính, tự hào nhưng rất chân thành và hào phóng.',
+    'Xử Nữ':
+      'Tìm kiếm sự an toàn qua việc giữ mọi thứ ngăn nắp. Cảm xúc thường được lý trí hóa, bạn xoa dịu bản thân bằng việc giải quyết vấn đề và dọn dẹp.',
+    'Thiên Bình':
+      'Cần sự bình yên và hòa hợp trong các mối quan hệ. Cảm xúc của bạn dễ bị ảnh hưởng bởi môi trường xung quanh, ghét sự xung đột và thô lỗ.',
+    'Bọ Cạp':
+      'Cảm xúc mãnh liệt, thâm sâu và có phần giữ kẽ. Bạn khát khao sự kết nối chân thật đến tận cùng và không bao giờ thỏa mãn với sự hời hợt.',
+    'Nhân Mã':
+      'Cảm xúc tích cực, không thích bị trói buộc. Bạn tìm thấy sự an ủi qua những trải nghiệm mới mẻ, tự do và thái độ lạc quan trong mọi tình huống.',
+    'Ma Kết':
+      'Kiểm soát cảm xúc tốt, thường giấu kín tâm sự. Bạn cảm thấy an toàn khi mọi thứ nằm trong tầm kiểm soát, có cấu trúc và được xã hội tôn trọng.',
+    'Bảo Bình':
+      'Trực giác nhạy bén nhưng tiếp cận cảm xúc một cách khách quan. Bạn cần không gian riêng, sự độc lập và thích quan sát tình cảm của mình như một người ngoài cuộc.',
+    'Song Ngư':
+      'Cực kỳ nhạy cảm và dễ thấu cảm với người khác. Bạn dễ bị choáng ngợp bởi cảm xúc của môi trường và cần không gian yên tĩnh để thanh lọc tinh thần.',
   },
   mercury: {
-    'Bạch Dương': 'Suy nghĩ nhanh, giao tiếp bộc trực và quyết đoán. Bạn thích những ý tưởng táo bạo nhưng dễ mất kiên nhẫn với các chi tiết rườm rà.',
-    'Kim Ngưu': 'Tư duy thực tế, cẩn trọng và chậm rãi. Bạn cân nhắc kỹ lưỡng trước khi nói và thích những ý tưởng có thể áp dụng vào thực tiễn sinh lời.',
-    'Song Tử': 'Trí tuệ sắc bén, học hỏi cực nhanh và tài giao tiếp xuất chúng. Bạn thích thu thập vô vàn luồng thông tin nhưng đôi khi thiếu sự chuyên sâu.',
-    'Cự Giải': 'Trí tuệ gắn liền với cảm xúc và trí nhớ tuyệt vời. Bạn giao tiếp dựa trên sự đồng cảm, dễ thấu hiểu tâm lý người khác nhưng có phần chủ quan.',
-    'Sư Tử': 'Tư duy sáng tạo, diễn đạt hùng hồn và đầy kịch tính. Bạn thích nói về những ý tưởng lớn, mang tính truyền cảm hứng và thích sự chú ý khi phát biểu.',
-    'Xử Nữ': 'Tư duy phân tích, logic và đặc biệt chú ý đến tiểu tiết. Bạn là chuyên gia giải quyết vấn đề với khả năng hệ thống hóa dữ liệu một cách hoàn hảo.',
-    'Thiên Bình': 'Tư duy ngoại giao, luôn cân nhắc hai mặt của một vấn đề. Bạn giao tiếp khéo léo, công bằng nhưng đôi khi hay do dự trước khi quyết định.',
-    'Bọ Cạp': 'Trí tuệ thâm sâu, thích điều tra và khám phá bí mật. Bạn giao tiếp ít nhưng sắc sảo, có khả năng nhìn thấu tâm can và động cơ của người khác.',
-    'Nhân Mã': 'Tư duy triết lý, mở rộng và hướng tới tương lai. Bạn thích bàn về những bức tranh toàn cảnh, chân lý nhưng thường bỏ qua các chi tiết nhỏ lẻ.',
-    'Ma Kết': 'Tư duy chiến lược, thực dụng và có tổ chức. Bạn giao tiếp một cách thận trọng, nghiêm túc và luôn hướng tới kết quả cụ thể.',
-    'Bảo Bình': 'Trí tuệ tiên phong, độc đáo và khách quan. Bạn tiếp thu các ý tưởng mới lạ, khoa học và thích phá vỡ những quan điểm truyền thống lề thói.',
-    'Song Ngư': 'Tư duy trực giác, giàu trí tưởng tượng và mang tính thơ ca. Bạn giao tiếp bằng sự thấu cảm, dễ hiểu ý người khác không cần lời nói nhưng dễ lan man.'
+    'Bạch Dương':
+      'Suy nghĩ nhanh, giao tiếp bộc trực và quyết đoán. Bạn thích những ý tưởng táo bạo nhưng dễ mất kiên nhẫn với các chi tiết rườm rà.',
+    'Kim Ngưu':
+      'Tư duy thực tế, cẩn trọng và chậm rãi. Bạn cân nhắc kỹ lưỡng trước khi nói và thích những ý tưởng có thể áp dụng vào thực tiễn sinh lời.',
+    'Song Tử':
+      'Trí tuệ sắc bén, học hỏi cực nhanh và tài giao tiếp xuất chúng. Bạn thích thu thập vô vàn luồng thông tin nhưng đôi khi thiếu sự chuyên sâu.',
+    'Cự Giải':
+      'Trí tuệ gắn liền với cảm xúc và trí nhớ tuyệt vời. Bạn giao tiếp dựa trên sự đồng cảm, dễ thấu hiểu tâm lý người khác nhưng có phần chủ quan.',
+    'Sư Tử':
+      'Tư duy sáng tạo, diễn đạt hùng hồn và đầy kịch tính. Bạn thích nói về những ý tưởng lớn, mang tính truyền cảm hứng và thích sự chú ý khi phát biểu.',
+    'Xử Nữ':
+      'Tư duy phân tích, logic và đặc biệt chú ý đến tiểu tiết. Bạn là chuyên gia giải quyết vấn đề với khả năng hệ thống hóa dữ liệu một cách hoàn hảo.',
+    'Thiên Bình':
+      'Tư duy ngoại giao, luôn cân nhắc hai mặt của một vấn đề. Bạn giao tiếp khéo léo, công bằng nhưng đôi khi hay do dự trước khi quyết định.',
+    'Bọ Cạp':
+      'Trí tuệ thâm sâu, thích điều tra và khám phá bí mật. Bạn giao tiếp ít nhưng sắc sảo, có khả năng nhìn thấu tâm can và động cơ của người khác.',
+    'Nhân Mã':
+      'Tư duy triết lý, mở rộng và hướng tới tương lai. Bạn thích bàn về những bức tranh toàn cảnh, chân lý nhưng thường bỏ qua các chi tiết nhỏ lẻ.',
+    'Ma Kết':
+      'Tư duy chiến lược, thực dụng và có tổ chức. Bạn giao tiếp một cách thận trọng, nghiêm túc và luôn hướng tới kết quả cụ thể.',
+    'Bảo Bình':
+      'Trí tuệ tiên phong, độc đáo và khách quan. Bạn tiếp thu các ý tưởng mới lạ, khoa học và thích phá vỡ những quan điểm truyền thống lề thói.',
+    'Song Ngư':
+      'Tư duy trực giác, giàu trí tưởng tượng và mang tính thơ ca. Bạn giao tiếp bằng sự thấu cảm, dễ hiểu ý người khác không cần lời nói nhưng dễ lan man.',
   },
   venus: {
-    'Bạch Dương': 'Trong tình yêu, bạn mãnh liệt, chủ động và thích chinh phục. Bạn đánh giá cao sự cuồng nhiệt nhưng cũng dễ cảm thấy nhàm chán nếu thiếu lửa.',
-    'Kim Ngưu': 'Yêu thích sự ổn định, trung thành và các giá trị vật chất. Bạn thể hiện tình cảm qua sự chăm sóc, những món quà xúc giác và sự bền bỉ.',
-    'Song Tử': 'Tình yêu cần sự kích thích trí tuệ và giao tiếp. Bạn thích những cuộc trò chuyện thú vị, sự tự do và một mối quan hệ như những người bạn tri kỷ.',
-    'Cự Giải': 'Trong tình yêu, bạn tìm kiếm sự an toàn, che chở và tính gia đình. Bạn thể hiện sự quan tâm sâu sắc, dễ bị tổn thương và rất nhớ nhung kỷ niệm.',
-    'Sư Tử': 'Tình yêu phải rực rỡ, lãng mạn và đầy tự hào. Bạn cực kỳ hào phóng, trung thành và luôn muốn biến người yêu thành tâm điểm của sự chú ý.',
-    'Xử Nữ': 'Thể hiện tình yêu qua sự tận tụy và hành động thực tế. Bạn chọn lọc kỹ càng, thích giúp đỡ đối phương hoàn thiện nhưng đôi khi quá khắt khe.',
-    'Thiên Bình': 'Tình yêu là nghệ thuật và sự hòa hợp. Bạn lãng mạn, duyên dáng, ghét sự thô bạo và luôn muốn đối xử công bằng với nửa kia của mình.',
-    'Bọ Cạp': 'Tình yêu mang tính sở hữu, cuồng nhiệt và biến đổi sâu sắc. Bạn khát khao sự kết nối thể xác lẫn tâm hồn ở mức độ tối đa và tuyệt đối trung thành.',
-    'Nhân Mã': 'Tình yêu là một cuộc phiêu lưu tự do. Bạn thích cùng người yêu trải nghiệm những điều mới lạ, ghét sự trói buộc và rất chân thành, vui vẻ.',
-    'Ma Kết': 'Tình yêu cần sự cam kết, trách nhiệm và tính ổn định. Bạn tiếp cận tình cảm một cách nghiêm túc, coi trọng địa vị và sự trưởng thành của đối tác.',
-    'Bảo Bình': 'Tình yêu xuất phát từ tình bạn và sự tôn trọng không gian riêng. Bạn bị thu hút bởi sự khác biệt, độc đáo và những giá trị tinh thần đồng điệu.',
-    'Song Ngư': 'Tình yêu vô điều kiện, lãng mạn và đầy sự hi sinh. Bạn dễ dàng đồng cảm, tha thứ và luôn muốn hòa tan ranh giới cá nhân vào tình yêu.'
+    'Bạch Dương':
+      'Trong tình yêu, bạn mãnh liệt, chủ động và thích chinh phục. Bạn đánh giá cao sự cuồng nhiệt nhưng cũng dễ cảm thấy nhàm chán nếu thiếu lửa.',
+    'Kim Ngưu':
+      'Yêu thích sự ổn định, trung thành và các giá trị vật chất. Bạn thể hiện tình cảm qua sự chăm sóc, những món quà xúc giác và sự bền bỉ.',
+    'Song Tử':
+      'Tình yêu cần sự kích thích trí tuệ và giao tiếp. Bạn thích những cuộc trò chuyện thú vị, sự tự do và một mối quan hệ như những người bạn tri kỷ.',
+    'Cự Giải':
+      'Trong tình yêu, bạn tìm kiếm sự an toàn, che chở và tính gia đình. Bạn thể hiện sự quan tâm sâu sắc, dễ bị tổn thương và rất nhớ nhung kỷ niệm.',
+    'Sư Tử':
+      'Tình yêu phải rực rỡ, lãng mạn và đầy tự hào. Bạn cực kỳ hào phóng, trung thành và luôn muốn biến người yêu thành tâm điểm của sự chú ý.',
+    'Xử Nữ':
+      'Thể hiện tình yêu qua sự tận tụy và hành động thực tế. Bạn chọn lọc kỹ càng, thích giúp đỡ đối phương hoàn thiện nhưng đôi khi quá khắt khe.',
+    'Thiên Bình':
+      'Tình yêu là nghệ thuật và sự hòa hợp. Bạn lãng mạn, duyên dáng, ghét sự thô bạo và luôn muốn đối xử công bằng với nửa kia của mình.',
+    'Bọ Cạp':
+      'Tình yêu mang tính sở hữu, cuồng nhiệt và biến đổi sâu sắc. Bạn khát khao sự kết nối thể xác lẫn tâm hồn ở mức độ tối đa và tuyệt đối trung thành.',
+    'Nhân Mã':
+      'Tình yêu là một cuộc phiêu lưu tự do. Bạn thích cùng người yêu trải nghiệm những điều mới lạ, ghét sự trói buộc và rất chân thành, vui vẻ.',
+    'Ma Kết':
+      'Tình yêu cần sự cam kết, trách nhiệm và tính ổn định. Bạn tiếp cận tình cảm một cách nghiêm túc, coi trọng địa vị và sự trưởng thành của đối tác.',
+    'Bảo Bình':
+      'Tình yêu xuất phát từ tình bạn và sự tôn trọng không gian riêng. Bạn bị thu hút bởi sự khác biệt, độc đáo và những giá trị tinh thần đồng điệu.',
+    'Song Ngư':
+      'Tình yêu vô điều kiện, lãng mạn và đầy sự hi sinh. Bạn dễ dàng đồng cảm, tha thứ và luôn muốn hòa tan ranh giới cá nhân vào tình yêu.',
   },
   mars: {
-    'Bạch Dương': 'Năng lượng bùng nổ, quyết đoán và mang tính chiến đấu cao. Bạn hành động ngay lập tức, dũng cảm nhưng cần học cách kiểm soát sự nóng nảy.',
-    'Kim Ngưu': 'Hành động chậm rãi, bền bỉ và khó bị xoynh chuyển. Một khi đã quyết định, bạn có sức chịu đựng phi thường để đạt được mục tiêu lâu dài.',
-    'Song Tử': 'Năng lượng phân tán, thích làm nhiều việc cùng lúc. Bạn giải quyết vấn đề bằng trí óc và lời nói, phản ứng nhanh nhưng hay thay đổi mục tiêu.',
-    'Cự Giải': 'Hành động dựa trên cảm xúc và bản năng bảo vệ. Bạn hiếm khi tấn công trực diện mà thường đi đường vòng, sở hữu ý chí bảo vệ gia đình mạnh mẽ.',
-    'Sư Tử': 'Hành động với sự tự tin, kiêu hãnh và tràn đầy năng lượng. Bạn có sức hút lãnh đạo, thích vượt qua thử thách để chứng tỏ bản lĩnh và sức mạnh.',
-    'Xử Nữ': 'Hành động có tính toán, chi tiết và vô cùng hiệu quả. Bạn làm việc chăm chỉ, cẩn thận và hướng năng lượng vào việc hoàn thiện các kỹ năng thực tế.',
-    'Thiên Bình': 'Hành động luôn cân nhắc và cố gắng duy trì sự công bằng. Bạn giỏi thuyết phục hơn là ép buộc, nhưng đôi khi thiếu tính quyết đoán trong xung đột.',
-    'Bọ Cạp': 'Năng lượng tập trung, mãnh liệt và mang tính chiến lược sâu sắc. Bạn sở hữu sức chịu đựng tuyệt vời, quyết tâm đến cùng và hiếm khi từ bỏ.',
-    'Nhân Mã': 'Hành động dựa trên lý tưởng, nhiệt tình và ưa dịch chuyển. Bạn hướng năng lượng vào việc khám phá, học hỏi và bảo vệ niềm tin của mình.',
-    'Ma Kết': 'Hành động có kỷ luật, tham vọng và vô cùng kiên nhẫn. Bạn kiểm soát năng lượng tuyệt vời để đạt được quyền lực và thành tựu xã hội lâu dài.',
-    'Bảo Bình': 'Hành động khó đoán, mang tinh thần cách mạng. Bạn hướng sức mạnh vào các mục tiêu tiến bộ, tự do và không tuân theo các lề thói truyền thống.',
-    'Song Ngư': 'Năng lượng êm đềm, hành động theo cảm hứng và trực giác. Bạn thiếu sự ganh đua bạo lực, thay vào đó bạn dùng sự mềm dẻo và thấu cảm để tiến lên.'
+    'Bạch Dương':
+      'Năng lượng bùng nổ, quyết đoán và mang tính chiến đấu cao. Bạn hành động ngay lập tức, dũng cảm nhưng cần học cách kiểm soát sự nóng nảy.',
+    'Kim Ngưu':
+      'Hành động chậm rãi, bền bỉ và khó bị xoynh chuyển. Một khi đã quyết định, bạn có sức chịu đựng phi thường để đạt được mục tiêu lâu dài.',
+    'Song Tử':
+      'Năng lượng phân tán, thích làm nhiều việc cùng lúc. Bạn giải quyết vấn đề bằng trí óc và lời nói, phản ứng nhanh nhưng hay thay đổi mục tiêu.',
+    'Cự Giải':
+      'Hành động dựa trên cảm xúc và bản năng bảo vệ. Bạn hiếm khi tấn công trực diện mà thường đi đường vòng, sở hữu ý chí bảo vệ gia đình mạnh mẽ.',
+    'Sư Tử':
+      'Hành động với sự tự tin, kiêu hãnh và tràn đầy năng lượng. Bạn có sức hút lãnh đạo, thích vượt qua thử thách để chứng tỏ bản lĩnh và sức mạnh.',
+    'Xử Nữ':
+      'Hành động có tính toán, chi tiết và vô cùng hiệu quả. Bạn làm việc chăm chỉ, cẩn thận và hướng năng lượng vào việc hoàn thiện các kỹ năng thực tế.',
+    'Thiên Bình':
+      'Hành động luôn cân nhắc và cố gắng duy trì sự công bằng. Bạn giỏi thuyết phục hơn là ép buộc, nhưng đôi khi thiếu tính quyết đoán trong xung đột.',
+    'Bọ Cạp':
+      'Năng lượng tập trung, mãnh liệt và mang tính chiến lược sâu sắc. Bạn sở hữu sức chịu đựng tuyệt vời, quyết tâm đến cùng và hiếm khi từ bỏ.',
+    'Nhân Mã':
+      'Hành động dựa trên lý tưởng, nhiệt tình và ưa dịch chuyển. Bạn hướng năng lượng vào việc khám phá, học hỏi và bảo vệ niềm tin của mình.',
+    'Ma Kết':
+      'Hành động có kỷ luật, tham vọng và vô cùng kiên nhẫn. Bạn kiểm soát năng lượng tuyệt vời để đạt được quyền lực và thành tựu xã hội lâu dài.',
+    'Bảo Bình':
+      'Hành động khó đoán, mang tinh thần cách mạng. Bạn hướng sức mạnh vào các mục tiêu tiến bộ, tự do và không tuân theo các lề thói truyền thống.',
+    'Song Ngư':
+      'Năng lượng êm đềm, hành động theo cảm hứng và trực giác. Bạn thiếu sự ganh đua bạo lực, thay vào đó bạn dùng sự mềm dẻo và thấu cảm để tiến lên.',
   },
   ascendant: {
-    'Bạch Dương': 'Năng động, nhanh nhẹn và đầy sức sống. Ấn tượng ban đầu về bạn là sự trực tiếp, tự tin, mang phong thái của một người tiên phong không thích chần chừ.',
-    'Kim Ngưu': 'Trầm tĩnh, vững chãi và toát lên vẻ đáng tin cậy. Bạn thích quan sát cẩn thận, hành động từ tốn và mang lại cảm giác bình yên, thực tế cho người đối diện.',
-    'Song Tử': 'Hoạt bát, tò mò và dễ bắt chuyện. Ấn tượng ban đầu về bạn là sự thông minh, lanh lợi, luôn bận rộn và có khả năng giao tiếp đa dạng với mọi người.',
-    'Cự Giải': 'Thân thiện nhưng có phần rụt rè, cảnh giác ở phút ban đầu. Khi đã quen, bạn tỏa ra năng lượng bao bọc, ấm áp và rất chu đáo như một người mẹ.',
-    'Sư Tử': 'Tự tự, thu hút và có phong thái đĩnh đạc. Bạn tự nhiên trở thành trung tâm chú ý mỗi khi xuất hiện nhờ sự nồng nhiệt và cách ăn mặc nổi bật.',
-    'Xử Nữ': 'Chỉn chu, khiêm tốn và cực kỳ để ý tiểu tiết. Bạn tiếp cận mọi việc bằng thái độ cẩn trọng, phân tích, lịch sự và luôn mang lại cảm giác gọn gàng.',
-    'Thiên Bình': 'Duyên dáng, lịch thiệp và dễ mến. Bạn biết cách tạo không khí hài hòa, giao tiếp khéo léo và luôn để lại ấn tượng về sự tinh tế, thẩm mỹ cao.',
-    'Bọ Cạp': 'Bí ẩn, ánh mắt sắc sảo và mang năng lượng cuốn hút. Bạn tiếp cận thế giới một cách thăm dò, không dễ tiết lộ bản thân nhưng lại vô cùng sâu sắc.',
-    'Nhân Mã': 'Cởi mở, vui vẻ và toát lên sự nhiệt tình. Bạn mang đến năng lượng tích cực, nụ cười sảng khoái và một thái độ không kiểu cách, đầy tinh thần tự do.',
-    'Ma Kết': 'Nghiêm túc, trưởng thành và có trách nhiệm. Bạn luôn toát lên vẻ đáng tin cậy, quy củ và sự tôn trọng đối với các ranh giới và luật lệ xã hội.',
-    'Bảo Bình': 'Độc đáo, khác biệt và thân thiện một cách khách quan. Bạn không ngại bộc lộ cá tính cá biệt ngay từ lần đầu gặp mặt và đối xử bình đẳng với tất cả.',
-    'Song Ngư': 'Mơ màng, dịu dàng và dễ thích nghi. Bạn hòa mình vào môi trường một cách tự nhiên như dòng nước, ánh mắt sâu thẳm và luôn tỏ ra đầy thấu cảm.'
-  }
+    'Bạch Dương':
+      'Năng động, nhanh nhẹn và đầy sức sống. Ấn tượng ban đầu về bạn là sự trực tiếp, tự tin, mang phong thái của một người tiên phong không thích chần chừ.',
+    'Kim Ngưu':
+      'Trầm tĩnh, vững chãi và toát lên vẻ đáng tin cậy. Bạn thích quan sát cẩn thận, hành động từ tốn và mang lại cảm giác bình yên, thực tế cho người đối diện.',
+    'Song Tử':
+      'Hoạt bát, tò mò và dễ bắt chuyện. Ấn tượng ban đầu về bạn là sự thông minh, lanh lợi, luôn bận rộn và có khả năng giao tiếp đa dạng với mọi người.',
+    'Cự Giải':
+      'Thân thiện nhưng có phần rụt rè, cảnh giác ở phút ban đầu. Khi đã quen, bạn tỏa ra năng lượng bao bọc, ấm áp và rất chu đáo như một người mẹ.',
+    'Sư Tử':
+      'Tự tự, thu hút và có phong thái đĩnh đạc. Bạn tự nhiên trở thành trung tâm chú ý mỗi khi xuất hiện nhờ sự nồng nhiệt và cách ăn mặc nổi bật.',
+    'Xử Nữ':
+      'Chỉn chu, khiêm tốn và cực kỳ để ý tiểu tiết. Bạn tiếp cận mọi việc bằng thái độ cẩn trọng, phân tích, lịch sự và luôn mang lại cảm giác gọn gàng.',
+    'Thiên Bình':
+      'Duyên dáng, lịch thiệp và dễ mến. Bạn biết cách tạo không khí hài hòa, giao tiếp khéo léo và luôn để lại ấn tượng về sự tinh tế, thẩm mỹ cao.',
+    'Bọ Cạp':
+      'Bí ẩn, ánh mắt sắc sảo và mang năng lượng cuốn hút. Bạn tiếp cận thế giới một cách thăm dò, không dễ tiết lộ bản thân nhưng lại vô cùng sâu sắc.',
+    'Nhân Mã':
+      'Cởi mở, vui vẻ và toát lên sự nhiệt tình. Bạn mang đến năng lượng tích cực, nụ cười sảng khoái và một thái độ không kiểu cách, đầy tinh thần tự do.',
+    'Ma Kết':
+      'Nghiêm túc, trưởng thành và có trách nhiệm. Bạn luôn toát lên vẻ đáng tin cậy, quy củ và sự tôn trọng đối với các ranh giới và luật lệ xã hội.',
+    'Bảo Bình':
+      'Độc đáo, khác biệt và thân thiện một cách khách quan. Bạn không ngại bộc lộ cá tính cá biệt ngay từ lần đầu gặp mặt và đối xử bình đẳng với tất cả.',
+    'Song Ngư':
+      'Mơ màng, dịu dàng và dễ thích nghi. Bạn hòa mình vào môi trường một cách tự nhiên như dòng nước, ánh mắt sâu thẳm và luôn tỏ ra đầy thấu cảm.',
+  },
 };
 
 export const WESTERN_HOUSES_MEANING: Record<number, string> = {
@@ -97,7 +169,7 @@ export const WESTERN_HOUSES_MEANING: Record<number, string> = {
   9: 'Triết học, tôn giáo, giáo dục đại học, những chuyến đi xa, văn hóa nước ngoài và sự mở rộng thế giới quan.',
   10: 'Sự nghiệp, địa vị xã hội, danh tiếng, hình ảnh công chúng và hình mẫu quyền lực hoặc cha mẹ (Midheaven).',
   11: 'Bạn bè, mạng lưới xã hội, cộng đồng, hy vọng, ước mơ lớn và các hoạt động vì lợi ích tập thể.',
-  12: 'Tiềm thức, sự biệt lập, bí mật, bệnh viện, nhà tù, kẻ thù giấu mặt, tâm linh và sự buông bỏ.'
+  12: 'Tiềm thức, sự biệt lập, bí mật, bệnh viện, nhà tù, kẻ thù giấu mặt, tâm linh và sự buông bỏ.',
 };
 
 export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
@@ -113,7 +185,7 @@ export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
     9: 'Khao khát mở rộng tầm nhìn qua học vấn, du lịch và triết lý. Bạn muốn trở thành người có vốn hiểu biết sâu rộng.',
     10: 'Tham vọng mạnh mẽ về sự nghiệp và địa vị. Hình ảnh công chúng rất quan trọng, bạn sinh ra để vươn tới đỉnh cao danh vọng.',
     11: 'Tỏa sáng qua các hoạt động nhóm và lý tưởng xã hội. Bạn thu hút nhiều bạn bè và đóng vai trò thủ lĩnh trong các tổ chức.',
-    12: 'Cái tôi có phần ẩn giấu, sâu sắc và mang tính tâm linh. Bạn cần những khoảng thời gian một mình để phục hồi năng lượng nội tâm.'
+    12: 'Cái tôi có phần ẩn giấu, sâu sắc và mang tính tâm linh. Bạn cần những khoảng thời gian một mình để phục hồi năng lượng nội tâm.',
   },
   moon: {
     1: 'Cảm xúc bộc lộ rõ trên khuôn mặt. Bạn nhạy cảm, dễ thay đổi tâm trạng và phản ứng với thế giới chủ yếu bằng trực giác.',
@@ -127,7 +199,7 @@ export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
     9: 'Cảm thấy an tâm khi được tự do khám phá và học hỏi. Triết lý sống và niềm tin tín ngưỡng xoa dịu tâm hồn bạn.',
     10: 'Nhu cầu được công chúng và xã hội công nhận. Cảm xúc của bạn chịu tác động lớn từ danh tiếng và thành tựu nghề nghiệp.',
     11: 'Cảm thấy thuộc về khi ở trong một cộng đồng hoặc nhóm bạn bè chung chí hướng. Bạn nuôi dưỡng những ước mơ lớn cho tập thể.',
-    12: 'Thế giới cảm xúc vô cùng phong phú, trực giác và thường được giấu kín. Bạn dễ đồng cảm với nỗi đau của người khác.'
+    12: 'Thế giới cảm xúc vô cùng phong phú, trực giác và thường được giấu kín. Bạn dễ đồng cảm với nỗi đau của người khác.',
   },
   mercury: {
     1: 'Tư duy sắc bén, nói nhiều và ham học hỏi. Bạn giao tiếp cởi mở và thể hiện trí thông minh ngay trong phong thái.',
@@ -141,7 +213,7 @@ export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
     9: 'Khao khát tri thức sâu rộng, triết học và tôn giáo. Bạn thích nghiên cứu văn hóa nước ngoài và suy nghĩ về các hệ tư tưởng lớn.',
     10: 'Giao tiếp là chìa khóa cho sự nghiệp. Bạn có khả năng tổ chức, phát ngôn trước công chúng và sử dụng trí tuệ để đạt quyền lực.',
     11: 'Tư duy hướng đến tương lai và cộng đồng. Bạn thích trao đổi ý tưởng với các nhóm, hội đoàn và có mạng lưới quan hệ rộng.',
-    12: 'Tư duy trực giác và có khả năng thấu thị. Bạn thường giấu kín suy nghĩ của mình và hay chìm đắm vào thế giới nội tâm.'
+    12: 'Tư duy trực giác và có khả năng thấu thị. Bạn thường giấu kín suy nghĩ của mình và hay chìm đắm vào thế giới nội tâm.',
   },
   venus: {
     1: 'Ngoại hình thu hút, duyên dáng và có gu thẩm mỹ cao. Bạn mang năng lượng dễ mến, hòa đồng và thích sự hài hòa.',
@@ -155,7 +227,7 @@ export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
     9: 'Yêu thích nghệ thuật, văn hóa nước ngoài và sự mở mang trí tuệ. Bạn có thể bị thu hút bởi những người có xuất thân khác biệt.',
     10: 'Sự nghiệp gắn liền với nghệ thuật, ngoại giao hoặc cái đẹp. Bạn được công chúng yêu mến và có mối quan hệ tốt với cấp trên.',
     11: 'Nhiều bạn bè và được yêu quý trong các hội nhóm. Tình yêu thường nảy nở từ nền tảng tình bạn hoặc những hoạt động xã hội.',
-    12: 'Tình yêu có phần thầm kín, lãng mạn và đôi khi hi sinh vô điều kiện. Bạn có khiếu nghệ thuật tâm linh và trực giác nhạy bén.'
+    12: 'Tình yêu có phần thầm kín, lãng mạn và đôi khi hi sinh vô điều kiện. Bạn có khiếu nghệ thuật tâm linh và trực giác nhạy bén.',
   },
   mars: {
     1: 'Nhiều năng lượng, xông xáo và đôi khi bốc đồng. Bạn khẳng định bản thân một cách mạnh mẽ và luôn sẵn sàng cạnh tranh.',
@@ -169,7 +241,7 @@ export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
     9: 'Nhiệt thành bảo vệ niềm tin và lý tưởng của mình. Bạn thích các cuộc phiêu lưu mạo hiểm, du lịch xa và thảo luận triết học.',
     10: 'Động lực mạnh mẽ để thành công trong sự nghiệp. Bạn có khả năng lãnh đạo, vượt qua trở ngại để đạt đến đỉnh cao danh vọng.',
     11: 'Nhiều năng lượng trong các hoạt động xã hội. Bạn là người tiên phong trong nhóm nhưng đôi khi áp đặt ý kiến lên bạn bè.',
-    12: 'Hành động âm thầm hoặc kìm nén sự tức giận. Năng lượng của bạn nên được hướng vào các công việc từ thiện hoặc nghiên cứu sâu.'
+    12: 'Hành động âm thầm hoặc kìm nén sự tức giận. Năng lượng của bạn nên được hướng vào các công việc từ thiện hoặc nghiên cứu sâu.',
   },
   jupiter: {
     1: 'Lạc quan, thân thiện và bao dung. Bạn lan tỏa năng lượng tích cực, luôn muốn phát triển bản thân và có cái nhìn triết học về đời.',
@@ -183,7 +255,7 @@ export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
     9: 'Sở hữu trí tuệ uyên bác, niềm tin tôn giáo và triết lý sâu sắc. Bạn thường gặp may mắn khi đi du lịch nước ngoài hoặc học lên cao.',
     10: 'Thành công lớn trong sự nghiệp và uy tín xã hội cao. Bạn dễ thăng tiến và được giao phó những vị trí quyền lực, mang tính đạo đức.',
     11: 'Nhiều cơ hội từ mạng lưới bạn bè và các hội nhóm. Bạn nhận được sự giúp đỡ từ những người có quyền thế và hoàn thành ước mơ lớn.',
-    12: 'Có trực giác tâm linh mạnh mẽ và thiên thần hộ mệnh ẩn giấu. Bạn tìm thấy sự an bình qua việc thiền định và giúp đỡ người khác.'
+    12: 'Có trực giác tâm linh mạnh mẽ và thiên thần hộ mệnh ẩn giấu. Bạn tìm thấy sự an bình qua việc thiền định và giúp đỡ người khác.',
   },
   saturn: {
     1: 'Nghiêm túc, cẩn trọng và có tinh thần trách nhiệm cao ngay từ sớm. Bạn xây dựng bản sắc cá nhân một cách chậm rãi nhưng vô cùng vững chắc.',
@@ -197,6 +269,6 @@ export const WESTERN_PLANET_IN_HOUSE: Record<string, Record<number, string>> = {
     9: 'Có những triết lý sống bảo thủ hoặc nghiêm khắc. Bạn tiếp thu học vấn một cách có hệ thống và đòi hỏi tính ứng dụng thực tế cao.',
     10: 'Đạt đỉnh cao danh vọng nhờ sự kiên nhẫn và nỗ lực phi thường. Khát khao quyền lực của bạn đi kèm với gánh nặng trách nhiệm lớn.',
     11: 'Chọn lọc bạn bè cẩn thận, thường kết giao với người lớn tuổi hoặc có địa vị. Các mục tiêu dài hạn đòi hỏi sự bền bỉ để hoàn thành.',
-    12: 'Thường giấu kín nỗi sợ hãi và có những gánh nặng tiềm thức. Bạn làm việc rất hiệu quả trong sự tĩnh lặng hoặc môi trường cách ly.'
-  }
+    12: 'Thường giấu kín nỗi sợ hãi và có những gánh nặng tiềm thức. Bạn làm việc rất hiệu quả trong sự tĩnh lặng hoặc môi trường cách ly.',
+  },
 };

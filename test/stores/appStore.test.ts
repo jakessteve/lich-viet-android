@@ -80,5 +80,4 @@ describe('appStore', () => {
       expect(useAppStore.getState().fontSize).toBe('small');
     });
   });
-
 });

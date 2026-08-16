@@ -43,9 +43,7 @@ const CALIBRATION_CASES: OracleCase[] = [
     date: '2024-04-03',
     tianShenLuck: '吉',
     note: 'Oracle says marriage is blocked here even though the day is otherwise usable.',
-    expectations: [
-      { activityId: 'cuoi-hoi', max: CLASSICAL_AUSPICIOUSNESS.forbiddenCap },
-    ],
+    expectations: [{ activityId: 'cuoi-hoi', max: CLASSICAL_AUSPICIOUSNESS.forbiddenCap }],
   },
   {
     // Reference snapshot from lunar-javascript 1.7.7:

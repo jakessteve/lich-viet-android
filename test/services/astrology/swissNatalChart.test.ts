@@ -31,12 +31,16 @@ function fakeEphemeris(flags = REQUIRED_FLAGS): SwissNatalEphemeris {
     version: () => 'test-swiss',
     dateToJulianDay: (date) => date.getTime() / 86_400_000 + 2_440_587.5,
     calculatePosition: (_julianDay, body, requestedFlags) => ({
-      longitude: (Number(requestedFlags) & CalculationFlag.Equatorial)
-        ? 100 + Number(body)
-        : ((Number(body) * 23.75 + 280.071588) % 360 + 360) % 360,
-      latitude: (Number(requestedFlags) & CalculationFlag.Equatorial)
-        ? -10 + Number(body) * 0.2
-        : (Number(body) % 5 === 0 ? 0 : 0.1),
+      longitude:
+        Number(requestedFlags) & CalculationFlag.Equatorial
+          ? 100 + Number(body)
+          : (((Number(body) * 23.75 + 280.071588) % 360) + 360) % 360,
+      latitude:
+        Number(requestedFlags) & CalculationFlag.Equatorial
+          ? -10 + Number(body) * 0.2
+          : Number(body) % 5 === 0
+            ? 0
+            : 0.1,
       distance: 1 + Number(body) / 100,
       longitudeSpeed: Number(body) % 3 === 0 ? -0.2 : 0.8,
       latitudeSpeed: 0,
@@ -64,27 +68,35 @@ describe('Swiss natal application adapter', () => {
   });
 
   it('rejects unsupported local/UTC boundaries before calculation', () => {
-    expect(() => fixedOffsetBirthToUtc({
-      ...input,
-      birthDate: new Date(1800, 0, 1),
-    })).toThrow(/1800-01-02/);
-    expect(fixedOffsetBirthToUtc({
-      ...input,
-      birthDate: new Date(2399, 11, 31),
-      birthHour: 23,
-      birthMinute: 59,
-      timezone: -14,
-    }).toISOString()).toBe('2400-01-01T13:59:00.000Z');
-    expect(() => fixedOffsetBirthToUtc({
-      ...input,
-      birthDate: new Date(2400, 0, 1),
-    })).toThrow(/1800-01-02/);
-    expect(fixedOffsetBirthToUtc({
-      ...input,
-      birthDate: new Date(1800, 0, 2),
-      birthHour: 0,
-      timezone: 14,
-    }).toISOString()).toBe('1800-01-01T10:00:00.000Z');
+    expect(() =>
+      fixedOffsetBirthToUtc({
+        ...input,
+        birthDate: new Date(1800, 0, 1),
+      }),
+    ).toThrow(/1800-01-02/);
+    expect(
+      fixedOffsetBirthToUtc({
+        ...input,
+        birthDate: new Date(2399, 11, 31),
+        birthHour: 23,
+        birthMinute: 59,
+        timezone: -14,
+      }).toISOString(),
+    ).toBe('2400-01-01T13:59:00.000Z');
+    expect(() =>
+      fixedOffsetBirthToUtc({
+        ...input,
+        birthDate: new Date(2400, 0, 1),
+      }),
+    ).toThrow(/1800-01-02/);
+    expect(
+      fixedOffsetBirthToUtc({
+        ...input,
+        birthDate: new Date(1800, 0, 2),
+        birthHour: 0,
+        timezone: 14,
+      }).toISOString(),
+    ).toBe('1800-01-01T10:00:00.000Z');
   });
 
   it('treats the exact solar horizon as a day chart', () => {
@@ -107,11 +119,7 @@ describe('Swiss natal application adapter', () => {
   });
 
   it('declares the exact local ephemeris assets and 11-aspect table', () => {
-    expect(LOCAL_EPHEMERIS_FILES.map((entry) => entry.name)).toEqual([
-      'sepl_18.se1',
-      'semo_18.se1',
-      'seas_18.se1',
-    ]);
+    expect(LOCAL_EPHEMERIS_FILES.map((entry) => entry.name)).toEqual(['sepl_18.se1', 'semo_18.se1', 'seas_18.se1']);
     expect(ASPECT_DEFINITIONS).toHaveLength(11);
     expect(ASPECT_DEFINITIONS.map(({ id, angle, orb }) => [id, angle, orb])).toEqual([
       ['conjunction', 0, 8],
@@ -156,18 +164,21 @@ describe('Swiss natal application adapter', () => {
   it('returns the ordered 20-object Swiss contract, houses, angles, and aspects', async () => {
     const result = await calculateSwissNatalChart(input, { ephemeris: fakeEphemeris() });
 
-    expect(result.objects.map(({ id, name, category, isAngle }) => [id, name, category, isAngle]))
-      .toEqual(REQUIRED_OBJECT_SCHEMA.map(({ id, name, category, isAngle }) => [id, name, category, isAngle]));
+    expect(result.objects.map(({ id, name, category, isAngle }) => [id, name, category, isAngle])).toEqual(
+      REQUIRED_OBJECT_SCHEMA.map(({ id, name, category, isAngle }) => [id, name, category, isAngle]),
+    );
     expect(result.objects).toHaveLength(20);
     expect(result.houses).toHaveLength(12);
     expect(Object.keys(result.angles)).toEqual(['Ascendant', 'Descendant', 'Midheaven', 'Imum Coeli']);
     expect(result.angles.Descendant.longitude).toBe(194);
     expect(result.angles['Imum Coeli'].longitude).toBe(104);
     expect(result.aspects.length).toBeGreaterThan(0);
-    expect(result.objects.find((body) => body.id === 'derived:true-south-node')?.speed)
-      .toBe(result.objects.find((body) => body.id === 'lunar-point:true-north-node')?.speed);
-    expect(result.objects.find((body) => body.id === 'derived:true-south-node')?.retrograde)
-      .toBe(result.objects.find((body) => body.id === 'lunar-point:true-north-node')?.retrograde);
+    expect(result.objects.find((body) => body.id === 'derived:true-south-node')?.speed).toBe(
+      result.objects.find((body) => body.id === 'lunar-point:true-north-node')?.speed,
+    );
+    expect(result.objects.find((body) => body.id === 'derived:true-south-node')?.retrograde).toBe(
+      result.objects.find((body) => body.id === 'lunar-point:true-north-node')?.retrograde,
+    );
     expect(result.objects.find((body) => body.id === 'derived:part-of-fortune')?.speed).toBeNull();
     expect(result.objects.find((body) => body.id === 'angle:vertex')?.retrograde).toBeNull();
     expect(result.metadata.ephemeris).toBe('Swiss Ephemeris files');
@@ -177,9 +188,7 @@ describe('Swiss natal application adapter', () => {
     expect(Object.keys(result.metadata.returnedFlags)).toHaveLength(17);
     expect(result.metadata.objectPolicyVersion).toBe('western-natal-20-v1');
     expect(result.metadata.aspectPolicyVersion).toBe('western-aspects-11-v1');
-    expect(result.metadata.returnedEquatorialFlags['planet:sun']).toBe(
-      REQUIRED_FLAGS | CalculationFlag.Equatorial,
-    );
+    expect(result.metadata.returnedEquatorialFlags['planet:sun']).toBe(REQUIRED_FLAGS | CalculationFlag.Equatorial);
     expect(result.metadata.partOfFortuneAltitudePolicy).toBe('geocentric-equatorial-altitude-v1');
     const sun = result.objects[0];
     expect(sun.rightAscension).toBe(100);
@@ -188,13 +197,18 @@ describe('Swiss natal application adapter', () => {
     expect(sun.distanceSpeed).toBe(0);
     expect(result.legacyResult.planets[0].ra).toBe(100);
     expect(result.legacyResult.planets[0].dec).toBe(-10);
-    expect(result.legacyResult.aspects.every((aspect) => ASPECT_DEFINITIONS.some((definition) => definition.id === aspect.type))).toBe(true);
+    expect(
+      result.legacyResult.aspects.every((aspect) =>
+        ASPECT_DEFINITIONS.some((definition) => definition.id === aspect.type),
+      ),
+    ).toBe(true);
   });
 
   it('rejects a required body when Swiss falls back to Moshier', async () => {
     const fallbackFlags = CalculationFlag.MoshierEphemeris | CalculationFlag.Speed;
 
-    await expect(calculateSwissNatalChart(input, { ephemeris: fakeEphemeris(fallbackFlags) }))
-      .rejects.toThrow(/Sun.*Swiss Ephemeris/i);
+    await expect(calculateSwissNatalChart(input, { ephemeris: fakeEphemeris(fallbackFlags) })).rejects.toThrow(
+      /Sun.*Swiss Ephemeris/i,
+    );
   });
 });

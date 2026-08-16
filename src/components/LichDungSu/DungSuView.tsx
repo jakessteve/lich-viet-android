@@ -105,7 +105,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
     return y;
   }, [birthYear]);
 
-  const effectiveBirthProfile: PersonalBirthDetails & { birthYear?: number } | null = useMemo(() => {
+  const effectiveBirthProfile: (PersonalBirthDetails & { birthYear?: number }) | null = useMemo(() => {
     if (!parsedBirthYear) return null;
     if (userBirthProfile?.birthYear === parsedBirthYear) {
       return userBirthProfile;
@@ -511,9 +511,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
                     {/* Best hour mini-card */}
                     {bestHourInfo && (
                       <div className="flex flex-col items-center justify-center p-3 sm:py-4 rounded-2xl bg-white/80 dark:bg-white/5 border border-black/5 dark:border-white/5 shadow-sm w-full transition-transform hover:scale-[1.02]">
-                        <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">
-                          {bestHourInfo.chi}
-                        </p>
+                        <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{bestHourInfo.chi}</p>
                         <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider font-bold mt-1">
                           Giờ tốt nhất
                         </p>

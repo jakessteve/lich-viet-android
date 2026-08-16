@@ -365,6 +365,121 @@
       "branches": ["Sửu", "Mùi"],
       "description": "Thái Dương và Thái Âm cùng tọa thủ cung Mệnh tại Sửu hoặc Mùi.",
       "note": "Thái Dương và Thái Âm cùng thủ Mệnh tại Sửu hoặc Mùi."
+    },
+    {
+      "id": "thach-trung-an-ngoc",
+      "name": "Thạch Trung Ẩn Ngọc",
+      "nameHanViet": "石中隱玉",
+      "category": "cat",
+      "rarity": 5,
+      "matchKind": "thachTrungAnNgoc",
+      "stars": ["Cự Môn"],
+      "branches": ["Tý", "Ngọ"],
+      "description": "Cự Môn thủ Mệnh tại Tý hoặc Ngọ, hội thêm Hóa Lộc, Lộc Tồn hoặc Hóa Quyền/Khoa. Tượng trưng ngọc quý ẩn trong đá, trải qua mài giũa mà phát tiết tinh hoa rực rỡ, hậu vận đại phú đại quý.",
+      "note": "Cự Môn thủ Mệnh tại Tý hoặc Ngọ có Lộc hoặc Khoa/Quyền hội chiếu."
+    },
+    {
+      "id": "nhat-le-trung-thien",
+      "name": "Nhật Lệ Trung Thiên",
+      "nameHanViet": "日麗中天",
+      "category": "cat",
+      "rarity": 5,
+      "matchKind": "menhBranchStars",
+      "stars": ["Thái Dương"],
+      "branches": ["Ngọ"],
+      "description": "Thái Dương cư Ngọ thủ Mệnh, mặt trời chiếu sáng giữa trời đỉnh cao. Chủ về sự nghiệp huy hoàng, quang minh lỗi lạc, uy danh lẫy lừng và khả năng lãnh đạo siêu quần.",
+      "note": "Thái Dương cư Ngọ thủ Mệnh."
+    },
+    {
+      "id": "nguyet-lang-thien-mon",
+      "name": "Nguyệt Lãng Thiên Môn",
+      "nameHanViet": "月朗天門",
+      "category": "cat",
+      "rarity": 5,
+      "matchKind": "menhBranchStars",
+      "stars": ["Thái Âm"],
+      "branches": ["Hợi"],
+      "description": "Thái Âm cư Hợi thủ Mệnh, trăng sáng rọi nơi cổng trời. Chủ về nội tâm thâm trầm tinh tế, trí tuệ mẫn tiệp, phú quý tự nhiên và điền sản dồi dào.",
+      "note": "Thái Âm cư Hợi thủ Mệnh."
+    },
+    {
+      "id": "phu-tuong-trieu-vien",
+      "name": "Phủ Tướng Triều Viên",
+      "nameHanViet": "府相朝垣",
+      "category": "cat",
+      "rarity": 4,
+      "matchKind": "tamPhuongCluster",
+      "stars": ["Thiên Phủ", "Thiên Tướng"],
+      "description": "Thiên Phủ và Thiên Tướng từ Tam Phương Tứ Chính cùng hướng về chầu Mệnh. Biểu thị tài năng điều hành xuất chúng, được tín nhiệm cao, tài khố vững mạnh.",
+      "note": "Thiên Phủ và Thiên Tướng cùng chiếu về bản cung trong Tam Phương Tứ Chính."
+    },
+    {
+      "id": "tu-phu-trieu-vien",
+      "name": "Tử Phủ Triều Viên",
+      "nameHanViet": "紫府朝垣",
+      "category": "cat",
+      "rarity": 5,
+      "matchKind": "tamPhuongCluster",
+      "stars": ["Tử Vi", "Thiên Phủ"],
+      "description": "Tử Vi và Thiên Phủ cùng chiếu về Mệnh từ Tam Phương Tứ Chính. Đại biểu cho cách cục phúc thọ song toàn, dễ đạt vị thế cao quý và cuộc đời viên mãn.",
+      "note": "Tử Vi và Thiên Phủ cùng xuất hiện trong Tam Phương Tứ Chính."
+    },
+    {
+      "id": "dao-hong-dac-dia",
+      "name": "Đào Hồng Đắc Địa",
+      "nameHanViet": "桃紅得地",
+      "category": "cat",
+      "rarity": 3,
+      "palaceConstraint": "sameCungOrTamHop",
+      "stars": ["Đào Hoa", "Hồng Loan"],
+      "description": "Đào Hoa và Hồng Loan đắc vị cùng hội chiếu. Duyên dáng, nhân duyên tốt đẹp, được nhiều người mến mộ, nghệ thuật và thẩm mỹ phát tiết.",
+      "note": "Đào Hoa và Hồng Loan cùng hội tụ trong cùng vùng luận giải."
+    },
+    {
+      "id": "ma-dau-doi-kiem",
+      "name": "Mã Đầu Đới Kiếm",
+      "nameHanViet": "馬頭帶劍",
+      "category": "hung",
+      "rarity": 4,
+      "matchKind": "menhBranchStars",
+      "stars": ["Kình Dương"],
+      "branches": ["Ngọ"],
+      "description": "Kình Dương tọa thủ cung Mệnh tại Ngọ. Tính cách dũng mãnh, quyết liệt nhưng nhiều thăng trầm, cần tôi luyện bản lĩnh thép để chuyển nguy thành cơ.",
+      "note": "Kình Dương thủ Mệnh tại Ngọ."
+    },
+    {
+      "id": "song-loc-trieu-vien",
+      "name": "Song Lộc Triều Viên",
+      "nameHanViet": "雙祿朝垣",
+      "category": "cat",
+      "rarity": 5,
+      "matchKind": "songLocTrieuVien",
+      "stars": ["Lộc Tồn"],
+      "requiredTuHoa": ["Lộc"],
+      "description": "Lộc Tồn và Hóa Lộc cùng xuất hiện trong Tam Phương Tứ Chính chiếu về bản cung. Nguồn tài lộc dồi dào cả chính tài lẫn thiên tài, kinh doanh vượng phát.",
+      "note": "Cả Lộc Tồn và Hóa Lộc cùng hội tụ ở Tam Phương Tứ Chính."
+    },
+    {
+      "id": "loc-ma-giao-tri",
+      "name": "Lộc Mã Giao Trì",
+      "nameHanViet": "祿馬交馳",
+      "category": "cat",
+      "rarity": 4,
+      "palaceConstraint": "sameCungOrTamHop",
+      "stars": ["Lộc Tồn", "Thiên Mã"],
+      "description": "Lộc Tồn và Thiên Mã cùng hội ngộ trong Tam Hợp hoặc đồng cung. Càng bôn ba càng đắc lợi, kinh thương buôn bán phát tài, danh tài vang xa.",
+      "note": "Lộc Tồn và Thiên Mã cùng xuất hiện trong một vùng luận giải."
+    },
+    {
+      "id": "phong-van-te-hoi",
+      "name": "Phong Vân Tế Hội",
+      "nameHanViet": "風雲際會",
+      "category": "cat",
+      "rarity": 5,
+      "matchKind": "phongVanTeHoi",
+      "stars": ["Thiên Khôi", "Thiên Việt", "Tả Phụ", "Hữu Bật"],
+      "description": "Gặp thời vận lớn như rồng mây hội ngộ, hội tụ nhiều quý nhân phò trợ từ mọi phương vị. Cơ hội đổi đời và phát triển rực rỡ.",
+      "note": "Hội tụ đầy đủ quý tinh và phụ tinh đắc lực trong Tam Phương Tứ Chính."
     }
   ]
 }

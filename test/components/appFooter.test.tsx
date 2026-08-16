@@ -50,7 +50,10 @@ describe('AppFooter', () => {
   });
 
   it('shows Admin for admin users', () => {
-    useAuthStore.setState({ user: makeUser({ email: 'admin@lichviet.app', displayName: 'Admin' }), isAuthenticated: true });
+    useAuthStore.setState({
+      user: makeUser({ email: 'admin@lichviet.app', displayName: 'Admin' }),
+      isAuthenticated: true,
+    });
     renderFooter();
 
     expect(screen.getByRole('button', { name: 'Admin' })).toBeTruthy();

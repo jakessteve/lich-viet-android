@@ -40,7 +40,7 @@ export const TuViMarkdownExport: React.FC = () => {
           path: filename,
           data: md,
           directory: Directory.Documents,
-          encoding: Encoding.UTF8
+          encoding: Encoding.UTF8,
         });
         window.alert(`Đã lưu file Markdown vào thư mục Documents/${filename}`);
       } else {

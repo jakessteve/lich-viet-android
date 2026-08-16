@@ -1,14 +1,17 @@
 import React, { useMemo, useState } from 'react';
 import type { TuViChart as TuViChartType, DaiHanInterpretationResult } from '../../types/tuvi';
 import { getAllDaiHanInterpretations, getCurrentDaiHan } from '../../services/tuvi/daiHanInterpretation';
+import { classifyTuViChart } from '../../services/tuvi/chartClassification';
+import { calculateFlyingStars } from '../../services/tuvi/flyingStars';
 import { SegmentedControl, type SegmentedOption } from '../shared';
 
-type SummaryTab = 'overview' | 'daiHan';
+type SummaryTab = 'overview' | 'daiHan' | 'phiTinh';
 type DaiHanViewMode = 'simple' | 'advanced';
 
 const SUMMARY_TABS: readonly SegmentedOption<SummaryTab>[] = [
   { id: 'overview', label: 'Tổng quan', shortLabel: 'Tổng quan', icon: 'dashboard' },
   { id: 'daiHan', label: 'Đại hạn', shortLabel: 'Đại hạn', icon: 'timeline' },
+  { id: 'phiTinh', label: 'Phi Tinh Tứ Hóa', shortLabel: 'Phi Tinh', icon: 'hub' },
 ];
 
 const DAI_HAN_VIEW_MODES: readonly SegmentedOption<DaiHanViewMode>[] = [
@@ -31,13 +34,7 @@ const LUCK_TIER_CLASS: Record<DaiHanInterpretationResult['luckTier'], string> = 
   'Gian Nan': 'bg-bad/15 text-bad dark:text-bad-dark border-bad/40',
 };
 
-function Badge({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+function Badge({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span className={`inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold ${className ?? ''}`}>
       {children}
@@ -137,6 +134,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
     };
   }, [chart, palaceStats]);
 
+  const classification = useMemo(() => classifyTuViChart(chart), [chart]);
+  const flyingStars = useMemo(() => calculateFlyingStars(chart), [chart]);
+
   return (
     <section className="surface-panel space-y-4 p-4 sm:p-5">
       <div className="space-y-3">
@@ -163,12 +163,47 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
 
       {activeTab === 'overview' && (
         <div className="space-y-4">
+          {/* Cây Phân Loại Lá Số (Classification Tree Archetype) */}
+          <div className="rounded-2xl border border-gold/40 bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/60 p-4 space-y-2.5 shadow-sm">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg">account_tree</span>
+                <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+                  Cây Phân Loại Lá Số
+                </h4>
+              </div>
+              <Badge className="bg-gold/15 text-gold-light dark:text-gold-dark border border-gold/40">
+                {classification.cucName}
+              </Badge>
+            </div>
+
+            {/* Breadcrumb Path */}
+            <div className="flex flex-wrap items-center gap-1.5 text-xs font-semibold">
+              {classification.classificationPath.map((step, idx) => (
+                <React.Fragment key={idx}>
+                  <span className="rounded-lg bg-surface-container-low px-2.5 py-1 text-text-primary-light dark:text-text-primary-dark border border-border-light/50 dark:border-border-dark/50">
+                    {step}
+                  </span>
+                  {idx < classification.classificationPath.length - 1 && (
+                    <span className="text-text-secondary-light dark:text-text-secondary-dark text-xs">›</span>
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+
+            <p className="text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark pt-1 border-t border-border-light/30 dark:border-border-dark/30">
+              {classification.patternSummaryVi}
+            </p>
+          </div>
+
           {/* Current Đại Hạn High-Signal Highlight Card */}
           {currentDaiHan && (
             <div className="surface-card relative overflow-hidden p-4 sm:p-5 shadow-sm space-y-3.5 border-gold/40 dark:border-gold-dark/40 bg-gradient-to-br from-gold/10 via-surface-subtle-light/80 to-surface-container-low dark:from-gold-dark/10 dark:via-surface-subtle-dark/80 dark:to-surface-elevated-dark/50">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-2">
-                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-xl animate-pulse">timeline</span>
+                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-xl animate-pulse">
+                    timeline
+                  </span>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <h4 className="text-base font-bold text-text-primary-light dark:text-text-primary-dark">
@@ -200,20 +235,36 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
               {/* Tam Tài Scoreboard Mini */}
               <div className="grid gap-2 sm:grid-cols-4 text-xs">
                 <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">Thiên Thời (Thái Tuế)</span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">{currentDaiHan.tamTai.thienThoi.level}</p>
+                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                    Thiên Thời (Thái Tuế)
+                  </span>
+                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                    {currentDaiHan.tamTai.thienThoi.level}
+                  </p>
                 </div>
                 <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">Địa Lợi (Cung Chi)</span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">{currentDaiHan.tamTai.diaLoi.level}</p>
+                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                    Địa Lợi (Cung Chi)
+                  </span>
+                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                    {currentDaiHan.tamTai.diaLoi.level}
+                  </p>
                 </div>
                 <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">Nhân Hòa (Quý Nhân)</span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">{currentDaiHan.tamTai.nhanHoa.level}</p>
+                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                    Nhân Hòa (Quý Nhân)
+                  </span>
+                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                    {currentDaiHan.tamTai.nhanHoa.level}
+                  </p>
                 </div>
                 <div className="rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 p-2.5 space-y-0.5">
-                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">Khí Lực (Trường Sinh)</span>
-                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">{currentDaiHan.truongSinh.name}</p>
+                  <span className="text-[10px] uppercase font-bold text-text-secondary-light dark:text-text-secondary-dark">
+                    Khí Lực (Trường Sinh)
+                  </span>
+                  <p className="font-semibold text-text-primary-light dark:text-text-primary-dark truncate">
+                    {currentDaiHan.truongSinh.name}
+                  </p>
                 </div>
               </div>
 
@@ -227,8 +278,8 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                         pat.type === 'cat'
                           ? 'bg-good/15 text-good dark:text-good-dark border-good/30'
                           : pat.type === 'hung'
-                          ? 'bg-bad/15 text-bad dark:text-bad-dark border-bad/30'
-                          : 'bg-gold/15 text-gold-light dark:text-gold-dark border-gold/30'
+                            ? 'bg-bad/15 text-bad dark:text-bad-dark border-bad/30'
+                            : 'bg-gold/15 text-gold-light dark:text-gold-dark border-gold/30'
                       }`}
                     >
                       {pat.name}
@@ -246,7 +297,8 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                     const content = part.slice(colonIdx + 1);
                     return (
                       <p key={idx}>
-                        <strong className="font-bold text-gold-light dark:text-gold-dark">{title}:</strong>{content}
+                        <strong className="font-bold text-gold-light dark:text-gold-dark">{title}:</strong>
+                        {content}
                       </p>
                     );
                   }
@@ -257,7 +309,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
               {/* Item 2 Fixed Spacing */}
               <div className="mt-3 pt-3 border-t border-border-light/40 dark:border-border-dark/40 flex flex-wrap items-start justify-between gap-2 text-xs sm:text-sm text-text-secondary-light dark:text-text-secondary-dark">
                 <div className="flex items-start gap-2 leading-relaxed">
-                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-base shrink-0 mt-0.5">lightbulb</span>
+                  <span className="material-icons-round text-gold-light dark:text-gold-dark text-base shrink-0 mt-0.5">
+                    lightbulb
+                  </span>
                   <div>
                     <strong className="text-text-primary-light dark:text-text-primary-dark">Định hướng cốt lõi:</strong>{' '}
                     <span>{currentDaiHan.detailedSynthesis.strategicGuidance}</span>
@@ -271,20 +325,31 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
             {/* Major Star Layout Card */}
             <div className="surface-card rounded-2xl p-4">
               <div className="flex items-center gap-1.5">
-                <span className="material-icons-round shrink-0 text-base text-gold-light dark:text-gold-dark">straighten</span>
+                <span className="material-icons-round shrink-0 text-base text-gold-light dark:text-gold-dark">
+                  straighten
+                </span>
                 <h4 className="flex-1 min-w-0 text-left text-sm font-semibold leading-snug text-text-primary-light dark:text-text-primary-dark">
                   Bố cục chính tinh
                 </h4>
               </div>
               <div className="mt-3 space-y-2 text-sm text-text-secondary-light dark:text-text-secondary-dark">
                 <p>
-                  Tổng chính tinh: <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">{summary.totalMajorStars}</span>
+                  Tổng chính tinh:{' '}
+                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                    {summary.totalMajorStars}
+                  </span>
                 </p>
                 <p>
-                  Tổng phụ tinh: <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">{summary.totalAuxiliaryStars}</span>
+                  Tổng phụ tinh:{' '}
+                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                    {summary.totalAuxiliaryStars}
+                  </span>
                 </p>
                 <p>
-                  Tổng sát tinh: <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">{summary.totalSatStars}</span>
+                  Tổng sát tinh:{' '}
+                  <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                    {summary.totalSatStars}
+                  </span>
                 </p>
                 <p>
                   Cung nhiều chính tinh nhất:{' '}
@@ -311,13 +376,22 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
               </div>
               <div className="mt-3 space-y-2">
                 {summary.tuHoaEntries.length === 0 ? (
-                  <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">Chưa có Tứ Hóa được ghi nhận.</p>
+                  <p className="text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                    Chưa có Tứ Hóa được ghi nhận.
+                  </p>
                 ) : (
                   summary.tuHoaEntries.slice(0, 8).map((entry) => (
-                    <div key={`${entry.palaceName}-${entry.type}-${entry.starName}`} className="flex flex-wrap items-center gap-2 text-sm">
+                    <div
+                      key={`${entry.palaceName}-${entry.type}-${entry.starName}`}
+                      className="flex flex-wrap items-center gap-2 text-sm"
+                    >
                       <Badge className={TUHOA_CLASS[entry.type]}>{entry.type}</Badge>
-                      <span className="font-medium text-text-primary-light dark:text-text-primary-dark">{entry.starName}</span>
-                      <span className="text-text-secondary-light dark:text-text-secondary-dark">→ {entry.palaceName}</span>
+                      <span className="font-medium text-text-primary-light dark:text-text-primary-dark">
+                        {entry.starName}
+                      </span>
+                      <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                        → {entry.palaceName}
+                      </span>
                     </div>
                   ))
                 )}
@@ -359,9 +433,14 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                   >
                     <span className="font-bold whitespace-nowrap">{dh.ageRange}t</span>
                     <span className="text-[10px] truncate max-w-[75px]">{dh.palaceName}</span>
-                    <span className="text-[9px] font-medium text-gold-light dark:text-gold-dark">{dh.luckScore}/10</span>
+                    <span className="text-[9px] font-medium text-gold-light dark:text-gold-dark">
+                      {dh.luckScore}/10
+                    </span>
                     {dh.isCurrent && (
-                      <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-gold-light dark:bg-gold-dark animate-pulse" title="Đại hạn hiện tại" />
+                      <span
+                        className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-gold-light dark:bg-gold-dark animate-pulse"
+                        title="Đại hạn hiện tại"
+                      />
                     )}
                   </button>
                 );
@@ -424,7 +503,8 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                           const content = part.slice(colonIdx + 1);
                           return (
                             <p key={idx}>
-                              <strong className="font-bold text-gold-light dark:text-gold-dark">{title}:</strong>{content}
+                              <strong className="font-bold text-gold-light dark:text-gold-dark">{title}:</strong>
+                              {content}
                             </p>
                           );
                         }
@@ -486,7 +566,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                       </p>
                     ) : (
                       <p className="text-gold-light dark:text-gold-dark font-medium">
-                        ⚠️ {selectedDaiHan.starStructure.vcdSpecialNote ?? 'Bản cung Vô Chính Diệu, mượn lực chiếu từ đối cung.'}
+                        ⚠️{' '}
+                        {selectedDaiHan.starStructure.vcdSpecialNote ??
+                          'Bản cung Vô Chính Diệu, mượn lực chiếu từ đối cung.'}
                       </p>
                     )}
 
@@ -496,10 +578,18 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                         Lưu Tứ Hóa Can {selectedDaiHan.daiHanTuHoa.canCung} Đại Hạn:
                       </span>
                       <div className="grid grid-cols-2 gap-1 text-[11px]">
-                        <span>✦ Lộc: <strong>{selectedDaiHan.daiHanTuHoa.hoaLoc}</strong></span>
-                        <span>✦ Quyền: <strong>{selectedDaiHan.daiHanTuHoa.hoaQuyen}</strong></span>
-                        <span>✦ Khoa: <strong>{selectedDaiHan.daiHanTuHoa.hoaKhoa}</strong></span>
-                        <span>✦ Kỵ: <strong>{selectedDaiHan.daiHanTuHoa.hoaKy}</strong></span>
+                        <span>
+                          ✦ Lộc: <strong>{selectedDaiHan.daiHanTuHoa.hoaLoc}</strong>
+                        </span>
+                        <span>
+                          ✦ Quyền: <strong>{selectedDaiHan.daiHanTuHoa.hoaQuyen}</strong>
+                        </span>
+                        <span>
+                          ✦ Khoa: <strong>{selectedDaiHan.daiHanTuHoa.hoaKhoa}</strong>
+                        </span>
+                        <span>
+                          ✦ Kỵ: <strong>{selectedDaiHan.daiHanTuHoa.hoaKy}</strong>
+                        </span>
                       </div>
                     </div>
 
@@ -507,9 +597,7 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                       {selectedDaiHan.tamPhuongTuChinh.summary}
                     </p>
                     {selectedDaiHan.tuanTriet.note && (
-                      <p className="text-bad dark:text-bad-dark pt-1 font-medium">
-                        🛡️ {selectedDaiHan.tuanTriet.note}
-                      </p>
+                      <p className="text-bad dark:text-bad-dark pt-1 font-medium">🛡️ {selectedDaiHan.tuanTriet.note}</p>
                     )}
                   </div>
 
@@ -523,7 +611,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                       <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
                         <div className="flex items-center justify-between gap-2">
                           <span className="font-bold text-gold-light dark:text-gold-dark text-xs">✦ Thiên Thời</span>
-                          <Badge className="bg-gold/15 text-gold-light dark:text-gold-dark">{selectedDaiHan.tamTai.thienThoi.level}</Badge>
+                          <Badge className="bg-gold/15 text-gold-light dark:text-gold-dark">
+                            {selectedDaiHan.tamTai.thienThoi.level}
+                          </Badge>
                         </div>
                         <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                           {selectedDaiHan.tamTai.thienThoi.desc}
@@ -533,7 +623,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                       <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
                         <div className="flex items-center justify-between gap-2">
                           <span className="font-bold text-info dark:text-info-dark text-xs">✦ Địa Lợi</span>
-                          <Badge className="bg-info/15 text-info dark:text-info-dark">{selectedDaiHan.tamTai.diaLoi.level}</Badge>
+                          <Badge className="bg-info/15 text-info dark:text-info-dark">
+                            {selectedDaiHan.tamTai.diaLoi.level}
+                          </Badge>
                         </div>
                         <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                           {selectedDaiHan.tamTai.diaLoi.desc}
@@ -543,7 +635,9 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                       <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
                         <div className="flex items-center justify-between gap-2">
                           <span className="font-bold text-good dark:text-good-dark text-xs">✦ Nhân Hòa</span>
-                          <Badge className="bg-good/15 text-good dark:text-good-dark">{selectedDaiHan.tamTai.nhanHoa.level}</Badge>
+                          <Badge className="bg-good/15 text-good dark:text-good-dark">
+                            {selectedDaiHan.tamTai.nhanHoa.level}
+                          </Badge>
                         </div>
                         <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                           {selectedDaiHan.tamTai.nhanHoa.desc}
@@ -552,8 +646,12 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
 
                       <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2.5 border border-border-light/30 dark:border-border-dark/30 space-y-1">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-bold text-purple dark:text-purple-dark text-xs">✦ Khí Lực ({selectedDaiHan.truongSinh.name})</span>
-                          <Badge className="bg-purple/15 text-purple dark:text-purple-dark">{selectedDaiHan.truongSinh.name}</Badge>
+                          <span className="font-bold text-purple dark:text-purple-dark text-xs">
+                            ✦ Khí Lực ({selectedDaiHan.truongSinh.name})
+                          </span>
+                          <Badge className="bg-purple/15 text-purple dark:text-purple-dark">
+                            {selectedDaiHan.truongSinh.name}
+                          </Badge>
                         </div>
                         <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                           {selectedDaiHan.truongSinh.energyDescription}
@@ -575,8 +673,13 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
                     ) : (
                       <div className="space-y-2">
                         {selectedDaiHan.prominentPatterns.map((pat, i) => (
-                          <div key={i} className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2 border border-border-light/40 dark:border-border-dark/40 space-y-0.5">
-                            <span className={`text-[11px] font-bold ${pat.type === 'cat' ? 'text-good dark:text-good-dark' : pat.type === 'hung' ? 'text-bad dark:text-bad-dark' : 'text-gold-light dark:text-gold-dark'}`}>
+                          <div
+                            key={i}
+                            className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2 border border-border-light/40 dark:border-border-dark/40 space-y-0.5"
+                          >
+                            <span
+                              className={`text-[11px] font-bold ${pat.type === 'cat' ? 'text-good dark:text-good-dark' : pat.type === 'hung' ? 'text-bad dark:text-bad-dark' : 'text-gold-light dark:text-gold-dark'}`}
+                            >
                               ✦ {pat.name}
                             </span>
                             <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
@@ -622,6 +725,111 @@ export const TuViSummaryPanel: React.FC<{ chart: TuViChartType }> = React.memo((
               )}
             </article>
           )}
+        </div>
+      )}
+
+      {activeTab === 'phiTinh' && (
+        <div className="space-y-4">
+          {/* Executive Synthesis Card */}
+          <div className="surface-card rounded-2xl p-4 sm:p-5 border-l-4 border-l-gold space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="material-icons-round text-gold-light dark:text-gold-dark text-lg">hub</span>
+              <h3 className="font-bold text-sm text-text-primary-light dark:text-text-primary-dark">
+                Luận Giải Động Thái Phi Tinh Toàn Bàn
+              </h3>
+            </div>
+            <p className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+              {flyingStars.overallSynthesisVi}
+            </p>
+          </div>
+
+          {/* Key Interactions: Mệnh & Tài Quan */}
+          <div className="grid gap-3 sm:grid-cols-2">
+            {/* Mệnh Flying */}
+            <div className="surface-card rounded-2xl p-4 space-y-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-gold-light dark:text-gold-dark flex items-center gap-1.5">
+                <span className="material-icons-round text-base">flight_takeoff</span>
+                Mệnh Xuất Tứ Hóa
+              </h4>
+              <div className="space-y-1.5">
+                {flyingStars.keyInteractions.menhFlying.length === 0 ? (
+                  <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">Không có</p>
+                ) : (
+                  flyingStars.keyInteractions.menhFlying.map((h, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs">
+                      <Badge className={TUHOA_CLASS[h.type]}>Hóa {h.type}</Badge>
+                      <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                        {h.starName}
+                      </span>
+                      <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                        → {h.targetPalaceName} {h.isTuHoa ? '(Tự Hóa)' : ''}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+
+            {/* Mệnh Received */}
+            <div className="surface-card rounded-2xl p-4 space-y-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-info dark:text-info-dark flex items-center gap-1.5">
+                <span className="material-icons-round text-base">flight_land</span>
+                Tứ Hóa Nhập Cung Mệnh
+              </h4>
+              <div className="space-y-1.5">
+                {flyingStars.keyInteractions.menhReceived.length === 0 ? (
+                  <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                    Không có cung vị phi nhập trực tiếp
+                  </p>
+                ) : (
+                  flyingStars.keyInteractions.menhReceived.map((h, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs">
+                      <span className="text-text-secondary-light dark:text-text-secondary-dark">
+                        {h.sourcePalaceName}
+                      </span>
+                      <span className="text-text-secondary-light dark:text-text-secondary-dark">phi</span>
+                      <Badge className={TUHOA_CLASS[h.type]}>Hóa {h.type}</Badge>
+                      <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">
+                        ({h.starName})
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Tự Hóa Grid */}
+          <div className="surface-card rounded-2xl p-4 space-y-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-purple dark:text-purple-dark flex items-center gap-1.5">
+              <span className="material-icons-round text-base">sync_alt</span>
+              Các Vị Trí Tự Hóa Nội Cung ({flyingStars.tuHuaList.length})
+            </h4>
+            {flyingStars.tuHuaList.length === 0 ? (
+              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                Bản bàn không có vị trí Tự Hóa nội tại.
+              </p>
+            ) : (
+              <div className="grid gap-2 sm:grid-cols-2">
+                {flyingStars.tuHuaList.map((tuHua, idx) => (
+                  <div
+                    key={idx}
+                    className="p-2.5 rounded-xl bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/60 border border-border-light/50 dark:border-border-dark/50 text-xs space-y-1"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-text-primary-light dark:text-text-primary-dark">
+                        Cung {tuHua.sourcePalaceName} (Can {tuHua.sourceCan})
+                      </span>
+                      <Badge className={TUHOA_CLASS[tuHua.type]}>Tự Hóa {tuHua.type}</Badge>
+                    </div>
+                    <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+                      {tuHua.descriptionVi}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       )}
     </section>

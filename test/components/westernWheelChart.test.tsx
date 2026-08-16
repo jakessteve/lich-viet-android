@@ -1,17 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import type { WesternChartResult } from '@/services/astrology/westernCalculator';
-import {
-  longitudeToChartAngleDegrees,
-  WesternWheelChart,
-} from '@/components/Astrology/Western/WesternWheelChart';
+import { longitudeToChartAngleDegrees, WesternWheelChart } from '@/components/Astrology/Western/WesternWheelChart';
 
 const ASCENDANT = 63.5131;
 const MIDHEAVEN = 322.8517;
 const CUSPS = [
-  63.5131, 89.9593, 116.4055, 142.8517,
-  176.4055, 209.9593, 243.5131, 269.9593,
-  296.4055, 322.8517, 356.4055, 29.9593,
+  63.5131, 89.9593, 116.4055, 142.8517, 176.4055, 209.9593, 243.5131, 269.9593, 296.4055, 322.8517, 356.4055, 29.9593,
 ];
 
 const result: WesternChartResult = {
@@ -67,8 +62,9 @@ describe('WesternWheelChart geometry', () => {
     expect(radius(firstSpoke!, 'x1', 'y1')).toBeCloseTo(152, 6);
     expect(radius(firstSpoke!, 'x2', 'y2')).toBeCloseTo(42, 6);
 
-    const labelPositions = [...container.querySelectorAll('[data-western-house-label]')]
-      .map((label) => `${Number(label.getAttribute('x')).toFixed(4)},${Number(label.getAttribute('y')).toFixed(4)}`);
+    const labelPositions = [...container.querySelectorAll('[data-western-house-label]')].map(
+      (label) => `${Number(label.getAttribute('x')).toFixed(4)},${Number(label.getAttribute('y')).toFixed(4)}`,
+    );
     expect(new Set(labelPositions).size).toBe(12);
   });
 });

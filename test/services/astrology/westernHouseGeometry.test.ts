@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  buildTopocentricObserver,
-  computePorphyryCusps,
-  unixMsToJulianDay,
-} from '@omce/core-logic';
+import { buildTopocentricObserver, computePorphyryCusps, unixMsToJulianDay } from '@omce/core-logic';
 
 describe('Western Porphyry house geometry', () => {
   it('matches the reference chart angles for the printed birth coordinates', () => {
@@ -19,9 +15,8 @@ describe('Western Porphyry house geometry', () => {
     expect(houses.ascendant).toBeCloseTo(63.5131, 3);
     expect(houses.midheaven).toBeCloseTo(322.8517, 3);
     const expectedCusps = [
-      63.5131, 89.9593, 116.4055, 142.8517,
-      176.4055, 209.9593, 243.5131, 269.9593,
-      296.4055, 322.8517, 356.4055, 29.9593,
+      63.5131, 89.9593, 116.4055, 142.8517, 176.4055, 209.9593, 243.5131, 269.9593, 296.4055, 322.8517, 356.4055,
+      29.9593,
     ];
     houses.cusps.forEach((cusp, index) => {
       expect(cusp).toBeCloseTo(expectedCusps[index], 3);

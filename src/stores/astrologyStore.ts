@@ -6,10 +6,7 @@ import {
 } from '@omce/core-logic';
 import type { VedicChartInput, SynastryInput, WesternChartInput } from '../types/astrology';
 import { calculateWesternChart, type WesternChartResult } from '../services/astrology/westernCalculator';
-import {
-  calculateSwissNatalChart,
-  type SwissNatalChartResult,
-} from '../services/astrology/swissNatalChart';
+import { calculateSwissNatalChart, type SwissNatalChartResult } from '../services/astrology/swissNatalChart';
 import {
   calculateSolarReturnChart,
   calculateLunarReturnDates,
@@ -71,7 +68,7 @@ interface AstrologyState {
   error: string | null;
 
   setSubTab: (tab: AstrologyTab) => void;
-  
+
   setWesternInput: (partial: Partial<WesternChartInput>) => void;
   calculateWestern: () => Promise<void>;
 
@@ -103,9 +100,17 @@ const getDefaultWesternInput = (): WesternChartInput => {
   };
 };
 
-const buildUnifiedProfile = (input: WesternChartInput, gender: string) => {
+const resolveGender = (gender?: string, fallback: string = 'male'): string => {
+  if (!gender) return fallback;
+  if (gender === 'nam' || gender === 'male') return 'male';
+  if (gender === 'nu' || gender === 'female') return 'female';
+  return fallback;
+};
+
+const buildUnifiedProfile = (input: WesternChartInput, defaultGender: string) => {
   const birthDate = input.birthDate instanceof Date ? new Date(input.birthDate.getTime()) : new Date(input.birthDate);
   birthDate.setHours(input.birthHour ?? 12, input.birthMinute ?? 0, 0, 0);
+  const gender = resolveGender(input.gender, defaultGender);
   return generateUnifiedBirthProfile({
     birthTimestamp: birthDate.getTime(),
     latitude: input.latitude,
@@ -153,7 +158,7 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
       westernNatalResult: null,
       error: null,
     })),
-    
+
   calculateWestern: async () => {
     set({ isCalculating: true, error: null, westernResult: null, westernNatalResult: null });
     try {
@@ -165,9 +170,8 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
     }
   },
 
-  setVedicInput: (partial) =>
-    set((state) => ({ vedicInput: { ...state.vedicInput, ...partial }, error: null })),
-    
+  setVedicInput: (partial) => set((state) => ({ vedicInput: { ...state.vedicInput, ...partial }, error: null })),
+
   calculateVedic: async () => {
     set({ isCalculating: true, error: null });
     try {
@@ -216,12 +220,8 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
       const solarReturn = calculateSolarReturnChart(westernInput, forecastYear);
       const lunarReturns = calculateLunarReturnDates(westernInput, forecastYear);
       const upcoming =
-        lunarReturns.find((entry) => entry.julianDay >= unixMsToJulianDay(now.getTime())) ??
-        lunarReturns[0] ??
-        null;
-      const selectedLunarReturn = upcoming
-        ? calculateLunarReturnChart(westernInput, upcoming.julianDay)
-        : null;
+        lunarReturns.find((entry) => entry.julianDay >= unixMsToJulianDay(now.getTime())) ?? lunarReturns[0] ?? null;
+      const selectedLunarReturn = upcoming ? calculateLunarReturnChart(westernInput, upcoming.julianDay) : null;
       const transits = calculateTransitReport(westernInput, now);
       const progressions = calculateProgressedChart(westernInput, now);
       set({
