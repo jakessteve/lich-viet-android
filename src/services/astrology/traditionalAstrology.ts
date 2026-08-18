@@ -5,7 +5,7 @@ import {
   calculateArabicLots,
   calculateAlmutenFiguris,
   calculateFirdaria,
-} from '@omce/core-logic';
+} from '@lich-viet/core-logic';
 import type { SwissNatalChartResult } from './swissNatalChart';
 
 export interface TraditionalPlanetAnalysis {
@@ -159,7 +159,11 @@ export function analyzeTraditionalChart(natalResult: SwissNatalChartResult, birt
         termRuler: essential.termRuler,
         decanRuler: essential.decanRuler,
       },
-      accidentalFactors: accidental.factors,
+      accidentalFactors: (accidental.factors || []).map((f: { name: string; score: number; type: string }) => ({
+        name: f.name,
+        score: f.score,
+        type: f.type === 'positive' || f.type === 'negative' ? f.type : 'neutral',
+      })),
     });
   });
 

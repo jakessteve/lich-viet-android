@@ -8,7 +8,7 @@ import {
   computeCompositeChart,
   computeDavisonChart,
   calculateWesternTransitAspects,
-} from '@omce/core-logic';
+} from '@lich-viet/core-logic';
 import {
   calculateWesternChart,
   calculateWesternChartForJulianDay,

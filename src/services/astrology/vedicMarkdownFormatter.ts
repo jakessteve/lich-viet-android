@@ -18,7 +18,7 @@ import type { WesternChartResult } from './westernCalculator';
 import { synthesizeVedicReading } from './vedicSynthesisEngine';
 import { detectVedicYogasAndDoshas } from './vedicYogas';
 import { calculateVedicDashaTimeline, type VimshottariDashaResult } from './vedicDasha';
-import { computeVedicDignity } from '@omce/core-logic';
+import { computeVedicDignity } from '@lich-viet/core-logic';
 
 export interface VedicMarkdownOptions {
   birthDate?: Date;

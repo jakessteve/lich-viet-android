@@ -9,7 +9,7 @@ import {
   calculateDavisonResult,
   detectMajorAspects,
 } from '../../../src/services/astrology/predictiveCalculator';
-import { computeTrueLunarPosition } from '@omce/core-logic';
+import { computeTrueLunarPosition } from '@lich-viet/core-logic';
 import { calculateWesternChart } from '../../../src/services/astrology/westernCalculator';
 import type { WesternChartInput } from '../../../src/types/astrology';
 

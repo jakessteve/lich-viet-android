@@ -5,7 +5,7 @@ import {
   calculateArabicLots,
   calculateAlmutenFiguris,
   calculateFirdaria,
-} from '@omce/core-logic';
+} from '@lich-viet/core-logic';
 
 describe('Traditional & Hellenistic Astrology Engine', () => {
   it('correctly calculates Diurnal (Day) vs Nocturnal (Night) Sect', () => {

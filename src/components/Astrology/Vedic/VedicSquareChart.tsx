@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import { useAppStore } from '../../../stores/appStore';
-import { computeNavamsha } from '@omce/core-logic';
+import { computeNavamsha } from '@lich-viet/core-logic';
 
 const S = 360;
 const P = 8;

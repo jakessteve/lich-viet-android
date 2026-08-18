@@ -1,4 +1,4 @@
-import { computeAshtakoot } from '@omce/core-logic';
+import { computeAshtakoot } from '@lich-viet/core-logic';
 
 export interface AshtakootItem {
   key: string;
@@ -70,12 +70,12 @@ const KOOTA_METAS: Record<string, { nameVi: string; nameSanskrit: string; maxSco
 };
 
 export function getDetailedAshtakoot(moonA: number, moonB: number): AshtakootDetailedResult {
-  const raw = computeAshtakoot(moonA, moonB);
-  const breakdown = raw && raw.breakdown ? raw.breakdown : {};
+  const raw = computeAshtakoot(moonA, moonB) as { score?: number; breakdown?: Record<string, number> } | null;
+  const breakdown: Record<string, number> = raw && raw.breakdown ? raw.breakdown : {};
 
   const items: AshtakootItem[] = Object.keys(KOOTA_METAS).map((key) => {
     const meta = KOOTA_METAS[key];
-    const score = typeof breakdown[key] === 'number' ? breakdown[key] : typeof raw?.[key] === 'number' ? raw[key] : 0;
+    const score = typeof breakdown[key] === 'number' ? breakdown[key] : 0;
     const ratio = meta.maxScore > 0 ? score / meta.maxScore : 0;
 
     let verdictVi = 'Hoàn hảo';

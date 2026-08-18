@@ -1,4 +1,4 @@
-import { unixMsToJulianDay, buildTopocentricObserver, computeTopocentricPlanetarySnapshot } from '@omce/core-logic';
+import { unixMsToJulianDay, buildTopocentricObserver, computeTopocentricPlanetarySnapshot } from '@lich-viet/core-logic';
 import {
   computeDignity,
   detectMinorAspects,
@@ -6,7 +6,7 @@ import {
   computeDispositorTree,
   detectChartShape,
   computePartOfFortune,
-} from '@omce/core-logic';
+} from '@lich-viet/core-logic';
 import type { WesternChartInput } from '../../types/astrology';
 
 export interface PlanetPosition {
@@ -163,10 +163,24 @@ export function calculateWesternChartForJulianDay(
     };
   });
 
-  const aspects: AspectResult[] = detectMinorAspects(planets);
+  const rawAspects = (detectMinorAspects(planets) || []) as Array<{
+    bodyA?: string;
+    planetA?: string;
+    bodyB?: string;
+    planetB?: string;
+    aspectId?: string;
+    type?: string;
+    orb?: number;
+  }>;
+  const aspects: AspectResult[] = rawAspects.map((a) => ({
+    planetA: a.planetA || a.bodyA || '',
+    planetB: a.planetB || a.bodyB || '',
+    type: a.type || a.aspectId || '',
+    orb: typeof a.orb === 'number' ? a.orb : 0,
+  }));
 
-  const dispositorTree = computeDispositorTree(planets);
-  const chartShape = detectChartShape(planets);
+  const dispositorTree = (computeDispositorTree(planets) as WesternChartResult['dispositorTree']) || null;
+  const chartShape = (detectChartShape(planets) as WesternChartResult['chartShape']) || null;
   const pof = computePartOfFortune(
     planets.find((p) => p.body === 'sun')?.tropicalLongitude ?? 0,
     planets.find((p) => p.body === 'moon')?.tropicalLongitude ?? 0,

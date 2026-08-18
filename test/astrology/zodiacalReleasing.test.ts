@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateZodiacalReleasing } from '@omce/core-logic';
+import { calculateZodiacalReleasing } from '@lich-viet/core-logic';
 
 describe('Hellenistic Zodiacal Releasing Engine', () => {
   it('generates Level 1 and Level 2 periods with correct planetary durations', () => {

@@ -1,4 +1,4 @@
-import { unixMsToJulianDay } from '@omce/core-logic';
+import { unixMsToJulianDay } from '@lich-viet/core-logic';
 import { calculateWesternChart, calculateWesternChartForJulianDay } from './westernCalculator';
 import type { WesternChartInput } from '../../types/astrology';
 

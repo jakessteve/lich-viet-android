@@ -932,7 +932,18 @@ export async function calculateSwissNatalChart(
         morinus: HouseSystem.Morinus,
       };
       const selectedHouseSystem = houseSystemMap[input.houseSystem || 'placidus'] || HouseSystem.Placidus;
-      const houseData = ephemeris.calculateHouses(julianDay, input.latitude, input.longitude, selectedHouseSystem);
+      let houseData: SwissHouseResult;
+      try {
+        houseData = ephemeris.calculateHouses(julianDay, input.latitude, input.longitude, selectedHouseSystem);
+        const angleValues = [houseData.ascendant, houseData.mc, houseData.vertex];
+        const rawCusps = houseData.cusps.length >= 13 ? houseData.cusps.slice(1, 13) : houseData.cusps.slice(0, 12);
+        if (!angleValues.every(Number.isFinite) || rawCusps.length !== 12 || !rawCusps.every(Number.isFinite)) {
+          throw new Error('Non-finite cusps returned');
+        }
+      } catch {
+        // High latitude fallback: Placidus / Koch fail at polar latitudes (>66.5°). Fallback to Porphyrius.
+        houseData = ephemeris.calculateHouses(julianDay, input.latitude, input.longitude, HouseSystem.Porphyrius);
+      }
       const angleValues = [houseData.ascendant, houseData.mc, houseData.vertex];
       if (!angleValues.every(Number.isFinite)) {
         throw new Error('Swiss Ephemeris returned non-finite primary angle data');
@@ -1125,7 +1136,7 @@ export async function calculateSwissNatalChart(
         const dignity = getEssentialDignity(object.id, signIdx);
         return { ...object, dignity };
       });
-      const houses: SwissNatalHouse[] = cusps.map((longitude, index) => {
+      const houses: SwissNatalHouse[] = cusps.map((longitude: number, index: number) => {
         const zodiac = zodiacPosition(longitude);
         return {
           number: index + 1,

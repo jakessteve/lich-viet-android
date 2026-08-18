@@ -10,11 +10,13 @@
     "./calendar": "./src/calendar/index.ts",
     "./dungsu": "./src/dungsu/index.ts",
     "./maihoa": "./src/maihoa/index.ts",
-    "./fengshui": "./src/fengshui/index.ts",
     "./qmdj": "./src/qmdj/index.ts",
     "./thaiAt": "./src/thaiAt/index.ts",
     "./lucNham": "./src/lucNham/index.ts",
-    "./tamThuc": "./src/tamThuc/index.ts"
+    "./tamThuc": "./src/tamThuc/index.ts",
+    "./lunar-engine": "./src/lunar-engine/index.ts",
+    "./astrology-rules": "./src/astrology-rules/index.ts",
+    "./prayer-catalog": "./src/prayer-catalog/index.ts"
   },
   "dependencies": {
     "@lich-viet/types": "3.1.0"

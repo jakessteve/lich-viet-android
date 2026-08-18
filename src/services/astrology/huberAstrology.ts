@@ -1,4 +1,4 @@
-import { calculateHuberAgePoint, detectHuberAspectFigures } from '@omce/core-logic';
+import { calculateHuberAgePoint, detectHuberAspectFigures } from '@lich-viet/core-logic';
 import type { SwissNatalChartResult } from './swissNatalChart';
 
 export interface HuberAnalysisResult {
@@ -40,7 +40,7 @@ export function analyzeHuberChart(natalResult: SwissNatalChartResult, currentAge
   const planets = natalResult.objects.map((o) => ({ body: o.nameVi, tropicalLongitude: o.longitude }));
 
   // 1. Age Point Progression
-  const agePoint = calculateHuberAgePoint(currentAgeYears, cusps, planets);
+  const agePoint = calculateHuberAgePoint(currentAgeYears, cusps, planets) as HuberAnalysisResult['agePoint'];
 
   // 2. Aspect Figures
   const figures = detectHuberAspectFigures(
@@ -51,7 +51,7 @@ export function analyzeHuberChart(natalResult: SwissNatalChartResult, currentAge
       planetB: a.objectBName,
       type: a.id,
     })),
-  );
+  ) as HuberAnalysisResult['figures'];
 
   // 3. Color Polarity Balance
   let redCount = 0;

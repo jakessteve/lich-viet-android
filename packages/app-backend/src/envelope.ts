@@ -1,8 +1,8 @@
-import { createAsyncCalculationRequest } from "@omce/contracts";
+import { createAsyncCalculationRequest } from "@lich-viet/contracts";
 import {
   createChunkPlan,
   runElectionScan
-} from "@omce/swisseph-wasm";
+} from "@lich-viet/swisseph-wasm";
 
 export interface ElectionOptionsInput {
   chunkHours?: number;

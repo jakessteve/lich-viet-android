@@ -1,5 +1,5 @@
 {
-  "name": "@omce/swisseph-wasm",
+  "name": "@lich-viet/swisseph-wasm",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -15,8 +15,8 @@
     "status": "node -e \"console.log('Swiss Ephemeris wasm wrapper pending implementation.')\""
   },
   "dependencies": {
-    "@omce/canonical-db": "0.0.0",
-    "@omce/contracts": "0.0.0",
-    "@omce/core-logic": "0.0.0"
+    "@lich-viet/canonical-db": "0.0.0",
+    "@lich-viet/contracts": "0.0.0",
+    "@lich-viet/core-logic": "0.0.0"
   }
 }

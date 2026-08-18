@@ -11,12 +11,12 @@ export const VedicInterpretationPanel: React.FC<{
   if (mode === 'simple') {
     return (
       <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
-        <div className="card-header bg-purple-50/50 dark:bg-purple-900/10 flex items-center justify-between border-b border-border-light/40 dark:border-border-dark/40 pb-3">
-          <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400 font-bold">
-            <span className="material-icons-round text-base">psychology</span>
+        <div className="card-header bg-purple-50/50 dark:bg-purple-900/10 flex items-center justify-between gap-3 border-b border-border-light/40 dark:border-border-dark/40">
+          <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400 font-bold m-0">
+            <span className="material-icons-round text-base shrink-0">psychology</span>
             Luận Giải Cốt Cách & Bản Mệnh (Vedic)
           </h3>
-          <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
+          <span className="inline-flex items-center justify-center shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-purple-200/60 dark:border-purple-800/60 bg-purple-100/80 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 leading-none">
             Cơ Bản (Sidereal Lahiri)
           </span>
         </div>
@@ -119,12 +119,12 @@ export const VedicInterpretationPanel: React.FC<{
   // MODE 2: Chuyên Sâu (Advanced Technical & Comprehensive Jyotish Synthesis)
   return (
     <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
-      <div className="card-header bg-purple-50/50 dark:bg-purple-900/10 flex items-center justify-between border-b border-border-light/40 dark:border-border-dark/40 pb-3">
-        <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400 font-bold">
-          <span className="material-icons-round text-base">psychology</span>
+      <div className="card-header bg-purple-50/50 dark:bg-purple-900/10 flex items-center justify-between gap-3 border-b border-border-light/40 dark:border-border-dark/40">
+        <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400 font-bold m-0">
+          <span className="material-icons-round text-base shrink-0">psychology</span>
           Diễn Giải Toàn Diện (Jyotish Synthesis & Kỹ Thuật)
         </h3>
-        <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
+        <span className="inline-flex items-center justify-center shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-purple-200/60 dark:border-purple-800/60 bg-purple-100/80 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 leading-none">
           Chuyên Sâu (Sidereal Lahiri)
         </span>
       </div>

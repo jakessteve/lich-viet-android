@@ -3,7 +3,7 @@ import {
   generateUnifiedBirthProfile,
   calculateSynastry as calculateSynastryCore,
   unixMsToJulianDay,
-} from '@omce/core-logic';
+} from '@lich-viet/core-logic';
 import type { VedicChartInput, SynastryInput, WesternChartInput } from '../types/astrology';
 import { calculateWesternChart, type WesternChartResult } from '../services/astrology/westernCalculator';
 import { calculateSwissNatalChart, type SwissNatalChartResult } from '../services/astrology/swissNatalChart';
@@ -206,7 +206,7 @@ export const useAstrologyStore = create<AstrologyState>((set, get) => ({
       const { synastryInput } = get();
       const profileA = buildUnifiedProfile(synastryInput.profileA, 'male');
       const profileB = buildUnifiedProfile(synastryInput.profileB, 'female');
-      const result = calculateSynastryCore(profileA, profileB);
+      const result = calculateSynastryCore(profileA, profileB) as unknown as SynastryResult;
       const compositeResult = calculateCompositeResult(synastryInput.profileA, synastryInput.profileB);
       const davisonResult = calculateDavisonResult(synastryInput.profileA, synastryInput.profileB);
       set({ synastryResult: result, compositeResult, davisonResult, isCalculating: false });

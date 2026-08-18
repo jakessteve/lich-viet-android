@@ -13,7 +13,7 @@ import {
   unixMsToJulianDay,
   buildTopocentricObserver,
   computeTopocentricPlanetarySnapshot,
-} from '@omce/core-logic';
+} from '@lich-viet/core-logic';
 import type { WesternChartInput } from '../../types/astrology';
 import { calculateWesternChart } from './westernCalculator';
 

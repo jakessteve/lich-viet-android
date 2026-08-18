@@ -17,13 +17,15 @@ export default defineConfig({
       { find: '@lich-viet/core/tamThuc', replacement: path.resolve(__dirname, 'packages/core/src/tamThuc/index.ts') },
       // Base package alias
       { find: '@lich-viet/core', replacement: path.resolve(__dirname, 'packages/core/src/index.ts') },
+      { find: '@lich-viet/types', replacement: path.resolve(__dirname, 'packages/types/src/index.ts') },
+      { find: '@lich-viet/contracts', replacement: path.resolve(__dirname, 'packages/contracts/src/index.ts') },
+      { find: '@lich-viet/api-client', replacement: path.resolve(__dirname, 'packages/api-client/src/index.ts') },
       // App-level alias
       { find: '@', replacement: path.resolve(__dirname, 'src') },
-      { find: '@omce/core-logic', replacement: path.resolve(__dirname, 'packages/core-logic/src/index.js') },
-      { find: '@omce/contracts', replacement: path.resolve(__dirname, 'packages/contracts/src/index.js') },
-      { find: '@omce/canonical-db', replacement: path.resolve(__dirname, 'packages/canonical-db/src/index.js') },
-      { find: '@omce/swisseph-wasm', replacement: path.resolve(__dirname, 'packages/swisseph-wasm/src/index.js') },
-      { find: '@omce/app-backend', replacement: path.resolve(__dirname, 'packages/app-backend/src/index.js') },
+      { find: '@lich-viet/core-logic', replacement: path.resolve(__dirname, 'packages/core-logic/src/index.js') },
+      { find: '@lich-viet/canonical-db', replacement: path.resolve(__dirname, 'packages/canonical-db/src/index.js') },
+      { find: '@lich-viet/swisseph-wasm', replacement: path.resolve(__dirname, 'packages/swisseph-wasm/src/index.js') },
+      { find: '@lich-viet/app-backend', replacement: path.resolve(__dirname, 'packages/app-backend/src/index.js') },
     ],
   },
   test: {

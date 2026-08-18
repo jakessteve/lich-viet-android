@@ -16,7 +16,19 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true
+    "allowJs": true,
+    "baseUrl": "../..",
+    "paths": {
+      "@lich-viet/core": ["packages/core/src/index.ts"],
+      "@lich-viet/core/*": ["packages/core/src/*/index.ts"],
+      "@lich-viet/types": ["packages/types/src/index.ts"],
+      "@lich-viet/contracts": ["packages/contracts/src/index.ts"],
+      "@lich-viet/api-client": ["packages/api-client/src/index.ts"],
+      "@lich-viet/core-logic": ["packages/core-logic/src/index.js", "packages/core-logic/src/index.d.ts"],
+      "@lich-viet/canonical-db": ["packages/canonical-db/src/index.js", "packages/canonical-db/src/index.d.ts"],
+      "@lich-viet/swisseph-wasm": ["packages/swisseph-wasm/src/index.js", "packages/swisseph-wasm/src/index.d.ts"],
+      "@lich-viet/app-backend": ["packages/app-backend/src/index.ts", "packages/app-backend/src/index.d.ts"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "test"]

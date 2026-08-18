@@ -3,11 +3,11 @@ import {
   createOverrideAuditEntry,
   getDungSuScoringProfile,
   resolveVietnamHistoricalTimezone
-} from "@omce/canonical-db";
+} from "@lich-viet/canonical-db";
 import {
   createAsyncCalculationRequest,
   createHybridElectionTimeline
-} from "@omce/contracts";
+} from "@lich-viet/contracts";
 import {
   applyTimelineGuardrails,
   calculateDungSuEventScore,
@@ -19,7 +19,7 @@ import {
   resolveStrictModeOverrides,
   summarizeChunkCandidates,
   unixMsToJulianDay
-} from "@omce/core-logic";
+} from "@lich-viet/core-logic";
 import { executeWasmAstronomyPipeline } from "./astronomy-api.js";
 
 function createTimelineTransferPayload(timeline) {

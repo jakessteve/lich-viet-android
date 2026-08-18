@@ -5,16 +5,16 @@ import { classifyTuViChart } from '../../services/tuvi/chartClassification';
 import { calculateFlyingStars } from '../../services/tuvi/flyingStars';
 import { SegmentedControl, type SegmentedOption } from '../shared';
 import { TuViTieuHanPanel } from './TuViTieuHanPanel';
-import { LayoutDashboard, Calendar, TrendingUp, Network, ChevronRight, Activity } from 'lucide-react';
+import { TrendingUp, Network, ChevronRight, Activity } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 type SummaryTab = 'overview' | 'tieuHan' | 'daiHan' | 'phiTinh';
 
 const SUMMARY_TABS: readonly SegmentedOption<SummaryTab>[] = [
-  { id: 'overview', label: 'Tổng quan', shortLabel: 'Tổng quan', icon: <LayoutDashboard className="h-4 w-4" /> as unknown as string },
-  { id: 'tieuHan', label: 'Tiểu hạn & Năm', shortLabel: 'Tiểu hạn', icon: <Calendar className="h-4 w-4" /> as unknown as string },
-  { id: 'daiHan', label: 'Đại hạn', shortLabel: 'Đại hạn', icon: <TrendingUp className="h-4 w-4" /> as unknown as string },
-  { id: 'phiTinh', label: 'Phi Tinh Tứ Hóa', shortLabel: 'Phi Tinh', icon: <Network className="h-4 w-4" /> as unknown as string },
+  { id: 'overview', label: 'Tổng quan', shortLabel: 'Tổng quan' },
+  { id: 'tieuHan', label: 'Tiểu hạn & Năm', shortLabel: 'Tiểu hạn' },
+  { id: 'daiHan', label: 'Đại hạn', shortLabel: 'Đại hạn' },
+  { id: 'phiTinh', label: 'Phi Tinh Tứ Hóa', shortLabel: 'Phi Tinh' },
 ];
 
 const TUHOA_CLASS: Record<'Lộc' | 'Quyền' | 'Khoa' | 'Kỵ', string> = {

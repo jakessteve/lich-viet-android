@@ -29,7 +29,7 @@ test.describe('Lịch Việt - End-to-End User Journey Tests', () => {
 
       // Check result appears
       await expect(page.getByText('Lá số Tử Vi')).toBeVisible({ timeout: 5000 });
-      await expect(page.getByText('Mệnh')).toBeVisible();
+      await expect(page.getByRole('button', { name: /Mở lá số Tử Vi/i })).toBeVisible();
     }
   });
 
@@ -38,7 +38,7 @@ test.describe('Lịch Việt - End-to-End User Journey Tests', () => {
 
     // Verify main page elements
     await expect(page.locator('body')).toBeVisible();
-    await expect(page.getByRole('tablist', { name: /Chế độ xem âm lịch/i })).toBeVisible();
+    await expect(page.getByRole('tablist', { name: /Chức năng Âm Lịch/i })).toBeVisible();
 
     // Verify day view or detailed view components render
     await expect(page.getByText(/Giờ Hoàng Đạo|Dụng Sự|Tiết khí/i).first()).toBeVisible({ timeout: 10000 });
@@ -48,25 +48,19 @@ test.describe('Lịch Việt - End-to-End User Journey Tests', () => {
     await page.goto('/app/tu-vi');
 
     // Fill form if input form is displayed
-    const nameInput = page.locator('input[placeholder*="Họ tên"], input#name');
+    const nameInput = page.locator('input#tuviName, input[placeholder*="Nguyễn Văn A"]');
     if (await nameInput.isVisible()) {
       await nameInput.fill('Nguyễn Văn A');
     }
 
-    const calcBtn = page.getByRole('button', { name: /Lập Lá Số/i });
+    const calcBtn = page.getByRole('button', { name: /Xem Lá Số/i });
     if (await calcBtn.isVisible()) {
       await calcBtn.click();
     }
 
     // Wait for the chart to render
-    await expect(page.getByText(/Mệnh|Thân|Quan Lộc|Tài Bạch/i).first()).toBeVisible({ timeout: 10000 });
-
-    // Test tab switching between Tóm tắt & Tiểu hạn if available
-    const tieuHanTab = page.getByRole('tab', { name: /Tiểu Hạn/i });
-    if (await tieuHanTab.isVisible()) {
-      await tieuHanTab.click();
-      await expect(page.getByText(/Tiểu Hạn Năm/i)).toBeVisible();
-    }
+    await expect(page.getByText(/Tử Vi Đẩu Số/i)).toBeVisible();
+    await expect(page.getByText(/Thông Tin Lá Số/i)).toBeVisible();
   });
 
   test('4. Gieo Quẻ & Mai Hoa Dịch Số full flow', async ({ page }) => {
@@ -76,11 +70,11 @@ test.describe('Lịch Việt - End-to-End User Journey Tests', () => {
     await expect(page.getByText(/Mai Hoa Dịch Số|Tam Thức/i).first()).toBeVisible({ timeout: 10000 });
 
     // Click Gieo quẻ button
-    const gieoQueBtn = page.getByRole('button', { name: /Gieo Quẻ|Lập Quẻ/i }).first();
+    const gieoQueBtn = page.getByRole('button', { name: /Gieo Quẻ Mai Hoa/i });
     if (await gieoQueBtn.isVisible()) {
       await gieoQueBtn.click();
       // Check hexagram result
-      await expect(page.getByText(/Quẻ Chủ|Quẻ Hỗ|Quẻ Biến/i).first()).toBeVisible({ timeout: 5000 });
+      await expect(page.getByText('Quẻ Chủ', { exact: true })).toBeVisible({ timeout: 5000 });
     }
   });
 

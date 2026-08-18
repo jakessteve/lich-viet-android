@@ -26,6 +26,7 @@
     "format": "prettier --write \"{src,packages,scripts,test}/**/*.{ts,tsx,css,json}\"",
     "format:check": "prettier --check \"{src,packages,scripts,test}/**/*.{ts,tsx,css,json}\"",
     "validate:data": "npx tsx scripts/validateData.ts",
+    "fitness:assert": "npx tsx scripts/fitness/boundary-check.ts",
     "docs:api": "typedoc",
     "test:e2e": "playwright test",
     "test:e2e:ci": "npx playwright install --with-deps chromium && playwright test",

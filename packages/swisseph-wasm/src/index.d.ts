@@ -3,7 +3,7 @@ import type {
   DungSuEventScore,
   HybridElectionTimeline,
   ScoringMetrics,
-} from '@omce/contracts';
+} from '@lich-viet/contracts';
 
 export interface OmceWorkerOptions {
   controlZone?: 'occupied' | 'resistance';

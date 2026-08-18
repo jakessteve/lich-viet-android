@@ -7,9 +7,11 @@ import { WesternNatalChartDisplay } from './WesternNatalChartDisplay';
 import { TraditionalChartView } from './TraditionalChartView';
 import { HuberChartView } from './HuberChartView';
 import { ZodiacalReleasingView } from './ZodiacalReleasingView';
+import { ThematicChartView } from './ThematicChartView';
 
 const VIEW_TABS = [
   { id: 'natal', label: 'Bản Đồ Gốc', shortLabel: 'Lá Số' },
+  { id: 'thematic', label: 'Chủ Đề & Sứ Mệnh', shortLabel: 'Chủ Đề' },
   { id: 'traditional', label: 'Cổ Điển & Lots', shortLabel: 'Cổ Điển' },
   { id: 'huber', label: 'Tâm Lý Huber 72n', shortLabel: 'Huber' },
   { id: 'releasing', label: 'Vận Hạn Hy Lạp', shortLabel: 'Hy Lạp' },
@@ -198,6 +200,7 @@ export const WesternChartView: React.FC = () => {
           />
 
           {activeTab === 'natal' && <WesternNatalChartDisplay />}
+          {activeTab === 'thematic' && <ThematicChartView natalResult={result} />}
           {activeTab === 'traditional' && <TraditionalChartView natalResult={result} birthDate={birthDateObj} />}
           {activeTab === 'huber' && <HuberChartView natalResult={result} birthDate={birthDateObj} />}
           {activeTab === 'releasing' && <ZodiacalReleasingView natalResult={result} birthDate={birthDateObj} />}

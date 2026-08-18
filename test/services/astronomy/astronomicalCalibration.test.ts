@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { getSunLongitude, getSolarTerm, getJDN, findSolarTermStart } from '@/utils/foundationalLayer';
-import { computeAyanamsa, computeTrueLunarPosition, computeDeltaT } from '@omce/core-logic';
+import { computeAyanamsa, computeTrueLunarPosition, computeDeltaT } from '@lich-viet/core-logic';
 import { calculateWesternChartForJulianDay } from '@/services/astrology/westernCalculator';
 
 describe('Astronomical Cross-Validation Suite', () => {

@@ -8,7 +8,7 @@ import {
   computeAyanamsa,
   computeLahiriAyanamsa,
   convertTropicalToSidereal
-} from "@omce/core-logic";
+} from "@lich-viet/core-logic";
 
 test("Round 4 - War Timezone Splits and Transitions", () => {
   // 1948 occupied vs resistance split

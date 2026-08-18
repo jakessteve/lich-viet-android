@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
-import { computeVedicDignity, computeVimshottariDasha } from '@omce/core-logic';
-import { unixMsToJulianDay } from '@omce/core-logic';
+import { computeVedicDignity, computeVimshottariDasha } from '@lich-viet/core-logic';
+import { unixMsToJulianDay } from '@lich-viet/core-logic';
 import {
   getVedicSignInterpretation,
   getVedicPlanetInSignInterpretation,

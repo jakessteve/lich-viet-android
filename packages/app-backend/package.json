@@ -1,18 +1,18 @@
 {
-  "name": "@omce/app-backend",
+  "name": "@lich-viet/app-backend",
   "version": "3.1.0",
   "private": true,
   "type": "module",
-  "main": "./src/index.js",
-  "types": "./src/index.d.ts",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "default": "./src/index.js"
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
     },
     "./server": {
-      "types": "./src/main.d.ts",
-      "default": "./src/main.js"
+      "types": "./src/main.ts",
+      "default": "./src/main.ts"
     }
   },
   "scripts": {
@@ -28,10 +28,10 @@
     "@nestjs/core": "^11.0.0",
     "@nestjs/platform-fastify": "^11.0.0",
     "@nestjs/swagger": "^11.0.0",
-    "@omce/canonical-db": "0.0.0",
-    "@omce/contracts": "0.0.0",
-    "@omce/core-logic": "0.0.0",
-    "@omce/swisseph-wasm": "0.0.0",
+    "@lich-viet/canonical-db": "0.0.0",
+    "@lich-viet/contracts": "0.0.0",
+    "@lich-viet/core-logic": "0.0.0",
+    "@lich-viet/swisseph-wasm": "0.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "fastify": "^5.2.0",

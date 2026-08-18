@@ -1,3 +1,3 @@
-import { computeNavamsha, computeVimshottariDasha, computeAshtakoot } from '@omce/core-logic';
+import { computeNavamsha, computeVimshottariDasha, computeAshtakoot } from '@lich-viet/core-logic';
 
 export { computeNavamsha, computeVimshottariDasha, computeAshtakoot };

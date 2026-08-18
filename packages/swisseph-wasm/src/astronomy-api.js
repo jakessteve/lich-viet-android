@@ -9,11 +9,11 @@ import {
   solveSolarTermBoundary,
   computeSolarLongitude,
   normalizeDegrees
-} from "@omce/core-logic";
+} from "@lich-viet/core-logic";
 import {
   resolveVietnamHistoricalTimezone,
   shiftTimestampByOffsetHours
-} from "@omce/canonical-db";
+} from "@lich-viet/canonical-db";
 
 export function deriveWasmTopocentricSnapshot(input) {
   const observer = buildTopocentricObserver(input);

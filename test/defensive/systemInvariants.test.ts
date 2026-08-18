@@ -3,6 +3,8 @@ import { sanitizePlainText, sanitizeCoordinates, escapeSvgText, escapeHtml } fro
 import { getCivilDateForOffset, estimateTimezoneOffsetHours } from '@/utils/geo';
 import { useProfileVaultStore, DEFAULT_PROFILE } from '@/stores/profileVaultStore';
 import { getSolarTerm } from '@/utils/foundationalLayer';
+import { calculateSwissNatalChart, type SwissNatalEphemeris } from '@/services/astrology/swissNatalChart';
+import { CalculationFlag, HouseSystem } from '@swisseph/core';
 
 describe('Zero-Trust Defensive & Boundary Test Suite', () => {
   // ── 1. Security & Sanitization Boundaries ───────────────────
@@ -86,6 +88,59 @@ describe('Zero-Trust Defensive & Boundary Test Suite', () => {
         expect(typeof term).toBe('string');
         expect(term.length).toBeGreaterThan(0);
       }
+    });
+
+    it('calculates Western natal chart at polar latitude falling back to Porphyry when Placidus fails', async () => {
+      const REQUIRED_FLAGS = CalculationFlag.SwissEphemeris | CalculationFlag.Speed;
+
+      const polarEphemeris: SwissNatalEphemeris = {
+        version: () => 'test-swiss',
+        dateToJulianDay: (date: Date) => date.getTime() / 86_400_000 + 2_440_587.5,
+        calculatePosition: (_julianDay: number, body: number, requestedFlags: number) => ({
+          longitude: (((Number(body) * 23.75 + 280.071588) % 360) + 360) % 360,
+          latitude: 0.1,
+          distance: 1,
+          longitudeSpeed: 0.8,
+          latitudeSpeed: 0,
+          distanceSpeed: 0,
+          flags: Number(requestedFlags) || REQUIRED_FLAGS,
+        }),
+        calculateHouses: (_julianDay: number, _latitude: number, _longitude: number, houseSystem?: HouseSystem) => {
+          if (houseSystem === HouseSystem.Placidus) {
+            throw new Error('House calculation failed at polar latitude');
+          }
+          return {
+            cusps: [0, 15, 45, 75, 105, 135, 165, 195, 225, 255, 285, 315, 345],
+            ascendant: 15,
+            mc: 285,
+            armc: 0,
+            vertex: 205,
+            equatorialAscendant: 0,
+            coAscendant1: 0,
+            coAscendant2: 0,
+            polarAscendant: 0,
+            houseSystem: HouseSystem.Porphyrius,
+          };
+        },
+      };
+
+      const polarChart = await calculateSwissNatalChart(
+        {
+          birthDate: new Date(1995, 7, 15),
+          birthHour: 12,
+          birthMinute: 0,
+          latitude: 78.2232, // Longyearbyen, Svalbard (Arctic)
+          longitude: 15.6267,
+          timezone: 2,
+          houseSystem: 'placidus',
+        },
+        { ephemeris: polarEphemeris },
+      );
+
+      expect(polarChart).toBeDefined();
+      expect(polarChart.houses.length).toBe(12);
+      expect(Number.isFinite(polarChart.angles.Ascendant.longitude)).toBe(true);
+      expect(polarChart.angles.Ascendant.longitude).toBe(15);
     });
   });
 });

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateHuberAgePoint, detectHuberAspectFigures } from '@omce/core-logic';
+import { calculateHuberAgePoint, detectHuberAspectFigures } from '@lich-viet/core-logic';
 
 describe('Huber Psychological Astrology & 72-Year Life Clock Engine', () => {
   it('correctly calculates Huber Age Point across houses (6 years per house)', () => {

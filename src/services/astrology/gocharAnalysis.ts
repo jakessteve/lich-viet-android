@@ -15,7 +15,7 @@ import {
   buildTopocentricObserver,
   computeTopocentricPlanetarySnapshot,
   calculateTarabala,
-} from '@omce/core-logic';
+} from '@lich-viet/core-logic';
 import type { VedicChartInput } from '../../types/astrology';
 import { calculateWesternChart } from './westernCalculator';
 

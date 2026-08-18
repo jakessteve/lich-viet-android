@@ -1,4 +1,4 @@
-import { computeVimshottariDasha } from '@omce/core-logic';
+import { computeVimshottariDasha } from '@lich-viet/core-logic';
 import { calculateAntardashaPeriods, type AntardashaPeriod } from './gocharAnalysis';
 
 export interface DashaPeriod {

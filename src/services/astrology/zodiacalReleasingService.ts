@@ -1,7 +1,21 @@
-import { calculateZodiacalReleasing } from '@omce/core-logic';
+import { calculateZodiacalReleasing } from '@lich-viet/core-logic';
 import type { SwissNatalChartResult } from './swissNatalChart';
 
-export type ZodiacalPeriod = ReturnType<typeof calculateZodiacalReleasing>[number];
+export interface ZodiacalPeriod {
+  level: number;
+  sign: string;
+  signVi: string;
+  durationYears?: number;
+  durationMonths?: number;
+  startAge: number;
+  endAge: number;
+  startYear: number;
+  endYear: number;
+  isPeak: boolean;
+  peakType?: string | null;
+  isLoosingOfHelm?: boolean;
+  subPeriods?: ZodiacalPeriod[];
+}
 
 export interface ZodiacalReleasingReport {
   lotOfFortune: {
@@ -72,8 +86,8 @@ export function generateZodiacalReleasingReport(
   const spiritSign = SIGN_NAMES[spiritSignIdx];
   const spiritSignVi = SIGN_NAMES_VI[spiritSignIdx];
 
-  const releasingFromSpirit = calculateZodiacalReleasing(spiritSign, birthDate, fortuneSign, maxYears);
-  const releasingFromFortune = calculateZodiacalReleasing(fortuneSign, birthDate, fortuneSign, maxYears);
+  const releasingFromSpirit = calculateZodiacalReleasing(spiritSign, birthDate, fortuneSign, maxYears) as ZodiacalPeriod[];
+  const releasingFromFortune = calculateZodiacalReleasing(fortuneSign, birthDate, fortuneSign, maxYears) as ZodiacalPeriod[];
 
   return {
     lotOfFortune: {

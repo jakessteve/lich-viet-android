@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildTopocentricObserver, computePorphyryCusps, unixMsToJulianDay } from '@omce/core-logic';
+import { buildTopocentricObserver, computePorphyryCusps, unixMsToJulianDay } from '@lich-viet/core-logic';
 
 describe('Western Porphyry house geometry', () => {
   it('matches the reference chart angles for the printed birth coordinates', () => {

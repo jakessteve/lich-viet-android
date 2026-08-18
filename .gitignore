@@ -39,6 +39,10 @@ __pycache__/
 .venv/
 venv/
 env/
+natal_chart/__pycache__/
+natal_chart/venv/
+natal_chart/*.svg
+natal_chart/*.json
 
 # IDEs & OS Files
 .vscode/
@@ -55,6 +59,8 @@ Desktop.ini
 # Testing & Coverage
 coverage/
 .nyc_output/
+playwright-report/
+test-results/
 
 # Debug/Lint/Test output artifacts (temp files)
 lint*.txt

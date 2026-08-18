@@ -29,7 +29,7 @@ No code changes in this document.
    vedic dignity, tarabala.
 7. Synastry is a stub returning {} (astrologyStore.ts:106-113).
 8. Duplicate minimal engine. Frontend westernCalculator.ts re-implements a
-   subset while @omce/app-backend already exposes a complete pipeline:
+   subset while @lich-viet/app-backend already exposes a complete pipeline:
    - createWesternChart (packages/app-backend/src/frontend-readiness.js:757):
      core+outer planets, north/south node, lilith, chiron, antiscia, PoF with
      real day/night detection, major+minor aspects, midpoints, chart shape,
@@ -61,7 +61,7 @@ D9 navamsha, Vedic dignity — all already implemented in packages/.
 ## 4. Implementation Phases
 
 ### Phase 0 — Correctness (P0, blocking)
-- T1 Engine swap: replace frontend pipeline with @omce/app-backend
+- T1 Engine swap: replace frontend pipeline with @lich-viet/app-backend
   createWesternChart / createVedicKundli (pure ESM JS, browser-safe).
   westernCalculator.ts becomes a thin adapter mapping results to
   WesternChartResult; or store calls backend functions directly.
@@ -129,7 +129,7 @@ test/ (new fixtures)
   fallback option = swisseph-wasm engine (already a dependency).
 - R2 Historical timezone/DST data may be incomplete; affects pre-1975 VN births.
 - R3 Module officially "removed" per docs — needs owner confirmation.
-- R4 Bundle size/perf when importing @omce/app-backend client-side; check
+- R4 Bundle size/perf when importing @lich-viet/app-backend client-side; check
   tree-shaking of frontend-readiness imports.
 
 ## 8. Open Questions (user decision needed)
@@ -155,7 +155,7 @@ CONFIRMED (evidence):
   receptions, almuten, bounds/terms, fixed stars, intercepted signs
   (frontend-readiness.js:757-1012).
 - createVedicKundli delivers lagna, D1/D9, dashas, yogas, doshas (:1013-1042).
-- @omce/app-backend is browser-safe: executeWasmAstronomyPipeline is pure JS
+- @lich-viet/app-backend is browser-safe: executeWasmAstronomyPipeline is pure JS
   core-logic math despite the wasm name (swisseph-wasm/src/astronomy-api.js).
 - Historical timezone support exists but Vietnam-only (canonical-db/htzc.js).
 

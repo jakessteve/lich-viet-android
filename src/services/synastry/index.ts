@@ -1,3 +1,3 @@
-import { generateUnifiedBirthProfile } from '@omce/core-logic';
+import { generateUnifiedBirthProfile } from '@lich-viet/core-logic';
 
 export { generateUnifiedBirthProfile };

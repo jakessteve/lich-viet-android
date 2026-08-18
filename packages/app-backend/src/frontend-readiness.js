@@ -5,7 +5,7 @@ import {
   listCalculationSources,
   listDungSuEvents,
   listDungSuScoringProfiles
-} from "@omce/canonical-db";
+} from "@lich-viet/canonical-db";
 import {
   calculateDungSuEventScore,
   computeWeightedScore,
@@ -44,7 +44,7 @@ import {
   computeNavamsha, 
   computeVimshottariDasha, 
   computeVedicDignity 
-} from "@omce/core-logic";
+} from "@lich-viet/core-logic";
 import { 
   detectStationaryPlanets,
   computeEclipseConditions,
@@ -54,8 +54,8 @@ import {
   computeBarbaultSyntheticIndex,
   calculateTraditionalMaiHoa,
   evaluateTamThucScore
-} from "@omce/core-logic";
-import { executeWasmAstronomyPipeline } from "@omce/swisseph-wasm";
+} from "@lich-viet/core-logic";
+import { executeWasmAstronomyPipeline } from "@lich-viet/swisseph-wasm";
 
 const CAN = Object.freeze(["Giap", "At", "Binh", "Dinh", "Mau", "Ky", "Canh", "Tan", "Nham", "Quy"]);
 const CAN_VI = Object.freeze(["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"]);
@@ -1533,7 +1533,7 @@ export function createFrontendReadinessBundle(input = {}) {
 import {
   createValidationDashboard,
   createPredictionRecord
-} from "@omce/core-logic";
+} from "@lich-viet/core-logic";
 
 let validationDashboard = null;
 

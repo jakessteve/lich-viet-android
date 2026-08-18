@@ -1,4 +1,4 @@
-import { resolveVietnamHistoricalTimezone } from "@omce/canonical-db";
+import { resolveVietnamHistoricalTimezone } from "@lich-viet/canonical-db";
 import { computeSolarLongitude, computeTrueLunarPosition, normalizeDegrees } from "./astronomy.js";
 
 const PI = Math.PI;
