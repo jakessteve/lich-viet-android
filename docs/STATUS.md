@@ -1,8 +1,8 @@
 # Project Status & Source of Truth (SOT)
 
-> **Version:** 3.3.0 | **Updated:** August 2026  
-> **Status:** Stable / Production-Ready / Fully Integrated  
-> **Test Baseline:** 100 Vitest Suites (692 tests) + 4 Backend Suites (22 tests) = **714 / 714 Passed (100%)**
+> **Version:** 3.4.0 | **Updated:** August 2026  
+> **Status:** Stable / Production-Ready / Fully Integrated & Unified UI/UX  
+> **Test Baseline:** 102 Vitest Suites (696 tests) + 4 Backend Suites (22 tests) = **718 / 718 Passed (100%)**
 
 ---
 
@@ -11,12 +11,12 @@
 | Gate | Target / Threshold | Current Value | Status |
 |---|---|---|---|
 | **TypeScript Typecheck** | Zero errors with `strict: true` | `tsc --noEmit`: **0 errors** | ✅ GREEN |
-| **Frontend & Unit Tests** | 100% passing suites | **100/100 files, 692/692 tests** | ✅ GREEN |
+| **Frontend & Unit Tests** | 100% passing suites | **102/102 files, 696/696 tests** | ✅ GREEN |
 | **Backend Fastify E2E** | 100% passing routes | **4 files, 22/22 tests** | ✅ GREEN |
 | **Live SDK Socket Tests** | Real HTTP integration | **5/5 live socket tests** | ✅ GREEN |
-| **Web Production Bundle** | Clean Vite + PWA build | **Built in ~6.4s** | ✅ GREEN |
-| **Android Debug APK** | Assembled via Gradle | **11.4 MB** (`app-debug.apk`) | ✅ GREEN |
-| **Android Release APK** | Assembled via Gradle | **9.4 MB** (`app-release-unsigned.apk`) | ✅ GREEN |
+| **Web Production Bundle** | Clean Vite + PWA build | **Built in ~6.7s** | ✅ GREEN |
+| **Android Debug APK** | Assembled via Gradle | **8.2 MB** (`app-debug.apk`) | ✅ GREEN |
+| **Android Release APK** | Assembled via Gradle | **7.4 MB** (`app-release-unsigned.apk`) | ✅ GREEN |
 
 ---
 
@@ -65,6 +65,12 @@ lich-viet-android/
 - **Gateway Abstraction:** Decoupled `RuntimeContext` supporting zero-latency local-first demo mode and live remote NestJS backend.
 - **Delta Sync Protocol:** Incremental synchronization via `/v1/sync` with server watermarking and mutation acknowledgments.
 - **Cloud Backup:** Automated profile and anniversary backup directly from the Settings page.
+
+### E. Design System & Ergonomics Standards (v3.4.0)
+- **Unified Semantic Tokens:** 7 core palette tokens (`good`, `bad`, `gold`, `purple`, `orange`, `info`, `primary`) and standardized surface hierarchy.
+- **Pure SVG Icon Architecture:** 100% Lucide SVG icons with zero font dependency, eliminated `material-icons-round.woff2` payload (150KB+ bandwidth saved, zero FOUT/layout shift).
+- **Accessible Sub-Navigation (`SubNavTabs`):** Touch-target ergonomics (min 44px), ARIA-compliant tablists, spring-press physics across Election, Mai Hoa, and Chiem Tinh pages.
+- **Unified Birth Form & Progressive Disclosure:** `UnifiedBirthDataPicker` centralized profile prefill, solar/lunar auto-conversion, and layered collapsible expert settings.
 
 ---
 

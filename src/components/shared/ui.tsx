@@ -92,7 +92,7 @@ export function IconButton(props: IconButtonProps) {
 
 export interface ActionButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon?: React.ReactNode | string;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'gold';
 }
 
 export function ActionButton({
@@ -106,7 +106,7 @@ export function ActionButton({
   return (
     <ShadcnButton
       type={type}
-      variant={variant === 'primary' ? 'primary' : 'ghost'}
+      variant={variant}
       className={cn('rounded-2xl px-6 py-3 text-sm font-bold gap-2', className)}
       {...props}
     >

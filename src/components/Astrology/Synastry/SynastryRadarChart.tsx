@@ -1,4 +1,6 @@
 import React from 'react';
+import { Compass } from 'lucide-react';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import type { SynastryDimensions } from '../../../stores/astrologyStore';
 
 interface SynastryRadarChartProps {
@@ -39,7 +41,7 @@ export const SynastryRadarChart: React.FC<SynastryRadarChartProps> = ({ dimensio
     <div className="surface-card p-4 sm:p-5 rounded-2xl border border-border-light/60 dark:border-border-dark/60 space-y-4">
       <div className="flex items-center justify-between border-b border-border-light/40 pb-2.5 dark:border-border-dark/40">
         <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-          <span className="material-icons-round text-base text-rose-500">radar</span>
+          <Compass className="h-4 w-4 text-rose-500 shrink-0" />
           Bản Đồ 5 Chiều Hòa Hợp (5D Relational Vector)
         </h4>
         <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
@@ -159,9 +161,9 @@ export const SynastryRadarChart: React.FC<SynastryRadarChartProps> = ({ dimensio
             >
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
-                  <span className="material-icons-round text-sm" style={{ color }}>
-                    {icon}
-                  </span>
+                  <div style={{ color }}>
+                    {renderDynamicIcon(icon, 'h-3.5 w-3.5')}
+                  </div>
                   {label}
                 </span>
                 <span className="text-xs font-bold text-rose-500 dark:text-rose-400">{dim.score}%</span>

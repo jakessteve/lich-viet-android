@@ -195,20 +195,20 @@ export default function LandingPage() {
             </p>
 
             {/* CTA buttons */}
-            <div className="flex flex-wrap items-center justify-start gap-4">
+            <div className="relative z-20 isolate flex flex-wrap items-center justify-start gap-4">
               <ActionButton
                 onClick={() => navigate('/app/am-lich')}
                 className="px-5 py-3 font-medium cursor-pointer"
-                icon="arrow_forward"
+                icon={<ArrowRight className="h-4 w-4" />}
               >
                 Khám phá ngay
               </ActionButton>
               <ActionButton
                 onClick={() => navigate('/app/nang-cap')}
                 variant="secondary"
-                className="px-5 py-3 font-medium cursor-pointer"
+                className="px-5 py-3 font-medium cursor-pointer border border-border-light dark:border-border-dark/60 bg-surface-subtle-light dark:bg-surface-elevated-dark"
+                icon={<Crown className="h-4 w-4" />}
               >
-                <Crown className="h-4 w-4 mr-1.5" />
                 Xem các gói
               </ActionButton>
             </div>
@@ -422,9 +422,15 @@ export default function LandingPage() {
                   Hôm nay là ngày Hoàng Đạo — thời điểm tốt để bắt đầu!
                 </p>
               )}
-              <ActionButton onClick={() => navigate('/app/am-lich')} className="px-8 py-3.5" icon="arrow_forward">
-                Mở Lịch Việt
-              </ActionButton>
+              <div className="relative z-20 isolate flex justify-center">
+                <ActionButton
+                  onClick={() => navigate('/app/am-lich')}
+                  className="px-8 py-3.5 font-bold cursor-pointer"
+                  icon={<ArrowRight className="h-4 w-4" />}
+                >
+                  Mở Lịch Việt
+                </ActionButton>
+              </div>
             </div>
           </div>
         </div>
@@ -520,7 +526,7 @@ export default function LandingPage() {
               © {new Date().getFullYear()} Lịch Việt. Tất cả tính toán chạy trên trình duyệt — dữ liệu riêng tư của bạn.
             </span>
             <span className="text-text-secondary-light/60 dark:text-text-secondary-dark/60 text-xs font-medium">
-              v3.0
+              v1.0
             </span>
           </div>
         </div>

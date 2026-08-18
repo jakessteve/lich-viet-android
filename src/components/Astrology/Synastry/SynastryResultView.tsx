@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Sparkles, Compass, LineChart, Star, Flame, CheckCircle2, Lightbulb } from 'lucide-react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { SegmentedControl } from '../../shared';
@@ -116,7 +117,7 @@ export const SynastryResultView: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <h4 className="text-sm font-semibold flex items-center gap-1.5 truncate">
-                      <span className="material-icons-round text-base text-amber-500">auto_awesome</span>
+                      <Sparkles className="h-4 w-4 text-amber-500 shrink-0" />
                       Tử Vi & Bát Tự
                     </h4>
                     <span className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
@@ -133,7 +134,7 @@ export const SynastryResultView: React.FC = () => {
 
                   {synastryResult.engines.tuVi.batTrach && (
                     <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border border-amber-200/50 dark:border-amber-700/50">
-                      <span className="material-icons-round text-xs">explore</span>
+                      <Compass className="h-3 w-3 shrink-0" />
                       Bát Trạch: {synastryResult.engines.tuVi.batTrach.relationship} ({synastryResult.engines.tuVi.batTrach.quaiA} - {synastryResult.engines.tuVi.batTrach.quaiB})
                     </div>
                   )}
@@ -165,7 +166,7 @@ export const SynastryResultView: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <h4 className="text-sm font-semibold flex items-center gap-1.5 truncate">
-                      <span className="material-icons-round text-base text-indigo-500 dark:text-indigo-400">auto_graph</span>
+                      <LineChart className="h-4 w-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
                       Tây Phương (Synastry)
                     </h4>
                     <span className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
@@ -223,7 +224,7 @@ export const SynastryResultView: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <h4 className="text-sm font-semibold flex items-center gap-1.5 truncate">
-                      <span className="material-icons-round text-base text-emerald-500">star_half</span>
+                      <Star className="h-4 w-4 text-emerald-500 shrink-0" />
                       Vedic (Ashtakoot & Manglik)
                     </h4>
                     <span className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
@@ -240,7 +241,7 @@ export const SynastryResultView: React.FC = () => {
 
                   {synastryResult.engines.vedic.manglik && (
                     <div className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold border ${synastryResult.engines.vedic.manglik.isCompatible ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border-emerald-200/50' : 'bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 border-rose-200/50'}`}>
-                      <span className="material-icons-round text-xs">local_fire_department</span>
+                      <Flame className="h-3 w-3 shrink-0" />
                       Kuja Dosha: {synastryResult.engines.vedic.manglik.label}
                     </div>
                   )}
@@ -273,7 +274,7 @@ export const SynastryResultView: React.FC = () => {
               <div className="surface-card p-4 sm:p-5 rounded-2xl border border-border-light/60 dark:border-border-dark/60 space-y-3">
                 <div className="flex items-center justify-between border-b border-border-light/40 pb-2.5 dark:border-border-dark/40">
                   <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-                    <span className="material-icons-round text-base text-emerald-500">star_half</span>
+                    <Star className="h-4 w-4 text-emerald-500 shrink-0" />
                     Bảng 8 Tiêu Chí Ashtakoot Guna Milan (Kèm Hóa Giải Dosha Pariharas)
                   </h4>
                   <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">
@@ -321,7 +322,7 @@ export const SynastryResultView: React.FC = () => {
                 {synastryResult.engines.vedic.pariharas && synastryResult.engines.vedic.pariharas.length > 0 && (
                   <div className="p-3 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-200/60 dark:border-emerald-800/40 text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
                     <p className="font-bold flex items-center gap-1.5">
-                      <span className="material-icons-round text-sm text-emerald-500">check_circle</span>
+                      <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
                       Ngoại Lệ Hóa Giải (Dosha Pariharas):
                     </p>
                     {synastryResult.engines.vedic.pariharas.map((p, idx) => (
@@ -336,7 +337,7 @@ export const SynastryResultView: React.FC = () => {
           {synastryResult.advice && synastryResult.advice.length > 0 && (
             <div className="surface-card p-4 sm:p-5 rounded-2xl border border-border-light/60 dark:border-border-dark/60 space-y-2.5 bg-gradient-to-br from-rose-50/30 to-indigo-50/30 dark:from-rose-950/10 dark:to-indigo-950/10">
               <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-                <span className="material-icons-round text-base text-rose-500">tips_and_updates</span>
+                <Lightbulb className="h-4 w-4 text-rose-500 shrink-0" />
                 Lời Khuyên Nuôi Dưỡng Tình Cảm & Chuyển Hóa Xung Khắc
               </h4>
               <ul className="space-y-1.5">

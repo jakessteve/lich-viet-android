@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Brain, Sparkles, TrendingUp, Lightbulb, LayoutGrid } from 'lucide-react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import { synthesizeVedicReading } from '../../../services/astrology/vedicSynthesisEngine';
 
@@ -13,7 +14,7 @@ export const VedicInterpretationPanel: React.FC<{
       <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
         <div className="card-header bg-purple-50/50 dark:bg-purple-900/10 flex items-center justify-between gap-3 border-b border-border-light/40 dark:border-border-dark/40">
           <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400 font-bold m-0">
-            <span className="material-icons-round text-base shrink-0">psychology</span>
+            <Brain className="h-4 w-4 shrink-0" />
             Luận Giải Cốt Cách & Bản Mệnh (Vedic)
           </h3>
           <span className="inline-flex items-center justify-center shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-purple-200/60 dark:border-purple-800/60 bg-purple-100/80 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 leading-none">
@@ -74,7 +75,7 @@ export const VedicInterpretationPanel: React.FC<{
           {reading.activeYogasSummaryVi.length > 0 && (
             <div className="p-3.5 rounded-xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 space-y-2">
               <h4 className="font-semibold text-xs text-purple-700 dark:text-purple-400 flex items-center gap-1.5">
-                <span className="material-icons-round text-sm">stars</span>
+                <Sparkles className="h-3.5 w-3.5" />
                 Thế Trận Cát Tinh Tiêu Biểu
               </h4>
               <div className="space-y-1.5">
@@ -94,7 +95,7 @@ export const VedicInterpretationPanel: React.FC<{
           {reading.activeDashaReadingVi && (
             <div className="p-3.5 rounded-xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 space-y-1">
               <h4 className="font-semibold text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
-                <span className="material-icons-round text-sm">timeline</span>
+                <TrendingUp className="h-3.5 w-3.5" />
                 Đại Vận Đang Kích Hoạt (Vimshottari Dasha)
               </h4>
               <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
@@ -106,7 +107,7 @@ export const VedicInterpretationPanel: React.FC<{
           {/* Actionable Guidance */}
           <div className="p-3.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-xs text-purple-900 dark:text-purple-200 leading-relaxed font-medium">
             <span className="font-bold flex items-center gap-1 mb-1">
-              <span className="material-icons-round text-sm">tips_and_updates</span>
+              <Lightbulb className="h-3.5 w-3.5" />
               Kim Chỉ Nam Vệ Đà
             </span>
             {reading.actionableGuidanceVi}
@@ -121,7 +122,7 @@ export const VedicInterpretationPanel: React.FC<{
     <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
       <div className="card-header bg-purple-50/50 dark:bg-purple-900/10 flex items-center justify-between gap-3 border-b border-border-light/40 dark:border-border-dark/40">
         <h3 className="section-title text-sm flex items-center gap-2 text-purple-700 dark:text-purple-400 font-bold m-0">
-          <span className="material-icons-round text-base shrink-0">psychology</span>
+          <Brain className="h-4 w-4 shrink-0" />
           Diễn Giải Toàn Diện (Jyotish Synthesis & Kỹ Thuật)
         </h3>
         <span className="inline-flex items-center justify-center shrink-0 text-[11px] font-semibold px-2.5 py-1 rounded-full border border-purple-200/60 dark:border-purple-800/60 bg-purple-100/80 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 leading-none">
@@ -179,7 +180,7 @@ export const VedicInterpretationPanel: React.FC<{
         {reading.bhavaMatrixReadingVi && (
           <div className="p-4 rounded-2xl bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 border border-border-light/60 dark:border-border-dark/60 space-y-2">
             <h4 className="font-bold text-xs text-purple-700 dark:text-purple-400 flex items-center gap-1.5 uppercase tracking-wider">
-              <span className="material-icons-round text-sm">dashboard_customize</span>
+              <LayoutGrid className="h-3.5 w-3.5" />
               Ma Trận Cấu Trúc Cung Vị (Bhava Distribution Matrix)
             </h4>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
@@ -192,7 +193,7 @@ export const VedicInterpretationPanel: React.FC<{
         {reading.activeYogasSummaryVi.length > 0 && (
           <div className="p-4 rounded-2xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 space-y-3">
             <h4 className="font-bold text-xs text-purple-700 dark:text-purple-400 flex items-center gap-1.5 uppercase tracking-wider">
-              <span className="material-icons-round text-sm">stars</span>
+              <Sparkles className="h-3.5 w-3.5" />
               Toàn Bộ Cát Cách & Hung Cách (Yogas & Formations — {reading.activeYogasSummaryVi.length})
             </h4>
             <div className="space-y-2">
@@ -212,7 +213,7 @@ export const VedicInterpretationPanel: React.FC<{
         {reading.activeDashaReadingVi && (
           <div className="p-4 rounded-2xl bg-surface-card border border-border-light/60 dark:border-border-dark/60 space-y-2">
             <h4 className="font-bold text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1.5 uppercase tracking-wider">
-              <span className="material-icons-round text-sm">timeline</span>
+              <TrendingUp className="h-3.5 w-3.5" />
               Thời Vận Kích Hoạt (Vimshottari Dasha Dynamics)
             </h4>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
@@ -224,7 +225,7 @@ export const VedicInterpretationPanel: React.FC<{
         {/* Actionable Guidance & Remedial Philosophy */}
         <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-xs text-purple-900 dark:text-purple-200 leading-relaxed font-medium space-y-1.5">
           <span className="font-bold flex items-center gap-1.5 text-sm text-purple-800 dark:text-purple-300">
-            <span className="material-icons-round text-base">tips_and_updates</span>
+            <Lightbulb className="h-4 w-4" />
             Kim Chỉ Nam & Pháp Tu Tập Vệ Đà (Jyotish Remedial Guidance)
           </span>
           <p>{reading.actionableGuidanceVi}</p>

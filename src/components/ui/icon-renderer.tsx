@@ -6,6 +6,7 @@ import {
   ChevronUp,
   Calendar,
   CalendarCheck,
+  CalendarDays,
   X,
   Menu,
   Settings,
@@ -21,6 +22,7 @@ import {
   Download,
   Share2,
   Check,
+  CheckCircle,
   Copy,
   Sparkles,
   Compass,
@@ -34,50 +36,114 @@ import {
   Camera,
   Lock,
   Unlock,
+  Clock,
+  ListChecks,
+  Table,
+  Palette,
+  Shapes,
+  Briefcase,
+  Wallet,
+  Brain,
+  Baby,
+  Globe,
+  Home,
+  BookOpen,
+  Star,
+  Hourglass,
+  Lightbulb,
+  LayoutGrid,
+  Dices,
+  LineChart,
+  Layers,
+  FileText,
+  TrendingUp,
+  Landmark,
+  GraduationCap,
+  Plane,
+  Flame,
+  HeartPulse,
+  Trees,
+  MoreHorizontal,
+  Hammer,
+  Mountain,
+  XCircle,
+  Infinity as InfinityIcon,
   type LucideIcon,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const ICON_MAP: Record<string, LucideIcon> = {
+  // Navigation & Chevrons
   chevron_left: ChevronLeft,
   chevron_right: ChevronRight,
   expand_more: ChevronDown,
   expand_less: ChevronUp,
+  close: X,
+  menu: Menu,
+
+  // Calendars & Dates
   today: Calendar,
   calendar_today: Calendar,
   calendar_month: Calendar,
   event: CalendarCheck,
   event_available: CalendarCheck,
-  close: X,
-  menu: Menu,
+  calendar_days: CalendarDays,
+  schedule: Clock,
+  time: Clock,
+  clock: Clock,
+  timelapse: Hourglass,
+
+  // Settings & Controls
   settings: Settings,
   tune: Sliders,
+  sliders: Sliders,
   help: HelpCircle,
   help_outline: HelpCircle,
   info: Info,
   info_outline: Info,
+
+  // Actions & Utilities
+  search: Search,
+  download: Download,
+  file_download: Download,
+  share: Share2,
+  check: Check,
+  check_circle: CheckCircle,
+  content_copy: Copy,
+  refresh: RotateCcw,
+  autorenew: RotateCcw,
+  photo_camera: Camera,
+  lock: Lock,
+  lock_open: Unlock,
+  checklist: ListChecks,
+
+  // User & Social
   favorite: Heart,
   favorite_border: Heart,
-  arrow_forward: ArrowRight,
-  arrow_back: ArrowLeft,
   person: User,
   person_outline: User,
   account_circle: User,
   security: ShieldCheck,
   verified: ShieldCheck,
   verified_user: ShieldCheck,
-  search: Search,
-  download: Download,
-  file_download: Download,
-  share: Share2,
-  check: Check,
-  check_circle: Check,
-  content_copy: Copy,
+  child_care: Baby,
+
+  // Direction & Astrological
+  arrow_forward: ArrowRight,
+  arrow_back: ArrowLeft,
+  arrow_right: ArrowRight,
+  arrow_left: ArrowLeft,
+  explore: Compass,
+  public: Globe,
+  language: Globe,
+  home: Home,
+  compass: Compass,
+  radar: Compass,
+
+  // Astronomy & Divination
   auto_awesome: Sparkles,
   stars: Sparkles,
   sparkles: Sparkles,
-  explore: Compass,
-  public: Compass,
   wb_sunny: Sun,
   wb_twilight: Sun,
   nights_stay: Moon,
@@ -85,28 +151,55 @@ const ICON_MAP: Record<string, LucideIcon> = {
   spa: Sparkles,
   bolt: Zap,
   military_tech: Award,
+  casino: Dices,
+  dices: Dices,
+  star: Star,
+  star_half: Star,
+  local_fire_department: Flame,
+  all_inclusive: InfinityIcon,
+  auto_graph: LineChart,
+  insights: LineChart,
+  timeline: TrendingUp,
+
+  // Work, Study, Psychology, Categories
+  work: Briefcase,
+  account_balance: Landmark,
+  account_balance_wallet: Wallet,
+  school: GraduationCap,
+  flight_takeoff: Plane,
+  temple_buddhist: Flame,
+  health_and_safety: HeartPulse,
+  park: Trees,
+  more_horiz: MoreHorizontal,
+  construction: Hammer,
+  landscape: Mountain,
+  psychology: Brain,
+  menu_book: BookOpen,
+  tips_and_updates: Lightbulb,
+  dashboard_customize: LayoutGrid,
+  palette: Palette,
+  interests: Shapes,
+  table_chart: Table,
+  layers: Layers,
+  description: FileText,
+  cancel: XCircle,
+
+  // Errors & Alerts
   error: AlertCircle,
   error_outline: AlertTriangle,
   warning: AlertTriangle,
-  refresh: RotateCcw,
-  autorenew: RotateCcw,
-  photo_camera: Camera,
-  lock: Lock,
-  lock_open: Unlock,
 };
 
 export function renderDynamicIcon(icon: React.ReactNode | string | undefined, className?: string): React.ReactNode {
   if (!icon) return null;
   if (typeof icon !== 'string') return icon;
 
-  const Matched = ICON_MAP[icon.trim()];
+  const trimmed = icon.trim();
+  const Matched = ICON_MAP[trimmed] || ICON_MAP[trimmed.toLowerCase()];
   if (Matched) {
     return <Matched className={cn('h-4 w-4 shrink-0', className)} aria-hidden="true" />;
   }
 
-  return (
-    <span className={cn('material-icons-round text-base shrink-0', className)} aria-hidden="true">
-      {icon}
-    </span>
-  );
+  return <Sparkles className={cn('h-4 w-4 shrink-0 opacity-70', className)} aria-hidden="true" />;
 }
+

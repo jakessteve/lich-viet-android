@@ -27,7 +27,7 @@ import FAQIntentCards, { type FAQIntent } from './FAQIntentCards';
 
 import SynergyRadar, { type RadarData } from '../shared/SynergyRadar';
 
-// New UX components
+import { Compass, ListChecks, CalendarCheck, Calendar, Sparkles } from 'lucide-react';
 import VerdictBanner from './VerdictBanner';
 import ResultTabs from './ResultTabs';
 import HourPickerGrid from './HourPickerGrid';
@@ -325,7 +325,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
             className={`p-4 sm:p-5 ${selectedIntent === 'xem-ngay' ? 'border-b border-border-light/30 dark:border-border-dark/30' : ''} bg-surface-subtle-light/30 dark:bg-white/5 transition-all duration-300`}
           >
             <div className="flex items-center gap-2 mb-4">
-              <span className="material-icons-round text-base text-gold dark:text-gold-dark">explore</span>
+              <Compass className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
               <p className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark uppercase tracking-wider">
                 Bạn muốn tra cứu gì?
               </p>
@@ -338,7 +338,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
             <div className="p-4 sm:p-5 animate-fade-scale">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <span className="material-icons-round text-base text-gold dark:text-gold-dark">checklist</span>
+                  <ListChecks className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
                   <span className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
                     Chọn việc cần làm cụ thể
                   </span>
@@ -363,7 +363,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
         {/* Date & Time Input — compact inline */}
         <div className="rounded-xl border border-border-light dark:border-border-dark overflow-hidden">
           <div className="px-4 py-2.5 border-b border-border-light/30 dark:border-border-dark/30 flex items-center gap-2">
-            <span className="material-icons-round text-base text-gold dark:text-gold-dark">event</span>
+            <CalendarCheck className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
             <span className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
               Chọn ngày giờ dự kiến
             </span>
@@ -446,7 +446,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
 
             {/* Lunar date summary — compact */}
             <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-white/5 text-xs text-text-secondary-light dark:text-text-secondary-dark">
-              <span className="material-icons-round text-sm text-gold dark:text-gold-dark">today</span>
+              <Calendar className="h-3.5 w-3.5 text-gold dark:text-gold-dark shrink-0" />
               <span className="capitalize">{solarDateStr}</span>
               <span className="text-gray-300 dark:text-gray-600">|</span>
               <span>
@@ -587,7 +587,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
       {/* Empty state */}
       {!result && (
         <div className="flex flex-col items-center justify-center py-8 text-center animate-fade-scale">
-          <span className="material-icons-round text-4xl text-gray-300 dark:text-gray-600 mb-2">auto_awesome</span>
+          <Sparkles className="h-10 w-10 text-gray-300 dark:text-gray-600 mb-2 opacity-50" />
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark max-w-xs">
             Chọn mục đích hoặc một việc cần làm cụ thể để xem đánh giá tốt/xấu
           </p>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sparkles } from 'lucide-react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 
 const SIGNS = [
@@ -50,7 +51,7 @@ export const WesternInterpretationPanel: React.FC<{ result: WesternChartResult }
     <div className="glass-card overflow-hidden mb-6 animate-fade-in-up">
       <div className="card-header bg-astral-surface-light/50 dark:bg-astral-surface-dark/30 flex items-center justify-between">
         <h3 className="section-title text-sm flex items-center gap-2 text-astral-primary dark:text-astral-primary-dark font-bold">
-          <span className="material-icons-round text-base">auto_awesome</span>
+          <Sparkles className="h-4 w-4 shrink-0" />
           Diễn Giải Nhanh (The Big Three & Trọng Tâm Vận Mệnh)
         </h3>
         <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-astral-primary/10 text-astral-primary dark:text-astral-primary-dark">

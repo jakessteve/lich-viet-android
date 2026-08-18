@@ -36,7 +36,6 @@ export default function HeroAuspiciousArt() {
       style={{
         maskImage: 'radial-gradient(circle at 50% 50%, black 88%, rgba(0,0,0,0.6) 96%, transparent 100%)',
         WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 88%, rgba(0,0,0,0.6) 96%, transparent 100%)',
-        contain: 'strict',
       }}
     >
       {/* Main Celestial Board with native GPU-accelerated SVG */}
@@ -183,10 +182,10 @@ export default function HeroAuspiciousArt() {
             {/* Core background aura */}
             <circle cx="400" cy="400" r="72" fill={`url(#${goldGradId})`} opacity="0.12" />
 
-            {/* Rotating Taiji Symbol */}
+            {/* Rotating Taiji Symbol (synchronized with Bagua at 60s) */}
             <g
               style={{
-                animation: 'spin 80s linear infinite',
+                animation: 'spin 60s linear infinite',
                 transformBox: 'view-box',
                 transformOrigin: '400px 400px',
                 willChange: 'transform',

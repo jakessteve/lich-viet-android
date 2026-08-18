@@ -35,7 +35,7 @@ export const ContextualDrawer: React.FC<ContextualDrawerProps> = ({
   return (
     <div
       className={cn(
-        'fixed sm:relative inset-x-0 bottom-0 z-40 sm:z-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col max-h-[85vh] bg-surface-card/95 backdrop-blur-md sm:backdrop-blur-none border-t sm:border border-border-light/80 dark:border-border-dark/80 rounded-t-3xl sm:rounded-2xl shadow-2xl sm:shadow-md overflow-hidden motion-gpu animate-slide-up',
+        'fixed sm:relative inset-x-0 bottom-0 z-40 sm:z-auto transition-all duration-380 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col max-h-[85vh] bg-surface-card/95 backdrop-blur-md sm:backdrop-blur-none border-t sm:border border-border-light/80 dark:border-border-dark/80 rounded-t-3xl sm:rounded-2xl shadow-2xl sm:shadow-md overflow-hidden motion-gpu animate-slide-up',
         isExpanded ? 'h-[80vh]' : 'h-[44vh] sm:h-auto',
       )}
       role="region"

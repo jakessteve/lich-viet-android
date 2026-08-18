@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { Award, Compass, Table, Hourglass } from 'lucide-react';
 import type { SwissNatalChartResult } from '../../../services/astrology/swissNatalChart';
 import { analyzeTraditionalChart } from '../../../services/astrology/traditionalAstrology';
 
@@ -53,7 +54,7 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
       <div className="space-y-4">
         <div className="glass-card p-4 sm:p-5 space-y-3">
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-            <span className="material-icons-round text-amber-500 text-base">military_tech</span>
+            <Award className="h-4 w-4 text-amber-500 shrink-0" />
             Chủ Quản Tối Cao (Almuten Figuris - Ibn Ezra)
           </h4>
           <div className="p-3 bg-surface-subtle-light dark:bg-white/5 rounded-xl flex items-center justify-between">
@@ -85,7 +86,7 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
 
         <div className="glass-card p-4 sm:p-5 space-y-3">
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-            <span className="material-icons-round text-indigo-500 text-base">explore</span>
+            <Compass className="h-4 w-4 text-indigo-500 shrink-0" />
             Các Điểm Ả Rập Trọng Yếu (Arabic Lots)
           </h4>
           <div className="space-y-2 text-xs">
@@ -121,7 +122,7 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
       <div className="glass-card overflow-hidden">
         <div className="p-4 sm:p-5 border-b border-border-light dark:border-border-dark/40 flex items-center justify-between">
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-            <span className="material-icons-round text-indigo-500 text-base">table_chart</span>
+            <Table className="h-4 w-4 text-indigo-500 shrink-0" />
             Bảng 5 Phẩm Chất Cốt Lõi (5-Fold Essential Dignities)
           </h4>
           <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
@@ -237,9 +238,7 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
       {/* 4. Firdaria Timeline */}
       <div className="glass-card p-4 sm:p-5 space-y-3">
         <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-          <span className="material-icons-round text-astral-primary dark:text-astral-primary-dark text-base">
-            hourglass_top
-          </span>
+          <Hourglass className="h-4 w-4 text-astral-primary dark:text-astral-primary-dark shrink-0" />
           Chu Kỳ Vận Hạn Firdaria (75 Năm Trung Cổ)
         </h4>
         <div className="space-y-2.5">

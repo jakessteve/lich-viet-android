@@ -20,4 +20,5 @@ export { ContextualDrawer } from './ContextualDrawer';
 export { StoryCardExportModal } from './StoryCardExportModal';
 export { default as TermTooltip, ESOTERIC_TERMS } from './TermTooltip';
 export { default as StoryShareModal } from './StoryShareModal';
+export * from './SubNavTabs';
 

@@ -49,6 +49,10 @@ export class RemoteAuthGateway implements AuthGateway {
   async getProfile(): Promise<UserProfile> {
     return this.client.getProfile();
   }
+
+  async updateProfile(updates: Partial<UserProfile>): Promise<UserProfile> {
+    return this.client.updateProfile(updates);
+  }
 }
 
 export class RemoteCalendarEventGateway implements CalendarEventGateway {

@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { TrendingUp, ChevronDown } from 'lucide-react';
 import type { SwissNatalChartResult } from '../../../services/astrology/swissNatalChart';
 import {
   generateZodiacalReleasingReport,
@@ -27,7 +28,7 @@ export const ZodiacalReleasingView: React.FC<ZodiacalReleasingViewProps> = ({ na
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border-light dark:border-border-dark/40 pb-3">
           <div>
             <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-astral-primary dark:text-astral-primary-dark">timeline</span>
+              <TrendingUp className="h-4 w-4 text-astral-primary dark:text-astral-primary-dark shrink-0" />
               Chu Kỳ Vận Hạn Hy Lạp (Zodiacal Releasing)
             </h3>
             <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
@@ -122,9 +123,9 @@ export const ZodiacalReleasingView: React.FC<ZodiacalReleasingViewProps> = ({ na
                       <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-200 dark:bg-white/10">
                         {p.durationYears} năm
                       </span>
-                      <span className="material-icons-round text-base text-text-secondary-light">
-                        {isExpanded ? 'expand_less' : 'expand_more'}
-                      </span>
+                      <ChevronDown
+                        className={`h-4 w-4 text-text-secondary-light transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                      />
                     </div>
                   </button>
 

@@ -44,6 +44,9 @@ export class LichVietApiClient {
     });
 
     if (!response.ok) {
+      if (response.status === 401 && typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lichviet:unauthorized', { detail: { path } }));
+      }
       let errorMessage = `HTTP ${response.status} ${response.statusText}`;
       try {
         const errorBody = await response.json();

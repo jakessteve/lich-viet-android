@@ -5,6 +5,7 @@
  */
 
 import React, { useMemo } from 'react';
+import { Clock, ArrowUpDown } from 'lucide-react';
 import type { Chi } from '../../types/calendar';
 import type { HourInfo } from '../../types/calendar';
 import type { HourScoreEntry } from '@lich-viet/core/dungsu';
@@ -100,10 +101,8 @@ const HourPickerGrid: React.FC<HourPickerGridProps> = ({
             onClick={() => setSortByScore(!sortByScore)}
             className="text-xs text-text-primary-light dark:text-gold-dark hover:underline flex items-center gap-1 font-semibold"
           >
-            <span className="material-icons-round" style={{ fontSize: '14px' }}>
-              {sortByScore ? 'sort' : 'schedule'}
-            </span>
-            {sortByScore ? 'Sắp xếp theo điểm' : 'Theo thứ tự giờ'}
+            {sortByScore ? <Clock className="h-3.5 w-3.5" /> : <ArrowUpDown className="h-3.5 w-3.5" />}
+            {sortByScore ? 'Theo thứ tự giờ' : 'Sắp xếp theo điểm'}
           </button>
         </div>
       )}

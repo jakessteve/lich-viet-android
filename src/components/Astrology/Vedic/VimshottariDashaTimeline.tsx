@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { TrendingUp, Sliders } from 'lucide-react';
 import type { VimshottariDashaResult, DashaPeriod } from '@/services/astrology/vedicDasha';
 
 export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult }> = ({ dasha }) => {
@@ -9,7 +10,7 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-light/50 pb-3 dark:border-border-dark/50">
         <div>
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-            <span className="material-icons-round text-base text-purple-600 dark:text-purple-400">timeline</span>
+            <TrendingUp className="h-4 w-4 text-purple-600 dark:text-purple-400 shrink-0" />
             Đại Vận Vimshottari Dasha (Chu Kỳ 120 Năm)
           </h4>
           <p className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark">
@@ -109,8 +110,8 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
             <div className="space-y-2 pt-2 border-t border-purple-500/20">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
-                  <span className="material-icons-round text-sm text-purple-600 dark:text-purple-400">tune</span>9 Phân
-                  Kỳ Tiểu Vận (Antardasha / Bhukti)
+                  <Sliders className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400 shrink-0" />
+                  9 Phân Kỳ Tiểu Vận (Antardasha / Bhukti)
                 </span>
                 <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">
                   Tiến trình chi tiết

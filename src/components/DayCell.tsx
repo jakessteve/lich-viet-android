@@ -6,16 +6,30 @@ interface DayCellProps {
   isSelected: boolean;
   onClick: (date: Date) => void;
   roundedClass?: string;
+  hasEvent?: boolean;
+  eventTitles?: string[];
 }
 
-const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, roundedClass = '' }) => {
+const DayCellInner: React.FC<DayCellProps> = ({
+  data,
+  isSelected,
+  onClick,
+  roundedClass = '',
+  hasEvent = false,
+  eventTitles,
+}) => {
   const { solarDate, lunarDate, dayQuality, isCurrentMonth, isToday, fullDate, personalScore } = data;
   const isWeekend = fullDate.getDay() === 0 || fullDate.getDay() === 6;
 
   /** Readable date label for screen readers, e.g. "3 tháng 3 năm 2026, Tốt" */
   const dayQualityLabel = dayQuality === 'Good' ? ', Ngày tốt' : dayQuality === 'Bad' ? ', Ngày xấu' : '';
   const personalAria = personalScore ? `, Tuổi bạn: ${personalScore.label}` : '';
-  const ariaLabel = `Ngày ${solarDate} tháng ${fullDate.getMonth() + 1} năm ${fullDate.getFullYear()}, Âm lịch ${lunarDate}${isToday ? ', Hôm nay' : ''}${dayQualityLabel}${personalAria}`;
+  const eventAria = hasEvent && eventTitles?.length
+    ? `, Có ${eventTitles.length} sự kiện: ${eventTitles.join(', ')}`
+    : hasEvent
+      ? ', Có sự kiện'
+      : '';
+  const ariaLabel = `Ngày ${solarDate} tháng ${fullDate.getMonth() + 1} năm ${fullDate.getFullYear()}, Âm lịch ${lunarDate}${isToday ? ', Hôm nay' : ''}${dayQualityLabel}${personalAria}${eventAria}`;
 
   const getDotColor = () => {
     switch (dayQuality) {
@@ -33,10 +47,10 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
   if (!isCurrentMonth) {
     return (
       <div
-        className={`bg-surface-light dark:bg-surface-dark aspect-square flex flex-col items-center justify-center opacity-50 pointer-events-none ${roundedClass}`}
+        className={`bg-surface-light dark:bg-surface-dark aspect-square flex flex-col items-center justify-center opacity-40 pointer-events-none ${roundedClass}`}
         aria-hidden="true"
       >
-        <span className="text-xs font-medium">{solarDate}</span>
+        <span className="text-sm sm:text-base font-semibold">{solarDate}</span>
       </div>
     );
   }
@@ -50,17 +64,19 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
           onClick(fullDate);
         }
       }}
-      role="gridcell"
+      role="button"
       tabIndex={0}
       aria-label={ariaLabel}
-      aria-selected={isSelected}
+      aria-pressed={isSelected}
+      aria-current={isToday ? 'date' : undefined}
       className={`
-        aspect-square min-h-[2.75rem] sm:min-h-[3rem] md:min-h-[3.25rem] flex flex-col items-center justify-center transition-[background-color,color,box-shadow] duration-150 cursor-pointer relative group spring-press motion-gpu
-        ${isToday ? 'bg-amber-50/70 dark:bg-amber-900/20 day-cell-today' : 'bg-surface-light dark:bg-surface-dark'}
+        aspect-square p-0.5 sm:p-1 flex flex-col items-center justify-center relative cursor-pointer
+        transition-[background-color,box-shadow,color,opacity] duration-150 motion-gpu select-none
         ${roundedClass}
+        ${isToday ? 'bg-primary/10 dark:bg-primary/15' : 'bg-surface-light dark:bg-surface-dark'}
         ${
-          isSelected && !isToday
-            ? 'day-cell-selected bg-surface-bright dark:bg-surface-elevated-dark/60'
+          isSelected
+            ? 'ring-2 ring-inset ring-primary bg-primary/15 dark:bg-primary/25 z-20 font-bold shadow-apple rounded-lg sm:rounded-md'
             : !isToday
               ? 'hover:bg-surface-container-lowest dark:hover:bg-white/5'
               : ''
@@ -76,13 +92,21 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
     >
       <span
         className={`
-        text-xs sm:text-sm md:text-base font-medium mb-0.5 relative z-10 text-center leading-none select-none
-        ${isToday ? 'text-primary' : isWeekend ? 'text-calendar-weekend' : 'text-text-primary-light dark:text-text-primary-dark'}
+        text-sm sm:text-base md:text-lg font-bold tracking-tight mb-0.5 relative z-10 text-center leading-none select-none
+        ${
+          isSelected
+            ? 'text-text-primary-light dark:text-white font-extrabold'
+            : isToday
+              ? 'text-primary dark:text-purple-300 font-extrabold'
+              : isWeekend
+                ? 'text-calendar-weekend'
+                : 'text-text-primary-light dark:text-text-primary-dark'
+        }
       `}
       >
         {solarDate}
       </span>
-      <span className="text-xs md:text-sm leading-none text-text-secondary-light dark:text-text-secondary-dark font-semibold relative z-10 text-center select-none">
+      <span className="text-[10px] sm:text-[11px] md:text-xs leading-none text-text-secondary-light/80 dark:text-text-secondary-dark/80 font-normal relative z-10 text-center select-none">
         {lunarDate}
       </span>
 
@@ -117,6 +141,15 @@ const DayCellInner: React.FC<DayCellProps> = ({ data, isSelected, onClick, round
               aria-hidden="true"
             /> // Diamond for personal bad
           ) : null)}
+
+        {/* User Scheduled Event Pip */}
+        {hasEvent && (
+          <div
+            className="w-1.5 h-1.5 rounded-full bg-purple dark:bg-purple-dark ring-1 ring-purple/40 shrink-0"
+            title={eventTitles?.length ? `Có ${eventTitles.length} sự kiện: ${eventTitles.join(', ')}` : 'Có sự kiện'}
+            aria-hidden="true"
+          />
+        )}
       </div>
     </div>
   );

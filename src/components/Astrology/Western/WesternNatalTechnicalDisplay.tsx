@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import type { SwissNatalChartResult } from '@/services/astrology/swissNatalChart';
 
 const ASPECT_PREVIEW_LIMIT = 12;
@@ -23,12 +24,10 @@ const Section: React.FC<{
       <span>{title}</span>
       <span className="flex items-center gap-2">
         {count !== undefined && <span className="badge-astral">{count}</span>}
-        <span
-          className="material-icons-round text-lg text-text-secondary-light transition-transform group-open:rotate-180 dark:text-text-secondary-dark"
+        <ChevronDown
+          className="h-4 w-4 text-text-secondary-light transition-transform group-open:rotate-180 dark:text-text-secondary-dark"
           aria-hidden="true"
-        >
-          expand_more
-        </span>
+        />
       </span>
     </summary>
     <div className="border-t border-border-light/40 bg-surface-container-lowest/40 dark:border-border-dark/40">
@@ -71,12 +70,10 @@ export const WesternNatalTechnicalDisplay: React.FC<{ result: SwissNatalChartRes
           <span className="hidden rounded-full bg-surface-container px-2 py-1 text-micro text-text-secondary-light dark:text-text-secondary-dark sm:inline">
             20 · 12 · 4 · {result.aspects.length}
           </span>
-          <span
-            className={`material-icons-round text-xl text-text-secondary-light transition-transform dark:text-text-secondary-dark ${open ? 'rotate-180' : ''}`}
+          <ChevronDown
+            className={`h-5 w-5 text-text-secondary-light transition-transform dark:text-text-secondary-dark ${open ? 'rotate-180' : ''}`}
             aria-hidden="true"
-          >
-            expand_more
-          </span>
+          />
         </span>
       </button>
 

@@ -1,10 +1,6 @@
-/**
- * ResultTabs — Tabbed result dashboard for Dụng Sự
- * Organizes results into: Tổng quan | Chi tiết | Giờ tốt | Phân tích | [Intent-specific]
- */
-
 import React from 'react';
 import type { FAQIntent } from './FAQIntentCards';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 
 export interface ResultTab {
   id: string;
@@ -12,27 +8,24 @@ export interface ResultTab {
   icon: string;
 }
 
-interface ResultTabsProps {
-  activeTab: string;
-  onTabChange: (tabId: string) => void;
-  intent?: FAQIntent | null;
-  hasResult: boolean;
-}
-
 function getTabsForIntent(intent: FAQIntent | null | undefined, hasResult: boolean): ResultTab[] {
   const base: ResultTab[] = [
-    { id: 'overview', label: 'Tổng quan', icon: 'dashboard' },
-    { id: 'details', label: 'Chi tiết', icon: 'analytics' },
+    { id: 'overview', label: 'Tổng quan', icon: 'dashboard_customize' },
+    { id: 'details', label: 'Chi tiết', icon: 'timeline' },
     { id: 'hours', label: 'Giờ tốt', icon: 'schedule' },
     { id: 'analysis', label: 'Phân tích', icon: 'radar' },
   ];
 
   if (!hasResult) return base;
 
-  // Intent-specific extra tabs are currently not implemented
-  // Future: Add intent-specific views here when components are ready
-
   return base;
+}
+
+interface ResultTabsProps {
+  activeTab: string;
+  onTabChange: (tabId: string) => void;
+  intent?: FAQIntent | null;
+  hasResult: boolean;
 }
 
 const ResultTabs: React.FC<ResultTabsProps> = ({ activeTab, onTabChange, intent, hasResult }) => {
@@ -52,9 +45,7 @@ const ResultTabs: React.FC<ResultTabsProps> = ({ activeTab, onTabChange, intent,
                 : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5 hover:text-text-primary-light dark:hover:text-text-primary-dark'
             }`}
           >
-            <span className="material-icons-round" style={{ fontSize: '16px' }}>
-              {tab.icon}
-            </span>
+            {renderDynamicIcon(tab.icon, 'h-4 w-4 shrink-0')}
             {tab.label}
           </button>
         );

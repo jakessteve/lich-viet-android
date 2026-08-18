@@ -11,6 +11,7 @@ import { LandingRoute, renderModuleRoutes, renderLegacyRedirects, saveCurrentRou
 import { analytics } from './services/analyticsService';
 import { useAppStore } from '@/stores/appStore';
 import { useAuthStore } from '@/stores/authStore';
+import { useProfileVaultStore } from '@/stores/profileVaultStore';
 import { useViewerLocation } from './hooks/useViewerLocation';
 import { getCivilDateForOffset } from '@/utils/geo';
 import { ArrowLeft } from 'lucide-react';
@@ -42,16 +43,30 @@ function AppLayout() {
       saveCurrentRoute(window.location.pathname, window.location.search);
     };
 
+    const handleOnline = () => {
+      // Auto-trigger delta sync when connectivity is restored
+      useProfileVaultStore.getState().syncWithCloud().catch(() => {});
+    };
+
+    const handleUnauthorized = () => {
+      // Rehydrate local state when token invalidated on remote server
+      useAuthStore.getState().rehydrate();
+    };
+
     window.addEventListener('storage', handleStorage);
     document.addEventListener('visibilitychange', flushRoute);
     window.addEventListener('pagehide', flushRoute);
     window.addEventListener('beforeunload', flushRoute);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('lichviet:unauthorized', handleUnauthorized);
 
     return () => {
       window.removeEventListener('storage', handleStorage);
       document.removeEventListener('visibilitychange', flushRoute);
       window.removeEventListener('pagehide', flushRoute);
       window.removeEventListener('beforeunload', flushRoute);
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('lichviet:unauthorized', handleUnauthorized);
     };
   }, []);
 
@@ -79,6 +94,38 @@ function AppLayout() {
       setSelectedDate(getCivilDateForOffset(new Date(), viewerLocation.timezoneOffsetHours));
     }
   }, [selectedDate, setSelectedDate, viewerLocation]);
+
+  // Desktop Ergonomics: Keyboard navigation for dates (ArrowLeft, ArrowRight, 't' for today)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const activeEl = document.activeElement;
+      if (
+        activeEl &&
+        (activeEl.tagName === 'INPUT' ||
+          activeEl.tagName === 'TEXTAREA' ||
+          activeEl.tagName === 'SELECT' ||
+          activeEl.getAttribute('contenteditable') === 'true')
+      ) {
+        return;
+      }
+
+      if (location.pathname === '/app/am-lich' || location.pathname === '/app') {
+        if (e.key === 'ArrowLeft' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          e.preventDefault();
+          setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() - 1));
+        } else if (e.key === 'ArrowRight' && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          e.preventDefault();
+          setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1));
+        } else if ((e.key === 't' || e.key === 'T') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          e.preventDefault();
+          setSelectedDate(new Date());
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [location.pathname, selectedDate, setSelectedDate]);
 
   const activeTab: ActiveTab = ROUTE_TO_TAB[location.pathname] || 'am-lich';
   const isFullPage =

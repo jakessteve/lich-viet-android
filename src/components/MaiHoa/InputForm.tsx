@@ -6,10 +6,16 @@ import { Clock, Info, Hash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
 
 /** Which input method is selected. */
+import { SubNavTabs, type SubNavTabItem } from '../shared';
+
 type InputMode = 'time' | 'numbers';
+
+const MAIHOA_MODES: readonly SubNavTabItem<InputMode>[] = [
+  { id: 'time', label: 'Theo giờ hiện tại', icon: <Clock className="h-4 w-4" /> },
+  { id: 'numbers', label: 'Nhập số', icon: <Hash className="h-4 w-4" /> },
+];
 
 interface InputFormProps {
   /** Called when the user submits a time-based divination. */
@@ -72,42 +78,15 @@ export default function InputForm({
   return (
     <form onSubmit={handleSubmit} className="w-full space-y-5">
       {/* Mode Selector */}
-      <div className="flex flex-col gap-2">
-        <div className="flex gap-1 p-1 bg-surface-subtle-light dark:bg-white/10 rounded-xl">
-          <button
-            type="button"
-            onClick={() => {
-              setMode('time');
-              setError('');
-            }}
-            className={cn(
-              'flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 spring-press',
-              mode === 'time'
-                ? 'bg-white dark:bg-surface-elevated-dark text-primary dark:text-gold shadow-sm font-semibold'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white',
-            )}
-          >
-            <Clock className="h-4 w-4" />
-            Theo giờ hiện tại
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              setMode('numbers');
-              setError('');
-            }}
-            className={cn(
-              'flex-1 py-2 px-3 text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-1.5 spring-press',
-              mode === 'numbers'
-                ? 'bg-white dark:bg-surface-elevated-dark text-primary dark:text-gold shadow-sm font-semibold'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white',
-            )}
-          >
-            <Hash className="h-4 w-4" />
-            Nhập số
-          </button>
-        </div>
-      </div>
+      <SubNavTabs
+        tabs={MAIHOA_MODES}
+        activeTab={mode}
+        onChange={(newMode) => {
+          setMode(newMode);
+          setError('');
+        }}
+        fullWidth
+      />
 
       {/* Calendar Mode Toggle */}
       <div className="flex flex-col gap-2 px-1">

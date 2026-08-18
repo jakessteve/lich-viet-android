@@ -1,4 +1,5 @@
 import React, { Suspense, useEffect, useRef, useState } from 'react';
+import { User } from 'lucide-react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { BirthDataInput, ActionButton, SegmentedControl, SavedChartsPicker } from '../../shared';
@@ -101,7 +102,7 @@ export const WesternChartView: React.FC = () => {
       <div className="glass-card">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2 text-astral-primary dark:text-astral-primary-dark">
-            <span className="material-icons-round text-base">person</span>
+            <User className="h-4 w-4 shrink-0" />
             Thông Tin Người Xem & Cài Đặt Hệ Thống
           </h3>
         </div>

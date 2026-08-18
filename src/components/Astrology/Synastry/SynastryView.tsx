@@ -1,4 +1,5 @@
 import React from 'react';
+import { User } from 'lucide-react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { useAuthStore } from '../../../stores/authStore';
@@ -58,7 +59,7 @@ export const SynastryView: React.FC = () => {
         <div className="glass-card">
           <div className="card-header bg-rose-50 dark:bg-rose-900/10">
             <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-rose-500 text-base">person</span>
+              <User className="h-4 w-4 text-rose-500 shrink-0" />
               Người Thứ Nhất (A)
             </h3>
           </div>
@@ -75,7 +76,7 @@ export const SynastryView: React.FC = () => {
         <div className="glass-card">
           <div className="card-header bg-pink-50 dark:bg-pink-900/10">
             <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-pink-500 text-base">person_outline</span>
+              <User className="h-4 w-4 text-pink-500 shrink-0" />
               Người Thứ Hai (B)
             </h3>
           </div>

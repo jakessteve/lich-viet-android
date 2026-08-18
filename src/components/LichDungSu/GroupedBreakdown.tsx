@@ -7,6 +7,8 @@
  */
 
 import React, { useState } from 'react';
+import { LineChart, ChevronDown } from 'lucide-react';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import { ScoreBreakdownItem } from '@lich-viet/core/dungsu';
 import AcademicCitation, { GROUP_CITATIONS } from './AcademicCitation';
 
@@ -59,9 +61,7 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
     <div className="rounded-xl border border-border-light dark:border-border-dark overflow-hidden">
       <div className="px-4 py-3 border-b border-border-light/50 dark:border-border-dark/50">
         <span className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-          <span className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark">
-            analytics
-          </span>
+          <LineChart className="h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark" />
           Chi tiết đánh giá (theo nhóm)
         </span>
       </div>
@@ -97,11 +97,9 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
                   {groupScore > 0 ? '+' : ''}
                   {groupScore}
                 </span>
-                <span
-                  className={`material-icons-round text-lg text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
-                >
-                  expand_more
-                </span>
+                <ChevronDown
+                  className={`h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                />
               </div>
             </button>
 
@@ -112,9 +110,9 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
                     const iq = quantifyScore(item.value, item.maxValue);
                     return (
                       <div key={item.factor} className="px-4 py-2.5 pl-12 flex items-start gap-3">
-                        <span className="material-icons-round text-base text-text-secondary-light dark:text-text-secondary-dark mt-0.5 shrink-0">
-                          {FACTOR_ICONS[item.factor] || 'info'}
-                        </span>
+                        <div className="text-text-secondary-light dark:text-text-secondary-dark mt-0.5 shrink-0">
+                          {renderDynamicIcon(FACTOR_ICONS[item.factor] || 'info', 'h-4 w-4')}
+                        </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
                             <span className="text-xs font-medium text-text-primary-light dark:text-text-primary-dark">

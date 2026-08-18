@@ -8,6 +8,7 @@
 
 import { create } from 'zustand';
 import { getRuntime } from '@/gateways/bootstrap';
+import { useEventStore } from './eventStore';
 import {
   getAllVaultProfiles,
   saveVaultProfile,
@@ -186,7 +187,7 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
       }
 
       const profiles = await getAllVaultProfiles();
-      const mutations = profiles.map((p) => ({
+      const profileMutations = profiles.map((p) => ({
         mutationId: `mut-prof-${p.id}`,
         entityType: 'user_note' as const,
         entityId: p.id,
@@ -196,10 +197,33 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
           typeof p.updatedAt === 'number' ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
       }));
 
+      // Gather calendar & dam gio event mutations
+      const eventMutations = useEventStore.getState().exportSyncMutations();
+      const allMutations = [...profileMutations, ...eventMutations];
+
       const res = await runtime.sync.sync({
         clientWatermark: get().lastSyncedAt || '2026-01-01T00:00:00.000Z',
-        mutations,
+        mutations: allMutations,
       });
+
+      // ── Process inbound deltas from server ────────────────────
+      if (res.deltas && res.deltas.length > 0) {
+        for (const delta of res.deltas) {
+          if (delta.entityType === 'user_note' || (delta.entityType === 'dam_gio' && delta.payload?.solarDate)) {
+            if (delta.action === 'delete') {
+              await deleteVaultProfile(delta.entityId);
+            } else if (delta.payload) {
+              await saveVaultProfile(delta.payload as unknown as VaultProfile);
+            }
+          }
+        }
+
+        // Apply calendar event deltas to eventStore
+        useEventStore.getState().applyServerDeltas(res.deltas);
+
+        // Reload profiles from IndexedDB to reflect any newly pulled profiles
+        await get().loadSavedProfiles();
+      }
 
       const nextWatermark = res.serverWatermark || new Date().toISOString();
       set({ isSyncing: false, lastSyncedAt: nextWatermark });

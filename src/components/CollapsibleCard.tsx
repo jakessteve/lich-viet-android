@@ -3,6 +3,7 @@ import { ChevronDown, Lock, Award, Diamond, Sparkles } from 'lucide-react';
 import { useDeviceClass } from '../hooks/useDeviceClass';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 
 type TierLevel = 'free' | 'premium' | 'elite' | 'credit';
 
@@ -129,13 +130,7 @@ function CollapsibleCard({
         <div className="flex items-center gap-2 min-w-0 flex-1">
           {icon && (
             <div className="text-text-secondary-light dark:text-text-secondary-dark shrink-0">
-              {typeof icon === 'string' ? (
-                <span className="material-icons-round text-lg shrink-0" aria-hidden="true">
-                  {icon}
-                </span>
-              ) : (
-                icon
-              )}
+              {renderDynamicIcon(icon, 'h-4 w-4 shrink-0')}
             </div>
           )}
           {typeof title === 'string' ? (

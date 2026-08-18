@@ -4,6 +4,7 @@ import { useAuthStore } from '@/stores/authStore';
 import { useHolidays } from '@/hooks/useHolidays';
 import MonthCalendar from '../MonthCalendar';
 import HolidaysCard from '../Calendar/HolidaysCard';
+import UpcomingEventsCard from '../Calendar/UpcomingEventsCard';
 import CollapsibleCard from '../CollapsibleCard';
 import { NAP_AM_HANH, STAR_COLORS } from '@/services/tuvi/constants';
 import type { ActiveTab } from '../../router/constants';
@@ -68,14 +69,20 @@ function AppSidebar({ activeTab }: AppSidebarProps) {
           />
         </div>
 
-        {/* Holidays Card — only on Âm Lịch tab */}
+        {/* Holidays Card & Upcoming Events Card — on Âm Lịch tab */}
         {activeTab === 'am-lich' && (
-          <HolidaysCard
-            holidays={holidays}
-            isLoading={holidaysLoading}
-            countryName={countryName}
-            isVietnam={isVietnam}
-          />
+          <>
+            <HolidaysCard
+              holidays={holidays}
+              isLoading={holidaysLoading}
+              countryName={countryName}
+              isVietnam={isVietnam}
+            />
+            <UpcomingEventsCard
+              daysAhead={14}
+              selectedDate={selectedDate}
+            />
+          </>
         )}
 
         {/* Daily Astrological Summary — shown on all tabs, collapsible */}

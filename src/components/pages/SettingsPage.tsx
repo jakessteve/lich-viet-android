@@ -27,12 +27,16 @@ import {
   LogIn,
   UserPlus,
   RefreshCw,
+  Camera,
+  Home,
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 // ══════════════════════════════════════════════════════════
 // Section Card — Flat, modern, always-open
 // ══════════════════════════════════════════════════════════
+
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 
 function SectionCard({
   icon,
@@ -46,11 +50,9 @@ function SectionCard({
   return (
     <Card className="glass-card rounded-2xl overflow-hidden border border-border-light/40 dark:border-border-dark/30">
       <div className="flex items-center gap-2.5 px-5 py-3 border-b border-border-light/20 dark:border-border-dark/15">
-        {typeof icon === 'string' ? (
-          <span className="material-icons-round text-base text-gold dark:text-gold-dark">{icon}</span>
-        ) : (
-          <div className="text-gold dark:text-gold-dark">{icon}</div>
-        )}
+        <div className="text-gold dark:text-gold-dark">
+          {renderDynamicIcon(icon, 'h-4 w-4 shrink-0')}
+        </div>
         <span className="text-base font-semibold tracking-tight">{title}</span>
       </div>
       <div className="px-5 py-1">{children}</div>
@@ -288,7 +290,7 @@ export default function SettingsPage() {
                     : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5'
                 }`}
               >
-                {typeof s.icon === 'string' ? <span className="material-icons-round text-sm">{s.icon}</span> : s.icon}
+                {renderDynamicIcon(s.icon, 'h-4 w-4 shrink-0')}
                 <span>{s.label}</span>
               </button>
             ))}
@@ -315,27 +317,15 @@ export default function SettingsPage() {
                   : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100/80 dark:hover:bg-white/5'
               }`}
             >
-              {typeof s.icon === 'string' ? (
-                <span
-                  className={`material-icons-round text-[18px] ${
-                    activeSection === s.id
-                      ? 'text-gold dark:text-gold-dark'
-                      : 'text-text-secondary-light/60 dark:text-text-secondary-dark/60'
-                  }`}
-                >
-                  {s.icon}
-                </span>
-              ) : (
-                <div
-                  className={
-                    activeSection === s.id
-                      ? 'text-gold dark:text-gold-dark'
-                      : 'text-text-secondary-light/60 dark:text-text-secondary-dark/60'
-                  }
-                >
-                  {s.icon}
-                </div>
-              )}
+              <div
+                className={
+                  activeSection === s.id
+                    ? 'text-gold dark:text-gold-dark'
+                    : 'text-text-secondary-light/60 dark:text-text-secondary-dark/60'
+                }
+              >
+                {renderDynamicIcon(s.icon, 'h-4 w-4 shrink-0')}
+              </div>
               <span>{s.label}</span>
             </button>
           ))}
@@ -735,7 +725,7 @@ export default function SettingsPage() {
                           </span>
                         )}
                         <div className="absolute inset-0 rounded-full bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <span className="material-icons-round text-white text-base">photo_camera</span>
+                          <Camera className="h-4 w-4 text-white" />
                         </div>
                       </div>
                       <input
@@ -903,7 +893,7 @@ export default function SettingsPage() {
                 {profileMode === 'password' && (
                   <div className="space-y-3 animate-fade-in-up">
                     <p className="text-xs font-semibold flex items-center gap-1.5">
-                      <span className="material-icons-round text-sm text-gold dark:text-gold-dark">lock</span>
+                      <Lock className="h-3.5 w-3.5 text-gold dark:text-gold-dark" />
                       Đổi mật khẩu
                     </p>
                     {[
@@ -1023,7 +1013,7 @@ export default function SettingsPage() {
           {/* About footer */}
           <div className="flex items-center justify-between px-4 py-3">
             <p className="text-xs text-text-secondary-light/60 dark:text-text-secondary-dark/60">
-              Lịch Việt v1.0 · MIT
+              Lịch Việt v3.5 · MIT
             </p>
             <button
               onClick={() => navigate('/app/am-lich')}
@@ -1031,9 +1021,7 @@ export default function SettingsPage() {
               aria-label="Về trang Âm Lịch"
               title="Về trang Âm Lịch"
             >
-              <span className="material-icons-round text-base text-text-secondary-light/60 dark:text-text-secondary-dark/60">
-                home
-              </span>
+              <Home className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60" />
             </button>
           </div>
         </div>{' '}

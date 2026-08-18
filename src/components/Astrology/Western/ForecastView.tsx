@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Calendar, CalendarDays, LineChart } from 'lucide-react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { ActionButton } from '../../shared';
@@ -85,7 +86,7 @@ export const ForecastView: React.FC = () => {
       <div className="glass-card">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2">
-            <span className="material-icons-round text-indigo-500 dark:text-indigo-400 text-base">event</span>
+            <Calendar className="h-4 w-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
             Chọn Năm Xem Vận Hạn
           </h3>
         </div>
@@ -176,9 +177,7 @@ export const ForecastView: React.FC = () => {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
-                      <span className="material-icons-round text-sm text-astral-primary dark:text-astral-primary-dark">
-                        calendar_view_month
-                      </span>
+                      <CalendarDays className="h-4 w-4 text-astral-primary dark:text-astral-primary-dark shrink-0" />
                       Ma Trận Năng Lượng 12 Tháng
                     </span>
                     <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">
@@ -237,7 +236,7 @@ export const ForecastView: React.FC = () => {
                   <div className="rounded-xl bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-3.5 border border-border-light/50 dark:border-border-dark/50 space-y-2.5 animate-fade-in">
                     <div className="flex items-center justify-between border-b border-border-light/30 dark:border-border-dark/30 pb-2">
                       <span className="text-xs font-bold text-astral-primary dark:text-astral-primary-dark flex items-center gap-1">
-                        <span className="material-icons-round text-sm">insights</span>
+                        <LineChart className="h-3.5 w-3.5 shrink-0" />
                         Chi Tiết Góc Chiếu {selectedMonthSummary.monthLabel}/{selectedMonthSummary.year}
                       </span>
                       <span className="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark">

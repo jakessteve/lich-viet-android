@@ -5,6 +5,8 @@
 // 3. Academic impact assessment for the user's query topic
 
 import React, { useState } from 'react';
+import { ChevronDown, Brain, BookOpen, Quote, Zap, AlertCircle, ListOrdered } from 'lucide-react';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import type {
   Hexagram,
   Trigram,
@@ -80,7 +82,6 @@ const CATEGORY_LABELS: readonly {
 ];
 
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
 
 function CollapsibleSection({
   title,
@@ -107,7 +108,9 @@ function CollapsibleSection({
           type="button"
           className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark transition-colors cursor-pointer"
         >
-          <span className={`material-icons-round text-lg ${accentClass}`}>{icon}</span>
+          <div className={accentClass}>
+            {renderDynamicIcon(icon, 'h-4 w-4 shrink-0')}
+          </div>
           <h4 className="text-base font-semibold text-text-primary-light dark:text-text-primary-dark flex-1">
             {title}
           </h4>
@@ -340,9 +343,9 @@ export default function TheoryCard({
                 if (!val) return null;
                 return (
                   <div key={key} className="card-subtle-sm">
-                    <span className="material-icons-round text-sm text-good dark:text-good-dark mt-0.5 shrink-0">
-                      {icon}
-                    </span>
+                    <div className="text-good dark:text-good-dark mt-0.5 shrink-0">
+                      {renderDynamicIcon(icon, 'h-4 w-4')}
+                    </div>
                     <div>
                       <span className="label-standard block">{label}</span>
                       <p className="text-sm text-text-primary-light dark:text-text-primary-dark">{val}</p>
@@ -393,7 +396,7 @@ export default function TheoryCard({
             <div className="space-y-4">
               <div>
                 <span className="label-standard flex items-center gap-1.5 mb-1.5">
-                  <span className="material-icons-round text-sm">psychology</span> Tượng quẻ & Cốt lõi
+                  <Brain className="h-4 w-4 text-purple-600 dark:text-purple-400" /> Tượng quẻ & Cốt lõi
                 </span>
                 {summary.briefExplanation && (
                   <p className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark mb-1">
@@ -414,9 +417,7 @@ export default function TheoryCard({
               {summary.thoanTu && (
                 <div className="card-quote">
                   <div className="flex items-center gap-1.5 mb-1.5">
-                    <span className="material-icons-round text-sm text-accent-moving dark:text-accent-moving-dark">
-                      menu_book
-                    </span>
+                    <BookOpen className="h-4 w-4 text-accent-moving dark:text-accent-moving-dark" />
                     <span className="label-standard text-accent-moving dark:text-accent-moving-dark">
                       Khẩu Quyết Thoán Từ (Văn Vương)
                     </span>
@@ -454,7 +455,7 @@ export default function TheoryCard({
               {summary.commentary && (
                 <div className="card-subtle">
                   <span className="label-standard block mb-2 flex items-center gap-1.5">
-                    <span className="material-icons-round text-sm">format_quote</span> Bình Giảng Tổng Quát
+                    <Quote className="h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark" /> Bình Giảng Tổng Quát
                   </span>
                   <p className="text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
                     {summary.commentary}
@@ -467,10 +468,10 @@ export default function TheoryCard({
             {summary.movingLineText && (
               <div className="card-highlight">
                 <div className="absolute top-0 right-0 p-2 opacity-10 dark:opacity-20 pointer-events-none">
-                  <span className="material-icons-round text-6xl text-accent-moving">bolt</span>
+                  <Zap className="h-16 w-16 text-accent-moving" />
                 </div>
                 <span className="label-standard text-accent-moving dark:text-accent-moving-dark block mb-2 relative z-10 flex items-center gap-1.5">
-                  <span className="material-icons-round text-base">priority_high</span> Tâm Điểm (Hào {movingLine} Động)
+                  <AlertCircle className="h-4 w-4" /> Tâm Điểm (Hào {movingLine} Động)
                 </span>
                 <p className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark relative z-10">
                   {summary.movingLineText.meaning}
@@ -486,7 +487,7 @@ export default function TheoryCard({
             {/* 3.4 Chi tiết 6 Hào (Loop with HaoAnalysisRow) */}
             <div className="mt-6 pt-5 border-t border-border-light/30 dark:border-border-dark/30">
               <span className="label-standard block mb-4 flex items-center gap-1.5">
-                <span className="material-icons-round text-sm">toc</span> Mổ xẻ 6 Hào Quẻ Chủ
+                <ListOrdered className="h-4 w-4" /> Mổ xẻ 6 Hào Quẻ Chủ
               </span>
               <div className="space-y-3">
                 {sMain.map((d) => {

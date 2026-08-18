@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Globe, Home, BookOpen } from 'lucide-react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import {
   getSignInterpretation,
@@ -51,7 +52,7 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
       <div className="glass-card overflow-hidden">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2">
-            <span className="material-icons-round text-blue-500 dark:text-blue-400 text-base">language</span>
+            <Globe className="h-4 w-4 text-blue-500 dark:text-blue-400 shrink-0" />
             Vị trí Hành Tinh (Planetary Positions)
           </h3>
         </div>
@@ -92,7 +93,7 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
       <div className="glass-card overflow-hidden">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2">
-            <span className="material-icons-round text-blue-500 dark:text-blue-400 text-base">home</span>
+            <Home className="h-4 w-4 text-blue-500 dark:text-blue-400 shrink-0" />
             Hệ thống Nhà (House Cusps - Placidus/Porphyry)
           </h3>
         </div>
@@ -129,7 +130,7 @@ export const WesternTechnicalTables: React.FC<{ result: WesternChartResult }> = 
         <div className="card-header border-b border-border-light/40 dark:border-border-dark/40">
           <div className="flex justify-between items-center">
             <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-blue-500 dark:text-blue-400 text-base">menu_book</span>
+              <BookOpen className="h-4 w-4 text-blue-500 dark:text-blue-400 shrink-0" />
               Luận Giải Chi Tiết
             </h3>
             <div className="flex bg-surface-light dark:bg-surface-dark rounded-lg p-1">

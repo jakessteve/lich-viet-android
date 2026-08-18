@@ -34,7 +34,7 @@ function AppFooter() {
             {footerActionLabel}
           </button>
           <span className="text-text-secondary-light/70 dark:text-text-secondary-dark/70 text-xs font-medium">
-            v3.0
+            v1.0
           </span>
         </div>
       </div>

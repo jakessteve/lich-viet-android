@@ -4,6 +4,7 @@
  */
 
 import React, { useMemo, useState } from 'react';
+import { AlertTriangle, Sparkles } from 'lucide-react';
 import type { Chi } from '../../types/calendar';
 import type { QmdjChart, QmdjPalace } from '../../types/qmdj';
 import { generateQmdjChart } from '@lich-viet/core/qmdj';
@@ -84,8 +85,8 @@ const QmdjChartWidget: React.FC<QmdjChartWidgetProps> = ({ date, hourChi }) => {
 
   if (!chart) {
     return (
-      <div className="text-center py-4 text-base text-text-secondary-light dark:text-text-secondary-dark">
-        <span className="material-icons-round text-2xl mb-1 block opacity-40">error_outline</span>
+      <div className="text-center py-4 text-base text-text-secondary-light dark:text-text-secondary-dark flex flex-col items-center">
+        <AlertTriangle className="h-6 w-6 mb-1 opacity-40" />
         Không thể tính Kỳ Môn cho ngày này
       </div>
     );
@@ -101,7 +102,7 @@ const QmdjChartWidget: React.FC<QmdjChartWidgetProps> = ({ date, hourChi }) => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="material-icons-round text-lg text-gold dark:text-gold-dark">auto_awesome</span>
+          <Sparkles className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
           <h3 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">Kỳ Môn Độn Giáp</h3>
         </div>
         <div className="flex items-center gap-2 text-base text-text-secondary-light dark:text-text-secondary-dark">

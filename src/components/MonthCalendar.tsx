@@ -8,6 +8,9 @@ import { IconButton } from './shared';
 import type { SwissGeoLocation } from '../services/astronomy/swissEphemeris';
 import { getCivilDateForOffset } from '@/utils/geo';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
+import { useEventStore } from '@/stores/eventStore';
+import { buildMonthEventMap, getDateKey } from '@/utils/eventEngine';
+import type { UpcomingEventOccurrence } from '@lich-viet/contracts';
 
 interface MonthCalendarProps {
   selectedDate: Date;
@@ -54,6 +57,14 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
       return personalScore ? { ...day, personalScore } : day;
     });
   }, [isPersonalized, birthYear, days, userBirthProfile]);
+
+  const events = useEventStore((s) => s.events);
+  const monthEventMap = useMemo(() => {
+    if (!days || days.length === 0) return new Map<string, UpcomingEventOccurrence[]>();
+    const firstDay = days[0].fullDate;
+    const lastDay = days[days.length - 1].fullDate;
+    return buildMonthEventMap(events, firstDay, lastDay);
+  }, [events, days]);
 
   // Labels matching the design order (Starting from Monday/T2)
   const visualWeekDays = useMemo(() => ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'], []);
@@ -263,7 +274,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
         {/* Month Content with directional slide and smooth row transitions */}
         <div
           key={`${viewYear}-${viewMonth}`}
-          className={`flex flex-col rounded-lg border border-border-light/60 dark:border-border-dark/60 bg-surface-container-low dark:bg-surface-elevated-dark overflow-hidden motion-gpu ${
+          className={`flex flex-col p-0.5 rounded-xl border border-border-light/60 dark:border-border-dark/60 bg-surface-container-low dark:bg-surface-elevated-dark overflow-hidden motion-gpu ${
             slideDir === 'left' ? 'animate-slide-left' : slideDir === 'right' ? 'animate-slide-right' : ''
           }`}
         >
@@ -295,6 +306,11 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
                     else if (colIdx === 6) roundedClass = 'rounded-r-lg';
                   }
 
+                  const dateKey = getDateKey(day.fullDate);
+                  const dayEvts = day.isCurrentMonth ? monthEventMap.get(dateKey) : undefined;
+                  const hasEvent = Boolean(dayEvts && dayEvts.length > 0);
+                  const eventTitles = dayEvts ? dayEvts.map((e) => e.title) : undefined;
+
                   return (
                     <DayCell
                       key={rowIdx * 7 + colIdx}
@@ -302,6 +318,8 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
                       isSelected={selectedDate.toDateString() === day.fullDate.toDateString()}
                       onClick={onSelectDate}
                       roundedClass={roundedClass}
+                      hasEvent={hasEvent}
+                      eventTitles={eventTitles}
                     />
                   );
                 })}

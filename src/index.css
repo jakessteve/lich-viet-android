@@ -28,52 +28,53 @@
   --color-crimson-600: #ff3b30;
   --color-crimson-400: #ff453a;
 
-  /* ── Semantic Hexagram Accent Colors ───────────────────── */
-  --color-accent-main: #2563eb;
-  --color-accent-main-dark: #60a5fa;
-  --color-accent-mutual: #7c3aed;
-  --color-accent-mutual-dark: #a78bfa;
-  --color-accent-changed: #0d9488;
-  --color-accent-changed-dark: #2dd4bf;
-  --color-accent-moving: #d97706;
-  --color-accent-moving-dark: #fbbf24;
-
-  /* ── Semantic Good/Bad ─────────────────────────────────── */
+  /* ── Core Semantic Palette ─────────────────────────────── */
   --color-good: #059669;
   --color-good-dark: #34d399;
   --color-bad: #dc2626;
   --color-bad-dark: #f87171;
-
-  /* ── Cultural Gold Accent ──────────────────────────────── */
-  --color-gold: #92400e;
+  --color-gold: #b45309;
   --color-gold-light: #d97706;
-  --color-gold-dark: #ffdea1;
+  --color-gold-dark: #fbbf24;
+  --color-purple: #7c3aed;
+  --color-purple-dark: #a78bfa;
+  --color-orange: #ea580c;
+  --color-orange-dark: #fb923c;
+  --color-info: #2563eb;
+  --color-info-dark: #60a5fa;
 
-  /* ── Eastern Domain Tokens ─────────────────────────────── */
-  --color-eastern-gold: #92400e;
-  --color-eastern-gold-light: #d97706;
-  --color-eastern-gold-dark: #ffdea1;
-  --color-eastern-line: #b8860b;
+  /* ── Semantic Aliases (Mapped to Core Tokens) ──────────── */
+  --color-eastern-gold: var(--color-gold);
+  --color-eastern-gold-light: var(--color-gold-light);
+  --color-eastern-gold-dark: var(--color-gold-dark);
+  --color-eastern-line: var(--color-gold);
   --color-eastern-line-dark: #a16207;
 
-  /* ── Astral (Western/Vedic) Domain Tokens ──────────────── */
-  --color-astral-primary: #4f46e5;
-  --color-astral-primary-dark: #818cf8;
+  --color-accent-main: var(--color-info);
+  --color-accent-main-dark: var(--color-info-dark);
+  --color-accent-mutual: var(--color-purple);
+  --color-accent-mutual-dark: var(--color-purple-dark);
+  --color-accent-changed: #0d9488;
+  --color-accent-changed-dark: #2dd4bf;
+  --color-accent-moving: var(--color-gold-light);
+  --color-accent-moving-dark: var(--color-gold-dark);
+
+  --color-astral-primary: var(--color-primary);
+  --color-astral-primary-dark: var(--color-primary-dark);
   --color-astral-surface-light: #eef2ff;
   --color-astral-surface-dark: rgba(79, 70, 229, 0.15);
   --color-astral-border-light: rgba(99, 102, 241, 0.25);
   --color-astral-border-dark: rgba(129, 140, 248, 0.25);
   --color-astral-glow: rgba(79, 70, 229, 0.15);
 
-  /* ── Aspect & Star Polarity Tokens ─────────────────────── */
-  --color-polarity-harmonious: #059669;
-  --color-polarity-harmonious-dark: #34d399;
-  --color-polarity-tension: #dc2626;
-  --color-polarity-tension-dark: #f87171;
-  --color-polarity-neutral: #2563eb;
-  --color-polarity-neutral-dark: #60a5fa;
+  --color-polarity-harmonious: var(--color-good);
+  --color-polarity-harmonious-dark: var(--color-good-dark);
+  --color-polarity-tension: var(--color-bad);
+  --color-polarity-tension-dark: var(--color-bad-dark);
+  --color-polarity-neutral: var(--color-info);
+  --color-polarity-neutral-dark: var(--color-info-dark);
 
-  /* ── Mystery Palette ───────────────────────────────────── */
+  /* ── Mystery Dark Palette ──────────────────────────────── */
   --color-mystery-deep: #0a0a1a;
   --color-mystery-surface: #1a1a2e;
   --color-mystery-purple: #7c3aed;
@@ -82,18 +83,6 @@
   --color-mystery-teal: #0d9488;
   --color-mystery-glow: rgba(124, 58, 237, 0.15);
   --color-mystery-glow-gold: rgba(212, 168, 67, 0.12);
-
-  /* ── Semantic Purple (Tam Hợp / Compatibility) ──────── */
-  --color-purple: #7c3aed;
-  --color-purple-dark: #a78bfa;
-
-  /* ── Semantic Orange (Lục Xung / Caution) ────────────── */
-  --color-orange: #ea580c;
-  --color-orange-dark: #fb923c;
-
-  /* ── Semantic Info (Water Element / Information) ─────── */
-  --color-info: #2563eb;
-  --color-info-dark: #60a5fa;
 
   --font-display: 'Noto Serif', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-sans:
@@ -723,25 +712,25 @@
   /* ── Entrance Utilities ────────────────────────────────── */
 
   .animate-fade-in-up {
-    animation: fadeInUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: fadeInUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
 
   .animate-scale-in {
-    animation: scaleIn 0.18s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: scaleIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
 
   .animate-slide-up {
-    animation: slideInUp 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: slideInUp 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
 
   .animate-fade-scale {
-    animation: fadeScale 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation: fadeScale 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
     transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
   }
@@ -791,7 +780,7 @@
 
   .page-enter-smooth,
   .animate-page-enter {
-    animation: pageEnterSmooth 0.36s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+    animation: pageEnterSmooth 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
     transform-origin: top center;
     backface-visibility: hidden;
     will-change: transform, opacity;
@@ -799,8 +788,8 @@
 
   @keyframes pageEnterSmooth {
     0% {
-      opacity: 0.6;
-      transform: translateY(12px) scaleY(0.98);
+      opacity: 0.1;
+      transform: translateY(10px) scaleY(0.99);
     }
     100% {
       opacity: 1;
@@ -1212,11 +1201,11 @@ html.theme-transitioning *::after {
 }
 
 .animate-slide-left {
-  animation: slideLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: slideLeft 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-slide-right {
-  animation: slideRight 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: slideRight 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .animate-radar-expand {

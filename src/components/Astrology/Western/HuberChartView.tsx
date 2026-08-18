@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { Clock, Palette, Shapes } from 'lucide-react';
 import type { SwissNatalChartResult } from '../../../services/astrology/swissNatalChart';
 import { analyzeHuberChart } from '../../../services/astrology/huberAstrology';
 
@@ -27,9 +28,7 @@ export const HuberChartView: React.FC<HuberChartViewProps> = ({ natalResult, bir
       <div className="glass-card p-4 sm:p-5 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-light dark:border-border-dark/40 pb-3">
           <div className="flex items-center gap-2">
-            <span className="material-icons-round text-astral-primary dark:text-astral-primary-dark text-lg">
-              schedule
-            </span>
+            <Clock className="h-4 w-4 text-astral-primary dark:text-astral-primary-dark shrink-0" />
             <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark">
               Đồng Hồ Cuộc Đời Huber 72 Năm (Lebensuhr)
             </h3>
@@ -111,7 +110,7 @@ export const HuberChartView: React.FC<HuberChartViewProps> = ({ natalResult, bir
       {/* 2. Color Polarity Balance */}
       <div className="glass-card p-4 sm:p-5 space-y-4">
         <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-          <span className="material-icons-round text-indigo-500 text-lg">palette</span>
+          <Palette className="h-4 w-4 text-indigo-500 shrink-0" />
           Cân Bằng Năng Lượng Màu Sắc Huber (Color Polarity)
         </h3>
 
@@ -150,7 +149,7 @@ export const HuberChartView: React.FC<HuberChartViewProps> = ({ natalResult, bir
       {/* 3. Huber Aspect Figures */}
       <div className="glass-card p-4 sm:p-5 space-y-4">
         <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-          <span className="material-icons-round text-indigo-500 text-lg">interests</span>
+          <Shapes className="h-4 w-4 text-indigo-500 shrink-0" />
           Mô Hình Cấu Trúc Góc Huber (Aspect Figures)
         </h3>
 

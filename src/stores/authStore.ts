@@ -457,6 +457,19 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     }
     saveAuthUser(updated);
     set({ user: updated });
+
+    try {
+      const runtime = getRuntime();
+      if (runtime.kind === 'remote') {
+        await runtime.auth.updateProfile({
+          name: updated.displayName,
+          avatarUrl: updated.avatarUrl,
+        });
+      }
+    } catch {
+      // Background remote sync failure should not block local UI
+    }
+
     return { success: true };
   },
 

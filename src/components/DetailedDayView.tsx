@@ -10,6 +10,8 @@ import {
 import { normalizeDungSuBuckets } from '../utils/dungSuDisplay';
 import { useAuthStore } from '../stores/authStore';
 import { useAppStore } from '../stores/appStore';
+import { useEventStore } from '../stores/eventStore';
+import { getEventsForDate } from '@/utils/eventEngine';
 import {
   calculatePersonalDayScore,
   calculatePersonalHourModifier,
@@ -25,7 +27,6 @@ import {
   ArrowRight,
   Clock,
   TrendingUp,
-  Share2,
   CheckCircle2,
   AlertTriangle,
   Compass,
@@ -34,7 +35,6 @@ import {
 } from 'lucide-react';
 import { Badge } from './shared';
 import TermTooltip from './shared/TermTooltip';
-import StoryShareModal from './shared/StoryShareModal';
 
 interface DetailedDayViewProps {
   date: Date;
@@ -47,10 +47,14 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
   const isPersonalized = useAppStore((s) => s.isPersonalized);
   const togglePersonalization = useAppStore((s) => s.togglePersonalization);
   const [sortByScore, setSortByScore] = useState(false);
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [isNghiOpen, setIsNghiOpen] = useState(false);
   const [isKyOpen, setIsKyOpen] = useState(false);
   const [isXungHopOpen, setIsXungHopOpen] = useState(false);
+
+  const events = useEventStore((s) => s.events);
+  const dayEvents = useMemo(() => {
+    return getEventsForDate(events, date);
+  }, [events, date]);
 
   const computedProfile = useMemo(() => {
     return getUserBirthProfile(user);
@@ -262,12 +266,33 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
           </div>
         </div>
 
-        {/* Bottom Action Bar: Cá nhân hóa (left full width) & Share (round button on right) */}
+        {/* User Events / Anniversaries for this day */}
+        {dayEvents.length > 0 && (
+          <div className="pt-2.5 border-t border-border-light/40 dark:border-border-dark/30 space-y-1.5">
+            <div className="flex items-center gap-1.5 text-xs font-bold text-purple dark:text-purple-dark">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Sự kiện & Lịch nhắc trong ngày:</span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {dayEvents.map((ev, idx) => (
+                <span
+                  key={`${ev.eventId}-${idx}`}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-purple/10 dark:bg-purple/20 border border-purple/30 text-xs font-semibold text-text-primary-light dark:text-text-primary-dark"
+                >
+                  <span>{ev.emoji}</span>
+                  <span>{ev.title}</span>
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Bottom Action Bar: Cá nhân hóa button */}
         <div className="pt-3 border-t border-border-light/40 dark:border-border-dark/30 flex items-center gap-2 w-full">
           {computedProfile?.birthYear ? (
             <button
               onClick={togglePersonalization}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl transition-all spring-press cursor-pointer ${
+              className={`w-full flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl transition-all spring-press cursor-pointer ${
                 isPersonalized
                   ? 'bg-purple/15 text-purple dark:text-purple-dark border border-purple/30 shadow-xs'
                   : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low'
@@ -280,35 +305,15 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
           ) : (
             <button
               onClick={() => navigate('/app/cai-dat')}
-              className="flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-medium rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-colors spring-press cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-medium rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-colors spring-press cursor-pointer"
               title="Cập nhật ngày sinh trong Cài đặt để cá nhân hoá"
             >
               <span className="indicator-pip-sm bg-text-secondary-light/40" aria-hidden="true" />
               <span>Cá nhân hóa</span>
             </button>
           )}
-
-          <button
-            onClick={() => setIsShareModalOpen(true)}
-            className="h-9 w-9 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-primary-light dark:text-text-primary-dark border border-border-light dark:border-border-dark/40 hover:bg-gold/15 hover:border-gold/40 transition-all shrink-0 spring-press cursor-pointer shadow-2xs"
-            title="Tạo ảnh chia sẻ Story 9:16 hoặc Vuông 1:1"
-            aria-label="Chia sẻ ngày này"
-          >
-            <Share2 className="w-4 h-4 text-gold dark:text-gold-dark" />
-          </button>
         </div>
       </div>
-
-      {/* Share Modal */}
-      <StoryShareModal
-        isOpen={isShareModalOpen}
-        onClose={() => setIsShareModalOpen(false)}
-        title={`${data.canChi?.day?.can} ${data.canChi?.day?.chi}`}
-        solarDateStr={solarDateStr}
-        lunarDateStr={`Ngày ${data.lunarDate?.day}/${data.lunarDate?.month}`}
-        verdict={dayVerdict}
-        goodHours={top3HoursList}
-      />
 
       {/* ── 2. Collapsible Grid: Nghi & Ky ───────────────────── */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
@@ -621,24 +626,24 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
         }
       >
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left border-collapse border-0">
-            <thead className="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase bg-surface-subtle-light/60 dark:bg-surface-elevated-dark/50 tracking-wider border-b border-border-light/40 dark:border-border-dark/30">
+          <table className="w-full text-sm text-left border-collapse">
+            <thead className="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/70 tracking-wider border-b border-border-light dark:border-border-dark/70">
               <tr>
-                <th className="hidden sm:table-cell px-6 py-3 w-24 border-0" scope="col">
+                <th className="hidden sm:table-cell px-6 py-3 w-24" scope="col">
                   Khung Giờ
                 </th>
-                <th className="px-3 sm:px-6 py-3 w-[90px] sm:w-32 text-center border-0" scope="col">
+                <th className="px-3 sm:px-6 py-3 w-[90px] sm:w-32 text-center" scope="col">
                   Can Chi
                 </th>
-                <th className="px-3 sm:px-6 py-3 border-0" scope="col">
+                <th className="px-3 sm:px-6 py-3" scope="col">
                   Nghi / Kỵ
                 </th>
-                <th className="px-3 sm:px-6 py-3 text-right w-[70px] sm:w-28 align-middle border-0" scope="col">
+                <th className="px-3 sm:px-6 py-3 text-right w-[70px] sm:w-28 align-middle" scope="col">
                   Điểm Số
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border-light/40 dark:divide-border-dark/30 border-0">
+            <tbody className="divide-y divide-border-light dark:divide-border-dark/70">
               {sortedHours.map((h, idx) => {
                 const advanced = h.advancedInfo || [];
                 const statusIndex = advanced.findIndex((s) => s.startsWith('Trạng thái:'));
@@ -673,7 +678,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 return (
                   <tr
                     key={idx}
-                    className={`transition-colors border-0 ${
+                    className={`transition-colors border-b border-border-light/70 dark:border-border-dark/60 last:border-b-0 ${
                       isTop3
                         ? 'bg-gold/10 dark:bg-gold-dark/10 hover:bg-gold/15'
                         : isWeak
@@ -683,10 +688,10 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                             : 'hover:bg-surface-subtle-light dark:hover:bg-white/5'
                     }`}
                   >
-                    <td className="hidden sm:table-cell px-6 py-4 font-medium whitespace-nowrap align-top border-0">
+                    <td className="hidden sm:table-cell px-6 py-4 font-medium whitespace-nowrap align-top">
                       {h.timeRange.replace(/:00/g, '').replace(' - ', '–')}
                     </td>
-                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-center align-top border-0">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-center align-top">
                       <div className="sm:hidden text-[11px] text-text-secondary-light dark:text-text-secondary-dark font-medium">
                         {h.timeRange.replace(/:00/g, '').replace(' - ', '–')}
                       </div>

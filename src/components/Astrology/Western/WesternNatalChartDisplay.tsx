@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ZoomIn, ZoomOut } from 'lucide-react';
 import { useAppStore } from '@/stores/appStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
 import { renderWesternNatalSvg } from '@/services/astrology/westernNatalExport';
@@ -7,6 +8,7 @@ import { ElementBalanceCard } from './ElementBalanceCard';
 import { AspectPatternsCard } from './AspectPatternsCard';
 import { WesternSimplifiedExplanation } from './WesternSimplifiedExplanation';
 import { WesternNatalTechnicalDisplay } from './WesternNatalTechnicalDisplay';
+import { WesternMarkdownExport } from '../WesternMarkdownExport';
 import { SegmentedControl, type SegmentedOption } from '../../shared';
 
 type WesternViewMode = 'simple' | 'advanced';
@@ -79,9 +81,7 @@ export const WesternNatalChartDisplay: React.FC = () => {
               className="surface-control inline-flex h-11 w-11 items-center justify-center rounded-xl text-text-secondary-light transition-colors hover:text-indigo-600 disabled:cursor-not-allowed disabled:opacity-35 dark:text-text-secondary-dark dark:hover:text-indigo-300"
               aria-label="Thu nhỏ lá số"
             >
-              <span className="material-icons-round text-xl" aria-hidden="true">
-                zoom_out
-              </span>
+              <ZoomOut className="h-5 w-5" aria-hidden="true" />
             </button>
             <button
               type="button"
@@ -99,9 +99,7 @@ export const WesternNatalChartDisplay: React.FC = () => {
               className="surface-control inline-flex h-11 w-11 items-center justify-center rounded-xl text-text-secondary-light transition-colors hover:text-indigo-600 disabled:cursor-not-allowed disabled:opacity-35 dark:text-text-secondary-dark dark:hover:text-indigo-300"
               aria-label="Phóng to lá số"
             >
-              <span className="material-icons-round text-xl" aria-hidden="true">
-                zoom_in
-              </span>
+              <ZoomIn className="h-5 w-5" aria-hidden="true" />
             </button>
           </div>
         </header>
@@ -136,7 +134,7 @@ export const WesternNatalChartDisplay: React.FC = () => {
       </p>
 
       {/* Dual Tier Interpretation Selector */}
-      <div className="space-y-2.5 pt-2 border-t border-border-light/40 dark:border-border-dark/40">
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-border-light/40 dark:border-border-dark/40">
         <div>
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
             Luận Giải Bản Đồ Sao
@@ -145,14 +143,17 @@ export const WesternNatalChartDisplay: React.FC = () => {
             Chọn chế độ xem phù hợp với nhu cầu của bạn.
           </p>
         </div>
-        <SegmentedControl
-          options={WESTERN_VIEW_MODES}
-          value={viewMode}
-          onChange={setViewMode}
-          ariaLabel="Chế độ xem luận giải Tây phương"
-          tone="indigo"
-          className="w-full"
-        />
+        <div className="flex flex-wrap items-center gap-2">
+          <WesternMarkdownExport system="western" />
+          <SegmentedControl
+            options={WESTERN_VIEW_MODES}
+            value={viewMode}
+            onChange={setViewMode}
+            ariaLabel="Chế độ xem luận giải Tây phương"
+            tone="indigo"
+            className="w-full sm:w-auto"
+          />
+        </div>
       </div>
 
       {/* MODE 1: Cơ bản (Simple) */}

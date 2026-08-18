@@ -38,7 +38,7 @@ test.describe('Lịch Việt - End-to-End User Journey Tests', () => {
 
     // Verify main page elements
     await expect(page.locator('body')).toBeVisible();
-    await expect(page.getByRole('tablist', { name: /Chức năng Âm Lịch/i })).toBeVisible();
+    await expect(page.getByRole('tablist', { name: /Chức năng/i })).toBeVisible();
 
     // Verify day view or detailed view components render
     await expect(page.getByText(/Giờ Hoàng Đạo|Dụng Sự|Tiết khí/i).first()).toBeVisible({ timeout: 10000 });
@@ -98,7 +98,7 @@ test.describe('Lịch Việt - End-to-End User Journey Tests', () => {
     await expect(page.getByText(/Cài Đặt|Giao Diện|Hồ Sơ/i).first()).toBeVisible({ timeout: 10000 });
 
     // Toggle theme via theme toggle in navbar
-    const themeBtn = page.getByRole('button', { name: /Chuyển sang chế độ/i });
+    const themeBtn = page.getByRole('button', { name: /Chuyển chế độ sáng\/tối|Chuyển sang chế độ/i });
     if (await themeBtn.isVisible()) {
       await themeBtn.click();
       // Verify dark/light class change

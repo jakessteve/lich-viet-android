@@ -1,4 +1,5 @@
 import React from 'react';
+import { Sparkles } from 'lucide-react';
 import type { AspectPattern } from '@/services/astrology/aspectPatterns';
 
 export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ patterns }) => {
@@ -9,9 +10,7 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
       <div className="flex items-center justify-between gap-2 border-b border-border-light/50 pb-3 dark:border-border-dark/50">
         <div>
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-            <span className="material-icons-round text-base text-astral-primary dark:text-astral-primary-dark">
-              stars
-            </span>
+            <Sparkles className="h-4 w-4 text-astral-primary dark:text-astral-primary-dark shrink-0" />
             Mô Hình Góc Chiếu Đặc Biệt & Luận Giải Cá Nhân Hóa
           </h4>
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">

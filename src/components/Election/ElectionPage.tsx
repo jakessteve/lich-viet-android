@@ -13,7 +13,22 @@ import { Card } from '@/components/ui/card';
 import { MotionFadeIn, MotionPageTransition } from '@/components/ui/motion-primitives';
 import { cn } from '@/lib/utils';
 
+import { SubNavTabs, type SubNavTabItem } from '../shared';
+
 type SubTab = 'tim-ngay' | 'dung-su';
+
+const ELECTION_TABS: readonly SubNavTabItem<SubTab>[] = [
+  {
+    id: 'tim-ngay',
+    label: 'Tìm Ngày Tốt',
+    icon: <CalendarCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />,
+  },
+  {
+    id: 'dung-su',
+    label: 'Tra Cứu Dụng Sự',
+    icon: <SlidersHorizontal className="h-4 w-4 text-purple dark:text-purple-dark" />,
+  },
+];
 
 export const ElectionPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -58,35 +73,11 @@ export const ElectionPage: React.FC = () => {
     <MotionFadeIn className="space-y-6 max-w-4xl mx-auto">
       {/* Subtab Segmented Control */}
       <div className="flex items-center justify-center">
-        <div className="inline-flex p-1 bg-surface-subtle-light dark:bg-surface-elevated-dark rounded-2xl border border-border-light/60 dark:border-border-dark/60 shadow-xs">
-          <button
-            type="button"
-            onClick={() => handleSubTabChange('tim-ngay')}
-            className={cn(
-              'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all spring-press',
-              activeSubTab === 'tim-ngay'
-                ? 'bg-white dark:bg-white/10 text-text-primary-light dark:text-gold-dark shadow-sm'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white',
-            )}
-          >
-            <CalendarCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Tìm Ngày Tốt</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleSubTabChange('dung-su')}
-            className={cn(
-              'flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all spring-press',
-              activeSubTab === 'dung-su'
-                ? 'bg-white dark:bg-white/10 text-text-primary-light dark:text-gold-dark shadow-sm'
-                : 'text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white',
-            )}
-          >
-            <SlidersHorizontal className="h-4 w-4 text-purple dark:text-purple-dark" />
-            <span>Tra Cứu Dụng Sự</span>
-          </button>
-        </div>
+        <SubNavTabs
+          tabs={ELECTION_TABS}
+          activeTab={activeSubTab}
+          onChange={handleSubTabChange}
+        />
       </div>
 
       <MotionPageTransition key={activeSubTab}>

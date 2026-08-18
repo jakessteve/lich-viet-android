@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Star, Hourglass, BookOpen } from 'lucide-react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { computeVedicDignity, computeVimshottariDasha } from '@lich-viet/core-logic';
@@ -83,7 +84,7 @@ export const VedicTechnicalTables: React.FC<{ result: WesternChartResult }> = ({
       <div className="glass-card overflow-hidden">
         <div className="card-header">
           <h3 className="section-title text-sm flex items-center gap-2">
-            <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">star</span>
+            <Star className="h-4 w-4 text-purple-500 dark:text-purple-400 shrink-0" />
             Trạng thái hành tinh (Dignities)
           </h3>
         </div>
@@ -119,7 +120,7 @@ export const VedicTechnicalTables: React.FC<{ result: WesternChartResult }> = ({
         <div className="glass-card overflow-hidden">
           <div className="card-header">
             <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">timelapse</span>
+              <Hourglass className="h-4 w-4 text-purple-500 dark:text-purple-400 shrink-0" />
               Đại vận Vimshottari Dasha (120 năm)
             </h3>
           </div>
@@ -156,7 +157,7 @@ export const VedicTechnicalTables: React.FC<{ result: WesternChartResult }> = ({
         <div className="card-header border-b border-border-light/40 dark:border-border-dark/40">
           <div className="flex justify-between items-center">
             <h3 className="section-title text-sm flex items-center gap-2">
-              <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">menu_book</span>
+              <BookOpen className="h-4 w-4 text-purple-500 dark:text-purple-400 shrink-0" />
               Luận Giải Chi Tiết (Vedic)
             </h3>
             <div className="flex bg-surface-light dark:bg-surface-dark rounded-lg p-1">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertTriangle, Compass } from 'lucide-react';
 import type { GocharReport } from '@/services/astrology/gocharAnalysis';
 import CollapsibleCard from '../../CollapsibleCard';
 
@@ -46,9 +47,7 @@ export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) 
         {/* Sade Sati Alert Callout */}
         {gochar.isSadeSatiActive && (
           <div className="rounded-xl bg-amber-500/10 dark:bg-amber-900/20 border border-amber-500/40 p-3 flex items-start gap-2.5">
-            <span className="material-icons-round text-amber-600 dark:text-amber-400 text-lg shrink-0 mt-0.5">
-              warning_amber
-            </span>
+            <AlertTriangle className="h-5 w-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
             <div className="space-y-1 text-xs">
               <span className="font-bold text-amber-800 dark:text-amber-300 block">
                 Cảnh Báo Vận Hạn: Shani Sade Sati ({gochar.sadeSatiPhase})
@@ -68,7 +67,7 @@ export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
-              <span className="material-icons-round text-sm text-purple-600 dark:text-purple-400">explore</span>
+              <Compass className="h-4 w-4 text-purple-600 dark:text-purple-400 shrink-0" />
               Vị Trí Các Hành Tinh Quá Cảnh So Với Cung Mặt Trăng
             </span>
             <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">

@@ -9,10 +9,10 @@ export interface MotionPageTransitionProps extends HTMLMotionProps<'div'> {
 export const MotionPageTransition: React.FC<MotionPageTransitionProps> = ({ children, className, ...props }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
       className={cn('w-full', className)}
       {...props}
     >
@@ -31,7 +31,7 @@ export const MotionFadeIn: React.FC<MotionFadeInProps> = ({ children, delay = 0,
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.2, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.35, delay, ease: [0.16, 1, 0.3, 1] }}
       className={className}
       {...props}
     >

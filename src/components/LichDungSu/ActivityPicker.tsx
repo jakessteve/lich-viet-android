@@ -7,6 +7,8 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { Search, X, CheckCircle2, XCircle } from 'lucide-react';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import {
   CATEGORIES,
   getActivitiesByCategory,
@@ -218,9 +220,11 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
         }`}
       >
         {indicator && (
-          <span className={`material-icons-round text-sm ${indicator.iconClass}`} style={{ fontSize: '14px' }}>
-            {indicator.icon}
-          </span>
+          indicator.icon === 'check_circle' ? (
+            <CheckCircle2 className={`h-3.5 w-3.5 shrink-0 ${indicator.iconClass}`} />
+          ) : (
+            <XCircle className={`h-3.5 w-3.5 shrink-0 ${indicator.iconClass}`} />
+          )
         )}
         {activity.nameVi}
       </button>
@@ -231,9 +235,7 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
     <div className="space-y-3">
       {/* Search bar */}
       <div className="relative">
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60">
-          search
-        </span>
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60" />
         <input
           type="text"
           value={searchQuery}
@@ -244,9 +246,9 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
         {searchQuery && (
           <button
             onClick={() => setSearchQuery('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 material-icons-round text-lg text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-text-primary-dark transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-text-secondary-light/60 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-text-primary-dark transition-colors"
           >
-            close
+            <X className="h-4 w-4" />
           </button>
         )}
       </div>
@@ -306,9 +308,9 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
                       )}
                     </span>
                   )}
-                  <span className={`material-icons-round text-2xl transition-colors duration-200 ${colors.icon}`}>
-                    {cat.icon}
-                  </span>
+                  <div className={`transition-colors duration-200 ${colors.icon}`}>
+                    {renderDynamicIcon(cat.icon, 'h-6 w-6')}
+                  </div>
                   <span
                     className={`text-sm font-medium leading-tight text-center transition-colors duration-200 ${
                       isExpanded || hasSelectedChild

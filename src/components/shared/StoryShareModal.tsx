@@ -42,12 +42,21 @@ export const StoryShareModal: React.FC<StoryShareModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-fade-in"
-      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Chia Sẻ Ngày Lành"
+      className="fixed inset-0 z-[90] flex items-center justify-center p-4"
     >
+      {/* Backdrop */}
+      <button
+        type="button"
+        aria-label="Đóng chia sẻ"
+        onClick={onClose}
+        className="fixed inset-0 bg-black/70 backdrop-blur-sm animate-fade-in w-full h-full border-none cursor-default"
+      />
+
       <div
-        className="bg-surface-light dark:bg-surface-dark border border-border-light/60 dark:border-border-dark/60 rounded-3xl shadow-2xl max-w-md w-full p-5 space-y-4 animate-scale-in"
-        onClick={(e) => e.stopPropagation()}
+        className="relative z-10 bg-surface-light dark:bg-surface-dark border border-border-light/60 dark:border-border-dark/60 rounded-3xl shadow-2xl max-w-md w-full p-5 space-y-4 animate-scale-in"
       >
         {/* Header */}
         <div className="flex items-center justify-between">

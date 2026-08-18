@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { Briefcase, Wallet, Brain, Heart, Baby, CheckCircle2, Sparkles } from 'lucide-react';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import type { SwissNatalChartResult } from '../../../services/astrology/swissNatalChart';
 import { analyzeThematicChart } from '../../../services/astrology/thematicAstrology';
 
@@ -40,7 +42,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
                 : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark hover:bg-astral-surface-light dark:hover:bg-astral-surface-dark'
             }`}
           >
-            <span className="material-icons-round text-base">{mode.icon}</span>
+            {renderDynamicIcon(mode.icon, 'h-4 w-4 shrink-0')}
             {mode.label}
           </button>
         ))}
@@ -51,7 +53,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
         <div className="glass-card p-4 sm:p-5 space-y-4 animate-fade-scale">
           <div className="flex items-center justify-between border-b border-border-light dark:border-border-dark/40 pb-3">
             <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-astral-primary dark:text-astral-primary-dark">work</span>
+              <Briefcase className="h-4 w-4 text-astral-primary dark:text-astral-primary-dark shrink-0" />
               Giải Mã Sứ Mệnh Hướng Nghiệp
             </h3>
             <span className="badge-astral">Thiên Đỉnh (MC): {vocational.mcSignVi}</span>
@@ -67,7 +69,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
             <div className="space-y-2 p-3.5 rounded-xl bg-surface-subtle-light dark:bg-white/5 border border-border-light dark:border-border-dark/40">
               <h4 className="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
-                <span className="material-icons-round text-emerald-500 text-sm">check_circle</span>
+                <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
                 Thế Mạnh Vượt Trội:
               </h4>
               <ul className="space-y-1 text-text-secondary-light dark:text-text-secondary-dark list-disc list-inside">
@@ -79,7 +81,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
 
             <div className="space-y-2 p-3.5 rounded-xl bg-surface-subtle-light dark:bg-white/5 border border-border-light dark:border-border-dark/40">
               <h4 className="font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
-                <span className="material-icons-round text-sky-500 text-sm">stars</span>
+                <Sparkles className="h-4 w-4 text-sky-500 shrink-0" />
                 Lĩnh Vực Tương Thích Cao:
               </h4>
               <div className="flex flex-wrap gap-1.5 pt-1">
@@ -102,7 +104,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
         <div className="glass-card p-4 sm:p-5 space-y-4 animate-fade-scale">
           <div className="flex items-center justify-between border-b border-border-light dark:border-border-dark/40 pb-3">
             <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-emerald-500">account_balance_wallet</span>
+              <Wallet className="h-4 w-4 text-emerald-500 shrink-0" />
               Bản Đồ Tài Chính & Dòng Tiền
             </h3>
             <span className="text-xs px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold">
@@ -152,7 +154,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
         <div className="glass-card p-4 sm:p-5 space-y-4 animate-fade-scale">
           <div className="border-b border-border-light dark:border-border-dark/40 pb-3">
             <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-violet-500">psychology</span>
+              <Brain className="h-4 w-4 text-violet-500 shrink-0" />
               Giải Mã Nghiệp Quả & Bản Đồ Sao Draconic
             </h3>
           </div>
@@ -208,7 +210,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
         <div className="glass-card p-4 sm:p-5 space-y-4 animate-fade-scale">
           <div className="border-b border-border-light dark:border-border-dark/40 pb-3">
             <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-rose-500">favorite</span>
+              <Heart className="h-4 w-4 text-rose-500 shrink-0" />
               Bản Đồ Tình Cảm & Mối Quan Hệ
             </h3>
           </div>
@@ -241,7 +243,7 @@ export const ThematicChartView: React.FC<ThematicChartViewProps> = ({ natalResul
         <div className="glass-card p-4 sm:p-5 space-y-4 animate-fade-scale">
           <div className="border-b border-border-light dark:border-border-dark/40 pb-3">
             <h3 className="text-sm sm:text-base font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-              <span className="material-icons-round text-amber-500">child_care</span>
+              <Baby className="h-4 w-4 text-amber-500 shrink-0" />
               Nuôi Dạy Con & Tâm Lý Trẻ Nhỏ
             </h3>
           </div>

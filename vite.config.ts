@@ -43,8 +43,24 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2,wasm,se1}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
         navigateFallback: '/index.html',
+        runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.pathname.endsWith('.wasm') || url.pathname.endsWith('.se1'),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'ephemeris-wasm-cache',
+              expiration: {
+                maxEntries: 20,
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+              },
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+        ],
       },
     }),
   ],
@@ -74,6 +90,7 @@ export default defineConfig({
       include: [/node_modules/],
     },
     sourcemap: 'hidden', // Generate source maps for error reporting but don't expose to browser
+    chunkSizeWarningLimit: 1200,
     rollupOptions: {
       output: {
         manualChunks(id) {
@@ -102,7 +119,7 @@ export default defineConfig({
           if (id.includes('/src/data/lucNham/') || id.includes('/services/lucNham/')) return 'data-lucnham';
           if (id.includes('/src/data/astrology/') || id.includes('/services/astrology/interpretations')) return 'data-astrology-texts';
           if (id.includes('/services/astrology/westernNatalExport') || id.includes('/components/shared/StoryCardExportModal')) return 'astrology-export-engine';
-          if (id.includes('/components/Astrology/Synastry') || id.includes('/services/synastry/')) return 'astrology-synastry';
+          if (id.includes('/components/Astrology/') || id.includes('/services/astrology/')) return 'astrology-suite';
           if (id.includes('/services/tuvi/daiHanInterpretation') || id.includes('/services/tuvi/palaceInterpretation')) {
             return 'tuvi-interpretations';
           }

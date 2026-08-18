@@ -118,12 +118,21 @@ export const TermTooltip: React.FC<TermTooltipProps> = ({ term, children, classN
 
       {isOpen && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-fade-in"
-          onClick={() => setIsOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={info.title}
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
         >
+          {/* Backdrop */}
+          <button
+            type="button"
+            aria-label="Đóng giải nghĩa"
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black/60 backdrop-blur-xs animate-fade-in w-full h-full border-none cursor-default"
+          />
+
           <div
-            className="bg-surface-light dark:bg-surface-dark border border-border-light/60 dark:border-border-dark/60 rounded-2xl shadow-2xl max-w-sm w-full p-5 space-y-3 animate-scale-in"
-            onClick={(e) => e.stopPropagation()}
+            className="relative z-10 bg-surface-light dark:bg-surface-dark border border-border-light/60 dark:border-border-dark/60 rounded-2xl shadow-2xl max-w-sm w-full p-5 space-y-3 animate-scale-in"
           >
             <div className="flex items-start justify-between gap-3">
               <div>

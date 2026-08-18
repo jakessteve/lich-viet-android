@@ -20,12 +20,12 @@ describe('WesternNatalChartDisplay', () => {
     });
     const { container } = render(<WesternNatalChartDisplay />);
 
+    const svg = container.querySelector('svg[data-chart="western-natal"]');
     expect(screen.getByRole('img', { name: /Lá số chiêm tinh Tây phương/i })).not.toBeNull();
-    expect(container.querySelector('svg')?.getAttribute('data-theme')).toBe('dark');
+    expect(svg?.getAttribute('data-theme')).toBe('dark');
     expect(container.querySelectorAll('[data-role="object"]')).toHaveLength(20);
     const viewport = container.querySelector('[data-western-chart-viewport]');
     const stage = container.querySelector('[data-western-chart-stage]');
-    const svg = container.querySelector('svg');
     expect(viewport?.getAttribute('data-zoom')).toBe('1');
     expect(stage?.getAttribute('style')).toContain('width: 100%');
     expect(svg?.classList.contains('w-full')).toBe(true);

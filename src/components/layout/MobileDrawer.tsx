@@ -41,7 +41,7 @@ export default function MobileDrawer({ isOpen: controlledOpen, onClose: controll
         setInternalOpen(false);
       }
       setIsClosing(false);
-    }, 200);
+    }, 350);
   }, [controlledClose, isControlled]);
 
   const handleNav = useCallback(
@@ -186,7 +186,7 @@ export default function MobileDrawer({ isOpen: controlledOpen, onClose: controll
     >
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-200 ease-out ${
+        className={`fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-350 ease-out ${
           isClosing ? 'opacity-0' : 'animate-fade-in'
         }`}
         onClick={handleClose}
@@ -195,7 +195,7 @@ export default function MobileDrawer({ isOpen: controlledOpen, onClose: controll
 
       {/* Drawer Panel */}
       <div
-        className={`fixed inset-y-0 left-0 w-4/5 max-w-xs bg-surface-light dark:bg-surface-dark shadow-2xl flex flex-col z-10 transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu border-r border-border-light/40 dark:border-border-dark/40 ${
+        className={`fixed inset-y-0 left-0 w-4/5 max-w-xs bg-surface-light dark:bg-surface-dark shadow-2xl flex flex-col z-10 transition-transform duration-350 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu border-r border-border-light/40 dark:border-border-dark/40 ${
           isClosing ? '-translate-x-full' : 'animate-slide-right'
         }`}
       >
@@ -211,7 +211,7 @@ export default function MobileDrawer({ isOpen: controlledOpen, onClose: controll
               LỊCH VIỆT
             </span>
             <span className="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-full bg-gold/10 text-text-primary-light dark:text-gold-dark">
-              v3
+              v1.0
             </span>
           </button>
           <button

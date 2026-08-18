@@ -1,8 +1,5 @@
-/**
- * BestTimesPanel — Top 3 best hours for the selected activity today
- */
-
 import React from 'react';
+import { Clock } from 'lucide-react';
 import { HourScoreEntry } from '@lich-viet/core/dungsu';
 
 interface BestTimesPanelProps {
@@ -17,7 +14,7 @@ const BestTimesPanel: React.FC<BestTimesPanelProps> = ({ bestHours, activityName
     <div className="rounded-xl border border-border-light dark:border-border-dark overflow-hidden">
       <div className="px-4 py-3 bg-surface-subtle-light dark:bg-surface-subtle-dark">
         <span className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-          <span className="material-icons-round text-base text-gold dark:text-gold-dark">schedule</span>
+          <Clock className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
           Giờ tốt nhất cho "{activityName}"
         </span>
       </div>

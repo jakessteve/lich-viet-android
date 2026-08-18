@@ -17,6 +17,7 @@ export interface AuthGateway {
   logout(): Promise<void>;
   register(input: RegisterInput): Promise<AuthResult>;
   getProfile(): Promise<UserProfile>;
+  updateProfile(updates: Partial<UserProfile>): Promise<UserProfile>;
 }
 
 export interface CalendarEventGateway {

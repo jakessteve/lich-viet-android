@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { Globe, Home } from 'lucide-react';
 import type { WesternChartResult, PlanetPosition } from '../../../services/astrology/westernCalculator';
 import { VedicInterpretationPanel } from './VedicInterpretationPanel';
 import { VedicSquareChart } from './VedicSquareChart';
@@ -12,6 +13,7 @@ import { detectVedicYogasAndDoshas } from '../../../services/astrology/vedicYoga
 import { calculateVedicGochar } from '../../../services/astrology/gocharAnalysis';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { useShallow } from 'zustand/react/shallow';
+import { WesternMarkdownExport } from '../WesternMarkdownExport';
 import { SegmentedControl, type SegmentedOption } from '../../shared';
 
 type VedicViewMode = 'simple' | 'advanced';
@@ -190,14 +192,15 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
               Chọn mức độ chi tiết phù hợp với nhu cầu tra cứu của bạn.
             </p>
           </div>
-          <div className="w-full sm:w-80">
+          <div className="flex flex-wrap items-center gap-2">
+            <WesternMarkdownExport system="vedic" />
             <SegmentedControl
               options={VEDIC_VIEW_MODES}
               value={viewMode}
               onChange={setViewMode}
               ariaLabel="Chế độ xem luận giải Vệ Đà"
               tone="purple"
-              className="w-full"
+              className="w-full sm:w-auto"
             />
           </div>
         </div>
@@ -222,7 +225,7 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
           <div className="glass-card overflow-hidden">
             <div className="card-header">
               <h3 className="section-title text-sm flex items-center gap-2">
-                <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">language</span>
+                <Globe className="h-4 w-4 text-purple-500 dark:text-purple-400 shrink-0" />
                 Vị Trí Hành Tinh Chi Tiết (Sidereal Lahiri)
               </h3>
             </div>
@@ -254,7 +257,7 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
           <div className="glass-card overflow-hidden">
             <div className="card-header">
               <h3 className="section-title text-sm flex items-center gap-2">
-                <span className="material-icons-round text-purple-500 dark:text-purple-400 text-base">home</span>
+                <Home className="h-4 w-4 text-purple-500 dark:text-purple-400 shrink-0" />
                 12 Bhava (Cung Vị Vệ Đà & Tọa Độ)
               </h3>
             </div>

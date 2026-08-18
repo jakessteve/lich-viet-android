@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Put,
   Delete,
   Query,
   Body,
@@ -64,6 +65,19 @@ export class CalendarController {
   createEvent(@Body() body: CreateBackendCalendarEventDto, @Headers('authorization') authHeader?: string) {
     const userId = this.extractUserId(authHeader);
     return this.calendarService.createEvent(userId, body);
+  }
+
+  @Put('events/:id')
+  @ApiOperation({ summary: 'Update a calendar event' })
+  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
+  @ApiResponse({ status: 200, description: 'Updated calendar event' })
+  updateEvent(
+    @Param('id') id: string,
+    @Body() body: CreateBackendCalendarEventDto,
+    @Headers('authorization') authHeader?: string,
+  ) {
+    const userId = this.extractUserId(authHeader);
+    return this.calendarService.updateEvent(userId, id, body);
   }
 
   @Delete('events/:id')

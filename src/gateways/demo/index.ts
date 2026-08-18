@@ -45,6 +45,15 @@ export class DemoAuthGateway implements AuthGateway {
   async getProfile(): Promise<UserProfile> {
     return this.user;
   }
+
+  async updateProfile(updates: Partial<UserProfile>): Promise<UserProfile> {
+    this.user = {
+      ...this.user,
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    return this.user;
+  }
 }
 
 export class DemoCalendarEventGateway implements CalendarEventGateway {
@@ -60,8 +69,17 @@ export class DemoCalendarEventGateway implements CalendarEventGateway {
       userId: DEMO_USER_PROFILE.id,
       title: event.title,
       description: event.description,
+      calendarType: event.calendarType ?? 'solar',
       solarDate: event.solarDate,
-      category: event.category,
+      lunarDay: event.lunarDay,
+      lunarMonth: event.lunarMonth,
+      lunarYear: event.lunarYear,
+      isLeapMonth: event.isLeapMonth,
+      recurrence: event.recurrence ?? 'none',
+      recurrenceEndDate: event.recurrenceEndDate,
+      category: event.category ?? 'personal',
+      emoji: event.emoji,
+      color: event.color,
       alarmOffsetsMinutes: event.alarmOffsetsMinutes || [],
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),

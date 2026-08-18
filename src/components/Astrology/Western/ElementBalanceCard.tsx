@@ -1,4 +1,5 @@
 import React from 'react';
+import { Scale } from 'lucide-react';
 import type { ElementModalityBalanceResult, ZodiacElement, ZodiacModality } from '@/services/astrology/elementBalance';
 
 export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResult }> = ({ balance }) => {
@@ -29,9 +30,7 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-light/50 pb-3 dark:border-border-dark/50">
         <div>
           <h4 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
-            <span className="material-icons-round text-base text-astral-primary dark:text-astral-primary-dark">
-              balance
-            </span>
+            <Scale className="h-4 w-4 text-astral-primary dark:text-astral-primary-dark shrink-0" />
             Cân Bằng Nguyên Tố & Tính Chất
           </h4>
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">

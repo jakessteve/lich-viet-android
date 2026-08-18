@@ -43,5 +43,29 @@ describe('Western natal page wiring', () => {
     render(<WesternMarkdownExport system="vedic" />);
     expect(screen.getByRole('button', { name: /Sao chép/i })).not.toBeNull();
   });
+
+  it('renders Copy Markdown button inside WesternNatalChartDisplay and VedicChartDisplay', async () => {
+    const fixture = createWesternNatalFixture();
+    act(() =>
+      useAstrologyStore.setState({
+        westernNatalResult: fixture,
+        westernResult: fixture.legacyResult,
+        vedicResult: fixture.legacyResult,
+        isCalculating: false,
+        error: null,
+      }),
+    );
+
+    const { WesternNatalChartDisplay } = await import('@/components/Astrology/Western/WesternNatalChartDisplay');
+    const { VedicChartDisplay } = await import('@/components/Astrology/Vedic/VedicChartDisplay');
+
+    const westernDisplay = render(<WesternNatalChartDisplay />);
+    expect(screen.getByRole('button', { name: /Sao chép Luận Giải \(Markdown\)/i })).not.toBeNull();
+    westernDisplay.unmount();
+
+    const vedicDisplay = render(<VedicChartDisplay result={fixture.legacyResult} />);
+    expect(screen.getByRole('button', { name: /Sao chép Luận Giải \(Markdown\)/i })).not.toBeNull();
+    vedicDisplay.unmount();
+  });
 });
 

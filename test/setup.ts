@@ -31,20 +31,36 @@ Object.defineProperty(global, 'import', {
   },
 });
 
-// Mock window.gtag
-Object.defineProperty(global, 'window', {
-  value: {
-    ...globalThis,
-    gtag: vi.fn(),
-    location: { pathname: '/' },
-  },
-  writable: true,
-});
+// Mock window.gtag on existing window
+if (typeof window !== 'undefined') {
+  (window as unknown as Record<string, unknown>).gtag = vi.fn();
+}
 
 // Mock navigator.language for locale detection
-Object.defineProperty(global, 'navigator', {
-  value: {
-    language: 'vi-VN',
-  },
-  writable: true,
-});
+if (typeof navigator !== 'undefined') {
+  try {
+    Object.defineProperty(navigator, 'language', {
+      value: 'vi-VN',
+      configurable: true,
+    });
+  } catch {
+    // ignore
+  }
+}
+
+// Mock window.matchMedia for JSDOM / React component testing
+if (typeof window !== 'undefined') {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  });
+}

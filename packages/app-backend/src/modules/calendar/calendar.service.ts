@@ -1,20 +1,25 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CalendarEventDto } from '@lich-viet/contracts';
 import { createCalendarDayDetail, createDungSuCatalog, createDungSuScoreDetail } from '../../frontend-readiness.js';
-import { CreateBackendCalendarEventDto } from './dto/calendar.dto.js';
+import { CreateBackendCalendarEventDto, UpdateBackendCalendarEventDto } from './dto/calendar.dto.js';
 
 @Injectable()
 export class CalendarService {
   private events: Map<string, CalendarEventDto> = new Map();
 
   constructor() {
-    // Seed initial event
+    // Seed initial event with recurrence
     this.createEvent('demo-user-001', {
       title: 'Tết Trung Thu',
-      description: 'Lễ hội trăng rằm',
+      description: 'Lễ hội trăng rằm tháng 8',
+      calendarType: 'lunar',
       solarDate: '2026-09-25',
-      category: 'holiday',
-      alarmOffsetsMinutes: [60],
+      lunarDay: 15,
+      lunarMonth: 8,
+      recurrence: 'yearly_lunar',
+      category: 'ritual',
+      emoji: '🥮',
+      alarmOffsetsMinutes: [60, 1440],
     });
   }
 
@@ -57,14 +62,41 @@ export class CalendarService {
       userId,
       title: dto.title,
       description: dto.description,
+      calendarType: dto.calendarType ?? 'solar',
       solarDate: dto.solarDate,
-      category: dto.category,
+      lunarDay: dto.lunarDay,
+      lunarMonth: dto.lunarMonth,
+      lunarYear: dto.lunarYear,
+      isLeapMonth: dto.isLeapMonth,
+      recurrence: dto.recurrence ?? 'none',
+      recurrenceEndDate: dto.recurrenceEndDate,
+      category: dto.category ?? 'personal',
+      emoji: dto.emoji,
+      color: dto.color,
       alarmOffsetsMinutes: dto.alarmOffsetsMinutes ?? [],
       createdAt: now,
       updatedAt: now,
     };
     this.events.set(id, event);
     return event;
+  }
+
+  async updateEvent(userId: string, id: string, dto: UpdateBackendCalendarEventDto): Promise<CalendarEventDto> {
+    const existing = this.events.get(id);
+    if (!existing) {
+      throw new NotFoundException(`Calendar event #${id} not found`);
+    }
+
+    const now = new Date().toISOString();
+    const updated: CalendarEventDto = {
+      ...existing,
+      ...dto,
+      id,
+      userId: existing.userId,
+      updatedAt: now,
+    };
+    this.events.set(id, updated);
+    return updated;
   }
 
   async deleteEvent(userId: string, id: string): Promise<void> {
