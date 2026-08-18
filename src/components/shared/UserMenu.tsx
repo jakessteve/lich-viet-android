@@ -1,9 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { User, Settings, HelpCircle, Info, LogOut, LogIn, UserPlus, Type } from 'lucide-react';
+import { CircleUserRound, Settings, HelpCircle, Info, LogOut, LogIn, UserPlus, Type } from 'lucide-react';
 import { useAuthStore } from '@/stores/authStore';
 import { useAppStore } from '@/stores/appStore';
-import { IconButton } from './ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -34,12 +33,19 @@ export default function UserMenu({ showFontSizeControl = false, onOpenHelp, onOp
     <div className={className}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <IconButton
+          <button
             id="tour-user-menu"
-            className="rounded-full text-text-secondary-light/80 dark:text-text-secondary-dark/80 hover:text-text-primary-light dark:hover:text-text-primary-dark"
-            icon={<User className="h-5 w-5 sm:h-[22px] sm:w-[22px]" strokeWidth={2.25} />}
-            label="Menu người dùng"
-          />
+            className="h-10 w-10 min-h-11 min-w-11 flex items-center justify-center rounded-full hover:bg-surface-container-low dark:hover:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark transition-colors spring-press"
+            aria-label="Menu người dùng"
+          >
+            {isAuthenticated && user ? (
+              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-gold/20 via-purple-500/20 to-indigo-500/20 border border-gold/40 text-amber-950 dark:text-gold-dark font-extrabold text-xs shadow-xs">
+                {user.displayName.charAt(0).toUpperCase()}
+              </div>
+            ) : (
+              <CircleUserRound className="h-5 w-5 sm:h-[22px] sm:w-[22px]" strokeWidth={2} />
+            )}
+          </button>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent align="end" className="w-64 p-1.5 shadow-2xl">

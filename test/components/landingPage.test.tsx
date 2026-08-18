@@ -25,9 +25,10 @@ describe('LandingPage Component', () => {
     expect(screen.getByRole('heading', { name: 'Gieo Quẻ' })).toBeInTheDocument();
 
     // Check CTA button
-    expect(screen.getByRole('button', { name: /Trải nghiệm ngay/i })).toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: /Khám phá ngay/i })[0]).toBeInTheDocument();
   });
 });
+
 
 describe('MoonPhaseSVG Component', () => {
   it('renders a full moon circle on lunar day 15', () => {

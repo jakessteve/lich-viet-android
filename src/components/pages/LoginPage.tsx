@@ -139,7 +139,7 @@ export default function LoginPage() {
           <div className="text-right">
             <button
               type="button"
-              className="text-sm text-gold dark:text-gold-dark hover:underline font-medium"
+              className="text-sm text-text-primary-light dark:text-gold-dark hover:underline font-semibold"
               onClick={() =>
                 setError(
                   'Đặt lại mật khẩu chưa khả dụng trong bản lưu cục bộ. Hãy tạo tài khoản mới nếu bạn đang dùng bản demo.',
@@ -204,7 +204,7 @@ export default function LoginPage() {
           Chưa có tài khoản?{' '}
           <button
             onClick={() => navigate('/app/dang-ky')}
-            className="font-semibold text-gold dark:text-gold-dark hover:underline"
+            className="font-semibold text-text-primary-light dark:text-gold-dark hover:underline"
           >
             Đăng ký ngay
           </button>

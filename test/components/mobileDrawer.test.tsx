@@ -4,6 +4,7 @@ import '@testing-library/jest-dom';
 import { render, screen, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import MobileDrawer from '@/components/layout/MobileDrawer';
+import { useAuthStore } from '@/stores/authStore';
 
 describe('MobileDrawer Component', () => {
   it('renders all separate astrology sub-items when opened via custom event', () => {
@@ -18,23 +19,40 @@ describe('MobileDrawer Component', () => {
       document.dispatchEvent(new CustomEvent('toggle-mobile-menu'));
     });
 
-    // Check header
+    // Check header and home navigation link
     expect(screen.getByText('LỊCH VIỆT')).toBeInTheDocument();
-
-    // Check Group 2 separate items
-    expect(screen.getByText('Tử Vi')).toBeInTheDocument();
-    expect(screen.getByText('Chiêm Tinh Tây Phương')).toBeInTheDocument();
-    expect(screen.getByText('Chiêm Tinh Ấn Độ (Vedic)')).toBeInTheDocument();
-    expect(screen.getByText('Hợp Lá Số (Synastry)')).toBeInTheDocument();
-
-    // Check Home item
-    expect(screen.getByText('Trang chủ')).toBeInTheDocument();
-    expect(screen.getByText('Giới thiệu & Tổng quan Lịch Việt')).toBeInTheDocument();
+    expect(screen.getByTitle('Về Trang chủ Lịch Việt')).toBeInTheDocument();
 
     // Check other groups
-    expect(screen.getByText('Âm lịch')).toBeInTheDocument();
-    expect(screen.getByText('Ngày Tốt')).toBeInTheDocument();
-    expect(screen.getByText('Gieo quẻ')).toBeInTheDocument();
+    expect(screen.getByText('Âm Lịch')).toBeInTheDocument();
+    expect(screen.getByText('Ngày Tốt & Dụng Sự')).toBeInTheDocument();
+    expect(screen.getByText('Mai Hoa & Tam Thức')).toBeInTheDocument();
     expect(screen.getByText('Cài đặt')).toBeInTheDocument();
+    expect(screen.getByText('Nâng cấp tài khoản')).toBeInTheDocument();
+  });
+
+  it('hides Nâng cấp tài khoản when user is admin or premium', () => {
+    useAuthStore.setState({
+      user: {
+        id: 'admin-1',
+        email: 'admin@lichviet.app',
+        displayName: 'Admin User',
+        accessTier: 'admin',
+        provider: 'email',
+        createdAt: '2026-01-01',
+      },
+    });
+
+    render(
+      <MemoryRouter initialEntries={['/app/am-lich']}>
+        <MobileDrawer isOpen={true} />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByText('Cài đặt')).toBeInTheDocument();
+    expect(screen.queryByText('Nâng cấp tài khoản')).not.toBeInTheDocument();
+
+    // Reset store
+    useAuthStore.setState({ user: null });
   });
 });

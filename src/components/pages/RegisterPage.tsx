@@ -287,11 +287,11 @@ export default function RegisterPage() {
             />
             <span className="text-sm text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
               Tôi đồng ý với{' '}
-              <button type="button" className="text-gold dark:text-gold-dark font-semibold hover:underline">
+              <button type="button" className="text-text-primary-light dark:text-gold-dark font-semibold hover:underline">
                 Điều khoản sử dụng
               </button>{' '}
               và{' '}
-              <button type="button" className="text-gold dark:text-gold-dark font-semibold hover:underline">
+              <button type="button" className="text-text-primary-light dark:text-gold-dark font-semibold hover:underline">
                 Chính sách bảo mật
               </button>
             </span>
@@ -355,7 +355,7 @@ export default function RegisterPage() {
           Đã có tài khoản?{' '}
           <button
             onClick={() => navigate('/app/dang-nhap')}
-            className="font-semibold text-gold dark:text-gold-dark hover:underline"
+            className="font-semibold text-text-primary-light dark:text-gold-dark hover:underline"
           >
             Đăng nhập
           </button>

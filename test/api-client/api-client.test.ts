@@ -47,39 +47,6 @@ describe('LichVietApiClient', () => {
     );
   });
 
-  it('fetches Đám Giỗ records with auth header', async () => {
-    client.setToken('auth-token-xyz');
-    const mockDamGioList = [
-      {
-        id: 'dg-1',
-        userId: 'usr-1',
-        deceasedName: 'Cụ Tổ',
-        relationship: 'Ông Cố',
-        lunarDay: 15,
-        lunarMonth: 7,
-        alarmLeadDays: [1, 3],
-        createdAt: '2026-01-01T00:00:00Z',
-        updatedAt: '2026-01-01T00:00:00Z',
-      },
-    ];
-
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockDamGioList,
-    } as Response);
-
-    const records = await client.listDamGio();
-    expect(records.length).toBe(1);
-    expect(records[0]?.deceasedName).toBe('Cụ Tổ');
-    expect(fetchSpy).toHaveBeenCalledWith(
-      'http://localhost:3000/v1/dam-gio',
-      expect.objectContaining({
-        headers: expect.objectContaining({
-          Authorization: 'Bearer auth-token-xyz',
-        }),
-      }),
-    );
-  });
 
   it('calls aligned calculation routes matching NestJS backend controllers', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue({

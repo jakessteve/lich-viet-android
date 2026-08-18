@@ -26,7 +26,9 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
       >
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{sect.isDay ? '☀️' : '🌙'}</span>
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-black/10 dark:bg-white/10 font-mono text-xl font-bold">
+              {sect.isDay ? '☉' : '☽'}
+            </div>
             <div>
               <h3 className="text-base sm:text-lg font-bold">{sect.sectLabelVi}</h3>
               <p className="text-xs opacity-90">
@@ -63,7 +65,9 @@ export const TraditionalChartView: React.FC<TraditionalChartViewProps> = ({ nata
                 {almutenFiguris.almuten} ({almutenFiguris.almutenScore} Điểm Phẩm Chất)
               </p>
             </div>
-            <span className="text-2xl">👑</span>
+            <span className="px-2.5 py-1 rounded-lg bg-gold/15 text-amber-950 dark:text-gold-dark text-xs font-bold border border-gold/30">
+              Almuten
+            </span>
           </div>
           <div className="space-y-1">
             <p className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">

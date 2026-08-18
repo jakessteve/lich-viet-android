@@ -45,29 +45,6 @@ describe('Live E2E Integration: LichVietApiClient <-> Fastify Backend', () => {
     expect(loginResult.user.id).toBe(regResult.user.id);
   });
 
-  it('performs full CRUD on Đám Giỗ against live backend', async () => {
-    const created = await client.createDamGio({
-      deceasedName: 'Cụ Khởi Tổ',
-      relationship: 'Cụ Cố',
-      lunarDay: 18,
-      lunarMonth: 8,
-      alarmLeadDays: [1, 3],
-      notes: 'Lễ cúng tổ',
-    });
-    expect(created.id).toBeDefined();
-    expect(created.deceasedName).toBe('Cụ Khởi Tổ');
-
-    const list = await client.listDamGio();
-    expect(list.some((r) => r.id === created.id)).toBe(true);
-
-    const updated = await client.updateDamGio(created.id, {
-      notes: 'Lễ cúng đại lễ tổ',
-    });
-    expect(updated.notes).toBe('Lễ cúng đại lễ tổ');
-
-    await client.deleteDamGio(created.id);
-  });
-
   it('performs Calendar calculations against live backend', async () => {
     const day = (await client.getCalendarDay('2026-08-18', 7)) as {
       date: { isoDate: string };
@@ -116,10 +93,10 @@ describe('Live E2E Integration: LichVietApiClient <-> Fastify Backend', () => {
       mutations: [
         {
           mutationId: 'live-sync-1',
-          entityType: 'dam_gio',
-          entityId: 'dg-live-1',
-          action: 'insert',
-          payload: { deceasedName: 'Cụ Tổ Live' },
+          entityType: 'user_profile',
+          entityId: 'usr-live-1',
+          action: 'update',
+          payload: { name: 'Người Thử Nghiệm Live' },
           clientUpdatedAt: new Date().toISOString(),
         },
       ],
@@ -130,3 +107,4 @@ describe('Live E2E Integration: LichVietApiClient <-> Fastify Backend', () => {
     expect(syncRes.acks[0].status).toBe('applied');
   });
 });
+

@@ -11,7 +11,7 @@ const badgeVariants = cva(
           'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border-border-light dark:border-border-dark/40',
         neutral:
           'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border-border-light dark:border-border-dark/40',
-        gold: 'bg-gold/10 dark:bg-gold-dark/10 text-gold dark:text-gold-dark border-gold/30 dark:border-gold-dark/25',
+        gold: 'bg-gold/10 dark:bg-gold-dark/10 text-amber-950 dark:text-gold-dark border-gold/30 dark:border-gold-dark/25 font-semibold',
         good: 'bg-good/10 dark:bg-good-dark/10 text-good dark:text-good-dark border-good/30 dark:border-good-dark/25',
         bad: 'bg-bad/10 dark:bg-bad-dark/10 text-bad dark:text-bad-dark border-bad/30 dark:border-bad-dark/25',
         purple:

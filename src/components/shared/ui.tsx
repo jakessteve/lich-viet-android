@@ -134,8 +134,7 @@ export function Toggle({ checked, onChange, id, className, disabled = false }: T
       disabled={disabled}
       onClick={(e) => onChange(!checked, e)}
       className={cn(
-        'relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-gold focus:ring-offset-2 dark:focus:ring-offset-surface-dark disabled:cursor-not-allowed disabled:opacity-40 min-h-11 min-w-11 items-center justify-center p-0 spring-press',
-        checked ? 'bg-primary' : 'bg-gray-300 dark:bg-gray-600',
+        'group relative inline-flex items-center justify-center p-1.5 -m-1.5 min-h-11 min-w-11 shrink-0 cursor-pointer bg-transparent border-0 focus:outline-none disabled:cursor-not-allowed disabled:opacity-40 spring-press',
         className,
       )}
     >
@@ -143,10 +142,19 @@ export function Toggle({ checked, onChange, id, className, disabled = false }: T
       <span
         aria-hidden="true"
         className={cn(
-          'pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow-md ring-0 transition-transform duration-200 ease-in-out',
-          checked ? 'translate-x-2.5' : '-translate-x-2.5',
+          'relative inline-flex h-6 w-11 shrink-0 rounded-full border-2 border-transparent transition-all duration-200 ease-in-out group-focus-visible:ring-2 group-focus-visible:ring-gold group-focus-visible:ring-offset-2 dark:group-focus-visible:ring-offset-surface-dark',
+          checked
+            ? 'bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 shadow-sm shadow-gold/20'
+            : 'bg-gray-300 dark:bg-gray-600',
         )}
-      />
+      >
+        <span
+          className={cn(
+            'pointer-events-none inline-block h-5 w-5 rounded-full bg-white dark:bg-gray-100 shadow-sm ring-0 transition-transform duration-200 ease-in-out',
+            checked ? 'translate-x-5' : 'translate-x-0',
+          )}
+        />
+      </span>
     </button>
   );
 }

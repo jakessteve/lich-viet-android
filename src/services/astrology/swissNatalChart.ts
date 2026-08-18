@@ -10,6 +10,7 @@ import { detectAspectPatterns, type AspectPattern } from './aspectPatterns';
 import { calculateElementModalityBalance, type ElementModalityBalanceResult } from './elementBalance';
 import { calculateBirthMoonPhase, type MoonPhaseResult } from './moonPhase';
 import { measureAsync } from '@/utils/performanceTracker';
+import { ComputeCache } from '@/utils/computeCache';
 
 export type SwissNatalObjectCategory = 'planet' | 'centaur' | 'lunar_point' | 'asteroid' | 'arabic_part' | 'angle';
 
@@ -909,13 +910,20 @@ function buildLegacyResult(
   };
 }
 
+const natalChartComputeCache = new ComputeCache<string, SwissNatalChartResult>(32);
+
 export async function calculateSwissNatalChart(
   input: WesternChartInput,
   options: CalculateSwissNatalOptions = {},
 ): Promise<SwissNatalChartResult> {
-  return measureAsync(
+  const cacheKey = `${input.birthDate instanceof Date ? input.birthDate.toISOString() : String(input.birthDate)}_${input.birthHour}_${input.birthMinute}_${input.latitude}_${input.longitude}_${input.timezone}_${input.houseSystem || 'placidus'}_${input.zodiacMode || 'tropical'}`;
+  if (!options.ephemeris && natalChartComputeCache.has(cacheKey)) {
+    return natalChartComputeCache.get(cacheKey)!;
+  }
+
+  const result = await measureAsync<SwissNatalChartResult>(
     'western_natal_chart_calculate',
-    async () => {
+    async (): Promise<SwissNatalChartResult> => {
       const utc = fixedOffsetBirthToUtc(input);
       const ephemeris = options.ephemeris ?? (await loadDefaultEphemeris());
       const julianDay = ephemeris.dateToJulianDay(utc);
@@ -1210,7 +1218,7 @@ export async function calculateSwissNatalChart(
           houseSystem: input.houseSystem || 'placidus',
         },
         metadata: {
-          engine: '@swisseph/browser',
+          engine: '@swisseph/browser' as const,
           version: ephemeris.version(),
           ephemeris: 'Swiss Ephemeris files',
           fixedUtcOffsetHours: input.timezone,
@@ -1243,4 +1251,10 @@ export async function calculateSwissNatalChart(
     },
     { location: input.locationName || 'unknown' },
   );
+
+  if (!options.ephemeris) {
+    natalChartComputeCache.set(cacheKey, result);
+  }
+
+  return result;
 }

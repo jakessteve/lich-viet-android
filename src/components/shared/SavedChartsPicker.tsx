@@ -186,7 +186,7 @@ export const SavedChartsPicker: React.FC<SavedChartsPickerProps> = ({
       bookmarkIcon: 'text-gold dark:text-gold-dark',
       focusRing: 'focus:ring-gold/50',
       saveBtnBadge:
-        'bg-amber-50 dark:bg-amber-900/20 text-gold dark:text-gold-dark hover:bg-amber-100 dark:hover:bg-amber-900/40 border-amber-200 dark:border-amber-700/50',
+        'bg-amber-50 dark:bg-amber-900/20 text-text-primary-light dark:text-gold-dark hover:bg-amber-100 dark:hover:bg-amber-900/40 border-amber-200 dark:border-amber-700/50 font-semibold',
       modalSaveBtn: 'bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white hover:brightness-110',
     },
     purple: {

@@ -185,7 +185,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
             {/* Card Header */}
             <div className="space-y-1 text-center relative z-10">
               <div className="text-[9px] font-bold uppercase tracking-[0.25em] text-amber-400">
-                ✦ LỊCH VIỆT · TỔNG QUAN BẢN MỆNH ✦
+                LỊCH VIỆT · TỔNG QUAN BẢN MỆNH
               </div>
               <h2 className="text-lg font-extrabold text-white tracking-wide pt-1">{safeName}</h2>
               <p className="text-[10px] text-gray-400">{solarDate}</p>
@@ -209,14 +209,14 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
 
             {/* Core Trait Highlight */}
             <div className="rounded-xl bg-gradient-to-br from-amber-500/10 to-purple-500/10 border border-amber-500/30 p-3 text-center space-y-1 relative z-10">
-              <div className="text-[9px] font-bold uppercase tracking-wider text-amber-400">🌟 BẢN SẮC CỐT LÕI</div>
+              <div className="text-[9px] font-bold uppercase tracking-wider text-amber-400">BẢN SẮC CỐT LÕI</div>
               <p className="text-[11px] leading-relaxed font-medium text-gray-100">{superpower}</p>
             </div>
 
             {/* 2026 Action Focus */}
             <div className="text-center space-y-0.5 relative z-10">
               <div className="text-[9px] font-bold uppercase tracking-wider text-sky-400">
-                🚀 ĐỊNH HƯỚNG TRỌNG TÂM 2026
+                ĐỊNH HƯỚNG TRỌNG TÂM 2026
               </div>
               <p className="text-[10px] leading-relaxed text-gray-300">{actionCompass}</p>
             </div>

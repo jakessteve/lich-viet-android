@@ -3,8 +3,7 @@ import { useTuViStore } from '../../stores/tuviStore';
 import { formatTuViChartAsMarkdown } from '../../services/tuvi/markdownFormatter';
 import { Capacitor } from '@capacitor/core';
 import { Clipboard } from '@capacitor/clipboard';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { Check, Copy, Download } from 'lucide-react';
+import { Check, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const TuViMarkdownExport: React.FC = () => {
@@ -30,64 +29,28 @@ export const TuViMarkdownExport: React.FC = () => {
     }
   };
 
-  const handleDownload = async () => {
-    try {
-      const md = getMarkdown();
-      const name = chart.input.name?.trim() || 'la-so';
-      const filename = `tu-vi-${name.toLowerCase().replace(/\s+/g, '-')}.md`;
-      if (Capacitor.isNativePlatform()) {
-        await Filesystem.writeFile({
-          path: filename,
-          data: md,
-          directory: Directory.Documents,
-          encoding: Encoding.UTF8,
-        });
-        window.alert(`Đã lưu file Markdown vào thư mục Documents/${filename}`);
-      } else {
-        const blob = new Blob([md], { type: 'text/markdown' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.click();
-        URL.revokeObjectURL(url);
-      }
-    } catch (e) {
-      console.error('Failed to download', e);
-      window.alert('Không thể lưu file lúc này. Vui lòng thử lại.');
-    }
-  };
-
   return (
-    <div className="w-full flex items-center gap-2.5 sm:gap-3 pt-2">
+    <div className="w-full flex items-center justify-center pt-2">
       <Button
         type="button"
         variant={copied ? 'secondary' : 'outline'}
         onClick={handleCopy}
-        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
+        className="w-full sm:w-auto min-w-[200px] h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60 hover:bg-surface-subtle-light dark:hover:bg-white/5 transition-all spring-press"
+        title="Sao chép toàn bộ luận giải lá số dạng Markdown"
       >
         {copied ? (
           <>
             <Check className="h-4 w-4 text-good dark:text-good-dark" />
-            <span className="text-good dark:text-good-dark">Đã chép!</span>
+            <span className="text-good dark:text-good-dark">Đã sao chép vào bộ nhớ tạm!</span>
           </>
         ) : (
           <>
-            <Copy className="h-4 w-4" />
-            <span>Sao chép Markdown</span>
+            <Copy className="h-4 w-4 text-gold dark:text-gold-dark" />
+            <span>Sao chép Luận Giải (Markdown)</span>
           </>
         )}
-      </Button>
-
-      <Button
-        type="button"
-        variant="outline"
-        onClick={handleDownload}
-        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
-      >
-        <Download className="h-4 w-4" />
-        <span>Tải file .md</span>
       </Button>
     </div>
   );
 };
+

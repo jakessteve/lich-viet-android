@@ -1,11 +1,19 @@
 import { createAsyncCalculationRequest } from '@lich-viet/contracts';
 import { createChunkPlan, runElectionScan } from '@lich-viet/swisseph-wasm';
 
+export interface ElectionOverrideInput {
+  school_id: string;
+  entity_id: string;
+  custom_element?: string;
+  custom_weight?: number;
+  [key: string]: unknown;
+}
+
 export interface ElectionOptionsInput {
   chunkHours?: number;
-  controlZone?: string;
+  controlZone?: 'occupied' | 'resistance' | string;
   strictMode?: boolean;
-  overrides?: unknown[];
+  overrides?: ElectionOverrideInput[];
   guardrails?: Record<string, unknown>;
 }
 
@@ -28,8 +36,8 @@ export interface ElectionResultPayload {
   chunkCount: number;
   latitudeGuardTriggered: boolean;
   metrics: unknown;
-  eventScore?: unknown;
-  timeline: unknown[];
+  eventScore: unknown;
+  timeline: unknown;
   chunkSummaries: ChunkSummaryItem[];
   timelineTransfer: TimelineTransferInput;
   astronomy: unknown;
@@ -46,10 +54,10 @@ export interface OmceBackendEnvelopeInput {
 function normalizeOptions(options: ElectionOptionsInput = {}) {
   return {
     chunkHours: options.chunkHours,
-    controlZone: options.controlZone,
+    controlZone: (options.controlZone === 'occupied' || options.controlZone === 'resistance' ? options.controlZone : undefined) as 'occupied' | 'resistance' | undefined,
     strictMode: options.strictMode,
-    overrides: Array.isArray(options.overrides) ? options.overrides : [],
-    guardrails: options.guardrails ?? {},
+    overrides: Array.isArray(options.overrides) ? (options.overrides as Array<{ school_id: string; entity_id: string; custom_element?: string; custom_weight?: number }>) : undefined,
+    guardrails: options.guardrails,
   };
 }
 
@@ -108,9 +116,13 @@ export function createOmceBackendEnvelope(input: OmceBackendEnvelopeInput) {
   });
   const result = runElectionScan({
     request,
-    ...options,
+    controlZone: options.controlZone,
+    chunkHours: options.chunkHours,
+    strictMode: options.strictMode,
+    guardrails: options.guardrails,
+    overrides: options.overrides,
   }) as unknown as ElectionResultPayload;
-  const events = [
+  const events: Array<{ type: string; payload: unknown }> = [
     createProgressEvent(request.taskId, 'validating', 0.12, 0, chunkPlan.length),
     createProgressEvent(request.taskId, 'timezone', 0.24, 0, chunkPlan.length),
   ];

@@ -248,6 +248,11 @@ export function getInitialScrollToTop(): boolean {
   return saved === null ? true : saved === 'true';
 }
 
+export function getInitialAutoHideNav(): boolean {
+  const saved = safeStorage.get('autoHideNav');
+  return saved === null ? true : saved === 'true';
+}
+
 // ══════════════════════════════════════════════════════════
 // Store Interface & Implementation
 // ══════════════════════════════════════════════════════════
@@ -260,6 +265,7 @@ interface AppState {
   fontSize: FontSizeLevel;
   isPersonalized: boolean;
   showScrollToTopButton: boolean;
+  autoHideNav: boolean;
 }
 
 interface AppActions {
@@ -270,6 +276,8 @@ interface AppActions {
   setFontSizeLevel: (level: FontSizeLevel) => void;
   togglePersonalization: () => void;
   setShowScrollToTopButton: (enabled: boolean) => void;
+  setAutoHideNav: (enabled: boolean) => void;
+  toggleAutoHideNav: () => void;
 }
 
 export type AppStore = AppState & AppActions;
@@ -285,6 +293,7 @@ export const useAppStore = create<AppStore>()((set) => ({
   isPersonalized: false,
   fontSize: getInitialFontSize(),
   showScrollToTopButton: getInitialScrollToTop(),
+  autoHideNav: getInitialAutoHideNav(),
 
   // Actions
   setSelectedDate: (date: Date) => {
@@ -360,4 +369,18 @@ export const useAppStore = create<AppStore>()((set) => ({
     safeStorage.set('showScrollToTopButton', String(boolValue));
     set({ showScrollToTopButton: boolValue });
   },
+
+  setAutoHideNav: (enabled: boolean) => {
+    const boolValue = Boolean(enabled);
+    safeStorage.set('autoHideNav', String(boolValue));
+    set({ autoHideNav: boolValue });
+  },
+
+  toggleAutoHideNav: () =>
+    set((state) => {
+      const nextVal = !state.autoHideNav;
+      safeStorage.set('autoHideNav', String(nextVal));
+      return { autoHideNav: nextVal };
+    }),
 }));
+

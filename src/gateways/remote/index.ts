@@ -1,13 +1,10 @@
-import { AuthGateway, CalendarEventGateway, DamGioGateway, SyncGateway, RuntimeContext } from '../index.js';
+import { AuthGateway, CalendarEventGateway, SyncGateway, RuntimeContext } from '../index.js';
 import {
   AuthResult,
   LoginInput,
   RegisterInput,
   SocialTokenPayload,
   UserProfile,
-  DamGioRecord,
-  CreateDamGioDto,
-  UpdateDamGioDto,
   CalendarEventDto,
   CreateCalendarEventDto,
   DateRange,
@@ -54,26 +51,6 @@ export class RemoteAuthGateway implements AuthGateway {
   }
 }
 
-export class RemoteDamGioGateway implements DamGioGateway {
-  constructor(private client: LichVietApiClient) {}
-
-  async listDamGio(): Promise<DamGioRecord[]> {
-    return this.client.listDamGio();
-  }
-
-  async createDamGio(entry: CreateDamGioDto): Promise<DamGioRecord> {
-    return this.client.createDamGio(entry);
-  }
-
-  async updateDamGio(id: string, entry: UpdateDamGioDto): Promise<DamGioRecord> {
-    return this.client.updateDamGio(id, entry);
-  }
-
-  async deleteDamGio(id: string): Promise<void> {
-    return this.client.deleteDamGio(id);
-  }
-}
-
 export class RemoteCalendarEventGateway implements CalendarEventGateway {
   constructor(private client: LichVietApiClient) {}
 
@@ -103,8 +80,8 @@ export function createRemoteRuntime(apiBaseUrl = 'http://localhost:3000'): Runti
   return {
     kind: 'remote',
     auth: new RemoteAuthGateway(client),
-    damGio: new RemoteDamGioGateway(client),
     calendar: new RemoteCalendarEventGateway(client),
     sync: new RemoteSyncGateway(client),
   };
 }
+

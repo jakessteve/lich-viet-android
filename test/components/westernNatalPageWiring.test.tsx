@@ -26,7 +26,7 @@ describe('Western natal page wiring', () => {
     expect(container.querySelector('[data-western-wheel]')).toBeNull();
   });
 
-  it('offers accessible Markdown copy and download buttons for Western and Vedic systems', () => {
+  it('offers accessible Markdown copy button for Western and Vedic systems', () => {
     const fixture = createWesternNatalFixture();
     act(() =>
       useAstrologyStore.setState({
@@ -38,11 +38,10 @@ describe('Western natal page wiring', () => {
 
     const western = render(<WesternMarkdownExport system="western" />);
     expect(screen.getByRole('button', { name: /Sao chép/i })).not.toBeNull();
-    expect(screen.getByRole('button', { name: /Tải/i })).not.toBeNull();
     western.unmount();
 
     render(<WesternMarkdownExport system="vedic" />);
     expect(screen.getByRole('button', { name: /Sao chép/i })).not.toBeNull();
-    expect(screen.getByRole('button', { name: /Tải/i })).not.toBeNull();
   });
 });
+

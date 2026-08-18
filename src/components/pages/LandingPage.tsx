@@ -158,8 +158,8 @@ export default function LandingPage() {
           <div className="absolute bottom-1/3 right-1/4 w-72 h-72 bg-amber-500/4 dark:bg-mystery-purple/6 rounded-full blur-3xl" />
         </div>
 
-        {/* Auspicious Art Background */}
-        <div className="absolute top-6 right-[-55%] h-[520px] w-[520px] opacity-[0.22] dark:opacity-[0.24] pointer-events-none z-[1] sm:top-0 sm:right-[-20%] sm:h-[720px] sm:w-[720px] sm:opacity-[0.6] md:right-[-10%] lg:right-[0%] lg:h-[900px] lg:w-[900px] lg:opacity-[0.8] lg:dark:opacity-[0.7]">
+        {/* Auspicious Art Background (Shifted 1/3 width to the right) */}
+        <div className="absolute top-2 right-0 translate-x-1/3 h-[560px] w-[560px] opacity-[0.24] dark:opacity-[0.26] pointer-events-none z-[1] sm:top-0 sm:h-[720px] sm:w-[720px] sm:opacity-[0.6] lg:h-[900px] lg:w-[900px] lg:opacity-[0.8] lg:dark:opacity-[0.7]">
           <HeroAuspiciousArt />
         </div>
 
@@ -195,23 +195,24 @@ export default function LandingPage() {
             </p>
 
             {/* CTA buttons */}
-            <div className="flex flex-wrap items-center justify-start gap-4 transform-gpu will-change-transform">
+            <div className="flex flex-wrap items-center justify-start gap-4">
               <ActionButton
                 onClick={() => navigate('/app/am-lich')}
-                className="px-5 py-3 font-medium"
+                className="px-5 py-3 font-medium cursor-pointer"
                 icon="arrow_forward"
               >
-                Trải nghiệm ngay
+                Khám phá ngay
               </ActionButton>
               <ActionButton
                 onClick={() => navigate('/app/nang-cap')}
                 variant="secondary"
-                className="px-5 py-3 font-medium"
+                className="px-5 py-3 font-medium cursor-pointer"
               >
                 <Crown className="h-4 w-4 mr-1.5" />
                 Xem các gói
               </ActionButton>
             </div>
+
           </div>
 
           {/* ══════════════════════════════════════════════════════
@@ -296,7 +297,7 @@ export default function LandingPage() {
             <button
               type="button"
               onClick={() => document.getElementById('stats-section')?.scrollIntoView({ behavior: 'smooth' })}
-              className="flex flex-col items-center gap-1.5 text-text-secondary-light/70 dark:text-text-secondary-dark/70 hover:text-gold dark:hover:text-gold-dark transition-colors cursor-pointer select-none group"
+              className="flex flex-col items-center gap-1.5 text-text-secondary-light/70 dark:text-text-secondary-dark/70 hover:text-text-primary-light dark:hover:text-gold-dark transition-colors cursor-pointer select-none group"
               aria-label="Cuộn xuống để xem thêm"
             >
               <span className="text-xs font-semibold tracking-wider uppercase">Khám phá thêm</span>
@@ -459,7 +460,7 @@ export default function LandingPage() {
                   <li key={f.label}>
                     <button
                       onClick={() => navigate(f.path)}
-                      className="text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/60 hover:text-gold dark:hover:text-gold-dark transition-colors"
+                      className="text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-gold-dark transition-colors"
                     >
                       {f.label}
                     </button>
@@ -481,7 +482,7 @@ export default function LandingPage() {
                   <li key={item.label}>
                     <button
                       onClick={() => navigate(item.path)}
-                      className="text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/60 hover:text-gold dark:hover:text-gold-dark transition-colors"
+                      className="text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-gold-dark transition-colors"
                     >
                       {item.label}
                     </button>
@@ -499,7 +500,7 @@ export default function LandingPage() {
                 <li>
                   <button
                     onClick={() => navigate('/app/nang-cap')}
-                    className="text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/60 hover:text-gold dark:hover:text-gold-dark transition-colors"
+                    className="text-xs text-text-secondary-light/70 dark:text-text-secondary-dark/60 hover:text-text-primary-light dark:hover:text-gold-dark transition-colors"
                   >
                     Nâng cấp tài khoản
                   </button>

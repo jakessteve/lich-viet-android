@@ -140,7 +140,7 @@ export const ForecastView: React.FC = () => {
             <CollapsibleCard
               title={`Tiến Trình Quá Cảnh 12 Tháng Năm ${forecastResult.year}`}
               icon="timeline"
-              defaultOpen
+              defaultOpen={false}
               collapseOnMobile={false}
             >
               <div className="p-4 sm:p-5 space-y-4">
@@ -162,7 +162,7 @@ export const ForecastView: React.FC = () => {
                           : forecastResult.monthlyTimeline.overallLuckTier === 'Khởi Sắc'
                             ? 'bg-info/15 text-info dark:text-info-dark border-info/40'
                             : forecastResult.monthlyTimeline.overallLuckTier === 'Bình Hòa'
-                              ? 'bg-gold/15 text-gold dark:text-gold-dark border-gold/40'
+                              ? 'bg-gold/15 text-amber-950 dark:text-gold-dark border-gold/40'
                               : 'bg-orange/15 text-orange dark:text-orange-dark border-orange/40'
                       }`}
                     >
@@ -219,7 +219,7 @@ export const ForecastView: React.FC = () => {
                                   : m.luckTier === 'Khởi Sắc'
                                     ? 'bg-info/15 text-info dark:text-info-dark'
                                     : m.luckTier === 'Bình Hòa'
-                                      ? 'bg-gold/15 text-gold dark:text-gold-dark'
+                                      ? 'bg-gold/15 text-amber-950 dark:text-gold-dark'
                                       : 'bg-orange/15 text-orange dark:text-orange-dark'
                               }`}
                             >

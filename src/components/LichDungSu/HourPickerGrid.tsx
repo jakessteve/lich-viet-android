@@ -98,7 +98,7 @@ const HourPickerGrid: React.FC<HourPickerGridProps> = ({
           </span>
           <button
             onClick={() => setSortByScore(!sortByScore)}
-            className="text-xs text-gold dark:text-gold-dark hover:underline flex items-center gap-1"
+            className="text-xs text-text-primary-light dark:text-gold-dark hover:underline flex items-center gap-1 font-semibold"
           >
             <span className="material-icons-round" style={{ fontSize: '14px' }}>
               {sortByScore ? 'sort' : 'schedule'}
@@ -140,7 +140,7 @@ const HourPickerGrid: React.FC<HourPickerGridProps> = ({
                 </span>
               )}
               {/* Chi name */}
-              <span className={`text-sm font-bold ${isSelected ? 'text-gold dark:text-gold-dark' : colors.text}`}>
+              <span className={`text-sm font-bold ${isSelected ? 'text-text-primary-light dark:text-gold-dark' : colors.text}`}>
                 {chi}
               </span>
 
@@ -153,7 +153,7 @@ const HourPickerGrid: React.FC<HourPickerGridProps> = ({
               {score !== undefined ? (
                 <span
                   className={`text-xs font-bold mt-1 tabular-nums ${
-                    isSelected ? 'text-gold dark:text-gold-dark' : colors.text
+                    isSelected ? 'text-text-primary-light dark:text-gold-dark' : colors.text
                   }`}
                 >
                   {score}%

@@ -71,7 +71,10 @@ export default function SettingsPage() {
   const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
   const showScrollToTopButton = useAppStore((s) => s.showScrollToTopButton);
   const setShowScrollToTopButton = useAppStore((s) => s.setShowScrollToTopButton);
+  const autoHideNav = useAppStore((s) => s.autoHideNav);
+  const setAutoHideNav = useAppStore((s) => s.setAutoHideNav);
   const { syncWithCloud, isSyncing, lastSyncedAt } = useProfileVaultStore();
+
   const { user, isAuthenticated, logout, updateProfile, changePassword } = useAuthStore(
     useShallow((s) => ({
       user: s.user,
@@ -281,7 +284,7 @@ export default function SettingsPage() {
                 onClick={() => setActiveSection(s.id)}
                 className={`flex shrink-0 snap-start items-center gap-1.5 px-3 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 spring-press ${
                   activeSection === s.id
-                    ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/12 dark:to-amber-400/8 text-gold dark:text-gold-dark shadow-sm font-semibold'
+                    ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/12 dark:to-amber-400/8 text-text-primary-light dark:text-gold-dark shadow-sm font-semibold'
                     : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5'
                 }`}
               >
@@ -308,7 +311,7 @@ export default function SettingsPage() {
               onClick={() => setActiveSection(s.id)}
               className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium w-full text-left transition-all duration-200 spring-press ${
                 activeSection === s.id
-                  ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/15 dark:to-amber-400/8 text-gold dark:text-gold-dark font-semibold'
+                  ? 'bg-gradient-to-r from-gold/15 to-amber-500/10 dark:from-gold-dark/15 dark:to-amber-400/8 text-text-primary-light dark:text-gold-dark font-semibold'
                   : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100/80 dark:hover:bg-white/5'
               }`}
             >
@@ -353,7 +356,7 @@ export default function SettingsPage() {
                       onClick={() => setFontSizeLevel(level)}
                       className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all duration-200 ${
                         fontSize === level
-                          ? 'bg-gold/12 dark:bg-gold-dark/12 text-gold dark:text-gold-dark'
+                          ? 'bg-gold/12 dark:bg-gold-dark/12 text-text-primary-light dark:text-gold-dark font-semibold'
                           : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700/50'
                       }`}
                     >
@@ -373,7 +376,19 @@ export default function SettingsPage() {
                   onChange={() => setShowScrollToTopButton(!showScrollToTopButton)}
                 />
               </SettingRow>
+              <SettingRow
+                icon="unfold_less"
+                label="Tự động ẩn thanh điều hướng"
+                description="Trượt ẩn thanh đỉnh và thanh đáy khi cuộn xuống để mở rộng không gian đọc luận giải"
+              >
+                <Toggle
+                  id="toggle-auto-hide-nav"
+                  checked={autoHideNav}
+                  onChange={() => setAutoHideNav(!autoHideNav)}
+                />
+              </SettingRow>
             </SectionCard>
+
           )}
 
           {/* Language & Region */}
@@ -587,7 +602,8 @@ export default function SettingsPage() {
                 description={
                   lastSyncedAt
                     ? `Đã đồng bộ lần cuối lúc ${new Date(lastSyncedAt).toLocaleTimeString('vi-VN')} (${new Date(lastSyncedAt).toLocaleDateString('vi-VN')})`
-                    : 'Đồng bộ hồ sơ và ngày giỗ gia tiên lên máy chủ'
+                    : 'Đồng bộ hồ sơ và dữ liệu cá nhân lên máy chủ'
+
                 }
               >
                 <button
@@ -681,7 +697,7 @@ export default function SettingsPage() {
                     <div className="flex flex-col gap-1.5 shrink-0">
                       <button
                         onClick={startEdit}
-                        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gold/8 dark:bg-gold-dark/6 text-gold dark:text-gold-dark hover:bg-gold/15 transition-colors flex items-center gap-1.5"
+                        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gold/8 dark:bg-gold-dark/6 text-text-primary-light dark:text-gold-dark hover:bg-gold/15 transition-colors flex items-center gap-1.5 font-semibold"
                       >
                         <Edit2 className="h-3.5 w-3.5" /> Sửa
                       </button>
@@ -985,7 +1001,7 @@ export default function SettingsPage() {
                     <div className="flex items-center justify-center gap-2.5">
                       <button
                         onClick={() => navigate('/app/dang-nhap')}
-                        className="px-4 py-1.5 rounded-xl text-xs font-medium bg-gold/10 dark:bg-gold-dark/8 text-gold dark:text-gold-dark hover:bg-gold/18 dark:hover:bg-gold-dark/15 transition-colors inline-flex items-center gap-1.5"
+                        className="px-4 py-1.5 rounded-xl text-xs font-semibold bg-gold/10 dark:bg-gold-dark/8 text-text-primary-light dark:text-gold-dark hover:bg-gold/18 dark:hover:bg-gold-dark/15 transition-colors inline-flex items-center gap-1.5"
                       >
                         <LogIn className="h-3.5 w-3.5" />
                         Đăng nhập

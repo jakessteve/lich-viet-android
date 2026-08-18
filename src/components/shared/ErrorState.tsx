@@ -34,7 +34,7 @@ export default function ErrorState({
         </div>
       </div>
       {onRetry && (
-        <button onClick={onRetry} className="mt-4 text-sm text-gold dark:text-gold-dark font-medium hover:underline">
+        <button onClick={onRetry} className="mt-4 text-sm text-text-primary-light dark:text-gold-dark font-semibold hover:underline">
           {retryLabel}
         </button>
       )}

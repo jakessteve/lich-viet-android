@@ -544,10 +544,18 @@ export interface UnifiedBirthProfile {
   tuViContext: {
     lunarDate: { day: number; month: number; year: number; isLeapMonth: boolean };
     hourBranchIndex: number;
+    yearBranchIndex?: number;
+    yearCanIndex?: number;
+    dayCanIndex?: number;
+    dayBranchIndex?: number;
+    cungPhi?: { index: number; name: string; element: string; group: string };
     isDayShifted: boolean;
+    chart?: any;
+    phuThePalace?: any;
   };
-  vedicContext: unknown | null;
-  westernContext: unknown | null;
+  crossEngineMapping?: any;
+  vedicContext: any;
+  westernContext: any;
 }
 
 export declare function generateUnifiedBirthProfile(input: {
@@ -637,6 +645,31 @@ export function computeDavisonChart(
   birthA: { julianDay: number; latitude: number; longitude: number },
   birthB: { julianDay: number; latitude: number; longitude: number },
 ): { julianDay: number; latitude: number; longitude: number; note: string };
+export function computeManglikDosha(input: {
+  marsSiderealLon?: number;
+  ascSiderealLon?: number;
+  moonSiderealLon?: number;
+  venusSiderealLon?: number;
+  age?: number;
+}): {
+  isManglik: boolean;
+  status: string;
+  afflictions: string[];
+  cancellations: string[];
+  houses: {
+    fromAsc: number;
+    fromMoon: number;
+    fromVenus: number;
+  };
+};
+
+export function computeCungPhi(lunarYear: number, gender: string): {
+  index: number;
+  name: string;
+  element: string;
+  group: string;
+};
+
 export function calculateSynastry(
   profileA: any,
   profileB: any,
@@ -644,10 +677,38 @@ export function calculateSynastry(
   vedicSynastryData?: any,
 ): {
   combinedScore: number;
+  dimensions: {
+    emotional: { score: number; label: string; details: string[] };
+    chemistry: { score: number; label: string; details: string[] };
+    intellect: { score: number; label: string; details: string[] };
+    stability: { score: number; label: string; details: string[] };
+    complement: { score: number; label: string; details: string[] };
+  };
+  advice: string[];
   engines: {
-    tuVi: { score: number; insights: string[] };
-    western: { score: number; insights: string[] };
-    vedic: { score: number; insights: string[]; rawBreakdown: Record<string, number> };
+    tuVi: {
+      score: number;
+      insights: string[];
+      batTrach?: {
+        quaiA: string;
+        quaiB: string;
+        relationship: string;
+        isCat: boolean;
+        delta: number;
+      } | null;
+    };
+    western: {
+      score: number;
+      insights: string[];
+      houseOverlays?: Array<{ planet: string; house: number; desc: string }>;
+    };
+    vedic: {
+      score: number;
+      insights: string[];
+      rawBreakdown: Record<string, number>;
+      pariharas?: Array<{ type: string; rule: string; scoreAdjustment: number }>;
+      manglik?: { isCompatible: boolean; label: string; details: string[] };
+    };
   };
 };
 
@@ -714,7 +775,7 @@ export declare function calculateZodiacalReleasing(
 ): any[];
 
 // Horary
-export declare const HORARY_TOPICS: readonly Array<{ id: string; nameVi: string; house: number; desc: string }>;
+export declare const HORARY_TOPICS: ReadonlyArray<{ id: string; nameVi: string; house: number; desc: string }>;
 export declare function judgeHoraryChart(input: {
   topicId: string;
   houseCusps: number[];

@@ -298,7 +298,7 @@ export const TuViInputForm: React.FC = () => {
               className={cn(
                 'flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2.5 transition-all duration-200 spring-press',
                 input.gender === g
-                  ? 'bg-white text-gold shadow-sm dark:bg-white/15 dark:text-gold-light font-semibold'
+                  ? 'bg-white text-text-primary-light shadow-sm dark:bg-white/15 dark:text-gold-light font-semibold'
                   : 'text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10',
               )}
             >
@@ -347,7 +347,7 @@ export const TuViInputForm: React.FC = () => {
                 className={cn(
                   'flex flex-col items-start p-2.5 rounded-xl border text-left transition-all spring-press',
                   isSelected
-                    ? 'border-gold bg-gold/10 text-gold-dark dark:border-gold dark:bg-gold/20 dark:text-gold-light shadow-sm font-semibold'
+                    ? 'border-gold bg-gold/10 text-text-primary-light dark:border-gold dark:bg-gold/20 dark:text-gold-light shadow-sm font-semibold'
                     : 'surface-control text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10',
                 )}
               >
@@ -363,7 +363,7 @@ export const TuViInputForm: React.FC = () => {
         <button
           type="button"
           onClick={() => setShowExpertSettings(!showExpertSettings)}
-          className="w-full flex items-center justify-between p-3 text-xs font-bold text-gold-dark dark:text-gold-light hover:bg-gold/10 transition-colors"
+          className="w-full flex items-center justify-between p-3 text-xs font-bold text-text-primary-light dark:text-gold-light hover:bg-gold/10 transition-colors"
         >
           <div className="flex items-center gap-2">
             <Sliders className="h-4 w-4 text-gold" />
@@ -389,7 +389,7 @@ export const TuViInputForm: React.FC = () => {
                       className={cn(
                         'flex flex-col items-start p-2 rounded-lg border text-left transition-all',
                         isSelected
-                          ? 'border-gold bg-gold/20 text-gold-dark dark:text-gold-light font-bold'
+                          ? 'border-gold bg-gold/20 text-text-primary-light dark:text-gold-light font-bold'
                           : 'surface-control text-text-secondary-light dark:text-text-secondary-dark opacity-80 hover:opacity-100',
                       )}
                     >
@@ -417,7 +417,7 @@ export const TuViInputForm: React.FC = () => {
                         className={cn(
                           'p-2 rounded-lg border text-left transition-all',
                           isSelected
-                            ? 'border-gold bg-gold/20 text-gold-dark dark:text-gold-light font-bold'
+                            ? 'border-gold bg-gold/20 text-text-primary-light dark:text-gold-light font-bold'
                             : 'surface-control text-text-secondary-light dark:text-text-secondary-dark opacity-80 hover:opacity-100',
                         )}
                       >
@@ -444,7 +444,7 @@ export const TuViInputForm: React.FC = () => {
                         className={cn(
                           'p-2 rounded-lg border text-left transition-all',
                           isSelected
-                            ? 'border-gold bg-gold/20 text-gold-dark dark:text-gold-light font-bold'
+                            ? 'border-gold bg-gold/20 text-text-primary-light dark:text-gold-light font-bold'
                             : 'surface-control text-text-secondary-light dark:text-text-secondary-dark opacity-80 hover:opacity-100',
                         )}
                       >

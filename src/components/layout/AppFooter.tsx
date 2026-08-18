@@ -29,7 +29,7 @@ function AppFooter() {
         <div className="flex items-center justify-end gap-4 text-sm">
           <button
             onClick={() => navigate('/app/nang-cap')}
-            className="relative cursor-pointer text-gold dark:text-gold-dark font-semibold hover:text-amber-700 dark:hover:text-amber-300 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-gold dark:after:bg-gold-dark after:transition-all after:duration-200 hover:after:w-full"
+            className="relative cursor-pointer text-text-primary-light dark:text-gold-dark font-semibold hover:text-amber-700 dark:hover:text-amber-300 transition-colors after:absolute after:bottom-0 after:left-0 after:w-0 after:h-px after:bg-text-primary-light dark:after:bg-gold-dark after:transition-all after:duration-200 hover:after:w-full"
           >
             {footerActionLabel}
           </button>

@@ -239,7 +239,7 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
           <button
             type="button"
             onClick={toggleZoom}
-            className="surface-control inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-gold dark:hover:text-gold-dark transition-colors"
+            className="surface-control inline-flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-text-primary-light dark:hover:text-gold-dark transition-colors"
             aria-label={mobileZoomed ? 'Thu nhỏ lá số' : 'Phóng to lá số'}
           >
             {mobileZoomed ? <ZoomOut className="h-4 w-4" /> : <ZoomIn className="h-4 w-4" />}

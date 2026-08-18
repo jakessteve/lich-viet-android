@@ -15,7 +15,13 @@ export function useHeaderScroll(options: UseHeaderScrollOptions = {}) {
   const [isScrolled, setIsScrolled] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+  const isVisibleRef = useRef(true);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rafId = useRef<number | null>(null);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
 
   useEffect(() => {
     if (typeof window === 'undefined' || typeof window.addEventListener !== 'function') {
@@ -45,9 +51,9 @@ export function useHeaderScroll(options: UseHeaderScrollOptions = {}) {
       const requestAf =
         typeof window.requestAnimationFrame === 'function'
           ? window.requestAnimationFrame
-          : (cb: FrameRequestCallback) => setTimeout(cb, 16);
+          : (cb: FrameRequestCallback) => setTimeout(cb, 16) as unknown as number;
 
-      requestAf(() => {
+      rafId.current = requestAf(() => {
         const currentScrollY = Math.max(0, typeof window.scrollY === 'number' ? window.scrollY : 0);
         const delta = currentScrollY - lastScrollY.current;
 
@@ -64,12 +70,12 @@ export function useHeaderScroll(options: UseHeaderScrollOptions = {}) {
             clearIdleTimer();
             setIsVisible(false);
           } else if (delta < 0) {
-            // Scrolling up -> show header and start 3-second auto-hide timer
+            // Scrolling up -> show header and start auto-hide timer
             setIsVisible(true);
             startIdleTimer(currentScrollY);
           }
-        } else if (isVisible && currentScrollY > minScroll) {
-          // If already visible and scrolled down, refresh the 3-second idle timer
+        } else if (isVisibleRef.current && currentScrollY > minScroll) {
+          // If already visible and scrolled down, refresh idle timer
           startIdleTimer(currentScrollY);
         }
 
@@ -81,11 +87,14 @@ export function useHeaderScroll(options: UseHeaderScrollOptions = {}) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       clearIdleTimer();
+      if (rafId.current && typeof window.cancelAnimationFrame === 'function') {
+        window.cancelAnimationFrame(rafId.current);
+      }
       if (typeof window.removeEventListener === 'function') {
         window.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [minScroll, threshold, autoHideDelay, isVisible]);
+  }, [minScroll, threshold, autoHideDelay]);
 
   return { isVisible, isScrolled };
 }

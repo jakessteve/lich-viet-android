@@ -217,7 +217,7 @@ export const TuViLocationPicker: React.FC<TuViLocationPickerProps> = ({ value, o
             className={cn(
               'rounded-xl border px-3 py-2 text-xs font-semibold transition-all spring-press',
               selectedQuickIndex === index
-                ? 'border-gold-light bg-gold/10 text-gold dark:border-gold dark:bg-gold/20 dark:text-gold-light shadow-sm'
+                ? 'border-gold-light bg-gold/10 text-text-primary-light dark:border-gold dark:bg-gold/20 dark:text-gold-light shadow-sm'
                 : 'surface-control text-text-secondary-light hover:bg-surface-container-lowest dark:text-text-secondary-dark dark:hover:bg-white/10',
             )}
           >

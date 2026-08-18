@@ -80,13 +80,13 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                     allCachCuc.map((c) => (
                       <span
                         key={c.name}
-                        className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold dark:text-gold-dark truncate"
+                        className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-amber-950 dark:text-gold-dark truncate"
                       >
                         {c.name}
                       </span>
                     ))
                   ) : cachCucAnalysisVi ? (
-                    <span className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-gold dark:text-gold-dark truncate">
+                    <span className="rounded-full bg-gold/15 px-1.5 py-0.2 text-[9px] font-semibold text-amber-950 dark:text-gold-dark truncate">
                       {cachCucAnalysisVi.name}
                     </span>
                   ) : null}
@@ -101,7 +101,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
               <button
                 type="button"
                 onClick={() => setIsZoomDrawerExpanded(true)}
-                className="inline-flex items-center gap-1 rounded-xl bg-gold/20 hover:bg-gold/30 border border-gold/40 px-2.5 py-1 text-[11px] font-bold text-gold dark:text-gold-dark transition-all interactive-press"
+                className="inline-flex items-center gap-1 rounded-xl bg-gold/20 hover:bg-gold/30 border border-gold/40 px-2.5 py-1 text-[11px] font-bold text-text-primary-light dark:text-gold-dark transition-all interactive-press"
               >
                 Chi tiết
                 <ChevronsUpDown className="h-3 w-3" />
@@ -246,7 +246,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
           <h3 className="text-base sm:text-lg font-bold text-text-primary-light dark:text-text-primary-dark">
             Luận Giải Chi Tiết {roleBadge} ({palaceBranch})
           </h3>
-          <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[10px] font-bold text-gold dark:text-gold-dark">
+          <span className="rounded-full bg-gold/15 px-2.5 py-0.5 text-[10px] font-bold text-amber-950 dark:text-gold-dark">
             {coreThemeVi}
           </span>
         </div>
@@ -318,7 +318,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                       {allCachCuc.slice(1).map((c) => (
                         <span
                           key={c.name}
-                          className="rounded-full bg-gold/20 px-2 py-0.5 text-[9px] font-semibold text-gold dark:text-gold-dark"
+                          className="rounded-full bg-gold/20 px-2 py-0.5 text-[9px] font-semibold text-amber-950 dark:text-gold-dark"
                         >
                           + {c.name}
                         </span>
@@ -326,7 +326,7 @@ export const TuViPalaceInlineDetail: React.FC<TuViPalaceInlineDetailProps> = ({
                     </div>
                   )}
                 </div>
-                <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-gold dark:text-gold-dark">
+                <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-bold text-amber-950 dark:text-gold-dark">
                   {cachCucAnalysisVi.purity}
                 </span>
               </div>

@@ -56,7 +56,7 @@ const FAQIntentCards: React.FC<FAQIntentCardsProps> = ({ selectedIntent, onSelec
               </span>
               <span
                 className={`text-xs font-semibold leading-tight ${
-                  isActive ? 'text-gold dark:text-gold-dark' : 'text-text-primary-light dark:text-text-primary-dark'
+                  isActive ? 'text-text-primary-light dark:text-gold-dark' : 'text-text-primary-light dark:text-text-primary-dark'
                 }`}
               >
                 {card.title}

@@ -41,7 +41,7 @@ function MethodDetailCard({ method }: { method: MethodSummary }) {
           <span>{method.name}</span>
         </div>
       }
-      defaultOpen={true}
+      defaultOpen={false}
     >
       <div className="p-4 space-y-3">
         {/* Verdict badge */}

@@ -6,7 +6,7 @@ import { CalendarCheck, TrendingUp, AlertTriangle, CalendarDays, Calendar, Activ
 const LUCK_TIER_CLASS: Record<TieuHanInterpretationResult['luckTier'], string> = {
   'Đại Cát': 'bg-good/15 text-good dark:text-good-dark border-good/40',
   'Khởi Sắc': 'bg-info/15 text-info dark:text-info-dark border-info/40',
-  'Bình Hòa': 'bg-gold/15 text-gold dark:text-gold-dark border-gold/40',
+  'Bình Hòa': 'bg-gold/15 text-amber-950 dark:text-gold-dark border-gold/40',
   'Thử Thách': 'bg-orange/15 text-orange dark:text-orange-dark border-orange/40',
   'Gian Nan': 'bg-bad/15 text-bad dark:text-bad-dark border-bad/40',
 };

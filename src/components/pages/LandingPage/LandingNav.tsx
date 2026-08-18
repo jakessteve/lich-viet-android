@@ -1,21 +1,19 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '@/stores/appStore';
-import { Sun, Moon, ArrowRight } from 'lucide-react';
+import { SunMedium, MoonStar } from 'lucide-react';
 import { UserMenu } from '@/components/shared';
-import { Button } from '@/components/ui/button';
 import { useHeaderScroll } from '@/hooks/useHeaderScroll';
 
 export default function LandingNav() {
   const isDark = useAppStore((s) => s.isDark);
   const toggleDarkMode = useAppStore((s) => s.toggleDarkMode);
-  const navigate = useNavigate();
-  const { isVisible, isScrolled } = useHeaderScroll({ minScroll: 50, threshold: 10 });
+  const autoHideNav = useAppStore((s) => s.autoHideNav);
+  const { isVisible, isScrolled } = useHeaderScroll({ minScroll: 60, threshold: 10 });
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 glass-nav transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
+      className={`fixed top-0 left-0 right-0 z-50 glass-nav transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu ${
+        autoHideNav && !isVisible ? '-translate-y-full' : 'translate-y-0'
       } ${isScrolled ? 'shadow-md dark:shadow-black/20 backdrop-blur-md' : ''}`}
       aria-label="Điều hướng trang chủ"
     >
@@ -27,24 +25,10 @@ export default function LandingNav() {
           >
             LỊCH VIỆT
           </button>
-
-          {/* Persistent CTA pill that smoothly appears after scrolling */}
-          {isScrolled && (
-            <div className="hidden sm:block transition-all duration-300 animate-in fade-in slide-in-from-top-1 ml-2">
-              <Button
-                onClick={() => navigate('/app/am-lich')}
-                variant="gold"
-                className="h-8 sm:h-9 px-3.5 sm:px-4 text-xs font-semibold gap-1.5 shadow-sm rounded-full"
-              >
-                <span>Trải nghiệm ngay</span>
-                <ArrowRight className="h-3.5 w-3.5" />
-              </Button>
-            </div>
-          )}
         </div>
 
-        {/* Right: Dark mode + User menu (exact matching position with AppNav) */}
-        <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+        {/* Right: Dark mode + User menu */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* Theme toggle */}
           <button
             id="tour-theme-toggle"
@@ -53,9 +37,9 @@ export default function LandingNav() {
             aria-label="Chuyển chế độ sáng/tối"
           >
             {isDark ? (
-              <Sun className="h-5 w-5 sm:h-[22px] sm:w-[22px]" strokeWidth={2.25} />
+              <SunMedium className="h-5 w-5 sm:h-[22px] sm:w-[22px] text-gold-dark" strokeWidth={2} />
             ) : (
-              <Moon className="h-5 w-5 sm:h-[22px] sm:w-[22px]" strokeWidth={2.25} />
+              <MoonStar className="h-5 w-5 sm:h-[22px] sm:w-[22px] text-amber-600" strokeWidth={2} />
             )}
           </button>
 
@@ -65,3 +49,4 @@ export default function LandingNav() {
     </nav>
   );
 }
+

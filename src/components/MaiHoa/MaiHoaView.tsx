@@ -11,7 +11,7 @@ import HexagramCard, { HaoDetailTable } from './HexagramCard';
 import SummaryCard from './SummaryCard';
 import TheoryCard from './TheoryCard';
 import { MaiHoaErrorBoundary } from './MaiHoaErrorBoundary';
-import QmdjCrossRef from './QmdjCrossRef';
+import TamThucCrossRef from './TamThucCrossRef';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -98,15 +98,16 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
   const lunarDate = useMemo(() => getLunarDate(selectedDate), [selectedDate]);
 
   /**
-   * Simulates a brief loading state before showing results.
+   * Simulates a mindful breathing ritual before revealing results.
    */
   const showResultWithDelay = useCallback((resultData: ResultState) => {
     setIsLoading(true);
     setTimeout(() => {
       setResult(resultData);
       setIsLoading(false);
-    }, 800);
+    }, 1200);
   }, []);
+
 
   /**
    * Handles time-based divination using the selected date + current hour.
@@ -227,26 +228,29 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
           )}
         </Card>
 
-        {/* ── Loading State ──────────────────────────── */}
+        {/* ── Mindful Ritual Loading State ──────────── */}
         {isLoading && (
-          <Card className="p-8 flex flex-col items-center gap-4 animate-scale-in motion-gpu rounded-2xl border border-border-light/60 dark:border-border-dark/60">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-500/20 to-purple-500/20 flex items-center justify-center animate-glow-breathe">
+          <Card className="p-8 flex flex-col items-center gap-4 animate-scale-in motion-gpu rounded-3xl border border-gold/30 dark:border-gold-dark/30 shadow-lg bg-surface-light dark:bg-surface-dark text-center">
+            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-gold/20 via-amber-500/20 to-purple-500/20 flex items-center justify-center animate-glow-breathe">
               <Sparkles className="h-8 w-8 text-gold dark:text-gold-dark animate-spin" />
             </div>
-            <div className="text-center">
-              <p className="font-semibold text-text-primary-light dark:text-text-primary-dark">Đang khởi quẻ...</p>
-              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mt-1">
-                Nạp Giáp, an Lục Thân, phân định Thể Dụng
+            <div className="space-y-1">
+              <p className="font-bold text-base text-text-primary-light dark:text-text-primary-dark font-display">
+                Tịnh tâm quán tưởng điều muốn hỏi...
+              </p>
+              <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+                Khởi quẻ theo Dịch lý · An Lục Thân · Phân định Thể Dụng
               </p>
             </div>
-            <div className="w-48 h-1.5 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+            <div className="w-56 h-1.5 rounded-full bg-surface-subtle-light dark:bg-white/10 overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-accent-main via-accent-mutual to-amber-500 loading-shimmer"
+                className="h-full rounded-full bg-gradient-to-r from-gold via-amber-400 to-gold-dark loading-shimmer"
                 style={{ width: '100%' }}
               />
             </div>
           </Card>
         )}
+
 
         {/* ── Results ────────────────────────────────── */}
         {result && !isLoading && (
@@ -321,8 +325,8 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
               context={result.divination.context}
             />
 
-            {/* QMDJ Cross-Reference */}
-            <QmdjCrossRef date={selectedDate} />
+            {/* Tam Thuc (QMDJ, Luc Nham, Thai At) Cross-Reference & Humanized Interpretation */}
+            <TamThucCrossRef date={selectedDate} questionContext={result.divination.context} />
 
             {/* Theory Card */}
             <TheoryCard

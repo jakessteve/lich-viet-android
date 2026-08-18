@@ -72,7 +72,10 @@ describe('Route Persistence & Native Navigation', () => {
       );
 
       expect(await screen.findByRole('heading', { level: 1 }, { timeout: 10000 })).toBeInTheDocument();
-      expect(await screen.findByRole('button', { name: /Trải nghiệm ngay/i }, { timeout: 10000 })).toBeInTheDocument();
+      const buttons = await screen.findAllByRole('button', { name: /Khám phá ngay/i }, { timeout: 10000 });
+      expect(buttons.length).toBeGreaterThanOrEqual(1);
     }, 15000);
   });
 });
+
+

@@ -22,7 +22,9 @@ function walk(dir) {
     if (
       entry.name.endsWith('.gz') ||
       entry.name.endsWith('.br') ||
+      entry.name.endsWith('.map') ||
       entry.name.startsWith('workbox-') ||
+      (entry.name.startsWith('swisseph-') && entry.name.endsWith('.wasm')) ||
       serviceWorkerFiles.has(entry.name)
     ) {
       fs.unlinkSync(fullPath);

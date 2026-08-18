@@ -238,7 +238,7 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
                 <p className="text-lg font-bold tracking-tight">{result.centerInfo.canChiYear}</p>
               </div>
             </div>
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/50 dark:bg-white/5 text-gold dark:text-gold-dark">
+            <span className="px-3 py-1 rounded-full text-xs font-bold bg-white/50 dark:bg-white/5 text-amber-950 dark:text-gold-dark">
               {result.centerInfo.gioiTinh}
             </span>
           </div>

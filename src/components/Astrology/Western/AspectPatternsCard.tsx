@@ -64,11 +64,11 @@ export const AspectPatternsCard: React.FC<{ patterns: AspectPattern[] }> = ({ pa
                 <div className="space-y-1.5 pt-1 text-xs leading-relaxed">
                   <div className="rounded-lg bg-surface-container-low/60 p-2 space-y-1 border border-border-light/30 dark:border-border-dark/30">
                     <p className="text-text-primary-light dark:text-text-primary-dark font-medium">
-                      <span className="text-gold dark:text-gold-dark font-bold mr-1">✦ Thiên phú:</span>
+                      <span className="text-gold dark:text-gold-dark font-bold mr-1">Thiên phú:</span>
                       {pattern.personalizedSynthesis.uniqueGiftVi}
                     </p>
                     <p className="text-text-secondary-light dark:text-text-secondary-dark">
-                      <span className="text-bad dark:text-bad-dark font-bold mr-1">⚠ Thách thức:</span>
+                      <span className="text-bad dark:text-bad-dark font-bold mr-1">Thách thức:</span>
                       {pattern.personalizedSynthesis.coreChallengeVi}
                     </p>
                   </div>

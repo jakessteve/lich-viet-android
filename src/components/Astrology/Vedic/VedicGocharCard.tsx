@@ -5,9 +5,9 @@ import CollapsibleCard from '../../CollapsibleCard';
 export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) => {
   return (
     <CollapsibleCard
-      title={`Vận Hạn Gochar (Quá Cảnh Theo Mặt Trăng Rashi) — ${gochar.dateLabel}`}
+      title={`Vận Hạn Gochar (Quá Cảnh Mặt Trăng) — ${gochar.dateLabel}`}
       icon="track_changes"
-      defaultOpen
+      defaultOpen={false}
       collapseOnMobile={false}
     >
       <div className="p-4 sm:p-5 space-y-4">
@@ -34,7 +34,7 @@ export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) 
                   : gochar.luckTier === 'Khởi Sắc'
                     ? 'bg-info/15 text-info dark:text-info-dark border-info/40'
                     : gochar.luckTier === 'Bình Hòa'
-                      ? 'bg-gold/15 text-gold dark:text-gold-dark border-gold/40'
+                      ? 'bg-gold/15 text-amber-950 dark:text-gold-dark border-gold/40'
                       : 'bg-bad/15 text-bad dark:text-bad-dark border-bad/40'
               }`}
             >
@@ -58,7 +58,7 @@ export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) 
                 luật, sự kiên định và buông bỏ nóng vội để kiến tạo nền móng vững bền.
               </p>
               <p className="text-[11px] font-medium text-amber-700 dark:text-amber-300/90 pt-0.5">
-                💡 Khuyên giải: {gochar.remedialAdviceVi}
+                <span className="font-semibold">Lời khuyên:</span> {gochar.remedialAdviceVi}
               </p>
             </div>
           </div>

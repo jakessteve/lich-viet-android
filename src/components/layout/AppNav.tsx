@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Menu, Sun, Moon } from 'lucide-react';
+import { SunMedium, MoonStar, Menu } from 'lucide-react';
+
 import { useAppStore } from '@/stores/appStore';
 import { NAV_LINKS, ROUTE_TO_TAB, TAB_TO_ROUTE, type ActiveTab } from '@/router/constants';
 import { useHeaderScroll } from '@/hooks/useHeaderScroll';
@@ -8,20 +9,23 @@ import { useHeaderScroll } from '@/hooks/useHeaderScroll';
 import HelpModal from '../shared/HelpModal';
 import AboutModal from '../shared/AboutModal';
 import UserMenu from '../shared/UserMenu';
+import MobileDrawer from './MobileDrawer';
 import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 
 export default function AppNav() {
   const isDark = useAppStore((s) => s.isDark);
   const toggleDarkMode = useAppStore((s) => s.toggleDarkMode);
+  const autoHideNav = useAppStore((s) => s.autoHideNav);
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
   const { isVisible, isScrolled } = useHeaderScroll({ minScroll: 70, threshold: 12 });
 
   const activeTab: ActiveTab = ROUTE_TO_TAB[location.pathname] || 'am-lich';
-  const isFullPage = location.pathname === '/app/cai-dat';
+  const isFullPage = location.pathname === '/app/cai-dat' || location.pathname === '/app/nang-cap';
 
   const handleTabChange = (tabId: ActiveTab) => {
     navigate(TAB_TO_ROUTE[tabId]);
@@ -34,23 +38,23 @@ export default function AppNav() {
   return (
     <>
       <nav
-        className={`sticky top-0 z-50 glass-nav transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
+        className={`sticky top-0 z-50 glass-nav transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu ${
+          autoHideNav && !isVisible ? '-translate-y-full' : 'translate-y-0'
         } ${isScrolled ? 'shadow-md dark:shadow-black/20 backdrop-blur-md' : ''}`}
         aria-label="Điều hướng chính"
       >
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
-          {/* Left: Hamburger (mobile) / Logo (desktop) */}
-          <div className="flex items-center gap-2 shrink-0">
-            {/* Hamburger button — mobile only */}
+          {/* Left: Hamburger button (Mobile) + Logo */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
-              className="md:hidden p-2 -ml-1 rounded-xl hover:bg-surface-container-low dark:hover:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark transition-colors spring-press min-h-11 min-w-11 flex items-center justify-center"
-              onClick={() => document.dispatchEvent(new CustomEvent('toggle-mobile-menu'))}
-              aria-label="Mở menu điều hướng"
+              type="button"
+              onClick={() => setMobileDrawerOpen(true)}
+              className="md:hidden p-2 rounded-xl text-text-primary-light dark:text-text-primary-dark hover:bg-surface-subtle-light dark:hover:bg-white/10 transition-colors interactive-press"
+              aria-label="Mở menu chức năng"
             >
-              <Menu className="h-6 w-6" strokeWidth={2.25} />
+              <Menu className="h-5 w-5" />
             </button>
-            {/* Logo */}
+
             <button
               id="tour-logo"
               onClick={handleHomeClick}
@@ -84,7 +88,7 @@ export default function AppNav() {
               >
                 {renderDynamicIcon(
                   link.icon,
-                  `h-4 w-4 transition-colors duration-200 ${activeTab === link.id && !isFullPage ? 'text-gold dark:text-gold-dark' : ''}`,
+                  `h-4 w-4 transition-colors duration-200 ${activeTab === link.id && !isFullPage ? 'text-text-primary-light dark:text-gold-dark' : ''}`,
                 )}
                 <span className="hidden lg:inline">{link.label}</span>
                 {!link.enabled && (
@@ -93,7 +97,7 @@ export default function AppNav() {
                   </span>
                 )}
                 {activeTab === link.id && !isFullPage && (
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-gold dark:bg-gold-dark transition-[transform,opacity] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-0.5 rounded-full bg-text-primary-light dark:bg-gold-dark transition-[transform,opacity] duration-250 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 )}
               </button>
             ))}
@@ -109,9 +113,9 @@ export default function AppNav() {
               aria-label="Chuyển chế độ sáng/tối"
             >
               {isDark ? (
-                <Sun className="h-5 w-5 sm:h-[22px] sm:w-[22px]" strokeWidth={2.25} />
+                <SunMedium className="h-5 w-5 sm:h-[22px] sm:w-[22px] text-gold-dark" strokeWidth={2} />
               ) : (
-                <Moon className="h-5 w-5 sm:h-[22px] sm:w-[22px]" strokeWidth={2.25} />
+                <MoonStar className="h-5 w-5 sm:h-[22px] sm:w-[22px] text-amber-600" strokeWidth={2} />
               )}
             </button>
 
@@ -124,6 +128,9 @@ export default function AppNav() {
           </div>
         </div>
       </nav>
+
+      {/* Mobile Drawer */}
+      <MobileDrawer isOpen={mobileDrawerOpen} onClose={() => setMobileDrawerOpen(false)} />
 
       {/* Reusable Modals */}
       <HelpModal isOpen={helpModalOpen} onClose={() => setHelpModalOpen(false)} />

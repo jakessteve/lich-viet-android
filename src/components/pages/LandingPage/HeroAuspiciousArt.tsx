@@ -32,17 +32,17 @@ export default function HeroAuspiciousArt() {
 
   return (
     <div
-      className="w-full h-full relative flex items-center justify-center pointer-events-none select-none"
+      className="w-full h-full relative flex items-center justify-center pointer-events-none select-none overflow-visible"
       style={{
-        maskImage: 'radial-gradient(circle at 50% 50%, black 80%, rgba(0,0,0,0.5) 94%, transparent 100%)',
-        WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 80%, rgba(0,0,0,0.5) 94%, transparent 100%)',
+        maskImage: 'radial-gradient(circle at 50% 50%, black 88%, rgba(0,0,0,0.6) 96%, transparent 100%)',
+        WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 88%, rgba(0,0,0,0.6) 96%, transparent 100%)',
         contain: 'strict',
       }}
     >
       {/* Main Celestial Board with native GPU-accelerated SVG */}
       <svg
-        className="absolute inset-0 w-full h-full"
-        viewBox="0 0 800 800"
+        className="absolute inset-0 w-full h-full overflow-visible"
+        viewBox="-120 -120 1040 1040"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         shapeRendering="geometricPrecision"
@@ -97,67 +97,44 @@ export default function HeroAuspiciousArt() {
         </defs>
 
         <g>
-          {/* Outer ceremonial framing rings */}
-          <circle cx="400" cy="400" r="370" stroke={`url(#${goldGradId})`} strokeWidth="1" opacity="0.12" />
-          <circle
-            cx="400"
-            cy="400"
-            r="348"
-            stroke={`url(#${goldGradId})`}
-            strokeWidth="0.5"
-            strokeDasharray="12 14"
-            opacity="0.14"
-          />
-          <circle cx="400" cy="400" r="315" stroke={`url(#${softGoldId})`} strokeWidth="1" opacity="0.12" />
-
-          {/* 2. BIG BOLD BÁT QUÁI RING */}
-          <g
-            style={{
-              animation: 'spin 90s linear infinite',
-              transformBox: 'view-box',
-              transformOrigin: '400px 400px',
-              willChange: 'transform',
-            }}
-          >
-            {trigrams.map((val, i) => {
-              const isInnerSolid = (val & 1) !== 0;
-              const isMidSolid = (val & 2) !== 0;
-              const isOuterSolid = (val & 4) !== 0;
-
-              const angle = i * 45;
-              return (
-                <g key={`trigram-${i}`} transform={`rotate(${angle} 400 400)`}>
-                  <g transform="translate(400, 130)">
-                    {isInnerSolid ? <use href={`#${solidYaoId}`} /> : <use href={`#${brokenYaoId}`} />}
-                  </g>
-                  <g transform="translate(400, 95)">
-                    {isMidSolid ? <use href={`#${solidYaoId}`} /> : <use href={`#${brokenYaoId}`} />}
-                  </g>
-                  <g transform="translate(400, 60)">
-                    {isOuterSolid ? <use href={`#${solidYaoId}`} /> : <use href={`#${brokenYaoId}`} />}
-                  </g>
-                </g>
-              );
-            })}
-
-            {/* Inner constraint ring for Bát Quái */}
-            <circle cx="400" cy="400" r="228" stroke={`url(#${goldGradId})`} strokeWidth="1" opacity="0.2" />
-            <circle
-              cx="400"
-              cy="400"
-              r="224"
-              stroke={`url(#${goldGradId})`}
-              strokeWidth="0.5"
-              strokeDasharray="6 6"
-              opacity="0.15"
-            />
-          </g>
-
-          {/* 3. CHÒM SAO (Constellations Void Filler) */}
-          <g style={{ transform: 'scale(1)', transformOrigin: '400px 400px' }}>
+          {/* 2. BIG BOLD BÁT QUÁI RING (Zoomed +30%, 30% faster spin: 60s) */}
+          <g style={{ transform: 'scale(1.3)', transformOrigin: '400px 400px' }}>
             <g
               style={{
-                animation: 'spin 105s linear infinite reverse',
+                animation: 'spin 60s linear infinite',
+                transformBox: 'view-box',
+                transformOrigin: '400px 400px',
+                willChange: 'transform',
+              }}
+            >
+              {trigrams.map((val, i) => {
+                const isInnerSolid = (val & 1) !== 0;
+                const isMidSolid = (val & 2) !== 0;
+                const isOuterSolid = (val & 4) !== 0;
+
+                const angle = i * 45;
+                return (
+                  <g key={`trigram-${i}`} transform={`rotate(${angle} 400 400)`}>
+                    <g transform="translate(400, 130)">
+                      {isInnerSolid ? <use href={`#${solidYaoId}`} /> : <use href={`#${brokenYaoId}`} />}
+                    </g>
+                    <g transform="translate(400, 95)">
+                      {isMidSolid ? <use href={`#${solidYaoId}`} /> : <use href={`#${brokenYaoId}`} />}
+                    </g>
+                    <g transform="translate(400, 60)">
+                      {isOuterSolid ? <use href={`#${solidYaoId}`} /> : <use href={`#${brokenYaoId}`} />}
+                    </g>
+                  </g>
+                );
+              })}
+            </g>
+          </g>
+
+          {/* 3. CHÒM SAO (Constellations Void Filler, Zoomed +30% to 1.43x, 30% faster: 70s) */}
+          <g style={{ transform: 'scale(1.43)', transformOrigin: '400px 400px' }}>
+            <g
+              style={{
+                animation: 'spin 70s linear infinite reverse',
                 transformBox: 'view-box',
                 transformOrigin: '400px 400px',
                 willChange: 'transform',
@@ -201,35 +178,36 @@ export default function HeroAuspiciousArt() {
             </g>
           </g>
 
-          {/* 4. TAIJI / ÂM DƯƠNG (Centerpiece) */}
-          {/* Core background aura */}
-          <circle cx="400" cy="400" r="72" fill={`url(#${goldGradId})`} opacity="0.08" />
+          {/* 4. TAIJI / ÂM DƯƠNG (Centerpiece Zoomed to 1.85x, 30% faster spin: 80s) */}
+          <g style={{ transform: 'scale(1.85)', transformOrigin: '400px 400px' }}>
+            {/* Core background aura */}
+            <circle cx="400" cy="400" r="72" fill={`url(#${goldGradId})`} opacity="0.12" />
 
-          {/* Rotating Taiji Symbol */}
-          <g
-            style={{
-              animation: 'spin 120s linear infinite',
-              transformBox: 'view-box',
-              transformOrigin: '400px 400px',
-              willChange: 'transform',
-            }}
-          >
-            <circle cx="400" cy="400" r="54" stroke={`url(#${goldGradId})`} strokeWidth="3" fill="none" opacity="0.9" />
-            <circle cx="400" cy="400" r="59" stroke={`url(#${softGoldId})`} strokeWidth="1" strokeDasharray="2 4" />
+            {/* Rotating Taiji Symbol */}
+            <g
+              style={{
+                animation: 'spin 80s linear infinite',
+                transformBox: 'view-box',
+                transformOrigin: '400px 400px',
+                willChange: 'transform',
+              }}
+            >
+              <circle cx="400" cy="400" r="54" stroke={`url(#${goldGradId})`} strokeWidth="3" fill="none" opacity="0.95" />
 
-            {/* S-curve path representing the Yin/Yang split */}
-            <path
-              d="M 400,346 
-                 A 27,27 0 0,0 400,400 
-                 A 27,27 0 0,1 400,454 
-                 A 54,54 0 0,1 400,346 Z"
-              fill={`url(#${goldGradId})`}
-              opacity="0.8"
-            />
+              {/* S-curve path representing the Yin/Yang split */}
+              <path
+                d="M 400,346 
+                   A 27,27 0 0,0 400,400 
+                   A 27,27 0 0,1 400,454 
+                   A 54,54 0 0,1 400,346 Z"
+                fill={`url(#${goldGradId})`}
+                opacity="0.88"
+              />
 
-            {/* The two 'eyes' */}
-            <circle cx="400" cy="373" r="7" fill="none" stroke={`url(#${goldGradId})`} strokeWidth="2" opacity="0.9" />
-            <circle cx="400" cy="427" r="7" fill={`url(#${goldGradId})`} opacity="0.8" />
+              {/* The two 'eyes' */}
+              <circle cx="400" cy="373" r="7" fill="none" stroke={`url(#${goldGradId})`} strokeWidth="2.2" opacity="0.95" />
+              <circle cx="400" cy="427" r="7" fill={`url(#${goldGradId})`} opacity="0.88" />
+            </g>
           </g>
         </g>
       </svg>

@@ -2,10 +2,10 @@ import React, { Suspense, useEffect, useRef } from 'react';
 import { Routes, Route, useNavigate, useLocation, Outlet } from 'react-router-dom';
 import LoadingState from './components/shared/LoadingState';
 import AppNav from './components/layout/AppNav';
-import MobileDrawer from './components/layout/MobileDrawer';
 import AppFooter from './components/layout/AppFooter';
 import AppSidebar from './components/layout/AppSidebar';
 import ScrollToTopButton from './components/shared/ScrollToTopButton';
+
 import { ROUTE_TO_TAB, type ActiveTab } from './router/constants';
 import { LandingRoute, renderModuleRoutes, renderLegacyRedirects, saveCurrentRoute } from './router/routes';
 import { analytics } from './services/analyticsService';
@@ -99,14 +99,12 @@ function AppLayout() {
       {/* Navigation */}
       <AppNav />
 
-      {/* Mobile slide-out drawer */}
-      <MobileDrawer />
-
       <main
         id="main-content"
-        className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 flex-1 w-full relative z-10 scroll-mt-20"
+        className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-8 sm:pb-12 flex-1 w-full relative z-10 scroll-mt-20"
         aria-label="Nội dung chính"
       >
+
         {isFullPage ? (
           /* Full-page routes with back-navigation */
           <div key={location.pathname} className="animate-page-enter">
@@ -149,6 +147,7 @@ function AppLayout() {
     </div>
   );
 }
+
 
 // ══════════════════════════════════════════════════════════
 // Root App Component — Top-Level Routing

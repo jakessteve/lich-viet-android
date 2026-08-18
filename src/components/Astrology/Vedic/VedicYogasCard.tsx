@@ -61,7 +61,7 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
 
                 {item.bhavaClassificationVi && (
                   <div className="rounded bg-surface-container-low px-2 py-1 text-micro font-medium text-text-secondary-light dark:text-text-secondary-dark">
-                    🏛 {item.bhavaClassificationVi}
+                    {item.bhavaClassificationVi}
                   </div>
                 )}
 
@@ -77,7 +77,7 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
 
                 {item.dashaActivationVi && (
                   <div className="text-xs text-indigo-700 dark:text-indigo-300 font-medium">
-                    ⏳ <span className="underline font-semibold">Thời vận kích hoạt:</span> {item.dashaActivationVi}
+                    <span className="font-semibold text-text-primary-light dark:text-text-primary-dark">Thời vận kích hoạt:</span> {item.dashaActivationVi}
                   </div>
                 )}
               </div>
@@ -103,7 +103,6 @@ export const VedicYogasCard: React.FC<{ items: VedicYogaDoshaItem[] }> = ({ item
                 </div>
                 {item.remedyOrAdviceVi && (
                   <p className="text-text-secondary-light dark:text-text-secondary-dark text-xs">
-                    💡{' '}
                     <strong className="font-medium text-text-primary-light dark:text-text-primary-dark">
                       Lời khuyên & Hóa giải (Upaya):
                     </strong>{' '}

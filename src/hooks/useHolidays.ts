@@ -27,6 +27,10 @@ export interface HolidayEntry {
   emoji: string;
   source: 'vn-solar' | 'vn-lunar' | 'local';
   daysOff?: boolean;
+  targetDate?: Date;
+  dateStr?: string;
+  dayOfWeek?: string;
+  daysUntil?: number;
 }
 
 interface GeoInfo {
@@ -83,6 +87,8 @@ const GeoCacheSchema = z.object({
 });
 
 // --- Pure Helper Functions ---
+
+const DAY_NAMES_VI = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
 
 function getVietnameseHolidaysForDate(
   date: Date,
@@ -157,14 +163,13 @@ function setCachedGeo(geo: GeoInfo): void {
 
 // --- The Hook ---
 
-export function useHolidays(selectedDate: Date, viewerLocation?: SwissGeoLocation | null) {
+export function useHolidays(selectedDate: Date = new Date(), viewerLocation?: SwissGeoLocation | null, daysAhead = 14) {
   const [geoInfo, setGeoInfo] = useState<GeoInfo | null>(null);
   const [geoLoading, setGeoLoading] = useState(true);
   const [localHolidays, setLocalHolidays] = useState<NagerHoliday[]>([]);
   const [localLoading, setLocalLoading] = useState(false);
 
   // Step 1: Detect country via IP geolocation (cached for 24h)
-  // MED-02: Only fetch if user has given consent or GPC is not set
   useEffect(() => {
     const cached = getCachedGeo();
     if (cached) {
@@ -173,12 +178,10 @@ export function useHolidays(selectedDate: Date, viewerLocation?: SwissGeoLocatio
       return;
     }
 
-    // Check for Global Privacy Control or explicit opt-out (MED-02)
     const gpcEnabled =
       'globalPrivacyControl' in navigator && (navigator as { globalPrivacyControl?: boolean }).globalPrivacyControl;
     const consentGiven = localStorage.getItem(GEO_CONSENT_KEY) === 'true';
     if (gpcEnabled && !consentGiven) {
-      // Respect GPC: default to Vietnam without IP detection
       setGeoInfo({ countryCode: VIETNAM_COUNTRY_CODE, countryName: 'Việt Nam' });
       setGeoLoading(false);
       return;
@@ -187,7 +190,7 @@ export function useHolidays(selectedDate: Date, viewerLocation?: SwissGeoLocatio
     let cancelled = false;
     async function fetchGeo() {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 5000); // 5s timeout
+      const timeout = setTimeout(() => controller.abort(), 5000);
       try {
         const res = await fetch(GEO_API_URL, { signal: controller.signal });
         clearTimeout(timeout);
@@ -203,8 +206,6 @@ export function useHolidays(selectedDate: Date, viewerLocation?: SwissGeoLocatio
         }
       } catch {
         clearTimeout(timeout);
-        // Fallback to Vietnam if geo fails or times out;
-        // Cache the fallback to prevent repeated 429 requests on re-renders
         if (!cancelled) {
           const fallback: GeoInfo = { countryCode: VIETNAM_COUNTRY_CODE, countryName: 'Việt Nam' };
           setCachedGeo(fallback);
@@ -222,8 +223,7 @@ export function useHolidays(selectedDate: Date, viewerLocation?: SwissGeoLocatio
   }, []);
 
   // Step 2: Fetch local country holidays from Nager.Date API
-  // Only fetches if the country is NOT Vietnam (Vietnamese holidays are static).
-  const year = selectedDate.getFullYear();
+  const baseYear = selectedDate.getFullYear();
   const countryCode = geoInfo?.countryCode;
 
   useEffect(() => {
@@ -236,10 +236,19 @@ export function useHolidays(selectedDate: Date, viewerLocation?: SwissGeoLocatio
     async function fetchLocal() {
       setLocalLoading(true);
       try {
-        const res = await fetch(`${NAGER_API_BASE}/PublicHolidays/${year}/${countryCode}`);
-        if (!res.ok) throw new Error(`Nager API returned ${res.status}`);
-        const json = await res.json();
-        const validated = NagerHolidaysSchema.safeParse(json);
+        const yearsToFetch = [baseYear];
+        // If 14-day window spans into next year, fetch next year too
+        const endWindow = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + daysAhead);
+        if (endWindow.getFullYear() > baseYear) {
+          yearsToFetch.push(endWindow.getFullYear());
+        }
+
+        const promises = yearsToFetch.map((y) =>
+          fetch(`${NAGER_API_BASE}/PublicHolidays/${y}/${countryCode}`).then((r) => (r.ok ? r.json() : [])),
+        );
+        const results = await Promise.all(promises);
+        const combined = results.flat();
+        const validated = NagerHolidaysSchema.safeParse(combined);
         if (!cancelled) {
           setLocalHolidays(validated.success ? validated.data : []);
         }
@@ -254,34 +263,56 @@ export function useHolidays(selectedDate: Date, viewerLocation?: SwissGeoLocatio
     return () => {
       cancelled = true;
     };
-  }, [year, countryCode]);
+  }, [baseYear, countryCode, selectedDate, daysAhead]);
 
-  // Step 3: Combine results for the selected date
+  // Step 3: Compute holidays across the 14-day range
   const holidays = useMemo<HolidayEntry[]>(() => {
-    const vnHolidays = getVietnameseHolidaysForDate(
-      selectedDate,
-      vietnameseHolidaysData.solar as SolarHolidayRule[],
-      vietnameseHolidaysData.lunar as LunarHolidayRule[],
-      viewerLocation,
-    );
+    const results: HolidayEntry[] = [];
+    const baseMidnight = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
 
-    // If user is in Vietnam, only return Vietnamese holidays
-    if (!countryCode || countryCode === VIETNAM_COUNTRY_CODE) {
-      return vnHolidays;
+    for (let i = 0; i < daysAhead; i++) {
+      const curDate = new Date(baseMidnight.getFullYear(), baseMidnight.getMonth(), baseMidnight.getDate() + i);
+      const dayOfWeek = DAY_NAMES_VI[curDate.getDay()];
+      const dateStr = `${String(curDate.getDate()).padStart(2, '0')}/${String(curDate.getMonth() + 1).padStart(2, '0')}`;
+
+      // 1. Vietnamese Holidays for curDate
+      const vnHolidays = getVietnameseHolidaysForDate(
+        curDate,
+        vietnameseHolidaysData.solar as SolarHolidayRule[],
+        vietnameseHolidaysData.lunar as LunarHolidayRule[],
+        viewerLocation,
+      );
+
+      for (const h of vnHolidays) {
+        results.push({
+          ...h,
+          targetDate: curDate,
+          dateStr,
+          dayOfWeek,
+          daysUntil: i,
+        });
+      }
+
+      // 2. Local Holidays (if user is outside Vietnam)
+      if (countryCode && countryCode !== VIETNAM_COUNTRY_CODE && localHolidays.length > 0) {
+        const dateKey = formatDateKey(curDate);
+        const matchingLocal: HolidayEntry[] = localHolidays
+          .filter((h) => h.date === dateKey)
+          .map((h) => ({
+            name: h.localName || h.name,
+            emoji: '🏳️',
+            source: 'local' as const,
+            targetDate: curDate,
+            dateStr,
+            dayOfWeek,
+            daysUntil: i,
+          }));
+        results.push(...matchingLocal);
+      }
     }
 
-    // Otherwise, combine VN + local
-    const dateKey = formatDateKey(selectedDate);
-    const matchingLocal: HolidayEntry[] = localHolidays
-      .filter((h) => h.date === dateKey)
-      .map((h) => ({
-        name: h.localName || h.name,
-        emoji: '🏳️',
-        source: 'local' as const,
-      }));
-
-    return [...vnHolidays, ...matchingLocal];
-  }, [selectedDate, countryCode, localHolidays, viewerLocation]);
+    return results;
+  }, [selectedDate, daysAhead, countryCode, localHolidays, viewerLocation]);
 
   return {
     holidays,

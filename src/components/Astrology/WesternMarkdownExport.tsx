@@ -5,8 +5,7 @@ import { formatWesternNatalAsMarkdown } from '../../services/astrology/westernNa
 import { formatVedicChartAsMarkdown } from '../../services/astrology/vedicMarkdownFormatter';
 import { Capacitor } from '@capacitor/core';
 import { Clipboard } from '@capacitor/clipboard';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { Check, Copy, Download } from 'lucide-react';
+import { Check, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 interface Props {
@@ -18,7 +17,6 @@ export const WesternMarkdownExport: React.FC<Props> = ({ system }) => {
   const westernNatalResult = useAstrologyStore((s) => s.westernNatalResult);
   const vedicInput = useAstrologyStore((s) => s.vedicInput);
   const [copied, setCopied] = useState(false);
-  const name = system === 'vedic' ? 'lá-số-vedic' : 'lá-số-tây-phương';
 
   if (!result || (system === 'western' && !westernNatalResult)) return null;
 
@@ -50,67 +48,30 @@ export const WesternMarkdownExport: React.FC<Props> = ({ system }) => {
     }
   };
 
-  const handleDownload = async () => {
-    try {
-      const filename = `${name}-${new Date().toISOString().slice(0, 10)}.md`;
-      if (Capacitor.isNativePlatform()) {
-        await Filesystem.writeFile({
-          path: filename,
-          data: md,
-          directory: Directory.Documents,
-          encoding: Encoding.UTF8,
-        });
-        window.alert(`Đã lưu file Markdown vào thư mục Documents/${filename}`);
-      } else {
-        const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-      }
-    } catch (e) {
-      console.error('Failed to download', e);
-      window.alert('Không thể lưu file lúc này. Vui lòng thử lại.');
-    }
-  };
-
   return (
-    <div className="w-full flex items-center gap-2.5 sm:gap-3 pt-2">
+    <div className="w-full flex items-center justify-center pt-2">
       <Button
         type="button"
         variant={copied ? 'secondary' : 'outline'}
         onClick={handleCopy}
-        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
-        title="Sao chép Markdown"
+        className="w-full sm:w-auto min-w-[200px] h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60 hover:bg-surface-subtle-light dark:hover:bg-white/5 transition-all spring-press"
+        title="Sao chép toàn bộ luận giải lá số dạng Markdown"
       >
         {copied ? (
           <>
             <Check className="h-4 w-4 text-good dark:text-good-dark" />
-            <span className="text-good dark:text-good-dark">Đã chép!</span>
+            <span className="text-good dark:text-good-dark">Đã sao chép vào bộ nhớ tạm!</span>
           </>
         ) : (
           <>
-            <Copy className="h-4 w-4" />
-            <span>Sao chép Markdown</span>
+            <Copy className="h-4 w-4 text-gold dark:text-gold-dark" />
+            <span>Sao chép Luận Giải (Markdown)</span>
           </>
         )}
-      </Button>
-      <Button
-        type="button"
-        variant="outline"
-        onClick={handleDownload}
-        className="flex-1 h-11 rounded-xl text-xs sm:text-sm font-semibold gap-2 border-border-light/60 dark:border-border-dark/60"
-        title="Tải Markdown"
-      >
-        <Download className="h-4 w-4" />
-        <span>Tải file .md</span>
       </Button>
     </div>
   );
 };
 
 export default WesternMarkdownExport;
+

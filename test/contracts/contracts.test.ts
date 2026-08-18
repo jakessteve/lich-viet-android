@@ -5,7 +5,6 @@ import {
   createAsyncCalculationRequest,
   type UserProfile,
   type AuthResult,
-  type DamGioRecord,
   type SyncMutation,
 } from '@lich-viet/contracts';
 
@@ -62,27 +61,15 @@ describe('@lich-viet/contracts module', () => {
     expect(authRes.user.tier).toBe('expert');
   });
 
-  it('validates dam gio and sync contract structure', () => {
-    const damGio: DamGioRecord = {
-      id: 'dg-1',
-      userId: 'usr-1',
-      deceasedName: 'Cụ Cố',
-      relationship: 'Ông',
-      lunarDay: 15,
-      lunarMonth: 7,
-      alarmLeadDays: [1, 3, 7],
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
-    expect(damGio.lunarDay).toBe(15);
-
+  it('validates sync contract structure', () => {
     const mutation: SyncMutation = {
       mutationId: 'mut-1',
-      entityType: 'dam_gio',
-      entityId: 'dg-1',
-      action: 'insert',
+      entityType: 'user_profile',
+      entityId: 'usr-1',
+      action: 'update',
       clientUpdatedAt: new Date().toISOString(),
     };
-    expect(mutation.entityType).toBe('dam_gio');
+    expect(mutation.entityType).toBe('user_profile');
   });
 });
+

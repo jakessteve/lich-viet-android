@@ -27,7 +27,7 @@ const TUHOA_CLASS: Record<'Lộc' | 'Quyền' | 'Khoa' | 'Kỵ', string> = {
 const LUCK_TIER_CLASS: Record<DaiHanInterpretationResult['luckTier'], string> = {
   'Đại Cát': 'bg-good/15 text-good dark:text-good-dark border-good/40',
   'Khởi Sắc': 'bg-info/15 text-info dark:text-info-dark border-info/40',
-  'Bình Hòa': 'bg-gold/15 text-gold dark:text-gold-dark border-gold/40',
+  'Bình Hòa': 'bg-gold/15 text-amber-950 dark:text-gold-dark border-gold/40',
   'Thử Thách': 'bg-orange/15 text-orange dark:text-orange-dark border-orange/40',
   'Gian Nan': 'bg-bad/15 text-bad dark:text-bad-dark border-bad/40',
 };
@@ -172,7 +172,7 @@ export const TuViSummaryPanel: React.FC<{
                     Cây Phân Loại Lá Số
                   </h4>
                 </div>
-                <Badge className="bg-gold/15 text-gold dark:text-gold-dark border border-gold/40">
+                <Badge className="bg-gold/15 text-amber-950 dark:text-gold-dark border border-gold/40">
                   {classification.cucName}
                 </Badge>
               </div>
@@ -208,7 +208,7 @@ export const TuViSummaryPanel: React.FC<{
                       <h4 className="text-base font-bold text-text-primary-light dark:text-text-primary-dark">
                         Đại Hạn Hiện Tại: {currentDaiHan.ageRange} tuổi
                       </h4>
-                      <Badge className="bg-gold/20 text-gold dark:text-gold-dark border border-gold/40">
+                      <Badge className="bg-gold/20 text-amber-950 dark:text-gold-dark border border-gold/40">
                         Cung {currentDaiHan.palaceName} ({currentDaiHan.palaceCanChi})
                       </Badge>
                       <Badge className={`border ${LUCK_TIER_CLASS[currentDaiHan.luckTier]}`}>
@@ -224,7 +224,7 @@ export const TuViSummaryPanel: React.FC<{
                     setSelectedDaiHanIndex(currentDaiHanIndex);
                     setActiveTab('daiHan');
                   }}
-                  className="inline-flex items-center gap-1 text-xs font-bold text-gold dark:text-gold-dark hover:underline cursor-pointer interactive-press"
+                  className="inline-flex items-center gap-1 text-xs font-bold text-text-primary-light dark:text-gold-dark hover:underline cursor-pointer interactive-press"
                 >
                   Khám phá 12 Đại hạn
                   <ChevronRight className="h-3.5 w-3.5" />
@@ -394,7 +394,7 @@ export const TuViSummaryPanel: React.FC<{
                       {selectedDaiHan.luckTier} ({selectedDaiHan.luckScore}/10)
                     </Badge>
                     {selectedDaiHan.isCurrent && (
-                      <Badge className="bg-gold/20 text-gold dark:text-gold-dark border border-gold/40">
+                      <Badge className="bg-gold/20 text-amber-950 dark:text-gold-dark border border-gold/40">
                         Đang diễn ra
                       </Badge>
                     )}
@@ -539,7 +539,7 @@ export const TuViSummaryPanel: React.FC<{
                           <span className="font-bold text-gold dark:text-gold-dark text-xs">
                             ✦ Thiên Thời (Thái Tuế)
                           </span>
-                          <Badge className="bg-gold/15 text-gold dark:text-gold-dark">
+                          <Badge className="bg-gold/15 text-amber-950 dark:text-gold-dark">
                             {selectedDaiHan.tamTai.thienThoi.level}
                           </Badge>
                         </div>

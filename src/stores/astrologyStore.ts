@@ -25,14 +25,44 @@ import { calculateMonthlyTransits, type MonthlyTransitTimeline } from '../servic
 
 export type AstrologyTab = 'tay-phuong' | 'vedic' | 'hop-la';
 
+export interface SynastryDimensions {
+  emotional: { score: number; label: string; details: string[] };
+  chemistry: { score: number; label: string; details: string[] };
+  intellect: { score: number; label: string; details: string[] };
+  stability: { score: number; label: string; details: string[] };
+  complement: { score: number; label: string; details: string[] };
+}
+
 export interface SynastryEngineScores {
-  tuVi: { score: number; insights: string[] };
-  western: { score: number; insights: string[] };
-  vedic: { score: number; insights: string[]; rawBreakdown: Record<string, number> };
+  tuVi: {
+    score: number;
+    insights: string[];
+    batTrach?: {
+      quaiA: string;
+      quaiB: string;
+      relationship: string;
+      isCat: boolean;
+      delta: number;
+    } | null;
+  };
+  western: {
+    score: number;
+    insights: string[];
+    houseOverlays?: Array<{ planet: string; house: number; desc: string }>;
+  };
+  vedic: {
+    score: number;
+    insights: string[];
+    rawBreakdown: Record<string, number>;
+    pariharas?: Array<{ type: string; rule: string; scoreAdjustment: number }>;
+    manglik?: { isCompatible: boolean; label: string; details: string[] };
+  };
 }
 
 export interface SynastryResult {
   combinedScore: number;
+  dimensions?: SynastryDimensions;
+  advice?: string[];
   engines: SynastryEngineScores;
 }
 

@@ -4,7 +4,7 @@ export type ActiveTab = 'am-lich' | 'ngay-tot' | 'tu-vi' | 'chiem-tinh' | 'gieo-
 export const ROUTE_TO_TAB: Record<string, ActiveTab> = {
   '/app': 'am-lich',
   '/app/am-lich': 'am-lich',
-  '/app/lich-dung-su': 'am-lich',
+  '/app/lich-dung-su': 'ngay-tot',
   '/app/acs': 'am-lich',
   '/app/ngay-tot': 'ngay-tot',
   '/app/tu-vi': 'tu-vi',
@@ -12,7 +12,9 @@ export const ROUTE_TO_TAB: Record<string, ActiveTab> = {
   '/app/chiem-tinh/tay-phuong': 'chiem-tinh',
   '/app/chiem-tinh/vedic': 'chiem-tinh',
   '/app/chiem-tinh/hop-la': 'chiem-tinh',
+  '/app/vedic': 'chiem-tinh',
   '/app/gieo-que': 'gieo-que',
+  '/app/tam-thuc': 'gieo-que',
 };
 
 /** Maps tab IDs to route paths */
@@ -33,9 +35,9 @@ export interface NavLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
-  { id: 'am-lich', label: 'Âm lịch', icon: 'calendar_month', desc: 'Âm lịch · Dụng sự', enabled: true },
-  { id: 'ngay-tot', label: 'Ngày Tốt', icon: 'event_available', desc: 'Chọn ngày giờ tốt', enabled: true },
+  { id: 'am-lich', label: 'Âm Lịch', icon: 'calendar_month', desc: 'Âm Lịch · Chi tiết ngày', enabled: true },
+  { id: 'ngay-tot', label: 'Ngày Tốt & Dụng Sự', icon: 'event_available', desc: 'Tìm ngày tốt · Tra cứu dụng sự', enabled: true },
   { id: 'tu-vi', label: 'Tử Vi', icon: 'auto_awesome', desc: 'Tử Vi Đẩu Số', enabled: true },
-  { id: 'chiem-tinh', label: 'Chiêm Tinh', icon: 'auto_graph', desc: 'Tây Phương · Ấn Độ · Hợp lá số', enabled: true },
-  { id: 'gieo-que', label: 'Gieo quẻ', icon: 'casino', desc: 'Mai Hoa & Tam Thức', enabled: true },
+  { id: 'chiem-tinh', label: 'Chiêm Tinh', icon: 'auto_graph', desc: 'Tây Phương · Vệ Đà · Hợp lá số', enabled: true },
+  { id: 'gieo-que', label: 'Gieo Quẻ', icon: 'casino', desc: 'Mai Hoa & Tam Thức', enabled: true },
 ];

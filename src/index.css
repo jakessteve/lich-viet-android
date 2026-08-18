@@ -791,19 +791,20 @@
 
   .page-enter-smooth,
   .animate-page-enter {
-    animation: pageEnterSmooth 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
-    transform: translate3d(0, 0, 0);
+    animation: pageEnterSmooth 0.36s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+    transform-origin: top center;
     backface-visibility: hidden;
+    will-change: transform, opacity;
   }
 
   @keyframes pageEnterSmooth {
-    from {
-      opacity: 0;
-      transform: translateY(4px);
+    0% {
+      opacity: 0.6;
+      transform: translateY(12px) scaleY(0.98);
     }
-    to {
+    100% {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scaleY(1);
     }
   }
 

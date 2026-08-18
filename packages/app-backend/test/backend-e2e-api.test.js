@@ -184,52 +184,6 @@ test('NestJS Fastify Backend E2E - Full API Route Suite', async (t) => {
     assert.equal(patchBody.name, 'Demo Tên Mới');
   });
 
-  await t.test('11. CRUD /v1/dam-gio', async () => {
-    // Create
-    const createRes = await app.inject({
-      method: 'POST',
-      url: '/v1/dam-gio',
-      payload: {
-        deceasedName: 'Cụ Bà',
-        relationship: 'Bà Nội',
-        lunarDay: 10,
-        lunarMonth: 3,
-        alarmLeadDays: [1, 3],
-      },
-    });
-    assert.equal(createRes.statusCode, 201);
-    const created = JSON.parse(createRes.payload);
-    assert.ok(created.id);
-    assert.equal(created.deceasedName, 'Cụ Bà');
-
-    // List
-    const listRes = await app.inject({
-      method: 'GET',
-      url: '/v1/dam-gio',
-    });
-    assert.equal(listRes.statusCode, 200);
-    const list = JSON.parse(listRes.payload);
-    assert.ok(Array.isArray(list));
-    assert.ok(list.some((r) => r.id === created.id));
-
-    // Update
-    const updateRes = await app.inject({
-      method: 'PATCH',
-      url: `/v1/dam-gio/${created.id}`,
-      payload: { notes: 'Chuẩn bị mâm cỗ chay' },
-    });
-    assert.equal(updateRes.statusCode, 200);
-    const updated = JSON.parse(updateRes.payload);
-    assert.equal(updated.notes, 'Chuẩn bị mâm cỗ chay');
-
-    // Delete
-    const deleteRes = await app.inject({
-      method: 'DELETE',
-      url: `/v1/dam-gio/${created.id}`,
-    });
-    assert.equal(deleteRes.statusCode, 204);
-  });
-
   await t.test('12. CRUD /v1/calendar/events', async () => {
     const createRes = await app.inject({
       method: 'POST',

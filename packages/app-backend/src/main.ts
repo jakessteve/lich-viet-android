@@ -23,16 +23,17 @@ export async function createApp(): Promise<NestFastifyApplication> {
   });
 
   // Fastify security & compression plugins
-  await app.register(fastifyCors, {
+  const registerPlugin = app.register as unknown as (plugin: unknown, opts?: unknown) => Promise<unknown>;
+  await registerPlugin(fastifyCors, {
     origin: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
 
-  await app.register(fastifyHelmet, {
+  await registerPlugin(fastifyHelmet, {
     contentSecurityPolicy: false, // Allows Swagger UI
   });
 
-  await app.register(fastifyCompress, {
+  await registerPlugin(fastifyCompress, {
     encodings: ['gzip', 'deflate'],
   });
 

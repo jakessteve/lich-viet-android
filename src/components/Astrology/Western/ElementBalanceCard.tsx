@@ -135,7 +135,7 @@ export const ElementBalanceCard: React.FC<{ balance: ElementModalityBalanceResul
       </div>
 
       <div className="astral-card p-3 text-xs leading-relaxed text-text-secondary-light dark:text-text-secondary-dark">
-        💡 <strong>Tổng quan năng lượng:</strong> {balance.summaryVi}
+        <strong className="text-text-primary-light dark:text-text-primary-dark">Tổng quan năng lượng:</strong> {balance.summaryVi}
       </div>
     </div>
   );

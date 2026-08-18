@@ -6,7 +6,6 @@ import {
   formatNapAm,
   formatXungHop,
   getStatusLabel,
-  renderStatusParts,
 } from '../utils/formatHelpers';
 import { normalizeDungSuBuckets } from '../utils/dungSuDisplay';
 import { useAuthStore } from '../stores/authStore';
@@ -18,9 +17,24 @@ import {
 } from '../services/personalization';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import CollapsibleCard from './CollapsibleCard';
-import { Sparkles, Smile, Frown, Meh, ArrowRight, Clock, TrendingUp, Heart } from 'lucide-react';
+import {
+  Sparkles,
+  Smile,
+  Frown,
+  Meh,
+  ArrowRight,
+  Clock,
+  TrendingUp,
+  Share2,
+  CheckCircle2,
+  AlertTriangle,
+  Compass,
+  Star,
+  ChevronDown,
+} from 'lucide-react';
 import { Badge } from './shared';
-import { DamGioModal } from './Calendar/DamGioModal';
+import TermTooltip from './shared/TermTooltip';
+import StoryShareModal from './shared/StoryShareModal';
 
 interface DetailedDayViewProps {
   date: Date;
@@ -33,7 +47,10 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
   const isPersonalized = useAppStore((s) => s.isPersonalized);
   const togglePersonalization = useAppStore((s) => s.togglePersonalization);
   const [sortByScore, setSortByScore] = useState(false);
-  const [isDamGioOpen, setIsDamGioOpen] = useState(false);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isNghiOpen, setIsNghiOpen] = useState(false);
+  const [isKyOpen, setIsKyOpen] = useState(false);
+  const [isXungHopOpen, setIsXungHopOpen] = useState(false);
 
   const computedProfile = useMemo(() => {
     return getUserBirthProfile(user);
@@ -90,8 +107,13 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
     return new Set(sorted.slice(0, 3).map((h) => h.idx));
   }, [personalizedHours]);
 
+  const top3HoursList = useMemo(() => {
+    const sorted = [...personalizedHours].sort((a, b) => b.score - a.score);
+    return sorted.slice(0, 3).map((h) => `${h.timeRange.replace(/:00/g, '')} (${h.canChi.chi})`);
+  }, [personalizedHours]);
+
   const solarDateStr = date.toLocaleDateString('vi-VN', { day: 'numeric', month: 'numeric', year: 'numeric' });
-  const dayOfWeekAbbr = data.dayOfWeek === 'Chủ Nhật' ? 'CN' : `T${date.getDay() + 1}`;
+  const dayOfWeekAbbr = data.dayOfWeek === 'Chủ Nhật' ? 'Chủ Nhật' : `Thứ ${date.getDay() + 1}`;
 
   // Helper to deduplicate and clean bracket descriptions
   const formatDungSu = (items: string[], focusWord: string) => {
@@ -150,7 +172,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
       parts.push(
         <span
           key={`${start}-${matchedText}`}
-          className={Number(percentValue) >= 50 ? 'text-good dark:text-good-dark' : 'text-bad dark:text-bad-dark'}
+          className={Number(percentValue) >= 50 ? 'text-good dark:text-good-dark font-medium' : 'text-bad dark:text-bad-dark font-medium'}
         >
           {matchedText}
         </span>,
@@ -192,85 +214,278 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
     };
   };
 
+  const dayVerdict = useMemo(() => {
+    if (formattedNghi.focus) return 'Ngày đại cát · Tốt cho mọi việc khởi sự';
+    if (formattedKy.focus) return 'Ngày đại hung · Nên giữ tĩnh, kiêng việc lớn';
+    if (formattedNghi.rest.length > 0) return `Vượng khí · Thuận cho ${formattedNghi.rest.slice(0, 2).join(', ')}`;
+    return 'Ngày bình hòa · Khởi sự cần cẩn trọng đúng giờ hoàng đạo';
+  }, [formattedNghi, formattedKy]);
+
   return (
     <div className="w-full space-y-4 animate-fade-scale" data-testid="detailed-day-view">
-      {/* At-a-glance summary (A5) */}
+      {/* ── 1. Hero 3-Second Actionable Advice Card ────────────────────────── */}
       <div
         id="tour-day-summary"
-        className="rounded-2xl bg-gradient-to-r from-gold/5 via-amber-50/50 to-gold/5 dark:from-gold-dark/5 dark:via-amber-900/10 dark:to-gold-dark/5 border border-gold/15 dark:border-gold-dark/15 px-5 py-4"
+        className="rounded-3xl bg-gradient-to-br from-surface-light via-amber-50/40 to-gold/5 dark:from-surface-dark dark:via-[#141426] dark:to-gold-dark/10 border border-gold/20 dark:border-gold-dark/20 p-4 sm:p-5 shadow-sm space-y-3.5 relative overflow-hidden"
       >
-        <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3">
-          <Sparkles className="h-5 w-5 text-gold dark:text-gold-dark mt-0.5 shrink-0" />
-          <div className="text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark flex-1 space-y-0.5">
-            <div className="font-bold">
-              {dayOfWeekAbbr}, {solarDateStr}
+        {/* Date & Verdict */}
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gold/15 text-amber-950 dark:text-gold-dark font-sans">
+              {dayOfWeekAbbr} · {solarDateStr}
+            </span>
+            <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark font-medium">
+              Âm lịch: Ngày {data.lunarDate?.day}/{data.lunarDate?.month} ({data.canChi?.day?.can} {data.canChi?.day?.chi})
+            </span>
+          </div>
+          <h3 className="text-base sm:text-lg font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
+            <Sparkles className="h-5 w-5 text-gold dark:text-gold-dark shrink-0" />
+            <span>{dayVerdict}</span>
+          </h3>
+        </div>
+
+        {/* Golden Hours Top Pills */}
+        <div className="pt-2 border-t border-border-light/40 dark:border-border-dark/30 flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-text-secondary-light dark:text-text-secondary-dark font-medium flex items-center gap-1">
+            <Star className="h-3.5 w-3.5 text-gold dark:text-gold-dark" />
+            Khung giờ vàng:
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {top3HoursList.map((h, idx) => (
+              <span
+                key={idx}
+                className="px-2.5 py-0.5 rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark font-semibold text-text-primary-light dark:text-text-primary-dark border border-border-light/60 dark:border-border-dark/60 text-[11px]"
+              >
+                {h}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom Action Bar: Cá nhân hóa (left full width) & Share (round button on right) */}
+        <div className="pt-3 border-t border-border-light/40 dark:border-border-dark/30 flex items-center gap-2 w-full">
+          {computedProfile?.birthYear ? (
+            <button
+              onClick={togglePersonalization}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-semibold rounded-xl transition-all spring-press cursor-pointer ${
+                isPersonalized
+                  ? 'bg-purple/15 text-purple dark:text-purple-dark border border-purple/30 shadow-xs'
+                  : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low'
+              }`}
+              title={isPersonalized ? 'Tắt cá nhân hoá' : 'Bật cá nhân hoá theo tuổi'}
+            >
+              <span className="indicator-pip-sm bg-purple animate-glow-breathe" aria-hidden="true" />
+              <span>{isPersonalized ? 'Đã cá nhân hóa' : 'Cá nhân hóa'}</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => navigate('/app/cai-dat')}
+              className="flex-1 flex items-center justify-center gap-2 py-2 px-3 text-xs sm:text-sm font-medium rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-colors spring-press cursor-pointer"
+              title="Cập nhật ngày sinh trong Cài đặt để cá nhân hoá"
+            >
+              <span className="indicator-pip-sm bg-text-secondary-light/40" aria-hidden="true" />
+              <span>Cá nhân hóa</span>
+            </button>
+          )}
+
+          <button
+            onClick={() => setIsShareModalOpen(true)}
+            className="h-9 w-9 sm:h-10 sm:w-10 rounded-full flex items-center justify-center bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-primary-light dark:text-text-primary-dark border border-border-light dark:border-border-dark/40 hover:bg-gold/15 hover:border-gold/40 transition-all shrink-0 spring-press cursor-pointer shadow-2xs"
+            title="Tạo ảnh chia sẻ Story 9:16 hoặc Vuông 1:1"
+            aria-label="Chia sẻ ngày này"
+          >
+            <Share2 className="w-4 h-4 text-gold dark:text-gold-dark" />
+          </button>
+        </div>
+      </div>
+
+      {/* Share Modal */}
+      <StoryShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        title={`${data.canChi?.day?.can} ${data.canChi?.day?.chi}`}
+        solarDateStr={solarDateStr}
+        lunarDateStr={`Ngày ${data.lunarDate?.day}/${data.lunarDate?.month}`}
+        verdict={dayVerdict}
+        goodHours={top3HoursList}
+      />
+
+      {/* ── 2. Collapsible Grid: Nghi & Ky ───────────────────── */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        {/* Việc Nên Làm (Nghi) */}
+        <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 dark:bg-emerald-950/15 p-4 space-y-2.5 flex flex-col justify-between overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setIsNghiOpen(!isNghiOpen)}
+            className="w-full flex items-center justify-between text-left interactive-press rounded-xl"
+            aria-expanded={isNghiOpen}
+          >
+            <div className="flex items-center gap-1.5 shrink-0">
+              <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <span className="text-xs font-bold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+                Việc Nên Làm (Nghi)
+              </span>
             </div>
-            <div>
+            <div className="flex items-center gap-2 ml-auto">
               {formattedNghi.focus ? (
-                <span className="text-good dark:text-good-dark font-semibold">Ngày tốt mọi việc.</span>
-              ) : formattedNghi.rest.length > 0 ? (
-                <span className="text-good dark:text-good-dark">
-                  Tốt cho <span className="font-medium">{formattedNghi.rest.slice(0, 3).join(', ')}</span>.
-                </span>
+                <Badge variant="good" pip={true}>
+                  Tốt Mọi Việc
+                </Badge>
               ) : (
-                <span>Không có việc nghi đặc biệt.</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-semibold">
+                  {formattedNghi.rest.length} việc
+                </span>
               )}
+              <ChevronDown
+                className={`h-4 w-4 text-emerald-600 dark:text-emerald-400 transition-transform duration-200 shrink-0 ${
+                  isNghiOpen ? 'rotate-180' : ''
+                }`}
+              />
             </div>
-            <div>
-              {formattedKy.focus ? (
-                <span className="text-bad dark:text-bad-dark font-semibold">Kỵ làm mọi việc.</span>
-              ) : formattedKy.rest.length > 0 ? (
-                <span className="text-bad dark:text-bad-dark">
-                  Kỵ <span className="font-medium">{formattedKy.rest.slice(0, 2).join(', ')}</span>.
-                </span>
-              ) : (
-                <span>Không có việc kỵ đặc biệt.</span>
-              )}
+          </button>
+
+          <div
+            className={`grid transition-[grid-template-rows] duration-250 ease-out ${
+              isNghiOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {formattedNghi.rest.length > 0 ? (
+                  formattedNghi.rest.map((item, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-surface-light dark:bg-surface-elevated-dark text-emerald-800 dark:text-emerald-200 border border-emerald-500/20 shadow-2xs"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : !formattedNghi.focus ? (
+                  <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark italic">
+                    Không có việc nghi đặc biệt hôm nay
+                  </span>
+                ) : null}
+              </div>
             </div>
           </div>
-          <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 shrink-0 w-full sm:w-auto">
-            {computedProfile?.birthYear ? (
-              <button
-                onClick={togglePersonalization}
-                className={`flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full w-full sm:w-auto transition-[background-color,color,border-color,box-shadow] duration-200 spring-press motion-gpu ${
-                  isPersonalized
-                    ? 'bg-purple/15 text-purple dark:text-purple-dark border border-purple/30 shadow-sm'
-                    : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low'
-                }`}
-                title={isPersonalized ? 'Tắt cá nhân hoá' : 'Bật cá nhân hoá theo tuổi của bạn'}
-              >
-                <span className="indicator-pip-sm bg-purple animate-glow-breathe" aria-hidden="true" />
-                {isPersonalized ? 'Đã CNH' : 'Chưa CNH'}
-              </button>
-            ) : (
-              <span
-                className="flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full w-full sm:w-auto bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40"
-                title="Cập nhật ngày sinh để cá nhân hoá"
-              >
-                <span className="indicator-pip-sm bg-text-secondary-light/40" aria-hidden="true" />
-                Chưa CNH
+        </div>
+
+        {/* Việc Cần Kiêng (Kỵ) */}
+        <div className="rounded-2xl border border-rose-500/20 bg-rose-500/5 dark:bg-rose-950/15 p-4 space-y-2.5 flex flex-col justify-between overflow-hidden">
+          <button
+            type="button"
+            onClick={() => setIsKyOpen(!isKyOpen)}
+            className="w-full flex items-center justify-between text-left interactive-press rounded-xl"
+            aria-expanded={isKyOpen}
+          >
+            <div className="flex items-center gap-1.5 shrink-0">
+              <AlertTriangle className="h-4 w-4 text-rose-600 dark:text-rose-400" />
+              <span className="text-xs font-bold uppercase tracking-wider text-rose-700 dark:text-rose-400">
+                Việc Cần Kiêng (Kỵ)
               </span>
-            )}
-            <button
-              onClick={() => setIsDamGioOpen(true)}
-              className="flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-colors shrink-0"
-              title="Mở sổ đám giỗ gia tiên"
-            >
-              <Heart className="w-3.5 h-3.5" />
-              <span>Sổ Giỗ</span>
-            </button>
+            </div>
+            <div className="flex items-center gap-2 ml-auto">
+              {formattedKy.focus ? (
+                <Badge variant="bad" pip={true}>
+                  Xấu Mọi Việc
+                </Badge>
+              ) : (
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-rose-500/10 text-rose-700 dark:text-rose-300 font-semibold">
+                  {formattedKy.rest.length} việc
+                </span>
+              )}
+              <ChevronDown
+                className={`h-4 w-4 text-rose-600 dark:text-rose-400 transition-transform duration-200 shrink-0 ${
+                  isKyOpen ? 'rotate-180' : ''
+                }`}
+              />
+            </div>
+          </button>
+
+          <div
+            className={`grid transition-[grid-template-rows] duration-250 ease-out ${
+              isKyOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {formattedKy.rest.length > 0 ? (
+                  formattedKy.rest.map((item, i) => (
+                    <span
+                      key={i}
+                      className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-medium bg-surface-light dark:bg-surface-elevated-dark text-rose-800 dark:text-rose-200 border border-rose-500/20 shadow-2xs"
+                    >
+                      {item}
+                    </span>
+                  ))
+                ) : !formattedKy.focus ? (
+                  <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark italic">
+                    Không có việc kỵ đặc biệt hôm nay
+                  </span>
+                ) : null}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <DamGioModal
-        isOpen={isDamGioOpen}
-        onClose={() => setIsDamGioOpen(false)}
-        currentLunarDay={data.lunarDate?.day}
-        currentLunarMonth={data.lunarDate?.month}
-      />
+      {/* ── 3. Bento Bottom: Trực/Tú & Xung Hợp Collapsible Card ──────────────── */}
+      <div className="rounded-2xl border border-border-light/60 dark:border-border-dark/60 bg-surface-light dark:bg-surface-elevated-dark p-4 space-y-3 overflow-hidden">
+        <button
+          type="button"
+          onClick={() => setIsXungHopOpen(!isXungHopOpen)}
+          className="w-full flex items-center justify-between text-left interactive-press rounded-xl"
+          aria-expanded={isXungHopOpen}
+        >
+          <div className="flex items-center gap-1.5 shrink-0">
+            <Compass className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
+            <span className="text-xs font-bold uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark">
+              Trực · Tú & Xung Hợp Chi
+            </span>
+          </div>
+          <div className="flex items-center gap-2 ml-auto">
+            <div className="text-[11px] px-2.5 py-1 rounded-xl bg-surface-subtle-light dark:bg-white/10 text-text-secondary-light dark:text-text-secondary-dark font-semibold text-right leading-tight flex flex-col items-end border border-border-light/40 dark:border-border-dark/40 shrink-0">
+              <span>Trực {data.modifyingLayer.trucDetail.name}</span>
+              <span className="opacity-80 font-medium">Sao {data.modifyingLayer.tuDetail.name}</span>
+            </div>
+            <ChevronDown
+              className={`h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200 shrink-0 ${
+                isXungHopOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </div>
+        </button>
 
-      {/* Personal Score Card */}
+        <div
+          className={`grid transition-[grid-template-rows] duration-250 ease-out ${
+            isXungHopOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1 border-t border-border-light/40 dark:border-border-dark/40">
+              <div className="space-y-1">
+                <p className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
+                  Trực {data.modifyingLayer.trucDetail.name} · Sao {data.modifyingLayer.tuDetail.name}
+                </p>
+                <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+                  {data.modifyingLayer.trucDetail.description}
+                </p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
+                  {formatXungHop(data.canChiXungHop || '')}
+                </p>
+                <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
+                  Nạp âm: <TermTooltip term="Nạp âm">{formatNapAm(data.napAmInteraction || '')}</TermTooltip>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ── 4. Personal Score & Dụng Sự (When active) ────────────────────── */}
       {isPersonalized && personalScore && (
         <div
           className={`rounded-2xl border px-5 py-4 page-enter-smooth ${
@@ -291,7 +506,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 <Meh className="h-5 w-5 text-text-secondary-light dark:text-text-secondary-dark" />
               )}
             </div>
-            <div className="text-sm leading-relaxed">
+            <div className="text-sm leading-relaxed flex-1">
               <div className="font-bold text-text-primary-light dark:text-text-primary-dark">
                 Điểm cá nhân hoá:{' '}
                 <span
@@ -325,7 +540,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
 
       {/* Personalized Dụng Sự */}
       {isPersonalized && personalDungSu && (
-        <CollapsibleCard title="Dụng sự theo tuổi" defaultOpen={true} collapseOnMobile={true}>
+        <CollapsibleCard title="Dụng sự theo tuổi của bạn" defaultOpen={false} collapseOnMobile={true}>
           <div className="divide-y divide-border-light dark:divide-border-dark text-sm px-4 sm:px-6 py-3">
             {personalDungSu.recommended.length > 0 && (
               <div className="py-2">
@@ -376,11 +591,9 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               onClick={() => {
                 const d = new Date(date);
                 const startStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-
                 const end = new Date(date);
                 end.setDate(end.getDate() + 7);
                 const endStr = `${end.getFullYear()}-${String(end.getMonth() + 1).padStart(2, '0')}-${String(end.getDate()).padStart(2, '0')}`;
-
                 navigate(`/app/ngay-tot?start=${startStr}&end=${endStr}`);
               }}
               className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline inline-flex items-center gap-1"
@@ -392,10 +605,154 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
         </CollapsibleCard>
       )}
 
-      {/* Chi tiết ngày âm — Collapsible */}
-      <CollapsibleCard title="Chi tiết ngày âm" defaultOpen={true} collapseOnMobile={true}>
+      {/* ── 5. Giờ Tốt & Xấu Trong Ngày (Always Shown) ─────────────────── */}
+      <CollapsibleCard
+        title="Giờ tốt và xấu trong ngày"
+        defaultOpen={true}
+        collapseOnMobile={false}
+        headerRight={
+          <button
+            onClick={() => setSortByScore((prev) => !prev)}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-[background-color,color,transform] duration-150 spring-press motion-gpu cursor-pointer"
+          >
+            {sortByScore ? <Clock className="h-3.5 w-3.5" /> : <TrendingUp className="h-3.5 w-3.5" />}
+            {sortByScore ? 'Theo giờ' : 'Giờ tốt trước'}
+          </button>
+        }
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm text-left border-collapse border-0">
+            <thead className="text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase bg-surface-subtle-light/60 dark:bg-surface-elevated-dark/50 tracking-wider border-b border-border-light/40 dark:border-border-dark/30">
+              <tr>
+                <th className="hidden sm:table-cell px-6 py-3 w-24 border-0" scope="col">
+                  Khung Giờ
+                </th>
+                <th className="px-3 sm:px-6 py-3 w-[90px] sm:w-32 text-center border-0" scope="col">
+                  Can Chi
+                </th>
+                <th className="px-3 sm:px-6 py-3 border-0" scope="col">
+                  Nghi / Kỵ
+                </th>
+                <th className="px-3 sm:px-6 py-3 text-right w-[70px] sm:w-28 align-middle border-0" scope="col">
+                  Điểm Số
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-light/40 dark:divide-border-dark/30 border-0">
+              {sortedHours.map((h, idx) => {
+                const advanced = h.advancedInfo || [];
+                const statusIndex = advanced.findIndex((s) => s.startsWith('Trạng thái:'));
+                let statusInfo = '';
+                if (statusIndex !== -1) {
+                  statusInfo = advanced[statusIndex].replace('Trạng thái:', '').trim();
+                }
+
+                const personalBreakdowns = advanced.filter((s) => s.startsWith('Cá nhân:'));
+                const positiveBreakdowns = personalBreakdowns.filter(
+                  (s) => s.includes('Tương hợp') && /\(\+\d+%\)/.test(s),
+                );
+                const negativeBreakdowns = personalBreakdowns.filter(
+                  (s) => s.includes('Tương khắc') && /\(-\d+%\)/.test(s),
+                );
+
+                const statusLabel = getStatusLabel(statusInfo);
+                const isHoangDao = statusLabel === 'HOÀNG ĐẠO';
+
+                const originalIndex = personalizedHours.findIndex((orig) => orig.timeRange === h.timeRange);
+                const isTop3 = topHourIndices.has(originalIndex);
+
+                const currentScore = h.score;
+                const isWeak = currentScore < 40;
+                const isAuspiciousCurrent = currentScore >= 60;
+                const positiveModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '+');
+                const negativeModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '-');
+                const scoreToneClass =
+                  currentScore >= 50 ? 'text-good dark:text-good-dark' : 'text-bad dark:text-bad-dark';
+                const normalizedHourDungSu = renderNormalizedDungSu(h.nghi, h.ky);
+
+                return (
+                  <tr
+                    key={idx}
+                    className={`transition-colors border-0 ${
+                      isTop3
+                        ? 'bg-gold/10 dark:bg-gold-dark/10 hover:bg-gold/15'
+                        : isWeak
+                          ? 'opacity-60 hover:opacity-100 hover:bg-surface-subtle-light dark:hover:bg-white/5'
+                          : isAuspiciousCurrent
+                            ? 'bg-info/5 dark:bg-info-dark/5 hover:bg-surface-subtle-light dark:hover:bg-white/5'
+                            : 'hover:bg-surface-subtle-light dark:hover:bg-white/5'
+                    }`}
+                  >
+                    <td className="hidden sm:table-cell px-6 py-4 font-medium whitespace-nowrap align-top border-0">
+                      {h.timeRange.replace(/:00/g, '').replace(' - ', '–')}
+                    </td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-center align-top border-0">
+                      <div className="sm:hidden text-[11px] text-text-secondary-light dark:text-text-secondary-dark font-medium">
+                        {h.timeRange.replace(/:00/g, '').replace(' - ', '–')}
+                      </div>
+                      <div
+                        className={`font-bold text-sm sm:text-base mt-0.5 ${
+                          h.isAuspicious ? 'text-good dark:text-good-dark' : 'text-text-primary-light dark:text-text-primary-dark'
+                        }`}
+                      >
+                        {h.canChi.can} {h.canChi.chi}
+                      </div>
+                      <div className="text-[11px] mt-0.5 tracking-tight font-semibold">
+                        {isHoangDao ? (
+                          <span className="text-good dark:text-good-dark">HOÀNG ĐẠO</span>
+                        ) : (
+                          <span className="text-text-secondary-light dark:text-text-secondary-dark">HẮC ĐẠO</span>
+                        )}
+                      </div>
+                    </td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-text-primary-light dark:text-text-primary-dark space-y-1.5 align-top">
+                      <div className="leading-relaxed">
+                        <span className="font-bold text-good dark:text-good-dark mr-1">Nghi:</span>
+                        <span>{normalizedHourDungSu.nghi}</span>
+                      </div>
+                      <div className="leading-relaxed">
+                        <span className="font-bold text-bad dark:text-bad-dark mr-1">Kỵ:</span>
+                        <span>{normalizedHourDungSu.ky}</span>
+                      </div>
+                      {isPersonalized && personalBreakdowns.length > 0 && (
+                        <div className="space-y-0.5 mt-1">
+                          {personalBreakdowns.map((b, i) => (
+                            <div key={i} className={`text-xs font-normal ${getBreakdownToneClass(b)}`}>
+                              {b.replace('Cá nhân:', '').trim()}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </td>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-right font-bold text-sm align-top flex flex-col items-end space-y-0.5 text-text-primary-light dark:text-text-primary-dark">
+                      <div className={scoreToneClass}>{currentScore}%</div>
+                      {isPersonalized && (positiveBreakdowns.length > 0 || negativeBreakdowns.length > 0) && (
+                        <div className="space-y-0.5 mt-1">
+                          {positiveModifierTotal !== null && positiveModifierTotal > 0 && (
+                            <div className="text-xs font-normal text-good dark:text-good-dark">
+                              Tương hợp +{positiveModifierTotal}%
+                            </div>
+                          )}
+                          {negativeModifierTotal !== null && negativeModifierTotal < 0 && (
+                            <div className="text-xs font-normal text-bad dark:text-bad-dark">
+                              Tương khắc {negativeModifierTotal}%
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </CollapsibleCard>
+
+      {/* ── 6. Chi Tiết Ngày Âm (Deep Dive Academic Accordion) ───────────── */}
+      <CollapsibleCard title="Chi tiết học thuật ngày âm" defaultOpen={false} collapseOnMobile={true}>
         <div className="divide-y divide-border-light dark:divide-border-dark text-sm">
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
               Ngũ hành
             </div>
@@ -403,64 +760,28 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               {data.nguHanhInteraction || 'N/A'}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
-              Nạp âm
+              <TermTooltip term="Nạp âm">Nạp âm</TermTooltip>
             </div>
             <div className="sm:col-span-3 text-text-primary-light dark:text-text-primary-dark mt-1 sm:mt-0 leading-relaxed">
               {formatNapAm(data.napAmInteraction || '')}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
-              Xung hợp
+              <TermTooltip term="Tam Hợp">Xung hợp</TermTooltip>
             </div>
             <div className="sm:col-span-3 text-text-primary-light dark:text-text-primary-dark mt-1 sm:mt-0 leading-relaxed">
               {formatXungHop(data.canChiXungHop || '')}
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
-            <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
-              Trực/Tú
-            </div>
-            <div className="sm:col-span-3 text-text-primary-light dark:text-text-primary-dark mt-1 sm:mt-0 leading-relaxed space-y-1.5">
-              <p>
-                Trực {data.modifyingLayer.trucDetail.name}: {data.modifyingLayer.trucDetail.description}
-              </p>
-              <p>
-                Sao {data.modifyingLayer.tuDetail.name}: {data.modifyingLayer.tuDetail.description}
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
               Cát thần
             </div>
             <div className="sm:col-span-3 text-text-primary-light dark:text-text-primary-dark mt-1 sm:mt-0 leading-relaxed">
               {data.goodStars.join(', ') || 'Không có'}
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
-            <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
-              Nghi
-            </div>
-            <div className="sm:col-span-3 mt-1 sm:mt-0 leading-relaxed">
-              {formattedNghi.focus || formattedNghi.rest.length > 0 ? (
-                <div className="flex flex-wrap gap-1.5">
-                  {formattedNghi.focus && (
-                    <Badge variant="good" pip={true}>
-                      Tốt mọi việc
-                    </Badge>
-                  )}
-                  {formattedNghi.rest.map((item, i) => (
-                    <Badge key={i} variant="good">
-                      {item}
-                    </Badge>
-                  ))}
-                </div>
-              ) : (
-                <span className="text-text-secondary-light dark:text-text-secondary-dark text-sm">Không có</span>
-              )}
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
@@ -473,30 +794,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
             <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
-              Kỵ
-            </div>
-            <div className="sm:col-span-3 mt-1 sm:mt-0 leading-relaxed">
-              {formattedKy.focus || formattedKy.rest.length > 0 ? (
-                <div className="flex flex-wrap gap-1.5">
-                  {formattedKy.focus && (
-                    <Badge variant="bad" pip={true}>
-                      Xấu mọi việc
-                    </Badge>
-                  )}
-                  {formattedKy.rest.map((item, i) => (
-                    <Badge key={i} variant="bad">
-                      {item}
-                    </Badge>
-                  ))}
-                </div>
-              ) : (
-                <span className="text-text-secondary-light dark:text-text-secondary-dark text-sm">Không có</span>
-              )}
-            </div>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-4 px-4 sm:px-6 py-3 sm:py-4 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors">
-            <div className="text-text-secondary-light dark:text-text-secondary-dark font-medium sm:col-span-1 tracking-wide">
-              Bành tổ bách kỵ
+              <TermTooltip term="Bành tổ bách kỵ">Bành tổ bách kỵ</TermTooltip>
             </div>
             <div className="sm:col-span-3 text-text-primary-light dark:text-text-primary-dark mt-1 sm:mt-0 leading-relaxed space-y-1.5">
               {renderWithItalics(data.banhTo.can)}
@@ -519,161 +817,6 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               <ArrowRight className="h-4 w-4" />
             </button>
           </div>
-        </div>
-      </CollapsibleCard>
-
-      {/* Giờ tốt và xấu trong ngày — Collapsible */}
-      <CollapsibleCard
-        title="Giờ tốt và xấu trong ngày"
-        defaultOpen={true}
-        collapseOnMobile={true}
-        headerRight={
-          <button
-            onClick={() => setSortByScore((prev) => !prev)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low transition-[background-color,color,transform] duration-150 spring-press motion-gpu"
-          >
-            {sortByScore ? <Clock className="h-3.5 w-3.5" /> : <TrendingUp className="h-3.5 w-3.5" />}
-            {sortByScore ? 'Theo giờ' : 'Giờ tốt trước'}
-          </button>
-        }
-      >
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
-            <thead className="text-xs sm:text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase bg-surface-subtle-light dark:bg-surface-subtle-dark tracking-wider">
-              <tr>
-                <th className="hidden sm:table-cell px-6 py-3 w-20" scope="col">
-                  Giờ
-                </th>
-                <th className="px-2 sm:px-6 py-3 w-[70px] sm:w-28 text-center" scope="col">
-                  Can Chi
-                </th>
-                <th className="px-3 sm:px-6 py-3" scope="col">
-                  Chi tiết
-                </th>
-                <th className="px-2 sm:px-6 py-3 text-right w-[60px] sm:w-24 align-middle" scope="col">
-                  ĐIỂM
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border-light dark:divide-border-dark">
-              {sortedHours.map((h, idx) => {
-                const advanced = h.advancedInfo || [];
-                const statusIndex = advanced.findIndex((s) => s.startsWith('Trạng thái:'));
-                let statusInfo = '';
-                if (statusIndex !== -1) {
-                  statusInfo = advanced[statusIndex].replace('Trạng thái:', '').trim();
-                }
-
-                // Find personalized breakdowns
-                const personalBreakdowns = advanced.filter((s) => s.startsWith('Cá nhân:'));
-                const positiveBreakdowns = personalBreakdowns.filter(
-                  (s) => s.includes('Tương hợp') && /\(\+\d+%\)/.test(s),
-                );
-                const negativeBreakdowns = personalBreakdowns.filter(
-                  (s) => s.includes('Tương khắc') && /\(-\d+%\)/.test(s),
-                );
-
-                const statusLabel = getStatusLabel(statusInfo);
-                const statusColorClass =
-                  statusLabel === 'HOÀNG ĐẠO'
-                    ? 'text-good dark:text-good-dark'
-                    : 'text-text-primary-light dark:text-text-primary-dark';
-
-                // We need to find the original index in `personalizedHours`
-                const originalIndex = personalizedHours.findIndex((orig) => orig.timeRange === h.timeRange);
-                const isTop3 = topHourIndices.has(originalIndex);
-
-                const currentScore = h.score;
-                const isWeak = currentScore < 40;
-                const isAuspiciousCurrent = currentScore >= 60;
-                const positiveModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '+');
-                const negativeModifierTotal = getSignedModifierTotalBySign(personalBreakdowns, '-');
-                const scoreToneClass =
-                  currentScore >= 50 ? 'text-good dark:text-good-dark' : 'text-bad dark:text-bad-dark';
-                const normalizedHourDungSu = renderNormalizedDungSu(h.nghi, h.ky);
-
-                return (
-                  <tr
-                    key={idx}
-                    className={`transition-colors ${
-                      isTop3
-                        ? 'bg-gold/5 dark:bg-gold-dark/5 border-l-2 border-l-gold dark:border-l-gold-dark hover:bg-gold/10 dark:hover:bg-gold-dark/10'
-                        : isWeak
-                          ? 'opacity-60 hover:opacity-100 hover:bg-surface-subtle-light dark:hover:bg-white/5'
-                          : isAuspiciousCurrent
-                            ? 'bg-info/5 dark:bg-info-dark/5 hover:bg-surface-subtle-light dark:hover:bg-white/5'
-                            : 'hover:bg-surface-subtle-light dark:hover:bg-white/5'
-                    }`}
-                  >
-                    <td className="hidden sm:table-cell px-6 py-4 font-medium whitespace-nowrap align-top">
-                      {h.timeRange.replace(/:00/g, '').replace(' - ', '–')}
-                    </td>
-                    <td className="px-2 sm:px-6 py-3 sm:py-4 text-center align-top">
-                      <div className="sm:hidden">
-                        <div className="text-xs text-text-secondary-light dark:text-text-secondary-dark font-medium">
-                          {h.timeRange.replace(/:00/g, '').replace(' - ', '–')}
-                        </div>
-                        <div
-                          className={`font-bold text-sm mt-0.5 ${h.isAuspicious ? 'text-good dark:text-good-dark' : 'text-text-primary-light dark:text-text-primary-dark'}`}
-                        >
-                          {h.canChi.can} {h.canChi.chi}
-                        </div>
-                        <div
-                          className={`text-xs mt-0.5 tracking-tight leading-tight font-semibold ${statusColorClass}`}
-                        >
-                          {statusLabel}
-                        </div>
-                      </div>
-                      <div className="hidden sm:block">
-                        <div
-                          className={`font-bold text-base ${h.isAuspicious ? 'text-good dark:text-good-dark' : 'text-text-primary-light dark:text-text-primary-dark'}`}
-                        >
-                          {h.canChi.can} {h.canChi.chi}
-                        </div>
-                        <div className="text-xs mt-1 tracking-tight leading-tight">{renderStatusParts(statusInfo)}</div>
-                      </div>
-                    </td>
-                    <td className="px-3 sm:px-6 py-3 sm:py-4 text-sm text-text-primary-light dark:text-text-primary-dark space-y-1.5 align-top">
-                      <div className="leading-relaxed">
-                        <span className="font-bold text-good dark:text-good-dark mr-1">Nghi:</span>
-                        <span>{normalizedHourDungSu.nghi}</span>
-                      </div>
-                      <div className="leading-relaxed">
-                        <span className="font-bold text-bad dark:text-bad-dark mr-1">Kỵ:</span>
-                        <span>{normalizedHourDungSu.ky}</span>
-                      </div>
-                      {isPersonalized && personalBreakdowns.length > 0 && (
-                        <div className="space-y-0.5 mt-1">
-                          {personalBreakdowns.map((b, i) => (
-                            <div key={i} className={`text-xs font-normal ${getBreakdownToneClass(b)}`}>
-                              {b.replace('Cá nhân:', '').trim()}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </td>
-                    <td className="px-2 sm:px-6 py-3 sm:py-4 text-right font-bold text-sm align-top flex flex-col items-end space-y-0.5 text-text-primary-light dark:text-text-primary-dark">
-                      <div className={scoreToneClass}>{currentScore}%</div>
-                      {isPersonalized && (positiveBreakdowns.length > 0 || negativeBreakdowns.length > 0) && (
-                        <div className="space-y-0.5 mt-1">
-                          {positiveModifierTotal !== null && positiveModifierTotal > 0 && (
-                            <div className="text-xs font-normal text-good dark:text-good-dark">
-                              Tương hợp +{positiveModifierTotal}%
-                            </div>
-                          )}
-                          {negativeModifierTotal !== null && negativeModifierTotal < 0 && (
-                            <div className="text-xs font-normal text-bad dark:text-bad-dark">
-                              Tương khắc {negativeModifierTotal}%
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
         </div>
       </CollapsibleCard>
     </div>

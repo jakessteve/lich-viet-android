@@ -458,8 +458,8 @@ export function computeAshtakoot(moonSiderealA, moonSiderealB) {
   if (lordA === lordB) {
     maitriScore = 5;
   } else {
-    const relA = PLANETARY_FRIENDSHIP[lordA][lordB];
-    const relB = PLANETARY_FRIENDSHIP[lordB][lordA];
+    const relA = PLANETARY_FRIENDSHIP[lordA]?.[lordB] ?? 0;
+    const relB = PLANETARY_FRIENDSHIP[lordB]?.[lordA] ?? 0;
     if (relA === 1 && relB === 1) maitriScore = 5;
     else if ((relA === 1 && relB === 0) || (relA === 0 && relB === 1)) maitriScore = 4;
     else if (relA === 0 && relB === 0) maitriScore = 3;
@@ -477,18 +477,131 @@ export function computeAshtakoot(moonSiderealA, moonSiderealB) {
   else ganaScore = 0;
   
   const distance = (rasiB - rasiA + 12) % 12 + 1;
-  const bhakootScore = [1, 7, 3, 11, 4, 10].includes(distance) ? 7 : 0;
+  let bhakootScore = [1, 7, 3, 11, 4, 10].includes(distance) ? 7 : 0;
   
   const nadiA = NAKSHATRA_NADI[nakA];
   const nadiB = NAKSHATRA_NADI[nakB];
-  const nadiScore = nadiA !== nadiB ? 8 : 0; 
+  let nadiScore = nadiA !== nadiB ? 8 : 0;
 
-  const total = varnaScore + vashyaScore + taraScore + yoniScore + maitriScore + ganaScore + bhakootScore + nadiScore;
+  // ══════════════════════════════════════════════════════════
+  // Classical Dosha Pariharas (Exceptions & Cancellations)
+  // ══════════════════════════════════════════════════════════
+  const pariharas = [];
+
+  // 1. Nadi Dosha Parihara: Canceled if same Rashi but different Nakshatra, or same lord
+  if (nadiScore === 0) {
+    if (rasiA === rasiB && nakA !== nakB) {
+      pariharas.push({
+        type: "nadi_dosha_cancelled",
+        rule: "Đồng cung Rasi nhưng khác Nakshatra (Nadi Dosha được hóa giải)",
+        scoreAdjustment: 8
+      });
+      nadiScore = 8;
+    } else if (lordA === lordB && nakA !== nakB) {
+      pariharas.push({
+        type: "nadi_dosha_cancelled",
+        rule: "Chủ tinh Rasi trùng nhau (Nadi Dosha được hóa giải)",
+        scoreAdjustment: 8
+      });
+      nadiScore = 8;
+    }
+  }
+
+  // 2. Bhakoot Dosha Parihara: Canceled if lords are same or mutual friends
+  if (bhakootScore === 0) {
+    if (lordA === lordB) {
+      pariharas.push({
+        type: "bhakoot_dosha_cancelled",
+        rule: "Cùng chủ tinh cai quản (Bhakoot Dosha được hóa giải)",
+        scoreAdjustment: 7
+      });
+      bhakootScore = 7;
+    } else if (PLANETARY_FRIENDSHIP[lordA]?.[lordB] === 1 && PLANETARY_FRIENDSHIP[lordB]?.[lordA] === 1) {
+      pariharas.push({
+        type: "bhakoot_dosha_cancelled",
+        rule: "Chủ tinh hai cung là bạn thân thiết (Bhakoot Dosha được hóa giải)",
+        scoreAdjustment: 7
+      });
+      bhakootScore = 7;
+    }
+  }
+
+  // 3. Gana Dosha Mitigation: Mitigated if Graha Maitri >= 4 and Nadi > 0
+  if (ganaScore <= 1 && maitriScore >= 4 && nadiScore > 0) {
+    pariharas.push({
+      type: "gana_dosha_mitigated",
+      rule: "Tình bạn Graha Maitri cao bù đắp khác biệt Gana",
+      scoreAdjustment: 3
+    });
+    ganaScore = Math.max(ganaScore, 3);
+  }
+
+  const rawTotal = varnaScore + vashyaScore + taraScore + yoniScore + maitriScore + ganaScore + bhakootScore + nadiScore;
+  const clampedTotal = Math.max(0, Math.min(36, rawTotal));
   
   return {
-    score: total,
+    score: clampedTotal,
     outOf: 36,
-    breakdown: { varna: varnaScore, vashya: vashyaScore, tara: taraScore, yoni: yoniScore, maitri: maitriScore, gana: ganaScore, bhakoot: bhakootScore, nadi: nadiScore }
+    breakdown: {
+      varna: varnaScore,
+      vashya: vashyaScore,
+      tara: taraScore,
+      yoni: yoniScore,
+      maitri: maitriScore,
+      gana: ganaScore,
+      bhakoot: bhakootScore,
+      nadi: nadiScore
+    },
+    pariharas
+  };
+}
+
+export function computeManglikDosha(input) {
+  const { marsSiderealLon = 0, ascSiderealLon = 0, moonSiderealLon = 0, venusSiderealLon = 0, age = 30 } = input;
+  
+  const marsRasi = Math.floor(normalizeDegrees(marsSiderealLon) / 30);
+  const ascRasi = Math.floor(normalizeDegrees(ascSiderealLon) / 30);
+  const moonRasi = Math.floor(normalizeDegrees(moonSiderealLon) / 30);
+  const venusRasi = Math.floor(normalizeDegrees(venusSiderealLon) / 30);
+
+  const MANGLIK_HOUSES = [1, 2, 4, 7, 8, 12];
+  
+  const houseFromAsc = (marsRasi - ascRasi + 12) % 12 + 1;
+  const houseFromMoon = (marsRasi - moonRasi + 12) % 12 + 1;
+  const houseFromVenus = (marsRasi - venusRasi + 12) % 12 + 1;
+
+  const isManglikFromAsc = MANGLIK_HOUSES.includes(houseFromAsc);
+  const isManglikFromMoon = MANGLIK_HOUSES.includes(houseFromMoon);
+  const isManglikFromVenus = MANGLIK_HOUSES.includes(houseFromVenus);
+
+  const afflictions = [];
+  if (isManglikFromAsc) afflictions.push(`Hỏa Tinh tại cung ${houseFromAsc} từ Lagna (Cung Mệnh)`);
+  if (isManglikFromMoon) afflictions.push(`Hỏa Tinh tại cung ${houseFromMoon} từ Chandra (Mặt Trăng)`);
+  if (isManglikFromVenus) afflictions.push(`Hỏa Tinh tại cung ${houseFromVenus} từ Shukra (Kim Tinh)`);
+
+  const cancellations = [];
+  // Mars in own sign (Aries = 0, Scorpio = 7) or exalted (Capricorn = 9)
+  if (marsRasi === 0 || marsRasi === 7 || marsRasi === 9) {
+    cancellations.push("Hỏa Tinh đắc địa / vượng địa (Aries, Scorpio, Capricorn) hóa giải sát khí");
+  }
+  // Age maturity (> 28 years old)
+  if (age >= 28) {
+    cancellations.push("Độ tuổi trưởng thành (trên 28 tuổi) giúp năng lượng Hỏa Tinh chín muồi");
+  }
+
+  const isManglik = afflictions.length > 0 && cancellations.length === 0;
+  const status = isManglik ? (afflictions.length >= 2 ? "high" : "moderate") : (afflictions.length > 0 ? "cancelled" : "none");
+
+  return {
+    isManglik,
+    status,
+    afflictions,
+    cancellations,
+    houses: {
+      fromAsc: houseFromAsc,
+      fromMoon: houseFromMoon,
+      fromVenus: houseFromVenus
+    }
   };
 }
 

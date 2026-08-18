@@ -23,9 +23,8 @@ export { createApp, bootstrap } from './main.js';
 export { AuthModule } from './modules/auth/auth.module.js';
 export { AuthService } from './modules/auth/auth.service.js';
 export { UsersModule } from './modules/users/users.module.js';
-export { DamGioModule } from './modules/dam-gio/dam-gio.module.js';
-export { DamGioService } from './modules/dam-gio/dam-gio.service.js';
 export { CalendarModule } from './modules/calendar/calendar.module.js';
+
 export { CalendarService } from './modules/calendar/calendar.service.js';
 export { TuViModule } from './modules/tuvi/tuvi.module.js';
 export { TuViService } from './modules/tuvi/tuvi.service.js';

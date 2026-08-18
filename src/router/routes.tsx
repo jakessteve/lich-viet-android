@@ -87,12 +87,14 @@ export function renderModuleRoutes() {
           </ErrorBoundary>
         }
       />
-      <Route path="lich-dung-su" element={<Navigate to="/app/am-lich" replace />} />
+      <Route path="lich-dung-su" element={<Navigate to="/app/ngay-tot?tab=dung-su" replace />} />
       <Route path="acs" element={<Navigate to="/app/am-lich" replace />} />
+      <Route path="vedic" element={<Navigate to="/app/chiem-tinh/vedic" replace />} />
+      <Route path="tam-thuc" element={<Navigate to="/app/gieo-que" replace />} />
       <Route
         path="ngay-tot"
         element={
-          <ErrorBoundary viewName="Ngày Tốt">
+          <ErrorBoundary viewName="Ngày Tốt & Dụng Sự">
             <Suspense fallback={<LoadingState />}>
               <div className="page-enter-smooth">
                 <ElectionPage />

@@ -9,18 +9,18 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-gradient-to-r from-mystery-deep to-indigo-950 text-gold-light ring-1 ring-gold/20 hover:shadow-xl hover:shadow-mystery-deep/20 dark:from-gold dark:to-amber-500 dark:text-indigo-950 dark:ring-0 dark:hover:shadow-gold-dark/25 font-bold',
+          'bg-gradient-to-r from-mystery-deep to-indigo-950 text-white ring-1 ring-gold/20 hover:shadow-xl hover:shadow-mystery-deep/20 dark:from-gold dark:to-amber-500 dark:text-indigo-950 dark:ring-0 dark:hover:shadow-gold-dark/25 font-bold',
         primary:
-          'bg-gradient-to-r from-mystery-deep to-indigo-950 text-gold-light ring-1 ring-gold/20 hover:shadow-xl hover:shadow-mystery-deep/20 dark:from-gold dark:to-amber-500 dark:text-indigo-950 dark:ring-0 dark:hover:shadow-gold-dark/25 font-bold',
+          'bg-gradient-to-r from-mystery-deep to-indigo-950 text-white ring-1 ring-gold/20 hover:shadow-xl hover:shadow-mystery-deep/20 dark:from-gold dark:to-amber-500 dark:text-indigo-950 dark:ring-0 dark:hover:shadow-gold-dark/25 font-bold',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
         outline:
-          'border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark hover:bg-accent hover:text-accent-foreground',
+          'border border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark text-text-primary-light dark:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-white/5',
         secondary:
-          'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark',
+          'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-primary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-text-primary-dark hover:bg-surface-container-low dark:hover:bg-surface-elevated-dark/80',
         ghost:
-          'text-text-secondary-light dark:text-text-secondary-dark hover:bg-surface-container-low dark:hover:bg-white/5 hover:text-text-primary-light dark:hover:text-text-primary-dark',
+          'text-text-primary-light dark:text-text-secondary-dark hover:bg-surface-container-low dark:hover:bg-white/5 hover:text-text-primary-light dark:hover:text-text-primary-dark',
         link: 'text-primary underline-offset-4 hover:underline',
-        gold: 'bg-gradient-to-r from-gold via-gold-light to-amber-500 text-white shadow-md shadow-gold/20 font-bold',
+        gold: 'bg-gradient-to-r from-amber-400 via-amber-300 to-amber-400 text-stone-950 dark:text-indigo-950 shadow-md shadow-gold/20 font-bold',
       },
       size: {
         default: 'h-11 px-5 py-2.5 min-h-11',

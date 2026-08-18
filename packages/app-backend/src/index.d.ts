@@ -185,7 +185,14 @@ export interface FrontendReadinessInput {
   personA?: Record<string, unknown>;
   personB?: Record<string, unknown>;
   viewYear?: number;
-  school?: string;
+  location?: { timezone?: number; lat?: number; lng?: number; [key: string]: unknown };
+  date?: Date | string | number;
+  number1?: number;
+  number2?: number;
+  number3?: number;
+  query?: string;
+  houseSystem?: string;
+  ayanamsa?: string;
 }
 
 export type FrontendReadyPayload = Record<string, unknown> & {

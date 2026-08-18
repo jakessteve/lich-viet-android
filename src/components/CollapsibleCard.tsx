@@ -67,7 +67,7 @@ const TIER_BADGE_CONFIG: Record<string, { label: string; icon: React.ReactNode; 
 function CollapsibleCard({
   title,
   icon,
-  defaultOpen = true,
+  defaultOpen = false,
   collapseOnMobile = true,
   alwaysOpenOnDesktop = false,
   headerRight,
@@ -99,7 +99,7 @@ function CollapsibleCard({
     <Collapsible
       open={effectiveOpen}
       onOpenChange={forceOpen ? undefined : setIsOpen}
-      className={cn('card-surface', className)}
+      className={cn('card-surface overflow-hidden rounded-2xl', className)}
     >
       <div
         role={forceOpen ? undefined : 'button'}
@@ -116,14 +116,17 @@ function CollapsibleCard({
               }
         }
         className={cn(
-          'card-header flex items-center justify-between w-full text-left transition-colors',
+          'card-header flex items-center justify-between w-full text-left transition-all',
+          effectiveOpen
+            ? 'rounded-t-2xl rounded-b-none border-b border-border-light/50 dark:border-border-dark/50'
+            : 'rounded-2xl border-b-0',
           forceOpen
             ? ''
             : 'cursor-pointer hover:bg-surface-container-low/50 dark:hover:bg-white/5 spring-press motion-gpu',
         )}
         aria-expanded={effectiveOpen}
       >
-        <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center gap-2 min-w-0 flex-1">
           {icon && (
             <div className="text-text-secondary-light dark:text-text-secondary-dark shrink-0">
               {typeof icon === 'string' ? (
@@ -135,7 +138,13 @@ function CollapsibleCard({
               )}
             </div>
           )}
-          {typeof title === 'string' ? <h2 className="section-title truncate">{title}</h2> : title}
+          {typeof title === 'string' ? (
+            <h2 className="section-title text-sm sm:text-base font-semibold leading-snug break-words">
+              {title}
+            </h2>
+          ) : (
+            title
+          )}
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {/* Tier badge */}

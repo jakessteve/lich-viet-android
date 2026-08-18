@@ -4,9 +4,6 @@ import {
   RegisterInput,
   SocialTokenPayload,
   UserProfile,
-  DamGioRecord,
-  CreateDamGioDto,
-  UpdateDamGioDto,
   CalendarEventDto,
   CreateCalendarEventDto,
   DateRange,
@@ -28,13 +25,6 @@ export interface CalendarEventGateway {
   deleteEvent(id: string): Promise<void>;
 }
 
-export interface DamGioGateway {
-  listDamGio(): Promise<DamGioRecord[]>;
-  createDamGio(entry: CreateDamGioDto): Promise<DamGioRecord>;
-  updateDamGio(id: string, entry: UpdateDamGioDto): Promise<DamGioRecord>;
-  deleteDamGio(id: string): Promise<void>;
-}
-
 export interface SyncGateway {
   sync(request: SyncPushRequest): Promise<SyncPullResponse>;
 }
@@ -43,6 +33,6 @@ export interface RuntimeContext {
   kind: 'demo' | 'remote';
   auth: AuthGateway;
   calendar: CalendarEventGateway;
-  damGio: DamGioGateway;
   sync?: SyncGateway;
 }
+

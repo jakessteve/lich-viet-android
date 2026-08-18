@@ -48,7 +48,7 @@ const ResultTabs: React.FC<ResultTabsProps> = ({ activeTab, onTabChange, intent,
             onClick={() => onTabChange(tab.id)}
             className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-200 ${
               isActive
-                ? 'bg-gold/12 dark:bg-gold-dark/12 text-gold dark:text-gold-dark ring-1 ring-gold/25 dark:ring-gold-dark/25 shadow-sm'
+                ? 'bg-gold/12 dark:bg-gold-dark/12 text-text-primary-light dark:text-gold-dark ring-1 ring-gold/25 dark:ring-gold-dark/25 shadow-sm font-semibold'
                 : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5 hover:text-text-primary-light dark:hover:text-text-primary-dark'
             }`}
           >

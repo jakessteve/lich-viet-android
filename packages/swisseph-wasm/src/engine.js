@@ -229,6 +229,16 @@ export function createChunkPlan({ request, chunkHours = 24 }) {
   }));
 }
 
+/**
+ * @param {Object} input
+ * @param {any} input.request
+ * @param {string} [input.controlZone]
+ * @param {number} [input.chunkHours]
+ * @param {boolean} [input.strictMode]
+ * @param {Array<any>} [input.overrides]
+ * @param {Record<string, any>} [input.guardrails]
+ * @param {() => number} [input.now]
+ */
 export function runElectionScan({
   request,
   controlZone,

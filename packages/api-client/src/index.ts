@@ -4,9 +4,6 @@ import {
   RegisterInput,
   SocialTokenPayload,
   UserProfile,
-  DamGioRecord,
-  CreateDamGioDto,
-  UpdateDamGioDto,
   SyncPushRequest,
   SyncPullResponse,
   CalendarEventDto,
@@ -47,38 +44,51 @@ export class LichVietApiClient {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`API Error ${response.status}: ${errorText}`);
+      let errorMessage = `HTTP ${response.status} ${response.statusText}`;
+      try {
+        const errorBody = await response.json();
+        if (errorBody && errorBody.message) {
+          errorMessage = errorBody.message;
+        }
+      } catch {
+        // ignore json parse error
+      }
+      throw new Error(errorMessage);
     }
 
     if (response.status === 204) {
       return undefined as unknown as T;
     }
 
-    return response.json() as Promise<T>;
+    return response.json();
   }
 
   // ── Auth Endpoints ──────────────────────────────────────────
-  async login(data: LoginInput): Promise<AuthResult> {
+  async login(input: LoginInput): Promise<AuthResult> {
     return this.fetchJson<AuthResult>('/v1/auth/login', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(input),
     });
   }
 
-  async register(data: RegisterInput): Promise<AuthResult> {
+  async register(input: RegisterInput): Promise<AuthResult> {
     return this.fetchJson<AuthResult>('/v1/auth/register', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(input),
     });
   }
 
-  async loginWithSocial(data: SocialTokenPayload): Promise<AuthResult> {
+  async socialAuth(payload: SocialTokenPayload): Promise<AuthResult> {
     return this.fetchJson<AuthResult>('/v1/auth/social', {
       method: 'POST',
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
   }
+
+  async loginWithSocial(payload: SocialTokenPayload): Promise<AuthResult> {
+    return this.socialAuth(payload);
+  }
+
 
   async getProfile(): Promise<UserProfile> {
     return this.fetchJson<UserProfile>('/v1/users/me');
@@ -89,29 +99,6 @@ export class LichVietApiClient {
       method: 'PATCH',
       body: JSON.stringify(updates),
     });
-  }
-
-  // ── Đám Giỗ Endpoints ───────────────────────────────────────
-  async listDamGio(): Promise<DamGioRecord[]> {
-    return this.fetchJson<DamGioRecord[]>('/v1/dam-gio');
-  }
-
-  async createDamGio(data: CreateDamGioDto): Promise<DamGioRecord> {
-    return this.fetchJson<DamGioRecord>('/v1/dam-gio', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async updateDamGio(id: string, data: UpdateDamGioDto): Promise<DamGioRecord> {
-    return this.fetchJson<DamGioRecord>(`/v1/dam-gio/${id}`, {
-      method: 'PATCH',
-      body: JSON.stringify(data),
-    });
-  }
-
-  async deleteDamGio(id: string): Promise<void> {
-    await this.fetchJson(`/v1/dam-gio/${id}`, { method: 'DELETE' });
   }
 
   // ── Calendar Event Endpoints ────────────────────────────────

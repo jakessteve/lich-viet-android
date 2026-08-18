@@ -46,7 +46,7 @@ export default function UpgradePage() {
             <Button
               onClick={() => navigate('/app/dang-ky')}
               variant="outline"
-              className="gap-2 px-6 rounded-xl font-semibold text-gold dark:text-gold-dark border-gold/30 dark:border-gold-dark/30 hover:bg-gold/10"
+              className="gap-2 px-6 rounded-xl font-semibold text-text-primary-light dark:text-gold-dark border-gold/30 dark:border-gold-dark/30 hover:bg-gold/10"
             >
               <UserPlus className="h-4 w-4" />
               Đăng Ký Miễn Phí

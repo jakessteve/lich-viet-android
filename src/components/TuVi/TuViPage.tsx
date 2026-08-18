@@ -270,7 +270,7 @@ export const TuViPage: React.FC = () => {
             <button
               type="button"
               onClick={() => setHanView(currentYear, currentMonth)}
-              className="surface-control inline-flex h-11 items-center gap-1.5 px-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-gold dark:hover:text-gold-dark"
+              className="surface-control inline-flex h-11 items-center gap-1.5 px-3 text-sm font-medium text-text-secondary-light dark:text-text-secondary-dark hover:bg-gold/10 hover:text-text-primary-light dark:hover:text-gold-dark"
             >
               <Calendar className="h-4 w-4" />
               Hôm nay
@@ -282,7 +282,7 @@ export const TuViPage: React.FC = () => {
       {chart && (
         <div className="surface-panel flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-4 py-3">
           <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold dark:text-gold-dark">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-text-primary-light dark:text-gold-dark">
               <Network className="h-4 w-4" />
             </div>
             <div>
