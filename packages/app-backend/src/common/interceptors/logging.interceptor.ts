@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-  Logger
-} from '@nestjs/common';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler, Logger } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { FastifyRequest, FastifyReply } from 'fastify';
@@ -22,10 +16,8 @@ export class LoggingInterceptor implements NestInterceptor {
       tap(() => {
         const res = ctx.getResponse<FastifyReply>();
         const elapsed = Date.now() - startTime;
-        this.logger.log(
-          `[${req.method}] ${req.url} ${res.statusCode} - ${elapsed}ms`
-        );
-      })
+        this.logger.log(`[${req.method}] ${req.url} ${res.statusCode} - ${elapsed}ms`);
+      }),
     );
   }
 }

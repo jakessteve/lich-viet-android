@@ -20,7 +20,9 @@ const TUHOA_BADGE_CLASS: Record<string, string> = {
 
 function Badge({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold border ${className ?? ''}`}>
+    <span
+      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold border ${className ?? ''}`}
+    >
       {children}
     </span>
   );
@@ -87,7 +89,8 @@ export const TuViTieuHanPanel: React.FC<{
             Vận Hạn Năm {tieuHanData.yearCan} {tieuHanData.yearChi} ({tieuHanData.viewYear})
           </h3>
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-            Tiểu Hạn nhập Cung <strong>{tieuHanData.tieuHanPalaceName}</strong> [{tieuHanData.tieuHanPalaceChi}] · Đương số {tieuHanData.viewAge} tuổi
+            Tiểu Hạn nhập Cung <strong>{tieuHanData.tieuHanPalaceName}</strong> [{tieuHanData.tieuHanPalaceChi}] · Đương
+            số {tieuHanData.viewAge} tuổi
           </p>
         </div>
       </div>
@@ -113,7 +116,8 @@ export const TuViTieuHanPanel: React.FC<{
           <TrendingUp className="h-4 w-4 text-gold dark:text-gold-dark shrink-0 mt-0.5" />
           <div className="text-xs space-y-0.5">
             <div className="font-bold text-text-primary-light dark:text-text-primary-dark">
-              {tieuHanData.daiHanResonance.titleVi} {mode === 'advanced' ? `(Hệ số tác động: ${tieuHanData.daiHanResonance.amplification}x)` : ''}
+              {tieuHanData.daiHanResonance.titleVi}{' '}
+              {mode === 'advanced' ? `(Hệ số tác động: ${tieuHanData.daiHanResonance.amplification}x)` : ''}
             </div>
             <p className="text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
               {tieuHanData.daiHanResonance.descriptionVi}
@@ -170,11 +174,15 @@ export const TuViTieuHanPanel: React.FC<{
             <Badge className={TUHOA_BADGE_CLASS['Lộc']}>{tieuHanData.luuTuHoa.hoaLoc}</Badge>
           </div>
           <div className="p-2.5 rounded-xl bg-info/5 dark:bg-info-dark/5 border border-info/20 flex items-center justify-between gap-2 min-h-[46px]">
-            <span className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">Lưu Quyền</span>
+            <span className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+              Lưu Quyền
+            </span>
             <Badge className={TUHOA_BADGE_CLASS['Quyền']}>{tieuHanData.luuTuHoa.hoaQuyen}</Badge>
           </div>
           <div className="p-2.5 rounded-xl bg-purple/5 dark:bg-purple-dark/5 border border-purple/20 flex items-center justify-between gap-2 min-h-[46px]">
-            <span className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">Lưu Khoa</span>
+            <span className="text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark">
+              Lưu Khoa
+            </span>
             <Badge className={TUHOA_BADGE_CLASS['Khoa']}>{tieuHanData.luuTuHoa.hoaKhoa}</Badge>
           </div>
           <div className="p-2.5 rounded-xl bg-bad/5 dark:bg-bad-dark/5 border border-bad/20 flex items-center justify-between gap-2 min-h-[46px]">
@@ -217,10 +225,7 @@ export const TuViTieuHanPanel: React.FC<{
         </div>
 
         {/* Carousel strip */}
-        <div
-          ref={carouselRef}
-          className="flex gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none snap-x snap-mandatory"
-        >
+        <div ref={carouselRef} className="flex gap-2 overflow-x-auto pb-2 pt-1 scrollbar-none snap-x snap-mandatory">
           {monthlyList.map((monthItem) => {
             const isSelected = monthItem.viewMonth === activeMonth;
             return (
@@ -237,9 +242,7 @@ export const TuViTieuHanPanel: React.FC<{
               >
                 <div className="flex items-center justify-between text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                   <span>Tháng {monthItem.viewMonth}</span>
-                  <span className="text-micro text-gold dark:text-gold-dark">
-                    {monthItem.monthScore}
-                  </span>
+                  <span className="text-micro text-gold dark:text-gold-dark">{monthItem.monthScore}</span>
                 </div>
                 <div className="text-micro text-text-secondary-light dark:text-text-secondary-dark mt-1 truncate">
                   Cung {monthItem.palaceName}
@@ -295,7 +298,9 @@ export const TuViTieuHanPanel: React.FC<{
             <div className="p-3 rounded-xl bg-surface-subtle-light/70 dark:bg-surface-elevated-dark/50 border border-border-light/40 dark:border-border-dark/40 space-y-1">
               <div className="flex items-center justify-between text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                 <span>Thiên Thời (Vòng Thái Tuế)</span>
-                <span className="text-gold dark:text-gold-dark">{tieuHanData.tamTai.thienThoi.level} ({tieuHanData.tamTai.thienThoi.score}/10)</span>
+                <span className="text-gold dark:text-gold-dark">
+                  {tieuHanData.tamTai.thienThoi.level} ({tieuHanData.tamTai.thienThoi.score}/10)
+                </span>
               </div>
               <p className="text-micro text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                 {tieuHanData.tamTai.thienThoi.desc}
@@ -305,7 +310,9 @@ export const TuViTieuHanPanel: React.FC<{
             <div className="p-3 rounded-xl bg-surface-subtle-light/70 dark:bg-surface-elevated-dark/50 border border-border-light/40 dark:border-border-dark/40 space-y-1">
               <div className="flex items-center justify-between text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                 <span>Địa Lợi (Nạp Âm vs Chi Cung)</span>
-                <span className="text-gold dark:text-gold-dark">{tieuHanData.tamTai.diaLoi.level} ({tieuHanData.tamTai.diaLoi.score}/10)</span>
+                <span className="text-gold dark:text-gold-dark">
+                  {tieuHanData.tamTai.diaLoi.level} ({tieuHanData.tamTai.diaLoi.score}/10)
+                </span>
               </div>
               <p className="text-micro text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                 {tieuHanData.tamTai.diaLoi.desc}
@@ -315,7 +322,9 @@ export const TuViTieuHanPanel: React.FC<{
             <div className="p-3 rounded-xl bg-surface-subtle-light/70 dark:bg-surface-elevated-dark/50 border border-border-light/40 dark:border-border-dark/40 space-y-1">
               <div className="flex items-center justify-between text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                 <span>Nhân Hòa (Cát / Sát Tinh Hội)</span>
-                <span className="text-gold dark:text-gold-dark">{tieuHanData.tamTai.nhanHoa.level} ({tieuHanData.tamTai.nhanHoa.score}/10)</span>
+                <span className="text-gold dark:text-gold-dark">
+                  {tieuHanData.tamTai.nhanHoa.level} ({tieuHanData.tamTai.nhanHoa.score}/10)
+                </span>
               </div>
               <p className="text-micro text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                 {tieuHanData.tamTai.nhanHoa.desc}
@@ -325,7 +334,9 @@ export const TuViTieuHanPanel: React.FC<{
             <div className="p-3 rounded-xl bg-surface-subtle-light/70 dark:bg-surface-elevated-dark/50 border border-border-light/40 dark:border-border-dark/40 space-y-1">
               <div className="flex items-center justify-between text-xs font-bold text-text-primary-light dark:text-text-primary-dark">
                 <span>Khí Lực (Tràng Sinh)</span>
-                <span className="text-gold dark:text-gold-dark">{tieuHanData.tamTai.khiLuc.stage} ({tieuHanData.tamTai.khiLuc.score}/10)</span>
+                <span className="text-gold dark:text-gold-dark">
+                  {tieuHanData.tamTai.khiLuc.stage} ({tieuHanData.tamTai.khiLuc.score}/10)
+                </span>
               </div>
               <p className="text-micro text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
                 {tieuHanData.tamTai.khiLuc.desc}

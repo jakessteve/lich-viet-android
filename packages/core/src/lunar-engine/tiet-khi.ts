@@ -10,30 +10,30 @@ export interface TietKhiInfo {
 }
 
 export const TIET_KHI_NAMES: { nameVi: string; nameSino: string }[] = [
-  { nameVi: 'Xuân Phân', nameSino: '春分' },   // 0°
-  { nameVi: 'Thanh Minh', nameSino: '清明' },  // 15°
-  { nameVi: 'Cốc Vũ', nameSino: '穀雨' },     // 30°
-  { nameVi: 'Lập Hạ', nameSino: '立夏' },     // 45°
-  { nameVi: 'Tiểu Mãn', nameSino: '小滿' },   // 60°
+  { nameVi: 'Xuân Phân', nameSino: '春分' }, // 0°
+  { nameVi: 'Thanh Minh', nameSino: '清明' }, // 15°
+  { nameVi: 'Cốc Vũ', nameSino: '穀雨' }, // 30°
+  { nameVi: 'Lập Hạ', nameSino: '立夏' }, // 45°
+  { nameVi: 'Tiểu Mãn', nameSino: '小滿' }, // 60°
   { nameVi: 'Mang Chủng', nameSino: '芒種' }, // 75°
-  { nameVi: 'Hạ Chí', nameSino: '夏至' },     // 90°
-  { nameVi: 'Tiểu Thử', nameSino: '小暑' },   // 105°
-  { nameVi: 'Đại Thử', nameSino: '大暑' },    // 120°
-  { nameVi: 'Lập Thu', nameSino: '立秋' },    // 135°
-  { nameVi: 'Xử Thử', nameSino: '處暑' },     // 150°
-  { nameVi: 'Bạch Lộ', nameSino: '白露' },    // 165°
-  { nameVi: 'Thu Phân', nameSino: '秋分' },   // 180°
-  { nameVi: 'Hàn Lộ', nameSino: '寒露' },     // 195°
+  { nameVi: 'Hạ Chí', nameSino: '夏至' }, // 90°
+  { nameVi: 'Tiểu Thử', nameSino: '小暑' }, // 105°
+  { nameVi: 'Đại Thử', nameSino: '大暑' }, // 120°
+  { nameVi: 'Lập Thu', nameSino: '立秋' }, // 135°
+  { nameVi: 'Xử Thử', nameSino: '處暑' }, // 150°
+  { nameVi: 'Bạch Lộ', nameSino: '白露' }, // 165°
+  { nameVi: 'Thu Phân', nameSino: '秋分' }, // 180°
+  { nameVi: 'Hàn Lộ', nameSino: '寒露' }, // 195°
   { nameVi: 'Sương Giáng', nameSino: '霜降' }, // 210°
-  { nameVi: 'Lập Đông', nameSino: '立冬' },   // 225°
+  { nameVi: 'Lập Đông', nameSino: '立冬' }, // 225°
   { nameVi: 'Tiểu Tuyết', nameSino: '小雪' }, // 240°
-  { nameVi: 'Đại Tuyết', nameSino: '大雪' },  // 255°
-  { nameVi: 'Đông Chí', nameSino: '冬至' },   // 270°
-  { nameVi: 'Tiểu Hàn', nameSino: '小寒' },   // 285°
-  { nameVi: 'Đại Hàn', nameSino: '大寒' },    // 300°
-  { nameVi: 'Lập Xuân', nameSino: '立春' },   // 315°
-  { nameVi: 'Vũ Thủy', nameSino: '雨水' },    // 330°
-  { nameVi: 'Kinh Trập', nameSino: '驚蟄' },  // 345°
+  { nameVi: 'Đại Tuyết', nameSino: '大雪' }, // 255°
+  { nameVi: 'Đông Chí', nameSino: '冬至' }, // 270°
+  { nameVi: 'Tiểu Hàn', nameSino: '小寒' }, // 285°
+  { nameVi: 'Đại Hàn', nameSino: '大寒' }, // 300°
+  { nameVi: 'Lập Xuân', nameSino: '立春' }, // 315°
+  { nameVi: 'Vũ Thủy', nameSino: '雨水' }, // 330°
+  { nameVi: 'Kinh Trập', nameSino: '驚蟄' }, // 345°
 ];
 
 export function getTietKhi(jd: number): TietKhiInfo {
@@ -49,13 +49,10 @@ export function getTietKhi(jd: number): TietKhiInfo {
   };
 }
 
-export function findTietKhiTransition(
-  year: number,
-  termIndex: number
-): { transitionJD: number; isoUtc7: string } {
+export function findTietKhiTransition(year: number, termIndex: number): { transitionJD: number; isoUtc7: string } {
   // Approximate day of year for the given solar term
   const targetLong = termIndex * 15;
-  let estJD = gregorianToJD(year, 1, 1) + (termIndex * 15.218 + 79) % 365.25;
+  let estJD = gregorianToJD(year, 1, 1) + ((termIndex * 15.218 + 79) % 365.25);
 
   // 4-iteration Newton-Raphson solver
   for (let i = 0; i < 4; i++) {

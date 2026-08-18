@@ -19,8 +19,18 @@ const DungSuView = React.lazy(() => import('../LichDungSu/DungSuView'));
 type SubTab = 'am-lich' | 'dung-su';
 
 const SUB_TABS: readonly SegmentedOption<SubTab>[] = [
-  { id: 'am-lich', label: 'Lịch Ngày', icon: <Calendar className="h-4 w-4" /> as unknown as string, shortLabel: 'Lịch Ngày' },
-  { id: 'dung-su', label: 'Dụng Sự Ngày', icon: <CalendarCheck className="h-4 w-4" /> as unknown as string, shortLabel: 'Dụng Sự' },
+  {
+    id: 'am-lich',
+    label: 'Lịch Ngày',
+    icon: (<Calendar className="h-4 w-4" />) as unknown as string,
+    shortLabel: 'Lịch Ngày',
+  },
+  {
+    id: 'dung-su',
+    label: 'Dụng Sự Ngày',
+    icon: (<CalendarCheck className="h-4 w-4" />) as unknown as string,
+    shortLabel: 'Dụng Sự',
+  },
 ];
 
 export default function AmLichPage() {

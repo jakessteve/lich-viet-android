@@ -36,11 +36,18 @@ export const StatsSection: React.FC = () => {
   );
 
   return (
-    <section id="stats-section" ref={statsSection.ref as unknown as React.RefObject<HTMLElement>} className="py-10 px-5 relative z-10">
+    <section
+      id="stats-section"
+      ref={statsSection.ref as unknown as React.RefObject<HTMLElement>}
+      className="py-10 px-5 relative z-10"
+    >
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {stats.map((s) => (
-            <div key={s.label} className="text-center py-6 px-4 glass-card glass-noise rounded-2xl border border-border-light/60 dark:border-border-dark/60">
+            <div
+              key={s.label}
+              className="text-center py-6 px-4 glass-card glass-noise rounded-2xl border border-border-light/60 dark:border-border-dark/60"
+            >
               {s.icon}
               <p className="text-2xl sm:text-3xl font-bold tabular-nums">
                 {s.value}

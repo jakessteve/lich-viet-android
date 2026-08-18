@@ -135,12 +135,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
 
           <div className="flex min-w-0 flex-1 justify-center px-1">
             <div className="flex items-center gap-1 whitespace-nowrap font-semibold text-sm">
-              <select
-                value={viewMonth}
-                onChange={handleMonthChange}
-                className={selectClass}
-                aria-label="Chọn tháng"
-              >
+              <select value={viewMonth} onChange={handleMonthChange} className={selectClass} aria-label="Chọn tháng">
                 {monthOptions.map((i) => (
                   <option key={i} value={i}>
                     Tháng {i + 1}
@@ -148,12 +143,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
                 ))}
               </select>
               <span className="text-gray-300 dark:text-gray-600 select-none">|</span>
-              <select
-                value={viewYear}
-                onChange={handleYearChange}
-                className={selectClass}
-                aria-label="Chọn năm"
-              >
+              <select value={viewYear} onChange={handleYearChange} className={selectClass} aria-label="Chọn năm">
                 {yearOptions.map((year) => (
                   <option key={year} value={year}>
                     {year}
@@ -203,12 +193,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
 
           <div className="flex-1 flex justify-center py-1.5">
             <div className="flex items-center gap-1 sm:gap-2 font-semibold text-sm sm:text-sm">
-              <select
-                value={viewMonth}
-                onChange={handleMonthChange}
-                className={selectClass}
-                aria-label="Chọn tháng"
-              >
+              <select value={viewMonth} onChange={handleMonthChange} className={selectClass} aria-label="Chọn tháng">
                 {monthOptions.map((i) => (
                   <option key={i} value={i}>
                     Tháng {i + 1}
@@ -216,12 +201,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
                 ))}
               </select>
               <span className="text-gray-300 dark:text-gray-600 select-none">|</span>
-              <select
-                value={viewYear}
-                onChange={handleYearChange}
-                className={selectClass}
-                aria-label="Chọn năm"
-              >
+              <select value={viewYear} onChange={handleYearChange} className={selectClass} aria-label="Chọn năm">
                 {yearOptions.map((year) => (
                   <option key={year} value={year}>
                     {year}

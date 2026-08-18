@@ -269,8 +269,7 @@ export function synthesizeVedicReading(
     ['sun', 'moon', 'mercury', 'venus', 'mars', 'jupiter', 'saturn'].includes(p.body),
   );
   let atmakaraka = mainPlanets[0];
-  const getDeg = (p?: (typeof mainPlanets)[0]) =>
-    p?.degreeInSign ?? (p ? (((p.siderealLongitude % 30) + 30) % 30) : 0);
+  const getDeg = (p?: (typeof mainPlanets)[0]) => p?.degreeInSign ?? (p ? ((p.siderealLongitude % 30) + 30) % 30 : 0);
 
   for (const p of mainPlanets) {
     if (getDeg(p) > getDeg(atmakaraka)) {

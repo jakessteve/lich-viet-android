@@ -13,7 +13,6 @@ import type {
   CombinationCategory,
 } from '../../types/tuvi';
 import combinationsData from '../../data/tuvi/combinations.json';
-import { TAM_HOP_GROUPS, DOI_CUNG_MAP, NHI_HOP_MAP } from './constants';
 import {
   evaluateResidentInteractions,
   evaluateOppositionInteractions,
@@ -88,13 +87,7 @@ import {
   getAdjacentPalaceIndices,
 } from './palaceGeometry';
 
-export {
-  normalizePalaceIndex,
-  detectTamHopPalaces,
-  detectDoiCung,
-  detectNhiHopPalace,
-  getAdjacentPalaceIndices,
-};
+export { normalizePalaceIndex, detectTamHopPalaces, detectDoiCung, detectNhiHopPalace, getAdjacentPalaceIndices };
 
 // ── Star Extraction ───────────────────────────────────────────
 
@@ -149,10 +142,7 @@ export function getStarsInTamHop(palaces: TuViPalace[], palaceIndex: number): st
  * - bán:  minor Sát Tinh present (Địa Không, Địa Kiếp, Hóa Kỵ)
  * - phá:  major Sát Tinh present (Kình Dương, Đà La, Hỏa Tinh, Linh Tinh)
  */
-export function checkCombinationPurity(
-  involvedPalaces: TuViPalace[],
-  satTinhNames?: string[],
-): CombinationPurity {
+export function checkCombinationPurity(involvedPalaces: TuViPalace[], satTinhNames?: string[]): CombinationPurity {
   const customMajor = satTinhNames ? new Set(satTinhNames.filter((n) => MAJOR_SAT_TINH.has(n))) : MAJOR_SAT_TINH;
   const customMinor = satTinhNames ? new Set(satTinhNames.filter((n) => MINOR_SAT_TINH.has(n))) : MINOR_SAT_TINH;
 

@@ -87,7 +87,10 @@ export const ElectionPage: React.FC = () => {
                 size="sm"
                 variant={!filterCatOnly ? 'default' : 'ghost'}
                 onClick={() => setFilterCatOnly(false)}
-                className={cn('text-xs h-8 px-3 rounded-lg', !filterCatOnly && 'bg-emerald-600 hover:bg-emerald-700 text-white')}
+                className={cn(
+                  'text-xs h-8 px-3 rounded-lg',
+                  !filterCatOnly && 'bg-emerald-600 hover:bg-emerald-700 text-white',
+                )}
               >
                 Tất cả ({results.length})
               </Button>

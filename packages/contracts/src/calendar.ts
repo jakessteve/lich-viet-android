@@ -1,6 +1,6 @@
 export interface DateRange {
   startDate: string; // YYYY-MM-DD
-  endDate: string;   // YYYY-MM-DD
+  endDate: string; // YYYY-MM-DD
 }
 
 export interface CalendarEventDto {
@@ -9,12 +9,14 @@ export interface CalendarEventDto {
   title: string;
   description?: string | undefined;
   solarDate: string; // YYYY-MM-DD
-  lunarDate?: {
-    day: number;
-    month: number;
-    year: number;
-    isLeap: boolean;
-  } | undefined;
+  lunarDate?:
+    | {
+        day: number;
+        month: number;
+        year: number;
+        isLeap: boolean;
+      }
+    | undefined;
   category: 'personal' | 'dam_gio' | 'holiday' | 'ritual';
   alarmOffsetsMinutes: number[];
   syncedAt?: string | undefined;

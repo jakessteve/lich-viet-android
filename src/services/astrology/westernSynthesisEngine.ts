@@ -307,4 +307,3 @@ export function synthesizeWesternNatalChart(chart: SwissNatalChartResult): Weste
 }
 
 export const synthesizeWesternReading = synthesizeWesternNatalChart;
-

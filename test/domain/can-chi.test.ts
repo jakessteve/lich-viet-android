@@ -1,11 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  getYearCanChi,
-  getMonthCanChi,
-  getDayCanChi,
-  getCanChiPillars,
-  gregorianToJD,
-} from '@lich-viet/core';
+import { getYearCanChi, getMonthCanChi, getDayCanChi, getCanChiPillars, gregorianToJD } from '@lich-viet/core';
 
 describe('Astrology Rules - Can Chi & Pillars', () => {
   it('computes year Can Chi correctly', () => {

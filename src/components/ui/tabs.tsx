@@ -12,7 +12,8 @@ const tabsListVariants = cva(
       variant: {
         default: 'surface-card',
         ghost: 'bg-transparent border-none shadow-none',
-        subtle: 'bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/45 border border-border-light/40 dark:border-border-dark/35',
+        subtle:
+          'bg-surface-subtle-light/80 dark:bg-surface-elevated-dark/45 border border-border-light/40 dark:border-border-dark/35',
       },
     },
     defaultVariants: {
@@ -23,14 +24,9 @@ const tabsListVariants = cva(
 
 const TabsList = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> &
-    VariantProps<typeof tabsListVariants>
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List> & VariantProps<typeof tabsListVariants>
 >(({ className, variant, ...props }, ref) => (
-  <TabsPrimitive.List
-    ref={ref}
-    className={cn(tabsListVariants({ variant }), className)}
-    {...props}
-  />
+  <TabsPrimitive.List ref={ref} className={cn(tabsListVariants({ variant }), className)} {...props} />
 ));
 TabsList.displayName = TabsPrimitive.List.displayName;
 
@@ -58,8 +54,7 @@ const tabsTriggerVariants = cva(
 
 const TabsTrigger = React.forwardRef<
   React.ComponentRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> &
-    VariantProps<typeof tabsTriggerVariants>
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & VariantProps<typeof tabsTriggerVariants>
 >(({ className, tone, ...props }, ref) => (
   <TabsPrimitive.Trigger
     ref={ref}

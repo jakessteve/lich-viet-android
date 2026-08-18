@@ -165,7 +165,9 @@ export const WesternSimplifiedExplanation: React.FC<WesternSimplifiedExplanation
                   </span>
                 )}
                 {mode === 'advanced' && obj.dignity && obj.dignity.type !== 'peregrine' && (
-                  <span className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium shrink-0 leading-none ${obj.dignity.badgeClass}`}>
+                  <span
+                    className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium shrink-0 leading-none ${obj.dignity.badgeClass}`}
+                  >
                     <span className="shrink-0">{obj.dignity.symbol}</span>
                     <span>{obj.dignity.labelVi}</span>
                   </span>

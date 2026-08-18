@@ -1,11 +1,4 @@
-import {
-  ExceptionFilter,
-  Catch,
-  ArgumentsHost,
-  HttpException,
-  HttpStatus,
-  Logger
-} from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 interface HttpExceptionResponseBody {
@@ -46,7 +39,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     if (status >= 500) {
       this.logger.error(
         `[${request.method}] ${request.url} - Error: ${message}`,
-        exception instanceof Error ? exception.stack : undefined
+        exception instanceof Error ? exception.stack : undefined,
       );
     }
 
@@ -56,7 +49,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
       path: request.url,
       method: request.method,
       message,
-      ...(errors ? { errors } : {})
+      ...(errors ? { errors } : {}),
     });
   }
 }

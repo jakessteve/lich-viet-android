@@ -14,7 +14,6 @@ export interface WesternChartInput {
   zodiacMode?: 'tropical' | 'draconic' | 'sidereal';
 }
 
-
 export interface VedicChartInput extends WesternChartInput {
   ayanamsa?: 'lahiri' | 'krishnamurti';
 }

@@ -145,7 +145,10 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
   return (
     <div className="w-full h-full flex flex-col">
       {!result ? (
-        <form onSubmit={handleSubmit} className="glass-card-strong glass-shimmer glass-noise p-5 flex flex-col flex-1 rounded-2xl border border-border-light/60 dark:border-border-dark/60">
+        <form
+          onSubmit={handleSubmit}
+          className="glass-card-strong glass-shimmer glass-noise p-5 flex flex-col flex-1 rounded-2xl border border-border-light/60 dark:border-border-dark/60"
+        >
           <div className="flex items-center gap-2 mb-3">
             <Sparkles className="h-4 w-4 text-gold dark:text-gold-dark" />
             <span className="label-standard text-text-secondary-light/70 dark:text-text-secondary-dark/70">
@@ -207,12 +210,7 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
                 {error}
               </p>
             )}
-            <Button
-              type="submit"
-              disabled={isAnimating}
-              variant="gold"
-              className="w-full h-11 text-sm font-bold gap-2"
-            >
+            <Button type="submit" disabled={isAnimating} variant="gold" className="w-full h-11 text-sm font-bold gap-2">
               {isAnimating ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -268,11 +266,7 @@ const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ o
 
           {/* CTA to full chart */}
           <div className="mt-auto flex flex-col gap-2">
-            <Button
-              onClick={openTuViChart}
-              variant="gold"
-              className="w-full h-11 text-sm font-bold gap-2"
-            >
+            <Button onClick={openTuViChart} variant="gold" className="w-full h-11 text-sm font-bold gap-2">
               Mở lá số Tử Vi
               <ArrowRight className="h-4 w-4" />
             </Button>

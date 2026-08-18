@@ -1,10 +1,4 @@
-import {
-  AuthGateway,
-  CalendarEventGateway,
-  DamGioGateway,
-  SyncGateway,
-  RuntimeContext,
-} from '../index.js';
+import { AuthGateway, CalendarEventGateway, DamGioGateway, SyncGateway, RuntimeContext } from '../index.js';
 import {
   AuthResult,
   LoginInput,
@@ -33,9 +27,16 @@ export class RemoteAuthGateway implements AuthGateway {
 
   async loginWithSocial(
     provider: 'google' | 'facebook' | 'apple' | 'zalo',
-    _payload: SocialTokenPayload
+    payload: SocialTokenPayload,
   ): Promise<AuthResult> {
-    return this.client.login({ email: `social-${provider}@lichviet.local` });
+    const res = await this.client.loginWithSocial({
+      provider,
+      token: payload.token || `social-token-${Date.now()}`,
+      codeVerifier: payload.codeVerifier,
+      redirectUri: payload.redirectUri,
+    });
+    this.client.setToken(res.accessToken);
+    return res;
   }
 
   async logout(): Promise<void> {
@@ -84,7 +85,9 @@ export class RemoteCalendarEventGateway implements CalendarEventGateway {
     return this.client.createCalendarEvent(event);
   }
 
-  async deleteEvent(_id: string): Promise<void> {}
+  async deleteEvent(id: string): Promise<void> {
+    return this.client.deleteCalendarEvent(id);
+  }
 }
 
 export class RemoteSyncGateway implements SyncGateway {

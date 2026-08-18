@@ -39,7 +39,7 @@ export class BirthLocationDto {
 export class CreateWesternChartDto {
   @ApiProperty({
     description: 'Birth date and time in ISO format',
-    example: '1995-10-24T14:30:00.000Z'
+    example: '1995-10-24T14:30:00.000Z',
   })
   @IsDateString()
   birthDate!: string;
@@ -53,7 +53,7 @@ export class CreateWesternChartDto {
   @ApiPropertyOptional({
     description: 'House calculation system',
     enum: ['placidus', 'koch', 'whole_sign', 'equal', 'porphyry'],
-    default: 'placidus'
+    default: 'placidus',
   })
   @IsOptional()
   @IsEnum(['placidus', 'koch', 'whole_sign', 'equal', 'porphyry'])
@@ -63,7 +63,7 @@ export class CreateWesternChartDto {
 export class CreateVedicChartDto {
   @ApiProperty({
     description: 'Birth date and time in ISO format',
-    example: '1995-10-24T14:30:00.000Z'
+    example: '1995-10-24T14:30:00.000Z',
   })
   @IsDateString()
   birthDate!: string;
@@ -77,7 +77,7 @@ export class CreateVedicChartDto {
   @ApiPropertyOptional({
     description: 'Ayanamsa mode for sidereal calculation',
     enum: ['lahiri', 'raman', 'krishnamurti', 'fagan_bradley', 'true_citra'],
-    default: 'lahiri'
+    default: 'lahiri',
   })
   @IsOptional()
   @IsString()

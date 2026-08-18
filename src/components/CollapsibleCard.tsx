@@ -44,7 +44,8 @@ const TIER_BADGE_CONFIG: Record<string, { label: string; icon: React.ReactNode; 
   free: {
     label: 'Miễn Phí',
     icon: <Lock className="h-3 w-3" />,
-    colorClass: 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark',
+    colorClass:
+      'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark',
   },
   premium: {
     label: 'Premium',
@@ -116,7 +117,9 @@ function CollapsibleCard({
         }
         className={cn(
           'card-header flex items-center justify-between w-full text-left transition-colors',
-          forceOpen ? '' : 'cursor-pointer hover:bg-surface-container-low/50 dark:hover:bg-white/5 spring-press motion-gpu',
+          forceOpen
+            ? ''
+            : 'cursor-pointer hover:bg-surface-container-low/50 dark:hover:bg-white/5 spring-press motion-gpu',
         )}
         aria-expanded={effectiveOpen}
       >

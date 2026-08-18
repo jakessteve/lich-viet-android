@@ -5,6 +5,6 @@ import { AstrologyService } from './astrology.service.js';
 @Module({
   controllers: [AstrologyController],
   providers: [AstrologyService],
-  exports: [AstrologyService]
+  exports: [AstrologyService],
 })
 export class AstrologyModule {}

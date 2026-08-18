@@ -91,7 +91,7 @@ export function createScoringMetrics(input: unknown): ScoringMetrics {
     westernScore: input.westernScore,
     vedicScore: input.vedicScore,
     isShortCircuited: input.isShortCircuited,
-    ...(input.reason !== undefined ? { reason: String(input.reason) } : {})
+    ...(input.reason !== undefined ? { reason: String(input.reason) } : {}),
   };
 }
 
@@ -113,7 +113,7 @@ export function createHybridElectionTimeline(input: unknown): HybridElectionTime
     metrics: createScoringMetrics(input.metrics),
     termName: input.termName,
     lunarDayStr: input.lunarDayStr,
-    ...(input.eventScore ? { eventScore: input.eventScore as DungSuEventScore } : {})
+    ...(input.eventScore ? { eventScore: input.eventScore as DungSuEventScore } : {}),
   };
 }
 
@@ -144,11 +144,11 @@ export function createAsyncCalculationRequest(input: unknown): AsyncCalculationR
       jd: input.userBirthData.jd,
       lat: input.userBirthData.lat,
       lng: input.userBirthData.lng,
-      alt: input.userBirthData.alt
+      alt: input.userBirthData.alt,
     },
     searchWindow: {
       startJd: input.searchWindow.startJd,
-      endJd: input.searchWindow.endJd
-    }
+      endJd: input.searchWindow.endJd,
+    },
   };
 }

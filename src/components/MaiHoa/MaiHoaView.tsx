@@ -257,10 +257,7 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
                 const { hexagram, haoDetails } = getCardData(card.key);
                 if (!hexagram) return null;
                 return (
-                  <div
-                    key={card.key}
-                    className="min-w-[72%] sm:min-w-0 h-full snap-center animate-fade-in-up"
-                  >
+                  <div key={card.key} className="min-w-[72%] sm:min-w-0 h-full snap-center animate-fade-in-up">
                     <HexagramCard
                       hexagram={hexagram}
                       label={card.label}
@@ -287,10 +284,7 @@ export default function MaiHoaView({ selectedDate }: MaiHoaViewProps): React.Rea
                   aria-expanded={haoExpanded}
                 >
                   <ChevronDown
-                    className={cn(
-                      'h-4 w-4 transition-transform duration-200',
-                      haoExpanded && 'rotate-180',
-                    )}
+                    className={cn('h-4 w-4 transition-transform duration-200', haoExpanded && 'rotate-180')}
                   />
                   {haoExpanded ? 'Ẩn chi tiết hào' : 'Chi tiết hào'}
                 </Button>

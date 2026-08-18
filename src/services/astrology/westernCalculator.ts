@@ -1,4 +1,8 @@
-import { unixMsToJulianDay, buildTopocentricObserver, computeTopocentricPlanetarySnapshot } from '@lich-viet/core-logic';
+import {
+  unixMsToJulianDay,
+  buildTopocentricObserver,
+  computeTopocentricPlanetarySnapshot,
+} from '@lich-viet/core-logic';
 import {
   computeDignity,
   detectMinorAspects,

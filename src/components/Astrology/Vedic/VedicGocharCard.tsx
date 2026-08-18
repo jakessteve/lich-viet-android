@@ -54,7 +54,8 @@ export const VedicGocharCard: React.FC<{ gochar: GocharReport }> = ({ gochar }) 
                 Cảnh Báo Vận Hạn: Shani Sade Sati ({gochar.sadeSatiPhase})
               </span>
               <p className="text-text-secondary-light dark:text-text-secondary-dark leading-relaxed">
-                Sao Thổ (Shani) đang quá cảnh gần Mặt Trăng gốc. Đây là chu kỳ 7.5 năm tôi luyện ý chí, đòi hỏi tính kỷ luật, sự kiên định và buông bỏ nóng vội để kiến tạo nền móng vững bền.
+                Sao Thổ (Shani) đang quá cảnh gần Mặt Trăng gốc. Đây là chu kỳ 7.5 năm tôi luyện ý chí, đòi hỏi tính kỷ
+                luật, sự kiên định và buông bỏ nóng vội để kiến tạo nền móng vững bền.
               </p>
               <p className="text-[11px] font-medium text-amber-700 dark:text-amber-300/90 pt-0.5">
                 💡 Khuyên giải: {gochar.remedialAdviceVi}

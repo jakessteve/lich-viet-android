@@ -86,8 +86,18 @@ export function generateZodiacalReleasingReport(
   const spiritSign = SIGN_NAMES[spiritSignIdx];
   const spiritSignVi = SIGN_NAMES_VI[spiritSignIdx];
 
-  const releasingFromSpirit = calculateZodiacalReleasing(spiritSign, birthDate, fortuneSign, maxYears) as ZodiacalPeriod[];
-  const releasingFromFortune = calculateZodiacalReleasing(fortuneSign, birthDate, fortuneSign, maxYears) as ZodiacalPeriod[];
+  const releasingFromSpirit = calculateZodiacalReleasing(
+    spiritSign,
+    birthDate,
+    fortuneSign,
+    maxYears,
+  ) as ZodiacalPeriod[];
+  const releasingFromFortune = calculateZodiacalReleasing(
+    fortuneSign,
+    birthDate,
+    fortuneSign,
+    maxYears,
+  ) as ZodiacalPeriod[];
 
   return {
     lotOfFortune: {

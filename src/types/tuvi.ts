@@ -791,4 +791,3 @@ export interface NguyetHanInterpretationResult {
   focusThemeVi: string;
   adviceVi: string;
 }
-

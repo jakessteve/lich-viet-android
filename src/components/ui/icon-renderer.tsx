@@ -95,10 +95,7 @@ const ICON_MAP: Record<string, LucideIcon> = {
   lock_open: Unlock,
 };
 
-export function renderDynamicIcon(
-  icon: React.ReactNode | string | undefined,
-  className?: string,
-): React.ReactNode {
+export function renderDynamicIcon(icon: React.ReactNode | string | undefined, className?: string): React.ReactNode {
   if (!icon) return null;
   if (typeof icon !== 'string') return icon;
 

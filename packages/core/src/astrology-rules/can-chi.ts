@@ -1,46 +1,13 @@
 import { gregorianToJD } from '../lunar-engine/julian-day.js';
 import { solarToLunar } from '../lunar-engine/converter.js';
 
-export type ThienCan =
-  | 'Giáp'
-  | 'Ất'
-  | 'Bính'
-  | 'Đinh'
-  | 'Mậu'
-  | 'Kỷ'
-  | 'Canh'
-  | 'Tân'
-  | 'Nhâm'
-  | 'Quý';
+export type ThienCan = 'Giáp' | 'Ất' | 'Bính' | 'Đinh' | 'Mậu' | 'Kỷ' | 'Canh' | 'Tân' | 'Nhâm' | 'Quý';
 
-export type DiaChi =
-  | 'Tý'
-  | 'Sửu'
-  | 'Dần'
-  | 'Mão'
-  | 'Thìn'
-  | 'Tỵ'
-  | 'Ngọ'
-  | 'Mùi'
-  | 'Thân'
-  | 'Dậu'
-  | 'Tuất'
-  | 'Hợi';
+export type DiaChi = 'Tý' | 'Sửu' | 'Dần' | 'Mão' | 'Thìn' | 'Tỵ' | 'Ngọ' | 'Mùi' | 'Thân' | 'Dậu' | 'Tuất' | 'Hợi';
 
 export type NguHanh = 'Kim' | 'Mộc' | 'Thủy' | 'Hỏa' | 'Thổ';
 
-export const THIEN_CAN_LIST: ThienCan[] = [
-  'Giáp',
-  'Ất',
-  'Bính',
-  'Đinh',
-  'Mậu',
-  'Kỷ',
-  'Canh',
-  'Tân',
-  'Nhâm',
-  'Quý',
-];
+export const THIEN_CAN_LIST: ThienCan[] = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
 
 export const DIA_CHI_LIST: DiaChi[] = [
   'Tý',
@@ -190,7 +157,7 @@ export function getCanChiPillars(
   solarMonth: number,
   solarDay: number,
   hour = 12,
-  minute = 0
+  minute = 0,
 ): CanChiPillars {
   const lunar = solarToLunar(solarYear, solarMonth, solarDay);
   const jd = gregorianToJD(solarYear, solarMonth, solarDay, hour, minute);

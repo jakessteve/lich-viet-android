@@ -42,9 +42,10 @@ export function useHeaderScroll(options: UseHeaderScrollOptions = {}) {
       if (ticking.current) return;
 
       ticking.current = true;
-      const requestAf = typeof window.requestAnimationFrame === 'function' 
-        ? window.requestAnimationFrame 
-        : (cb: FrameRequestCallback) => setTimeout(cb, 16);
+      const requestAf =
+        typeof window.requestAnimationFrame === 'function'
+          ? window.requestAnimationFrame
+          : (cb: FrameRequestCallback) => setTimeout(cb, 16);
 
       requestAf(() => {
         const currentScrollY = Math.max(0, typeof window.scrollY === 'number' ? window.scrollY : 0);

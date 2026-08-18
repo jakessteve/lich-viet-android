@@ -12,7 +12,21 @@ import { TuViMarkdownExport } from './TuViMarkdownExport';
 import { ExecutiveSnapshotCards } from '../shared/ExecutiveSnapshotCards';
 import { interpretPalace } from '@/services/tuvi/palaceInterpretation';
 import type { TuViSchool, TuViInput } from '../../types/tuvi';
-import { ArrowDown, Sparkles, ArrowUp, Network, History, Calendar, CalendarDays, Compass, ArrowLeftRight, Heart, User, AlertCircle, X } from 'lucide-react';
+import {
+  ArrowDown,
+  Sparkles,
+  ArrowUp,
+  Network,
+  History,
+  Calendar,
+  CalendarDays,
+  Compass,
+  ArrowLeftRight,
+  Heart,
+  User,
+  AlertCircle,
+  X,
+} from 'lucide-react';
 import './tuviChart.css';
 import { getDatePartsInTimeZone, VIETNAM_TIME_ZONE } from '@/services/tuvi/timeNormalization';
 
@@ -20,10 +34,10 @@ const getChiHourFromClockHour = (hour: number) => (hour === 23 ? 0 : Math.floor(
 
 const MONTH_LABELS = Array.from({ length: 12 }, (_, index) => index + 1);
 const SCHOOL_OPTIONS: readonly SegmentedOption<TuViSchool>[] = [
-  { id: 'nam-phai', label: 'Nam phái', icon: <ArrowDown className="h-4 w-4" /> as unknown as string },
-  { id: 'thien-luong', label: 'Thiên Lương', icon: <Sparkles className="h-4 w-4" /> as unknown as string },
-  { id: 'bac-phai', label: 'Bắc phái', icon: <ArrowUp className="h-4 w-4" /> as unknown as string },
-  { id: 'phi-tinh', label: 'Phi Tinh', icon: <Network className="h-4 w-4" /> as unknown as string },
+  { id: 'nam-phai', label: 'Nam phái', icon: (<ArrowDown className="h-4 w-4" />) as unknown as string },
+  { id: 'thien-luong', label: 'Thiên Lương', icon: (<Sparkles className="h-4 w-4" />) as unknown as string },
+  { id: 'bac-phai', label: 'Bắc phái', icon: (<ArrowUp className="h-4 w-4" />) as unknown as string },
+  { id: 'phi-tinh', label: 'Phi Tinh', icon: (<Network className="h-4 w-4" />) as unknown as string },
 ];
 
 const TUVI_VIEW_MODES: readonly SegmentedOption<'simple' | 'advanced'>[] = [
@@ -145,7 +159,7 @@ export const TuViPage: React.FC = () => {
             birthClockHour: clockHour,
             birthMinute: minute,
             birthHour: getChiHourFromClockHour(clockHour),
-            gender: (entry.gender === 'nữ' || entry.gender === 'female' || entry.gender === 'nu' ? 'nữ' : 'nam'),
+            gender: entry.gender === 'nữ' || entry.gender === 'female' || entry.gender === 'nu' ? 'nữ' : 'nam',
             birthLocation: {
               locationName: entry.locationName || 'Hà Nội, Việt Nam',
               lat: entry.latitude || 21.028511,

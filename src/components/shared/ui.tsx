@@ -2,7 +2,10 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button as ShadcnButton } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { IconButton as ShadcnIconButton, type IconButtonProps as ShadcnIconButtonProps } from '@/components/ui/icon-button';
+import {
+  IconButton as ShadcnIconButton,
+  type IconButtonProps as ShadcnIconButtonProps,
+} from '@/components/ui/icon-button';
 import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import { Badge, type BadgeProps } from '@/components/ui/badge';
 
@@ -231,9 +234,7 @@ export function SectionCard({ icon, title, children, className }: SectionCardPro
     <Card className={cn('p-5 sm:p-6', className)}>
       <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-border-light/40 dark:border-border-dark/40">
         {icon && (
-          <div className="text-gold dark:text-gold-dark shrink-0">
-            {renderDynamicIcon(icon, 'h-5 w-5 shrink-0')}
-          </div>
+          <div className="text-gold dark:text-gold-dark shrink-0">{renderDynamicIcon(icon, 'h-5 w-5 shrink-0')}</div>
         )}
         <h2 className="text-base font-bold tracking-tight">{title}</h2>
       </div>

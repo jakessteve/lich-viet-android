@@ -7,6 +7,7 @@
  */
 
 import { create } from 'zustand';
+import { getRuntime } from '@/gateways/bootstrap';
 import {
   getAllVaultProfiles,
   saveVaultProfile,
@@ -47,6 +48,8 @@ interface ProfileVaultState {
   activeProfile: ActiveBirthProfile;
   savedProfiles: VaultProfile[];
   isLoading: boolean;
+  isSyncing: boolean;
+  lastSyncedAt: string | null;
 
   // Actions
   setActiveProfile: (profile: Partial<ActiveBirthProfile>) => void;
@@ -54,12 +57,15 @@ interface ProfileVaultState {
   saveCurrentAsProfile: (name: string) => Promise<VaultProfile>;
   selectSavedProfile: (profile: VaultProfile) => void;
   removeSavedProfile: (id: string) => Promise<void>;
+  syncWithCloud: () => Promise<{ success: boolean; error?: string }>;
 }
 
 export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
   activeProfile: { ...DEFAULT_PROFILE },
   savedProfiles: [],
   isLoading: false,
+  isSyncing: false,
+  lastSyncedAt: null,
 
   setActiveProfile: (partial) => {
     set((state) => ({
@@ -167,6 +173,43 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
       }
     } else {
       set({ savedProfiles: profiles });
+    }
+  },
+
+  syncWithCloud: async () => {
+    set({ isSyncing: true });
+    try {
+      const runtime = getRuntime();
+      if (!runtime.sync) {
+        set({ isSyncing: false, lastSyncedAt: new Date().toISOString() });
+        return { success: true };
+      }
+
+      const profiles = await getAllVaultProfiles();
+      const mutations = profiles.map((p) => ({
+        mutationId: `mut-prof-${p.id}`,
+        entityType: 'user_note' as const,
+        entityId: p.id,
+        action: 'update' as const,
+        payload: { ...p },
+        clientUpdatedAt:
+          typeof p.updatedAt === 'number' ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
+      }));
+
+      const res = await runtime.sync.sync({
+        clientWatermark: get().lastSyncedAt || '2026-01-01T00:00:00.000Z',
+        mutations,
+      });
+
+      const nextWatermark = res.serverWatermark || new Date().toISOString();
+      set({ isSyncing: false, lastSyncedAt: nextWatermark });
+      return { success: true };
+    } catch (err: unknown) {
+      set({ isSyncing: false });
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : 'Lỗi đồng bộ đám mây',
+      };
     }
   },
 }));

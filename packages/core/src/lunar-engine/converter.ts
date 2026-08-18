@@ -1,8 +1,8 @@
 export interface LunarDate {
-  day: number;           // 1..30
-  month: number;         // 1..12
-  year: number;          // e.g. 2026
-  isLeapMonth: boolean;  // true if this month is Tháng Nhuận
+  day: number; // 1..30
+  month: number; // 1..12
+  year: number; // e.g. 2026
+  isLeapMonth: boolean; // true if this month is Tháng Nhuận
   leapMonthNumber: number; // Month number that was repeated (or 0)
   jd: number;
 }
@@ -18,14 +18,7 @@ function jdFromDate(dd: number, mm: number, yy: number): number {
   const a = INT((14 - mm) / 12);
   const y = yy + 4800 - a;
   const m = mm + 12 * a - 3;
-  let jd =
-    dd +
-    INT((153 * m + 2) / 5) +
-    365 * y +
-    INT(y / 4) -
-    INT(y / 100) +
-    INT(y / 400) -
-    32045;
+  let jd = dd + INT((153 * m + 2) / 5) + 365 * y + INT(y / 4) - INT(y / 100) + INT(y / 400) - 32045;
   if (jd < 2299161) {
     jd = dd + INT((153 * m + 2) / 5) + 365 * y + INT(y / 4) - 32083;
   }
@@ -68,7 +61,7 @@ function getNewMoonDay(k: number, timeZone = TIMEZONE_OFFSET_HOURS): number {
   C1 += 0.0104 * Math.sin(2 * dr * F) - 0.0051 * Math.sin((M + Mpr) * dr);
   C1 -= 0.0074 * Math.sin((M - Mpr) * dr) + 0.0004 * Math.sin((2 * F + M) * dr);
   C1 -= 0.0004 * Math.sin((2 * F - M) * dr) - 0.0006 * Math.sin((2 * F + Mpr) * dr);
-  C1 += 0.0010 * Math.sin((2 * F - Mpr) * dr) + 0.0005 * Math.sin((2 * Mpr + M) * dr);
+  C1 += 0.001 * Math.sin((2 * F - Mpr) * dr) + 0.0005 * Math.sin((2 * Mpr + M) * dr);
 
   let deltat: number;
   if (T < -11) {
@@ -189,7 +182,7 @@ export function lunarToSolar(
   lunarYear: number,
   lunarMonth: number,
   lunarDay: number,
-  isLeapMonth = false
+  isLeapMonth = false,
 ): { year: number; month: number; day: number } {
   // Approximate starting JD for month 11 of previous year to month 11 of following year
   const a11Prev = getLunarMonth11(lunarYear - 1, TIMEZONE_OFFSET_HOURS);
@@ -202,12 +195,7 @@ export function lunarToSolar(
     const date = jdToDate(candidateJd);
     try {
       const l = solarToLunar(date.year, date.month, date.day);
-      if (
-        l.year === lunarYear &&
-        l.month === lunarMonth &&
-        l.day === lunarDay &&
-        l.isLeapMonth === isLeapMonth
-      ) {
+      if (l.year === lunarYear && l.month === lunarMonth && l.day === lunarDay && l.isLeapMonth === isLeapMonth) {
         return date;
       }
     } catch {

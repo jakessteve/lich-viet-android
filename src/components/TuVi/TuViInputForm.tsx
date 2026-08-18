@@ -42,7 +42,11 @@ const GIO_TY_OPTIONS: { id: TuViGioTyPolicy; label: string; description: string 
 ];
 
 const LEAP_MONTH_OPTIONS: { id: TuViLeapMonthPolicy; label: string; description: string }[] = [
-  { id: 'split-15', label: 'Phân nửa (Split-15)', description: 'Nhuận trước ngày 15 tháng trước, sau ngày 15 tháng sau' },
+  {
+    id: 'split-15',
+    label: 'Phân nửa (Split-15)',
+    description: 'Nhuận trước ngày 15 tháng trước, sau ngày 15 tháng sau',
+  },
   { id: 'raw', label: 'Giữ nguyên tháng', description: 'Cả tháng nhuận tính theo tháng chính' },
 ];
 
@@ -149,11 +153,7 @@ export const TuViInputForm: React.FC = () => {
     const normalizedMinute = clampTimePart(minuteStr, 59);
     const validatedDate = new Date(y, m - 1, d, normalizedHour, normalizedMinute);
 
-    if (
-      validatedDate.getFullYear() !== y ||
-      validatedDate.getMonth() !== m - 1 ||
-      validatedDate.getDate() !== d
-    ) {
+    if (validatedDate.getFullYear() !== y || validatedDate.getMonth() !== m - 1 || validatedDate.getDate() !== d) {
       setError('Ngày không tồn tại trong tháng này.');
       return;
     }

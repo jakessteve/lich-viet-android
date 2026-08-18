@@ -14,19 +14,12 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
 
   // Ensure element balance, moon phase, and aspect patterns exist even if not attached to raw fixture
   const elementBalance =
-    result.elementBalance ??
-    (result.objects ? calculateElementModalityBalance(result.objects) : null);
+    result.elementBalance ?? (result.objects ? calculateElementModalityBalance(result.objects) : null);
 
   const moonPhase =
-    result.moonPhase ??
-    (sunObj && moonObj
-      ? calculateBirthMoonPhase(sunObj.longitude, moonObj.longitude)
-      : null);
+    result.moonPhase ?? (sunObj && moonObj ? calculateBirthMoonPhase(sunObj.longitude, moonObj.longitude) : null);
 
-  const aspectPatterns =
-    result.aspectPatterns ??
-    (result.objects ? detectAspectPatterns(result.objects) : []);
-
+  const aspectPatterns = result.aspectPatterns ?? (result.objects ? detectAspectPatterns(result.objects) : []);
 
   const houseRulers = result.houseRulers ?? [];
 
@@ -64,13 +57,19 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
   }
 
   if (mcAngle) {
-    linesBasic.push(`- **Thiên Đỉnh (Midheaven - MC)**: ${mcAngle.signVi} (${formatDegMin(mcAngle.degree, mcAngle.minute)})`);
+    linesBasic.push(
+      `- **Thiên Đỉnh (Midheaven - MC)**: ${mcAngle.signVi} (${formatDegMin(mcAngle.degree, mcAngle.minute)})`,
+    );
   }
   if (dcAngle) {
-    linesBasic.push(`- **Cung Lặn (Descendant - DC)**: ${dcAngle.signVi} (${formatDegMin(dcAngle.degree, dcAngle.minute)})`);
+    linesBasic.push(
+      `- **Cung Lặn (Descendant - DC)**: ${dcAngle.signVi} (${formatDegMin(dcAngle.degree, dcAngle.minute)})`,
+    );
   }
   if (icAngle) {
-    linesBasic.push(`- **Thiên Đáy (Imum Coeli - IC)**: ${icAngle.signVi} (${formatDegMin(icAngle.degree, icAngle.minute)})`);
+    linesBasic.push(
+      `- **Thiên Đáy (Imum Coeli - IC)**: ${icAngle.signVi} (${formatDegMin(icAngle.degree, icAngle.minute)})`,
+    );
   }
 
   // Sect & Moon Phase
@@ -84,7 +83,6 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
     );
   }
 
-
   if (result.legacyResult?.chartShape) {
     linesBasic.push(
       `- **Hình dáng biểu đồ (Chart Shape)**: ${result.legacyResult.chartShape.shape} (${result.legacyResult.chartShape.reason})`,
@@ -92,7 +90,6 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
   }
 
   parts.push(linesBasic.join('\n'));
-
 
   // 2. Objects & Planetary Dignities Table
   const linesObjects = ['## Bảng Tọa Độ & Phẩm Giá Hành Tinh'];
@@ -142,7 +139,6 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
     parts.push(linesBalance.join('\n'));
   }
 
-
   // 4. 12 Houses and Rulerships Table
   const linesHouses = ['## Cấu Trúc 12 Nhà Địa Bàn & Chủ Quản'];
   linesHouses.push('| Nhà | Cung Đỉnh Nhà | Tọa Độ Đỉnh | Chủ Tinh Quản Nhà | Vị Trí Chủ Tinh |');
@@ -151,10 +147,7 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
   for (const house of result.houses) {
     const ruler = houseRulers.find((hr) => hr.houseNumber === house.number);
     const rulerText = ruler ? `${ruler.traditionalRulerVi} ${ruler.traditionalRulerSymbol}` : '-';
-    const rulerPos =
-      ruler && ruler.rulerHouse
-        ? `Ngự tại Nhà ${ruler.rulerHouse} (${ruler.rulerSignVi ?? ''})`
-        : '-';
+    const rulerPos = ruler && ruler.rulerHouse ? `Ngự tại Nhà ${ruler.rulerHouse} (${ruler.rulerSignVi ?? ''})` : '-';
     linesHouses.push(
       `| Nhà ${house.number} | ${house.signVi} | ${formatDegMin(house.degree, house.minute)} | ${rulerText} | ${rulerPos} |`,
     );
@@ -169,7 +162,12 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
     linesAspects.push('| Thiên Thể A | Thiên Thể B | Góc Chiếu | Góc Chính Xác | Sai Số Orb | Trạng Thái |');
     linesAspects.push('|---|---|:---:|---:|---:|:---:|');
     for (const aspect of result.aspects) {
-      const stateText = aspect.state === 'applying' ? 'Áp sát (Applying)' : aspect.state === 'separating' ? 'Tách rời (Separating)' : '-';
+      const stateText =
+        aspect.state === 'applying'
+          ? 'Áp sát (Applying)'
+          : aspect.state === 'separating'
+            ? 'Tách rời (Separating)'
+            : '-';
       linesAspects.push(
         `| ${aspect.objectAName} | ${aspect.objectBName} | ${aspect.name} | ${aspect.exactAngle}° | ${aspect.orbDifference.toFixed(1)}° | ${stateText} |`,
       );
@@ -183,13 +181,19 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
     for (const pattern of aspectPatterns) {
       linesPatterns.push(`\n### ${pattern.nameVi} (${pattern.nameEn})`);
 
-      linesPatterns.push(`- **Hành tinh cấu thành**: ${pattern.planets.map((p) => `${p.nameVi} (${p.signVi})`).join(', ')}`);
+      linesPatterns.push(
+        `- **Hành tinh cấu thành**: ${pattern.planets.map((p) => `${p.nameVi} (${p.signVi})`).join(', ')}`,
+      );
       linesPatterns.push(`- **Bản chất mô hình**: ${pattern.descriptionVi}`);
       if (pattern.apexPlanet) {
-        linesPatterns.push(`- **Đỉnh tiêu điểm (Apex)**: ${pattern.apexPlanet.nameVi} tại Cung ${pattern.apexPlanet.signVi}`);
+        linesPatterns.push(
+          `- **Đỉnh tiêu điểm (Apex)**: ${pattern.apexPlanet.nameVi} tại Cung ${pattern.apexPlanet.signVi}`,
+        );
       }
       if (pattern.resolutionPoint) {
-        linesPatterns.push(`- **Điểm giải tỏa căng thẳng**: Cung đối diện ${pattern.resolutionPoint.oppositeSignVi}: ${pattern.resolutionPoint.adviceVi}`);
+        linesPatterns.push(
+          `- **Điểm giải tỏa căng thẳng**: Cung đối diện ${pattern.resolutionPoint.oppositeSignVi}: ${pattern.resolutionPoint.adviceVi}`,
+        );
       }
       if (pattern.personalizedSynthesis) {
         linesPatterns.push(`- **Thử thách cốt lõi**: ${pattern.personalizedSynthesis.coreChallengeVi}`);
@@ -222,4 +226,3 @@ export function formatWesternNatalAsMarkdown(result: SwissNatalChartResult): str
 
   return parts.join('\n\n');
 }
-

@@ -1,12 +1,6 @@
 import React from 'react';
 import { Info, Calendar, ShieldCheck, Zap } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
 interface AboutModalProps {
@@ -72,12 +66,7 @@ export default function AboutModal({ isOpen, onClose }: AboutModalProps) {
         {/* Footer */}
         <DialogFooter className="px-6 py-3.5 bg-surface-subtle-light/50 dark:bg-surface-subtle-dark/50 border-t border-border-light dark:border-border-dark flex justify-between items-center text-xs text-text-secondary-light dark:text-text-secondary-dark sm:justify-between">
           <span>© 2026 Lịch Việt App</span>
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={onClose}
-            className="px-4 font-semibold"
-          >
+          <Button variant="secondary" size="sm" onClick={onClose} className="px-4 font-semibold">
             Đóng
           </Button>
         </DialogFooter>

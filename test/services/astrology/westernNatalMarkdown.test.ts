@@ -28,4 +28,3 @@ describe('normalized Western natal Markdown', () => {
     expect(markdown).not.toContain('Requested flags');
   });
 });
-

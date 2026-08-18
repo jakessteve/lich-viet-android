@@ -4,6 +4,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../stores/appStore';
 import { useAuthStore } from '../../stores/authStore';
+import { useProfileVaultStore } from '@/stores/profileVaultStore';
 import { useTuViStore } from '@/stores/tuviStore';
 import { TuViLocationPicker } from '../TuVi/TuViLocationPicker';
 import { IconButton, Toggle, SettingRow, Select } from '../shared';
@@ -11,14 +12,37 @@ import SuccessToast from '../shared/SuccessToast';
 import type { TuViBirthLocation } from '../../types/tuvi';
 import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
 
-import { Palette, Clock, Calendar, Bell, Shield, UserCog, User, ChevronRight, Edit2, Lock, LogOut, LogIn, UserPlus } from 'lucide-react';
+import {
+  Palette,
+  Clock,
+  Calendar,
+  Bell,
+  Shield,
+  UserCog,
+  User,
+  ChevronRight,
+  Edit2,
+  Lock,
+  LogOut,
+  LogIn,
+  UserPlus,
+  RefreshCw,
+} from 'lucide-react';
 import { Card } from '@/components/ui/card';
 
 // ══════════════════════════════════════════════════════════
 // Section Card — Flat, modern, always-open
 // ══════════════════════════════════════════════════════════
 
-function SectionCard({ icon, title, children }: { icon: React.ReactNode | string; title: string; children: React.ReactNode }) {
+function SectionCard({
+  icon,
+  title,
+  children,
+}: {
+  icon: React.ReactNode | string;
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <Card className="glass-card rounded-2xl overflow-hidden border border-border-light/40 dark:border-border-dark/30">
       <div className="flex items-center gap-2.5 px-5 py-3 border-b border-border-light/20 dark:border-border-dark/15">
@@ -47,6 +71,7 @@ export default function SettingsPage() {
   const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
   const showScrollToTopButton = useAppStore((s) => s.showScrollToTopButton);
   const setShowScrollToTopButton = useAppStore((s) => s.setShowScrollToTopButton);
+  const { syncWithCloud, isSyncing, lastSyncedAt } = useProfileVaultStore();
   const { user, isAuthenticated, logout, updateProfile, changePassword } = useAuthStore(
     useShallow((s) => ({
       user: s.user,
@@ -260,11 +285,7 @@ export default function SettingsPage() {
                     : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-white/5'
                 }`}
               >
-                {typeof s.icon === 'string' ? (
-                  <span className="material-icons-round text-sm">{s.icon}</span>
-                ) : (
-                  s.icon
-                )}
+                {typeof s.icon === 'string' ? <span className="material-icons-round text-sm">{s.icon}</span> : s.icon}
                 <span>{s.label}</span>
               </button>
             ))}
@@ -560,6 +581,29 @@ export default function SettingsPage() {
                   {importMsg.text}
                 </div>
               )}
+              <SettingRow
+                icon="cloud_sync"
+                label="Đồng bộ đám mây"
+                description={
+                  lastSyncedAt
+                    ? `Đã đồng bộ lần cuối lúc ${new Date(lastSyncedAt).toLocaleTimeString('vi-VN')} (${new Date(lastSyncedAt).toLocaleDateString('vi-VN')})`
+                    : 'Đồng bộ hồ sơ và ngày giỗ gia tiên lên máy chủ'
+                }
+              >
+                <button
+                  disabled={isSyncing}
+                  onClick={async () => {
+                    const res = await syncWithCloud();
+                    if (res.success) {
+                      setShowSaveToast(true);
+                    }
+                  }}
+                  className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-50"
+                >
+                  <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
+                  {isSyncing ? 'Đang đồng bộ...' : 'Đồng bộ ngay'}
+                </button>
+              </SettingRow>
               <SettingRow icon="restart_alt" label="Khôi phục mặc định" description="Đặt lại tất cả cài đặt về ban đầu">
                 <button
                   onClick={() => {

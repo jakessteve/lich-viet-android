@@ -45,7 +45,13 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
       [400 + offset, 400 + offset],
     ];
     return (
-      <svg className="w-full h-full" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" shapeRendering="geometricPrecision">
+      <svg
+        className="w-full h-full"
+        viewBox="0 0 800 800"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        shapeRendering="geometricPrecision"
+      >
         {defs}
         <g
           style={{
@@ -100,7 +106,13 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
     // Thất Tinh Bắc Đẩu - Highly stylized Big Dipper wrapping the pole star
     // Centered and balanced so rotation is hypnotic and symmetrical relative to the box
     return (
-      <svg className="w-full h-full" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" shapeRendering="geometricPrecision">
+      <svg
+        className="w-full h-full"
+        viewBox="0 0 800 800"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        shapeRendering="geometricPrecision"
+      >
         {defs}
         {/* Ambient celestial frame */}
         <circle cx="400" cy="400" r="360" stroke={mysticGoldUrl} strokeWidth="1" strokeDasharray="3 9" opacity="0.3" />
@@ -173,7 +185,13 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
   const renderFourSymbols = () => {
     // Tứ Tượng - 4 Guardians mapping the four directions symmetrically
     return (
-      <svg className="w-full h-full" viewBox="0 0 800 800" fill="none" xmlns="http://www.w3.org/2000/svg" shapeRendering="geometricPrecision">
+      <svg
+        className="w-full h-full"
+        viewBox="0 0 800 800"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        shapeRendering="geometricPrecision"
+      >
         {defs}
         <g
           style={{
@@ -183,7 +201,6 @@ export default function MysticBackgroundPattern({ variant, className = '' }: Mys
             willChange: 'transform',
           }}
         >
-
           {/* Massive boundary rings representing Earth and Heaven */}
           <circle cx="400" cy="400" r="370" stroke={mysticGoldUrl} strokeWidth="2" opacity="0.4" />
           <circle

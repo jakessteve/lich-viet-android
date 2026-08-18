@@ -63,7 +63,10 @@ const CAN_TUHOA_DEFAULT: Record<string, Record<string, string>> = {
   Quý: { Lộc: 'Phá Quân', Quyền: 'Cự Môn', Khoa: 'Thái Âm', Kỵ: 'Tham Lang' },
 };
 
-const TRUONG_SINH_SCORES: Record<string, { level: 'thinh' | 'binh' | 'suy' | 'tich_luy'; score: number; desc: string }> = {
+const TRUONG_SINH_SCORES: Record<
+  string,
+  { level: 'thinh' | 'binh' | 'suy' | 'tich_luy'; score: number; desc: string }
+> = {
   'Trường Sinh': {
     level: 'thinh',
     score: 9.0,
@@ -223,7 +226,9 @@ function detectLuuTuHoaCollisions(
 } {
   const schoolProfile = TU_VI_SCHOOL_PROFILES[school] ?? TU_VI_SCHOOL_PROFILES['thien-luong'];
   const tuHoaTable = schoolProfile.tuHoaTable ?? CAN_TUHOA_DEFAULT;
-  const mapping = ((tuHoaTable as Record<string, Record<string, string>>)[yearCan] ?? CAN_TUHOA_DEFAULT[yearCan] ?? CAN_TUHOA_DEFAULT['Giáp']) as Record<string, string>;
+  const mapping = ((tuHoaTable as Record<string, Record<string, string>>)[yearCan] ??
+    CAN_TUHOA_DEFAULT[yearCan] ??
+    CAN_TUHOA_DEFAULT['Giáp']) as Record<string, string>;
 
   const hoaLoc = mapping['Lộc'] ?? mapping['Loc'] ?? '';
   const hoaQuyen = mapping['Quyền'] ?? mapping['Quyen'] ?? '';
@@ -403,7 +408,20 @@ function evaluateTieuHanTamTai(
   let nhanHoaDesc = 'Tự thân vận động, liên kết đồng nghiệp hài hòa.';
 
   const auspiciousCount = phuTinh.filter((s) =>
-    ['Tả Phụ', 'Hữu Bật', 'Thiên Khôi', 'Thiên Việt', 'Văn Xương', 'Văn Khúc', 'Lộc Tồn', 'Hóa Khoa', 'Hóa Lộc', 'Thiên Mã', 'Hồng Loan', 'Đào Hoa'].includes(s),
+    [
+      'Tả Phụ',
+      'Hữu Bật',
+      'Thiên Khôi',
+      'Thiên Việt',
+      'Văn Xương',
+      'Văn Khúc',
+      'Lộc Tồn',
+      'Hóa Khoa',
+      'Hóa Lộc',
+      'Thiên Mã',
+      'Hồng Loan',
+      'Đào Hoa',
+    ].includes(s),
   ).length;
 
   const satCount = satTinh.length;
@@ -413,13 +431,14 @@ function evaluateTieuHanTamTai(
   if (auspiciousCount >= 2 && satCount === 0 && majorDarkCount === 0) {
     nhanHoaScore = 9.2;
     nhanHoaLevel = 'Quý Nhân Phò Trợ';
-    nhanHoaDesc = 'Hội tụ nhiều cát tinh nâng đỡ, cấp trên trọng dụng, đồng nghiệp hết lòng hỗ trợ và dễ gặp cơ hội vàng.';
+    nhanHoaDesc =
+      'Hội tụ nhiều cát tinh nâng đỡ, cấp trên trọng dụng, đồng nghiệp hết lòng hỗ trợ và dễ gặp cơ hội vàng.';
   } else if (satCount >= 2 || majorDarkCount >= 2) {
     nhanHoaScore = 5.2;
     nhanHoaLevel = 'Tiểu Nhân Dèm Pha';
     nhanHoaDesc = 'Đề phòng thị phi, sự ganh ghét hoặc bất đồng quan điểm; nên giữ chữ tín và làm việc minh bạch.';
   } else {
-    nhanHoaScore = 7.2 + (majorBrightCount * 0.3) - (satCount * 0.4);
+    nhanHoaScore = 7.2 + majorBrightCount * 0.3 - satCount * 0.4;
     nhanHoaLevel = 'Tự Lực Cánh Sinh';
     nhanHoaDesc = 'Vừa có quý nhân tương trợ vừa có thử thách cạnh tranh; tự thân nỗ lực là yếu tố quyết định.';
   }
@@ -477,7 +496,9 @@ function synthesizeTieuHanGuidance(
   const majorNames = palace.chinhTinh.map((s) => `${s.name} (${s.brightness})`).join(', ') || 'Vô Chính Diệu';
   const hasSongLoc = collisions.some((c) => c.collisionKind === 'song_loc' || c.collisionKind === 'loc_gap_loc');
   const hasSongKy = collisions.some((c) => c.collisionKind === 'song_ky');
-  const hasLuuKyAffliction = collisions.some((c) => c.collisionKind === 'ky_xung_menh' || c.collisionKind === 'ky_xung_thai_tue');
+  const hasLuuKyAffliction = collisions.some(
+    (c) => c.collisionKind === 'ky_xung_menh' || c.collisionKind === 'ky_xung_thai_tue',
+  );
 
   // Dynamic Headline
   let themeHeadlineVi = `Tiểu Hạn năm ${yearCan} ${yearChi} (${viewYear}) nhập Cung ${palace.name} [${palace.chi}] (${viewAge} tuổi)`;

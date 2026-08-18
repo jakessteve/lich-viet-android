@@ -3,14 +3,7 @@
  * Pure TypeScript, zero I/O, deterministic.
  */
 
-export function gregorianToJD(
-  year: number,
-  month: number,
-  day: number,
-  hour = 0,
-  min = 0,
-  sec = 0
-): number {
+export function gregorianToJD(year: number, month: number, day: number, hour = 0, min = 0, sec = 0): number {
   let Y = year;
   let M = month;
   if (M <= 2) {
@@ -23,13 +16,7 @@ export function gregorianToJD(
   const B = 2 - A + Math.floor(A / 4);
 
   const dayFraction = (hour + min / 60 + sec / 3600) / 24;
-  const jd =
-    Math.floor(365.25 * (Y + 4716)) +
-    Math.floor(30.6001 * (M + 1)) +
-    day +
-    B -
-    1524.5 +
-    dayFraction;
+  const jd = Math.floor(365.25 * (Y + 4716)) + Math.floor(30.6001 * (M + 1)) + day + B - 1524.5 + dayFraction;
 
   return jd;
 }

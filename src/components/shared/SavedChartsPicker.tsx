@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, BookmarkPlus, Bookmark, Trash2 } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
@@ -218,7 +212,9 @@ export const SavedChartsPicker: React.FC<SavedChartsPickerProps> = ({
           onChange={handleSelect}
           value={selectedId}
         >
-          <option value="">-- Chọn {label} ({savedList.length}) --</option>
+          <option value="">
+            -- Chọn {label} ({savedList.length}) --
+          </option>
           {savedList.map((entry) => (
             <option key={entry.id} value={entry.id}>
               {entry.name} ({new Date(entry.birthDate).toLocaleDateString('vi-VN')}{' '}
@@ -289,13 +285,7 @@ export const SavedChartsPicker: React.FC<SavedChartsPickerProps> = ({
           )}
 
           <DialogFooter className="flex justify-end gap-2 pt-2 sm:justify-end">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowSaveModal(false)}
-              className="text-xs"
-            >
+            <Button type="button" variant="ghost" size="sm" onClick={() => setShowSaveModal(false)} className="text-xs">
               Hủy
             </Button>
             <Button

@@ -67,10 +67,7 @@ export interface DavisonChartResult {
 /**
  * Computes the Composite Chart between two natal charts.
  */
-export function calculateCompositeChart(
-  inputA: WesternChartInput,
-  inputB: WesternChartInput,
-): CompositeChartResult {
+export function calculateCompositeChart(inputA: WesternChartInput, inputB: WesternChartInput): CompositeChartResult {
   const chartA = calculateWesternChart(inputA);
   const chartB = calculateWesternChart(inputB);
 
@@ -81,7 +78,7 @@ export function calculateCompositeChart(
     const pB = chartB.planets.find((p) => p.body === pA.body);
     if (!pB) continue;
 
-    let midLon = calculateMidpoint(pA.tropicalLongitude, pB.tropicalLongitude);
+    const midLon = calculateMidpoint(pA.tropicalLongitude, pB.tropicalLongitude);
 
     compositePlanets.push({
       body: pA.body,
@@ -131,8 +128,8 @@ export function calculateCompositeChart(
   const compCusps: number[] = [];
 
   for (let i = 0; i < 12; i++) {
-    const cA = chartA.houses?.[i]?.longitude ?? (i * 30);
-    const cB = chartB.houses?.[i]?.longitude ?? (i * 30);
+    const cA = chartA.houses?.[i]?.longitude ?? i * 30;
+    const cB = chartB.houses?.[i]?.longitude ?? i * 30;
     compCusps.push(calculateMidpoint(cA, cB));
   }
 
@@ -157,10 +154,7 @@ export function calculateCompositeChart(
 /**
  * Computes the Davison Time-Space Midpoint Chart between two individuals.
  */
-export function calculateDavisonChart(
-  inputA: WesternChartInput,
-  inputB: WesternChartInput,
-): DavisonChartResult {
+export function calculateDavisonChart(inputA: WesternChartInput, inputB: WesternChartInput): DavisonChartResult {
   const dateA = inputA.birthDate instanceof Date ? inputA.birthDate : new Date(inputA.birthDate);
   const dateB = inputB.birthDate instanceof Date ? inputB.birthDate : new Date(inputB.birthDate);
 

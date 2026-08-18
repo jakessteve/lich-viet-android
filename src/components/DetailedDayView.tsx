@@ -18,8 +18,9 @@ import {
 } from '../services/personalization';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import CollapsibleCard from './CollapsibleCard';
-import { Sparkles, Smile, Frown, Meh, ArrowRight, Clock, TrendingUp } from 'lucide-react';
+import { Sparkles, Smile, Frown, Meh, ArrowRight, Clock, TrendingUp, Heart } from 'lucide-react';
 import { Badge } from './shared';
+import { DamGioModal } from './Calendar/DamGioModal';
 
 interface DetailedDayViewProps {
   date: Date;
@@ -32,6 +33,7 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
   const isPersonalized = useAppStore((s) => s.isPersonalized);
   const togglePersonalization = useAppStore((s) => s.togglePersonalization);
   const [sortByScore, setSortByScore] = useState(false);
+  const [isDamGioOpen, setIsDamGioOpen] = useState(false);
 
   const computedProfile = useMemo(() => {
     return getUserBirthProfile(user);
@@ -226,30 +228,47 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
               )}
             </div>
           </div>
-          {computedProfile?.birthYear ? (
+          <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 shrink-0 w-full sm:w-auto">
+            {computedProfile?.birthYear ? (
+              <button
+                onClick={togglePersonalization}
+                className={`flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full w-full sm:w-auto transition-[background-color,color,border-color,box-shadow] duration-200 spring-press motion-gpu ${
+                  isPersonalized
+                    ? 'bg-purple/15 text-purple dark:text-purple-dark border border-purple/30 shadow-sm'
+                    : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low'
+                }`}
+                title={isPersonalized ? 'Tắt cá nhân hoá' : 'Bật cá nhân hoá theo tuổi của bạn'}
+              >
+                <span className="indicator-pip-sm bg-purple animate-glow-breathe" aria-hidden="true" />
+                {isPersonalized ? 'Đã CNH' : 'Chưa CNH'}
+              </button>
+            ) : (
+              <span
+                className="flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full w-full sm:w-auto bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40"
+                title="Cập nhật ngày sinh để cá nhân hoá"
+              >
+                <span className="indicator-pip-sm bg-text-secondary-light/40" aria-hidden="true" />
+                Chưa CNH
+              </span>
+            )}
             <button
-              onClick={togglePersonalization}
-              className={`flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full shrink-0 w-full sm:w-auto transition-[background-color,color,border-color,box-shadow] duration-200 spring-press motion-gpu ${
-                isPersonalized
-                  ? 'bg-purple/15 text-purple dark:text-purple-dark border border-purple/30 shadow-sm'
-                  : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40 hover:bg-surface-container-low'
-              }`}
-              title={isPersonalized ? 'Tắt cá nhân hoá' : 'Bật cá nhân hoá theo tuổi của bạn'}
+              onClick={() => setIsDamGioOpen(true)}
+              className="flex items-center justify-center gap-1 px-3 py-1.5 text-xs font-medium rounded-full bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20 transition-colors shrink-0"
+              title="Mở sổ đám giỗ gia tiên"
             >
-              <span className="indicator-pip-sm bg-purple animate-glow-breathe" aria-hidden="true" />
-              {isPersonalized ? 'Đã CNH' : 'Chưa CNH'}
+              <Heart className="w-3.5 h-3.5" />
+              <span>Sổ Giỗ</span>
             </button>
-          ) : (
-            <span
-              className="flex items-center justify-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-full shrink-0 w-full sm:w-auto bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark border border-border-light dark:border-border-dark/40"
-              title="Cập nhật ngày sinh để cá nhân hoá"
-            >
-              <span className="indicator-pip-sm bg-text-secondary-light/40" aria-hidden="true" />
-              Chưa CNH
-            </span>
-          )}
+          </div>
         </div>
       </div>
+
+      <DamGioModal
+        isOpen={isDamGioOpen}
+        onClose={() => setIsDamGioOpen(false)}
+        currentLunarDay={data.lunarDate?.day}
+        currentLunarMonth={data.lunarDate?.month}
+      />
 
       {/* Personal Score Card */}
       {isPersonalized && personalScore && (
@@ -291,27 +310,13 @@ const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
                 {personalScore.description}
               </div>
               <div className="flex flex-wrap gap-1.5 mt-2">
-                {personalScore.isTamHop && (
-                  <Badge variant="purple">Tam Hợp</Badge>
-                )}
-                {personalScore.isLucHop && (
-                  <Badge variant="purple">Lục Hợp</Badge>
-                )}
-                {personalScore.isThaiTue && (
-                  <Badge variant="gold">Trị Thái Tuế</Badge>
-                )}
-                {personalScore.isTuongXung && (
-                  <Badge variant="orange">Lục Xung</Badge>
-                )}
-                {personalScore.isTuongHai && (
-                  <Badge variant="orange">Lục Hại</Badge>
-                )}
-                {personalScore.isTuongHinh && (
-                  <Badge variant="bad">Tương Hình</Badge>
-                )}
-                {personalScore.isTuongPha && (
-                  <Badge variant="bad">Tương Phá</Badge>
-                )}
+                {personalScore.isTamHop && <Badge variant="purple">Tam Hợp</Badge>}
+                {personalScore.isLucHop && <Badge variant="purple">Lục Hợp</Badge>}
+                {personalScore.isThaiTue && <Badge variant="gold">Trị Thái Tuế</Badge>}
+                {personalScore.isTuongXung && <Badge variant="orange">Lục Xung</Badge>}
+                {personalScore.isTuongHai && <Badge variant="orange">Lục Hại</Badge>}
+                {personalScore.isTuongHinh && <Badge variant="bad">Tương Hình</Badge>}
+                {personalScore.isTuongPha && <Badge variant="bad">Tương Phá</Badge>}
               </div>
             </div>
           </div>

@@ -39,8 +39,7 @@ const CosmicWeatherCard: React.FC<CosmicWeatherCardProps> = ({ navigate, today }
   const toneLabel =
     forecast.tone === 'optimistic' ? 'Thuận lợi' : forecast.tone === 'cautious' ? 'Bình thường' : 'Cần lưu ý';
 
-  const ToneIcon =
-    forecast.tone === 'optimistic' ? TrendingUp : forecast.tone === 'cautious' ? Minus : TrendingDown;
+  const ToneIcon = forecast.tone === 'optimistic' ? TrendingUp : forecast.tone === 'cautious' ? Minus : TrendingDown;
 
   return (
     <button

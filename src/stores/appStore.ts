@@ -25,11 +25,7 @@ export const FONT_SIZE_CYCLE: Readonly<Record<FontSizeLevel, FontSizeLevel>> = O
 export const MIN_SUPPORTED_YEAR = 1900;
 export const MAX_SUPPORTED_YEAR = 2199;
 
-export type ThemeTransitionOrigin =
-  | React.MouseEvent
-  | MouseEvent
-  | { clientX?: number; clientY?: number }
-  | undefined;
+export type ThemeTransitionOrigin = React.MouseEvent | MouseEvent | { clientX?: number; clientY?: number } | undefined;
 
 // ══════════════════════════════════════════════════════════
 // Safe Storage Abstraction (Handles QuotaExceeded / SecurityError)
@@ -136,8 +132,7 @@ export function executeThemeTransition(apply: () => void, origin?: ThemeTransiti
   }
 
   const prefersReducedMotion =
-    typeof window !== 'undefined' &&
-    window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
   const doc = document as unknown as TransitionViewDoc;
 
@@ -166,9 +161,7 @@ export function executeThemeTransition(apply: () => void, origin?: ThemeTransiti
         }
       }
     } else {
-      const toggleBtn =
-        document.getElementById('tour-theme-toggle') ??
-        document.getElementById('toggle-dark-mode');
+      const toggleBtn = document.getElementById('tour-theme-toggle') ?? document.getElementById('toggle-dark-mode');
       if (toggleBtn) {
         const rect = toggleBtn.getBoundingClientRect();
         if (rect.width > 0 && rect.height > 0) {
@@ -178,10 +171,7 @@ export function executeThemeTransition(apply: () => void, origin?: ThemeTransiti
       }
     }
 
-    const endRadius = Math.hypot(
-      Math.max(x, window.innerWidth - x),
-      Math.max(y, window.innerHeight - y)
-    );
+    const endRadius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y));
 
     document.documentElement.style.setProperty('--theme-x', `${x}px`);
     document.documentElement.style.setProperty('--theme-y', `${y}px`);
@@ -196,16 +186,13 @@ export function executeThemeTransition(apply: () => void, origin?: ThemeTransiti
         .then(() => {
           document.documentElement.animate(
             {
-              clipPath: [
-                `circle(0px at ${x}px ${y}px)`,
-                `circle(${endRadius}px at ${x}px ${y}px)`,
-              ],
+              clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${endRadius}px at ${x}px ${y}px)`],
             },
             {
               duration: 150,
               easing: 'cubic-bezier(0.2, 0, 0, 1)',
               pseudoElement: '::view-transition-new(root)',
-            }
+            },
           );
         })
         .catch(() => {

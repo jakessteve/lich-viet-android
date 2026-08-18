@@ -7,7 +7,7 @@
  */
 
 import { getCanChiYear } from '../../utils/calendarEngine';
-import type { Chi, Can } from '../../types/calendar';
+import type { Chi } from '../../types/calendar';
 import { CAN_LIST, CHI_LIST } from '../../utils/constants';
 import { resolvePersonalBirthMoment, type PersonalBirthDetails } from './birthMath';
 

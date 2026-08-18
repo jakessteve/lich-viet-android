@@ -16,10 +16,7 @@ import {
 
 export interface AuthGateway {
   login(input: LoginInput): Promise<AuthResult>;
-  loginWithSocial(
-    provider: 'google' | 'facebook' | 'apple' | 'zalo',
-    payload: SocialTokenPayload
-  ): Promise<AuthResult>;
+  loginWithSocial(provider: 'google' | 'facebook' | 'apple' | 'zalo', payload: SocialTokenPayload): Promise<AuthResult>;
   logout(): Promise<void>;
   register(input: RegisterInput): Promise<AuthResult>;
   getProfile(): Promise<UserProfile>;

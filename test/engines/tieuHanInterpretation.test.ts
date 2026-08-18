@@ -1,10 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { generateChart } from '@/services/tuvi';
-import {
-  interpretTieuHan,
-  interpretNguyetHan,
-  getYearCanChi,
-} from '@/services/tuvi/tieuHanInterpretation';
+import { interpretTieuHan, interpretNguyetHan, getYearCanChi } from '@/services/tuvi/tieuHanInterpretation';
 import { formatTieuHanAsMarkdown, formatHanContextAsMarkdown } from '@/services/tuvi/markdownFormatter';
 import type { TuViInput } from '@/types/tuvi';
 
@@ -150,7 +146,7 @@ describe('Tử Vi Tiểu Hạn & Nguyệt Hạn Dynamic Interpretation Engine', 
       const jaccardSimilarity = intersection.size / union.size;
 
       // Jaccard similarity must be under 0.60 (showing high customized variance)
-      expect(jaccardSimilarity).toBeLessThan(0.60);
+      expect(jaccardSimilarity).toBeLessThan(0.6);
     });
   });
 });

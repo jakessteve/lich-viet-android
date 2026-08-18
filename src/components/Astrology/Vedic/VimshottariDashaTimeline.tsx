@@ -109,8 +109,8 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
             <div className="space-y-2 pt-2 border-t border-purple-500/20">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-bold text-text-primary-light dark:text-text-primary-dark flex items-center gap-1.5">
-                  <span className="material-icons-round text-sm text-purple-600 dark:text-purple-400">tune</span>
-                  9 Phân Kỳ Tiểu Vận (Antardasha / Bhukti)
+                  <span className="material-icons-round text-sm text-purple-600 dark:text-purple-400">tune</span>9 Phân
+                  Kỳ Tiểu Vận (Antardasha / Bhukti)
                 </span>
                 <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">
                   Tiến trình chi tiết
@@ -139,7 +139,9 @@ export const VimshottariDashaTimeline: React.FC<{ dasha: VimshottariDashaResult 
                       )}
                     </div>
                     <div className="text-[11px] text-text-secondary-light dark:text-text-secondary-dark flex items-center justify-between">
-                      <span>{sub.startYear} – {sub.endYear}</span>
+                      <span>
+                        {sub.startYear} – {sub.endYear}
+                      </span>
                       <span>({sub.durationMonths} thg)</span>
                     </div>
                     <p className="text-[10px] text-text-secondary-light dark:text-text-secondary-dark leading-tight pt-0.5">

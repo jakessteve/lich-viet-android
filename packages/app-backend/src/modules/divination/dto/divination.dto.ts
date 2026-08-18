@@ -5,7 +5,7 @@ import { Type } from 'class-transformer';
 export class CreateMaiHoaDto {
   @ApiPropertyOptional({
     description: 'Timestamp or Date ISO for time-based divination casting',
-    example: '2026-08-16T14:30:00.000Z'
+    example: '2026-08-16T14:30:00.000Z',
   })
   @IsOptional()
   @IsDateString()
@@ -13,7 +13,7 @@ export class CreateMaiHoaDto {
 
   @ApiPropertyOptional({
     description: 'First number for number-based casting (1-64)',
-    example: 8
+    example: 8,
   })
   @IsOptional()
   @Type(() => Number)
@@ -22,7 +22,7 @@ export class CreateMaiHoaDto {
 
   @ApiPropertyOptional({
     description: 'Second number for number-based casting (1-64)',
-    example: 3
+    example: 3,
   })
   @IsOptional()
   @Type(() => Number)
@@ -31,7 +31,7 @@ export class CreateMaiHoaDto {
 
   @ApiPropertyOptional({
     description: 'Third number or hour branch for changing line calculation',
-    example: 5
+    example: 5,
   })
   @IsOptional()
   @Type(() => Number)
@@ -40,7 +40,7 @@ export class CreateMaiHoaDto {
 
   @ApiPropertyOptional({
     description: 'Divination question or intent description',
-    example: 'Khai trương cửa hàng ngày mai có thuận lợi không?'
+    example: 'Khai trương cửa hàng ngày mai có thuận lợi không?',
   })
   @IsOptional()
   @IsString()
@@ -50,7 +50,7 @@ export class CreateMaiHoaDto {
 export class CreateTamThucDto {
   @ApiProperty({
     description: 'Date and time in ISO format for Tam Thức synthesis (QMDJ + Thái Ất + Lục Nhâm)',
-    example: '2026-08-16T14:30:00.000Z'
+    example: '2026-08-16T14:30:00.000Z',
   })
   @IsDateString()
   date!: string;
@@ -58,7 +58,7 @@ export class CreateTamThucDto {
   @ApiPropertyOptional({
     description: 'Timezone offset (default: 7.0)',
     example: 7.0,
-    default: 7.0
+    default: 7.0,
   })
   @IsOptional()
   @Type(() => Number)

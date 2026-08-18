@@ -1,9 +1,4 @@
-import {
-  AuthGateway,
-  CalendarEventGateway,
-  DamGioGateway,
-  RuntimeContext,
-} from '../index.js';
+import { AuthGateway, CalendarEventGateway, DamGioGateway, RuntimeContext } from '../index.js';
 import {
   AuthResult,
   LoginInput,
@@ -32,7 +27,7 @@ export class DemoAuthGateway implements AuthGateway {
 
   async loginWithSocial(
     provider: 'google' | 'facebook' | 'apple' | 'zalo',
-    _payload: SocialTokenPayload
+    _payload: SocialTokenPayload,
   ): Promise<AuthResult> {
     return {
       accessToken: `demo-${provider}-access-token`,

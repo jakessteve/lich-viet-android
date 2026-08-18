@@ -8,13 +8,16 @@ import LoadingState from '../../shared/LoadingState';
 import { WesternChartView } from './WesternChartView';
 import { Compass, User, Sunrise } from 'lucide-react';
 
-const ForecastView = React.lazy(() =>
-  import('./ForecastView').then((m) => ({ default: m.ForecastView })),
-);
+const ForecastView = React.lazy(() => import('./ForecastView').then((m) => ({ default: m.ForecastView })));
 
 const PAGE_TABS = [
-  { id: 'la-so', label: 'Lá Số Gốc', icon: <User className="h-4 w-4" /> as unknown as string, shortLabel: 'Lá Số' },
-  { id: 'van-han', label: 'Vận Hạn', icon: <Sunrise className="h-4 w-4" /> as unknown as string, shortLabel: 'Vận Hạn' },
+  { id: 'la-so', label: 'Lá Số Gốc', icon: (<User className="h-4 w-4" />) as unknown as string, shortLabel: 'Lá Số' },
+  {
+    id: 'van-han',
+    label: 'Vận Hạn',
+    icon: (<Sunrise className="h-4 w-4" />) as unknown as string,
+    shortLabel: 'Vận Hạn',
+  },
 ] as const;
 
 type PageTab = (typeof PAGE_TABS)[number]['id'];

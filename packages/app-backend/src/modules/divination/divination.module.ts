@@ -5,6 +5,6 @@ import { DivinationService } from './divination.service.js';
 @Module({
   controllers: [DivinationController],
   providers: [DivinationService],
-  exports: [DivinationService]
+  exports: [DivinationService],
 })
 export class DivinationModule {}

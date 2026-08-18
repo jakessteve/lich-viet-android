@@ -5,7 +5,7 @@ import { createApp } from '../../packages/app-backend/src/main.js';
 import {
   createCalendarDayDetail,
   createTuViChartReadiness,
-  ElectionService
+  ElectionService,
 } from '../../packages/app-backend/src/index.js';
 
 interface StreamEventItem {
@@ -33,7 +33,7 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
     it('GET /v1/calendar/day returns accurate solar/lunar calendar data', async () => {
       const response = await app.inject({
         method: 'GET',
-        url: '/v1/calendar/day?date=2026-08-16&timezone=7'
+        url: '/v1/calendar/day?date=2026-08-16&timezone=7',
       });
 
       expect(response.statusCode).toBe(200);
@@ -47,7 +47,7 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
       // Golden comparison against pure engine
       const golden = createCalendarDayDetail({
         date: new Date('2026-08-16'),
-        location: { timezone: 7 }
+        location: { timezone: 7 },
       });
       expect(data.canChi.year.can).toBe(golden.canChi.year.can);
       expect(data.canChi.year.chi).toBe(golden.canChi.year.chi);
@@ -56,7 +56,7 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
     it('GET /v1/calendar/dung-su/catalog returns full event catalog', async () => {
       const response = await app.inject({
         method: 'GET',
-        url: '/v1/calendar/dung-su/catalog'
+        url: '/v1/calendar/dung-su/catalog',
       });
 
       expect(response.statusCode).toBe(200);
@@ -71,8 +71,8 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
         url: '/v1/calendar/dung-su/score',
         payload: {
           date: '2026-08-16',
-          profileId: 'ds_kai_shi'
-        }
+          profileId: 'ds_kai_shi',
+        },
       });
 
       expect(response.statusCode).toBe(200);
@@ -92,13 +92,13 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
         latitude: 21.0285,
         longitude: 105.8542,
         timezone: 7.0,
-        school: 'nam_phai' as const
+        school: 'nam_phai' as const,
       };
 
       const response = await app.inject({
         method: 'POST',
         url: '/v1/tu-vi/chart',
-        payload
+        payload,
       });
 
       expect(response.statusCode).toBe(200);
@@ -117,9 +117,9 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
           latitude: payload.latitude,
           longitude: payload.longitude,
           timezone: payload.timezone,
-          gender: payload.gender
+          gender: payload.gender,
         },
-        school: payload.school
+        school: payload.school,
       });
       expect(data.chart.menhPalaceIndex).toBe(golden.chart.menhPalaceIndex);
       expect(data.chart.thanPalaceIndex).toBe(golden.chart.thanPalaceIndex);
@@ -135,15 +135,15 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
           latitude: 21.0285,
           longitude: 105.8542,
           altitudeMeters: 19,
-          timezone: 7.0
+          timezone: 7.0,
         },
-        houseSystem: 'placidus' as const
+        houseSystem: 'placidus' as const,
       };
 
       const response = await app.inject({
         method: 'POST',
         url: '/v1/astrology/western',
-        payload
+        payload,
       });
 
       expect(response.statusCode).toBe(200);
@@ -161,15 +161,15 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
           latitude: 21.0285,
           longitude: 105.8542,
           altitudeMeters: 19,
-          timezone: 7.0
+          timezone: 7.0,
         },
-        ayanamsa: 'lahiri'
+        ayanamsa: 'lahiri',
       };
 
       const response = await app.inject({
         method: 'POST',
         url: '/v1/astrology/vedic',
-        payload
+        payload,
       });
 
       expect(response.statusCode).toBe(200);
@@ -184,18 +184,18 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
       const payload = {
         person1: {
           birthDate: '1990-05-15T08:30:00.000Z',
-          birthLocation: { latitude: 21.0285, longitude: 105.8542, timezone: 7.0 }
+          birthLocation: { latitude: 21.0285, longitude: 105.8542, timezone: 7.0 },
         },
         person2: {
           birthDate: '1992-08-20T10:15:00.000Z',
-          birthLocation: { latitude: 10.8231, longitude: 106.6297, timezone: 7.0 }
-        }
+          birthLocation: { latitude: 10.8231, longitude: 106.6297, timezone: 7.0 },
+        },
       };
 
       const response = await app.inject({
         method: 'POST',
         url: '/v1/astrology/synastry',
-        payload
+        payload,
       });
 
       expect(response.statusCode).toBe(200);
@@ -213,13 +213,13 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
         number1: 8,
         number2: 3,
         number3: 5,
-        query: 'Khai trương'
+        query: 'Khai trương',
       };
 
       const response = await app.inject({
         method: 'POST',
         url: '/v1/divination/mai-hoa',
-        payload
+        payload,
       });
 
       expect(response.statusCode).toBe(200);
@@ -232,13 +232,13 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
     it('POST /v1/divination/tam-thuc synthesizes QMDJ, Thái Ất, và Lục Nhâm', async () => {
       const payload = {
         date: '2026-08-16T14:30:00.000Z',
-        timezone: 7.0
+        timezone: 7.0,
       };
 
       const response = await app.inject({
         method: 'POST',
         url: '/v1/divination/tam-thuc',
-        payload
+        payload,
       });
 
       expect(response.statusCode).toBe(200);
@@ -260,23 +260,23 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
             jd: 2460826.5,
             lat: 10.8231,
             lng: 106.6297,
-            alt: 19
+            alt: 19,
           },
           searchWindow: {
             startJd: 2460826.5,
-            endJd: 2460827.5
-          }
+            endJd: 2460827.5,
+          },
         },
         options: {
           chunkHours: 24,
-          strictMode: true
-        }
+          strictMode: true,
+        },
       };
 
       const response = await app.inject({
         method: 'POST',
         url: '/v1/election/scan',
-        payload
+        payload,
       });
 
       expect(response.statusCode).toBe(200);
@@ -297,17 +297,17 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
             jd: 2460826.5,
             lat: 10.8231,
             lng: 106.6297,
-            alt: 19
+            alt: 19,
           },
           searchWindow: {
             startJd: 2460826.5,
-            endJd: 2460827.5
-          }
+            endJd: 2460827.5,
+          },
         },
         options: {
           chunkHours: 24,
-          strictMode: true
-        }
+          strictMode: true,
+        },
       };
 
       const events: StreamEventItem[] = [];
@@ -315,7 +315,7 @@ describe('NestJS Fastify Metaphysical Backend Server', () => {
         electionService.streamScan(payload).subscribe({
           next: (event) => events.push(event.data as StreamEventItem),
           complete: () => resolve(),
-          error: (err) => reject(err)
+          error: (err) => reject(err),
         });
       });
 

@@ -212,7 +212,11 @@ export function calculateMonthlyTransits(input: WesternChartInput, targetYear: n
             const orb = Math.abs(shortest - aspRule.angle);
             const isHarmonious =
               aspRule.isHarmonious &&
-              !(aspKey === 'conjunction' && ['saturn', 'mars', 'pluto'].includes(transit.body) && ['moon', 'sun'].includes(natalPlanet.body));
+              !(
+                aspKey === 'conjunction' &&
+                ['saturn', 'mars', 'pluto'].includes(transit.body) &&
+                ['moon', 'sun'].includes(natalPlanet.body)
+              );
 
             const intensity: 'high' | 'medium' | 'low' = orb < 1.5 ? 'high' : orb < 3.5 ? 'medium' : 'low';
             const aspectType = aspKey as TransitAspectDetail['aspectType'];
@@ -319,8 +323,7 @@ export function calculateMonthlyTransits(input: WesternChartInput, targetYear: n
   }
 
   // Calculate year metrics
-  const avgScore =
-    Math.round((months.reduce((sum, m) => sum + m.score, 0) / months.length) * 10) / 10;
+  const avgScore = Math.round((months.reduce((sum, m) => sum + m.score, 0) / months.length) * 10) / 10;
 
   let overallLuckTier: MonthlyTransitTimeline['overallLuckTier'] = 'Bình Hòa';
   if (avgScore >= 8.5) overallLuckTier = 'Đại Cát';

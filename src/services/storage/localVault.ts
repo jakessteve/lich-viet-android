@@ -79,9 +79,7 @@ export async function saveVaultProfile(
 ): Promise<VaultProfile> {
   const now = Date.now();
   const rawCoords = profile.birthplace;
-  const safeCoords = rawCoords
-    ? sanitizeCoordinates(rawCoords.lat, rawCoords.lng)
-    : { lat: 21.0285, lng: 105.8542 };
+  const safeCoords = rawCoords ? sanitizeCoordinates(rawCoords.lat, rawCoords.lng) : { lat: 21.0285, lng: 105.8542 };
 
   const sanitizedBirthplace = rawCoords
     ? {

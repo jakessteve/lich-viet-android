@@ -13,12 +13,7 @@ export function getNewMoonJD(k: number): number {
   const T4 = T3 * T;
 
   // Approximate time of New Moon (JDE)
-  const jde =
-    2451549.59289 +
-    29.530588853 * k +
-    0.0001337 * T2 -
-    0.00000015 * T3 +
-    0.00000000073 * T4;
+  const jde = 2451549.59289 + 29.530588853 * k + 0.0001337 * T2 - 0.00000015 * T3 + 0.00000000073 * T4;
 
   // Sun's mean anomaly
   const M = 2.5534 + 29.10535669 * k - 0.0000218 * T2 - 0.00000011 * T3;

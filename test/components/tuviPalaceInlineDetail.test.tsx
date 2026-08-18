@@ -30,12 +30,7 @@ describe('TuViPalaceInlineDetail (Hybrid Adaptive Display)', () => {
 
   it('renders focused narrative summary in simple mode', () => {
     render(
-      <TuViPalaceInlineDetail
-        interpretation={mockInterpretation}
-        onClose={() => {}}
-        isZoomed={false}
-        mode="simple"
-      />,
+      <TuViPalaceInlineDetail interpretation={mockInterpretation} onClose={() => {}} isZoomed={false} mode="simple" />,
     );
 
     expect(screen.getByText(/Tổng Quan & Khí Chất Cung Vị/i)).toBeDefined();

@@ -11,18 +11,78 @@ export interface DungSuResult {
 }
 
 export const TRUC_12_LIST = [
-  { name: 'Kiến', meaning: 'Khởi đầu, xuất hành, giá thú', good: ['Xuất hành', 'Cầu tài', 'Ký kết'], bad: ['Động thổ', 'An táng'] },
-  { name: 'Trừ', meaning: 'Tẩy uế, giải trừ, chữa bệnh', good: ['Chữa bệnh', 'Tắm gội', 'Dọn dẹp'], bad: ['Cưới hỏi', 'Khai trương'] },
-  { name: 'Mãn', meaning: 'Đầy đủ, cầu phúc, nhập trạch', good: ['Cầu tài', 'Khai trương', 'Nhập trạch'], bad: ['Chữa bệnh', 'Cho vay'] },
-  { name: 'Bình', meaning: 'Bình ổn, tu bổ, san nền', good: ['Sửa chữa', 'San nền', 'Giao dịch'], bad: ['Đi thuyền', 'Tranh chấp'] },
-  { name: 'Định', meaning: 'Đính ước, cầu an, gieo trồng', good: ['Đính hôn', 'Ký hợp đồng', 'Trồng trọt'], bad: ['Kiện tụng', 'Xuất hành xa'] },
-  { name: 'Chấp', meaning: 'Bắt giữ, xây đắp, củng cố', good: ['Xây đắp', 'Thu nợ', 'Gia cố'], bad: ['Di chuyển', 'Khai trương'] },
-  { name: 'Phá', meaning: 'Phá bỏ, dỡ nhà, giải tỏa', good: ['Dỡ nhà', 'Phá vỡ chướng ngại', 'Chữa bệnh'], bad: ['Cưới hỏi', 'Khai trương', 'Ký kết'] },
-  { name: 'Nguy', meaning: 'Nguy nan, cẩn trọng hành sự', good: ['Cúng tế', 'Cầu an', 'Thiền định'], bad: ['Đi lại nguy hiểm', 'Leo núi', 'Đầu tư lớn'] },
-  { name: 'Thành', meaning: 'Thành tựu, hôn lễ, khai trương', good: ['Khai trương', 'Cưới hỏi', 'Nhập học', 'Ký hợp đồng'], bad: ['Kiện tụng', 'Tranh chấp'] },
-  { name: 'Thâu', meaning: 'Thu gom, thu hoạch, cất giữ', good: ['Thu hoạch', 'Cất trữ', 'Gom vốn'], bad: ['Tang lễ', 'Xuất kho'] },
-  { name: 'Khai', meaning: 'Mở cửa, khởi công, giao thương', good: ['Khai trương', 'Động thổ', 'Xuất hành', 'Ký hợp đồng'], bad: ['An táng', 'Phá dỡ'] },
-  { name: 'Bế', meaning: 'Đóng kín, bồi đắp, phòng thủ', good: ['Xây đập', 'Phòng thủ', 'Đắp đê'], bad: ['Khai trương', 'Cưới hỏi', 'Khởi công'] },
+  {
+    name: 'Kiến',
+    meaning: 'Khởi đầu, xuất hành, giá thú',
+    good: ['Xuất hành', 'Cầu tài', 'Ký kết'],
+    bad: ['Động thổ', 'An táng'],
+  },
+  {
+    name: 'Trừ',
+    meaning: 'Tẩy uế, giải trừ, chữa bệnh',
+    good: ['Chữa bệnh', 'Tắm gội', 'Dọn dẹp'],
+    bad: ['Cưới hỏi', 'Khai trương'],
+  },
+  {
+    name: 'Mãn',
+    meaning: 'Đầy đủ, cầu phúc, nhập trạch',
+    good: ['Cầu tài', 'Khai trương', 'Nhập trạch'],
+    bad: ['Chữa bệnh', 'Cho vay'],
+  },
+  {
+    name: 'Bình',
+    meaning: 'Bình ổn, tu bổ, san nền',
+    good: ['Sửa chữa', 'San nền', 'Giao dịch'],
+    bad: ['Đi thuyền', 'Tranh chấp'],
+  },
+  {
+    name: 'Định',
+    meaning: 'Đính ước, cầu an, gieo trồng',
+    good: ['Đính hôn', 'Ký hợp đồng', 'Trồng trọt'],
+    bad: ['Kiện tụng', 'Xuất hành xa'],
+  },
+  {
+    name: 'Chấp',
+    meaning: 'Bắt giữ, xây đắp, củng cố',
+    good: ['Xây đắp', 'Thu nợ', 'Gia cố'],
+    bad: ['Di chuyển', 'Khai trương'],
+  },
+  {
+    name: 'Phá',
+    meaning: 'Phá bỏ, dỡ nhà, giải tỏa',
+    good: ['Dỡ nhà', 'Phá vỡ chướng ngại', 'Chữa bệnh'],
+    bad: ['Cưới hỏi', 'Khai trương', 'Ký kết'],
+  },
+  {
+    name: 'Nguy',
+    meaning: 'Nguy nan, cẩn trọng hành sự',
+    good: ['Cúng tế', 'Cầu an', 'Thiền định'],
+    bad: ['Đi lại nguy hiểm', 'Leo núi', 'Đầu tư lớn'],
+  },
+  {
+    name: 'Thành',
+    meaning: 'Thành tựu, hôn lễ, khai trương',
+    good: ['Khai trương', 'Cưới hỏi', 'Nhập học', 'Ký hợp đồng'],
+    bad: ['Kiện tụng', 'Tranh chấp'],
+  },
+  {
+    name: 'Thâu',
+    meaning: 'Thu gom, thu hoạch, cất giữ',
+    good: ['Thu hoạch', 'Cất trữ', 'Gom vốn'],
+    bad: ['Tang lễ', 'Xuất kho'],
+  },
+  {
+    name: 'Khai',
+    meaning: 'Mở cửa, khởi công, giao thương',
+    good: ['Khai trương', 'Động thổ', 'Xuất hành', 'Ký hợp đồng'],
+    bad: ['An táng', 'Phá dỡ'],
+  },
+  {
+    name: 'Bế',
+    meaning: 'Đóng kín, bồi đắp, phòng thủ',
+    good: ['Xây đập', 'Phòng thủ', 'Đắp đê'],
+    bad: ['Khai trương', 'Cưới hỏi', 'Khởi công'],
+  },
 ];
 
 export const MANSIONS_28 = [
@@ -59,7 +119,10 @@ export const MANSIONS_28 = [
 /**
  * Derives 12 Trực from lunar month and day branch.
  */
-export function getTruc(lunarMonth: number, dayChi: DiaChi): { name: string; meaning: string; good: string[]; bad: string[] } {
+export function getTruc(
+  lunarMonth: number,
+  dayChi: DiaChi,
+): { name: string; meaning: string; good: string[]; bad: string[] } {
   const monthStartChiIndex = (lunarMonth + 1) % 12;
   const dayChiIndex = DIA_CHI_LIST.indexOf(dayChi);
   const trucIndex = (dayChiIndex - monthStartChiIndex + 12) % 12;

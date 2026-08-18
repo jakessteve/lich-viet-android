@@ -287,9 +287,7 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
       break;
     }
     case 'thors_hammer': {
-      const apexDesc = apex
-        ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})`
-        : 'đỉnh búa';
+      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'đỉnh búa';
       pattern.personalizedSynthesis = {
         coreChallengeVi: `Căng thẳng từ góc vuông (90°) cộng hưởng với hai góc 135° (Sesquisquare) dội áp lực mãnh liệt lên ${apexDesc}, dễ gây cảm giác bị thôi thúc gay gắt.`,
         uniqueGiftVi: `Sức mạnh phá vỡ rào cản vô song: Cây búa của Thor ban tặng ý chí đập tan nghịch cảnh và khả năng định hình lại thực tại.`,
@@ -298,9 +296,7 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
       break;
     }
     case 'boomerang': {
-      const apexDesc = apex
-        ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})`
-        : 'đỉnh Yod';
+      const apexDesc = apex ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})` : 'đỉnh Yod';
       pattern.personalizedSynthesis = {
         coreChallengeVi: `Thế giằng co giữa đỉnh Yod ${apexDesc} và hành tinh đối đỉnh đòi hỏi sự tự điều chỉnh nhận thức liên tục để không bị rơi vào thế bế tắc.`,
         uniqueGiftVi: `Năng lực phản tỉnh siêu phàm: Hành tinh đối trọng đóng vai trò điểm giải phóng giúp năng lượng Yod quay ngược trở lại như chiếc boomerang kích hoạt tiềm năng tối thượng.`,

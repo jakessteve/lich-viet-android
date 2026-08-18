@@ -11,12 +11,7 @@ import { sanitizePlainText } from '@/utils/security';
 import { Capacitor } from '@capacitor/core';
 import { Clipboard } from '@capacitor/clipboard';
 import { Sparkles, CheckCircle2, Download, Share2, RotateCcw, Camera, Loader2 } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
 interface StoryCardExportModalProps {
@@ -264,13 +259,7 @@ export const StoryCardExportModal: React.FC<StoryCardExportModalProps> = ({
                 <Share2 className="h-4 w-4" />
                 Chia Sẻ
               </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                onClick={handleGenerateImage}
-                title="Tạo lại ảnh"
-              >
+              <Button type="button" variant="outline" size="icon" onClick={handleGenerateImage} title="Tạo lại ảnh">
                 <RotateCcw className="h-4 w-4" />
               </Button>
             </>

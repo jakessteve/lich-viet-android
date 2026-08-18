@@ -43,7 +43,7 @@ describe('LichVietApiClient', () => {
       'http://localhost:3000/v1/auth/login',
       expect.objectContaining({
         method: 'POST',
-      })
+      }),
     );
   });
 
@@ -77,7 +77,38 @@ describe('LichVietApiClient', () => {
         headers: expect.objectContaining({
           Authorization: 'Bearer auth-token-xyz',
         }),
-      })
+      }),
     );
+  });
+
+  it('calls aligned calculation routes matching NestJS backend controllers', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true }),
+    } as Response);
+
+    await client.calculateTuViChart({ birthDate: '1995-08-15' });
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/tu-vi/chart', expect.anything());
+
+    await client.calculateWesternChart({ birthDate: '1995-08-15' });
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/astrology/western', expect.anything());
+
+    await client.calculateVedicChart({ birthDate: '1995-08-15' });
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/astrology/vedic', expect.anything());
+
+    await client.calculateSynastry({ personA: {}, personB: {} });
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/astrology/synastry', expect.anything());
+
+    await client.calculateMaiHoa({ date: '2026-08-18' });
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/divination/mai-hoa', expect.anything());
+
+    await client.calculateTamThuc({ date: '2026-08-18' });
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/divination/tam-thuc', expect.anything());
+
+    await client.getDungSuCatalog();
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/calendar/dung-su/catalog', expect.anything());
+
+    await client.getDungSuScore('2026-08-18', 'general');
+    expect(fetchSpy).toHaveBeenCalledWith('http://localhost:3000/v1/calendar/dung-su/score', expect.anything());
   });
 });

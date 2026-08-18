@@ -2,7 +2,20 @@ import { Can, Chi } from '../types/calendar';
 
 // ── Canonical Can & Chi Lists ─────────────────────────────────
 export const CAN_LIST: readonly Can[] = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
-export const CHI_LIST: readonly Chi[] = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+export const CHI_LIST: readonly Chi[] = [
+  'Tý',
+  'Sửu',
+  'Dần',
+  'Mão',
+  'Thìn',
+  'Tỵ',
+  'Ngọ',
+  'Mùi',
+  'Thân',
+  'Dậu',
+  'Tuất',
+  'Hợi',
+];
 
 // ── Scoring Thresholds ────────────────────────────────────────
 /** All numeric scoring magic numbers for day and hour evaluation. */

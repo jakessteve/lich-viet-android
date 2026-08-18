@@ -113,22 +113,11 @@ export const ElectionInputForm: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1.5">
             <Label htmlFor="election-start-date">Từ ngày</Label>
-            <Input
-              id="election-start-date"
-              type="date"
-              value={startStr}
-              onChange={handleStartChange}
-            />
+            <Input id="election-start-date" type="date" value={startStr} onChange={handleStartChange} />
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="election-end-date">Đến ngày</Label>
-            <Input
-              id="election-end-date"
-              type="date"
-              value={endStr}
-              onChange={handleEndChange}
-              min={startStr}
-            />
+            <Input id="election-end-date" type="date" value={endStr} onChange={handleEndChange} min={startStr} />
           </div>
         </div>
 

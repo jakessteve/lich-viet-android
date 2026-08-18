@@ -1,41 +1,41 @@
 # Function & Engine Reference - Lich Viet v3
 
-> **Version:** 3.1.0 | **Updated:** August 2026  
-> Source of truth for engine APIs, calculation pipelines, and domain functions.
+> **Version:** 3.3.0 | **Updated:** August 2026  
+> Source of truth for engine APIs, calculation pipelines, backend controllers, and domain functions.
 
 ---
 
 ## 1. Active Surfaces & Route Catalog
 
-Lịch Việt is a browser-only SPA packaged for Android via Capacitor. All computation runs locally in client-side TypeScript.
+Lịch Việt is an offline-first SPA packaged for Android via Capacitor, with optional NestJS Fastify backend synchronization.
 
 | Surface | Route | Primary Component | Responsibility |
 | --- | --- | --- | --- |
 | Landing | `/` | `src/components/pages/LandingPage.tsx` | App intake, feature showcase, and birth data seeding |
-| Âm Lịch & Dụng Sự | `/app/am-lich` | `src/components/pages/AmLichPage.tsx` | Solar/lunar conversion, Can Chi, Tiết Khí, Hoàng Đạo/Hắc Đạo, and personal score |
+| Âm Lịch & Dụng Sự | `/app/am-lich` | `src/components/pages/AmLichPage.tsx` | Solar/lunar conversion, Can Chi, Tiết Khí, Hoàng Đạo/Hắc Đạo, Sổ Đám Giỗ trigger, and personal score |
 | Ngày Tốt (Electional) | `/app/ngay-tot` | `src/components/Election/ElectionPage.tsx` | Date range search, activity filtering, and personal chart compatibility |
 | Gieo Quẻ & Tam Thức | `/app/gieo-que` | `src/components/GieoQue/GieoQueView.tsx` | Mai Hoa Dịch Số, Kỳ Môn Độn Giáp, Thái Ất, and Đại Lục Nhâm |
 | Tử Vi Đẩu Số | `/app/tu-vi` | `src/components/TuVi/TuViPage.tsx` | 12-palace chart generation, true-solar correction, and SVG export |
 | Chiêm Tinh Tây Phương | `/app/chiem-tinh/tay-phuong` | `src/components/Astrology/Western/WesternAstrologyPage.tsx` | Western natal chart, Placidus/Whole Sign houses, aspects, wheel renderer |
 | Chiêm Tinh Ấn Độ | `/app/chiem-tinh/vedic` | `src/components/Astrology/Vedic/VedicAstrologyPage.tsx` | Vedic Rasi & D9 Navamsha charts, Nakshatras, and square chart renderers |
 | Hợp Lá Số (Synastry) | `/app/chiem-tinh/hop-la` | `src/components/Astrology/Synastry/SynastryPage.tsx` | Dual chart cross-aspect comparison and synastry analysis |
-| Cài Đặt & Profile | `/app/cai-dat` | `src/components/pages/SettingsPage.tsx` | User preferences, theme, data storage, and export management |
-| Authentication | `/app/dang-nhap`, `/app/dang-ky` | `LoginPage.tsx`, `RegisterPage.tsx` | Demo-mode local profile management |
+| Cài Đặt & Profile | `/app/cai-dat` | `src/components/pages/SettingsPage.tsx` | User preferences, theme, cloud sync trigger & status, data export |
+| Authentication | `/app/dang-nhap`, `/app/dang-ky` | `LoginPage.tsx`, `RegisterPage.tsx` | Local demo & remote backend authentication |
 | Nâng Cấp | `/app/nang-cap` | `src/components/pages/UpgradePage.tsx` | Feature tier matrix and membership status |
 
 ---
 
 ## 2. Core Calculation Engine Catalog
 
-All computational engines are pure TypeScript with zero external network dependencies:
+All computational engines are pure TypeScript and can run either in-browser or on the NestJS backend:
 
-### A. Calendar & Auspicious Timing Layer (`src/utils/`)
+### A. Calendar & Auspicious Timing Layer (`src/utils/` & `packages/core/src/calendar/`)
 - `calendarEngine.ts`: Core solar-to-lunar conversion, lunar month leap rule solvers, Can Chi calculation, and location-aware caching.
 - `activityScorer.ts`: 28-mansions (Nhị Thập Bát Tú), 12 Directing Officers (Trực), and Thập Nhị Thần scoring.
 - `dungSuEngine.ts`: Day quality classification, activity suitability filtering, and rule aggregation.
 - `dungSuSuggester.ts`: Date range scanner for optimal activity dates.
 
-### B. Divination & Metaphysical Engines (`src/utils/`)
+### B. Divination & Metaphysical Engines (`src/utils/` & `packages/core/`)
 - `maiHoaEngine.ts`: Mai Hoa Dịch Số calculation (Upper/Lower trigrams, Changing lines, Initial/Mutual/Transformed hexagrams).
 - `maiHoaInterpreter.ts`: Hexagram name mapping, elemental dynamics, and fortune interpretations.
 - `tamThucSynthesis.ts`: Unified synthesis of Tam Thức (Kỳ Môn Độn Giáp + Thái Ất + Đại Lục Nhâm).
@@ -55,40 +55,30 @@ All computational engines are pure TypeScript with zero external network depende
 
 ---
 
-## 3. Package Architecture & Facades
+## 3. Backend HTTP API Controllers (`packages/app-backend/src/modules/`)
 
-Public library abstractions under `packages/core/src/`:
-
-| Package Import | Functionality |
-| --- | --- |
-| `@lich-viet/core` | Core library facade and shared constants |
-| `@lich-viet/core/calendar` | Solar-lunar conversions and Can Chi math |
-| `@lich-viet/core/dungsu` | Activity scoring and day quality evaluation |
-| `@lich-viet/core/maihoa` | Mai Hoa hexagram casting and analysis |
-| `@lich-viet/core/tamThuc` | Unified Tam Thức divination synthesis |
-| `@lich-viet/core/qmdj` | Kỳ Môn Độn Giáp calculation engine |
-| `@lich-viet/core/thaiAt` | Thái Ất astrological forecast engine |
-| `@lich-viet/core/lucNham` | Đại Lục Nhâm divination engine |
-| `@lich-viet/types` | Unified TypeScript type definitions |
+| Controller | Base Path | Key Endpoints | Description |
+| --- | --- | --- | --- |
+| `AuthController` | `/v1/auth` | `POST /login`, `POST /register`, `POST /social` | User authentication, token issuance, credential management |
+| `UsersController` | `/v1/users` | `GET /me`, `PATCH /me` | User profile retrieval and personal settings update |
+| `DamGioController` | `/v1/dam-gio` | `GET /`, `POST /`, `GET /:id`, `PATCH /:id`, `DELETE /:id` | Ancestral death anniversaries CRUD with lunar date mapping |
+| `CalendarController` | `/v1/calendar` | `GET /day`, `GET /dung-su/catalog`, `GET /dung-su/score`, `GET /events`, `POST /events`, `DELETE /events/:id` | Calendar calculations, catalog querying, and personal events |
+| `SyncController` | `/v1/sync` | `POST /` | Delta sync protocol with watermark timestamps and mutation ACKs |
+| `TuViController` | `/v1/tu-vi` | `POST /chart` | Server-side Tử Vi chart computation and verification |
+| `AstrologyController` | `/v1/astrology` | `POST /western`, `POST /vedic`, `POST /synastry` | Western natal, Vedic Kundli, and Synastry calculations |
+| `DivinationController` | `/v1/divination` | `POST /mai-hoa`, `POST /tam-thuc` | Hexagram casting and Tam Thức board generation |
+| `ElectionController` | `/v1/election` | `POST /scan` | High-performance date range scan for auspicious activities |
 
 ---
 
-## 4. State Management Layer
+## 4. State Management & Gateway Layer
 
-| Store (`src/stores/`) | State Scope | Persistence |
-| --- | --- | --- |
-| `appStore.ts` | Selected date, viewer geolocation, theme, font preferences | `localStorage` |
-| `authStore.ts` | Local demo profile, user birthday, and session metadata | `localStorage` |
-| `tuviStore.ts` | Active Tu Vi input, calculated chart, selected palace, and Hạn timeline | Memory |
-| `electionStore.ts` | Electional search filters, target date range, selected activities | Memory |
-
----
-
-## 5. Validation & Quality Baseline
-
-| Verification Step | Command | Status |
-| --- | --- | --- |
-| Type Safety | `npm run typecheck` | **Passed (0 errors)** |
-| Engine & Unit Tests | `npm test` | **Passed (59/59 suites, 463/463 tests)** |
-| Static Analysis | `npm run lint` | **Passed (0 errors)** |
-| Production Build | `npm run build` | **Passed (Clean Vite + PWA build)** |
+| Store / Layer | Module Path | Scope | Persistence / Runtime |
+| --- | --- | --- | --- |
+| `appStore` | `src/stores/appStore.ts` | Selected date, viewer geolocation, theme, font preferences | `localStorage` |
+| `authStore` | `src/stores/authStore.ts` | Authenticated user session, profile metadata, login/register | `RuntimeContext.auth` + `localStorage` |
+| `damGioStore` | `src/stores/damGioStore.ts` | Ancestral death anniversaries, lunar reminders, CRUD operations | `RuntimeContext.damGio` + `localStorage` |
+| `profileVaultStore` | `src/stores/profileVaultStore.ts` | Vault profiles, charts, and cloud sync trigger (`syncWithCloud`) | `RuntimeContext.sync` + IndexedDB |
+| `tuviStore` | `src/stores/tuviStore.ts` | Active Tu Vi input, calculated chart, selected palace, and Hạn timeline | Memory |
+| `electionStore` | `src/stores/electionStore.ts` | Electional search filters, target date range, selected activities | Memory |
+| `RuntimeContext` | `src/gateways/bootstrap.ts` | Runtime provider switching between `createDemoRuntime` and `createRemoteRuntime` | Configurable (`VITE_APP_RUNTIME`) |

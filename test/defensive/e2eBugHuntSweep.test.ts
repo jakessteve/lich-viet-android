@@ -19,15 +19,11 @@ import {
   computeSarvashtakavarga,
 } from '@lich-viet/core-logic';
 import { synthesizeTriSystemReport } from '@/services/astrology/dialecticalSynthesis';
-import { calculateCompositeChart, calculateDavisonChart } from '@/services/astrology/relationshipCharts';
-import {
-  ensureHexagramsLoaded,
-  buildTimeBasedInput,
-  performTimeBasedDivination,
-} from '@/utils/maiHoaEngine';
+import { calculateCompositeChart } from '@/services/astrology/relationshipCharts';
+import { ensureHexagramsLoaded, buildTimeBasedInput, performTimeBasedDivination } from '@/utils/maiHoaEngine';
 import { generateQmdjChart } from '@/utils/qmdjEngine';
 import { generateLucNhamChart } from '@/utils/lucNhamEngine';
-import { getCosmicForecast, getThaiAtYearChart } from '@/utils/thaiAtEngine';
+import { getCosmicForecast } from '@/utils/thaiAtEngine';
 import { calculatePersonalDayScore } from '@/services/personalization/personalDayScore';
 
 describe('End-to-End Bug Hunt & Adversarial Stress Testing Sweep', () => {
@@ -80,8 +76,8 @@ describe('End-to-End Bug Hunt & Adversarial Stress Testing Sweep', () => {
     it('handles Year 2000 Leap Century and Year 1900 Non-Leap Century boundaries', () => {
       const dates = [
         new Date(2000, 1, 29, 12, 0, 0), // Valid leap day
-        new Date(2000, 0, 1, 0, 0, 0),   // Century boundary
-        new Date(1900, 0, 1, 0, 0, 0),   // Oldest supported baseline
+        new Date(2000, 0, 1, 0, 0, 0), // Century boundary
+        new Date(1900, 0, 1, 0, 0, 0), // Oldest supported baseline
       ];
 
       for (const d of dates) {
@@ -134,7 +130,7 @@ describe('End-to-End Bug Hunt & Adversarial Stress Testing Sweep', () => {
       { name: 'North Pole', lat: 90.0, lng: 0.0 },
       { name: 'South Pole', lat: -90.0, lng: 0.0 },
       { name: 'Svalbard High Arctic', lat: 78.2232, lng: 15.6267 },
-      { name: 'Ushuaia Sub-Antarctic', lat: -54.8019, lng: -68.3030 },
+      { name: 'Ushuaia Sub-Antarctic', lat: -54.8019, lng: -68.303 },
       { name: 'Null Island', lat: 0.0, lng: 0.0 },
       { name: 'Antimeridian East', lat: 0.0, lng: 180.0 },
       { name: 'Antimeridian West', lat: 0.0, lng: -180.0 },
@@ -168,8 +164,18 @@ describe('End-to-End Bug Hunt & Adversarial Stress Testing Sweep', () => {
   describe('3. Cross-Engine Invariant Verification', () => {
     it('ensures Vedic Shodashavarga D1..D60 produces strictly valid zodiac signs for all 360 degrees', () => {
       const validSigns = [
-        'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-        'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+        'aries',
+        'taurus',
+        'gemini',
+        'cancer',
+        'leo',
+        'virgo',
+        'libra',
+        'scorpio',
+        'sagittarius',
+        'capricorn',
+        'aquarius',
+        'pisces',
       ];
 
       // Sample every 15 degrees across the entire zodiac (24 checkpoints)
@@ -313,7 +319,7 @@ describe('End-to-End Bug Hunt & Adversarial Stress Testing Sweep', () => {
 
       for (let i = 0; i < 100; i++) {
         // Pseudo-random deterministic offsets
-        const randomTime = seedBase - (i * 86400000 * 123.456) % (50 * 365 * 86400000);
+        const randomTime = seedBase - ((i * 86400000 * 123.456) % (50 * 365 * 86400000));
         const birthDate = new Date(randomTime);
         const lat = ((i * 17.3) % 160) - 80; // [-80, +80]
         const lng = ((i * 29.7) % 360) - 180; // [-180, +180]

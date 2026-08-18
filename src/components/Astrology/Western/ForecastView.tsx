@@ -166,7 +166,8 @@ export const ForecastView: React.FC = () => {
                               : 'bg-orange/15 text-orange dark:text-orange-dark border-orange/40'
                       }`}
                     >
-                      {forecastResult.monthlyTimeline.overallLuckTier} · {forecastResult.monthlyTimeline.overallYearScore}/10
+                      {forecastResult.monthlyTimeline.overallLuckTier} ·{' '}
+                      {forecastResult.monthlyTimeline.overallYearScore}/10
                     </span>
                   </div>
                 </div>

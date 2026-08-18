@@ -1,7 +1,24 @@
-import { Controller, Get, Query, Post, Body, Inject, HttpCode, HttpStatus } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Delete,
+  Query,
+  Body,
+  Param,
+  Inject,
+  Headers,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiHeader } from '@nestjs/swagger';
 import { CalendarService } from './calendar.service.js';
-import { GetCalendarDayDto, GetDungSuDto } from './dto/calendar.dto.js';
+import {
+  GetCalendarDayDto,
+  GetDungSuDto,
+  GetCalendarEventsQueryDto,
+  CreateBackendCalendarEventDto,
+} from './dto/calendar.dto.js';
 
 @ApiTags('Calendar & Dụng Sự')
 @Controller('v1/calendar')
@@ -28,5 +45,43 @@ export class CalendarController {
   @ApiResponse({ status: 200, description: 'Dụng Sự calculation score' })
   getDungSuScore(@Body() body: GetDungSuDto) {
     return this.calendarService.getDungSuScore(body.date, body.profileId);
+  }
+
+  @Get('events')
+  @ApiOperation({ summary: 'List calendar events in date range' })
+  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
+  @ApiResponse({ status: 200, description: 'List of calendar events' })
+  getEvents(@Query() query: GetCalendarEventsQueryDto, @Headers('authorization') authHeader?: string) {
+    const userId = this.extractUserId(authHeader);
+    return this.calendarService.getEvents(userId, query.start, query.end);
+  }
+
+  @Post('events')
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create a new calendar event' })
+  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
+  @ApiResponse({ status: 201, description: 'Created calendar event' })
+  createEvent(@Body() body: CreateBackendCalendarEventDto, @Headers('authorization') authHeader?: string) {
+    const userId = this.extractUserId(authHeader);
+    return this.calendarService.createEvent(userId, body);
+  }
+
+  @Delete('events/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete a calendar event' })
+  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
+  @ApiResponse({ status: 204, description: 'Event deleted successfully' })
+  deleteEvent(@Param('id') id: string, @Headers('authorization') authHeader?: string) {
+    const userId = this.extractUserId(authHeader);
+    return this.calendarService.deleteEvent(userId, id);
+  }
+
+  private extractUserId(authHeader?: string): string {
+    if (!authHeader) return 'demo-user-001';
+    const parts = authHeader.replace(/^Bearer\s+/i, '').split('-');
+    if (parts.length >= 2 && parts[0] === 'jwt') {
+      return parts.slice(1, parts.length - 1).join('-');
+    }
+    return 'demo-user-001';
   }
 }

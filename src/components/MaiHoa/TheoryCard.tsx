@@ -108,7 +108,9 @@ function CollapsibleSection({
           className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-surface-subtle-light dark:hover:bg-surface-subtle-dark transition-colors cursor-pointer"
         >
           <span className={`material-icons-round text-lg ${accentClass}`}>{icon}</span>
-          <h4 className="text-base font-semibold text-text-primary-light dark:text-text-primary-dark flex-1">{title}</h4>
+          <h4 className="text-base font-semibold text-text-primary-light dark:text-text-primary-dark flex-1">
+            {title}
+          </h4>
           <ChevronDown
             className={`h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark transition-transform duration-200 ${
               open ? 'rotate-180' : ''

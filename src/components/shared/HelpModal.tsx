@@ -1,12 +1,6 @@
 import React from 'react';
 import { HelpCircle, Calendar, CalendarCheck, Sparkles, Dices, SlidersHorizontal } from 'lucide-react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 
 interface HelpModalProps {
@@ -92,11 +86,7 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
 
         {/* Footer */}
         <DialogFooter className="px-6 py-3.5 bg-surface-subtle-light/50 dark:bg-surface-subtle-dark/50 border-t border-border-light dark:border-border-dark flex justify-end">
-          <Button
-            variant="default"
-            onClick={onClose}
-            className="px-5 py-2 font-semibold"
-          >
+          <Button variant="default" onClick={onClose} className="px-5 py-2 font-semibold">
             Đã hiểu
           </Button>
         </DialogFooter>

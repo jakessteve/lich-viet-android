@@ -1,9 +1,6 @@
 import 'reflect-metadata';
 import { NestFactory } from '@nestjs/core';
-import {
-  FastifyAdapter,
-  NestFastifyApplication
-} from '@nestjs/platform-fastify';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import fastifyHelmet from '@fastify/helmet';
@@ -18,29 +15,25 @@ export async function createApp(): Promise<NestFastifyApplication> {
   const fastifyAdapter = new FastifyAdapter({
     logger: process.env.NODE_ENV !== 'test',
     trustProxy: true,
-    bodyLimit: 1048576 // 1MB
+    bodyLimit: 1048576, // 1MB
   });
 
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    fastifyAdapter,
-    {
-      logger: process.env.NODE_ENV === 'test' ? false : ['error', 'warn', 'log']
-    }
-  );
+  const app = await NestFactory.create<NestFastifyApplication>(AppModule, fastifyAdapter, {
+    logger: process.env.NODE_ENV === 'test' ? false : ['error', 'warn', 'log'],
+  });
 
   // Fastify security & compression plugins
   await app.register(fastifyCors, {
     origin: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   });
 
   await app.register(fastifyHelmet, {
-    contentSecurityPolicy: false // Allows Swagger UI
+    contentSecurityPolicy: false, // Allows Swagger UI
   });
 
   await app.register(fastifyCompress, {
-    encodings: ['gzip', 'deflate']
+    encodings: ['gzip', 'deflate'],
   });
 
   // Global filters, interceptors, and pipes
@@ -51,22 +44,26 @@ export async function createApp(): Promise<NestFastifyApplication> {
       transform: true,
       whitelist: true,
       forbidNonWhitelisted: false,
-      transformOptions: { enableImplicitConversion: true }
-    })
+      transformOptions: { enableImplicitConversion: true },
+    }),
   );
 
   // Swagger / OpenAPI documentation
   const config = new DocumentBuilder()
     .setTitle('Lịch Việt & OMCE Metaphysical Computation API')
     .setDescription(
-      'High-performance NestJS (Fastify) backend providing calculation endpoints for Âm Lịch, Tử Vi, Chiêm Tinh Tây Phương/Vedic, Mai Hoa, Tam Thức, and Electional Astrology.'
+      'High-performance NestJS (Fastify) backend providing calculation endpoints for Âm Lịch, Tử Vi, Chiêm Tinh Tây Phương/Vedic, Mai Hoa, Tam Thức, Electional Astrology, Auth, and Cloud Data Sync.',
     )
     .setVersion('3.1.0')
+    .addTag('Authentication')
+    .addTag('Users & Profile')
     .addTag('Calendar & Dụng Sự')
+    .addTag('Đám Giỗ (Ancestral Anniversaries)')
     .addTag('Tử Vi Đẩu Số')
     .addTag('Astrology (Western, Vedic & Synastry)')
     .addTag('Divination (Mai Hoa & Tam Thức)')
     .addTag('Election (Ngày Tốt & Async Scans)')
+    .addTag('Data Synchronization')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

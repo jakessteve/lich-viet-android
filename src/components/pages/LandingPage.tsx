@@ -23,7 +23,21 @@ import HeroAuspiciousArt from './LandingPage/HeroAuspiciousArt';
 import MysticBackgroundPattern from './LandingPage/MysticBackgroundPattern';
 import LandingNav from './LandingPage/LandingNav';
 import { ActionButton } from '../shared';
-import { CheckCircle2, ShieldCheck, Lock, Crown, ArrowRight, Calendar, Clock, Sun, ChevronDown, Compass, Atom, AlertTriangle, Info } from 'lucide-react';
+import {
+  CheckCircle2,
+  ShieldCheck,
+  Lock,
+  Crown,
+  ArrowRight,
+  Calendar,
+  Clock,
+  Sun,
+  ChevronDown,
+  Compass,
+  Atom,
+  AlertTriangle,
+  Info,
+} from 'lucide-react';
 
 const TRUST_VALUES = [
   {

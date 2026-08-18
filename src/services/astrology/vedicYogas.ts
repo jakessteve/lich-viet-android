@@ -162,12 +162,14 @@ export function detectVedicYogasAndDoshas(
       }
 
       const isCancelled = cancellations.length > 0;
-      const severity = isCancelled ? 'Nhẹ' : (mars.house === 7 || mars.house === 8 ? 'Cao' : 'Trung Bình');
+      const severity = isCancelled ? 'Nhẹ' : mars.house === 7 || mars.house === 8 ? 'Cao' : 'Trung Bình';
       const bhavaClass = classifyBhava([mars.house]);
 
       items.push({
         id: 'manglik_dosha',
-        nameVi: isCancelled ? 'Kuja Dosha (Đã Hóa Giải - Manglik Cancelled)' : 'Manglik Dosha (Hỏa Tinh Chiếu Mệnh/Hôn Nhân)',
+        nameVi: isCancelled
+          ? 'Kuja Dosha (Đã Hóa Giải - Manglik Cancelled)'
+          : 'Manglik Dosha (Hỏa Tinh Chiếu Mệnh/Hôn Nhân)',
         nameSanskrit: isCancelled ? 'Kuja Dosha Nivaran' : 'Kuja Dosha',
         type: isCancelled ? 'neutral' : 'dosha',
         categoryVi: isCancelled ? 'Đặc Biệt' : 'Khắc Kỵ (Dosha)',
@@ -207,7 +209,8 @@ export function detectVedicYogasAndDoshas(
       bhavaHouses: [mars.house],
       bhavaClassificationVi: classifyBhava([mars.house]),
       dashaActivationVi: 'Hiệu lực tột đỉnh trong đại vận Hỏa Tinh (Mangala Mahadasha).',
-      descriptionVi: 'Một trong Ngũ Đại Cát Cách (Pancha Mahapurusha). Sao Hỏa đắc địa tại cung Kendra mang lại khí phách hào sảng, uy quyền quân sự, tài năng lãnh đạo và thể lực phi thường.',
+      descriptionVi:
+        'Một trong Ngũ Đại Cát Cách (Pancha Mahapurusha). Sao Hỏa đắc địa tại cung Kendra mang lại khí phách hào sảng, uy quyền quân sự, tài năng lãnh đạo và thể lực phi thường.',
       personalizedSynthesisVi: `Hỏa Tinh ngự tại Nhà ${mars.house} thuộc cung ${SIGN_NAMES_VI[mars.signIndex]}. Đương số có tố chất chỉ huy, ý chí sắt đá và khả năng chuyển bại thành thắng.`,
       remedyOrAdviceVi: 'Sử dụng uy quyền và lòng dũng cảm để bảo vệ chính nghĩa và dẫn dắt tập thể.',
     });
@@ -226,7 +229,8 @@ export function detectVedicYogasAndDoshas(
       bhavaHouses: [mercury.house],
       bhavaClassificationVi: classifyBhava([mercury.house]),
       dashaActivationVi: 'Kích hoạt tài năng kinh doanh và văn chương vượt bậc trong vận Sao Thủy.',
-      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Thủy đắc địa tại Kendra ban tặng trí tuệ uyên bác, tài giao tiếp ngoại giao siêu phàm và danh tiếng trong giới học giả/doanh nhân.',
+      descriptionVi:
+        'Một trong Ngũ Đại Cát Cách. Sao Thủy đắc địa tại Kendra ban tặng trí tuệ uyên bác, tài giao tiếp ngoại giao siêu phàm và danh tiếng trong giới học giả/doanh nhân.',
       personalizedSynthesisVi: `Thủy Tinh ngự tại Nhà ${mercury.house} thuộc cung ${SIGN_NAMES_VI[mercury.signIndex]}, mang lại tư duy toán học và ngôn ngữ trác việt.`,
       remedyOrAdviceVi: 'Phát huy năng khiếu nghiên cứu, viết lách, kinh doanh và cố vấn chiến lược.',
     });
@@ -245,7 +249,8 @@ export function detectVedicYogasAndDoshas(
       bhavaHouses: [jupiter.house],
       bhavaClassificationVi: classifyBhava([jupiter.house]),
       dashaActivationVi: 'Phát huy phước lành, danh dự và tài lộc lớn trong vận Sao Mộc.',
-      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Mộc tọa thủ tại Kendra giúp người sở hữu có tâm hồn thánh thiện, trí tuệ tâm linh cao thâm và được xã hội kính trọng.',
+      descriptionVi:
+        'Một trong Ngũ Đại Cát Cách. Sao Mộc tọa thủ tại Kendra giúp người sở hữu có tâm hồn thánh thiện, trí tuệ tâm linh cao thâm và được xã hội kính trọng.',
       personalizedSynthesisVi: `Mộc Tinh ngự tại Nhà ${jupiter.house} (${SIGN_NAMES_VI[jupiter.signIndex]}), tạo nên phong thái vương giả, uy tín đạo đức và phúc ấm bền vững.`,
       remedyOrAdviceVi: 'Lan tỏa tri thức, làm việc thiện nguyện và giữ gìn chuẩn mực đạo đức trong sáng.',
     });
@@ -264,7 +269,8 @@ export function detectVedicYogasAndDoshas(
       bhavaHouses: [venus.house],
       bhavaClassificationVi: classifyBhava([venus.house]),
       dashaActivationVi: 'Khai mở vận may tài chính và thành tựu nghệ thuật rực rỡ trong vận Sao Kim.',
-      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Kim tọa thủ tại Kendra mang lại nét đẹp quý phái, cuộc sống phong lưu, tài hoa nghệ thuật và hạnh phúc gia đạo.',
+      descriptionVi:
+        'Một trong Ngũ Đại Cát Cách. Sao Kim tọa thủ tại Kendra mang lại nét đẹp quý phái, cuộc sống phong lưu, tài hoa nghệ thuật và hạnh phúc gia đạo.',
       personalizedSynthesisVi: `Kim Tinh ngự tại Nhà ${venus.house} (${SIGN_NAMES_VI[venus.signIndex]}), mang lại gu thẩm mỹ tinh tế và duyên may thu hút tài lộc.`,
       remedyOrAdviceVi: 'Tận dụng khiếu thẩm mỹ, sự khéo léo trong quan hệ công chúng và lối sống thanh lịch.',
     });
@@ -283,7 +289,8 @@ export function detectVedicYogasAndDoshas(
       bhavaHouses: [saturn.house],
       bhavaClassificationVi: classifyBhava([saturn.house]),
       dashaActivationVi: 'Gặt hái thành tựu khổng lồ sau thời gian kiên trì rèn luyện trong vận Sao Thổ.',
-      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Thổ tọa thủ tại Kendra rèn giũa ý chí phi thường, bản lĩnh chịu đựng bền bỉ và quyền lực tối thượng nơi hậu vận.',
+      descriptionVi:
+        'Một trong Ngũ Đại Cát Cách. Sao Thổ tọa thủ tại Kendra rèn giũa ý chí phi thường, bản lĩnh chịu đựng bền bỉ và quyền lực tối thượng nơi hậu vận.',
       personalizedSynthesisVi: `Thổ Tinh ngự tại Nhà ${saturn.house} (${SIGN_NAMES_VI[saturn.signIndex]}), giúp đương số xây dựng cơ nghiệp vững chắc như bàn thạch.`,
       remedyOrAdviceVi: 'Kiên trì mục tiêu dài hạn, giữ kỷ luật nghiêm minh và công bằng với cấp dưới.',
     });

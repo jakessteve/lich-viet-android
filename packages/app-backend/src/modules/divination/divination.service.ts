@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  createMaiHoaReading,
-  createTamThucReading
-} from '../../frontend-readiness.js';
+import { createMaiHoaReading, createTamThucReading } from '../../frontend-readiness.js';
 import { CreateMaiHoaDto, CreateTamThucDto } from './dto/divination.dto.js';
 
 @Injectable()
@@ -14,7 +11,7 @@ export class DivinationService {
       number1: dto.number1,
       number2: dto.number2,
       number3: dto.number3,
-      query: dto.query
+      query: dto.query,
     });
   }
 
@@ -22,7 +19,7 @@ export class DivinationService {
     const timestamp = new Date(dto.date).getTime();
     return createTamThucReading({
       timestamp,
-      timezone: dto.timezone ?? 7.0
+      timezone: dto.timezone ?? 7.0,
     });
   }
 }

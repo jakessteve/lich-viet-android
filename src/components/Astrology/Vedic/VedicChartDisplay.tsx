@@ -239,7 +239,9 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
                 </thead>
                 <tbody>
                   {result.planets
-                    .filter((p) => ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'].includes(p.body))
+                    .filter((p) =>
+                      ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'].includes(p.body),
+                    )
                     .map((planet) => (
                       <VedicPlanetRow key={planet.body} planet={planet} />
                     ))}
@@ -265,7 +267,9 @@ export const VedicChartDisplay: React.FC<{ result: WesternChartResult }> = ({ re
                     key={house.index}
                     className="surface-card p-2.5 rounded-xl text-center border border-border-light/40 dark:border-border-dark/40"
                   >
-                    <p className="label-standard text-purple-700 dark:text-purple-400 font-semibold">Bhava {house.index}</p>
+                    <p className="label-standard text-purple-700 dark:text-purple-400 font-semibold">
+                      Bhava {house.index}
+                    </p>
                     <p className="text-xs font-semibold mt-0.5">
                       {deg}°{min.toString().padStart(2, '0')}&apos; {house.sign}
                     </p>

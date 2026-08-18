@@ -5,6 +5,6 @@ import { TuViService } from './tuvi.service.js';
 @Module({
   controllers: [TuViController],
   providers: [TuViService],
-  exports: [TuViService]
+  exports: [TuViService],
 })
 export class TuViModule {}

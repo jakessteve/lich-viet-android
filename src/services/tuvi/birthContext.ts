@@ -10,10 +10,7 @@ import type {
 import { CAN, CHI } from '../../utils/constants';
 import { getCanChiDay, getLunarDate } from '../../utils/calendarEngine';
 import { getDatePartsInTimeZone, getHourBranch, normalizeBirthTimeWithPolicy } from './timeNormalization';
-import {
-  TU_VI_SCHOOL_PROFILES,
-  type TuViSchoolProfile,
-} from './schoolProfiles';
+import { TU_VI_SCHOOL_PROFILES, type TuViSchoolProfile } from './schoolProfiles';
 import {
   getSwissEphemerisInstance,
   getSwissTrueSolarCivilTimeForLocation,
@@ -152,24 +149,22 @@ export interface TuViBirthContext {
 
 export function buildTuViBirthContext(input: TuViInput, schoolProfile?: TuViSchoolProfile): TuViBirthContext {
   const profile =
-    schoolProfile ??
-    TU_VI_SCHOOL_PROFILES[input.school || 'nam-phai'] ??
-    TU_VI_SCHOOL_PROFILES['nam-phai'];
+    schoolProfile ?? TU_VI_SCHOOL_PROFILES[input.school || 'nam-phai'] ?? TU_VI_SCHOOL_PROFILES['nam-phai'];
   const activeTimePolicy: TuViTimePolicy = input.timePolicy ?? profile.timePolicy ?? 'historical-vietnam';
   const activeGioTyPolicy: TuViGioTyPolicy = input.gioTyPolicy ?? 'next-day-standard';
   const activeLeapMonthPolicy: TuViLeapMonthPolicy = input.leapMonthPolicy ?? profile.leapMonthPolicy ?? 'split-15';
   const zonedDate = resolveCivilBirthDate(input) ?? normalizeToIanaTimezone(input.solarDate, input.timezone);
-  const trueSolarDate = activeTimePolicy === 'true-solar'
-    ? applyTrueSolarTimeLayer(zonedDate, input.birthLocation)
-    : zonedDate;
-  const normalized = activeTimePolicy === 'civil'
-    ? {
-        correctedDate: trueSolarDate,
-        offsetHours: input.birthLocation?.timezone ?? 7,
-        historicalRegion: undefined,
-        warnings: [],
-      }
-    : normalizeBirthTimeWithPolicy(trueSolarDate, input.birthLocation);
+  const trueSolarDate =
+    activeTimePolicy === 'true-solar' ? applyTrueSolarTimeLayer(zonedDate, input.birthLocation) : zonedDate;
+  const normalized =
+    activeTimePolicy === 'civil'
+      ? {
+          correctedDate: trueSolarDate,
+          offsetHours: input.birthLocation?.timezone ?? 7,
+          historicalRegion: undefined,
+          warnings: [],
+        }
+      : normalizeBirthTimeWithPolicy(trueSolarDate, input.birthLocation);
   const correctedDate = normalized.correctedDate;
   const swissLocation: SwissGeoLocation | undefined = input.birthLocation
     ? {
@@ -256,4 +251,3 @@ export function buildTuViBirthContext(input: TuViInput, schoolProfile?: TuViScho
     warnings,
   };
 }
-

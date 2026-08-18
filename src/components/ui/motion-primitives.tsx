@@ -6,11 +6,7 @@ export interface MotionPageTransitionProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode;
 }
 
-export const MotionPageTransition: React.FC<MotionPageTransitionProps> = ({
-  children,
-  className,
-  ...props
-}) => {
+export const MotionPageTransition: React.FC<MotionPageTransitionProps> = ({ children, className, ...props }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 8 }}
@@ -30,12 +26,7 @@ export interface MotionFadeInProps extends HTMLMotionProps<'div'> {
   delay?: number;
 }
 
-export const MotionFadeIn: React.FC<MotionFadeInProps> = ({
-  children,
-  delay = 0,
-  className,
-  ...props
-}) => {
+export const MotionFadeIn: React.FC<MotionFadeInProps> = ({ children, delay = 0, className, ...props }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.98 }}
@@ -53,11 +44,7 @@ export interface MotionCardProps extends HTMLMotionProps<'div'> {
   children: React.ReactNode;
 }
 
-export const MotionCard: React.FC<MotionCardProps> = ({
-  children,
-  className,
-  ...props
-}) => {
+export const MotionCard: React.FC<MotionCardProps> = ({ children, className, ...props }) => {
   return (
     <motion.div
       whileHover={{ y: -2 }}

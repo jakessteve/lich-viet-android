@@ -94,7 +94,6 @@ const HOA_TINH_START = [2, 3, 1, 9] as const;
 /** Linh Tinh classical start positions by Tam Hợp group. */
 const LINH_TINH_START = [10, 10, 3, 10] as const;
 
-
 /** Triệt Không positions by year Can index. */
 const TRIET_KHONG_TABLE: Record<number, [number, number]> = {
   0: [8, 9], // Giáp
@@ -583,13 +582,9 @@ export function placePhuTinh(
     'Địa Không': diaKhong,
     'Địa Kiếp': diaKiep,
     'Hỏa Tinh':
-      thuanNghich === 'Thuận'
-        ? mod12(HOA_TINH_START[group] + hourBranch)
-        : mod12(HOA_TINH_START[group] - hourBranch),
+      thuanNghich === 'Thuận' ? mod12(HOA_TINH_START[group] + hourBranch) : mod12(HOA_TINH_START[group] - hourBranch),
     'Linh Tinh':
-      thuanNghich === 'Thuận'
-        ? mod12(LINH_TINH_START[group] - hourBranch)
-        : mod12(LINH_TINH_START[group] + hourBranch),
+      thuanNghich === 'Thuận' ? mod12(LINH_TINH_START[group] - hourBranch) : mod12(LINH_TINH_START[group] + hourBranch),
 
     // Other important stars
     'Thiên Mã': THIEN_MA_TABLE[mod12(yearChiIndex)],
@@ -628,13 +623,9 @@ export function placeHoaLinhTinh(
 ): { hoaTinh: number; linhTinh: number } {
   const group = getTamHopGroup(yearChiIndex);
   const hoaTinh =
-    thuanNghich === 'Thuận'
-      ? mod12(HOA_TINH_START[group] + hourBranch)
-      : mod12(HOA_TINH_START[group] - hourBranch);
+    thuanNghich === 'Thuận' ? mod12(HOA_TINH_START[group] + hourBranch) : mod12(HOA_TINH_START[group] - hourBranch);
   const linhTinh =
-    thuanNghich === 'Thuận'
-      ? mod12(LINH_TINH_START[group] - hourBranch)
-      : mod12(LINH_TINH_START[group] + hourBranch);
+    thuanNghich === 'Thuận' ? mod12(LINH_TINH_START[group] - hourBranch) : mod12(LINH_TINH_START[group] + hourBranch);
   return { hoaTinh, linhTinh };
 }
 

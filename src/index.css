@@ -226,7 +226,6 @@
   }
 }
 
-
 @layer components {
   /* ── Semantic Surface Primitives ─────────────────────────── */
   .surface-card,
@@ -809,7 +808,9 @@
   }
 
   .interactive-press {
-    transition: transform 120ms cubic-bezier(0.2, 0, 0, 1), box-shadow 120ms ease;
+    transition:
+      transform 120ms cubic-bezier(0.2, 0, 0, 1),
+      box-shadow 120ms ease;
   }
 
   .interactive-press:active {
@@ -1059,7 +1060,6 @@ html.theme-transitioning *::after {
   z-index: 9999;
 }
 
-
 /* ═══════════════════════════════════════════════════════════
    CELESTIAL MICRO-ANIMATIONS & INTERACTION REFINEMENTS
    ═══════════════════════════════════════════════════════════ */
@@ -1127,11 +1127,14 @@ html.theme-transitioning *::after {
 }
 
 @keyframes haoMovingPulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 6px rgba(245, 158, 11, 0.4);
   }
   50% {
-    box-shadow: 0 0 16px rgba(245, 158, 11, 0.8), 0 0 24px rgba(217, 119, 6, 0.5);
+    box-shadow:
+      0 0 16px rgba(245, 158, 11, 0.8),
+      0 0 24px rgba(217, 119, 6, 0.5);
   }
 }
 
@@ -1232,7 +1235,9 @@ html.theme-transitioning *::after {
 }
 
 .spring-press {
-  transition: transform 140ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 140ms ease;
+  transition:
+    transform 140ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 140ms ease;
   will-change: transform;
 }
 
@@ -1241,7 +1246,9 @@ html.theme-transitioning *::after {
 }
 
 .spring-bounce {
-  transition: transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 240ms ease;
+  transition:
+    transform 240ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 240ms ease;
 }
 
 /* ═══════════════════════════════════════════════════════════

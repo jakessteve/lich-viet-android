@@ -81,17 +81,14 @@ const SIGNS_SIDEREAL = [
 function formatDegMin(longitude: number): string {
   const norm = ((longitude % 360) + 360) % 360;
   const deg = Math.floor(norm % 30);
-  const min = Math.floor((norm % 30 - deg) * 60);
+  const min = Math.floor(((norm % 30) - deg) * 60);
   return `${deg}°${min.toString().padStart(2, '0')}′`;
 }
 
 /**
  * Formats a complete Vedic (Jyotish) chart as rich Markdown.
  */
-export function formatVedicChartAsMarkdown(
-  chartResult: WesternChartResult,
-  options?: VedicMarkdownOptions,
-): string {
+export function formatVedicChartAsMarkdown(chartResult: WesternChartResult, options?: VedicMarkdownOptions): string {
   const birthDate = options?.birthDate ?? new Date();
   const name = options?.name?.trim() || 'Chưa rõ';
   const ayanamsa = options?.ayanamsa ?? 'Lahiri (Chitra Paksha)';
@@ -150,7 +147,9 @@ export function formatVedicChartAsMarkdown(
 
   // 2. Navagrahas Table
   const linesGrahas = ['## Bảng Tọa Độ 9 Cửu Diệu (Navagrahas & Dignities)'];
-  linesGrahas.push('| Hành Tinh (Graha) | Cung Hoàng Đạo (Rasi) | Tọa Độ Sidereal | Cung Vị (Bhava) | Chòm Sao (Nakshatra) | Phẩm Vị (Dignity) |');
+  linesGrahas.push(
+    '| Hành Tinh (Graha) | Cung Hoàng Đạo (Rasi) | Tọa Độ Sidereal | Cung Vị (Bhava) | Chòm Sao (Nakshatra) | Phẩm Vị (Dignity) |',
+  );
   linesGrahas.push('|---|---|---:|:---:|---|---|');
 
   const grahaBodies = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn', 'rahu', 'ketu'];
@@ -206,8 +205,12 @@ export function formatVedicChartAsMarkdown(
     linesYogas.push('Lá số sở hữu cấu trúc hành tinh phân bổ đồng đều, không phát hiện tổ hợp cực đoan.');
   } else {
     for (const yoga of detectedYogas) {
-      linesYogas.push(`\n### ${yoga.nameVi} (${yoga.nameSanskrit}) - [${yoga.categoryVi} · Mức độ: ${yoga.severityOrStrength}]`);
-      linesYogas.push(`- **Hành tinh & Cung vị**: ${yoga.planetsInvolved.join(' + ')}${yoga.bhavaHouses ? ` tại Nhà ${yoga.bhavaHouses.join(', ')}` : ''}`);
+      linesYogas.push(
+        `\n### ${yoga.nameVi} (${yoga.nameSanskrit}) - [${yoga.categoryVi} · Mức độ: ${yoga.severityOrStrength}]`,
+      );
+      linesYogas.push(
+        `- **Hành tinh & Cung vị**: ${yoga.planetsInvolved.join(' + ')}${yoga.bhavaHouses ? ` tại Nhà ${yoga.bhavaHouses.join(', ')}` : ''}`,
+      );
       linesYogas.push(`- **Ý nghĩa cấu trúc**: ${yoga.descriptionVi}`);
       if (yoga.personalizedSynthesisVi) {
         linesYogas.push(`- **Luận giải chi tiết**: ${yoga.personalizedSynthesisVi}`);
@@ -262,7 +265,9 @@ export function formatVedicChartAsMarkdown(
 
   // Footer
   parts.push('---');
-  parts.push('*Lá số được tính toán theo hệ tọa độ thiên văn Sidereal Lahiri (Chitra Paksha Ayanamsa) - Hệ thống Jyotish Lịch Việt.*');
+  parts.push(
+    '*Lá số được tính toán theo hệ tọa độ thiên văn Sidereal Lahiri (Chitra Paksha Ayanamsa) - Hệ thống Jyotish Lịch Việt.*',
+  );
 
   return parts.join('\n\n');
 }

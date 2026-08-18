@@ -21,10 +21,7 @@ import {
   type ProgressionResult,
   type DavisonResult,
 } from '../services/astrology/predictiveCalculator';
-import {
-  calculateMonthlyTransits,
-  type MonthlyTransitTimeline,
-} from '../services/astrology/monthlyTransitTimeline';
+import { calculateMonthlyTransits, type MonthlyTransitTimeline } from '../services/astrology/monthlyTransitTimeline';
 
 export type AstrologyTab = 'tay-phuong' | 'vedic' | 'hop-la';
 

@@ -53,7 +53,11 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   public render(): ReactNode {
     if (this.state.hasError) {
       return (
-        <div className="card-surface mx-auto max-w-lg my-12 rounded-2xl border border-red-500/20 overflow-hidden shadow-lg" role="alert" aria-live="assertive">
+        <div
+          className="card-surface mx-auto max-w-lg my-12 rounded-2xl border border-red-500/20 overflow-hidden shadow-lg"
+          role="alert"
+          aria-live="assertive"
+        >
           {/* Header */}
           <div className="card-header border-b border-red-200 dark:border-red-900/40 bg-red-50 dark:bg-red-950/30 p-4">
             <div className="flex items-center gap-3">

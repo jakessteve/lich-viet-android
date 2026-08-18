@@ -35,14 +35,9 @@ test('NestJS Fastify Backend E2E - Full API Route Suite', async (t) => {
       method: 'POST',
       url: '/v1/tu-vi/chart',
       payload: {
-        name: 'Nguyễn Văn A',
-        birthYear: 1995,
-        birthMonth: 8,
-        birthDay: 15,
-        birthHour: 10,
-        birthMinute: 30,
+        birthDate: '1995-08-15T10:30:00.000Z',
         gender: 'male',
-        viewYear: 2026,
+        name: 'Nguyễn Văn A',
       },
     });
     assert.equal(res.statusCode, 200);
@@ -137,6 +132,158 @@ test('NestJS Fastify Backend E2E - Full API Route Suite', async (t) => {
     assert.equal(res.statusCode, 200);
     const body = JSON.parse(res.payload);
     assert.ok(body.envelope !== undefined || body.timeline !== undefined || body.status !== undefined || body.response !== undefined);
+  });
+
+  await t.test('9. POST /v1/auth/login and /v1/auth/register', async () => {
+    const regRes = await app.inject({
+      method: 'POST',
+      url: '/v1/auth/register',
+      payload: {
+        email: `tester_${Date.now()}@lichviet.local`,
+        password: 'Password123',
+        name: 'Nhà Thử Nghiệm',
+      },
+    });
+    assert.equal(regRes.statusCode, 201);
+    const regBody = JSON.parse(regRes.payload);
+    assert.ok(regBody.accessToken);
+    assert.ok(regBody.user.id);
+
+    const loginRes = await app.inject({
+      method: 'POST',
+      url: '/v1/auth/login',
+      payload: {
+        email: regBody.user.email,
+        password: 'Password123',
+      },
+    });
+    assert.equal(loginRes.statusCode, 200);
+    const loginBody = JSON.parse(loginRes.payload);
+    assert.ok(loginBody.accessToken);
+    assert.equal(loginBody.user.email, regBody.user.email);
+  });
+
+  await t.test('10. GET and PATCH /v1/users/me', async () => {
+    const getRes = await app.inject({
+      method: 'GET',
+      url: '/v1/users/me',
+      headers: { authorization: 'Bearer jwt-demo-user-001-123' },
+    });
+    assert.equal(getRes.statusCode, 200);
+    const getBody = JSON.parse(getRes.payload);
+    assert.ok(getBody.id);
+
+    const patchRes = await app.inject({
+      method: 'PATCH',
+      url: '/v1/users/me',
+      headers: { authorization: 'Bearer jwt-demo-user-001-123' },
+      payload: { name: 'Demo Tên Mới' },
+    });
+    assert.equal(patchRes.statusCode, 200);
+    const patchBody = JSON.parse(patchRes.payload);
+    assert.equal(patchBody.name, 'Demo Tên Mới');
+  });
+
+  await t.test('11. CRUD /v1/dam-gio', async () => {
+    // Create
+    const createRes = await app.inject({
+      method: 'POST',
+      url: '/v1/dam-gio',
+      payload: {
+        deceasedName: 'Cụ Bà',
+        relationship: 'Bà Nội',
+        lunarDay: 10,
+        lunarMonth: 3,
+        alarmLeadDays: [1, 3],
+      },
+    });
+    assert.equal(createRes.statusCode, 201);
+    const created = JSON.parse(createRes.payload);
+    assert.ok(created.id);
+    assert.equal(created.deceasedName, 'Cụ Bà');
+
+    // List
+    const listRes = await app.inject({
+      method: 'GET',
+      url: '/v1/dam-gio',
+    });
+    assert.equal(listRes.statusCode, 200);
+    const list = JSON.parse(listRes.payload);
+    assert.ok(Array.isArray(list));
+    assert.ok(list.some((r) => r.id === created.id));
+
+    // Update
+    const updateRes = await app.inject({
+      method: 'PATCH',
+      url: `/v1/dam-gio/${created.id}`,
+      payload: { notes: 'Chuẩn bị mâm cỗ chay' },
+    });
+    assert.equal(updateRes.statusCode, 200);
+    const updated = JSON.parse(updateRes.payload);
+    assert.equal(updated.notes, 'Chuẩn bị mâm cỗ chay');
+
+    // Delete
+    const deleteRes = await app.inject({
+      method: 'DELETE',
+      url: `/v1/dam-gio/${created.id}`,
+    });
+    assert.equal(deleteRes.statusCode, 204);
+  });
+
+  await t.test('12. CRUD /v1/calendar/events', async () => {
+    const createRes = await app.inject({
+      method: 'POST',
+      url: '/v1/calendar/events',
+      payload: {
+        title: 'Cúng Rằm',
+        solarDate: '2026-08-28',
+        category: 'ritual',
+      },
+    });
+    assert.equal(createRes.statusCode, 201);
+    const created = JSON.parse(createRes.payload);
+    assert.ok(created.id);
+    assert.equal(created.title, 'Cúng Rằm');
+
+    const getRes = await app.inject({
+      method: 'GET',
+      url: '/v1/calendar/events?start=2026-08-01&end=2026-08-31',
+    });
+    assert.equal(getRes.statusCode, 200);
+    const list = JSON.parse(getRes.payload);
+    assert.ok(Array.isArray(list));
+    assert.ok(list.some((e) => e.id === created.id));
+
+    const delRes = await app.inject({
+      method: 'DELETE',
+      url: `/v1/calendar/events/${created.id}`,
+    });
+    assert.equal(delRes.statusCode, 204);
+  });
+
+  await t.test('13. POST /v1/sync', async () => {
+    const syncRes = await app.inject({
+      method: 'POST',
+      url: '/v1/sync',
+      payload: {
+        clientWatermark: '2026-01-01T00:00:00.000Z',
+        mutations: [
+          {
+            mutationId: 'mut-1',
+            entityType: 'dam_gio',
+            entityId: 'dg-sync-1',
+            action: 'insert',
+            payload: { deceasedName: 'Cụ Thủy Tổ' },
+            clientUpdatedAt: new Date().toISOString(),
+          },
+        ],
+      },
+    });
+    assert.equal(syncRes.statusCode, 200);
+    const syncBody = JSON.parse(syncRes.payload);
+    assert.ok(syncBody.serverWatermark);
+    assert.equal(syncBody.acks.length, 1);
+    assert.equal(syncBody.acks[0].status, 'applied');
   });
 
   await app.close();

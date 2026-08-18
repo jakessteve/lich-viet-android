@@ -196,7 +196,32 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   login: async (credentials) => {
     set({ isLoading: true });
 
-    // Simulate network delay
+    try {
+      const runtime = getRuntime();
+      if (runtime.kind === 'remote') {
+        const authResult = await runtime.auth.login({
+          email: credentials.email,
+          password: credentials.password,
+        });
+        const user: User = {
+          id: authResult.user.id,
+          email: authResult.user.email,
+          displayName: authResult.user.name,
+          accessTier: authResult.user.tier === 'expert' ? 'premium' : 'free',
+          avatarUrl: authResult.user.avatarUrl,
+          provider: 'email',
+          createdAt: authResult.user.createdAt,
+        };
+        saveAuthUser(user);
+        set({ user, isAuthenticated: true, isLoading: false });
+        return { success: true };
+      }
+    } catch (err: unknown) {
+      set({ isLoading: false });
+      return { success: false, error: err instanceof Error ? err.message : 'Đăng nhập không thành công.' };
+    }
+
+    // Local / Demo runtime fallback
     await new Promise((r) => setTimeout(r, 600));
 
     const users = getStoredUsers();
@@ -229,7 +254,32 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   register: async (data) => {
     set({ isLoading: true });
 
-    // Simulate network delay
+    try {
+      const runtime = getRuntime();
+      if (runtime.kind === 'remote') {
+        const authResult = await runtime.auth.register({
+          email: data.email,
+          password: data.password,
+          name: data.displayName,
+        });
+        const user: User = {
+          id: authResult.user.id,
+          email: authResult.user.email,
+          displayName: authResult.user.name,
+          accessTier: authResult.user.tier === 'expert' ? 'premium' : 'free',
+          provider: 'email',
+          createdAt: authResult.user.createdAt,
+        };
+        saveAuthUser(user);
+        set({ user, isAuthenticated: true, isLoading: false });
+        return { success: true };
+      }
+    } catch (err: unknown) {
+      set({ isLoading: false });
+      return { success: false, error: err instanceof Error ? err.message : 'Đăng ký không thành công.' };
+    }
+
+    // Local / Demo runtime fallback
     await new Promise((r) => setTimeout(r, 800));
 
     const users = getStoredUsers();
@@ -302,6 +352,11 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
 
   // ── Logout ──────────────────────────────────────────────
   logout: () => {
+    try {
+      getRuntime().auth.logout();
+    } catch {
+      // ignore
+    }
     saveAuthUser(null);
     set({ user: null, isAuthenticated: false });
   },
@@ -339,12 +394,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       if (birthday && /^\d{4}-\d{2}-\d{2}$/.test(birthday)) {
         const [y, m, d] = birthday.split('-').map(Number);
         const dt = new Date(y, m - 1, d);
-        if (
-          Number.isInteger(y) &&
-          dt.getFullYear() === y &&
-          dt.getMonth() === m - 1 &&
-          dt.getDate() === d
-        ) {
+        if (Number.isInteger(y) && dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d) {
           updated.profile.birthYear = y;
           updated.profile.birthMonth = m;
           updated.profile.birthDay = d;

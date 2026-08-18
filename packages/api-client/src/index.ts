@@ -2,6 +2,7 @@ import {
   AuthResult,
   LoginInput,
   RegisterInput,
+  SocialTokenPayload,
   UserProfile,
   DamGioRecord,
   CreateDamGioDto,
@@ -33,7 +34,7 @@ export class LichVietApiClient {
 
   private async fetchJson<T>(path: string, options: RequestInit = {}): Promise<T> {
     const headers: Record<string, string> = {
-      'Content-Type': 'application/json',
+      ...(options.body ? { 'Content-Type': 'application/json' } : {}),
       ...(options.headers as Record<string, string>),
     };
     if (this.token) {
@@ -50,10 +51,14 @@ export class LichVietApiClient {
       throw new Error(`API Error ${response.status}: ${errorText}`);
     }
 
+    if (response.status === 204) {
+      return undefined as unknown as T;
+    }
+
     return response.json() as Promise<T>;
   }
 
-  // Auth endpoints
+  // ── Auth Endpoints ──────────────────────────────────────────
   async login(data: LoginInput): Promise<AuthResult> {
     return this.fetchJson<AuthResult>('/v1/auth/login', {
       method: 'POST',
@@ -68,11 +73,25 @@ export class LichVietApiClient {
     });
   }
 
+  async loginWithSocial(data: SocialTokenPayload): Promise<AuthResult> {
+    return this.fetchJson<AuthResult>('/v1/auth/social', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
   async getProfile(): Promise<UserProfile> {
     return this.fetchJson<UserProfile>('/v1/users/me');
   }
 
-  // Đám Giỗ endpoints
+  async updateProfile(updates: Partial<UserProfile>): Promise<UserProfile> {
+    return this.fetchJson<UserProfile>('/v1/users/me', {
+      method: 'PATCH',
+      body: JSON.stringify(updates),
+    });
+  }
+
+  // ── Đám Giỗ Endpoints ───────────────────────────────────────
   async listDamGio(): Promise<DamGioRecord[]> {
     return this.fetchJson<DamGioRecord[]>('/v1/dam-gio');
   }
@@ -95,9 +114,11 @@ export class LichVietApiClient {
     await this.fetchJson(`/v1/dam-gio/${id}`, { method: 'DELETE' });
   }
 
-  // Calendar event endpoints
+  // ── Calendar Event Endpoints ────────────────────────────────
   async getCalendarEvents(range: DateRange): Promise<CalendarEventDto[]> {
-    return this.fetchJson<CalendarEventDto[]>(`/v1/calendar/events?start=${range.startDate}&end=${range.endDate}`);
+    return this.fetchJson<CalendarEventDto[]>(
+      `/v1/calendar/events?start=${encodeURIComponent(range.startDate)}&end=${encodeURIComponent(range.endDate)}`,
+    );
   }
 
   async createCalendarEvent(event: CreateCalendarEventDto): Promise<CalendarEventDto> {
@@ -107,7 +128,11 @@ export class LichVietApiClient {
     });
   }
 
-  // Sync endpoint
+  async deleteCalendarEvent(id: string): Promise<void> {
+    await this.fetchJson(`/v1/calendar/events/${id}`, { method: 'DELETE' });
+  }
+
+  // ── Sync Endpoint ───────────────────────────────────────────
   async sync(pushData: SyncPushRequest): Promise<SyncPullResponse> {
     return this.fetchJson<SyncPullResponse>('/v1/sync', {
       method: 'POST',
@@ -115,34 +140,59 @@ export class LichVietApiClient {
     });
   }
 
-  // Metaphysical & Calculation endpoints
+  // ── Metaphysical & Calculation Endpoints ────────────────────
   async getCalendarDay(date: string, timezone = 7): Promise<unknown> {
     return this.fetchJson(`/v1/calendar/day?date=${encodeURIComponent(date)}&timezone=${timezone}`);
   }
 
+  async getDungSuCatalog(): Promise<unknown> {
+    return this.fetchJson('/v1/calendar/dung-su/catalog');
+  }
+
+  async getDungSuScore(date: string, profileId?: string): Promise<unknown> {
+    return this.fetchJson('/v1/calendar/dung-su/score', {
+      method: 'POST',
+      body: JSON.stringify({ date, profileId }),
+    });
+  }
+
   async calculateTuViChart(data: unknown): Promise<unknown> {
-    return this.fetchJson('/v1/tuvi/chart', {
+    return this.fetchJson('/v1/tu-vi/chart', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
   async calculateWesternChart(data: unknown): Promise<unknown> {
-    return this.fetchJson('/v1/astrology/western-chart', {
+    return this.fetchJson('/v1/astrology/western', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
   async calculateVedicChart(data: unknown): Promise<unknown> {
-    return this.fetchJson('/v1/astrology/vedic-chart', {
+    return this.fetchJson('/v1/astrology/vedic', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async calculateSynastry(data: unknown): Promise<unknown> {
+    return this.fetchJson('/v1/astrology/synastry', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
   async calculateMaiHoa(data: unknown): Promise<unknown> {
-    return this.fetchJson('/v1/divination/maihoa', {
+    return this.fetchJson('/v1/divination/mai-hoa', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async calculateTamThuc(data: unknown): Promise<unknown> {
+    return this.fetchJson('/v1/divination/tam-thuc', {
       method: 'POST',
       body: JSON.stringify(data),
     });

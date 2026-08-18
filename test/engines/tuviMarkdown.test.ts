@@ -45,7 +45,6 @@ describe('Markdown Formatter', () => {
     expect(markdown).not.toContain(['Điểm', 'huyền', 'khí'].join(' '));
   });
 
-
   it('should include combinations section when enabled', () => {
     const chart = generateChart(input);
     const markdown = formatTuViChartAsMarkdown(chart, { includeCombinations: true });

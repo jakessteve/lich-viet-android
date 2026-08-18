@@ -21,8 +21,7 @@ const badgeVariants = cva(
         info: 'bg-info/10 dark:bg-info-dark/10 text-info dark:text-info-dark border-info/30 dark:border-info-dark/25',
         astral:
           'bg-astral-primary/10 dark:bg-astral-primary-dark/15 text-astral-primary dark:text-astral-primary-dark border-astral-border-light dark:border-astral-border-dark',
-        destructive:
-          'bg-destructive/10 text-destructive border-destructive/30',
+        destructive: 'bg-destructive/10 text-destructive border-destructive/30',
         outline: 'text-foreground border-border',
       },
       size: {
@@ -53,9 +52,7 @@ const pipVariants: Record<string, string> = {
   outline: 'bg-foreground',
 };
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
   pip?: boolean;
 }
 

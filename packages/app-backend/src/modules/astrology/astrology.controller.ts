@@ -1,11 +1,7 @@
 import { Controller, Post, Body, Inject, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AstrologyService } from './astrology.service.js';
-import {
-  CreateWesternChartDto,
-  CreateVedicChartDto,
-  CreateSynastryDto
-} from './dto/astrology.dto.js';
+import { CreateWesternChartDto, CreateVedicChartDto, CreateSynastryDto } from './dto/astrology.dto.js';
 
 @ApiTags('Astrology (Western, Vedic & Synastry)')
 @Controller('v1/astrology')

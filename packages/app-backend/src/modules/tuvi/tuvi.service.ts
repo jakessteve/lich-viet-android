@@ -13,7 +13,7 @@ export class TuViService {
       longitude: dto.longitude ?? 105.8542,
       timezone: dto.timezone ?? 7.0,
       altitudeMeters: 19,
-      school: dto.school ?? 'nam_phai'
+      school: dto.school ?? 'nam_phai',
     });
   }
 }

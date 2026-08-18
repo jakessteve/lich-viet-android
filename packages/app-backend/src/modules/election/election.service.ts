@@ -16,7 +16,7 @@ export class ElectionService {
   runScan(dto: RunElectionScanDto) {
     return createOmceBackendEnvelope({
       request: dto.request,
-      options: dto.options
+      options: dto.options,
     });
   }
 
@@ -24,7 +24,7 @@ export class ElectionService {
     const envelope = this.runScan(dto);
     return from(envelope.events).pipe(
       concatMap((event) => from([event]).pipe(delay(20))),
-      concatMap((event) => [{ data: event } as SseMessageEvent])
+      concatMap((event) => [{ data: event } as SseMessageEvent]),
     );
   }
 }

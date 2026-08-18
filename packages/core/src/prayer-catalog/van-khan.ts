@@ -36,7 +36,8 @@ Nam mô A Di Đà Phật! (3 lần, 3 lạy)`,
     title: 'Văn Khấn Thần Tài và Thổ Địa Hàng Ngày / Mùng 10',
     category: 'than_tai',
     lunarTriggers: [{ day: 10 }],
-    instructions: 'Sắm lễ: Hoa cúc vàng, đĩa hoa quả ngũ quả, nước sạch, rượu, nến, bánh kẹo, bộ tam sên (thịt heo, tôm/cua, trứng luộc).',
+    instructions:
+      'Sắm lễ: Hoa cúc vàng, đĩa hoa quả ngũ quả, nước sạch, rượu, nến, bánh kẹo, bộ tam sên (thịt heo, tôm/cua, trứng luộc).',
     prayerText: `Nam mô A Di Đà Phật! (3 lần, 3 lạy)
 Con kính lạy Chư vị Tôn thần quản cai khu vực bản gia bản thổ.
 Con kính lạy ngài Đông Trù Tư Mệnh Táo Phủ Thần Quân.
@@ -57,7 +58,8 @@ Nam mô A Di Đà Phật! (3 lần, 3 lạy)`,
     title: 'Văn Khấn Lễ Tiễn Táo Quân Chầu Trời (23 Tháng Chạp)',
     category: 'le_tet',
     lunarTriggers: [{ day: 23, month: 12 }],
-    instructions: 'Sắm lễ: 3 bộ mũ Táo Quân (2 mũ ông, 1 mũ bà kèm hia), 3 con cá chép sống thả trong chậu nước, mâm cỗ mặn/chay, hoa tươi, trầu cau.',
+    instructions:
+      'Sắm lễ: 3 bộ mũ Táo Quân (2 mũ ông, 1 mũ bà kèm hia), 3 con cá chép sống thả trong chậu nước, mâm cỗ mặn/chay, hoa tươi, trầu cau.',
     prayerText: `Nam mô A Di Đà Phật! (3 lần, 3 lạy)
 Con kính lạy Ngài Đông Trù Tư Mệnh Táo Phủ Thần Quân.
 Tín chủ con là: ...
@@ -74,8 +76,12 @@ Nam mô A Di Đà Phật! (3 lần, 3 lạy)`,
     id: 'vk_giao_thua_ngoai_troi',
     title: 'Văn Khấn Giao Thừa Ngoài Trời (Trừ Tịch)',
     category: 'le_tet',
-    lunarTriggers: [{ day: 30, month: 12 }, { day: 29, month: 12 }],
-    instructions: 'Sắm lễ: Bàn lễ đặt ngoài trời, gà trống hoa luộc ngậm hoa hồng, bánh chưng, mâm ngũ quả, trầu cau, rượu, trà, đèn nến, vàng mã.',
+    lunarTriggers: [
+      { day: 30, month: 12 },
+      { day: 29, month: 12 },
+    ],
+    instructions:
+      'Sắm lễ: Bàn lễ đặt ngoài trời, gà trống hoa luộc ngậm hoa hồng, bánh chưng, mâm ngũ quả, trầu cau, rượu, trà, đèn nến, vàng mã.',
     prayerText: `Nam mô A Di Đà Phật! (3 lần, 3 lạy)
 Con kính lạy chín phương Trời, mười phương Chư Phật, Chư Phật mười phương.
 Con kính lạy Quan Đương niên Hành khiển Thái Tuế chí đức Tôn thần.
@@ -94,8 +100,12 @@ Nam mô A Di Đà Phật! (3 lần, 3 lạy)`,
     id: 'vk_giao_thua_trong_nha',
     title: 'Văn Khấn Giao Thừa Trong Nhà (Gia Tiên)',
     category: 'le_tet',
-    lunarTriggers: [{ day: 30, month: 12 }, { day: 29, month: 12 }],
-    instructions: 'Sắm lễ: Cỗ mặn hoặc cỗ chay dâng trên bàn thờ gia tiên, mâm ngũ quả, hoa tươi, trầu cau, vàng mã gia tiên.',
+    lunarTriggers: [
+      { day: 30, month: 12 },
+      { day: 29, month: 12 },
+    ],
+    instructions:
+      'Sắm lễ: Cỗ mặn hoặc cỗ chay dâng trên bàn thờ gia tiên, mâm ngũ quả, hoa tươi, trầu cau, vàng mã gia tiên.',
     prayerText: `Nam mô A Di Đà Phật! (3 lần, 3 lạy)
 Con kính lạy Hoàng thiên Hậu Thổ chư vị Tôn thần.
 Con kính lạy Tổ Tiên nội ngoại chư vị Hương linh.

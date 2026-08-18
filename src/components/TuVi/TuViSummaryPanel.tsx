@@ -282,25 +282,19 @@ export const TuViSummaryPanel: React.FC<{
               <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
                 Chính Tinh
               </span>
-              <p className="text-lg font-bold text-gold dark:text-gold-dark mt-0.5">
-                {summary.totalMajorStars}
-              </p>
+              <p className="text-lg font-bold text-gold dark:text-gold-dark mt-0.5">{summary.totalMajorStars}</p>
             </div>
             <div className="surface-card rounded-2xl p-3 text-center border-info/30">
               <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
                 Phụ Tinh
               </span>
-              <p className="text-lg font-bold text-info dark:text-info-dark mt-0.5">
-                {summary.totalAuxiliaryStars}
-              </p>
+              <p className="text-lg font-bold text-info dark:text-info-dark mt-0.5">{summary.totalAuxiliaryStars}</p>
             </div>
             <div className="surface-card rounded-2xl p-3 text-center border-bad/30">
               <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
                 Sát Tinh
               </span>
-              <p className="text-lg font-bold text-bad dark:text-bad-dark mt-0.5">
-                {summary.totalSatStars}
-              </p>
+              <p className="text-lg font-bold text-bad dark:text-bad-dark mt-0.5">{summary.totalSatStars}</p>
             </div>
             <div className="surface-card rounded-2xl p-3 text-center border-purple/30">
               <span className="text-micro uppercase tracking-wider text-text-secondary-light dark:text-text-secondary-dark font-semibold">
@@ -345,13 +339,7 @@ export const TuViSummaryPanel: React.FC<{
         </div>
       )}
 
-      {activeTab === 'tieuHan' && (
-        <TuViTieuHanPanel
-          chart={chart}
-          viewYear={viewYear}
-          mode={mode}
-        />
-      )}
+      {activeTab === 'tieuHan' && <TuViTieuHanPanel chart={chart} viewYear={viewYear} mode={mode} />}
 
       {activeTab === 'daiHan' && (
         <div className="space-y-4">
@@ -376,9 +364,7 @@ export const TuViSummaryPanel: React.FC<{
                   >
                     <span className="font-bold whitespace-nowrap">{dh.ageRange}t</span>
                     <span className="text-[10px] truncate max-w-[75px]">{dh.palaceName}</span>
-                    <span className="text-[9px] font-medium text-gold dark:text-gold-dark">
-                      {dh.luckScore}/10
-                    </span>
+                    <span className="text-[9px] font-medium text-gold dark:text-gold-dark">{dh.luckScore}/10</span>
                     {dh.isCurrent && (
                       <span
                         className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-gold-light dark:bg-gold-dark animate-pulse"
@@ -518,10 +504,18 @@ export const TuViSummaryPanel: React.FC<{
                         Lưu Tứ Hóa Can {selectedDaiHan.daiHanTuHoa.canCung} Đại Hạn:
                       </span>
                       <div className="grid grid-cols-2 gap-1 text-[11px]">
-                        <span>✦ Lộc: <strong>{selectedDaiHan.daiHanTuHoa.hoaLoc}</strong></span>
-                        <span>✦ Quyền: <strong>{selectedDaiHan.daiHanTuHoa.hoaQuyen}</strong></span>
-                        <span>✦ Khoa: <strong>{selectedDaiHan.daiHanTuHoa.hoaKhoa}</strong></span>
-                        <span>✦ Kỵ: <strong>{selectedDaiHan.daiHanTuHoa.hoaKy}</strong></span>
+                        <span>
+                          ✦ Lộc: <strong>{selectedDaiHan.daiHanTuHoa.hoaLoc}</strong>
+                        </span>
+                        <span>
+                          ✦ Quyền: <strong>{selectedDaiHan.daiHanTuHoa.hoaQuyen}</strong>
+                        </span>
+                        <span>
+                          ✦ Khoa: <strong>{selectedDaiHan.daiHanTuHoa.hoaKhoa}</strong>
+                        </span>
+                        <span>
+                          ✦ Kỵ: <strong>{selectedDaiHan.daiHanTuHoa.hoaKy}</strong>
+                        </span>
                       </div>
                     </div>
 
@@ -542,7 +536,9 @@ export const TuViSummaryPanel: React.FC<{
                     <div className="space-y-2">
                       <div className="rounded-lg bg-surface-subtle-light/90 dark:bg-surface-elevated-dark/70 p-2 border border-border-light/30 dark:border-border-dark/30 space-y-0.5">
                         <div className="flex items-center justify-between gap-2">
-                          <span className="font-bold text-gold dark:text-gold-dark text-xs">✦ Thiên Thời (Thái Tuế)</span>
+                          <span className="font-bold text-gold dark:text-gold-dark text-xs">
+                            ✦ Thiên Thời (Thái Tuế)
+                          </span>
                           <Badge className="bg-gold/15 text-gold dark:text-gold-dark">
                             {selectedDaiHan.tamTai.thienThoi.level}
                           </Badge>
@@ -618,48 +614,42 @@ export const TuViSummaryPanel: React.FC<{
                 Luận Giải Động Thái Phi Tinh Toàn Bàn
               </h3>
             </div>
-            
+
             <div className="space-y-2.5 pt-1">
-              {flyingStars.synthesisItems && flyingStars.synthesisItems.length > 0 ? (
-                flyingStars.synthesisItems.map((item, idx) => (
-                  <p
-                    key={idx}
-                    className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
-                  >
-                    <strong className="font-bold text-gold dark:text-gold-dark mr-1">
-                      {item.title}:
-                    </strong>
-                    {item.content}
-                  </p>
-                ))
-              ) : (
-                flyingStars.overallSynthesisVi.split('\n\n').map((para, idx) => {
-                  const colonIdx = para.indexOf(':');
-                  if (colonIdx > 0 && colonIdx < 40) {
-                    const title = para.slice(0, colonIdx);
-                    const rest = para.slice(colonIdx + 1);
+              {flyingStars.synthesisItems && flyingStars.synthesisItems.length > 0
+                ? flyingStars.synthesisItems.map((item, idx) => (
+                    <p
+                      key={idx}
+                      className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
+                    >
+                      <strong className="font-bold text-gold dark:text-gold-dark mr-1">{item.title}:</strong>
+                      {item.content}
+                    </p>
+                  ))
+                : flyingStars.overallSynthesisVi.split('\n\n').map((para, idx) => {
+                    const colonIdx = para.indexOf(':');
+                    if (colonIdx > 0 && colonIdx < 40) {
+                      const title = para.slice(0, colonIdx);
+                      const rest = para.slice(colonIdx + 1);
+                      return (
+                        <p
+                          key={idx}
+                          className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
+                        >
+                          <strong className="font-bold text-gold dark:text-gold-dark mr-1">{title}:</strong>
+                          {rest}
+                        </p>
+                      );
+                    }
                     return (
                       <p
                         key={idx}
                         className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
                       >
-                        <strong className="font-bold text-gold dark:text-gold-dark mr-1">
-                          {title}:
-                        </strong>
-                        {rest}
+                        {para}
                       </p>
                     );
-                  }
-                  return (
-                    <p
-                      key={idx}
-                      className="text-xs sm:text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark"
-                    >
-                      {para}
-                    </p>
-                  );
-                })
-              )}
+                  })}
             </div>
           </div>
 

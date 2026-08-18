@@ -12,4 +12,3 @@ export {
   ACTIVITY_MAP,
   type ScanProgressCallback,
 };
-

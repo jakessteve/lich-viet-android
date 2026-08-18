@@ -1,8 +1,5 @@
-import { createAsyncCalculationRequest } from "@lich-viet/contracts";
-import {
-  createChunkPlan,
-  runElectionScan
-} from "@lich-viet/swisseph-wasm";
+import { createAsyncCalculationRequest } from '@lich-viet/contracts';
+import { createChunkPlan, runElectionScan } from '@lich-viet/swisseph-wasm';
 
 export interface ElectionOptionsInput {
   chunkHours?: number;
@@ -52,47 +49,53 @@ function normalizeOptions(options: ElectionOptionsInput = {}) {
     controlZone: options.controlZone,
     strictMode: options.strictMode,
     overrides: Array.isArray(options.overrides) ? options.overrides : [],
-    guardrails: options.guardrails ?? {}
+    guardrails: options.guardrails ?? {},
   };
 }
 
 function toJsonTimelineTransfer(timelineTransfer: TimelineTransferInput) {
   return {
     timestamps: Array.from(timelineTransfer.timestamps),
-    scores: Array.from(timelineTransfer.scores)
+    scores: Array.from(timelineTransfer.scores),
   };
 }
 
-function createProgressEvent(taskId: string, phase: string, progress: number, completedChunks: number, totalChunks: number) {
+function createProgressEvent(
+  taskId: string,
+  phase: string,
+  progress: number,
+  completedChunks: number,
+  totalChunks: number,
+) {
   return {
-    type: "omce:progress",
+    type: 'omce:progress',
     payload: {
       taskId,
       phase,
       progress,
       completedChunks,
-      totalChunks
-    }
+      totalChunks,
+    },
   };
 }
 
 function createChunkEvent(taskId: string, summary: unknown) {
   return {
-    type: "omce:chunk",
+    type: 'omce:chunk',
     payload: {
       taskId,
-      summary
-    }
+      summary,
+    },
   };
 }
 
 function createResultEvent(result: ElectionResultPayload) {
   return {
-    type: "omce:result",
+    type: 'omce:result',
     payload: {
       ...result,
-      timelineTransfer: toJsonTimelineTransfer(result.timelineTransfer)
-    }
+      timelineTransfer: toJsonTimelineTransfer(result.timelineTransfer),
+    },
   };
 }
 
@@ -101,36 +104,27 @@ export function createOmceBackendEnvelope(input: OmceBackendEnvelopeInput) {
   const options = normalizeOptions(input.options);
   const chunkPlan = createChunkPlan({
     request,
-    chunkHours: options.chunkHours
+    chunkHours: options.chunkHours,
   });
   const result = runElectionScan({
     request,
-    ...options
+    ...options,
   }) as unknown as ElectionResultPayload;
   const events = [
-    createProgressEvent(request.taskId, "validating", 0.12, 0, chunkPlan.length),
-    createProgressEvent(request.taskId, "timezone", 0.24, 0, chunkPlan.length)
+    createProgressEvent(request.taskId, 'validating', 0.12, 0, chunkPlan.length),
+    createProgressEvent(request.taskId, 'timezone', 0.24, 0, chunkPlan.length),
   ];
 
   for (const chunk of chunkPlan) {
     const progress = 0.24 + ((chunk.chunkIndex + 1) / Math.max(chunk.totalChunks, 1)) * 0.56;
-    events.push(
-      createProgressEvent(
-        request.taskId,
-        "scanning",
-        progress,
-        chunk.chunkIndex + 1,
-        chunk.totalChunks
-      )
-    );
-    const chunkSummary = result.chunkSummaries.find(
-      (summary: ChunkSummaryItem) => summary.chunkIndex === chunk.chunkIndex
-    ) ?? chunk;
+    events.push(createProgressEvent(request.taskId, 'scanning', progress, chunk.chunkIndex + 1, chunk.totalChunks));
+    const chunkSummary =
+      result.chunkSummaries.find((summary: ChunkSummaryItem) => summary.chunkIndex === chunk.chunkIndex) ?? chunk;
     events.push(createChunkEvent(request.taskId, chunkSummary));
   }
 
-  events.push(createProgressEvent(request.taskId, "scoring", 0.9, chunkPlan.length, chunkPlan.length));
-  events.push(createProgressEvent(request.taskId, "complete", 1, chunkPlan.length, chunkPlan.length));
+  events.push(createProgressEvent(request.taskId, 'scoring', 0.9, chunkPlan.length, chunkPlan.length));
+  events.push(createProgressEvent(request.taskId, 'complete', 1, chunkPlan.length, chunkPlan.length));
   events.push(createResultEvent(result));
 
   return {
@@ -154,7 +148,7 @@ export function createOmceBackendEnvelope(input: OmceBackendEnvelopeInput) {
       timelineTransfer: toJsonTimelineTransfer(result.timelineTransfer),
       astronomy: result.astronomy,
       scanDiagnostics: result.scanDiagnostics,
-      overrideAuditLog: result.overrideAuditLog
-    }
+      overrideAuditLog: result.overrideAuditLog,
+    },
   };
 }

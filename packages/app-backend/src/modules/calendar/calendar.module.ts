@@ -5,6 +5,6 @@ import { CalendarService } from './calendar.service.js';
 @Module({
   controllers: [CalendarController],
   providers: [CalendarService],
-  exports: [CalendarService]
+  exports: [CalendarService],
 })
 export class CalendarModule {}

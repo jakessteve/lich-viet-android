@@ -1,23 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { generateChart } from '../../src/services/tuvi/starPlacement';
 import { buildTuViBirthContext } from '../../src/services/tuvi/birthContext';
 import { DEFAULT_SCHOOL_PROFILE } from '../../src/services/tuvi/schoolProfiles';
 import {
-  computeHora,
-  computeDrekkana,
-  computeChaturthamsha,
-  computeSaptamsha,
-  computeNavamsha,
-  computeDashamsha,
-  computeDvadashamsha,
-  computeShodashamsha,
-  computeVimshamsha,
-  computeChaturvimshamsha,
-  computeSaptavimshamsha,
-  computeTrimsamsha,
-  computeKhavedamsha,
-  computeAkshavedamsha,
-  computeShashtiamsha,
   computeShodashavargaMap,
   computeVimshottariAntardashas,
   computeBhinnashtakavarga,

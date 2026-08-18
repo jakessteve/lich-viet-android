@@ -5,7 +5,7 @@ import { Type } from 'class-transformer';
 export class CreateTuViChartDto {
   @ApiProperty({
     description: 'Birth date and time in ISO format or YYYY-MM-DD',
-    example: '1990-05-15T08:30:00.000Z'
+    example: '1990-05-15T08:30:00.000Z',
   })
   @IsDateString()
   birthDate!: string;
@@ -13,14 +13,14 @@ export class CreateTuViChartDto {
   @ApiProperty({
     description: 'Gender of the person',
     enum: ['male', 'female'],
-    example: 'male'
+    example: 'male',
   })
   @IsEnum(['male', 'female'])
   gender!: 'male' | 'female';
 
   @ApiPropertyOptional({
     description: 'Full name',
-    example: 'Nguyễn Văn A'
+    example: 'Nguyễn Văn A',
   })
   @IsOptional()
   @IsString()
@@ -29,7 +29,7 @@ export class CreateTuViChartDto {
   @ApiPropertyOptional({
     description: 'Birth latitude (default: 21.0285 for Hanoi)',
     example: 21.0285,
-    default: 21.0285
+    default: 21.0285,
   })
   @IsOptional()
   @Type(() => Number)
@@ -41,7 +41,7 @@ export class CreateTuViChartDto {
   @ApiPropertyOptional({
     description: 'Birth longitude (default: 105.8542 for Hanoi)',
     example: 105.8542,
-    default: 105.8542
+    default: 105.8542,
   })
   @IsOptional()
   @Type(() => Number)
@@ -53,7 +53,7 @@ export class CreateTuViChartDto {
   @ApiPropertyOptional({
     description: 'Timezone offset (default: 7.0)',
     example: 7.0,
-    default: 7.0
+    default: 7.0,
   })
   @IsOptional()
   @Type(() => Number)
@@ -65,7 +65,7 @@ export class CreateTuViChartDto {
   @ApiPropertyOptional({
     description: 'Astrological tradition/school',
     enum: ['nam_phai', 'bac_phai'],
-    default: 'nam_phai'
+    default: 'nam_phai',
   })
   @IsOptional()
   @IsEnum(['nam_phai', 'bac_phai'])

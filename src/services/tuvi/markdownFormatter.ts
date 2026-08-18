@@ -166,7 +166,6 @@ export function formatPositionalSemanticsAsMarkdown(chart: TuViChart): string {
   return lines.join('\n');
 }
 
-
 /**
  * Formats comprehensive Vận Hạn (12 Đại Hạn schedule, Active Đại Hạn deep dive, Tiểu Hạn, Nguyệt Hạn, Lưu Diệu).
  */
@@ -180,14 +179,22 @@ export function formatHanContextAsMarkdown(chart: TuViChart, customHan?: TuViHan
   const activeDaiHan = getCurrentDaiHan(chart, han.viewAge) ?? allDaiHans.find((d) => d.isCurrent) ?? allDaiHans[0];
 
   const lines: string[] = ['## Vận Hạn & Lưu Niên Chi Tiết'];
-  lines.push(`- **Thời điểm tra cứu**: Năm ${han.viewYear} (Âm lịch), Tháng ${han.viewMonth}, Tuổi mụ: ${han.viewAge} tuổi`);
-  lines.push(`- **Đại Hạn Đang Đi (10 năm)**: Cung ${han.daiHanPalaceName || activeDaiHan?.palaceName || '-'} (${han.daiHanAgeRange || activeDaiHan?.ageRange || '-'})`);
-  
+  lines.push(
+    `- **Thời điểm tra cứu**: Năm ${han.viewYear} (Âm lịch), Tháng ${han.viewMonth}, Tuổi mụ: ${han.viewAge} tuổi`,
+  );
+  lines.push(
+    `- **Đại Hạn Đang Đi (10 năm)**: Cung ${han.daiHanPalaceName || activeDaiHan?.palaceName || '-'} (${han.daiHanAgeRange || activeDaiHan?.ageRange || '-'})`,
+  );
+
   const tieuHanPalace = han.tieuHanPalaceIndex !== null ? chart.palaces[han.tieuHanPalaceIndex] : null;
-  lines.push(`- **Tiểu Hạn Năm ${han.viewYear}**: Cung ${tieuHanPalace ? `${tieuHanPalace.name} (${tieuHanPalace.canChi})` : '-'}`);
+  lines.push(
+    `- **Tiểu Hạn Năm ${han.viewYear}**: Cung ${tieuHanPalace ? `${tieuHanPalace.name} (${tieuHanPalace.canChi})` : '-'}`,
+  );
 
   const nguyetHanPalace = han.nguyetHanPalaceIndex !== null ? chart.palaces[han.nguyetHanPalaceIndex] : null;
-  lines.push(`- **Nguyệt Hạn Tháng ${han.viewMonth}**: Cung ${nguyetHanPalace ? `${nguyetHanPalace.name} (${nguyetHanPalace.canChi})` : '-'}`);
+  lines.push(
+    `- **Nguyệt Hạn Tháng ${han.viewMonth}**: Cung ${nguyetHanPalace ? `${nguyetHanPalace.name} (${nguyetHanPalace.canChi})` : '-'}`,
+  );
 
   // 1. Table of 12 Major Luck Periods
   lines.push('\n### Bảng 12 Thập Niên Đại Hạn Cuộc Đời');
@@ -198,28 +205,40 @@ export function formatHanContextAsMarkdown(chart: TuViChart, customHan?: TuViHan
     const isCurrentMarker = dh.palaceId === activeDaiHan?.palaceId ? ' ★ (Hiện tại)' : '';
     const nameFull = `${dh.palaceName}${isCurrentMarker}`;
     const tamTaiDesc = `Thiên: ${dh.tamTai.thienThoi.level} · Địa: ${dh.tamTai.diaLoi.level} · Nhân: ${dh.tamTai.nhanHoa.level}`;
-    lines.push(`| ${dh.ageRange} | ${escapeMarkdown(nameFull)} | ${dh.palaceCanChi} | ${dh.truongSinh.name} | **${dh.luckTier}** (${dh.luckScore}/10) | ${tamTaiDesc} |`);
+    lines.push(
+      `| ${dh.ageRange} | ${escapeMarkdown(nameFull)} | ${dh.palaceCanChi} | ${dh.truongSinh.name} | **${dh.luckTier}** (${dh.luckScore}/10) | ${tamTaiDesc} |`,
+    );
   }
 
   // 2. Active Major Luck Period Deep Dive
   if (activeDaiHan) {
-    lines.push(`\n### Luận Giải Chuyên Sâu Đại Hạn ${activeDaiHan.ageRange} (Cung ${activeDaiHan.palaceName} - ${activeDaiHan.palaceCanChi})`);
+    lines.push(
+      `\n### Luận Giải Chuyên Sâu Đại Hạn ${activeDaiHan.ageRange} (Cung ${activeDaiHan.palaceName} - ${activeDaiHan.palaceCanChi})`,
+    );
     lines.push(`- **Chủ đề vận hạn (Theme)**: ${activeDaiHan.themeVi}`);
     lines.push(`- **Đánh giá Tam Tài (${activeDaiHan.luckScore}/10 - ${activeDaiHan.luckTier})**:`);
     lines.push(`  - **Thiên Thời (${activeDaiHan.tamTai.thienThoi.level})**: ${activeDaiHan.tamTai.thienThoi.desc}`);
     lines.push(`  - **Địa Lợi (${activeDaiHan.tamTai.diaLoi.level})**: ${activeDaiHan.tamTai.diaLoi.desc}`);
     lines.push(`  - **Nhân Hòa (${activeDaiHan.tamTai.nhanHoa.level})**: ${activeDaiHan.tamTai.nhanHoa.desc}`);
-    lines.push(`  - **Khí Lực Tràng Sinh (${activeDaiHan.truongSinh.name})**: ${activeDaiHan.truongSinh.energyDescription}`);
-    
+    lines.push(
+      `  - **Khí Lực Tràng Sinh (${activeDaiHan.truongSinh.name})**: ${activeDaiHan.truongSinh.energyDescription}`,
+    );
+
     lines.push(`- **Lưu Tứ Hóa Can Cung ${activeDaiHan.daiHanTuHoa.canCung}**:`);
-    lines.push(`  - Hóa Lộc: ${activeDaiHan.daiHanTuHoa.hoaLoc} · Hóa Quyền: ${activeDaiHan.daiHanTuHoa.hoaQuyen} · Hóa Khoa: ${activeDaiHan.daiHanTuHoa.hoaKhoa} · Hóa Kỵ: ${activeDaiHan.daiHanTuHoa.hoaKy}`);
+    lines.push(
+      `  - Hóa Lộc: ${activeDaiHan.daiHanTuHoa.hoaLoc} · Hóa Quyền: ${activeDaiHan.daiHanTuHoa.hoaQuyen} · Hóa Khoa: ${activeDaiHan.daiHanTuHoa.hoaKhoa} · Hóa Kỵ: ${activeDaiHan.daiHanTuHoa.hoaKy}`,
+    );
     if (activeDaiHan.daiHanTuHoa.interactionWithNatal.length > 0) {
       lines.push(`  - Tương tác với Tứ Hóa gốc: ${activeDaiHan.daiHanTuHoa.interactionWithNatal.join('; ')}`);
     }
 
     lines.push(`- **Phân kỳ 5 năm (Tiền vận vs Hậu vận)**:`);
-    lines.push(`  - 5 năm đầu (${activeDaiHan.startAge}–${activeDaiHan.startAge + 4} tuổi): ${activeDaiHan.phasingBreakdown.firstHalf}`);
-    lines.push(`  - 5 năm sau (${activeDaiHan.startAge + 5}–${activeDaiHan.endAge} tuổi): ${activeDaiHan.phasingBreakdown.secondHalf}`);
+    lines.push(
+      `  - 5 năm đầu (${activeDaiHan.startAge}–${activeDaiHan.startAge + 4} tuổi): ${activeDaiHan.phasingBreakdown.firstHalf}`,
+    );
+    lines.push(
+      `  - 5 năm sau (${activeDaiHan.startAge + 5}–${activeDaiHan.endAge} tuổi): ${activeDaiHan.phasingBreakdown.secondHalf}`,
+    );
 
     lines.push(`- **Định hướng chiến lược (Strategic Guidance)**: ${activeDaiHan.detailedSynthesis.strategicGuidance}`);
     lines.push(`- **Sự nghiệp & Tài lộc**: ${activeDaiHan.detailedSynthesis.careerAndWealth}`);
@@ -242,12 +261,20 @@ export function formatHanContextAsMarkdown(chart: TuViChart, customHan?: TuViHan
 
   // 4. Detailed Tiểu Hạn (Annual Horizon) Deep Dive
   const tieuHanResult = interpretTieuHan(chart, han.viewYear);
-  lines.push(`\n### Luận Giải Chi Tiết Tiểu Hạn Năm ${tieuHanResult.viewYear} (${tieuHanResult.yearCan} ${tieuHanResult.yearChi})`);
+  lines.push(
+    `\n### Luận Giải Chi Tiết Tiểu Hạn Năm ${tieuHanResult.viewYear} (${tieuHanResult.yearCan} ${tieuHanResult.yearChi})`,
+  );
   lines.push(`- **Tiêu đề tổng quan**: ${tieuHanResult.themeHeadlineVi}`);
-  lines.push(`- **Cung tọa thủ**: Cung ${tieuHanResult.tieuHanPalaceName} (${tieuHanResult.tieuHanPalaceChi}) · Đánh giá: **${tieuHanResult.luckTier}** (${tieuHanResult.overallScore}/10)`);
-  lines.push(`- **Tương quan Đại Hạn**: ${tieuHanResult.daiHanResonance.titleVi} (${tieuHanResult.daiHanResonance.descriptionVi})`);
-  lines.push(`- **Lưu Tứ Hóa Can ${tieuHanResult.luuTuHoa.canYear}**: Hóa Lộc (${tieuHanResult.luuTuHoa.hoaLoc}), Hóa Quyền (${tieuHanResult.luuTuHoa.hoaQuyen}), Hóa Khoa (${tieuHanResult.luuTuHoa.hoaKhoa}), Hóa Kỵ (${tieuHanResult.luuTuHoa.hoaKy})`);
-  
+  lines.push(
+    `- **Cung tọa thủ**: Cung ${tieuHanResult.tieuHanPalaceName} (${tieuHanResult.tieuHanPalaceChi}) · Đánh giá: **${tieuHanResult.luckTier}** (${tieuHanResult.overallScore}/10)`,
+  );
+  lines.push(
+    `- **Tương quan Đại Hạn**: ${tieuHanResult.daiHanResonance.titleVi} (${tieuHanResult.daiHanResonance.descriptionVi})`,
+  );
+  lines.push(
+    `- **Lưu Tứ Hóa Can ${tieuHanResult.luuTuHoa.canYear}**: Hóa Lộc (${tieuHanResult.luuTuHoa.hoaLoc}), Hóa Quyền (${tieuHanResult.luuTuHoa.hoaQuyen}), Hóa Khoa (${tieuHanResult.luuTuHoa.hoaKhoa}), Hóa Kỵ (${tieuHanResult.luuTuHoa.hoaKy})`,
+  );
+
   if (tieuHanResult.collisions.length > 0) {
     lines.push(`- **Tương tác Tứ Hóa nổi bật**:`);
     for (const c of tieuHanResult.collisions) {
@@ -267,7 +294,9 @@ export function formatHanContextAsMarkdown(chart: TuViChart, customHan?: TuViHan
   // 5. Nguyệt Hạn Current Month
   const nguyetHanResult = interpretNguyetHan(chart, han.viewYear, han.viewMonth);
   lines.push(`\n### Nguyệt Hạn Tháng ${han.viewMonth} (Cung ${nguyetHanResult.palaceName})`);
-  lines.push(`- **Mức độ**: **${nguyetHanResult.luckTier}** (${nguyetHanResult.monthScore}/10) · **Trọng tâm**: ${nguyetHanResult.focusThemeVi}`);
+  lines.push(
+    `- **Mức độ**: **${nguyetHanResult.luckTier}** (${nguyetHanResult.monthScore}/10) · **Trọng tâm**: ${nguyetHanResult.focusThemeVi}`,
+  );
   lines.push(`- **Luận giải**: ${nguyetHanResult.summaryVi} ${nguyetHanResult.adviceVi}`);
 
   return lines.join('\n');
@@ -362,7 +391,9 @@ export function formatFlyingStarsAsMarkdown(chart: TuViChart): string {
       : '-';
     const ky = p.flyingHuas['Kỵ'] ? `${p.flyingHuas['Kỵ'].targetPalaceName} (${p.flyingHuas['Kỵ'].starName})` : '-';
     const tuHoa = p.tuHuas.length > 0 ? p.tuHuas.map((th) => th.type).join(', ') : '-';
-    lines.push(`| ${p.palaceName} | ${p.can} ${p.chi} | ${escapeMarkdown(loc)} | ${escapeMarkdown(quyen)} | ${escapeMarkdown(khoa)} | ${escapeMarkdown(ky)} | ${tuHoa} |`);
+    lines.push(
+      `| ${p.palaceName} | ${p.can} ${p.chi} | ${escapeMarkdown(loc)} | ${escapeMarkdown(quyen)} | ${escapeMarkdown(khoa)} | ${escapeMarkdown(ky)} | ${tuHoa} |`,
+    );
   });
 
   return lines.join('\n');
@@ -419,4 +450,3 @@ export function formatTuViChartAsMarkdown(chart: TuViChart, options?: Partial<Tu
 
   return parts.join('\n\n');
 }
-

@@ -61,9 +61,7 @@ export default function CrossRefSynthesis({ synthesis }: CrossRefSynthesisProps)
     <Card className={cn('rounded-2xl border-2 p-5 space-y-4 shadow-sm', style.border, style.bg)}>
       {/* Header */}
       <div className="flex items-center gap-3">
-        <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center', style.badge)}>
-          {style.icon}
-        </div>
+        <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center', style.badge)}>{style.icon}</div>
         <div className="min-w-0 flex-1">
           <h3 className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">Tổng Hợp Tam Thức</h3>
           <p className={cn('text-sm font-semibold', style.text)}>{synthesis.combinedLabel}</p>

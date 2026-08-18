@@ -52,13 +52,7 @@ const HolidaysCard: React.FC<HolidaysCardProps> = ({ holidays, isLoading, countr
                 </p>
                 <div className="flex items-center gap-2 mt-1">
                   <Badge
-                    variant={
-                      h.source === 'vn-lunar'
-                        ? 'gold'
-                        : h.source === 'vn-solar'
-                          ? 'good'
-                          : 'info'
-                    }
+                    variant={h.source === 'vn-lunar' ? 'gold' : h.source === 'vn-solar' ? 'good' : 'info'}
                     className="text-[11px] px-2 py-0.5 rounded-full"
                   >
                     {SOURCE_LABELS[h.source]}
