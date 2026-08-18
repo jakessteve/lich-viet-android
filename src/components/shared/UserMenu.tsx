@@ -21,7 +21,9 @@ interface UserMenuProps {
 
 export default function UserMenu({ showFontSizeControl = false, onOpenHelp, onOpenAbout, className }: UserMenuProps) {
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+  const logout = useAuthStore((s) => s.logout);
   const fontSize = useAppStore((s) => s.fontSize);
   const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
 

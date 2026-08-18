@@ -8,10 +8,10 @@
 
 import { getCanChiYear } from '../../utils/calendarEngine';
 import type { Chi, Can } from '../../types/calendar';
+import { CAN_LIST, CHI_LIST } from '../../utils/constants';
 import { resolvePersonalBirthMoment, type PersonalBirthDetails } from './birthMath';
 
-export const CHI_LIST: Chi[] = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
-export const CAN_LIST: Can[] = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
+export { CAN_LIST, CHI_LIST };
 
 export interface PersonalDayScore {
   actionScore: number;

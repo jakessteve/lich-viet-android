@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateSolarArcDirections } from '@/services/western';
+import { calculateSolarArcDirections } from '@/services/astrology/solarArcCalculator';
 import type { WesternChartInput } from '@/types/astrology';
 
 describe('solarArcCalculator', () => {

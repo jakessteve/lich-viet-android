@@ -28,7 +28,7 @@ interface DetailedDayViewProps {
 
 const DetailedDayView: React.FC<DetailedDayViewProps> = ({ date, data }) => {
   const navigate = useNavigate();
-  const { user } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
   const isPersonalized = useAppStore((s) => s.isPersonalized);
   const togglePersonalization = useAppStore((s) => s.togglePersonalization);
   const [sortByScore, setSortByScore] = useState(false);

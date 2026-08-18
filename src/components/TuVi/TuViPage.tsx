@@ -8,6 +8,7 @@ import { TuViChart } from './TuViChart';
 import { TuViSummaryPanel } from './TuViSummaryPanel';
 import { IconButton, SegmentedControl, SavedChartsPicker, type SegmentedOption } from '../shared';
 import { TuViPalaceInlineDetail } from './TuViPalaceInlineDetail';
+import { TuViMarkdownExport } from './TuViMarkdownExport';
 import { ExecutiveSnapshotCards } from '../shared/ExecutiveSnapshotCards';
 import { interpretPalace } from '@/services/tuvi/palaceInterpretation';
 import type { TuViSchool, TuViInput } from '../../types/tuvi';
@@ -331,14 +332,17 @@ export const TuViPage: React.FC = () => {
               Chọn mức độ chi tiết phù hợp với nhu cầu tra cứu.
             </p>
           </div>
-          <SegmentedControl
-            options={TUVI_VIEW_MODES}
-            value={interpretationMode}
-            onChange={setInterpretationMode}
-            ariaLabel="Chế độ xem luận giải Tử Vi"
-            tone="gold"
-            className="w-full sm:w-auto"
-          />
+          <div className="flex flex-wrap items-center gap-2">
+            <TuViMarkdownExport />
+            <SegmentedControl
+              options={TUVI_VIEW_MODES}
+              value={interpretationMode}
+              onChange={setInterpretationMode}
+              ariaLabel="Chế độ xem luận giải Tử Vi"
+              tone="gold"
+              className="w-full sm:w-auto"
+            />
+          </div>
         </div>
       )}
 

@@ -172,11 +172,18 @@ describe('Star Placement Engine', () => {
   });
 
   describe('placePhuTinh Thiên Lương Kình Đà', () => {
-    it('places Hỏa Tinh and Linh Tinh from the classical year-branch and hour tables', () => {
+    it('places Hỏa Tinh and Linh Tinh for Thuận charts (Hỏa thuận, Linh nghịch)', () => {
       const positions = placePhuTinh(9, 11, 11, 13, 9, 0, 0, 'Thuận');
 
-      expect(positions['Hỏa Tinh']).toBe(6); // Ngọ
-      expect(positions['Linh Tinh']).toBe(7); // Mùi
+      expect(positions['Hỏa Tinh']).toBe(6); // Ngọ: (Dậu 9 + Thân 9) % 12 = 6
+      expect(positions['Linh Tinh']).toBe(1); // Sửu: (Tuất 10 - Thân 9) % 12 = 1
+    });
+
+    it('places Hỏa Tinh and Linh Tinh for Nghịch charts (Hỏa nghịch, Linh thuận)', () => {
+      const positions = placePhuTinh(9, 11, 11, 13, 9, 0, 0, 'Nghịch');
+
+      expect(positions['Hỏa Tinh']).toBe(0); // Tý: (Dậu 9 - Thân 9) % 12 = 0
+      expect(positions['Linh Tinh']).toBe(7); // Mùi: (Tuất 10 + Thân 9) % 12 = 7
     });
 
     it('places Lưu Hà by the classical year-can table', () => {
@@ -402,7 +409,7 @@ describe('Star Placement Engine', () => {
       expect(byChi.get('Tỵ')?.brightness['Tử Vi']).toBe('Miếu');
       expect(byChi.get('Tỵ')?.brightness['Thất Sát']).toBe('Vượng');
       expect(byChi.get('Tỵ')?.brightness['Thiên Mã']).toBe('Đắc');
-      expect(byChi.get('Ngọ')?.brightness['Hỏa Tinh']).toBe('Đắc');
+      expect(byChi.get('Tý')?.brightness['Hỏa Tinh']).toBe('Hãm');
       expect(byChi.get('Ngọ')?.brightness['Thiên Hình']).toBe('Hãm');
       expect(byChi.get('Mùi')?.brightness['Linh Tinh']).toBe('Hãm');
       expect(byChi.get('Mùi')?.brightness['Thiên Khốc']).toBe('Đắc');
@@ -481,8 +488,8 @@ describe('Star Placement Engine', () => {
       const densest = counts.reduce((current, next) => (next.nonMajor > current.nonMajor ? next : current));
 
       expect(densest.chi).toBe(8); // Thân
-      expect(densest.nonMajor).toBe(19);
-      expect(densest.total).toBe(21);
+      expect(densest.nonMajor).toBe(20);
+      expect(densest.total).toBe(22);
       expect(densest.main).toBe(2);
     });
   });

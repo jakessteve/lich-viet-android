@@ -141,7 +141,14 @@ export const VedicSquareChart: React.FC<{ result: WesternChartResult; type: 'D1'
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <svg viewBox={`0 0 ${S} ${S}`} style={{ width: '100%', maxWidth: S }}>
+      <svg
+        viewBox={`0 0 ${S} ${S}`}
+        style={{ width: '100%', maxWidth: S }}
+        role="img"
+        aria-label="Vedic South Indian Chart"
+        shapeRendering="geometricPrecision"
+        textRendering="geometricPrecision"
+      >
         <rect width={S} height={S} fill={co.bg} rx="6" />
 
         {/* outer chart border */}

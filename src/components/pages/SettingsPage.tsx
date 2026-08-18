@@ -1,4 +1,5 @@
 import React, { useState, useRef, useMemo } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
 import { useAppStore } from '../../stores/appStore';
@@ -46,7 +47,15 @@ export default function SettingsPage() {
   const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
   const showScrollToTopButton = useAppStore((s) => s.showScrollToTopButton);
   const setShowScrollToTopButton = useAppStore((s) => s.setShowScrollToTopButton);
-  const { user, isAuthenticated, logout, updateProfile, changePassword } = useAuthStore();
+  const { user, isAuthenticated, logout, updateProfile, changePassword } = useAuthStore(
+    useShallow((s) => ({
+      user: s.user,
+      isAuthenticated: s.isAuthenticated,
+      logout: s.logout,
+      updateProfile: s.updateProfile,
+      changePassword: s.changePassword,
+    })),
+  );
   const avatarInputRef = useRef<HTMLInputElement>(null);
   const [showSaveToast, setShowSaveToast] = useState(false);
 

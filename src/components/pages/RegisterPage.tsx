@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   UserPlus,
@@ -32,7 +33,14 @@ import { cn } from '@/lib/utils';
 export default function RegisterPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { register, socialLogin, isLoading, isAuthenticated } = useAuthStore();
+  const { register, socialLogin, isLoading, isAuthenticated } = useAuthStore(
+    useShallow((s) => ({
+      register: s.register,
+      socialLogin: s.socialLogin,
+      isLoading: s.isLoading,
+      isAuthenticated: s.isAuthenticated,
+    })),
+  );
 
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');

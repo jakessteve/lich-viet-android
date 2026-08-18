@@ -131,6 +131,10 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({
             <div className="relative flex-1">
               <input
                 type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
+                aria-label="Ngày sinh dương lịch"
                 min="1"
                 max="31"
                 className="surface-control w-full p-3 text-center font-bold transition-colors"
@@ -148,6 +152,10 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({
             <div className="relative flex-1">
               <input
                 type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
+                aria-label="Tháng sinh dương lịch"
                 min="1"
                 max="12"
                 className="surface-control w-full p-3 text-center font-bold transition-colors"
@@ -165,6 +173,10 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({
             <div className="relative flex-[1.5]">
               <input
                 type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
+                aria-label="Năm sinh dương lịch"
                 min="1900"
                 max="2100"
                 className="surface-control w-full p-3 text-center font-bold transition-colors"
@@ -188,6 +200,10 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({
             <div className="relative flex-1">
               <input
                 type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
+                aria-label="Giờ sinh"
                 min="0"
                 max="23"
                 className="surface-control w-full p-3 text-center font-bold transition-colors"
@@ -206,6 +222,10 @@ export const BirthDataInput: React.FC<BirthDataInputProps> = ({
             <div className="relative flex-1">
               <input
                 type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                autoComplete="off"
+                aria-label="Phút sinh"
                 min="0"
                 max="59"
                 className="surface-control w-full p-3 text-center font-bold transition-colors"

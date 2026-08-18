@@ -10,7 +10,8 @@ import { MotionFadeIn } from '@/components/ui/motion-primitives';
 export default function UpgradePage() {
   usePageTitle('Quyền lợi Thành viên');
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
 
   const isPremium = user?.accessTier === 'premium' || user?.accessTier === 'admin';
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import { useNavigate } from 'react-router-dom';
 import { LockKeyholeOpen, User, Lock, Eye, EyeOff, AlertCircle, ArrowLeft, Info, Loader2 } from 'lucide-react';
 import { useAuthStore } from '../../stores/authStore';
@@ -15,7 +16,13 @@ import { MotionFadeIn } from '@/components/ui/motion-primitives';
 
 export default function LoginPage() {
   const navigate = useNavigate();
-  const { login, isLoading, isAuthenticated } = useAuthStore();
+  const { login, isLoading, isAuthenticated } = useAuthStore(
+    useShallow((s) => ({
+      login: s.login,
+      isLoading: s.isLoading,
+      isAuthenticated: s.isAuthenticated,
+    })),
+  );
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

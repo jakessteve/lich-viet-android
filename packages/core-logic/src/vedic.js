@@ -12,6 +12,49 @@ const DASHA_SEQUENCE = [
   { lord: "mercury", years: 17 }
 ];
 
+export const SIGNS = [
+  "aries", "taurus", "gemini", "cancer",
+  "leo", "virgo", "libra", "scorpio",
+  "sagittarius", "capricorn", "aquarius", "pisces"
+];
+
+export function computeHora(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const isOdd = sign % 2 === 0;
+  const d2Sign = isOdd ? (deg < 15 ? 4 : 3) : (deg < 15 ? 3 : 4);
+  return SIGNS[d2Sign];
+}
+
+export function computeDrekkana(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const decan = Math.floor(deg / 10);
+  const d3Sign = (sign + decan * 4) % 12;
+  return SIGNS[d3Sign];
+}
+
+export function computeChaturthamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / 7.5);
+  const d4Sign = (sign + part * 3) % 12;
+  return SIGNS[d4Sign];
+}
+
+export function computeSaptamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / (30 / 7));
+  const isOdd = sign % 2 === 0;
+  const d7Sign = isOdd ? (sign + part) % 12 : (sign + 6 + part) % 12;
+  return SIGNS[d7Sign];
+}
+
 export function computeNavamsha(siderealLongitude) {
   const normLon = normalizeDegrees(siderealLongitude);
   const sign = Math.floor(normLon / 30);
@@ -24,15 +67,150 @@ export function computeNavamsha(siderealLongitude) {
   // Earth signs (Taurus, Virgo, Cap) -> sign % 4 === 1 -> starts from Capricorn (9)
   // Air signs (Gemini, Libra, Aqua) -> sign % 4 === 2 -> starts from Libra (6)
   // Water signs (Cancer, Scorpio, Pisces) -> sign % 4 === 3 -> starts from Cancer (3)
-  // This is mathematically equivalent to the standard Movable/Fixed/Dual rules.
   if (sign % 4 === 0) startingSign = 0; 
   else if (sign % 4 === 1) startingSign = 9; 
   else if (sign % 4 === 2) startingSign = 6; 
   else startingSign = 3; 
 
   const d9Sign = (startingSign + navamshaIndex) % 12;
-  const SIGNS = ["aries", "taurus", "gemini", "cancer", "leo", "virgo", "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"];
   return SIGNS[d9Sign];
+}
+
+export function computeDashamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / 3);
+  const isOdd = sign % 2 === 0;
+  const d10Sign = isOdd ? (sign + part) % 12 : (sign + 8 + part) % 12;
+  return SIGNS[d10Sign];
+}
+
+export function computeDvadashamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / 2.5);
+  const d12Sign = (sign + part) % 12;
+  return SIGNS[d12Sign];
+}
+
+export function computeShodashamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / (30 / 16));
+  const signMod3 = sign % 3;
+  const start = signMod3 === 0 ? 0 : (signMod3 === 1 ? 4 : 8);
+  const d16Sign = (start + part) % 12;
+  return SIGNS[d16Sign];
+}
+
+export function computeVimshamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / 1.5);
+  const signMod3 = sign % 3;
+  const start = signMod3 === 0 ? 0 : (signMod3 === 1 ? 8 : 4);
+  const d20Sign = (start + part) % 12;
+  return SIGNS[d20Sign];
+}
+
+export function computeChaturvimshamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / 1.25);
+  const isOdd = sign % 2 === 0;
+  const start = isOdd ? 4 : 3;
+  const d24Sign = (start + part) % 12;
+  return SIGNS[d24Sign];
+}
+
+export function computeSaptavimshamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / (30 / 27));
+  const signMod4 = sign % 4;
+  const start = signMod4 === 0 ? 0 : (signMod4 === 1 ? 3 : (signMod4 === 2 ? 6 : 9));
+  const d27Sign = (start + part) % 12;
+  return SIGNS[d27Sign];
+}
+
+export function computeTrimsamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const isOdd = sign % 2 === 0;
+  let d30Sign;
+  if (isOdd) {
+    if (deg < 5) d30Sign = 0;
+    else if (deg < 10) d30Sign = 10;
+    else if (deg < 18) d30Sign = 8;
+    else if (deg < 25) d30Sign = 2;
+    else d30Sign = 6;
+  } else {
+    if (deg < 5) d30Sign = 1;
+    else if (deg < 12) d30Sign = 5;
+    else if (deg < 20) d30Sign = 11;
+    else if (deg < 25) d30Sign = 9;
+    else d30Sign = 7;
+  }
+  return SIGNS[d30Sign];
+}
+
+export function computeKhavedamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / 0.75);
+  const isOdd = sign % 2 === 0;
+  const start = isOdd ? 0 : 6;
+  const d40Sign = (start + part) % 12;
+  return SIGNS[d40Sign];
+}
+
+export function computeAkshavedamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / (30 / 45));
+  const signMod3 = sign % 3;
+  const start = signMod3 === 0 ? 0 : (signMod3 === 1 ? 4 : 8);
+  const d45Sign = (start + part) % 12;
+  return SIGNS[d45Sign];
+}
+
+export function computeShashtiamsha(siderealLongitude) {
+  const normLon = normalizeDegrees(siderealLongitude);
+  const sign = Math.floor(normLon / 30);
+  const deg = normLon % 30;
+  const part = Math.floor(deg / 0.5);
+  const d60Sign = (sign + part) % 12;
+  return SIGNS[d60Sign];
+}
+
+export function computeShodashavargaMap(siderealLongitude) {
+  return {
+    d1: SIGNS[Math.floor(normalizeDegrees(siderealLongitude) / 30)],
+    d2: computeHora(siderealLongitude),
+    d3: computeDrekkana(siderealLongitude),
+    d4: computeChaturthamsha(siderealLongitude),
+    d7: computeSaptamsha(siderealLongitude),
+    d9: computeNavamsha(siderealLongitude),
+    d10: computeDashamsha(siderealLongitude),
+    d12: computeDvadashamsha(siderealLongitude),
+    d16: computeShodashamsha(siderealLongitude),
+    d20: computeVimshamsha(siderealLongitude),
+    d24: computeChaturvimshamsha(siderealLongitude),
+    d27: computeSaptavimshamsha(siderealLongitude),
+    d30: computeTrimsamsha(siderealLongitude),
+    d40: computeKhavedamsha(siderealLongitude),
+    d45: computeAkshavedamsha(siderealLongitude),
+    d60: computeShashtiamsha(siderealLongitude),
+  };
 }
 
 export function computeVimshottariDasha(moonSidereal, birthJulianDay, birthYear) {
@@ -72,6 +250,139 @@ export function computeVimshottariDasha(moonSidereal, birthJulianDay, birthYear)
   }
   
   return dashas;
+}
+
+export function computeVimshottariAntardashas(mahadashaLord, startYear, durationYears) {
+  const mahadashaIndex = DASHA_SEQUENCE.findIndex((d) => d.lord === mahadashaLord);
+  if (mahadashaIndex === -1) return [];
+
+  const mahaYears = DASHA_SEQUENCE[mahadashaIndex].years;
+  const antardashas = [];
+  let currentStart = startYear;
+
+  for (let i = 0; i < 9; i++) {
+    const subLordIndex = (mahadashaIndex + i) % 9;
+    const subDasha = DASHA_SEQUENCE[subLordIndex];
+    const antardashaYears = (durationYears * subDasha.years) / 120;
+    const endYear = currentStart + antardashaYears;
+    antardashas.push({
+      lord: subDasha.lord,
+      startYear: currentStart,
+      endYear,
+      duration: antardashaYears,
+    });
+    currentStart = endYear;
+  }
+  return antardashas;
+}
+
+/**
+ * Classical Parashara Ashtakavarga benefic point rules from natal positions.
+ */
+export const ASHTAKAVARGA_RULES = {
+  sun: {
+    sun: [1, 2, 4, 7, 8, 9, 10, 11],
+    moon: [3, 6, 10, 11],
+    mars: [1, 2, 4, 7, 8, 9, 10, 11],
+    mercury: [3, 5, 6, 9, 10, 11, 12],
+    jupiter: [5, 6, 9, 11],
+    venus: [6, 7, 12],
+    saturn: [1, 2, 4, 7, 8, 9, 10, 11],
+    ascendant: [3, 4, 6, 10, 11, 12],
+  },
+  moon: {
+    sun: [3, 6, 7, 8, 10, 11],
+    moon: [1, 3, 6, 7, 10, 11],
+    mars: [2, 3, 5, 6, 9, 10, 11],
+    mercury: [1, 3, 4, 5, 7, 8, 10, 11],
+    jupiter: [1, 4, 7, 8, 10, 11, 12],
+    venus: [3, 4, 5, 7, 9, 10, 11],
+    saturn: [3, 5, 6, 11],
+    ascendant: [3, 6, 10, 11],
+  },
+  mars: {
+    sun: [3, 5, 6, 10, 11],
+    moon: [3, 6, 11],
+    mars: [1, 2, 4, 7, 8, 10, 11],
+    mercury: [3, 5, 6, 11],
+    jupiter: [6, 10, 11, 12],
+    venus: [6, 8, 11, 12],
+    saturn: [1, 4, 7, 8, 9, 10, 11],
+    ascendant: [1, 3, 6, 10, 11],
+  },
+  mercury: {
+    sun: [5, 6, 9, 11, 12],
+    moon: [2, 4, 6, 8, 10, 11],
+    mars: [1, 2, 4, 7, 8, 9, 10, 11],
+    mercury: [1, 3, 5, 6, 9, 10, 11, 12],
+    jupiter: [6, 8, 11, 12],
+    venus: [1, 2, 3, 4, 5, 8, 9, 11],
+    saturn: [1, 2, 4, 7, 8, 9, 10, 11],
+    ascendant: [1, 2, 4, 6, 8, 10, 11],
+  },
+  jupiter: {
+    sun: [1, 2, 3, 4, 7, 8, 9, 10, 11],
+    moon: [2, 5, 7, 9, 11],
+    mars: [1, 2, 4, 7, 8, 10, 11],
+    mercury: [1, 2, 4, 5, 6, 9, 10, 11],
+    jupiter: [1, 2, 3, 4, 7, 8, 10, 11],
+    venus: [2, 5, 6, 9, 10, 11],
+    saturn: [3, 5, 6, 12],
+    ascendant: [1, 2, 4, 5, 6, 7, 9, 10, 11],
+  },
+  venus: {
+    sun: [8, 11, 12],
+    moon: [1, 2, 3, 4, 5, 8, 9, 11, 12],
+    mars: [3, 5, 6, 9, 11, 12],
+    mercury: [3, 5, 6, 9, 11],
+    jupiter: [5, 8, 9, 10, 11],
+    venus: [1, 2, 3, 4, 5, 8, 9, 10, 11],
+    saturn: [3, 4, 5, 8, 9, 10, 11],
+    ascendant: [1, 2, 3, 4, 5, 8, 9, 11],
+  },
+  saturn: {
+    sun: [1, 2, 4, 7, 8, 10, 11],
+    moon: [3, 6, 11],
+    mars: [3, 5, 6, 10, 11, 12],
+    mercury: [6, 8, 9, 10, 11, 12],
+    jupiter: [5, 6, 11, 12],
+    venus: [6, 11, 12],
+    saturn: [3, 5, 6, 11],
+    ascendant: [1, 3, 4, 6, 10, 11],
+  },
+};
+
+export function computeBhinnashtakavarga(planetSigns) {
+  const bav = {};
+  const planets = ['sun', 'moon', 'mars', 'mercury', 'jupiter', 'venus', 'saturn'];
+
+  for (const targetPlanet of planets) {
+    const rules = ASHTAKAVARGA_RULES[targetPlanet];
+    const points = Array(12).fill(0);
+    if (rules) {
+      for (const [sourceBody, houses] of Object.entries(rules)) {
+        const sourceSign = planetSigns[sourceBody];
+        if (sourceSign !== undefined) {
+          for (const h of houses) {
+            const destSign = (sourceSign + h - 1) % 12;
+            points[destSign] += 1;
+          }
+        }
+      }
+    }
+    bav[targetPlanet] = points;
+  }
+  return bav;
+}
+
+export function computeSarvashtakavarga(bav) {
+  const sav = Array(12).fill(0);
+  for (const points of Object.values(bav)) {
+    for (let i = 0; i < 12; i++) {
+      sav[i] += points[i];
+    }
+  }
+  return sav;
 }
 
 const NAKSHATRA_NADI = [

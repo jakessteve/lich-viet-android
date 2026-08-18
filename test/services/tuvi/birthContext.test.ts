@@ -125,8 +125,15 @@ describe('Tu Vi birth context', () => {
     expect(context.correctedDate.getMonth()).toBe(10);
     expect(context.correctedDate.getDate()).toBe(13);
     expect(context.correctedDate.getHours()).toBe(18);
-    expect(context.correctedDate.getMinutes()).toBe(36);
+    expect(context.correctedDate.getMinutes()).toBe(30);
     expect(context.canChi.day).toEqual({ can: 'Ất', chi: 'Tỵ' });
+
+    // Under explicit true-solar policy, true solar time layer is applied (+6.5m for HCM)
+    const solarContext = buildTuViBirthContext(
+      { ...input, timePolicy: 'true-solar' },
+      resolveTuViSchoolProfile('thien-luong'),
+    );
+    expect(solarContext.correctedDate.getMinutes()).toBe(36);
   });
 
   it('preserves a UTC instant civil date when only the branch hour is available', () => {

@@ -2,6 +2,7 @@ import type { Can, Chi } from '../../types/calendar';
 import type {
   HistoricalVietnamRegion,
   TuViBirthLocation,
+  TuViGioTyPolicy,
   TuViInput,
   TuViLeapMonthPolicy,
   TuViTimePolicy,
@@ -9,7 +10,10 @@ import type {
 import { CAN, CHI } from '../../utils/constants';
 import { getCanChiDay, getLunarDate } from '../../utils/calendarEngine';
 import { getDatePartsInTimeZone, getHourBranch, normalizeBirthTimeWithPolicy } from './timeNormalization';
-import type { TuViSchoolProfile } from './schoolProfiles';
+import {
+  TU_VI_SCHOOL_PROFILES,
+  type TuViSchoolProfile,
+} from './schoolProfiles';
 import {
   getSwissEphemerisInstance,
   getSwissTrueSolarCivilTimeForLocation,
@@ -104,7 +108,13 @@ function resolveLeapMonthPolicyMonth(
   lunar: { day: number; month: number; isLeap: boolean },
   leapMonthPolicy: TuViLeapMonthPolicy,
 ): number {
-  if (leapMonthPolicy === 'split-15' && lunar.isLeap && lunar.day > 15) {
+  if (!lunar.isLeap) {
+    return lunar.month;
+  }
+  if (leapMonthPolicy === 'split-15') {
+    return lunar.day > 15 ? lunar.month + 1 : lunar.month;
+  }
+  if (leapMonthPolicy === 'next-month') {
     return lunar.month + 1;
   }
   return lunar.month;
@@ -134,19 +144,41 @@ export interface TuViBirthContext {
   amDuong: 'Dương' | 'Âm';
   thuanNghich: 'Thuận' | 'Nghịch';
   timePolicy: TuViTimePolicy;
+  gioTyPolicy: TuViGioTyPolicy;
   leapMonthPolicy: TuViLeapMonthPolicy;
   historicalRegion?: HistoricalVietnamRegion;
   warnings: string[];
 }
 
-export function buildTuViBirthContext(input: TuViInput, schoolProfile: TuViSchoolProfile): TuViBirthContext {
+export function buildTuViBirthContext(input: TuViInput, schoolProfile?: TuViSchoolProfile): TuViBirthContext {
+  const profile =
+    schoolProfile ??
+    TU_VI_SCHOOL_PROFILES[input.school || 'nam-phai'] ??
+    TU_VI_SCHOOL_PROFILES['nam-phai'];
+  const activeTimePolicy: TuViTimePolicy = input.timePolicy ?? profile.timePolicy ?? 'historical-vietnam';
+  const activeGioTyPolicy: TuViGioTyPolicy = input.gioTyPolicy ?? 'next-day-standard';
+  const activeLeapMonthPolicy: TuViLeapMonthPolicy = input.leapMonthPolicy ?? profile.leapMonthPolicy ?? 'split-15';
   const zonedDate = resolveCivilBirthDate(input) ?? normalizeToIanaTimezone(input.solarDate, input.timezone);
-  const timePolicy = schoolProfile.timePolicy;
-  const trueSolarDate = applyTrueSolarTimeLayer(zonedDate, input.birthLocation);
-  const normalized = normalizeBirthTimeWithPolicy(trueSolarDate, input.birthLocation);
+  const trueSolarDate = activeTimePolicy === 'true-solar'
+    ? applyTrueSolarTimeLayer(zonedDate, input.birthLocation)
+    : zonedDate;
+  const normalized = activeTimePolicy === 'civil'
+    ? {
+        correctedDate: trueSolarDate,
+        offsetHours: input.birthLocation?.timezone ?? 7,
+        historicalRegion: undefined,
+        warnings: [],
+      }
+    : normalizeBirthTimeWithPolicy(trueSolarDate, input.birthLocation);
   const correctedDate = normalized.correctedDate;
-  const lunar = getLunarDate(correctedDate);
-  const logicalMonth = resolveLeapMonthPolicyMonth(lunar, input.leapMonthPolicy ?? schoolProfile.leapMonthPolicy);
+  const swissLocation: SwissGeoLocation | undefined = input.birthLocation
+    ? {
+        longitude: input.birthLocation.lng,
+        timezoneOffsetHours: input.birthLocation.timezone,
+      }
+    : undefined;
+  const lunar = getLunarDate(correctedDate, swissLocation);
+  const logicalMonth = resolveLeapMonthPolicyMonth(lunar, activeLeapMonthPolicy);
 
   const yearCanIndex = mod10(lunar.year - 4);
   const yearChiIndex = mod12(lunar.year - 4);
@@ -158,13 +190,21 @@ export function buildTuViBirthContext(input: TuViInput, schoolProfile: TuViSchoo
   const monthCan = CAN[monthCanIndex];
   const monthChi = CHI[monthChiIndex];
 
-  const dayCanChiStr = getCanChiDay(correctedDate);
+  const hourBranchIndex =
+    input.birthClockHour !== undefined ? getHourBranch(correctedDate.getHours()) : mod12(input.birthHour);
+
+  // Check if birth hour is Dạ Tý (23:00 - 24:00)
+  const isLateRat = hourBranchIndex === 0 && correctedDate.getHours() === 23;
+  const shouldAdvanceDayForCanChi = isLateRat && activeGioTyPolicy === 'next-day-standard';
+  const dateForDayCanChi = shouldAdvanceDayForCanChi
+    ? new Date(correctedDate.getFullYear(), correctedDate.getMonth(), correctedDate.getDate() + 1)
+    : correctedDate;
+
+  const dayCanChiStr = getCanChiDay(dateForDayCanChi);
   const [dayCan, dayChi] = dayCanChiStr.split(' ') as [Can, Chi];
   const dayCanIndex = CAN.indexOf(dayCan);
   const dayChiIndex = CHI.indexOf(dayChi);
 
-  const hourBranchIndex =
-    input.birthClockHour !== undefined ? getHourBranch(correctedDate.getHours()) : mod12(input.birthHour);
   const hourCanIndex = mod10(dayCanIndex * 2 + hourBranchIndex);
   const hourCan = CAN[hourCanIndex];
   const hourChi = CHI[hourBranchIndex];
@@ -174,7 +214,15 @@ export function buildTuViBirthContext(input: TuViInput, schoolProfile: TuViSchoo
   const thuanNghich = (amDuong === 'Dương' && isMale) || (amDuong === 'Âm' && !isMale) ? 'Thuận' : 'Nghịch';
 
   const warnings = [...normalized.warnings];
-  if (input.leapMonthPolicy && input.leapMonthPolicy !== schoolProfile.leapMonthPolicy) {
+  if (activeTimePolicy === 'true-solar') {
+    warnings.push('Đang áp dụng Giờ Mặt Trời Thực (True Solar Time) theo kinh độ và phương trình thời gian.');
+  }
+  if (isLateRat && activeGioTyPolicy === 'next-day-standard') {
+    warnings.push('Sinh vào giờ Tý đêm (23h-24h): Can Chi ngày được tính chuyển sang ngày hôm sau.');
+  } else if (isLateRat && activeGioTyPolicy === 'da-ty-split') {
+    warnings.push('Sinh vào giờ Dạ Tý (23h-24h): Giữ nguyên Can Chi ngày cũ theo quy ước Dạ Tý phân biệt.');
+  }
+  if (input.leapMonthPolicy && input.leapMonthPolicy !== profile.leapMonthPolicy) {
     warnings.push(`Leap-month override applied: ${input.leapMonthPolicy}.`);
   }
 
@@ -201,9 +249,11 @@ export function buildTuViBirthContext(input: TuViInput, schoolProfile: TuViSchoo
     },
     amDuong,
     thuanNghich,
-    timePolicy,
-    leapMonthPolicy: input.leapMonthPolicy ?? schoolProfile.leapMonthPolicy,
+    timePolicy: activeTimePolicy,
+    gioTyPolicy: activeGioTyPolicy,
+    leapMonthPolicy: activeLeapMonthPolicy,
     historicalRegion: normalized.historicalRegion,
     warnings,
   };
 }
+

@@ -169,6 +169,8 @@ export const WesternWheelChart: React.FC<{ result: WesternChartResult }> = ({ re
         className="animate-orbital-settle motion-gpu"
         role="img"
         aria-label="Western Birth Chart"
+        shapeRendering="geometricPrecision"
+        textRendering="geometricPrecision"
       >
         <rect x={0} y={0} width={S} height={S} fill={co.bg} rx="8" />
 

@@ -85,18 +85,24 @@ export default defineConfig({
           if (id.includes('node_modules/zod')) {
             return 'vendor-zod';
           }
+          // Lucide icons
+          if (id.includes('node_modules/lucide-react')) {
+            return 'vendor-lucide';
+          }
+          // Metaphysical & Ephemeris Core Engines
+          if (id.includes('packages/core-logic')) {
+            return 'engine-core-logic';
+          }
+          // Swiss Ephemeris core
+          if (id.includes('node_modules/@swisseph/')) {
+            return 'vendor-swisseph';
+          }
           // Data & Interpretation Domain Splitting
           if (id.includes('/src/data/qmdj/') || id.includes('/services/qmdj/')) return 'data-qmdj';
           if (id.includes('/src/data/lucNham/') || id.includes('/services/lucNham/')) return 'data-lucnham';
-          if (id.includes('/components/Astrology/Western') || id.includes('/services/astrology/western') || id.includes('/services/astrology/swissNatal')) {
-            return 'astrology-western';
-          }
-          if (id.includes('/components/Astrology/Vedic') || id.includes('/services/astrology/vedic') || id.includes('/services/vedic/')) {
-            return 'astrology-vedic';
-          }
-          if (id.includes('/components/Astrology/Synastry') || id.includes('/services/synastry/')) {
-            return 'astrology-synastry';
-          }
+          if (id.includes('/src/data/astrology/') || id.includes('/services/astrology/interpretations')) return 'data-astrology-texts';
+          if (id.includes('/services/astrology/westernNatalExport') || id.includes('/components/shared/StoryCardExportModal')) return 'astrology-export-engine';
+          if (id.includes('/components/Astrology/Synastry') || id.includes('/services/synastry/')) return 'astrology-synastry';
           if (id.includes('/services/tuvi/daiHanInterpretation') || id.includes('/services/tuvi/palaceInterpretation')) {
             return 'tuvi-interpretations';
           }

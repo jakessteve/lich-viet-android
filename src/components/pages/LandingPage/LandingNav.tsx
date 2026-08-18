@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { useHeaderScroll } from '@/hooks/useHeaderScroll';
 
 export default function LandingNav() {
-  const { isDark, toggleDarkMode } = useAppStore();
+  const isDark = useAppStore((s) => s.isDark);
+  const toggleDarkMode = useAppStore((s) => s.toggleDarkMode);
   const navigate = useNavigate();
   const { isVisible, isScrolled } = useHeaderScroll({ minScroll: 50, threshold: 10 });
 

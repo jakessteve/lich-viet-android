@@ -1,13 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { BirthDataInput, ActionButton, SegmentedControl, SavedChartsPicker } from '../../shared';
+import LoadingState from '../../shared/LoadingState';
 import { ExecutiveSnapshotCards } from '../../shared/ExecutiveSnapshotCards';
 import { WesternNatalChartDisplay } from './WesternNatalChartDisplay';
-import { TraditionalChartView } from './TraditionalChartView';
-import { HuberChartView } from './HuberChartView';
-import { ZodiacalReleasingView } from './ZodiacalReleasingView';
-import { ThematicChartView } from './ThematicChartView';
+
+const TraditionalChartView = React.lazy(() =>
+  import('./TraditionalChartView').then((m) => ({ default: m.TraditionalChartView })),
+);
+const HuberChartView = React.lazy(() => import('./HuberChartView').then((m) => ({ default: m.HuberChartView })));
+const ZodiacalReleasingView = React.lazy(() =>
+  import('./ZodiacalReleasingView').then((m) => ({ default: m.ZodiacalReleasingView })),
+);
+const ThematicChartView = React.lazy(() =>
+  import('./ThematicChartView').then((m) => ({ default: m.ThematicChartView })),
+);
 
 const VIEW_TABS = [
   { id: 'natal', label: 'Bản Đồ Gốc', shortLabel: 'Lá Số' },
@@ -199,11 +207,13 @@ export const WesternChartView: React.FC = () => {
             tone="astral"
           />
 
-          {activeTab === 'natal' && <WesternNatalChartDisplay />}
-          {activeTab === 'thematic' && <ThematicChartView natalResult={result} />}
-          {activeTab === 'traditional' && <TraditionalChartView natalResult={result} birthDate={birthDateObj} />}
-          {activeTab === 'huber' && <HuberChartView natalResult={result} birthDate={birthDateObj} />}
-          {activeTab === 'releasing' && <ZodiacalReleasingView natalResult={result} birthDate={birthDateObj} />}
+          <Suspense fallback={<LoadingState label="Đang tải dữ liệu phân tích chiêm tinh..." />}>
+            {activeTab === 'natal' && <WesternNatalChartDisplay />}
+            {activeTab === 'thematic' && <ThematicChartView natalResult={result} />}
+            {activeTab === 'traditional' && <TraditionalChartView natalResult={result} birthDate={birthDateObj} />}
+            {activeTab === 'huber' && <HuberChartView natalResult={result} birthDate={birthDateObj} />}
+            {activeTab === 'releasing' && <ZodiacalReleasingView natalResult={result} birthDate={birthDateObj} />}
+          </Suspense>
         </div>
       )}
     </div>

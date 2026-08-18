@@ -15,7 +15,10 @@ export type AspectPatternType =
   | 'stellium'
   | 'yod'
   | 'kite'
-  | 'mystic_rectangle';
+  | 'mystic_rectangle'
+  | 'thors_hammer'
+  | 'boomerang'
+  | 'grand_sextile';
 
 export interface AspectPattern {
   id: string;
@@ -283,6 +286,36 @@ function enrichPatternDetails(pattern: AspectPattern): AspectPattern {
       };
       break;
     }
+    case 'thors_hammer': {
+      const apexDesc = apex
+        ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})`
+        : 'đỉnh búa';
+      pattern.personalizedSynthesis = {
+        coreChallengeVi: `Căng thẳng từ góc vuông (90°) cộng hưởng với hai góc 135° (Sesquisquare) dội áp lực mãnh liệt lên ${apexDesc}, dễ gây cảm giác bị thôi thúc gay gắt.`,
+        uniqueGiftVi: `Sức mạnh phá vỡ rào cản vô song: Cây búa của Thor ban tặng ý chí đập tan nghịch cảnh và khả năng định hình lại thực tại.`,
+        actionableAdviceVi: `Hướng năng lượng bùng nổ vào các mục tiêu cải cách mang tính xây dựng thay vì phản ứng bộc phát.`,
+      };
+      break;
+    }
+    case 'boomerang': {
+      const apexDesc = apex
+        ? `${apex.nameVi} (${apex.signVi}${apex.house ? ` - Nhà ${apex.house}` : ''})`
+        : 'đỉnh Yod';
+      pattern.personalizedSynthesis = {
+        coreChallengeVi: `Thế giằng co giữa đỉnh Yod ${apexDesc} và hành tinh đối đỉnh đòi hỏi sự tự điều chỉnh nhận thức liên tục để không bị rơi vào thế bế tắc.`,
+        uniqueGiftVi: `Năng lực phản tỉnh siêu phàm: Hành tinh đối trọng đóng vai trò điểm giải phóng giúp năng lượng Yod quay ngược trở lại như chiếc boomerang kích hoạt tiềm năng tối thượng.`,
+        actionableAdviceVi: `Tập trung vào hành tinh đối đỉnh như chìa khóa mở khóa toàn bộ sức mạnh định mệnh của Yod.`,
+      };
+      break;
+    }
+    case 'grand_sextile': {
+      pattern.personalizedSynthesis = {
+        coreChallengeVi: `Cấu trúc vòng kín quá hoàn hảo có thể tạo ra quán tính thụ động nếu bạn thiếu động lực bên ngoài thúc đẩy.`,
+        uniqueGiftVi: `Cách cục Ngôi Sao David (Lục Giác Lớn) siêu hiếm: Hội tụ trọn vẹn 6 góc lục hợp và 2 tam hợp lớn, mang lại phước lành to lớn, sự bảo bọc tâm linh và tiềm năng phát triển toàn diện.`,
+        actionableAdviceVi: `Chủ động đảm nhận các trọng trách lớn cho cộng đồng để khai thác tối đa kho tàng năng lượng vũ trụ này.`,
+      };
+      break;
+    }
   }
 
   return pattern;
@@ -545,6 +578,96 @@ export function detectAspectPatterns(
               descriptionVi: `Sự kết hợp hoàn hảo giữa năng lượng đối kháng và năng lượng hòa giải, giúp chuyển hóa xung đột thành khả năng sáng tạo và trực giác phi thường.`,
               planets: [p1, p2, p3, p4],
             });
+          }
+        }
+      }
+    }
+  }
+
+  // 7. Thor's Hammer (God's Fist)
+  const sesqOrb = 3.5;
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      if (!isAspect(planets[i].longitude, planets[j].longitude, 90, squareOrb)) continue;
+      for (let k = 0; k < n; k++) {
+        if (k === i || k === j) continue;
+        const apex = planets[k];
+        if (
+          isAspect(planets[i].longitude, apex.longitude, 135, sesqOrb) &&
+          isAspect(planets[j].longitude, apex.longitude, 135, sesqOrb)
+        ) {
+          rawPatterns.push({
+            id: `thors-hammer-${i}-${j}-${k}`,
+            type: 'thors_hammer',
+            nameVi: `Cây Búa Của Thor (Thor's Hammer / God's Fist)`,
+            nameEn: "Thor's Hammer",
+            descriptionVi: `Cấu trúc xung lực cực mạnh từ góc vuông 90° và hai góc 135° chỉ thẳng vào ${apex.nameVi}, tạo sức mạnh đột phá rào cản to lớn.`,
+            planets: [planets[i], planets[j], apex],
+            apexPlanet: apex,
+          });
+        }
+      }
+    }
+  }
+
+  // 8. Boomerang
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      if (!isAspect(planets[i].longitude, planets[j].longitude, 60, sexOrb)) continue;
+      for (let k = 0; k < n; k++) {
+        if (k === i || k === j) continue;
+        const apex = planets[k];
+        if (
+          isAspect(planets[i].longitude, apex.longitude, 150, quinOrb) &&
+          isAspect(planets[j].longitude, apex.longitude, 150, quinOrb)
+        ) {
+          for (let m = 0; m < n; m++) {
+            if (m === i || m === j || m === k) continue;
+            const opp = planets[m];
+            if (isAspect(apex.longitude, opp.longitude, 180, oppOrb)) {
+              rawPatterns.push({
+                id: `boomerang-${i}-${j}-${k}-${m}`,
+                type: 'boomerang',
+                nameVi: `Chiếc Boomerang (Boomerang Yod)`,
+                nameEn: 'Boomerang Yod',
+                descriptionVi: `Cấu trúc Yod hoàn hảo có điểm giải phóng tại ${opp.nameVi} đối đỉnh với ${apex.nameVi}, giúp chuyển hóa năng lượng định mệnh thành hành động đột phá.`,
+                planets: [planets[i], planets[j], apex, opp],
+                apexPlanet: apex,
+              });
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // 9. Grand Sextile (Star of David)
+  if (n >= 6) {
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        if (!isAspect(planets[i].longitude, planets[j].longitude, 60, sexOrb)) continue;
+        for (let k = j + 1; k < n; k++) {
+          if (!isAspect(planets[j].longitude, planets[k].longitude, 60, sexOrb)) continue;
+          for (let l = k + 1; l < n; l++) {
+            if (!isAspect(planets[k].longitude, planets[l].longitude, 60, sexOrb)) continue;
+            for (let m = l + 1; m < n; m++) {
+              if (!isAspect(planets[l].longitude, planets[m].longitude, 60, sexOrb)) continue;
+              for (let p = m + 1; p < n; p++) {
+                if (
+                  isAspect(planets[m].longitude, planets[p].longitude, 60, sexOrb) &&
+                  isAspect(planets[p].longitude, planets[i].longitude, 60, sexOrb)
+                ) {
+                  rawPatterns.push({
+                    id: `grand-sextile-${i}-${j}-${k}-${l}-${m}-${p}`,
+                    type: 'grand_sextile',
+                    nameVi: `Lục Giác Lớn (Grand Sextile / Ngôi Sao David)`,
+                    nameEn: 'Grand Sextile (Star of David)',
+                    descriptionVi: `Cấu trúc siêu hiếm gồm 6 hành tinh liên kết hoàn hảo tạo thành 2 tam hợp lồng nhau, biểu trưng cho phước lành và sự hòa hợp tối thượng.`,
+                    planets: [planets[i], planets[j], planets[k], planets[l], planets[m], planets[p]],
+                  });
+                }
+              }
+            }
           }
         }
       }

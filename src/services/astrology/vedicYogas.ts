@@ -6,7 +6,7 @@ export interface VedicYogaDoshaItem {
   nameSanskrit: string;
   type: VedicCombinationType;
   categoryVi: 'Cát Cách (Yoga)' | 'Khắc Kỵ (Dosha)' | 'Đặc Biệt';
-  severityOrStrength: 'Cao' | 'Trung Bình' | 'Nhẹ';
+  severityOrStrength: 'Tối Cao' | 'Cao' | 'Trung Bình' | 'Nhẹ';
   planetsInvolved: string[];
   descriptionVi: string;
   remedyOrAdviceVi?: string;
@@ -134,34 +134,162 @@ export function detectVedicYogasAndDoshas(
     }
   }
 
-  // 3. Manglik / Kuja Dosha (Mars in 1st, 4th, 7th, 8th, 12th house from Lagna)
+  // 3. Manglik / Kuja Dosha with Classical Parashara Cancellations
   if (mars) {
     const manglikHouses = [1, 4, 7, 8, 12];
     if (manglikHouses.includes(mars.house)) {
-      const severity = mars.house === 7 || mars.house === 8 ? 'Cao' : 'Trung Bình';
+      const cancellations: string[] = [];
+      if (mars.house === 1 && mars.signIndex === 0) {
+        cancellations.push('Hỏa Tinh cư Bạch Dương tại Cung 1 (Nhà của chính mình / Ruchaka Yoga)');
+      }
+      if (mars.house === 4 && mars.signIndex === 7) {
+        cancellations.push('Hỏa Tinh cư Bọ Cạp tại Cung 4 (Tự vượng bản cung)');
+      }
+      if (mars.house === 7 && mars.signIndex === 9) {
+        cancellations.push('Hỏa Tinh đắc địa Ma Kết tại Cung 7 (Uchcha / Tối Thượng Exalted)');
+      }
+      if (mars.house === 8 && (mars.signIndex === 8 || mars.signIndex === 11)) {
+        cancellations.push('Hỏa Tinh cư Nhân Mã/Song Ngư tại Cung 8 (Nhà Sao Mộc bảo bọc)');
+      }
+      if (mars.house === 12 && (mars.signIndex === 3 || mars.signIndex === 4)) {
+        cancellations.push('Hỏa Tinh cư Cự Giải/Sư Tử tại Cung 12 (Hóa giải sát tính)');
+      }
+      if (jupiter && (jupiter.signIndex === mars.signIndex || (((jupiter.house - mars.house) % 12) + 12) % 12 === 6)) {
+        cancellations.push('Được Sao Mộc (Guru) đồng cung hoặc đối chiếu che chở');
+      }
+      if (moon && moon.signIndex === mars.signIndex) {
+        cancellations.push('Đồng cung với Mặt Trăng (Chandra-Mangala hóa sát thành tài)');
+      }
+
+      const isCancelled = cancellations.length > 0;
+      const severity = isCancelled ? 'Nhẹ' : (mars.house === 7 || mars.house === 8 ? 'Cao' : 'Trung Bình');
       const bhavaClass = classifyBhava([mars.house]);
 
       items.push({
         id: 'manglik_dosha',
-        nameVi: 'Manglik Dosha (Hỏa Tinh Chiếu Mệnh/Hôn Nhân)',
-        nameSanskrit: 'Kuja Dosha',
-        type: 'dosha',
-        categoryVi: 'Khắc Kỵ (Dosha)',
+        nameVi: isCancelled ? 'Kuja Dosha (Đã Hóa Giải - Manglik Cancelled)' : 'Manglik Dosha (Hỏa Tinh Chiếu Mệnh/Hôn Nhân)',
+        nameSanskrit: isCancelled ? 'Kuja Dosha Nivaran' : 'Kuja Dosha',
+        type: isCancelled ? 'neutral' : 'dosha',
+        categoryVi: isCancelled ? 'Đặc Biệt' : 'Khắc Kỵ (Dosha)',
         severityOrStrength: severity,
         planetsInvolved: ['Sao Hỏa (Mangala)'],
         bhavaHouses: [mars.house],
         bhavaClassificationVi: bhavaClass,
         dashaActivationVi:
           'Cần chú ý giữ hòa khí trong gia đạo trong các giai đoạn Mahadasha/Antardasha của Sao Hỏa (Mangala).',
-        descriptionVi: `Sao Hỏa đóng tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}), tạo ra năng lượng nhiệt huyết, bộc trực nhưng có thể gây ra những thử thách về tính kiên nhẫn trong các mối quan hệ tình cảm và hôn nhân.`,
-        personalizedSynthesisVi: `Sao Hỏa tọa thủ tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}). Đương số có cá tính mạnh mẽ, dám nghĩ dám làm và ý chí kiên định; tuy nhiên cần học cách làm dịu năng lượng Hỏa để xây dựng mối quan hệ đối tác và hôn nhân bền vững.`,
-        remedyOrAdviceVi:
-          'Học cách kiềm chế sự nóng nảy, tôn trọng không gian riêng của đối phương, tập thể thao lành mạnh và kết hôn khi đã đủ chín chắn.',
+        descriptionVi: isCancelled
+          ? `Sao Hỏa đóng tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}) cấu thành thế Manglik nhưng ĐÃ ĐƯỢC HÓA GIẢI theo kinh điển Parashara: ${cancellations.join('; ')}.`
+          : `Sao Hỏa đóng tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}), tạo ra năng lượng nhiệt huyết, bộc trực nhưng có thể gây ra những thử thách về tính kiên nhẫn trong các mối quan hệ tình cảm và hôn nhân.`,
+        personalizedSynthesisVi: isCancelled
+          ? `Thế Hỏa Tinh tại Nhà ${mars.house} đã được hóa giải nhờ: ${cancellations.join('; ')}. Năng lượng Hỏa chuyển hóa thành ý chí kiên định và bản lĩnh vượt khó.`
+          : `Sao Hỏa tọa thủ tại Nhà ${mars.house} (${SIGN_NAMES_VI[mars.signIndex]}). Đương số có cá tính mạnh mẽ, dám nghĩ dám làm và ý chí kiên định; tuy nhiên cần học cách làm dịu năng lượng Hỏa để xây dựng mối quan hệ đối tác và hôn nhân bền vững.`,
+        remedyOrAdviceVi: isCancelled
+          ? 'Phát huy năng lực lãnh đạo và sự kiên cường trong công việc; duy trì lối ứng xử hòa nhã, bao dung trong tình cảm.'
+          : 'Học cách kiềm chế sự nóng nảy, tôn trọng không gian riêng của đối phương, tập thể thao lành mạnh và kết hôn khi đã đủ chín chắn.',
       });
     }
   }
 
-  // 4. Chandra-Mangala Yoga (Moon + Mars conjunction or mutual aspect)
+  // 4. Pancha Mahapurusha Yogas (Ruchaka, Bhadra, Hamsa, Malavya, Sasa)
+  const venus = planets.find((p) => p.body === 'venus');
+  const kendraHouses = [1, 4, 7, 10];
+
+  // Ruchaka (Mars in Kendra in own/exalt sign: Aries 0, Scorpio 7, Capricorn 9)
+  if (mars && kendraHouses.includes(mars.house) && [0, 7, 9].includes(mars.signIndex)) {
+    items.push({
+      id: 'ruchaka_yoga',
+      nameVi: 'Ruchaka Yoga (Đại Hùng & Dũng Tướng)',
+      nameSanskrit: 'Ruchaka Yoga (Pancha Mahapurusha)',
+      type: 'yoga',
+      categoryVi: 'Cát Cách (Yoga)',
+      severityOrStrength: 'Tối Cao',
+      planetsInvolved: ['Sao Hỏa (Mangala)'],
+      bhavaHouses: [mars.house],
+      bhavaClassificationVi: classifyBhava([mars.house]),
+      dashaActivationVi: 'Hiệu lực tột đỉnh trong đại vận Hỏa Tinh (Mangala Mahadasha).',
+      descriptionVi: 'Một trong Ngũ Đại Cát Cách (Pancha Mahapurusha). Sao Hỏa đắc địa tại cung Kendra mang lại khí phách hào sảng, uy quyền quân sự, tài năng lãnh đạo và thể lực phi thường.',
+      personalizedSynthesisVi: `Hỏa Tinh ngự tại Nhà ${mars.house} thuộc cung ${SIGN_NAMES_VI[mars.signIndex]}. Đương số có tố chất chỉ huy, ý chí sắt đá và khả năng chuyển bại thành thắng.`,
+      remedyOrAdviceVi: 'Sử dụng uy quyền và lòng dũng cảm để bảo vệ chính nghĩa và dẫn dắt tập thể.',
+    });
+  }
+
+  // Bhadra (Mercury in Kendra in own/exalt sign: Gemini 2, Virgo 5)
+  if (mercury && kendraHouses.includes(mercury.house) && [2, 5].includes(mercury.signIndex)) {
+    items.push({
+      id: 'bhadra_yoga',
+      nameVi: 'Bhadra Yoga (Trí Tuệ Trác Tuyệt & Hùng Biện)',
+      nameSanskrit: 'Bhadra Yoga (Pancha Mahapurusha)',
+      type: 'yoga',
+      categoryVi: 'Cát Cách (Yoga)',
+      severityOrStrength: 'Tối Cao',
+      planetsInvolved: ['Sao Thủy (Budha)'],
+      bhavaHouses: [mercury.house],
+      bhavaClassificationVi: classifyBhava([mercury.house]),
+      dashaActivationVi: 'Kích hoạt tài năng kinh doanh và văn chương vượt bậc trong vận Sao Thủy.',
+      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Thủy đắc địa tại Kendra ban tặng trí tuệ uyên bác, tài giao tiếp ngoại giao siêu phàm và danh tiếng trong giới học giả/doanh nhân.',
+      personalizedSynthesisVi: `Thủy Tinh ngự tại Nhà ${mercury.house} thuộc cung ${SIGN_NAMES_VI[mercury.signIndex]}, mang lại tư duy toán học và ngôn ngữ trác việt.`,
+      remedyOrAdviceVi: 'Phát huy năng khiếu nghiên cứu, viết lách, kinh doanh và cố vấn chiến lược.',
+    });
+  }
+
+  // Hamsa (Jupiter in Kendra in own/exalt sign: Cancer 3, Sagittarius 8, Pisces 11)
+  if (jupiter && kendraHouses.includes(jupiter.house) && [3, 8, 11].includes(jupiter.signIndex)) {
+    items.push({
+      id: 'hamsa_yoga',
+      nameVi: 'Hamsa Yoga (Bạch Hạc Thánh Thiện & Đạo Đức)',
+      nameSanskrit: 'Hamsa Yoga (Pancha Mahapurusha)',
+      type: 'yoga',
+      categoryVi: 'Cát Cách (Yoga)',
+      severityOrStrength: 'Tối Cao',
+      planetsInvolved: ['Sao Mộc (Guru)'],
+      bhavaHouses: [jupiter.house],
+      bhavaClassificationVi: classifyBhava([jupiter.house]),
+      dashaActivationVi: 'Phát huy phước lành, danh dự và tài lộc lớn trong vận Sao Mộc.',
+      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Mộc tọa thủ tại Kendra giúp người sở hữu có tâm hồn thánh thiện, trí tuệ tâm linh cao thâm và được xã hội kính trọng.',
+      personalizedSynthesisVi: `Mộc Tinh ngự tại Nhà ${jupiter.house} (${SIGN_NAMES_VI[jupiter.signIndex]}), tạo nên phong thái vương giả, uy tín đạo đức và phúc ấm bền vững.`,
+      remedyOrAdviceVi: 'Lan tỏa tri thức, làm việc thiện nguyện và giữ gìn chuẩn mực đạo đức trong sáng.',
+    });
+  }
+
+  // Malavya (Venus in Kendra in own/exalt sign: Taurus 1, Libra 6, Pisces 11)
+  if (venus && kendraHouses.includes(venus.house) && [1, 6, 11].includes(venus.signIndex)) {
+    items.push({
+      id: 'malavya_yoga',
+      nameVi: 'Malavya Yoga (Mỹ Lệ, Phú Quý & Nghệ Thuật)',
+      nameSanskrit: 'Malavya Yoga (Pancha Mahapurusha)',
+      type: 'yoga',
+      categoryVi: 'Cát Cách (Yoga)',
+      severityOrStrength: 'Tối Cao',
+      planetsInvolved: ['Sao Kim (Shukra)'],
+      bhavaHouses: [venus.house],
+      bhavaClassificationVi: classifyBhava([venus.house]),
+      dashaActivationVi: 'Khai mở vận may tài chính và thành tựu nghệ thuật rực rỡ trong vận Sao Kim.',
+      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Kim tọa thủ tại Kendra mang lại nét đẹp quý phái, cuộc sống phong lưu, tài hoa nghệ thuật và hạnh phúc gia đạo.',
+      personalizedSynthesisVi: `Kim Tinh ngự tại Nhà ${venus.house} (${SIGN_NAMES_VI[venus.signIndex]}), mang lại gu thẩm mỹ tinh tế và duyên may thu hút tài lộc.`,
+      remedyOrAdviceVi: 'Tận dụng khiếu thẩm mỹ, sự khéo léo trong quan hệ công chúng và lối sống thanh lịch.',
+    });
+  }
+
+  // Sasa (Saturn in Kendra in own/exalt sign: Libra 6, Capricorn 9, Aquarius 10)
+  if (saturn && kendraHouses.includes(saturn.house) && [6, 9, 10].includes(saturn.signIndex)) {
+    items.push({
+      id: 'sasa_yoga',
+      nameVi: 'Sasa Yoga (Quyền Lực Trầm Tích & Kỷ Luật Thép)',
+      nameSanskrit: 'Sasa Yoga (Pancha Mahapurusha)',
+      type: 'yoga',
+      categoryVi: 'Cát Cách (Yoga)',
+      severityOrStrength: 'Tối Cao',
+      planetsInvolved: ['Sao Thổ (Shani)'],
+      bhavaHouses: [saturn.house],
+      bhavaClassificationVi: classifyBhava([saturn.house]),
+      dashaActivationVi: 'Gặt hái thành tựu khổng lồ sau thời gian kiên trì rèn luyện trong vận Sao Thổ.',
+      descriptionVi: 'Một trong Ngũ Đại Cát Cách. Sao Thổ tọa thủ tại Kendra rèn giũa ý chí phi thường, bản lĩnh chịu đựng bền bỉ và quyền lực tối thượng nơi hậu vận.',
+      personalizedSynthesisVi: `Thổ Tinh ngự tại Nhà ${saturn.house} (${SIGN_NAMES_VI[saturn.signIndex]}), giúp đương số xây dựng cơ nghiệp vững chắc như bàn thạch.`,
+      remedyOrAdviceVi: 'Kiên trì mục tiêu dài hạn, giữ kỷ luật nghiêm minh và công bằng với cấp dưới.',
+    });
+  }
+
+  // 5. Chandra-Mangala Yoga (Moon + Mars conjunction or mutual aspect)
   if (moon && mars) {
     if (moon.signIndex === mars.signIndex || (((mars.house - moon.house) % 12) + 12) % 12 === 6) {
       const involvedHouses = [moon.house, mars.house];
@@ -185,7 +313,7 @@ export function detectVedicYogasAndDoshas(
     }
   }
 
-  // 5. Guru-Mangala Yoga (Jupiter + Mars in conjunction or mutual trine/kendra)
+  // 6. Guru-Mangala Yoga (Jupiter + Mars in conjunction)
   if (jupiter && mars) {
     if (jupiter.signIndex === mars.signIndex) {
       const involvedHouses = [jupiter.house];
@@ -209,7 +337,7 @@ export function detectVedicYogasAndDoshas(
     }
   }
 
-  // 6. Shani-Chandra (Visha Yoga - Saturn & Moon conjunction)
+  // 7. Shani-Chandra (Visha Yoga - Saturn & Moon conjunction)
   if (saturn && moon) {
     if (saturn.signIndex === moon.signIndex) {
       const involvedHouses = [saturn.house];

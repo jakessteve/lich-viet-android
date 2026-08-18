@@ -142,7 +142,14 @@ export const VedicDiamondChart: React.FC<{ result: WesternChartResult; type: 'D1
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center' }} data-vedic-diamond-chart>
-      <svg viewBox={`0 0 ${S} ${S}`} style={{ width: '100%', maxWidth: S }}>
+      <svg
+        viewBox={`0 0 ${S} ${S}`}
+        style={{ width: '100%', maxWidth: S }}
+        role="img"
+        aria-label="Vedic North Indian Diamond Chart"
+        shapeRendering="geometricPrecision"
+        textRendering="geometricPrecision"
+      >
         <rect width={S} height={S} fill={co.bg} stroke={co.ln} strokeWidth="2" />
 
         {/* Draw diagonals */}

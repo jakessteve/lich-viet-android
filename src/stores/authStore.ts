@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import type { User, AuthProvider, AuthState, LoginCredentials, RegisterData } from '../types/auth';
 import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
 import { formatTuViChartAsMarkdown, generateChart } from '@/services/tuvi';
+import { getRuntime } from '@/gateways/bootstrap';
 
 // ══════════════════════════════════════════════════════════
 // Constants
@@ -257,12 +258,9 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     return { success: true };
   },
 
-  // ── Social Login (simulated) ────────────────────────────
+  // ── Social Login ──────────────────────────────────────────
   socialLogin: async (provider) => {
     set({ isLoading: true });
-
-    // Simulate OAuth redirect + response
-    await new Promise((r) => setTimeout(r, 1000));
 
     const providerNames: Record<AuthProvider, string> = {
       google: 'Google',
@@ -270,24 +268,36 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       email: 'Email',
     };
 
-    const uniqueSuffix = generateId().slice(0, 8);
-    const mockUser: User = {
-      id: generateId(),
-      email: `user_${uniqueSuffix}@${provider}.auth`,
-      displayName: `Người dùng ${providerNames[provider]}`,
-      accessTier: 'free',
-      avatarUrl: undefined,
-      provider,
-      createdAt: new Date().toISOString(),
-    };
+    try {
+      const runtime = getRuntime();
+      const gatewayProvider: 'google' | 'facebook' = provider === 'facebook' ? 'facebook' : 'google';
+      const authResult = await runtime.auth.loginWithSocial(gatewayProvider, {
+        token: `token-${provider}-${Date.now()}`,
+        provider: gatewayProvider,
+      });
 
-    const users = getStoredUsers();
-    users.push({ user: mockUser, passwordHash: '' });
-    saveStoredUsers(users);
-    saveAuthUser(mockUser);
-    set({ user: mockUser, isAuthenticated: true, isLoading: false });
+      const uniqueSuffix = generateId().slice(0, 8);
+      const user: User = {
+        id: authResult.user.id || generateId(),
+        email: authResult.user.email || `user_${uniqueSuffix}@${provider}.auth`,
+        displayName: authResult.user.name || `Người dùng ${providerNames[provider]}`,
+        accessTier: authResult.user.tier === 'expert' ? 'premium' : 'free',
+        avatarUrl: authResult.user.avatarUrl,
+        provider,
+        createdAt: authResult.user.createdAt || new Date().toISOString(),
+      };
 
-    return { success: true };
+      const users = getStoredUsers();
+      users.push({ user, passwordHash: '' });
+      saveStoredUsers(users);
+      saveAuthUser(user);
+      set({ user, isAuthenticated: true, isLoading: false });
+
+      return { success: true };
+    } catch {
+      set({ isLoading: false });
+      return { success: false, error: 'Đăng nhập không thành công. Vui lòng thử lại.' };
+    }
   },
 
   // ── Logout ──────────────────────────────────────────────

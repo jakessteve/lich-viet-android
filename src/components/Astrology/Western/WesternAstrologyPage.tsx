@@ -1,12 +1,16 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Suspense, useEffect, useRef, useState } from 'react';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useAuthStore } from '@/stores/authStore';
 import { useAstrologyStore } from '@/stores/astrologyStore';
 import { getUserBirthProfile } from '@/utils/userBirthProfile';
 import { SegmentedControl } from '../../shared';
+import LoadingState from '../../shared/LoadingState';
 import { WesternChartView } from './WesternChartView';
-import { ForecastView } from './ForecastView';
 import { Compass, User, Sunrise } from 'lucide-react';
+
+const ForecastView = React.lazy(() =>
+  import('./ForecastView').then((m) => ({ default: m.ForecastView })),
+);
 
 const PAGE_TABS = [
   { id: 'la-so', label: 'Lá Số Gốc', icon: <User className="h-4 w-4" /> as unknown as string, shortLabel: 'Lá Số' },
@@ -67,7 +71,11 @@ export const WesternAstrologyPage: React.FC = () => {
       />
 
       {pageTab === 'la-so' && <WesternChartView />}
-      {pageTab === 'van-han' && <ForecastView />}
+      {pageTab === 'van-han' && (
+        <Suspense fallback={<LoadingState label="Đang tải dữ liệu vận hạn chiêm tinh..." />}>
+          <ForecastView />
+        </Suspense>
+      )}
     </div>
   );
 };

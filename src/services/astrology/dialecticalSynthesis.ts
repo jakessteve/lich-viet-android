@@ -46,6 +46,9 @@ export interface DialecticalSynthesisResult {
   consensusGiftsVi: string[];
   growthTensionsVi: string[];
   unifiedLifeAdviceVi: string;
+  elementalAlchemyVi?: string;
+  dashaConvergenceVi?: string;
+  triTraditionMatrix?: Array<{ layer: string; western: string; tuvi: string; vedic: string }>;
 }
 
 /**
@@ -116,7 +119,37 @@ export function synthesizeTriSystemReport(input: TriSystemInput): DialecticalSyn
     );
   }
 
-  // 6. Unified Life Guidance (Thân - Tâm - Trí)
+  // 6. Elemental Alchemy
+  const elementalAlchemyVi = `Ngũ hành bản mệnh ${tuvi.menhNapAm} tương phối với nguyên tố trội ${western.dominantElement ?? 'Đa nguyên'} (Tây Phương) và khí chất Jyotish: Nguồn năng lượng tự nhiên của bạn cần được tiếp đất bằng hành động kỷ luật và rèn luyện thể chất đều đặn.`;
+
+  // 7. Dasha & Timing Convergence
+  const dashaConvergenceVi = vedic.activeDashaLord
+    ? `Hội tụ thời vận: Giai đoạn vận hành của Đại vận ${vedic.activeDashaLord} (Vệ Đà) đồng pha với tiến trình dịch chuyển Cung Thân (${tuvi.thanCung}) của Tử Vi, mở ra cơ hội chuyển mình then chốt.`
+    : 'Hội tụ thời vận: Các đại vận Đông - Tây tương hỗ, giúp đương số chủ động nắm bắt cơ hội chuyển mình.';
+
+  // 8. Tri-Tradition Comparative Matrix
+  const triTraditionMatrix = [
+    {
+      layer: 'Bản sắc & Khí chất',
+      western: `Mặt Trời ${western.sunSign}, Mọc ${western.ascSign}`,
+      tuvi: `Mệnh tại ${tuvi.menhCung} (${chinhTinhStr})`,
+      vedic: `Lagna tại ${vedic.lagnaSign}`,
+    },
+    {
+      layer: 'Tâm trí & Trực giác',
+      western: `Mặt Trăng ${western.moonSign}`,
+      tuvi: `Nạp âm ${tuvi.menhNapAm}`,
+      vedic: `Chandra tại ${vedic.moonRasiSign} (${vedic.nakshatra ?? 'Nakshatra'})`,
+    },
+    {
+      layer: 'Sứ mệnh & Hậu vận',
+      western: `Chủ tinh ${western.chartRuler ?? 'Cung Mọc'}`,
+      tuvi: `Thân cư ${tuvi.thanCung} (${tuvi.cuc})`,
+      vedic: `Atmakaraka ${vedic.atmakaraka ?? 'Soul Lord'}`,
+    },
+  ];
+
+  // 9. Unified Life Guidance (Thân - Tâm - Trí)
   const unifiedLifeAdviceVi = `Kim chỉ nam thống nhất: Hãy lấy sự tự tin của ${western.sunSign} làm đòn bẩy hành động, dùng kỷ luật và sự bền bỉ của ${chinhTinhStr} để quản trị công việc thực tế, và luôn giữ gìn sự trong sáng, bình an nơi tâm hồn theo chỉ dẫn của ${vedic.moonRasiSign} / ${vedic.lagnaSign}. Khi Thân - Tâm - Trí hòa hợp, bạn sẽ khai mở trọn vẹn tiềm năng cuộc đời.`;
 
   return {
@@ -126,5 +159,8 @@ export function synthesizeTriSystemReport(input: TriSystemInput): DialecticalSyn
     consensusGiftsVi,
     growthTensionsVi,
     unifiedLifeAdviceVi,
+    elementalAlchemyVi,
+    dashaConvergenceVi,
+    triTraditionMatrix,
   };
 }

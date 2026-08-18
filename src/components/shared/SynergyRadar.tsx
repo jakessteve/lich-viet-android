@@ -73,7 +73,14 @@ const SynergyRadar: React.FC<SynergyRadarProps> = ({ data, axes = DEFAULT_AXES, 
 
   return (
     <div className="flex justify-center">
-      <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size} className="overflow-visible">
+      <svg
+        viewBox={`0 0 ${size} ${size}`}
+        width={size}
+        height={size}
+        className="overflow-visible"
+        shapeRendering="geometricPrecision"
+        textRendering="geometricPrecision"
+      >
         {/* Background grid */}
         {gridLevels.map((level) => {
           const pts = labelsWithAngles

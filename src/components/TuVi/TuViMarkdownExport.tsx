@@ -8,7 +8,7 @@ import { Check, Copy, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const TuViMarkdownExport: React.FC = () => {
-  const { chart } = useTuViStore();
+  const chart = useTuViStore((s) => s.chart);
   const [copied, setCopied] = useState(false);
 
   if (!chart) return null;

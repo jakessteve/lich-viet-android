@@ -9,7 +9,7 @@
  */
 
 import type { TuViPalace, PositionalSemantic, PositionalSemanticType } from '../../types/tuvi';
-import { detectDoiCung, detectTamHopPalaces, detectNhiHopPalace } from './combinationDetection';
+import { detectDoiCung, detectTamHopPalaces, detectNhiHopPalace } from './palaceGeometry';
 
 // ── Elemental Branches mapping for Nhị Hợp ───────────────────
 export const BRANCH_ELEMENT: Record<string, 'Thủy' | 'Hỏa' | 'Mộc' | 'Kim' | 'Thổ'> = {

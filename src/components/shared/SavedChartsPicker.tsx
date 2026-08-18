@@ -129,11 +129,18 @@ export const SavedChartsPicker: React.FC<SavedChartsPickerProps> = ({
     const lng = currentInput.longitude ?? loc?.lng ?? 105.8542;
     const tz = parseNumericTimezone(currentInput.timezone ?? loc?.timezone, 7);
 
+    const resolvedClockHour =
+      currentInput.birthClockHour !== undefined
+        ? currentInput.birthClockHour
+        : currentInput.birthHour !== undefined
+          ? currentInput.birthHour
+          : 12;
+
     const newEntry: SavedChartEntry = {
       id: `${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
       name: chartName.trim(),
       birthDate: bDate.toISOString(),
-      birthHour: currentInput.birthHour ?? currentInput.birthClockHour ?? 12,
+      birthHour: resolvedClockHour,
       birthMinute: currentInput.birthMinute ?? 0,
       latitude: lat,
       longitude: lng,

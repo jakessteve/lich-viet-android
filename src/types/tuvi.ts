@@ -32,7 +32,10 @@ export type TuViDateType = 'solar' | 'lunar';
 export type TuViTimePolicy = 'civil' | 'historical-vietnam' | 'true-solar';
 
 /** Leap-month handling policy used by the school profile */
-export type TuViLeapMonthPolicy = 'raw' | 'split-15';
+export type TuViLeapMonthPolicy = 'raw' | 'split-15' | 'keep-same' | 'next-month' | 'tiet-khi';
+
+/** Policy for determining Day Can/Chi for births in Giờ Tý (23:00–01:00) */
+export type TuViGioTyPolicy = 'next-day-standard' | 'da-ty-split' | 'solar-midnight';
 
 /** Historical Vietnam timezone region hint */
 export type HistoricalVietnamRegion = 'north' | 'south';
@@ -47,6 +50,8 @@ export interface TuViEngineMeta {
   leapMonthPolicy: TuViLeapMonthPolicy;
   /** Time normalization policy applied */
   timePolicy: TuViTimePolicy;
+  /** Giờ Tý day transition policy applied */
+  gioTyPolicy?: TuViGioTyPolicy;
   /** Historical Vietnam region used for pre-1975 normalization, if any */
   historicalRegion?: HistoricalVietnamRegion;
   /** Source references used to validate this chart */
@@ -185,6 +190,8 @@ export interface TuViInput {
   timePolicy?: TuViTimePolicy;
   /** Leap month handling policy override */
   leapMonthPolicy?: TuViLeapMonthPolicy;
+  /** Policy for determining Day Can/Chi for births in Giờ Tý (23:00–01:00) */
+  gioTyPolicy?: TuViGioTyPolicy;
   /** Calculation school variant for disputed placement and Tứ Hóa rules */
   school?: TuViSchool;
 }

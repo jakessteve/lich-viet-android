@@ -129,8 +129,8 @@ function inferHistoricalRegion(date: Date, birthLocation?: TuViBirthLocation): H
   }
 
   if (typeof birthLocation?.lat === 'number') {
-    if (birthLocation.lat >= 17.5) return 'north';
-    if (birthLocation.lat <= 16) return 'south';
+    if (birthLocation.lat >= 17.0) return 'north';
+    if (birthLocation.lat < 17.0) return 'south';
   }
 
   return undefined;
@@ -257,7 +257,7 @@ export function normalizeBirthTimeWithPolicy(
   if (!period || period.to === 'present') {
     return {
       correctedDate: new Date(date.getTime()),
-      offsetHours: 7,
+      offsetHours: isVietnam ? 7 : (birthLocation?.timezone ?? 7),
       historicalRegion,
       warnings,
     };

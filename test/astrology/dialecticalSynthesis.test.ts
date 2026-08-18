@@ -38,5 +38,8 @@ describe('synthesizeTriSystemReport (Dialectical Tri-System Synthesis)', () => {
     expect(report.consensusGiftsVi.length).toBeGreaterThan(0);
     expect(report.growthTensionsVi.length).toBeGreaterThan(0);
     expect(report.unifiedLifeAdviceVi).toContain('Thân - Tâm - Trí');
+    expect(report.elementalAlchemyVi).toBeDefined();
+    expect(report.dashaConvergenceVi).toBeDefined();
+    expect(report.triTraditionMatrix?.length).toBe(3);
   });
 });

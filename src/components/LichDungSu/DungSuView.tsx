@@ -55,7 +55,7 @@ function clampPercentage(value: number): number {
 }
 
 const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDate }) => {
-  const { user } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
   const userBirthProfile = useMemo(() => getUserBirthProfile(user), [user]);
   const isPersonalized = useAppStore((s) => s.isPersonalized);
   const [selectedActivity, setSelectedActivity] = useState<string | null>(null);

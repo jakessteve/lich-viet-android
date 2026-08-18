@@ -26,8 +26,9 @@ const DEFAULT_BIRTH_LOCATION = {
 };
 
 const HeroBirthdayInput: React.FC<{ onNavigate: (path: string) => void }> = ({ onNavigate }) => {
-  const { setInput, calculateChart } = useTuViStore();
-  const { user } = useAuthStore();
+  const setInput = useTuViStore((s) => s.setInput);
+  const calculateChart = useTuViStore((s) => s.calculateChart);
+  const user = useAuthStore((s) => s.user);
   const userBirthProfile = useMemo(() => getUserBirthProfile(user), [user]);
   const didPrefill = useRef(false);
   const [birthDate, setBirthDate] = useState('');

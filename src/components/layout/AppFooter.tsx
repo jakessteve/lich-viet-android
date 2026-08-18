@@ -19,7 +19,8 @@ export function getFooterActionLabel(user: User | null, isAuthenticated: boolean
 
 function AppFooter() {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
   const footerActionLabel = getFooterActionLabel(user, isAuthenticated);
 
   return (

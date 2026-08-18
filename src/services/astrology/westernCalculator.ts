@@ -221,7 +221,14 @@ function buildResult(
 }
 
 export function calculateWesternChart(input: WesternChartInput & { ayanamsa?: string }): WesternChartResult {
-  const birthDate = input.birthDate instanceof Date ? input.birthDate : new Date(input.birthDate);
-  const julianDay = unixMsToJulianDay(birthDate.getTime());
+  const birthDate = input.birthDate instanceof Date ? input.birthDate : new Date(input.birthDate || Date.now());
+  const year = birthDate.getFullYear();
+  const month = birthDate.getMonth();
+  const day = birthDate.getDate();
+  const hour = Number.isFinite(input.birthHour) ? Math.max(0, Math.min(23, Math.floor(input.birthHour))) : 12;
+  const minute = Number.isFinite(input.birthMinute) ? Math.max(0, Math.min(59, Math.floor(input.birthMinute))) : 0;
+  const timezone = Number.isFinite(input.timezone) ? Math.max(-14, Math.min(14, input.timezone)) : 7;
+  const utcMillis = Date.UTC(year, month, day, hour, minute) - timezone * 3_600_000;
+  const julianDay = unixMsToJulianDay(utcMillis);
   return calculateWesternChartForJulianDay(julianDay, input.latitude, input.longitude, input.ayanamsa ?? 'lahiri');
 }

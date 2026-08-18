@@ -28,7 +28,7 @@ const MonthCalendar: React.FC<MonthCalendarProps> = ({
 }) => {
   const [viewYear, setViewYear] = useState(() => selectedDate.getFullYear());
   const [viewMonth, setViewMonth] = useState(() => selectedDate.getMonth());
-  const { user } = useAuthStore();
+  const user = useAuthStore((s) => s.user);
   const userBirthProfile = useMemo(() => getUserBirthProfile(user), [user]);
 
   const days = useMemo(() => {

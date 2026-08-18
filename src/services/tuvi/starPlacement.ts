@@ -88,21 +88,12 @@ const THIEN_HI_TABLE = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0, 11, 10];
 /** Lưu Hà position by year Can index (classic Can-based rule). */
 const LUU_HA_TABLE = [9, 10, 7, 4, 5, 6, 8, 3, 11, 2];
 
-/** Hỏa Tinh classical start table by Tam Hợp group and hour branch. */
-const HOA_TINH_TABLE: Record<number, readonly number[]> = {
-  0: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1],
-  1: [3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2],
-  2: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0],
-  3: [9, 10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8],
-};
+/** Hỏa Tinh classical start positions by Tam Hợp group (0=Thân-Tý-Thìn, 1=Tỵ-Dậu-Sửu, 2=Dần-Ngọ-Tuất, 3=Hợi-Mão-Mùi). */
+const HOA_TINH_START = [2, 3, 1, 9] as const;
 
-/** Linh Tinh classical start table by Tam Hợp group and hour branch. */
-const LINH_TINH_TABLE: Record<number, readonly number[]> = {
-  0: [10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  1: [10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  2: [3, 4, 5, 6, 7, 8, 9, 10, 11, 0, 1, 2],
-  3: [10, 11, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-};
+/** Linh Tinh classical start positions by Tam Hợp group. */
+const LINH_TINH_START = [10, 10, 3, 10] as const;
+
 
 /** Triệt Không positions by year Can index. */
 const TRIET_KHONG_TABLE: Record<number, [number, number]> = {
@@ -591,8 +582,14 @@ export function placePhuTinh(
     // Sát Tinh
     'Địa Không': diaKhong,
     'Địa Kiếp': diaKiep,
-    'Hỏa Tinh': HOA_TINH_TABLE[group][mod12(hourBranch)],
-    'Linh Tinh': LINH_TINH_TABLE[group][mod12(hourBranch)],
+    'Hỏa Tinh':
+      thuanNghich === 'Thuận'
+        ? mod12(HOA_TINH_START[group] + hourBranch)
+        : mod12(HOA_TINH_START[group] - hourBranch),
+    'Linh Tinh':
+      thuanNghich === 'Thuận'
+        ? mod12(LINH_TINH_START[group] - hourBranch)
+        : mod12(LINH_TINH_START[group] + hourBranch),
 
     // Other important stars
     'Thiên Mã': THIEN_MA_TABLE[mod12(yearChiIndex)],
@@ -617,6 +614,28 @@ export function placePhuTinh(
   addRingStars(result, TUONG_TINH_12, getTuongTinhStart(yearChiIndex));
 
   return result;
+}
+
+/**
+ * Places Hỏa Tinh and Linh Tinh following classical Yin/Yang gender rules:
+ * - Dương Nam / Âm Nữ (Thuận): Hỏa Tinh clockwise (+), Linh Tinh counter-clockwise (-)
+ * - Âm Nam / Dương Nữ (Nghịch): Hỏa Tinh counter-clockwise (-), Linh Tinh clockwise (+)
+ */
+export function placeHoaLinhTinh(
+  yearChiIndex: number,
+  hourBranch: number,
+  thuanNghich: ThuanNghich,
+): { hoaTinh: number; linhTinh: number } {
+  const group = getTamHopGroup(yearChiIndex);
+  const hoaTinh =
+    thuanNghich === 'Thuận'
+      ? mod12(HOA_TINH_START[group] + hourBranch)
+      : mod12(HOA_TINH_START[group] - hourBranch);
+  const linhTinh =
+    thuanNghich === 'Thuận'
+      ? mod12(LINH_TINH_START[group] - hourBranch)
+      : mod12(LINH_TINH_START[group] + hourBranch);
+  return { hoaTinh, linhTinh };
 }
 
 /**
@@ -959,13 +978,14 @@ export function generateChart(input: TuViInput): TuViChart {
         input: {
           ...input,
           school: schoolProfile.id,
-          timePolicy: schoolProfile.timePolicy,
+          timePolicy: birthContext.timePolicy,
         },
         engineMeta: {
           version: input.engineVersion ?? 'accuracy-v4',
           schoolLabel: schoolProfile.label,
           leapMonthPolicy: birthContext.leapMonthPolicy,
           timePolicy: birthContext.timePolicy,
+          gioTyPolicy: birthContext.gioTyPolicy,
           historicalRegion: birthContext.historicalRegion,
           catalog: getTuViCatalogSummary(),
           warnings: auditWarnings,

@@ -260,7 +260,13 @@ export const TuViChart: React.FC<TuViChartProps> = ({ chart, selectedPalaceIndex
       >
         <div className="tuvi-chart" role="grid" aria-label="Lá số Tử Vi" style={chartStyle}>
           {tamHopLines.length > 0 && (
-            <svg className="tuvi-connection-svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <svg
+              className="tuvi-connection-svg"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+              shapeRendering="geometricPrecision"
+            >
               {tamHopLines.map((line, index) => (
                 <line
                   key={`tamhop-${index}`}
