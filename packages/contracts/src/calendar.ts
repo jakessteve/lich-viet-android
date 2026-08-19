@@ -1,7 +1,10 @@
-export interface DateRange {
-  startDate: string; // YYYY-MM-DD
-  endDate: string; // YYYY-MM-DD
-}
+import { z } from 'zod';
+
+export const DateRangeSchema = z.object({
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Định dạng YYYY-MM-DD không hợp lệ'),
+  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Định dạng YYYY-MM-DD không hợp lệ'),
+});
+export type DateRange = z.infer<typeof DateRangeSchema>;
 
 export type CalendarSystemType = 'solar' | 'lunar';
 
@@ -16,48 +19,39 @@ export type EventRecurrenceType =
 
 export type EventCategory = 'personal' | 'dam_gio' | 'memorial' | 'work' | 'family' | 'ritual';
 
-export interface CalendarEventDto {
-  id: string;
-  userId: string;
-  title: string;
-  description?: string | undefined;
-  calendarType: CalendarSystemType; // 'solar' | 'lunar'
-  solarDate: string; // ISO date YYYY-MM-DD
-  lunarDay?: number | undefined;
-  lunarMonth?: number | undefined;
-  lunarYear?: number | undefined;
-  isLeapMonth?: boolean | undefined;
-  recurrence: EventRecurrenceType;
-  recurrenceEndDate?: string | undefined;
-  category: EventCategory;
-  emoji?: string | undefined;
-  color?: string | undefined;
-  alarmOffsetsMinutes: number[];
-  syncedAt?: string | undefined;
-  createdAt: string;
-  updatedAt: string;
-}
+export const CreateCalendarEventSchema = z.object({
+  title: z.string().min(1, 'Tiêu đề không được để trống'),
+  description: z.string().optional(),
+  calendarType: z.enum(['solar', 'lunar']).default('solar'),
+  solarDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Định dạng YYYY-MM-DD không hợp lệ'),
+  lunarDay: z.number().int().min(1).max(30).optional(),
+  lunarMonth: z.number().int().min(1).max(12).optional(),
+  lunarYear: z.number().int().optional(),
+  isLeapMonth: z.boolean().optional(),
+  recurrence: z
+    .enum(['none', 'daily', 'weekly', 'monthly_solar', 'monthly_lunar', 'yearly_solar', 'yearly_lunar'])
+    .default('none'),
+  recurrenceEndDate: z.string().optional(),
+  category: z.enum(['personal', 'dam_gio', 'memorial', 'work', 'family', 'ritual']).default('personal'),
+  emoji: z.string().optional(),
+  color: z.string().optional(),
+  alarmOffsetsMinutes: z.array(z.number()).default([]),
+});
+export type CreateCalendarEventDto = z.infer<typeof CreateCalendarEventSchema>;
 
-export interface CreateCalendarEventDto {
-  title: string;
-  description?: string | undefined;
-  calendarType?: CalendarSystemType | undefined;
-  solarDate: string;
-  lunarDay?: number | undefined;
-  lunarMonth?: number | undefined;
-  lunarYear?: number | undefined;
-  isLeapMonth?: boolean | undefined;
-  recurrence?: EventRecurrenceType | undefined;
-  recurrenceEndDate?: string | undefined;
-  category?: EventCategory | undefined;
-  emoji?: string | undefined;
-  color?: string | undefined;
-  alarmOffsetsMinutes?: number[] | undefined;
-}
+export const UpdateCalendarEventSchema = CreateCalendarEventSchema.partial().extend({
+  id: z.string().min(1),
+});
+export type UpdateCalendarEventDto = z.infer<typeof UpdateCalendarEventSchema>;
 
-export interface UpdateCalendarEventDto extends Partial<CreateCalendarEventDto> {
-  id: string;
-}
+export const CalendarEventSchema = CreateCalendarEventSchema.extend({
+  id: z.string(),
+  userId: z.string(),
+  syncedAt: z.string().optional(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type CalendarEventDto = z.infer<typeof CalendarEventSchema>;
 
 export interface UpcomingEventOccurrence {
   eventId: string;

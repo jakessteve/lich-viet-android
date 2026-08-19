@@ -29,81 +29,81 @@ interface ActivityPickerProps {
 
 const CAT_COLORS: Record<string, { icon: string; ring: string; bg: string; pillBg: string; pillText: string }> = {
   blue: {
-    icon: 'text-blue-500',
-    ring: 'ring-blue-400/30',
-    bg: 'bg-blue-50 dark:bg-blue-900/15',
-    pillBg: 'bg-blue-100 dark:bg-blue-900/25',
-    pillText: 'text-blue-700 dark:text-blue-300',
+    icon: 'text-info dark:text-info-dark',
+    ring: 'ring-info/30 dark:ring-info-dark/30',
+    bg: 'bg-info/10 dark:bg-info/15',
+    pillBg: 'bg-info/15 dark:bg-info/25',
+    pillText: 'text-info dark:text-info-dark',
   },
   pink: {
-    icon: 'text-pink-500',
-    ring: 'ring-pink-400/30',
-    bg: 'bg-pink-50 dark:bg-pink-900/15',
-    pillBg: 'bg-pink-100 dark:bg-pink-900/25',
-    pillText: 'text-pink-700 dark:text-pink-300',
+    icon: 'text-rose-500 dark:text-rose-400',
+    ring: 'ring-rose-400/30 dark:ring-rose-500/30',
+    bg: 'bg-rose-500/10 dark:bg-rose-500/15',
+    pillBg: 'bg-rose-500/15 dark:bg-rose-500/25',
+    pillText: 'text-rose-600 dark:text-rose-300',
   },
   amber: {
-    icon: 'text-amber-500',
-    ring: 'ring-amber-400/30',
-    bg: 'bg-amber-50 dark:bg-amber-900/15',
-    pillBg: 'bg-amber-100 dark:bg-amber-900/25',
-    pillText: 'text-amber-800 dark:text-amber-300',
+    icon: 'text-gold dark:text-gold-dark',
+    ring: 'ring-gold/30 dark:ring-gold-dark/30',
+    bg: 'bg-gold/10 dark:bg-gold-dark/15',
+    pillBg: 'bg-gold/15 dark:bg-gold-dark/25',
+    pillText: 'text-gold dark:text-gold-dark',
   },
   cyan: {
-    icon: 'text-cyan-500',
-    ring: 'ring-cyan-400/30',
-    bg: 'bg-cyan-50 dark:bg-cyan-900/15',
-    pillBg: 'bg-cyan-100 dark:bg-cyan-900/25',
+    icon: 'text-cyan-600 dark:text-cyan-400',
+    ring: 'ring-cyan-400/30 dark:ring-cyan-500/30',
+    bg: 'bg-cyan-500/10 dark:bg-cyan-500/15',
+    pillBg: 'bg-cyan-500/15 dark:bg-cyan-500/25',
     pillText: 'text-cyan-700 dark:text-cyan-300',
   },
   purple: {
-    icon: 'text-purple-500',
-    ring: 'ring-purple-400/30',
-    bg: 'bg-purple-50 dark:bg-purple-900/15',
-    pillBg: 'bg-purple-100 dark:bg-purple-900/25',
-    pillText: 'text-purple-700 dark:text-purple-300',
+    icon: 'text-purple dark:text-purple-dark',
+    ring: 'ring-purple/30 dark:ring-purple-dark/30',
+    bg: 'bg-purple/10 dark:bg-purple-dark/15',
+    pillBg: 'bg-purple/15 dark:bg-purple-dark/25',
+    pillText: 'text-purple dark:text-purple-dark',
   },
   emerald: {
-    icon: 'text-emerald-500',
-    ring: 'ring-emerald-400/30',
-    bg: 'bg-emerald-50 dark:bg-emerald-900/15',
-    pillBg: 'bg-emerald-100 dark:bg-emerald-900/25',
-    pillText: 'text-emerald-700 dark:text-emerald-300',
+    icon: 'text-good dark:text-good-dark',
+    ring: 'ring-good/30 dark:ring-good-dark/30',
+    bg: 'bg-good/10 dark:bg-good-dark/15',
+    pillBg: 'bg-good/15 dark:bg-good-dark/25',
+    pillText: 'text-good dark:text-good-dark',
   },
   green: {
-    icon: 'text-green-500',
-    ring: 'ring-green-400/30',
-    bg: 'bg-green-50 dark:bg-green-900/15',
-    pillBg: 'bg-green-100 dark:bg-green-900/25',
-    pillText: 'text-green-700 dark:text-green-300',
+    icon: 'text-good dark:text-good-dark',
+    ring: 'ring-good/30 dark:ring-good-dark/30',
+    bg: 'bg-good/10 dark:bg-good-dark/15',
+    pillBg: 'bg-good/15 dark:bg-good-dark/25',
+    pillText: 'text-good dark:text-good-dark',
   },
   indigo: {
-    icon: 'text-indigo-500',
-    ring: 'ring-indigo-400/30',
-    bg: 'bg-indigo-50 dark:bg-indigo-900/15',
-    pillBg: 'bg-indigo-100 dark:bg-indigo-900/25',
-    pillText: 'text-indigo-700 dark:text-indigo-300',
+    icon: 'text-primary dark:text-primary-dark',
+    ring: 'ring-primary/30 dark:ring-primary-dark/30',
+    bg: 'bg-primary/10 dark:bg-primary-dark/15',
+    pillBg: 'bg-primary/15 dark:bg-primary-dark/25',
+    pillText: 'text-primary dark:text-primary-dark',
   },
   teal: {
-    icon: 'text-teal-500',
-    ring: 'ring-teal-400/30',
-    bg: 'bg-teal-50 dark:bg-teal-900/15',
-    pillBg: 'bg-teal-100 dark:bg-teal-900/25',
+    icon: 'text-teal-600 dark:text-teal-400',
+    ring: 'ring-teal-400/30 dark:ring-teal-500/30',
+    bg: 'bg-teal-500/10 dark:bg-teal-500/15',
+    pillBg: 'bg-teal-500/15 dark:bg-teal-500/25',
     pillText: 'text-teal-700 dark:text-teal-300',
   },
   gray: {
-    icon: 'text-gray-500',
-    ring: 'ring-gray-400/30',
-    bg: 'bg-gray-50 dark:bg-gray-800/20',
-    pillBg: 'bg-gray-200 dark:bg-gray-700/40',
-    pillText: 'text-gray-700 dark:text-gray-300',
+    icon: 'text-text-secondary-light dark:text-text-secondary-dark',
+    ring: 'ring-border-light dark:ring-border-dark',
+    bg: 'bg-surface-subtle-light dark:bg-surface-subtle-dark',
+    pillBg: 'bg-surface-subtle-light dark:bg-surface-elevated-dark',
+    pillText: 'text-text-secondary-light dark:text-text-secondary-dark',
   },
   rose: {
-    icon: 'text-rose-500',
-    ring: 'ring-rose-400/30',
-    bg: 'bg-rose-50 dark:bg-rose-900/15',
-    pillBg: 'bg-rose-100 dark:bg-rose-900/25',
-    pillText: 'text-rose-700 dark:text-rose-300',
+    icon: 'text-rose-500 dark:text-rose-400',
+    ring: 'ring-rose-400/30 dark:ring-rose-500/30',
+    bg: 'bg-rose-500/10 dark:bg-rose-500/15',
+    pillBg: 'bg-rose-500/15 dark:bg-rose-500/25',
+    pillText: 'text-rose-600 dark:text-rose-300',
   },
 };
 
@@ -215,8 +215,8 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
           isSelected
             ? `${colors.pillBg} ${colors.pillText} ring-2 ${colors.ring} shadow-sm`
             : indicator
-              ? `bg-white/70 dark:bg-white/8 text-text-primary-light dark:text-text-primary-dark hover:bg-white dark:hover:bg-white/12 border border-black/5 dark:border-white/10 ${indicator.pillExtra}`
-              : 'bg-white/70 dark:bg-white/8 text-text-primary-light dark:text-text-primary-dark hover:bg-white dark:hover:bg-white/12 border border-black/5 dark:border-white/10'
+              ? `bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-primary-light dark:text-text-primary-dark hover:bg-surface-light dark:hover:bg-surface-dark border border-border-light/60 dark:border-border-dark/60 ${indicator.pillExtra}`
+              : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-primary-light dark:text-text-primary-dark hover:bg-surface-light dark:hover:bg-surface-dark border border-border-light/60 dark:border-border-dark/60'
         }`}
       >
         {indicator && (
@@ -241,7 +241,7 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Tìm kiếm việc cần làm..."
-          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white/70 dark:bg-white/8 border border-black/5 dark:border-white/10 text-sm text-text-primary-light dark:text-text-primary-dark placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60 focus:outline-none focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 transition-all"
+          className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light/60 dark:border-border-dark/60 text-sm text-text-primary-light dark:text-text-primary-dark placeholder:text-text-secondary-light/60 dark:placeholder:text-text-secondary-dark/60 focus:outline-none focus:ring-2 focus:ring-gold/30 dark:focus:ring-gold-dark/30 transition-all"
         />
         {searchQuery && (
           <button
@@ -255,7 +255,7 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
 
       {/* Search results */}
       {searchQuery.trim() && (
-        <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800/20 border border-black/5 dark:border-white/10 animate-fade-scale">
+        <div className="p-3 rounded-xl bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/60 dark:border-border-dark/60 animate-fade-scale">
           {searchResults.length > 0 ? (
             <div className="flex flex-wrap gap-2">
               {searchResults.map((activity) => {
@@ -291,20 +291,20 @@ const ActivityPicker: React.FC<ActivityPickerProps> = ({
                       ? `${colors.bg} ring-1 ${colors.ring} scale-[0.97]`
                       : hasSelectedChild
                         ? `${colors.bg} ring-1 ${colors.ring}`
-                        : 'hover:bg-gray-50 dark:hover:bg-white/5'
+                        : 'hover:bg-surface-subtle-light/60 dark:hover:bg-white/5'
                   }`}
                 >
                   {/* Category badge — Nghi/Kỵ counts */}
                   {counts && (counts.nghi > 0 || counts.ky > 0) && (
-                    <span className="absolute -top-1 -right-1 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-white dark:bg-gray-800 shadow-sm border border-black/5 dark:border-white/10">
+                    <span className="absolute -top-1 -right-1 flex items-center gap-0.5 px-1.5 py-0.5 rounded-full bg-surface-light dark:bg-surface-elevated-dark shadow-sm border border-border-light/60 dark:border-border-dark/60">
                       {counts.nghi > 0 && (
-                        <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">{counts.nghi}✓</span>
+                        <span className="text-xs font-bold text-good dark:text-good-dark">{counts.nghi}✓</span>
                       )}
                       {counts.nghi > 0 && counts.ky > 0 && (
-                        <span className="text-[10px] text-gray-300 dark:text-gray-600">|</span>
+                        <span className="text-[10px] text-border-light dark:text-border-dark">|</span>
                       )}
                       {counts.ky > 0 && (
-                        <span className="text-xs font-bold text-red-500 dark:text-red-400">{counts.ky}✗</span>
+                        <span className="text-xs font-bold text-bad dark:text-bad-dark">{counts.ky}✗</span>
                       )}
                     </span>
                   )}

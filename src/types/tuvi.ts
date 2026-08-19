@@ -149,6 +149,8 @@ export interface TuViBirthLocation {
   lng: number;
   /** Estimated UTC offset for the birth location */
   timezone: number;
+  /** Method/source used to resolve timezone ('iana' | 'offline_iana' | 'solar_meridian_fallback') */
+  timezoneSource?: string;
   /** ISO 3166-1 alpha-2 country code, when available */
   countryCode?: string;
   /** Human-readable country name, when available */

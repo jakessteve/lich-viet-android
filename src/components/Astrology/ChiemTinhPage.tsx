@@ -50,19 +50,7 @@ export default function ChiemTinhPage() {
   );
 
   const handleTabChange = (tab: AstrologySubTab) => {
-    if (location.pathname.startsWith('/chiem-tinh/')) {
-      navigate(`/chiem-tinh/${tab}`);
-    } else {
-      setSearchParams((prev) => {
-        const next = new URLSearchParams(prev);
-        if (tab === 'tay-phuong') {
-          next.delete('sub');
-        } else {
-          next.set('sub', tab);
-        }
-        return next;
-      });
-    }
+    navigate(`/app/chiem-tinh/${tab}`);
   };
 
   return (

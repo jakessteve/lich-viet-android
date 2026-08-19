@@ -343,7 +343,7 @@ function layHeavenPlate(
   return { stars, stems };
 }
 
-function buildRotationOrder<T extends { homePalace: number }>(items: T[], first: T, _duongDon: boolean): T[] {
+function buildRotationOrder<T extends { homePalace: number }>(items: T[], first: T, duongDon: boolean): T[] {
   // Build the list starting from 'first', following palace order
   const eightItems = items.filter((i) => i.homePalace !== 5); // Exclude center palace item
   const firstIdx = eightItems.indexOf(first);
@@ -351,7 +351,10 @@ function buildRotationOrder<T extends { homePalace: number }>(items: T[], first:
 
   const ordered: T[] = [];
   for (let i = 0; i < eightItems.length; i++) {
-    ordered.push(eightItems[(firstIdx + i) % eightItems.length]);
+    const idx = duongDon
+      ? (firstIdx + i) % eightItems.length
+      : (((firstIdx - i) % eightItems.length) + eightItems.length) % eightItems.length;
+    ordered.push(eightItems[idx]);
   }
   return ordered;
 }

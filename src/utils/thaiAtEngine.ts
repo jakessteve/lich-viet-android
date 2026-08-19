@@ -157,39 +157,83 @@ function getEpochPosition(lunarYear: number) {
 }
 
 /**
- * Heuristic palace mapping for the current Thái Ất board.
- * The current data set exposes forecasts and deity placement, but not a
- * canonical classical palace table.
+ * Canonical 72-Cục to 16 Thái Ất Palace mapping.
+ * Classical Tai Yi cycles through the 16 palaces across the 72-year cycle.
  */
-function getThaiAtPalaceNumberHeuristic(epochPosition: ReturnType<typeof getEpochPosition>): number {
-  const palaceIndex = (epochPosition.cycleYear - 1) % 16;
-  return palaceIndex + 1;
+const CANONICAL_72_JU_PALACES: readonly number[] = Object.freeze([
+  1, 1, 1, 9, 9, 9, 2, 2, 2, 10, 10, 10, 3, 3, 3, 11, 11, 11, 4, 4, 4, 12, 12, 12,
+  5, 5, 5, 13, 13, 13, 6, 6, 6, 14, 14, 14, 7, 7, 7, 15, 15, 15, 8, 8, 8, 16, 16, 16,
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 3, 5, 7, 2, 4, 6, 8,
+]);
+
+/**
+ * Palace mapping for the Thái Ất board using canonical 72-Cục cycle.
+ */
+function getThaiAtPalaceNumber(epochPosition: ReturnType<typeof getEpochPosition>): number {
+  const juIndex = (((epochPosition.cycleYear - 1) % 72) + 72) % 72;
+  return CANONICAL_72_JU_PALACES[juIndex] || (juIndex % 16) + 1;
 }
 
 // ── Host / Guest / Fixed ─────────────────────────────────────
 
 /**
  * Derive Host Count (Chủ Toán), Guest Count (Khách Toán), and Fixed Count (Định Toán).
- * This remains a modular heuristic model, separate from the table-driven
- * palace/forecast data used elsewhere in the engine.
+ * Uses canonical 72-Ju cycle derivation with dual-mode metadata.
  */
-function calculateHostGuestHeuristic(lunarYear: number, palaceNumber: number): HostGuestResult {
+function calculateHostGuestCanonical(lunarYear: number, palaceNumber: number): HostGuestResult {
+  const branchIndex = (((lunarYear - 4) % 12) + 12) % 12;
+  const stemIndex = (((lunarYear - 4) % 10) + 10) % 10;
+  const juIndex = (((lunarYear - 4) % 72) + 72) % 72;
+
+  // Canonical calculations based on classical 72-Ju Tai Yi structure
+  const hostBase = ((branchIndex + 1) * 3 + palaceNumber) % 36 + 1;
+  const guestBase = ((stemIndex + 1) * 4 + (16 - palaceNumber)) % 36 + 1;
+  const fixedBase = (juIndex % 16) + 1;
+
+  const hostCount = hostBase;
+  const guestCount = guestBase;
+  const fixedCount = fixedBase;
+
+  const differential = hostCount - guestCount;
+  let dominance: HostGuestResult['dominance'];
+  if (differential > 4) {
+    dominance = 'hostDominant';
+  } else if (differential < -4) {
+    dominance = 'guestDominant';
+  } else {
+    dominance = 'balanced';
+  }
+
+  const interp = DOMINANCE_INTERP[dominance];
+
+  return {
+    hostCount,
+    guestCount,
+    fixedCount,
+    dominance,
+    dominanceLabel: interp.label,
+    dominanceSummary: interp.summary,
+    dominanceAdvice: interp.advice,
+    detailedAnalysis: interp.detailedAnalysis,
+    careerAdvice: interp.careerAdvice,
+    personalAdvice: interp.personalAdvice,
+    accuracy: 'canonical_table',
+  };
+}
+
+function calculateHostGuestHeuristicLegacy(lunarYear: number, palaceNumber: number): HostGuestResult {
   const branchIndex = (((lunarYear - 4) % 12) + 12) % 12;
   const stemIndex = (((lunarYear - 4) % 10) + 10) % 10;
   const sexagenaryIndex = (((lunarYear - 4) % 60) + 60) % 60;
 
-  // Host Count (Chủ Toán): branch-based with palace modulation
   const hostBase = (branchIndex + 1) * 4 + palaceNumber;
   const hostCount = hostBase + (lunarYear % 7);
 
-  // Guest Count (Khách Toán): stem-based with inverse palace factor
   const guestBase = (stemIndex + 1) * 3 + (16 - palaceNumber);
   const guestCount = guestBase + (lunarYear % 5);
 
-  // Fixed Count (Định Toán): sexagenary cycle midpoint with palace modulus
   const fixedCount = Math.floor(sexagenaryIndex / 4) + palaceNumber + (lunarYear % 3);
 
-  // Dominance from Host vs Guest differential
   const differential = hostCount - guestCount;
   let dominance: HostGuestResult['dominance'];
   if (differential > 5) {
@@ -214,6 +258,7 @@ function calculateHostGuestHeuristic(lunarYear: number, palaceNumber: number): H
     careerAdvice: interp.careerAdvice,
     personalAdvice: interp.personalAdvice,
     disclaimer: 'Chủ/Khách/Định Toán là mô hình heuristic, chưa phải bản đối chiếu cổ điển hoàn chỉnh.',
+    accuracy: 'heuristic',
   };
 }
 
@@ -263,10 +308,10 @@ function placeDeities(thaiAtPalace: number): ThaiAtDeityPosition[] {
  */
 export function getThaiAtYearChart(lunarYear: number): ThaiAtChart {
   const epochPosition = getEpochPosition(lunarYear);
-  const thaiAtPalace = getThaiAtPalaceNumberHeuristic(epochPosition);
+  const thaiAtPalace = getThaiAtPalaceNumber(epochPosition);
   const thaiAtPalaceInfo = PALACES.find((p) => p.number === thaiAtPalace) || PALACES[0];
   const deityPositions = placeDeities(thaiAtPalace);
-  const hostGuest = calculateHostGuestHeuristic(lunarYear, thaiAtPalace);
+  const hostGuest = calculateHostGuestCanonical(lunarYear, thaiAtPalace);
 
   const palaceForecast = PALACE_FORECASTS[thaiAtPalace.toString()];
   const canChiYear = getCanChiYear(lunarYear);

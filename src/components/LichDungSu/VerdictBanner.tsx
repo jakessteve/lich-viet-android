@@ -24,48 +24,43 @@ function getVerdict(pct: number): { text: string; emoji: string; bgGrad: string;
     return {
       text: 'Đại Cát',
       emoji: '✨',
-      bgGrad:
-        'from-emerald-500/15 via-emerald-400/10 to-green-400/5 dark:from-emerald-500/10 dark:via-emerald-600/8 dark:to-green-900/5',
-      textColor: 'text-emerald-600 dark:text-emerald-400',
+      bgGrad: 'from-good/15 via-good/10 to-good/5 dark:from-good/10 dark:via-good/5 dark:to-transparent',
+      textColor: 'text-good dark:text-good-dark',
     };
   if (pct >= 60)
     return {
       text: 'Tốt',
       emoji: '👍',
-      bgGrad:
-        'from-green-400/15 via-lime-400/10 to-emerald-300/5 dark:from-green-500/10 dark:via-lime-600/8 dark:to-emerald-900/5',
-      textColor: 'text-green-600 dark:text-green-400',
+      bgGrad: 'from-good/12 via-good/8 to-transparent dark:from-good/10 dark:via-good/5 dark:to-transparent',
+      textColor: 'text-good dark:text-good-dark',
     };
   if (pct >= 40)
     return {
       text: 'Bình thường',
       emoji: '⚖️',
-      bgGrad:
-        'from-amber-400/15 via-yellow-400/10 to-amber-300/5 dark:from-amber-500/10 dark:via-yellow-600/8 dark:to-amber-900/5',
-      textColor: 'text-amber-800 dark:text-amber-300',
+      bgGrad: 'from-gold/15 via-gold/10 to-gold/5 dark:from-gold/10 dark:via-gold/5 dark:to-transparent',
+      textColor: 'text-gold dark:text-gold-dark',
     };
   if (pct >= 20)
     return {
       text: 'Xấu',
       emoji: '⚠️',
-      bgGrad:
-        'from-orange-400/15 via-amber-400/10 to-orange-300/5 dark:from-orange-500/10 dark:via-amber-600/8 dark:to-orange-900/5',
-      textColor: 'text-orange-600 dark:text-orange-400',
+      bgGrad: 'from-orange/15 via-orange/10 to-orange/5 dark:from-orange/10 dark:via-orange/5 dark:to-transparent',
+      textColor: 'text-orange dark:text-orange-dark',
     };
   return {
     text: 'Đại Kỵ',
     emoji: '🚫',
-    bgGrad: 'from-red-400/15 via-rose-400/10 to-red-300/5 dark:from-red-500/10 dark:via-rose-600/8 dark:to-red-900/5',
-    textColor: 'text-red-600 dark:text-red-400',
+    bgGrad: 'from-bad/15 via-bad/10 to-bad/5 dark:from-bad/10 dark:via-bad/5 dark:to-transparent',
+    textColor: 'text-bad dark:text-bad-dark',
   };
 }
 
 function getStrokeColor(pct: number): string {
-  if (pct >= 80) return '#10b981';
-  if (pct >= 60) return '#22c55e';
-  if (pct >= 40) return '#f59e0b';
-  if (pct >= 20) return '#f97316';
-  return '#ef4444';
+  if (pct >= 60) return '#059669'; // Good
+  if (pct >= 40) return '#b45309'; // Gold
+  if (pct >= 20) return '#ea580c'; // Orange
+  return '#dc2626'; // Bad
 }
 
 const VerdictBanner: React.FC<VerdictBannerProps> = ({

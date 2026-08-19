@@ -48,7 +48,7 @@ const FAQIntentCards: React.FC<FAQIntentCardsProps> = ({ selectedIntent, onSelec
               className={`flex flex-col items-center justify-center text-center p-2.5 sm:p-3 rounded-xl border transition-all duration-200 cursor-pointer group hover:shadow-sm ${
                 isActive
                   ? 'bg-gold/10 dark:bg-gold-dark/10 border-gold/40 dark:border-gold-dark/40 ring-1 ring-gold/20 dark:ring-gold-dark/20 shadow-sm'
-                  : 'bg-white dark:bg-white/[0.03] border-border-light dark:border-border-dark hover:bg-gray-50 dark:hover:bg-white/5 hover:border-gray-300 dark:hover:border-gray-600'
+                  : 'bg-surface-light dark:bg-surface-elevated-dark/40 border-border-light/60 dark:border-border-dark/60 hover:bg-surface-subtle-light/60 dark:hover:bg-surface-elevated-dark hover:border-border-light dark:hover:border-border-dark'
               }`}
             >
               <span className="text-2xl mb-1.5 transition-transform duration-200 group-hover:scale-110">

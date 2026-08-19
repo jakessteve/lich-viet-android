@@ -43,11 +43,11 @@ const FACTOR_ICONS: Record<string, string> = {
 
 function quantifyScore(value: number, maxValue: number): { text: string; colorClass: string } {
   const ratio = maxValue > 0 ? value / maxValue : 0;
-  if (ratio >= 0.7) return { text: 'Rất tốt', colorClass: 'text-emerald-600 dark:text-emerald-400' };
-  if (ratio >= 0.4) return { text: 'Tốt vừa', colorClass: 'text-green-600 dark:text-green-400' };
-  if (ratio >= 0.05) return { text: 'Bình thường', colorClass: 'text-amber-800 dark:text-amber-300' };
-  if (ratio >= -0.3) return { text: 'Xấu', colorClass: 'text-orange-600 dark:text-orange-400' };
-  return { text: 'Rất Xấu', colorClass: 'text-red-600 dark:text-red-400' };
+  if (ratio >= 0.7) return { text: 'Rất tốt', colorClass: 'text-good dark:text-good-dark' };
+  if (ratio >= 0.4) return { text: 'Tốt vừa', colorClass: 'text-good dark:text-good-dark' };
+  if (ratio >= 0.05) return { text: 'Bình thường', colorClass: 'text-gold dark:text-gold-dark' };
+  if (ratio >= -0.3) return { text: 'Xấu', colorClass: 'text-orange dark:text-orange-dark' };
+  return { text: 'Rất Xấu', colorClass: 'text-bad dark:text-bad-dark' };
 }
 
 const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
@@ -58,8 +58,8 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
   const itemsByFactor = new Map(breakdown.map((b) => [b.factor, b]));
 
   return (
-    <div className="rounded-xl border border-border-light dark:border-border-dark overflow-hidden">
-      <div className="px-4 py-3 border-b border-border-light/50 dark:border-border-dark/50">
+    <div className="rounded-xl border border-border-light dark:border-border-dark overflow-hidden bg-surface-light dark:bg-surface-dark">
+      <div className="px-4 py-3 border-b border-border-light/50 dark:border-border-dark/50 bg-surface-subtle-light/40 dark:bg-surface-subtle-dark/40">
         <span className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark flex items-center gap-2">
           <LineChart className="h-4 w-4 text-text-secondary-light dark:text-text-secondary-dark" />
           Chi tiết đánh giá (theo nhóm)
@@ -79,7 +79,7 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
           <div key={group.id} className="border-b border-border-light/30 dark:border-border-dark/30 last:border-b-0">
             <button
               onClick={() => setExpandedGroup(isExpanded ? null : group.id)}
-              className="w-full flex items-center justify-between px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="w-full flex items-center justify-between px-4 py-3 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-2.5">
                 <span className="text-lg">{group.icon}</span>
@@ -92,7 +92,7 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
               </div>
               <div className="flex items-center gap-2">
                 <span
-                  className={`text-sm font-bold ${groupScore >= 0 ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'}`}
+                  className={`text-sm font-bold ${groupScore >= 0 ? 'text-good dark:text-good-dark' : 'text-bad dark:text-bad-dark'}`}
                 >
                   {groupScore > 0 ? '+' : ''}
                   {groupScore}
@@ -105,7 +105,7 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
 
             {isExpanded && (
               <>
-                <div className="divide-y divide-border-light/30 dark:divide-border-dark/30 animate-fade-scale bg-surface-subtle-light/50 dark:bg-white/[0.01]">
+                <div className="divide-y divide-border-light/30 dark:divide-border-dark/30 animate-fade-scale bg-surface-subtle-light/50 dark:bg-white/[0.02]">
                   {groupItems.map((item) => {
                     const iq = quantifyScore(item.value, item.maxValue);
                     return (
@@ -127,10 +127,10 @@ const GroupedBreakdown: React.FC<GroupedBreakdownProps> = ({ breakdown }) => {
                             {item.detail}
                           </p>
                           {/* Progress bar */}
-                          <div className="mt-1 h-1 rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden">
+                          <div className="mt-1 h-1 rounded-full bg-border-light dark:bg-border-dark overflow-hidden">
                             <div
                               className={`h-full rounded-full transition-all duration-500 ${
-                                item.value > 0 ? 'bg-emerald-500' : item.value < 0 ? 'bg-red-500' : 'bg-gray-400'
+                                item.value > 0 ? 'bg-good dark:bg-good-dark' : item.value < 0 ? 'bg-bad dark:bg-bad-dark' : 'bg-text-secondary-light/40'
                               }`}
                               style={{ width: `${Math.max(3, Math.abs(item.value / item.maxValue) * 100)}%` }}
                             />

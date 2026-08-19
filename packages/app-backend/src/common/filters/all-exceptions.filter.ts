@@ -43,9 +43,33 @@ export class AllExceptionsFilter implements ExceptionFilter {
       );
     }
 
+    const errorCode =
+      status === 401
+        ? 'UNAUTHORIZED'
+        : status === 403
+          ? 'FORBIDDEN'
+          : status === 404
+            ? 'NOT_FOUND'
+            : status === 422
+              ? 'UNPROCESSABLE_ENTITY'
+              : status === 400
+                ? 'BAD_REQUEST'
+                : status >= 500
+                  ? 'INTERNAL_SERVER_ERROR'
+                  : 'REQUEST_FAILED';
+
     response.status(status).send({
+      ok: false,
+      error: {
+        code: errorCode,
+        message,
+        details: errors,
+      },
+      meta: {
+        traceId: (request.headers['x-request-id'] as string) || `trace-${Date.now()}`,
+        timestamp: new Date().toISOString(),
+      },
       statusCode: status,
-      timestamp: new Date().toISOString(),
       path: request.url,
       method: request.method,
       message,

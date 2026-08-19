@@ -15,10 +15,17 @@ interface UserMenuProps {
   showFontSizeControl?: boolean;
   onOpenHelp?: () => void;
   onOpenAbout?: () => void;
+  onOpenChange?: (open: boolean) => void;
   className?: string;
 }
 
-export default function UserMenu({ showFontSizeControl = false, onOpenHelp, onOpenAbout, className }: UserMenuProps) {
+export default function UserMenu({
+  showFontSizeControl = false,
+  onOpenHelp,
+  onOpenAbout,
+  onOpenChange,
+  className,
+}: UserMenuProps) {
   const navigate = useNavigate();
   const user = useAuthStore((s) => s.user);
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
@@ -31,7 +38,7 @@ export default function UserMenu({ showFontSizeControl = false, onOpenHelp, onOp
 
   return (
     <div className={className}>
-      <DropdownMenu>
+      <DropdownMenu onOpenChange={onOpenChange}>
         <DropdownMenuTrigger asChild>
           <button
             id="tour-user-menu"

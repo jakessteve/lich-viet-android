@@ -19,6 +19,7 @@ export default function AppNav() {
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,6 +27,8 @@ export default function AppNav() {
 
   const activeTab: ActiveTab = ROUTE_TO_TAB[location.pathname] || 'am-lich';
   const isFullPage = location.pathname === '/app/cai-dat' || location.pathname === '/app/nang-cap';
+
+  const isNavHidden = autoHideNav && !isVisible && !isUserMenuOpen && !mobileDrawerOpen;
 
   const handleTabChange = (tabId: ActiveTab) => {
     navigate(TAB_TO_ROUTE[tabId]);
@@ -39,7 +42,7 @@ export default function AppNav() {
     <>
       <nav
         className={`sticky top-0 z-50 glass-nav transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] motion-gpu ${
-          autoHideNav && !isVisible ? '-translate-y-full' : 'translate-y-0'
+          isNavHidden ? '-translate-y-full' : 'translate-y-0'
         } ${isScrolled ? 'shadow-md dark:shadow-black/20 backdrop-blur-md' : ''}`}
         aria-label="Điều hướng chính"
       >
@@ -124,6 +127,7 @@ export default function AppNav() {
               showFontSizeControl={true}
               onOpenHelp={() => setHelpModalOpen(true)}
               onOpenAbout={() => setAboutModalOpen(true)}
+              onOpenChange={setIsUserMenuOpen}
             />
           </div>
         </div>

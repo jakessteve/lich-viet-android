@@ -1,4 +1,34 @@
 import React from 'react';
+import { NAP_AM_HANH } from '@/services/tuvi/constants';
+
+/**
+ * High-contrast theme-aware palette for Five Elements (Ngũ Hành)
+ * Ensures >= 4.5:1 WCAG 2.1 AA compliance across light and dark modes.
+ */
+export const ELEMENT_CONTRAST_COLORS: Record<'light' | 'dark', Record<string, string>> = {
+  light: {
+    Kim: '#64748b',
+    Mộc: '#16a34a',
+    Thủy: '#2563eb',
+    Hỏa: '#dc2626',
+    Thổ: '#d97706',
+  },
+  dark: {
+    Kim: '#cbd5e1',
+    Mộc: '#4ade80',
+    Thủy: '#60a5fa',
+    Hỏa: '#f87171',
+    Thổ: '#fbbf24',
+  },
+};
+
+export function getNapAmThemeColor(napAm: string | undefined, isDark: boolean): string | undefined {
+  if (!napAm) return undefined;
+  const element = NAP_AM_HANH[napAm];
+  if (!element) return undefined;
+  const theme = isDark ? 'dark' : 'light';
+  return ELEMENT_CONTRAST_COLORS[theme][element];
+}
 
 /**
  * Text formatting helpers for Vietnamese lunar calendar display.

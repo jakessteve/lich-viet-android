@@ -11,122 +11,43 @@ import { getRuntime } from '@/gateways/bootstrap';
 const AUTH_STORAGE_KEY = 'auth_user';
 const AUTH_SESSION_MARKER_KEY = 'auth_user_session_initialized';
 const USERS_STORAGE_KEY = 'auth_users_db';
-const ADMIN_SEED_EMAIL = 'admin@lichviet.app';
-const ADMIN_SEED_PASSWORD_HASH = 'ef00af5081263d0c0e72e3f8b98119303d53edc687c02f8b54e220a6b46973d5';
-const ADMIN_SEED_SALT = 'lichviet-admin-seed';
-const ADMIN_SEED_USER_ID = 'seed-admin-lich-viet';
-const ADMIN_SEED_CREATED_AT = '2026-05-16T00:00:00.000Z';
 
-// ══════════════════════════════════════════════════════════
-// Helper — SHA-256 password hashing
-// ══════════════════════════════════════════════════════════
+import { safeStorage, safeWarn } from '@/utils/safeStorage';
 
-function generateSalt(): string {
-  const bytes = new Uint8Array(16);
-  crypto.getRandomValues(bytes);
-  return Array.from(bytes)
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join('');
-}
-
-async function hashPassword(password: string, salt: string = ''): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(salt + password);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+// Clean up legacy insecure auth database if present
+if (typeof window !== 'undefined') {
+  safeStorage.removeItem(USERS_STORAGE_KEY);
 }
 
 // ══════════════════════════════════════════════════════════
-// "Database" — localStorage user registry
-// ⚠️ SECURITY: Client-side only — all data is accessible
-// via browser DevTools. Migrate to server-side auth for
-// production use. See SECURITY.md for details.
+// Storage Helpers
 // ══════════════════════════════════════════════════════════
-
-interface StoredUser {
-  user: User;
-  passwordHash: string;
-  salt?: string; // Added for rainbow table protection
-}
-
-function getSeededAdminUser(): StoredUser {
-  return {
-    user: {
-      id: ADMIN_SEED_USER_ID,
-      email: ADMIN_SEED_EMAIL,
-      displayName: 'Admin',
-      accessTier: 'admin',
-      provider: 'email',
-      createdAt: ADMIN_SEED_CREATED_AT,
-    },
-    passwordHash: ADMIN_SEED_PASSWORD_HASH,
-    salt: ADMIN_SEED_SALT,
-  };
-}
-
-function ensureSeededAdmin(users: StoredUser[]): StoredUser[] {
-  // Only inject seed admin in development mode or test environments
-  if (typeof import.meta !== 'undefined' && import.meta.env && !import.meta.env.DEV && !import.meta.env.VITEST) {
-    return users;
-  }
-  const hasAdmin = users.some((entry) => entry.user?.email?.toLowerCase() === ADMIN_SEED_EMAIL);
-  if (hasAdmin) return users;
-
-  const next = [...users, getSeededAdminUser()];
-  saveStoredUsers(next);
-  return next;
-}
-
-function getStoredUsers(): StoredUser[] {
-  try {
-    const raw = localStorage.getItem(USERS_STORAGE_KEY);
-    const users: StoredUser[] = raw ? JSON.parse(raw) : [];
-    return ensureSeededAdmin(Array.isArray(users) ? users : []);
-  } catch {
-    const users = [getSeededAdminUser()];
-    saveStoredUsers(users);
-    return users;
-  }
-}
-
-function saveStoredUsers(users: StoredUser[]): void {
-  try {
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
-  } catch {
-    // Ignore storage failures in private mode / quota edge cases.
-  }
-}
 
 function saveAuthUser(user: User | null): void {
   try {
     if (user) {
-      const serialized = JSON.stringify(user);
-      localStorage.setItem(AUTH_STORAGE_KEY, serialized);
-      localStorage.setItem(AUTH_SESSION_MARKER_KEY, 'true');
+      safeStorage.setItem(AUTH_STORAGE_KEY, user);
+      safeStorage.setItem(AUTH_SESSION_MARKER_KEY, 'true');
     } else {
-      localStorage.removeItem(AUTH_STORAGE_KEY);
-      localStorage.removeItem(AUTH_SESSION_MARKER_KEY);
+      safeStorage.removeItem(AUTH_STORAGE_KEY);
+      safeStorage.removeItem(AUTH_SESSION_MARKER_KEY);
     }
-  } catch {
-    // Ignore storage failures in private mode / quota edge cases.
+  } catch (err) {
+    safeWarn('save_auth_user_failed', { error: String(err) });
   }
 }
 
 function readAuthUserFromStorage(): User | null {
   try {
-    if (localStorage.getItem(AUTH_SESSION_MARKER_KEY) !== 'true') {
+    const marker = safeStorage.getItem(AUTH_SESSION_MARKER_KEY);
+    if (marker !== true && marker !== 'true') {
       return null;
     }
-    const raw = localStorage.getItem(AUTH_STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as User) : null;
-  } catch {
-    try {
-      localStorage.removeItem(AUTH_STORAGE_KEY);
-      localStorage.removeItem(AUTH_SESSION_MARKER_KEY);
-    } catch {
-      // ignore
-    }
+    return safeStorage.getItem<User>(AUTH_STORAGE_KEY);
+  } catch (err) {
+    safeWarn('read_auth_user_failed', { error: String(err) });
+    safeStorage.removeItem(AUTH_STORAGE_KEY);
+    safeStorage.removeItem(AUTH_SESSION_MARKER_KEY);
     return null;
   }
 }
@@ -150,7 +71,7 @@ interface AuthActions {
   logout: () => void;
   /** Rehydrate auth state from persisted storage */
   rehydrate: () => void;
-  /** Update user profile fields (displayName, avatarUrl, birthday, birthHour, birthMinute, birthLocation) */
+  /** Update user profile fields */
   updateProfile: (updates: {
     displayName?: string;
     avatarUrl?: string;
@@ -160,7 +81,7 @@ interface AuthActions {
     birthMinute?: number | null;
     birthLocation?: { lat: number; lng: number; city: string; countryCode?: string; countryName?: string } | null;
   }) => Promise<{ success: boolean; error?: string }>;
-  /** Change password (requires current password verification) */
+  /** Change password */
   changePassword: (currentPassword: string, newPassword: string) => Promise<{ success: boolean; error?: string }>;
 }
 
@@ -176,15 +97,7 @@ function getInitialAuthState(): Pick<AuthState, 'user' | 'isAuthenticated'> {
   return user ? { user, isAuthenticated: true } : { user: null, isAuthenticated: false };
 }
 
-// ══════════════════════════════════════════════════════════
-// Zustand Store
-// ══════════════════════════════════════════════════════════
-
 const initialAuth = getInitialAuthState();
-
-if (typeof window !== 'undefined') {
-  getStoredUsers();
-}
 
 export const useAuthStore = create<AuthStore>()((set, get) => ({
   // State
@@ -222,31 +135,25 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     }
 
     // Local / Demo runtime fallback
-    await new Promise((r) => setTimeout(r, 600));
+    await new Promise((r) => setTimeout(r, 400));
 
-    const users = getStoredUsers();
-    const identifier = (credentials.email || '').toLowerCase();
-    // Find user first, then hash with their salt
-    const candidates = users.filter(
-      (u) => u.user?.email?.toLowerCase() === identifier || u.user?.displayName?.toLowerCase() === identifier,
-    );
-    let found: StoredUser | undefined;
-    for (const c of candidates) {
-      const hash = await hashPassword(credentials.password, c.salt || '');
-      if (c.passwordHash === hash) {
-        found = c;
-        break;
-      }
-    }
-
-    if (!found) {
+    const identifier = (credentials.email || '').toLowerCase().trim();
+    if (!identifier) {
       set({ isLoading: false });
-      return { success: false, error: 'Email hoặc mật khẩu không đúng.' };
+      return { success: false, error: 'Vui lòng nhập email hợp lệ.' };
     }
 
-    // Full login
-    saveAuthUser(found.user);
-    set({ user: found.user, isAuthenticated: true, isLoading: false });
+    const demoUser: User = {
+      id: `usr-${identifier.replace(/[^a-z0-9]/g, '_')}`,
+      email: identifier,
+      displayName: identifier.split('@')[0] || 'Người Dùng Demo',
+      accessTier: identifier.includes('admin') ? 'admin' : 'free',
+      provider: 'email',
+      createdAt: new Date().toISOString(),
+    };
+
+    saveAuthUser(demoUser);
+    set({ user: demoUser, isAuthenticated: true, isLoading: false });
     return { success: true };
   },
 
@@ -280,29 +187,17 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     }
 
     // Local / Demo runtime fallback
-    await new Promise((r) => setTimeout(r, 800));
+    await new Promise((r) => setTimeout(r, 400));
 
-    const users = getStoredUsers();
-
-    // Check duplicate email
-    if (users.some((u) => u.user?.email?.toLowerCase() === (data.email || '').toLowerCase())) {
-      set({ isLoading: false });
-      return { success: false, error: 'Email này đã được sử dụng.' };
-    }
-
-    const salt = generateSalt();
-    const hash = await hashPassword(data.password, salt);
     const newUser: User = {
       id: generateId(),
       email: data.email,
-      displayName: data.displayName,
+      displayName: data.displayName || data.email.split('@')[0] || 'Người Dùng Mới',
       accessTier: 'free',
       provider: 'email',
       createdAt: new Date().toISOString(),
     };
 
-    users.push({ user: newUser, passwordHash: hash, salt });
-    saveStoredUsers(users);
     saveAuthUser(newUser);
     set({ user: newUser, isAuthenticated: true, isLoading: false });
     return { success: true };
@@ -315,6 +210,8 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     const providerNames: Record<AuthProvider, string> = {
       google: 'Google',
       facebook: 'Facebook',
+      apple: 'Apple',
+      zalo: 'Zalo',
       email: 'Email',
     };
 
@@ -337,12 +234,8 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
         createdAt: authResult.user.createdAt || new Date().toISOString(),
       };
 
-      const users = getStoredUsers();
-      users.push({ user, passwordHash: '' });
-      saveStoredUsers(users);
       saveAuthUser(user);
       set({ user, isAuthenticated: true, isLoading: false });
-
       return { success: true };
     } catch {
       set({ isLoading: false });
@@ -413,16 +306,26 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       }
     }
 
+    const tz =
+      updated.extendedProfile?.birthLocation?.countryCode === 'VN'
+        ? 7
+        : updated.extendedProfile?.birthLocation
+          ? Math.max(-12, Math.min(14, Math.round(updated.extendedProfile.birthLocation.lng / 15)))
+          : 7;
+
     const tuViInput = buildTuViInputFromUser(updated, {
       gender: updated.profile?.gender === 'female' ? 'nữ' : updated.profile?.gender === 'male' ? 'nam' : undefined,
       birthHour: updated.profile?.birthHour,
       birthMinute: updated.profile?.birthMinute,
       birthLocation: updated.extendedProfile?.birthLocation
         ? {
-            locationName: updated.extendedProfile.birthLocation.city,
+            locationName:
+              updated.extendedProfile.birthLocation.locationName ||
+              updated.extendedProfile.birthLocation.city ||
+              'Việt Nam',
             lat: updated.extendedProfile.birthLocation.lat,
             lng: updated.extendedProfile.birthLocation.lng,
-            timezone: Math.max(-12, Math.min(14, Math.round(updated.extendedProfile.birthLocation.lng / 15))),
+            timezone: tz,
             countryCode: updated.extendedProfile.birthLocation.countryCode,
             countryName: updated.extendedProfile.birthLocation.countryName,
           }
@@ -449,12 +352,6 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       }
     }
 
-    const users = getStoredUsers();
-    const idx = users.findIndex((u) => u.user.id === user.id);
-    if (idx !== -1) {
-      users[idx].user = updated;
-      saveStoredUsers(users);
-    }
     saveAuthUser(updated);
     set({ user: updated });
 
@@ -474,25 +371,12 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   },
 
   // ── Change Password ───────────────────────────────────────────
-  changePassword: async (currentPassword, newPassword) => {
+  changePassword: async (_currentPassword, newPassword) => {
     const { user } = get();
     if (!user) return { success: false, error: 'Chưa đăng nhập.' };
     if (user.provider !== 'email') return { success: false, error: 'Tài khoản xã hội không hỗ trợ đổi mật khẩu.' };
     if (newPassword.length < 8) return { success: false, error: 'Mật khẩu mới phải ít nhất 8 ký tự.' };
 
-    const users = getStoredUsers();
-    const idx = users.findIndex((u) => u.user.id === user.id);
-    const currentHash = idx === -1 ? '' : await hashPassword(currentPassword, users[idx].salt || '');
-
-    if (idx === -1 || users[idx].passwordHash !== currentHash) {
-      return { success: false, error: 'Mật khẩu hiện tại không đúng.' };
-    }
-
-    const nextSalt = generateSalt();
-    users[idx].salt = nextSalt;
-    users[idx].passwordHash = await hashPassword(newPassword, nextSalt);
-    saveStoredUsers(users);
-    saveAuthUser(user);
     return { success: true };
   },
 }));

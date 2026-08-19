@@ -18,6 +18,7 @@ import { getUpcomingEvents, getEventsForDate } from '@/utils/eventEngine';
 
 export interface EventState {
   events: CalendarEventDto[];
+  pendingMutations: SyncMutation[];
   isLoading: boolean;
   
   // Actions
@@ -33,6 +34,7 @@ export interface EventState {
 
   // Sync helpers
   exportSyncMutations: () => SyncMutation[];
+  clearAcknowledgedMutations: (mutationIds: string[]) => void;
   applyServerDeltas: (deltas: ServerDelta[]) => void;
 }
 
@@ -75,6 +77,7 @@ export const useEventStore = create<EventState>()(
   persist(
     (set, get) => ({
       events: DEFAULT_SEEDED_EVENTS,
+      pendingMutations: [],
       isLoading: false,
 
       addEvent: (dto, userId = 'local-user') => {
@@ -102,8 +105,18 @@ export const useEventStore = create<EventState>()(
           updatedAt: now,
         };
 
+        const mutation: SyncMutation = {
+          mutationId: `mut-event-${id}-${Date.now()}`,
+          entityType: 'calendar_event',
+          entityId: id,
+          action: 'insert',
+          payload: { ...newEvent },
+          clientUpdatedAt: now,
+        };
+
         set((state) => ({
           events: [...state.events, newEvent],
+          pendingMutations: [...state.pendingMutations.filter((m) => m.entityId !== id), mutation],
         }));
 
         return newEvent;
@@ -111,24 +124,52 @@ export const useEventStore = create<EventState>()(
 
       updateEvent: (id, updates) => {
         const now = new Date().toISOString();
-        set((state) => ({
-          events: state.events.map((ev) =>
-            ev.id === id
-              ? {
-                  ...ev,
-                  ...updates,
-                  title: updates.title !== undefined ? updates.title.trim() : ev.title,
-                  description: updates.description !== undefined ? updates.description?.trim() : ev.description,
-                  updatedAt: now,
-                }
-              : ev,
-          ),
-        }));
+        let updatedEvent: CalendarEventDto | undefined;
+
+        set((state) => {
+          const events = state.events.map((ev) => {
+            if (ev.id === id) {
+              updatedEvent = {
+                ...ev,
+                ...updates,
+                title: updates.title !== undefined ? updates.title.trim() : ev.title,
+                description: updates.description !== undefined ? updates.description?.trim() : ev.description,
+                updatedAt: now,
+              };
+              return updatedEvent;
+            }
+            return ev;
+          });
+
+          const mutation: SyncMutation = {
+            mutationId: `mut-event-${id}-${Date.now()}`,
+            entityType: 'calendar_event',
+            entityId: id,
+            action: 'update',
+            payload: updatedEvent ? { ...updatedEvent } : (updates as Record<string, unknown>),
+            clientUpdatedAt: now,
+          };
+
+          return {
+            events,
+            pendingMutations: [...state.pendingMutations.filter((m) => m.entityId !== id), mutation],
+          };
+        });
       },
 
       deleteEvent: (id) => {
+        const now = new Date().toISOString();
+        const mutation: SyncMutation = {
+          mutationId: `mut-del-event-${id}-${Date.now()}`,
+          entityType: 'calendar_event',
+          entityId: id,
+          action: 'delete',
+          clientUpdatedAt: now,
+        };
+
         set((state) => ({
           events: state.events.filter((ev) => ev.id !== id),
+          pendingMutations: [...state.pendingMutations.filter((m) => m.entityId !== id), mutation],
         }));
       },
 
@@ -141,7 +182,7 @@ export const useEventStore = create<EventState>()(
       },
 
       clearAllEvents: () => {
-        set({ events: [] });
+        set({ events: [], pendingMutations: [] });
       },
 
       getUpcoming: (daysAhead = 30, fromDate = new Date()) => {
@@ -155,7 +196,12 @@ export const useEventStore = create<EventState>()(
       },
 
       exportSyncMutations: () => {
-        const { events } = get();
+        const { pendingMutations, events } = get();
+        if (pendingMutations.length > 0) {
+          return pendingMutations;
+        }
+
+        // Fallback for initial export of non-seed events if queue is empty
         return events
           .filter((e) => !e.id.startsWith('seed-'))
           .map((e) => ({
@@ -166,6 +212,14 @@ export const useEventStore = create<EventState>()(
             payload: { ...e },
             clientUpdatedAt: e.updatedAt || new Date().toISOString(),
           }));
+      },
+
+      clearAcknowledgedMutations: (mutationIds: string[]) => {
+        if (!mutationIds || mutationIds.length === 0) return;
+        const ackedSet = new Set(mutationIds);
+        set((state) => ({
+          pendingMutations: state.pendingMutations.filter((m) => !ackedSet.has(m.mutationId)),
+        }));
       },
 
       applyServerDeltas: (deltas) => {

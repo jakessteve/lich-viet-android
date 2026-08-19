@@ -6,16 +6,11 @@ describe('authStore', () => {
     vi.resetModules();
   });
 
-  it('seeds the local admin account on load', async () => {
+  it('does not store unencrypted user registry in auth_users_db on load', async () => {
     await import('@/stores/authStore');
 
     const rawUsers = localStorage.getItem('auth_users_db');
-    expect(rawUsers).toBeTruthy();
-
-    const users = JSON.parse(rawUsers as string) as Array<{
-      user: { email: string };
-    }>;
-    expect(users.some((entry) => entry.user.email === 'admin@lichviet.app')).toBe(true);
+    expect(rawUsers).toBeNull();
   });
 
   it('allows the seeded admin account to log in', async () => {

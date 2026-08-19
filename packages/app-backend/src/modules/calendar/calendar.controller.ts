@@ -8,11 +8,11 @@ import {
   Body,
   Param,
   Inject,
-  Headers,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiHeader } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { CalendarService } from './calendar.service.js';
 import {
   GetCalendarDayDto,
@@ -20,6 +20,8 @@ import {
   GetCalendarEventsQueryDto,
   CreateBackendCalendarEventDto,
 } from './dto/calendar.dto.js';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
+import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 
 @ApiTags('Calendar & Dụng Sự')
 @Controller('v1/calendar')
@@ -49,53 +51,50 @@ export class CalendarController {
   }
 
   @Get('events')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'List calendar events in date range' })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
   @ApiResponse({ status: 200, description: 'List of calendar events' })
-  getEvents(@Query() query: GetCalendarEventsQueryDto, @Headers('authorization') authHeader?: string) {
-    const userId = this.extractUserId(authHeader);
+  @ApiResponse({ status: 401, description: 'Unauthorized - Missing or invalid JWT' })
+  getEvents(@CurrentUser('sub') userId: string, @Query() query: GetCalendarEventsQueryDto) {
     return this.calendarService.getEvents(userId, query.start, query.end);
   }
 
   @Post('events')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new calendar event' })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
   @ApiResponse({ status: 201, description: 'Created calendar event' })
-  createEvent(@Body() body: CreateBackendCalendarEventDto, @Headers('authorization') authHeader?: string) {
-    const userId = this.extractUserId(authHeader);
+  @ApiResponse({ status: 401, description: 'Unauthorized - Missing or invalid JWT' })
+  createEvent(@CurrentUser('sub') userId: string, @Body() body: CreateBackendCalendarEventDto) {
     return this.calendarService.createEvent(userId, body);
   }
 
   @Put('events/:id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update a calendar event' })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
   @ApiResponse({ status: 200, description: 'Updated calendar event' })
+  @ApiResponse({ status: 401, description: 'Unauthorized - Missing or invalid JWT' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Cannot modify another user event' })
   updateEvent(
+    @CurrentUser('sub') userId: string,
     @Param('id') id: string,
     @Body() body: CreateBackendCalendarEventDto,
-    @Headers('authorization') authHeader?: string,
   ) {
-    const userId = this.extractUserId(authHeader);
     return this.calendarService.updateEvent(userId, id, body);
   }
 
   @Delete('events/:id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete a calendar event' })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
   @ApiResponse({ status: 204, description: 'Event deleted successfully' })
-  deleteEvent(@Param('id') id: string, @Headers('authorization') authHeader?: string) {
-    const userId = this.extractUserId(authHeader);
+  @ApiResponse({ status: 401, description: 'Unauthorized - Missing or invalid JWT' })
+  @ApiResponse({ status: 403, description: 'Forbidden - Cannot delete another user event' })
+  deleteEvent(@CurrentUser('sub') userId: string, @Param('id') id: string) {
     return this.calendarService.deleteEvent(userId, id);
-  }
-
-  private extractUserId(authHeader?: string): string {
-    if (!authHeader) return 'demo-user-001';
-    const parts = authHeader.replace(/^Bearer\s+/i, '').split('-');
-    if (parts.length >= 2 && parts[0] === 'jwt') {
-      return parts.slice(1, parts.length - 1).join('-');
-    }
-    return 'demo-user-001';
   }
 }

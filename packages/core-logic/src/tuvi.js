@@ -85,7 +85,7 @@ const THAI_TUE_12 = ["Thái Tuế", "Thiếu Dương", "Tang Môn", "Thiếu Âm
 const BAC_PHAI_THAI_TUE_12 = ["Thái Tuế", "Hối Khí", "Tang Môn", "Quán Sách", "Quan Phù", "Tiểu Hao", "Tuế Phá", "Long Đức", "Bạch Hổ", "Thiên Đức", "Điếu Khách", "Bệnh Phù"];
 const BAC_SI_12 = ["Bác Sỹ", "Lực Sỹ", "Thanh Long", "Tiểu Hao", "Tướng Quân", "Tấu Thư", "Phi Liêm", "Hỷ Thần", "Bệnh Phù", "Đại Hao", "Phục Binh", "Quan Phủ"];
 const TUONG_TINH_12 = ["Tướng Tinh", "Phan Án", "Tuế Dịch", "Tức Thần", "Hoa Cái", "Kiếp Sát", "Tai Sát", "Thiên Sát", "Chỉ Bối", "Hàm Trì", "Nguyệt Sát", "Vong Thần"];
-const TRUONG_SINH_12 = ["Trường Sinh", "Mục Dục", "Quan Đới", "Lâm Quan", "Đế Vượng", "Suy", "Bệnh", "Tử", "Mộ", "Tuyệt", "Thai", "Dưỡng"];
+const TRUONG_SINH_12 = ["Trường Sinh", "Mộc Dục", "Quan Đới", "Lâm Quan", "Đế Vượng", "Suy", "Bệnh", "Tử", "Mộ", "Tuyệt", "Thai", "Dưỡng"];
 const TU_HOA_TABLE = {
   "Giáp": { "Lộc": "Liêm Trinh", "Quyền": "Phá Quân", "Khoa": "Vũ Khúc", "Kỵ": "Thái Dương" },
   "Ất": { "Lộc": "Thiên Cơ", "Quyền": "Thiên Lương", "Khoa": "Tử Vi", "Kỵ": "Thái Âm" },

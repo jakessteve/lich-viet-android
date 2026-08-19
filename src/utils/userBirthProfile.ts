@@ -18,22 +18,48 @@ function parseBirthday(birthday?: string) {
   return { year, month, day };
 }
 
+import { resolveTimezone } from './timezoneResolver';
+
 function toBirthLocation(
-  location?: { lat: number; lng: number; city: string; countryCode?: string; countryName?: string } | null,
+  location?: {
+    lat: number;
+    lng: number;
+    city?: string;
+    locationName?: string;
+    countryCode?: string;
+    countryName?: string;
+  } | null,
 ): TuViBirthLocation | undefined {
   if (!location) return undefined;
+  const tzRes = resolveTimezone(location.lat, location.lng);
   return {
-    locationName: location.city,
+    locationName: location.locationName || location.city || 'Việt Nam',
     lat: location.lat,
     lng: location.lng,
-    timezone: Math.max(-12, Math.min(14, Math.round(location.lng / 15))),
-    countryCode: 'countryCode' in location ? location.countryCode : undefined,
-    countryName: 'countryName' in location ? location.countryName : undefined,
+    timezone: tzRes.offsetHours,
+    timezoneSource: tzRes.source,
+    countryCode: location.countryCode,
+    countryName: location.countryName,
   };
 }
 
+import { safeStorage } from '@/stores/appStore';
+
 export function getUserBirthProfile(user?: User | null): UserBirthProfile | null {
-  if (!user) return null;
+  if (!user) {
+    const rawLocal = safeStorage.get('local_birth_profile');
+    if (rawLocal) {
+      try {
+        const parsed = JSON.parse(rawLocal) as UserBirthProfile;
+        if (parsed.birthYear && parsed.birthMonth && parsed.birthDay) {
+          return parsed;
+        }
+      } catch {
+        // invalid json in storage
+      }
+    }
+    return null;
+  }
 
   const parsedBirthday = parseBirthday(user.birthday);
   const birthLocation = toBirthLocation(user.extendedProfile?.birthLocation);
@@ -42,7 +68,13 @@ export function getUserBirthProfile(user?: User | null): UserBirthProfile | null
   const birthDay = user.profile?.birthDay ?? parsedBirthday?.day;
   const birthHour = user.profile?.birthHour;
   const birthMinute = user.profile?.birthMinute;
-  const gender = user.profile?.gender;
+  const rawGender = user.profile?.gender;
+  const gender: 'male' | 'female' | undefined =
+    rawGender === 'female' || (rawGender as unknown) === 'nu'
+      ? 'female'
+      : rawGender === 'male' || (rawGender as unknown) === 'nam'
+        ? 'male'
+        : undefined;
 
   if (
     birthYear === undefined &&
@@ -53,6 +85,17 @@ export function getUserBirthProfile(user?: User | null): UserBirthProfile | null
     gender === undefined &&
     birthLocation === undefined
   ) {
+    const rawLocal = safeStorage.get('local_birth_profile');
+    if (rawLocal) {
+      try {
+        const parsed = JSON.parse(rawLocal) as UserBirthProfile;
+        if (parsed.birthYear && parsed.birthMonth && parsed.birthDay) {
+          return parsed;
+        }
+      } catch {
+        // ignore
+      }
+    }
     return null;
   }
 

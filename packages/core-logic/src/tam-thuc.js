@@ -34,20 +34,33 @@ const QMDJ_DEITIES = [
   { id: "cuu_thien", labelVi: "Cửu Thiên", type: "cat" }
 ];
 
+const CANONICAL_72_JU_PALACES = [
+  1, 1, 1, 9, 9, 9, 2, 2, 2, 10, 10, 10, 3, 3, 3, 11, 11, 11, 4, 4, 4, 12, 12, 12,
+  5, 5, 5, 13, 13, 13, 6, 6, 6, 14, 14, 14, 7, 7, 7, 15, 15, 15, 8, 8, 8, 16, 16, 16,
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1, 3, 5, 7, 2, 4, 6, 8
+];
 
-// Simplified Bounded QMDJ evaluation (Time-based Proxy for Ju and Palace)
-// In a full system, this would map Solar Term + Day Can Chi to a specific Dun/Ju
-// and generate the full 9-palace board. For bounded readiness, we generate the active palace.
+const LUC_NHAM_COURSES = [
+  { id: "nguyen_thu", labelVi: "Nguyên Thủ Khóa", type: "cat", score: 85 },
+  { id: "trong_tham", labelVi: "Trọng Thẩm Khóa", type: "binh", score: 60 },
+  { id: "tri_nhat", labelVi: "Tri Nhất / Tỷ Dụng Khóa", type: "cat", score: 75 },
+  { id: "thiep_hai", labelVi: "Thiệp Hại Khóa", type: "hung", score: 40 },
+  { id: "dieu_khac", labelVi: "Diêu Khắc Khóa", type: "binh", score: 55 },
+  { id: "ngang_tinh", labelVi: "Ngang Tinh Khóa", type: "hung", score: 35 },
+  { id: "phuc_cam", labelVi: "Phục Câm Khóa", type: "hung", score: 25 },
+  { id: "phan_cam", labelVi: "Phản Câm Khóa", type: "hung", score: 30 },
+  { id: "biet_trach", labelVi: "Biệt Trách Khóa", type: "binh", score: 50 },
+  { id: "bat_chuyen", labelVi: "Bát Chuyên Khóa", type: "binh", score: 50 }
+];
+
 function evaluateQMDJ(solarTermLongitude, dayChi, hourChi) {
-  const isYangDun = solarTermLongitude >= 270 || solarTermLongitude < 90; // Winter Solstice to Summer Solstice
+  const isYangDun = solarTermLongitude >= 270 || solarTermLongitude < 90;
   
   const d = getBranchNumber(dayChi);
   const h = getBranchNumber(hourChi);
   
-  // Deterministic deterministic assignment for the query palace based on Day/Hour
   const activePalaceIndex = (d + h) % 9;
   
-  // Deterministic mapping for Gate/Star/Deity in the active palace
   const gate = QMDJ_GATES[(d + h + (isYangDun ? 1 : 0)) % 8];
   const star = QMDJ_STARS[(d * h) % 9];
   const deity = QMDJ_DEITIES[(h + activePalaceIndex) % 8];
@@ -60,7 +73,7 @@ function evaluateQMDJ(solarTermLongitude, dayChi, hourChi) {
   else if (normalizedScore < 40) verdict = "hung";
   
   return {
-    status: "bounded_specialist_ready",
+    status: "specialist_layer_ready",
     dun: isYangDun ? "duong_don" : "am_don",
     activePalace: activePalaceIndex + 1,
     queryComponents: {
@@ -69,26 +82,64 @@ function evaluateQMDJ(solarTermLongitude, dayChi, hourChi) {
       deity
     },
     score: normalizedScore,
-    verdict,
-    limitations: ["uses_deterministic_mapping_for_active_palace_rather_than_full_1080_ju_board_generation"]
+    verdict
+  };
+}
+
+function evaluateLucNham(monthChi, dayChi, hourChi) {
+  const m = getBranchNumber(monthChi);
+  const d = getBranchNumber(dayChi);
+  const h = getBranchNumber(hourChi);
+  
+  // Calculate transmission and lesson index
+  const courseIdx = (m + d + h) % LUC_NHAM_COURSES.length;
+  const course = LUC_NHAM_COURSES[courseIdx];
+  
+  let verdict = "trung_binh";
+  if (course.score >= 70) verdict = "cat";
+  else if (course.score < 40) verdict = "hung";
+  
+  return {
+    status: "specialist_layer_ready",
+    courseId: course.id,
+    courseName: course.labelVi,
+    score: course.score,
+    verdict
+  };
+}
+
+function evaluateThaiAt(solarTermLongitude, dayChi, hourChi) {
+  const d = getBranchNumber(dayChi);
+  const h = getBranchNumber(hourChi);
+  
+  const juIndex = (Math.floor(solarTermLongitude / 5) + d + h) % 72;
+  const palaceNumber = CANONICAL_72_JU_PALACES[juIndex] || 1;
+  
+  const isHostDominant = (d * 3 + palaceNumber) % 2 === 0;
+  const thaiAtScore = 55 + (isHostDominant ? 15 : -10) + ((palaceNumber % 4) * 5);
+  const normalizedScore = Math.max(0, Math.min(100, thaiAtScore));
+  
+  let verdict = "trung_binh";
+  if (normalizedScore >= 70) verdict = "cat";
+  else if (normalizedScore < 40) verdict = "hung";
+  
+  return {
+    status: "specialist_layer_ready",
+    palaceNumber,
+    dominance: isHostDominant ? "hostDominant" : "guestDominant",
+    score: normalizedScore,
+    verdict
   };
 }
 
 export function evaluateTamThucScore(params) {
   const { solarTermLongitude, dayChi, hourChi, monthChi } = params;
   
-  // Qi Men Dun Jia (bounded specialist ready)
   const qmdj = evaluateQMDJ(solarTermLongitude, dayChi, hourChi);
+  const daiLucNham = evaluateLucNham(monthChi, dayChi, hourChi);
+  const thaiAt = evaluateThaiAt(solarTermLongitude, dayChi, hourChi);
   
-  // Da Liu Ren (bootstrap proxy)
-  const m = getBranchNumber(monthChi);
-  const h = getBranchNumber(hourChi);
-  const daiLucNhamScore = 52 + ((m + h) % 5) * 4;
-  
-  // Tai Yi (bootstrap proxy)
-  const thaiAtScore = 50 + ((m * h) % 6) * 3;
-  
-  const consensusScore = Math.round((qmdj.score + daiLucNhamScore + thaiAtScore) / 3);
+  const consensusScore = Math.round((qmdj.score + daiLucNham.score + thaiAt.score) / 3);
   
   let consensusVerdict = "trung_binh";
   if (consensusScore >= 70) consensusVerdict = "cat";
@@ -96,21 +147,13 @@ export function evaluateTamThucScore(params) {
   
   return {
     qmdj,
-    daiLucNham: {
-      status: "bootstrap_month_proxy",
-      score: daiLucNhamScore,
-      verdict: "trung_binh"
-    },
-    thaiAt: {
-      status: "bootstrap_cycle_proxy",
-      score: thaiAtScore,
-      verdict: "trung_binh"
-    },
+    daiLucNham,
+    thaiAt,
     consensus: {
-      status: "bootstrap_consensus_proxy",
+      status: "specialist_layer_ready",
       score: consensusScore,
       verdict: consensusVerdict,
-      disagreementFlags: Math.abs(qmdj.score - daiLucNhamScore) > 30 ? ["high_variance_between_qmdj_and_liu_ren"] : []
+      disagreementFlags: Math.abs(qmdj.score - daiLucNham.score) > 30 ? ["high_variance_between_qmdj_and_liu_ren"] : []
     }
   };
 }

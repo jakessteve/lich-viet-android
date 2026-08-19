@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeAll } from 'vitest';
 import {
   ensureHexagramsLoaded,
   getHourChiIndex,
@@ -13,6 +13,7 @@ import {
   getTrigramById,
   buildDivinationContext,
 } from '@/utils/maiHoaEngine';
+import { getElementStrength, interpretDivination } from '@/utils/maiHoaInterpreter';
 
 describe('maiHoaEngine', () => {
   beforeAll(async () => {
@@ -209,6 +210,30 @@ describe('maiHoaEngine', () => {
       const canHex = Array.from(hexagramsMap.values()).find((h) => h.id === 1);
       expect(canHex).toBeDefined();
       expect(canHex?.thoanTu?.hanViet).toBe('Càn: Nguyên, hanh, lợi, trinh.');
+    });
+  });
+
+  describe('MAI-01 & MAI-03: Seasonal Strength & Ứng Kỳ Timing', () => {
+    it('MAI-01: calculates Mộc as Vượng in Spring and Tử in Autumn', () => {
+      // Month 1 (Spring) -> Mộc is Vượng
+      const m1Strength = getElementStrength('Mộc', 1);
+      expect(m1Strength).toBe('Vượng');
+
+      // Month 8 (Autumn) -> Mộc is Tử (Kim overcomes Mộc)
+      const m8Strength = getElementStrength('Mộc', 8);
+      expect(m8Strength).toBe('Tử');
+    });
+
+    it('MAI-03: calculates Ứng Kỳ for divination result', () => {
+      const input = { yearChiIndex: 5, lunarMonth: 1, lunarDay: 10, hourChiIndex: 7 };
+      const div = performTimeBasedDivination(input);
+      const summary = interpretDivination(div, 1);
+
+      expect(summary.ungKy).toBeDefined();
+      expect(summary.ungKy?.timing).toBeDefined();
+      expect(['fast', 'medium', 'slow', 'unlikely']).toContain(summary.ungKy?.timing);
+      expect(typeof summary.ungKy?.explanation).toBe('string');
+      expect(summary.ungKy?.estimatedCount).toBeGreaterThan(0);
     });
   });
 });

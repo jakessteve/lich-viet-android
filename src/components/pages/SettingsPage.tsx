@@ -1,17 +1,15 @@
-import React, { useState, useRef, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { usePageTitle } from '@/hooks/usePageTitle';
-import { useNavigate } from 'react-router-dom';
-import { useAppStore } from '../../stores/appStore';
-import { useAuthStore } from '../../stores/authStore';
-import { useProfileVaultStore } from '@/stores/profileVaultStore';
-import { useTuViStore } from '@/stores/tuviStore';
-import { TuViLocationPicker } from '../TuVi/TuViLocationPicker';
-import { IconButton, Toggle, SettingRow, Select } from '../shared';
-import SuccessToast from '../shared/SuccessToast';
-import type { TuViBirthLocation } from '../../types/tuvi';
-import { buildTuViInputFromUser } from '@/utils/userBirthProfile';
-
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { safeStorage } from '@/stores/appStore';
+import { useAuthStore } from '@/stores/authStore';
+import { IconButton } from '@/components/shared';
+import SuccessToast from '@/components/shared/SuccessToast';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import type { TuViBirthLocation } from '@/types/tuvi';
+import { getUserBirthProfile, UserBirthProfile } from '@/utils/userBirthProfile';
+import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import {
   Palette,
   Clock,
@@ -21,76 +19,43 @@ import {
   UserCog,
   User,
   ChevronRight,
-  Edit2,
-  Lock,
-  LogOut,
-  LogIn,
-  UserPlus,
-  RefreshCw,
-  Camera,
   Home,
 } from 'lucide-react';
-import { Card } from '@/components/ui/card';
-
-// ══════════════════════════════════════════════════════════
-// Section Card — Flat, modern, always-open
-// ══════════════════════════════════════════════════════════
-
-import { renderDynamicIcon } from '@/components/ui/icon-renderer';
-
-function SectionCard({
-  icon,
-  title,
-  children,
-}: {
-  icon: React.ReactNode | string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <Card className="glass-card rounded-2xl overflow-hidden border border-border-light/40 dark:border-border-dark/30">
-      <div className="flex items-center gap-2.5 px-5 py-3 border-b border-border-light/20 dark:border-border-dark/15">
-        <div className="text-gold dark:text-gold-dark">
-          {renderDynamicIcon(icon, 'h-4 w-4 shrink-0')}
-        </div>
-        <span className="text-base font-semibold tracking-tight">{title}</span>
-      </div>
-      <div className="px-5 py-1">{children}</div>
-    </Card>
-  );
-}
-
-// ══════════════════════════════════════════════════════════
-// Settings Page — Modern flat design
-// ══════════════════════════════════════════════════════════
+import {
+  DisplaySection,
+  DataSection,
+  ProfileSection,
+  AccountSection,
+} from '@/components/Settings';
 
 export default function SettingsPage() {
   usePageTitle('Cài đặt');
   const navigate = useNavigate();
-  const isDark = useAppStore((s) => s.isDark);
-  const toggleDarkMode = useAppStore((s) => s.toggleDarkMode);
-  const fontSize = useAppStore((s) => s.fontSize);
-  const setFontSizeLevel = useAppStore((s) => s.setFontSizeLevel);
-  const showScrollToTopButton = useAppStore((s) => s.showScrollToTopButton);
-  const setShowScrollToTopButton = useAppStore((s) => s.setShowScrollToTopButton);
-  const autoHideNav = useAppStore((s) => s.autoHideNav);
-  const setAutoHideNav = useAppStore((s) => s.setAutoHideNav);
-  const { syncWithCloud, isSyncing, lastSyncedAt } = useProfileVaultStore();
+  const [searchParams] = useSearchParams();
+  const urlSection = searchParams.get('section');
 
-  const { user, isAuthenticated, logout, updateProfile, changePassword } = useAuthStore(
+  const { user, isAuthenticated, updateProfile, changePassword } = useAuthStore(
     useShallow((s) => ({
       user: s.user,
       isAuthenticated: s.isAuthenticated,
-      logout: s.logout,
       updateProfile: s.updateProfile,
       changePassword: s.changePassword,
     })),
   );
-  const avatarInputRef = useRef<HTMLInputElement>(null);
   const [showSaveToast, setShowSaveToast] = useState(false);
 
   // Active section (sidebar navigation)
-  const [activeSection, setActiveSection] = useState('appearance');
+  const validSections = ['appearance', 'general', 'calendar', 'notifications', 'data', 'profile', 'account'];
+  const [activeSection, setActiveSection] = useState(() => {
+    if (urlSection && validSections.includes(urlSection)) return urlSection;
+    return 'appearance';
+  });
+
+  useEffect(() => {
+    if (urlSection && validSections.includes(urlSection)) {
+      setActiveSection(urlSection);
+    }
+  }, [urlSection]);
 
   // Sections definition
   const SECTIONS = useMemo(
@@ -100,10 +65,10 @@ export default function SettingsPage() {
       { id: 'calendar', icon: <Calendar className="h-4 w-4" />, label: 'Âm Lịch' },
       { id: 'notifications', icon: <Bell className="h-4 w-4" />, label: 'Thông báo' },
       { id: 'data', icon: <Shield className="h-4 w-4" />, label: 'Dữ liệu' },
-      ...(isAuthenticated ? [{ id: 'profile', icon: <UserCog className="h-4 w-4" />, label: 'Hồ Sơ' }] : []),
+      { id: 'profile', icon: <UserCog className="h-4 w-4" />, label: 'Hồ Sơ' },
       { id: 'account', icon: <User className="h-4 w-4" />, label: 'Tài khoản' },
     ],
-    [isAuthenticated],
+    [],
   );
 
   // Profile editing state
@@ -128,38 +93,17 @@ export default function SettingsPage() {
   const [pwMsg, setPwMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
 
   const startEdit = () => {
-    setEditName(user?.displayName ?? '');
+    const currentProfile = getUserBirthProfile(user);
+    setEditName(user?.displayName ?? (safeStorage.get('guest_display_name') || ''));
 
-    let d = '',
-      m = '',
-      y = '';
-    if (user?.birthday) {
-      const parts = user.birthday.split('-');
-      if (parts.length === 3) {
-        y = parts[0];
-        m = parts[1];
-        d = parts[2];
-      }
-    }
-    setEditDay(d);
-    setEditMonth(m);
-    setEditYear(y);
+    setEditDay(currentProfile?.birthDay ? String(currentProfile.birthDay) : '');
+    setEditMonth(currentProfile?.birthMonth ? String(currentProfile.birthMonth) : '');
+    setEditYear(currentProfile?.birthYear ? String(currentProfile.birthYear) : '');
 
-    setEditGender(user?.profile?.gender || '');
-    setEditBirthHour(user?.profile?.birthHour !== undefined ? String(user.profile.birthHour) : '');
-    setEditBirthMinute(user?.profile?.birthMinute !== undefined ? String(user.profile.birthMinute) : '');
-    setEditBirthLocation(
-      user?.extendedProfile?.birthLocation
-        ? {
-            locationName: user.extendedProfile.birthLocation.city,
-            lat: user.extendedProfile.birthLocation.lat,
-            lng: user.extendedProfile.birthLocation.lng,
-            timezone: Math.max(-12, Math.min(14, Math.round(user.extendedProfile.birthLocation.lng / 15))),
-            countryCode: user.extendedProfile.birthLocation.countryCode,
-            countryName: user.extendedProfile.birthLocation.countryName,
-          }
-        : undefined,
-    );
+    setEditGender(currentProfile?.gender || '');
+    setEditBirthHour(currentProfile?.birthHour !== undefined ? String(currentProfile.birthHour) : '');
+    setEditBirthMinute(currentProfile?.birthMinute !== undefined ? String(currentProfile.birthMinute) : '');
+    setEditBirthLocation(currentProfile?.birthLocation);
 
     setEditAvatar(user?.avatarUrl ?? '');
     setProfileMsg(null);
@@ -180,38 +124,52 @@ export default function SettingsPage() {
       birthdayStr = `${editYear}-${String(editMonth).padStart(2, '0')}-${String(editDay).padStart(2, '0')}`;
     }
 
-    const result = await updateProfile({
-      displayName: editName || undefined,
-      birthday: birthdayStr,
+    const localProfileData: UserBirthProfile = {
+      birthYear: editYear ? Number(editYear) : undefined,
+      birthMonth: editMonth ? Number(editMonth) : undefined,
+      birthDay: editDay ? Number(editDay) : undefined,
+      birthHour: editBirthHour === '' ? undefined : Number(editBirthHour),
+      birthMinute: editBirthMinute === '' ? undefined : Number(editBirthMinute),
       gender: editGender || undefined,
-      avatarUrl: editAvatar || undefined,
-      birthHour: editBirthHour === '' ? null : Number(editBirthHour),
-      birthMinute: editBirthMinute === '' ? null : Number(editBirthMinute),
-      birthLocation: editBirthLocation
-        ? {
-            city: editBirthLocation.locationName,
-            lat: editBirthLocation.lat,
-            lng: editBirthLocation.lng,
-            countryCode: editBirthLocation.countryCode,
-            countryName: editBirthLocation.countryName,
-          }
-        : undefined,
-    });
-    setProfileSaving(false);
-    if (result.success) {
-      const currentUser = useAuthStore.getState().user;
-      const nextInput = buildTuViInputFromUser(currentUser, useTuViStore.getState().input);
-      if (nextInput) {
-        useTuViStore.getState().setInput(nextInput);
-        useTuViStore.getState().calculateChart(nextInput);
-        useTuViStore.getState().previewMarkdown();
-      }
-      setProfileMsg({ type: 'ok', text: 'Hồ sơ đã được lưu.' });
-      setShowSaveToast(true);
-      setProfileMode('view');
-    } else {
-      setProfileMsg({ type: 'err', text: result.error ?? 'Lỗi không xác định.' });
+      birthLocation: editBirthLocation,
+    };
+
+    safeStorage.set('local_birth_profile', JSON.stringify(localProfileData));
+    if (editName) {
+      safeStorage.set('guest_display_name', editName);
     }
+
+    if (isAuthenticated && user) {
+      const result = await updateProfile({
+        displayName: editName || undefined,
+        birthday: birthdayStr,
+        gender: editGender || undefined,
+        avatarUrl: editAvatar || undefined,
+        birthHour: editBirthHour === '' ? null : Number(editBirthHour),
+        birthMinute: editBirthMinute === '' ? null : Number(editBirthMinute),
+        birthLocation: editBirthLocation
+          ? {
+              city: editBirthLocation.locationName,
+              lat: editBirthLocation.lat,
+              lng: editBirthLocation.lng,
+              countryCode: editBirthLocation.countryCode,
+              countryName: editBirthLocation.countryName,
+            }
+          : undefined,
+      });
+
+      if (!result.success) {
+        setProfileMsg({ type: 'err', text: result.error || 'Có lỗi xảy ra khi lưu hồ sơ.' });
+        setProfileSaving(false);
+        return;
+      }
+    }
+
+    setProfileSaving(false);
+    setProfileMode('view');
+    setShowSaveToast(true);
+    setProfileMsg({ type: 'ok', text: 'Đã lưu thông tin hồ sơ thành công!' });
+    setTimeout(() => setProfileMsg(null), 3000);
   };
 
   const handleAvatarFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -261,8 +219,6 @@ export default function SettingsPage() {
   );
   const [lunarEvents, setLunarEvents] = useState(() => localStorage.getItem('lunarEvents') !== 'false');
   const [autoSave, setAutoSave] = useState(() => localStorage.getItem('autoSave') !== 'false');
-  const [importMsg, setImportMsg] = useState<{ type: 'ok' | 'err'; text: string } | null>(null);
-  const importInputRef = useRef<HTMLInputElement>(null);
 
   const save = (key: string, value: string) => localStorage.setItem(key, value);
 
@@ -276,6 +232,7 @@ export default function SettingsPage() {
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">Tùy chỉnh trải nghiệm</p>
         </div>
       </div>
+
       {/* Mobile: horizontal tab strip */}
       <div className="md:hidden mb-4">
         <div className="relative">
@@ -303,6 +260,7 @@ export default function SettingsPage() {
           </div>
         </div>
       </div>
+
       {/* Desktop: 2-column layout */}
       <div className="flex gap-5 items-start">
         {/* ── LEFT SIDEBAR ── */}
@@ -330,704 +288,131 @@ export default function SettingsPage() {
             </button>
           ))}
         </nav>
-        {/* ── RIGHT CONTENT ── */}
+
+        {/* ── RIGHT CONTENT (Wrapped in ErrorBoundary per section) ── */}
         <div className="flex-1 min-w-0 space-y-3">
-          {/* Appearance */}
-          {activeSection === 'appearance' && (
-            <SectionCard icon="palette" title="Giao diện">
-              <SettingRow icon="dark_mode" label="Chế độ tối" description="Giảm mỏi mắt khi dùng ban đêm">
-                <Toggle id="toggle-dark-mode" checked={isDark} onChange={(_checked, e) => toggleDarkMode(e)} />
-              </SettingRow>
-              <SettingRow icon="format_size" label="Cỡ chữ">
-                <div className="flex items-center gap-0.5">
-                  {(['small', 'normal', 'large'] as const).map((level) => (
-                    <button
-                      key={level}
-                      onClick={() => setFontSizeLevel(level)}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-all duration-200 ${
-                        fontSize === level
-                          ? 'bg-gold/12 dark:bg-gold-dark/12 text-text-primary-light dark:text-gold-dark font-semibold'
-                          : 'text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-100 dark:hover:bg-gray-700/50'
-                      }`}
-                    >
-                      {level === 'small' ? 'Nhỏ' : level === 'normal' ? 'Vừa' : 'Lớn'}
-                    </button>
-                  ))}
-                </div>
-              </SettingRow>
-              <SettingRow
-                icon="arrow_upward"
-                label="Nút cuộn lên đầu trang"
-                description="Hiển thị nút nổi hỗ trợ cuộn nhanh khi trang có nội dung dài"
-              >
-                <Toggle
-                  id="toggle-scroll-to-top"
-                  checked={showScrollToTopButton}
-                  onChange={() => setShowScrollToTopButton(!showScrollToTopButton)}
-                />
-              </SettingRow>
-              <SettingRow
-                icon="unfold_less"
-                label="Tự động ẩn thanh điều hướng"
-                description="Trượt ẩn thanh đỉnh và thanh đáy khi cuộn xuống để mở rộng không gian đọc luận giải"
-              >
-                <Toggle
-                  id="toggle-auto-hide-nav"
-                  checked={autoHideNav}
-                  onChange={() => setAutoHideNav(!autoHideNav)}
-                />
-              </SettingRow>
-            </SectionCard>
-
+          {['appearance', 'general', 'calendar', 'notifications'].includes(activeSection) && (
+            <ErrorBoundary viewName={`Cài đặt: ${activeSection}`}>
+              <DisplaySection
+                activeSubSection={activeSection as 'appearance' | 'general' | 'calendar' | 'notifications'}
+                dateFormat={dateFormat}
+                onDateFormatChange={(v) => {
+                  setDateFormat(v);
+                  save('dateFormat', v);
+                }}
+                holidayCountry={holidayCountry}
+                onHolidayCountryChange={(v) => {
+                  setHolidayCountry(v);
+                  save('holidayCountry', v);
+                }}
+                defaultView={defaultView}
+                onDefaultViewChange={(v) => {
+                  setDefaultView(v);
+                  save('defaultView', v);
+                }}
+                showLunarDetails={showLunarDetails}
+                onShowLunarDetailsChange={(v) => {
+                  setShowLunarDetails(v);
+                  save('showLunarDetails', String(v));
+                }}
+                dailyHoroscope={dailyHoroscope}
+                onDailyHoroscopeChange={(v) => {
+                  setDailyHoroscope(v);
+                  save('dailyHoroscope', String(v));
+                }}
+                auspiciousReminder={auspiciousReminder}
+                onAuspiciousReminderChange={(v) => {
+                  setAuspiciousReminder(v);
+                  save('auspiciousReminder', String(v));
+                }}
+                lunarEvents={lunarEvents}
+                onLunarEventsChange={(v) => {
+                  setLunarEvents(v);
+                  save('lunarEvents', String(v));
+                }}
+              />
+            </ErrorBoundary>
           )}
 
-          {/* Language & Region */}
-          {activeSection === 'general' && (
-            <SectionCard icon="schedule" title="Ngày tháng">
-              <SettingRow icon="date_range" label="Định dạng ngày">
-                <Select
-                  id="select-date-format"
-                  value={dateFormat}
-                  onChange={(v) => {
-                    setDateFormat(v);
-                    save('dateFormat', v);
-                  }}
-                  options={[
-                    { value: 'dd/mm/yyyy', label: 'DD/MM/YYYY' },
-                    { value: 'mm/dd/yyyy', label: 'MM/DD/YYYY' },
-                    { value: 'yyyy-mm-dd', label: 'YYYY-MM-DD' },
-                  ]}
-                />
-              </SettingRow>
-              <SettingRow icon="flag" label="Quốc gia ngày lễ">
-                <Select
-                  id="select-holiday-country"
-                  value={holidayCountry}
-                  onChange={(v) => {
-                    setHolidayCountry(v);
-                    save('holidayCountry', v);
-                  }}
-                  options={[
-                    { value: 'VN', label: 'Việt Nam' },
-                    { value: 'US', label: 'Mỹ' },
-                    { value: 'JP', label: 'Nhật Bản' },
-                    { value: 'KR', label: 'Hàn Quốc' },
-                    { value: 'CN', label: 'Trung Quốc' },
-                  ]}
-                />
-              </SettingRow>
-            </SectionCard>
-          )}
-
-          {/* Calendar */}
-          {activeSection === 'calendar' && (
-            <SectionCard icon="calendar_month" title="Âm Lịch">
-              <SettingRow icon="view_module" label="Giao diện mặc định">
-                <Select
-                  id="select-default-view"
-                  value={defaultView}
-                  onChange={(v) => {
-                    setDefaultView(v);
-                    save('defaultView', v);
-                  }}
-                  options={[
-                    { value: 'month', label: 'Theo tháng' },
-                    { value: 'week', label: 'Theo tuần' },
-                  ]}
-                />
-              </SettingRow>
-              <SettingRow icon="info" label="Chi tiết âm lịch" description="Can chi, tiết khí trên ô lịch">
-                <Toggle
-                  id="toggle-lunar-details"
-                  checked={showLunarDetails}
-                  onChange={(v) => {
-                    setShowLunarDetails(v);
-                    save('showLunarDetails', String(v));
-                  }}
-                />
-              </SettingRow>
-            </SectionCard>
-          )}
-
-          {/* Notifications */}
-          {activeSection === 'notifications' && (
-            <SectionCard icon="notifications" title="Thông báo">
-              <SettingRow icon="wb_sunny" label="Lá số hàng ngày" description="Phân tích ngày mới mỗi sáng">
-                <Toggle
-                  id="toggle-daily-horoscope"
-                  checked={dailyHoroscope}
-                  onChange={(v) => {
-                    setDailyHoroscope(v);
-                    save('dailyHoroscope', String(v));
-                  }}
-                />
-              </SettingRow>
-              <SettingRow icon="event_available" label="Nhắc ngày tốt" description="Thông báo ngày hoàng đạo sắp tới">
-                <Toggle
-                  id="toggle-auspicious"
-                  checked={auspiciousReminder}
-                  onChange={(v) => {
-                    setAuspiciousReminder(v);
-                    save('auspiciousReminder', String(v));
-                  }}
-                />
-              </SettingRow>
-              <SettingRow icon="nights_stay" label="Sự kiện âm lịch" description="Rằm, mùng 1, tiết khí">
-                <Toggle
-                  id="toggle-lunar-events"
-                  checked={lunarEvents}
-                  onChange={(v) => {
-                    setLunarEvents(v);
-                    save('lunarEvents', String(v));
-                  }}
-                />
-              </SettingRow>
-            </SectionCard>
-          )}
-
-          {/* Data & Privacy */}
           {activeSection === 'data' && (
-            <SectionCard icon="security" title="Dữ liệu & Quyền riêng tư">
-              <SettingRow icon="save" label="Tự động lưu" description="Lưu cài đặt và lịch sử tra cứu">
-                <Toggle
-                  id="toggle-auto-save"
-                  checked={autoSave}
-                  onChange={(v) => {
-                    setAutoSave(v);
-                    save('autoSave', String(v));
-                  }}
-                />
-              </SettingRow>
-              <SettingRow icon="download" label="Xuất dữ liệu">
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => {
-                      const EXPORTABLE_KEYS = [
-                        'fontSize',
-                        'dateFormat',
-                        'defaultView',
-                        'theme',
-                        'showLunarDetails',
-                        'holidayCountry',
-                        'dailyHoroscope',
-                        'auspiciousReminder',
-                        'lunarEvents',
-                        'autoSave',
-                      ];
-                      const data = Object.fromEntries(
-                        EXPORTABLE_KEYS.map((k) => [k, localStorage.getItem(k)]).filter(([, v]) => v != null),
-                      );
-                      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                      const url = URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url;
-                      a.download = 'lich-viet-data.json';
-                      a.click();
-                      URL.revokeObjectURL(url);
-                    }}
-                    className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gold/8 dark:bg-gold-dark/6 text-gold dark:text-gold-dark hover:bg-gold/15 dark:hover:bg-gold-dark/12 transition-colors"
-                  >
-                    Xuất JSON
-                  </button>
-                  {/* Import */}
-                  <input
-                    ref={importInputRef}
-                    type="file"
-                    accept=".json"
-                    className="hidden"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0];
-                      if (!file) return;
-                      const reader = new FileReader();
-                      reader.onload = (ev) => {
-                        try {
-                          const IMPORTABLE_KEYS = [
-                            'fontSize',
-                            'dateFormat',
-                            'defaultView',
-                            'showLunarDetails',
-                            'holidayCountry',
-                            'dailyHoroscope',
-                            'auspiciousReminder',
-                            'lunarEvents',
-                            'autoSave',
-                          ];
-                          const parsed = JSON.parse(ev.target?.result as string);
-                          let count = 0;
-                          IMPORTABLE_KEYS.forEach((k) => {
-                            if (typeof parsed[k] === 'string') {
-                              localStorage.setItem(k, parsed[k]);
-                              count++;
-                            }
-                          });
-                          setImportMsg({ type: 'ok', text: `Đã nhập ${count} cài đặt. Tải lại để áp dụng.` });
-                          setTimeout(() => setImportMsg(null), 4000);
-                        } catch {
-                          setImportMsg({ type: 'err', text: 'File JSON không hợp lệ.' });
-                          setTimeout(() => setImportMsg(null), 3000);
-                        }
-                      };
-                      reader.readAsText(file);
-                      e.target.value = '';
-                    }}
-                  />
-                  <button
-                    onClick={() => importInputRef.current?.click()}
-                    className="text-xs font-medium px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 hover:bg-gray-100 dark:hover:bg-white/8 transition-colors"
-                  >
-                    Nhập JSON
-                  </button>
-                </div>
-              </SettingRow>
-              {importMsg && (
-                <div
-                  className={`mx-0 mb-1 px-3 py-2 rounded-lg text-xs font-medium ${importMsg.type === 'ok' ? 'bg-emerald-50 dark:bg-emerald-900/15 text-emerald-700 dark:text-emerald-400' : 'bg-red-50 dark:bg-red-900/15 text-red-600 dark:text-red-400'}`}
-                >
-                  {importMsg.text}
-                </div>
-              )}
-              <SettingRow
-                icon="cloud_sync"
-                label="Đồng bộ đám mây"
-                description={
-                  lastSyncedAt
-                    ? `Đã đồng bộ lần cuối lúc ${new Date(lastSyncedAt).toLocaleTimeString('vi-VN')} (${new Date(lastSyncedAt).toLocaleDateString('vi-VN')})`
-                    : 'Đồng bộ hồ sơ và dữ liệu cá nhân lên máy chủ'
-
-                }
-              >
-                <button
-                  disabled={isSyncing}
-                  onClick={async () => {
-                    const res = await syncWithCloud();
-                    if (res.success) {
-                      setShowSaveToast(true);
-                    }
-                  }}
-                  className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-colors disabled:opacity-50"
-                >
-                  <RefreshCw className={`h-3.5 w-3.5 ${isSyncing ? 'animate-spin' : ''}`} />
-                  {isSyncing ? 'Đang đồng bộ...' : 'Đồng bộ ngay'}
-                </button>
-              </SettingRow>
-              <SettingRow icon="restart_alt" label="Khôi phục mặc định" description="Đặt lại tất cả cài đặt về ban đầu">
-                <button
-                  onClick={() => {
-                    if (confirm('Khôi phục tất cả cài đặt về mặc định?')) {
-                      const SETTING_KEYS = [
-                        'fontSize',
-                        'dateFormat',
-                        'defaultView',
-                        'showLunarDetails',
-                        'holidayCountry',
-                        'dailyHoroscope',
-                        'auspiciousReminder',
-                        'lunarEvents',
-                        'autoSave',
-                      ];
-                      SETTING_KEYS.forEach((k) => localStorage.removeItem(k));
-                      window.location.reload();
-                    }
-                  }}
-                  className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gray-100 dark:bg-white/6 text-text-secondary-light dark:text-text-secondary-dark hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
-                >
-                  Khôi phục
-                </button>
-              </SettingRow>
-              <SettingRow icon="delete_sweep" label="Xóa bộ nhớ đệm" description="Xóa tất cả dữ liệu lưu trữ">
-                <button
-                  onClick={() => {
-                    if (confirm('Bạn có chắc muốn xóa tất cả dữ liệu?')) {
-                      localStorage.clear();
-                      window.location.reload();
-                    }
-                  }}
-                  className="text-xs font-medium px-3 py-1.5 rounded-lg bg-red-50 dark:bg-red-900/15 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/25 transition-colors"
-                >
-                  Xóa dữ liệu
-                </button>
-              </SettingRow>
-            </SectionCard>
+            <ErrorBoundary viewName="Cài đặt: Dữ liệu & Quyền riêng tư">
+              <DataSection
+                autoSave={autoSave}
+                onAutoSaveChange={(v) => {
+                  setAutoSave(v);
+                  save('autoSave', String(v));
+                }}
+                dateFormat={dateFormat}
+                holidayCountry={holidayCountry}
+                onShowToast={() => setShowSaveToast(true)}
+              />
+            </ErrorBoundary>
           )}
 
-          {/* Profile Editing */}
-          {activeSection === 'profile' && isAuthenticated && user && (
-            <SectionCard icon="manage_accounts" title="Hồ Sơ Cá Nhân">
-              <div className="py-3 space-y-3">
-                {profileMode === 'view' && (
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      {/* Avatar */}
-                      <div className="w-12 h-12 rounded-full shrink-0 overflow-hidden bg-gradient-to-br from-mystery-purple/20 to-mystery-blue/20 flex items-center justify-center">
-                        {user.avatarUrl ? (
-                          <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="text-lg font-bold text-center leading-none select-none text-mystery-purple dark:text-mystery-purple-light">
-                            {user.displayName.charAt(0).toUpperCase()}
-                          </span>
-                        )}
-                      </div>
-                      <div>
-                        <p className="text-sm font-semibold">{user.displayName}</p>
-                        <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">{user.email}</p>
-                        {(user.birthday || user.profile?.birthHour !== undefined) && (
-                          <p className="text-xs text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5">
-                            🎂 {user.birthday ? user.birthday.split('-').reverse().join('/') : 'Chưa có ngày sinh'}
-                            {user.profile?.birthHour !== undefined &&
-                              ` · ${String(user.profile.birthHour).padStart(2, '0')}:${user.profile?.birthMinute !== undefined ? String(user.profile.birthMinute).padStart(2, '0') : '00'}`}
-                          </p>
-                        )}
-                        {user.extendedProfile?.birthLocation && (
-                          <p className="text-xs text-text-secondary-light/60 dark:text-text-secondary-dark/60 mt-0.5">
-                            📍 Nơi sinh: {user.extendedProfile.birthLocation.city}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-1.5 shrink-0">
-                      <button
-                        onClick={startEdit}
-                        className="text-xs font-medium px-3 py-1.5 rounded-lg bg-gold/8 dark:bg-gold-dark/6 text-text-primary-light dark:text-gold-dark hover:bg-gold/15 transition-colors flex items-center gap-1.5 font-semibold"
-                      >
-                        <Edit2 className="h-3.5 w-3.5" /> Sửa
-                      </button>
-                      {user.provider === 'email' && (
-                        <button
-                          onClick={() => {
-                            setProfileMode('password');
-                            setPwMsg(null);
-                          }}
-                          className="text-xs font-medium px-3 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 hover:bg-gray-100 dark:hover:bg-white/8 transition-colors flex items-center gap-1.5"
-                        >
-                          <Lock className="h-3.5 w-3.5" /> Đổi mật khẩu
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                {profileMode === 'edit' && (
-                  <div className="space-y-3 animate-fade-in-up">
-                    {/* Avatar upload */}
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-14 h-14 rounded-full shrink-0 overflow-hidden bg-gradient-to-br from-mystery-purple/20 to-mystery-blue/20 flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity relative group"
-                        onClick={() => avatarInputRef.current?.click()}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={(e) => e.key === 'Enter' && avatarInputRef.current?.click()}
-                      >
-                        {editAvatar ? (
-                          <img src={editAvatar} alt="avatar preview" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="text-xl font-bold text-mystery-purple dark:text-mystery-purple-light">
-                            {(editName || user.displayName).charAt(0).toUpperCase()}
-                          </span>
-                        )}
-                        <div className="absolute inset-0 rounded-full bg-black/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Camera className="h-4 w-4 text-white" />
-                        </div>
-                      </div>
-                      <input
-                        ref={avatarInputRef}
-                        type="file"
-                        accept="image/*"
-                        className="hidden"
-                        onChange={handleAvatarFile}
-                      />
-                      <div>
-                        <p className="text-xs font-medium">Tải ảnh đại diện</p>
-                        <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
-                          Nhấp vào khung ảnh để chọn (tối đa 500 KB)
-                        </p>
-                        {editAvatar && (
-                          <button
-                            onClick={() => setEditAvatar('')}
-                            className="text-xs text-red-500 dark:text-red-400 mt-0.5"
-                          >
-                            Xóa ảnh
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Display name */}
-                    <div>
-                      <label className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark mb-1">
-                        Tên hiển thị
-                      </label>
-                      <input
-                        type="text"
-                        value={editName}
-                        onChange={(e) => setEditName(e.target.value)}
-                        placeholder="Nguyễn Văn A"
-                        className="w-full px-3 py-2 rounded-lg text-sm bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 focus:ring-2 focus:ring-gold/25 dark:focus:ring-gold-dark/25 outline-none transition-all"
-                      />
-                    </div>
-
-                    {/* Birthday & Time */}
-                    <div>
-                      <label className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark mb-1">
-                        Ngày giờ sinh (Dương lịch)
-                      </label>
-                      <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          value={editDay}
-                          onChange={(e) => setEditDay(e.target.value)}
-                          placeholder="Ngày"
-                          className="px-3 py-2.5 rounded-lg border border-border-light dark:border-border-dark bg-surface-subtle-light dark:bg-surface-subtle-dark text-sm text-center focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none transition-all"
-                        />
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          value={editMonth}
-                          onChange={(e) => setEditMonth(e.target.value)}
-                          placeholder="Tháng"
-                          className="px-3 py-2.5 rounded-lg border border-border-light dark:border-border-dark bg-surface-subtle-light dark:bg-surface-subtle-dark text-sm text-center focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none transition-all"
-                        />
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          pattern="[0-9]*"
-                          value={editYear}
-                          onChange={(e) => setEditYear(e.target.value)}
-                          placeholder="Năm"
-                          className="px-3 py-2.5 rounded-lg border border-border-light dark:border-border-dark bg-surface-subtle-light dark:bg-surface-subtle-dark text-sm text-center focus:ring-2 focus:ring-gold/30 focus:border-gold outline-none transition-all"
-                        />
-
-                        <select
-                          value={editBirthHour}
-                          onChange={(e) => setEditBirthHour(e.target.value)}
-                          className="px-3 py-2.5 rounded-lg text-sm bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 focus:ring-2 focus:ring-gold/25 dark:focus:ring-gold-dark/25 outline-none transition-all"
-                        >
-                          <option value="">Giờ</option>
-                          {Array.from({ length: 24 }).map((_, i) => (
-                            <option key={i} value={i}>
-                              {String(i).padStart(2, '0')}
-                            </option>
-                          ))}
-                        </select>
-
-                        <select
-                          value={editBirthMinute}
-                          onChange={(e) => setEditBirthMinute(e.target.value)}
-                          className="px-3 py-2.5 rounded-lg text-sm bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 focus:ring-2 focus:ring-gold/25 dark:focus:ring-gold-dark/25 outline-none transition-all"
-                        >
-                          <option value="">Phút</option>
-                          {Array.from({ length: 60 }).map((_, i) => (
-                            <option key={i} value={i}>
-                              {String(i).padStart(2, '0')}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark mb-1">
-                        Giới tính
-                      </label>
-                      <div className="flex gap-3">
-                        <label className="flex items-center gap-1.5 cursor-pointer min-h-[44px]">
-                          <input
-                            type="radio"
-                            name="gender"
-                            value="male"
-                            checked={editGender === 'male'}
-                            onChange={(e) => setEditGender(e.target.value as 'male' | 'female')}
-                            className="accent-gold w-4 h-4"
-                          />
-                          <span className="text-sm">Nam</span>
-                        </label>
-                        <label className="flex items-center gap-1.5 cursor-pointer min-h-[44px]">
-                          <input
-                            type="radio"
-                            name="gender"
-                            value="female"
-                            checked={editGender === 'female'}
-                            onChange={(e) => setEditGender(e.target.value as 'male' | 'female')}
-                            className="accent-gold w-4 h-4"
-                          />
-                          <span className="text-sm">Nữ</span>
-                        </label>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark mb-1">
-                        Nơi sinh
-                      </label>
-                      <TuViLocationPicker value={editBirthLocation} onChange={setEditBirthLocation} />
-                    </div>
-
-                    {profileMsg && (
-                      <p
-                        className={`text-xs font-medium ${profileMsg.type === 'ok' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}
-                      >
-                        {profileMsg.text}
-                      </p>
-                    )}
-
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={handleSaveProfile}
-                        disabled={profileSaving}
-                        className="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 hover:brightness-110 shadow-sm shadow-gold/15 disabled:opacity-50 transition-all"
-                      >
-                        {profileSaving ? 'Đang lưu...' : 'Lưu'}
-                      </button>
-                      <button
-                        onClick={cancelEdit}
-                        className="px-4 py-2 rounded-xl text-xs font-medium bg-gray-100 dark:bg-white/6 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
-                      >
-                        Hủy
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {profileMode === 'password' && (
-                  <div className="space-y-3 animate-fade-in-up">
-                    <p className="text-xs font-semibold flex items-center gap-1.5">
-                      <Lock className="h-3.5 w-3.5 text-gold dark:text-gold-dark" />
-                      Đổi mật khẩu
-                    </p>
-                    {[
-                      { label: 'Mật khẩu hiện tại', val: pwCurrent, set: setPwCurrent, ph: '••••••••' },
-                      { label: 'Mật khẩu mới (tối thiểu 8 ký tự)', val: pwNew, set: setPwNew, ph: '••••••••' },
-                      { label: 'Xác nhận mật khẩu mới', val: pwConfirm, set: setPwConfirm, ph: '••••••••' },
-                    ].map((f) => (
-                      <div key={f.label}>
-                        <label className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark mb-1">
-                          {f.label}
-                        </label>
-                        <input
-                          type="password"
-                          value={f.val}
-                          onChange={(e) => f.set(e.target.value)}
-                          placeholder={f.ph}
-                          className="w-full px-3 py-2 rounded-lg text-sm bg-surface-subtle-light dark:bg-surface-subtle-dark border border-border-light/30 dark:border-border-dark/25 focus:ring-2 focus:ring-gold/25 dark:focus:ring-gold-dark/25 outline-none transition-all"
-                        />
-                      </div>
-                    ))}
-                    {pwMsg && (
-                      <p
-                        className={`text-xs font-medium ${pwMsg.type === 'ok' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'}`}
-                      >
-                        {pwMsg.text}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={handleChangePassword}
-                        disabled={pwSaving || !pwCurrent || !pwNew || !pwConfirm}
-                        className="flex-1 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-gold to-amber-600 dark:from-gold-dark dark:to-amber-500 hover:brightness-110 shadow-sm shadow-gold/15 disabled:opacity-50 transition-all"
-                      >
-                        {pwSaving ? 'Đang lưu...' : 'Đổi mật khẩu'}
-                      </button>
-                      <button
-                        onClick={() => {
-                          setProfileMode('view');
-                          setPwMsg(null);
-                        }}
-                        className="px-4 py-2 rounded-xl text-xs font-medium bg-gray-100 dark:bg-white/6 hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
-                      >
-                        Hủy
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </SectionCard>
+          {activeSection === 'profile' && (
+            <ErrorBoundary viewName="Cài đặt: Hồ Sơ Cá Nhân">
+              <ProfileSection
+                profileMode={profileMode}
+                setProfileMode={setProfileMode}
+                editName={editName}
+                setEditName={setEditName}
+                editDay={editDay}
+                setEditDay={setEditDay}
+                editMonth={editMonth}
+                setEditMonth={setEditMonth}
+                editYear={editYear}
+                setEditYear={setEditYear}
+                editBirthHour={editBirthHour}
+                setEditBirthHour={setEditBirthHour}
+                editBirthMinute={editBirthMinute}
+                setEditBirthMinute={setEditBirthMinute}
+                editBirthLocation={editBirthLocation}
+                setEditBirthLocation={setEditBirthLocation}
+                editAvatar={editAvatar}
+                setEditAvatar={setEditAvatar}
+                editGender={editGender}
+                setEditGender={setEditGender}
+                profileSaving={profileSaving}
+                profileMsg={profileMsg}
+                onStartEdit={startEdit}
+                onCancelEdit={cancelEdit}
+                onSaveProfile={handleSaveProfile}
+                onAvatarFile={handleAvatarFile}
+                pwCurrent={pwCurrent}
+                setPwCurrent={setPwCurrent}
+                pwNew={pwNew}
+                setPwNew={setPwNew}
+                pwConfirm={pwConfirm}
+                setPwConfirm={setPwConfirm}
+                pwSaving={pwSaving}
+                pwMsg={pwMsg}
+                onChangePassword={handleChangePassword}
+              />
+            </ErrorBoundary>
           )}
 
-          {/* Account */}
           {activeSection === 'account' && (
-            <SectionCard icon={<User className="h-4 w-4" />} title="Tài khoản">
-              <div className="py-5 text-center">
-                {isAuthenticated && user ? (
-                  <>
-                    <div className="w-12 h-12 mx-auto mb-2.5 rounded-full overflow-hidden bg-gradient-to-br from-mystery-purple/20 to-mystery-blue/20 dark:from-mystery-purple/25 dark:to-mystery-blue/15 flex items-center justify-center">
-                      {user.avatarUrl ? (
-                        <img src={user.avatarUrl} alt="avatar" className="w-full h-full object-cover" />
-                      ) : (
-                        <span className="text-lg font-bold text-center leading-none select-none text-mystery-purple dark:text-mystery-purple-light">
-                          {user.displayName.charAt(0).toUpperCase()}
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-sm font-semibold mb-0.5">{user.displayName}</p>
-                    <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark">{user.email}</p>
-                    {user.provider !== 'email' && (
-                      <span className="inline-flex items-center gap-1 mt-2 px-2.5 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider bg-mystery-purple/8 dark:bg-mystery-purple/12 text-mystery-purple dark:text-mystery-purple-light">
-                        {user.provider === 'google' ? 'Google' : 'Facebook'}
-                      </span>
-                    )}
-                    <div className="mt-4">
-                      <button
-                        onClick={() => {
-                          if (confirm('Bạn có chắc muốn đăng xuất?')) logout();
-                        }}
-                        className="px-4 py-1.5 rounded-xl text-xs font-medium bg-red-50 dark:bg-red-900/15 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/25 transition-colors inline-flex items-center gap-1.5"
-                      >
-                        <LogOut className="h-3.5 w-3.5" />
-                        Đăng xuất
-                      </button>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="w-12 h-12 mx-auto mb-2.5 rounded-full bg-gray-100 dark:bg-white/6 flex items-center justify-center text-center select-none">
-                      <User className="h-6 w-6 text-gray-400 dark:text-gray-500" />
-                    </div>
-                    <p className="text-sm font-semibold mb-0.5">Khách</p>
-                    <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark mb-4">
-                      Đăng nhập để đồng bộ dữ liệu
-                    </p>
-                    <div className="flex items-center justify-center gap-2.5">
-                      <button
-                        onClick={() => navigate('/app/dang-nhap')}
-                        className="px-4 py-1.5 rounded-xl text-xs font-semibold bg-gold/10 dark:bg-gold-dark/8 text-text-primary-light dark:text-gold-dark hover:bg-gold/18 dark:hover:bg-gold-dark/15 transition-colors inline-flex items-center gap-1.5"
-                      >
-                        <LogIn className="h-3.5 w-3.5" />
-                        Đăng nhập
-                      </button>
-                      <button
-                        onClick={() => navigate('/app/dang-ky')}
-                        className="px-4 py-1.5 rounded-xl text-xs font-medium border border-border-light/50 dark:border-mystery-purple/15 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors inline-flex items-center gap-1.5"
-                      >
-                        <UserPlus className="h-3.5 w-3.5" />
-                        Đăng ký
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
-            </SectionCard>
+            <ErrorBoundary viewName="Cài đặt: Tài khoản">
+              <AccountSection />
+            </ErrorBoundary>
           )}
 
           {/* About footer */}
           <div className="flex items-center justify-between px-4 py-3">
             <p className="text-xs text-text-secondary-light/60 dark:text-text-secondary-dark/60">
-              Lịch Việt v3.5 · MIT
+              Lịch Việt v1.0 · MIT
             </p>
             <button
               onClick={() => navigate('/app/am-lich')}
-              className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
+              className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
               aria-label="Về trang Âm Lịch"
               title="Về trang Âm Lịch"
             >
               <Home className="h-4 w-4 text-text-secondary-light/60 dark:text-text-secondary-dark/60" />
             </button>
           </div>
-        </div>{' '}
-        {/* end right content */}
-      </div>{' '}
-      {/* end 2-column flex */}
+        </div>
+      </div>
       <div className="h-6" />
       <SuccessToast
         message="Thông tin cá nhân đã được cập nhật"

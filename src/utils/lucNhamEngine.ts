@@ -167,19 +167,25 @@ export interface ThanSat {
 
 /**
  * Thiên Đức Quý Nhân — the supreme auspicious spirit. Branch depends on Day Stem.
- * Giáp/Mậu → Sử/Mùi, Ất/Kỷ → Thân/Tý, Bính/Đinh → Hợi/Dậu, Canh/Tân → Dần/Ngọ, Nhâm/Quý → Tỵ/Mão
+/**
+ * Thiên Ất Quý Nhân — day and night distinction:
+ * Giáp/Mậu/Canh → Sửu (ngày) / Mùi (đêm)
+ * Ất/Kỷ → Tý (ngày) / Thân (đêm)
+ * Bính/Đinh → Hợi (ngày) / Dậu (đêm)
+ * Tân → Ngọ (ngày) / Dần (đêm)
+ * Nhâm/Quý → Tỵ (ngày) / Mão (đêm)
  */
-const THIEN_AT_MAP: Record<string, BranchId[]> = {
-  Giáp: ['suu', 'mui'],
-  Mậu: ['suu', 'mui'],
-  Ất: ['than', 'ti'],
-  Kỷ: ['than', 'ti'],
-  Bính: ['hoi', 'dau'],
-  Đinh: ['hoi', 'dau'],
-  Canh: ['dan', 'ngo'],
-  Tân: ['dan', 'ngo'],
-  Nhâm: ['ty', 'mao'],
-  Quý: ['ty', 'mao'],
+const THIEN_AT_MAP: Record<string, { day: BranchId; night: BranchId }> = {
+  Giáp: { day: 'suu', night: 'mui' },
+  Mậu: { day: 'suu', night: 'mui' },
+  Canh: { day: 'suu', night: 'mui' },
+  Ất: { day: 'ti', night: 'than' },
+  Kỷ: { day: 'ti', night: 'than' },
+  Bính: { day: 'hoi', night: 'dau' },
+  Đinh: { day: 'hoi', night: 'dau' },
+  Tân: { day: 'ngo', night: 'dan' },
+  Nhâm: { day: 'ty', night: 'mao' },
+  Quý: { day: 'ty', night: 'mao' },
 };
 
 /** Thiên Đức: Month-based auspicious marker. Simplified to Day Stem's generative branch. */
@@ -202,18 +208,32 @@ function getBachHoBranch(dayBranchIndex: number): BranchId {
 }
 
 /** Derive Thần Sát markers for a given branch in the chart context. */
-function deriveThanSat(branch: BranchId, dayStem: string, dayBranchIndex: number): ThanSat[] {
+function deriveThanSat(
+  branch: BranchId,
+  dayStem: string,
+  dayBranchIndex: number,
+  hourBranchIndex: number = 0,
+  astronomicalDaytime?: boolean,
+): ThanSat[] {
   const markers: ThanSat[] = [];
 
-  // Thiên Ất Quý Nhân
+  // Thiên Ất Quý Nhân (Phân biệt ngày: Mão 3..Thân 8 vs đêm: Dậu 9..Dần 2, hoặc qua vị trí Mặt Trời)
+  const isDayTime = astronomicalDaytime !== undefined
+    ? astronomicalDaytime
+    : (hourBranchIndex >= 3 && hourBranchIndex <= 8);
   const thienAt = THIEN_AT_MAP[dayStem];
-  if (thienAt?.includes(branch)) {
-    markers.push({
-      id: 'thienAt',
-      nameVi: 'Thiên Ất Quý Nhân',
-      nature: 'cat',
-      description: 'Quý nhân phò trợ, gặp người giúp đỡ, mọi việc thuận lợi.',
-    });
+  if (thienAt) {
+    const targetBranch = isDayTime ? thienAt.day : thienAt.night;
+    if (branch === targetBranch) {
+      markers.push({
+        id: 'thienAt',
+        nameVi: 'Thiên Ất Quý Nhân',
+        nature: 'cat',
+        description: isDayTime
+          ? 'Trực nhật Quý Nhân (ban ngày) phò trợ, gặp người giúp đỡ, mọi việc thuận lợi.'
+          : 'Dạ gian Quý Nhân (ban đêm) phò trợ, gặp người giúp đỡ, giải trừ hung hiểm.',
+      });
+    }
   }
 
   // Thiên Đức
@@ -283,42 +303,50 @@ const SOLAR_TERMS_ORDER = [
 
 // ── Nguyệt Tướng (Monthly General) ─────────────────────────────
 
+const NGUYET_TUONG_BY_SOLAR_TERM: BranchId[] = [
+  'suu', // 0: Tiểu Hàn
+  'ti',  // 1: Đại Hàn (Trung Khí - Thần Hậu)
+  'ti',  // 2: Lập Xuân
+  'hoi', // 3: Vũ Thủy (Trung Khí - Đăng Minh)
+  'hoi', // 4: Kinh Trập
+  'tuat',// 5: Xuân Phân (Trung Khí - Hà Khôi)
+  'tuat',// 6: Thanh Minh
+  'dau', // 7: Cốc Vũ (Trung Khí - Tòng Khôi)
+  'dau', // 8: Lập Hạ
+  'than',// 9: Tiểu Mãn (Trung Khí - Truyền Tống)
+  'than',// 10: Mang Chủng
+  'mui', // 11: Hạ Chí (Trung Khí - Tiểu Cát)
+  'mui', // 12: Tiểu Thử
+  'ngo', // 13: Đại Thử (Trung Khí - Thắng Quang)
+  'ngo', // 14: Lập Thu
+  'ty',  // 15: Xử Thử (Trung Khí - Thái Ất)
+  'ty',  // 16: Bạch Lộ
+  'thin',// 17: Thu Phân (Trung Khí - Thiên Cương)
+  'thin',// 18: Hàn Lộ
+  'mao', // 19: Sương Giáng (Trung Khí - Thái Xung)
+  'mao', // 20: Lập Đông
+  'dan', // 21: Tiểu Tuyết (Trung Khí - Công Tào)
+  'dan', // 22: Đại Tuyết
+  'suu', // 23: Đông Chí (Trung Khí - Đại Cát)
+];
+
 /**
  * Determine the Nguyệt Tướng based on the solar term.
- * Maps solar position to one of 12 Earthly Branches.
+ * Maps solar position to one of 12 Earthly Branches changing at Trung Khí.
  */
 function getNguyetTuong(date: Date): NguyetTuong {
   const jdn = getJDN(date.getDate(), date.getMonth() + 1, date.getFullYear());
   const solarTermName = getSolarTerm(jdn);
 
-  // Find the index (0-23) from the name
   let solarTermIdx = SOLAR_TERMS_ORDER.indexOf(solarTermName);
-  if (solarTermIdx === -1) solarTermIdx = 0; // fallback
+  if (solarTermIdx === -1) solarTermIdx = 0;
 
-  // Map solar term index (0-23) to Nguyệt Tướng branch
-  // Each pair of solar terms maps to one branch, changing at Trung Khí (odd indices)
-  const nguyetTuongByPair: BranchId[] = [
-    'suu', // 0: Tiểu Hàn (TK)
-    'ti', // 1: Đại Hàn (Trung Khí), 2: Lập Xuân (TK)
-    'hoi', // 3: Vũ Thủy (Trung Khí), 4: Kinh Trập (TK)
-    'tuat', // 5: Xuân Phân (Trung Khí), 6: Thanh Minh (TK)
-    'dau', // 7: Cốc Vũ (Trung Khí), 8: Lập Hạ (TK)
-    'than', // 9: Tiểu Mãn (Trung Khí), 10: Mang Chủng (TK)
-    'mui', // 11: Hạ Chí (Trung Khí), 12: Tiểu Thử (TK)
-    'ngo', // 13: Đại Thử (Trung Khí), 14: Lập Thu (TK)
-    'ty', // 15: Xử Thử (Trung Khí), 16: Bạch Lộ (TK)
-    'thin', // 17: Thu Phân (Trung Khí), 18: Hàn Lộ (TK)
-    'mao', // 19: Sương Giáng (Trung Khí), 20: Lập Đông (TK)
-    'dan', // 21: Tiểu Tuyết (Trung Khí), 22: Đại Tuyết (TK)
-    // 23: Đông Chí (Trung Khí) -> maps back to 0 (Sửu)
-  ];
-  const pairIndex = Math.floor((solarTermIdx + 1) / 2) % 12;
-  const branch = nguyetTuongByPair[pairIndex] || 'suu';
+  const branch = NGUYET_TUONG_BY_SOLAR_TERM[solarTermIdx] || 'suu';
 
   return {
     branch,
     branchName: BRANCH_NAMES[branch].vi,
-    solarLongitudeRange: `Tiết khí ${solarTermIdx}`,
+    solarLongitudeRange: `Tiết khí: ${solarTermName}`,
   };
 }
 
@@ -558,14 +586,12 @@ function selectSoTruyenBranch(board: BoardPosition[], tuKhoa: TuKhoa, khoaThuc?:
 // ── Khóa Thức Identification ───────────────────────────────────
 
 function identifyKhoaThuc(board: BoardPosition[], tuKhoa: TuKhoa, dayStemIndex: number): KhoaThuc {
-  // Classification cascade:
-  // Phục Ngâm → Phản Ngâm → Nguyên Thủ → Trùng Thẩu → Tri Nhất → Thiệp Hại → Diêu Khắc → Muội Giản → Biệt Trách
-
-  // 1. Check for Phục Ngâm (Thiên Bàn = Địa Bàn everywhere)
+  // Classification cascade according to classical Da Liu Ren Cửu Tông Môn:
+  // 1. Phục Câm (Thiên Bàn = Địa Bàn)
   const isPhucNgam = board.every((b) => b.tianBan === b.diaBan);
   if (isPhucNgam) return getCourseById('phucNgam');
 
-  // 2. Check for Phản Ngâm (Thiên Bàn xung Địa Bàn)
+  // 2. Phản Câm (Thiên Bàn xung Địa Bàn)
   const isPhanNgam = board.every((b) => {
     const diIdx = BRANCHES.indexOf(b.diaBan);
     const tiIdx = BRANCHES.indexOf(b.tianBan);
@@ -573,62 +599,63 @@ function identifyKhoaThuc(board: BoardPosition[], tuKhoa: TuKhoa, dayStemIndex: 
   });
   if (isPhanNgam) return getCourseById('fanNgam');
 
-  // Analyze Khắc (overcomes) relationships in all 4 lessons using L1 element data
-  // A lesson has Khắc when upper overcomes lower OR lower overcomes upper
-  const khacLessons = tuKhoa.lessons.filter((l) => l.elementRelation === 'khac' || l.elementRelation === 'bi_khac');
-  const khacCount = khacLessons.length;
+  // Analyze Khắc (overcomes) in all 4 lessons
+  const upperOvercomesLower = tuKhoa.lessons.filter((l) => l.elementRelation === 'khac');
+  const lowerOvercomesUpper = tuKhoa.lessons.filter((l) => l.elementRelation === 'bi_khac');
+  const totalKhac = upperOvercomesLower.length + lowerOvercomesUpper.length;
 
-  // 3. Nguyên Thủ: At least one lesson has Khắc, and the FIRST lesson with Khắc
-  //    has upper overcoming lower (the standard starting course)
-  if (
-    khacCount > 0 &&
-    (tuKhoa.lessons[0].elementRelation === 'khac' || tuKhoa.lessons[0].elementRelation === 'bi_khac')
-  ) {
+  // 3. Khi chỉ có 1 Khắc duy nhất (Tặc Khắc)
+  if (totalKhac === 1) {
+    if (lowerOvercomesUpper.length === 1) {
+      // Hạ tặc Thượng (Dưới khắc trên) -> Trọng Thẩm Khóa
+      return getCourseById('trungThau');
+    }
+    // Thượng khắc Hạ (Trên khắc dưới) -> Nguyên Thủ Khóa
     return getCourseById('nguyenThu');
   }
 
-  // 4. Trùng Thẩu: Multiple lessons have Khắc (2+), indicating complexity
-  if (khacCount >= 2) {
-    return getCourseById('trungThau');
-  }
+  // 4. Khi có 2 hoặc nhiều hơn Khắc -> Xét Tỷ Dụng / Tri Nhất hoặc Thiệp Hại
+  if (totalKhac >= 2) {
+    const isYangDay = dayStemIndex % 2 === 0;
+    const allKhac = [...upperOvercomesLower, ...lowerOvercomesUpper];
+    const matchPolarity = allKhac.filter((l) => {
+      const bIdx = BRANCHES.findIndex((b) => BRANCH_NAMES[b].vi === l.upperStem);
+      const isYangBranch = bIdx >= 0 ? bIdx % 2 === 0 : false;
+      return isYangDay === isYangBranch;
+    });
 
-  // 5. Tri Nhất: Exactly one lesson has Khắc (only one controlling pair)
-  if (khacCount === 1) {
-    return getCourseById('triNhat');
-  }
-
-  // No Khắc at all — classify among the remaining types
-
-  // 6. Thiệp Hại: No Khắc, determine by branch "depth" analysis
-  //    (the lesson whose branch has deepest Thiệp Hại count)
-  const upperBranches = tuKhoa.lessons.map((l) => l.upperStem);
-  const hasDuplicateUppers = new Set(upperBranches).size < upperBranches.length;
-  if (hasDuplicateUppers) {
+    if (matchPolarity.length === 1) {
+      // Tỷ Dụng / Tri Nhất (Chỉ 1 quẻ đồng âm dương với can ngày)
+      return getCourseById('triNhat');
+    }
+    // Thiệp Hại (Đồng tính chất hoặc cùng khắc -> đếm Mạnh Trọng Quý)
     return getCourseById('thiepHai');
   }
 
-  // 7. Diêu Khắc: Lessons form a distant/remote overcomes pattern
-  //    When upper and lower are same polarity but no direct Khắc
-  const lowerBranches = tuKhoa.lessons.map((l) => l.lowerBranch);
-  const hasDistantRelation = upperBranches.some((u, i) => u !== lowerBranches[i] && u !== '—');
-  if (hasDistantRelation && !hasDuplicateUppers) {
+  // 5. Tứ khóa không có Khắc -> Xét Dao Khắc (Diêu Khắc)
+  const dayStem = STEMS[dayStemIndex] || 'Giáp';
+  const dayStemElement = STEM_ELEMENT[dayStem] || 'Mộc';
+  const hasDaoKhac = tuKhoa.lessons.some((l) => {
+    if (!l.upperElement) return false;
+    const rel = getElementRelation(dayStemElement, l.upperElement as NguHanh);
+    return rel === 'khac' || rel === 'bi_khac';
+  });
+
+  if (hasDaoKhac) {
     return getCourseById('dieuKhac');
   }
 
-  // 8. Mội Giản: All lessons are harmonious (Sinh), quiet pattern
+  // 6. Bát Chuyên (Can Chi đồng vị) / Biệt Trách
+  if (dayStemIndex % 2 === 0) {
+    return getCourseById('bietTrach');
+  }
+
+  // 7. Mội Giản (Thuần sinh)
   const allSinh = tuKhoa.lessons.every((l) => l.relationship === 'Sinh');
   if (allSinh) {
     return getCourseById('muoiGian');
   }
 
-  // 9. Biệt Trách: Special/exceptional case (fallback)
-  //    Day's stem is Yang and Lesson 1 upper = Day Branch area
-  if (dayStemIndex % 2 === 0) {
-    // Yang stem
-    return getCourseById('bietTrach');
-  }
-
-  // Default fallback: Thiệp Mạch
   return getCourseById('thiMach');
 }
 
@@ -672,7 +699,7 @@ function calculateVerdict(tamTruyen: TamTruyen, khoaThuc: KhoaThuc): Verdict {
  * @param date - The date of the query
  * @param hourBranchId - Earthly Branch of the query hour (0-11 maps to Tý-Hợi)
  */
-export function generateLucNhamChart(date: Date, hourBranchId: number): LucNhamChart {
+export function generateLucNhamChart(date: Date, hourBranchId: number, astronomicalDaytime?: boolean): LucNhamChart {
   const hourBranch = BRANCHES[hourBranchId % 12];
   const { stem: dayStem, branch: dayBranch, stemIndex, branchIndex } = parseDayStemBranch(date);
 
@@ -700,7 +727,7 @@ export function generateLucNhamChart(date: Date, hourBranchId: number): LucNhamC
     // Find branch ID from lesson's upperStem (which is actually the Thiên Bàn branch name)
     const upperBranchId = BRANCHES.find((b) => BRANCH_NAMES[b].vi === lesson.upperStem);
     if (upperBranchId) {
-      const markers = deriveThanSat(upperBranchId, dayStem, branchIndex);
+      const markers = deriveThanSat(upperBranchId, dayStem, branchIndex, hourBranchId, astronomicalDaytime);
       lesson.thanSat = markers;
       allThanSat.push(...markers);
     }

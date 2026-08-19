@@ -1,56 +1,13 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, Inject } from '@nestjs/common';
 import { AuthResult, UserProfile } from '@lich-viet/contracts';
 import { LoginDto, RegisterDto, SocialLoginDto } from './dto/auth.dto.js';
+import { DatabaseService, DbUser } from '../../db/database.service.js';
+import { signJwt } from '../../common/jwt.util.js';
 import * as crypto from 'node:crypto';
-
-interface InternalUser {
-  id: string;
-  email: string;
-  name: string;
-  avatarUrl?: string;
-  passwordHash?: string;
-  salt?: string;
-  tier: 'free' | 'curious' | 'expert';
-  role: 'user' | 'admin';
-  provider: string;
-  createdAt: string;
-  updatedAt: string;
-}
 
 @Injectable()
 export class AuthService {
-  private users: Map<string, InternalUser> = new Map();
-
-  constructor() {
-    // Seed default admin and test user
-    this.seedUser({
-      id: 'seed-admin-lich-viet',
-      email: 'admin@lichviet.app',
-      name: 'Admin',
-      tier: 'expert',
-      role: 'admin',
-      provider: 'email',
-      passwordHash: 'ef00af5081263d0c0e72e3f8b98119303d53edc687c02f8b54e220a6b46973d5',
-      salt: 'lichviet-admin-seed',
-      createdAt: '2026-01-01T00:00:00.000Z',
-      updatedAt: '2026-01-01T00:00:00.000Z',
-    });
-
-    this.seedUser({
-      id: 'demo-user-001',
-      email: 'demo@lichviet.local',
-      name: 'Nguyễn Văn Demo',
-      tier: 'curious',
-      role: 'user',
-      provider: 'email',
-      createdAt: '2026-01-01T00:00:00.000Z',
-      updatedAt: '2026-01-01T00:00:00.000Z',
-    });
-  }
-
-  private seedUser(user: InternalUser) {
-    this.users.set(user.email.toLowerCase(), user);
-  }
+  constructor(@Inject(DatabaseService) private readonly db: DatabaseService) {}
 
   private hashPassword(password: string, salt = ''): string {
     return crypto
@@ -59,45 +16,61 @@ export class AuthService {
       .digest('hex');
   }
 
-  private toUserProfile(user: InternalUser): UserProfile {
+  private toUserProfile(user: DbUser): UserProfile {
     return {
       id: user.id,
       email: user.email,
       name: user.name,
-      avatarUrl: user.avatarUrl,
-      tier: user.tier,
-      role: user.role,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      avatarUrl: user.avatar_url || undefined,
+      tier: (user.tier as 'free' | 'curious' | 'expert') || 'free',
+      role: (user.role as 'user' | 'admin') || 'user',
+      createdAt: user.created_at,
+      updatedAt: user.updated_at,
     };
   }
 
   async login(dto: LoginDto): Promise<AuthResult> {
     const emailKey = dto.email.toLowerCase().trim();
-    let user = this.users.get(emailKey);
+    let user = this.db.prepare<DbUser>('SELECT * FROM users WHERE email = ?').get(emailKey);
 
     if (!user) {
       // In development or demo mode, auto-provision user if password is not strictly enforced
-      user = {
-        id: `usr-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        email: dto.email,
-        name: dto.email.split('@')[0] || 'Người Dùng',
-        tier: 'free',
-        role: 'user',
-        provider: 'email',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      };
-      this.users.set(emailKey, user);
-    } else if (user.passwordHash && dto.password) {
+      const now = new Date().toISOString();
+      const id = `usr-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+      const name = dto.email.split('@')[0] || 'Người Dùng';
+      const salt = crypto.randomBytes(16).toString('hex');
+      const passwordHash = dto.password ? this.hashPassword(dto.password, salt) : null;
+
+      this.db
+        .prepare(
+          `INSERT INTO users (id, email, name, avatar_url, password_hash, salt, tier, role, provider, created_at, updated_at)
+           VALUES (?, ?, ?, NULL, ?, ?, 'free', 'user', 'email', ?, ?)`,
+        )
+        .run(id, emailKey, name, passwordHash, salt, now, now);
+
+      user = this.db.prepare<DbUser>('SELECT * FROM users WHERE id = ?').get(id);
+      if (!user) {
+        throw new UnauthorizedException('Không thể khởi tạo tài khoản.');
+      }
+    } else if (user.password_hash && dto.password) {
       const hash = this.hashPassword(dto.password, user.salt || '');
-      if (hash !== user.passwordHash) {
+      if (hash !== user.password_hash) {
         throw new UnauthorizedException('Email hoặc mật khẩu không chính xác.');
       }
     }
 
-    const accessToken = `jwt-${user.id}-${Date.now()}`;
-    const refreshToken = `rft-${user.id}-${Date.now()}`;
+    const accessToken = signJwt({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      tier: user.tier,
+    });
+    const refreshToken = signJwt({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      tier: user.tier,
+    }, 30 * 86400);
 
     return {
       accessToken,
@@ -108,93 +81,120 @@ export class AuthService {
 
   async register(dto: RegisterDto): Promise<AuthResult> {
     const emailKey = dto.email.toLowerCase().trim();
-    if (this.users.has(emailKey)) {
+    const existing = this.db.prepare<DbUser>('SELECT id FROM users WHERE email = ?').get(emailKey);
+    if (existing) {
       throw new ConflictException('Email này đã được sử dụng.');
     }
 
     const salt = crypto.randomBytes(16).toString('hex');
-    const passwordHash = dto.password ? this.hashPassword(dto.password, salt) : undefined;
+    const passwordHash = dto.password ? this.hashPassword(dto.password, salt) : null;
     const now = new Date().toISOString();
+    const id = `usr-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    const name = dto.name || dto.email.split('@')[0] || 'Người Dùng Mới';
 
-    const newUser: InternalUser = {
-      id: `usr-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-      email: dto.email,
-      name: dto.name || dto.email.split('@')[0] || 'Người Dùng Mới',
-      passwordHash,
-      salt,
-      tier: 'free',
-      role: 'user',
-      provider: 'email',
-      createdAt: now,
-      updatedAt: now,
-    };
+    this.db
+      .prepare(
+        `INSERT INTO users (id, email, name, avatar_url, password_hash, salt, tier, role, provider, created_at, updated_at)
+         VALUES (?, ?, ?, NULL, ?, ?, 'free', 'user', 'email', ?, ?)`,
+      )
+      .run(id, emailKey, name, passwordHash, salt, now, now);
 
-    this.users.set(emailKey, newUser);
+    const newUser = this.db.prepare<DbUser>('SELECT * FROM users WHERE id = ?').get(id);
+    if (!newUser) {
+      throw new ConflictException('Không thể hoàn tất đăng ký.');
+    }
+
+    const accessToken = signJwt({
+      sub: newUser.id,
+      email: newUser.email,
+      role: newUser.role,
+      tier: newUser.tier,
+    });
+    const refreshToken = signJwt({
+      sub: newUser.id,
+      email: newUser.email,
+      role: newUser.role,
+      tier: newUser.tier,
+    }, 30 * 86400);
 
     return {
-      accessToken: `jwt-${newUser.id}-${Date.now()}`,
-      refreshToken: `rft-${newUser.id}-${Date.now()}`,
+      accessToken,
+      refreshToken,
       user: this.toUserProfile(newUser),
     };
   }
 
   async loginWithSocial(dto: SocialLoginDto): Promise<AuthResult> {
-    const syntheticEmail = `social-${dto.provider}-${dto.token.slice(-6)}@lichviet.local`;
-    const emailKey = syntheticEmail.toLowerCase();
-    let user = this.users.get(emailKey);
+    const syntheticEmail = `social-${dto.provider}-${dto.token.slice(-6)}@lichviet.local`.toLowerCase();
+    let user = this.db.prepare<DbUser>('SELECT * FROM users WHERE email = ?').get(syntheticEmail);
 
     if (!user) {
       const now = new Date().toISOString();
-      user = {
-        id: `usr-social-${Date.now()}`,
-        email: syntheticEmail,
-        name: `Người dùng ${dto.provider.toUpperCase()}`,
-        tier: 'free',
-        role: 'user',
-        provider: dto.provider,
-        createdAt: now,
-        updatedAt: now,
-      };
-      this.users.set(emailKey, user);
+      const id = `usr-social-${Date.now()}`;
+      const name = `Người dùng ${dto.provider.toUpperCase()}`;
+
+      this.db
+        .prepare(
+          `INSERT INTO users (id, email, name, avatar_url, password_hash, salt, tier, role, provider, created_at, updated_at)
+           VALUES (?, ?, ?, NULL, NULL, NULL, 'free', 'user', ?, ?, ?)`,
+        )
+        .run(id, syntheticEmail, name, dto.provider, now, now);
+
+      user = this.db.prepare<DbUser>('SELECT * FROM users WHERE id = ?').get(id);
+      if (!user) {
+        throw new UnauthorizedException('Không thể khởi tạo phiên đăng nhập mạng xã hội.');
+      }
     }
 
+    const accessToken = signJwt({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      tier: user.tier,
+    });
+    const refreshToken = signJwt({
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+      tier: user.tier,
+    }, 30 * 86400);
+
     return {
-      accessToken: `jwt-${user.id}-${Date.now()}`,
-      refreshToken: `rft-${user.id}-${Date.now()}`,
+      accessToken,
+      refreshToken,
       user: this.toUserProfile(user),
     };
   }
 
   getUserById(id: string): UserProfile | null {
-    for (const u of this.users.values()) {
-      if (u.id === id) return this.toUserProfile(u);
-    }
-    return null;
+    const user = this.db.prepare<DbUser>('SELECT * FROM users WHERE id = ?').get(id);
+    return user ? this.toUserProfile(user) : null;
   }
 
   updateUserProfile(id: string, updates: Partial<UserProfile>): UserProfile {
-    for (const [key, u] of this.users.entries()) {
-      if (u.id === id) {
-        const updated: InternalUser = {
-          ...u,
-          ...(updates.name ? { name: updates.name } : {}),
-          ...(updates.avatarUrl !== undefined ? { avatarUrl: updates.avatarUrl } : {}),
-          ...(updates.tier ? { tier: updates.tier } : {}),
-          updatedAt: new Date().toISOString(),
-        };
-        this.users.set(key, updated);
-        return this.toUserProfile(updated);
-      }
+    const existing = this.db.prepare<DbUser>('SELECT * FROM users WHERE id = ?').get(id);
+    const now = new Date().toISOString();
+
+    if (existing) {
+      const name = updates.name !== undefined ? updates.name : existing.name;
+      const avatarUrl = updates.avatarUrl !== undefined ? updates.avatarUrl : existing.avatar_url;
+
+      this.db
+        .prepare('UPDATE users SET name = ?, avatar_url = ?, updated_at = ? WHERE id = ?')
+        .run(name, avatarUrl, now, id);
+
+      const updated = this.db.prepare<DbUser>('SELECT * FROM users WHERE id = ?').get(id);
+      return updated ? this.toUserProfile(updated) : this.toUserProfile(existing);
     }
-    // If not found, return demo user with applied updates
+
     return {
       id,
       email: 'user@lichviet.local',
       name: updates.name || 'Người Dùng',
-      tier: updates.tier || 'free',
+      tier: 'free',
       role: 'user',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      createdAt: now,
+      updatedAt: now,
     };
   }
 }

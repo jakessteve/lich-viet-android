@@ -7,7 +7,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { useEventStore } from '@/stores/eventStore';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import CollapsibleCard from '../CollapsibleCard';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, Plus, Edit3, Trash2, CalendarPlus, Repeat } from 'lucide-react';
 import { EventEditorModal } from './EventEditorModal';
@@ -40,7 +40,8 @@ export const UpcomingEventsCard: React.FC<UpcomingEventsCardProps> = ({
     return getUpcomingEvents(events, daysAhead, baseDate);
   }, [events, daysAhead, selectedTimestamp]);
 
-  const handleOpenAdd = () => {
+  const handleOpenAdd = (e: React.MouseEvent) => {
+    e.stopPropagation();
     setEditingEvent(null);
     setIsModalOpen(true);
   };
@@ -59,38 +60,43 @@ export const UpcomingEventsCard: React.FC<UpcomingEventsCardProps> = ({
     }
   };
 
+  const titleNode = (
+    <div className="flex items-center gap-2 font-semibold text-sm">
+      <CalendarDays className="h-4 w-4 text-purple dark:text-purple-dark" />
+      <span>Sự kiện sắp tới ({daysAhead} ngày)</span>
+    </div>
+  );
+
+  const headerRightNode = (
+    <div className="flex items-center gap-2">
+      {upcomingList.length > 0 && (
+        <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-purple/10 text-purple dark:text-purple-dark">
+          {upcomingList.length} sự kiện
+        </span>
+      )}
+      <button
+        type="button"
+        onClick={handleOpenAdd}
+        className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-purple/15 text-purple dark:text-purple-dark hover:bg-purple/25 text-xs font-bold transition-colors spring-press cursor-pointer"
+        title="Thêm sự kiện mới"
+        aria-label="Thêm sự kiện"
+      >
+        <Plus className="w-3.5 h-3.5" />
+        <span className="hidden sm:inline">Thêm</span>
+      </button>
+    </div>
+  );
+
   return (
     <>
-      <Card className={`rounded-2xl border border-border-light/60 dark:border-border-dark/60 overflow-hidden shadow-apple ${className}`}>
-        {/* Header */}
-        <CardHeader className="py-3 px-5 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-subtle-light dark:bg-surface-subtle-dark">
-          <CardTitle className="font-semibold text-sm tracking-tight text-text-primary-light dark:text-text-primary-dark flex items-center justify-between gap-2">
-            <div className="flex items-center gap-2">
-              <CalendarDays className="h-4 w-4 text-purple dark:text-purple-dark" />
-              <span>Sự kiện sắp tới ({daysAhead} ngày)</span>
-            </div>
-            <div className="flex items-center gap-2">
-              {upcomingList.length > 0 && (
-                <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-purple/10 text-purple dark:text-purple-dark">
-                  {upcomingList.length} sự kiện
-                </span>
-              )}
-              <button
-                type="button"
-                onClick={handleOpenAdd}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-purple/15 text-purple dark:text-purple-dark hover:bg-purple/25 text-xs font-bold transition-colors spring-press cursor-pointer"
-                title="Thêm sự kiện mới"
-                aria-label="Thêm sự kiện"
-              >
-                <Plus className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Thêm</span>
-              </button>
-            </div>
-          </CardTitle>
-        </CardHeader>
-
-        {/* Body */}
-        <CardContent className="px-5 py-4 space-y-3.5">
+      <CollapsibleCard
+        title={titleNode}
+        defaultOpen={false}
+        collapseOnMobile={true}
+        headerRight={headerRightNode}
+        className={`shadow-apple ${className}`}
+      >
+        <div className="p-4 space-y-3">
           {upcomingList.length === 0 ? (
             <div className="text-center py-6 px-4 space-y-3">
               <div className="w-10 h-10 mx-auto rounded-2xl bg-purple/10 dark:bg-purple/20 flex items-center justify-center text-purple">
@@ -106,7 +112,10 @@ export const UpcomingEventsCard: React.FC<UpcomingEventsCardProps> = ({
               </div>
               <button
                 type="button"
-                onClick={handleOpenAdd}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleOpenAdd(e);
+                }}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple text-white text-xs font-bold shadow-xs hover:bg-purple/90 transition-all spring-press cursor-pointer"
               >
                 <Plus className="w-3.5 h-3.5" />
@@ -218,8 +227,8 @@ export const UpcomingEventsCard: React.FC<UpcomingEventsCardProps> = ({
               );
             })
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </CollapsibleCard>
 
       {/* Editor Modal */}
       <EventEditorModal

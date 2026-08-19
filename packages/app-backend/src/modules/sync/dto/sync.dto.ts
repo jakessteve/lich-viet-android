@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsArray, IsEnum, IsNotEmpty, IsObject, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
-import { SyncAction, SyncEntityType } from '@lich-viet/contracts';
+import type { SyncAction, SyncEntityType } from '@lich-viet/contracts';
 
 export class SyncMutationDto {
   @ApiProperty({ description: 'Client mutation unique ID' })
@@ -9,8 +9,8 @@ export class SyncMutationDto {
   @IsString()
   mutationId!: string;
 
-  @ApiProperty({ description: 'Target entity type', enum: ['dam_gio', 'user_note', 'calendar_event'] })
-  @IsEnum(['dam_gio', 'user_note', 'calendar_event'])
+  @ApiProperty({ description: 'Target entity type', enum: ['dam_gio', 'user_note', 'calendar_event', 'birth_profile'] })
+  @IsEnum(['dam_gio', 'user_note', 'calendar_event', 'birth_profile'])
   entityType!: SyncEntityType;
 
   @ApiProperty({ description: 'Entity unique ID' })

@@ -235,24 +235,28 @@ export function useHolidays(selectedDate: Date = new Date(), viewerLocation?: Sw
     let cancelled = false;
     async function fetchLocal() {
       setLocalLoading(true);
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+
       try {
         const yearsToFetch = [baseYear];
-        // If 14-day window spans into next year, fetch next year too
-        const endWindow = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + daysAhead);
-        if (endWindow.getFullYear() > baseYear) {
-          yearsToFetch.push(endWindow.getFullYear());
-        }
+        const nextYear = baseYear + 1;
+        yearsToFetch.push(nextYear);
 
         const promises = yearsToFetch.map((y) =>
-          fetch(`${NAGER_API_BASE}/PublicHolidays/${y}/${countryCode}`).then((r) => (r.ok ? r.json() : [])),
+          fetch(`${NAGER_API_BASE}/PublicHolidays/${y}/${countryCode}`, { signal: controller.signal }).then((r) =>
+            r.ok ? r.json() : [],
+          ),
         );
         const results = await Promise.all(promises);
+        clearTimeout(timeout);
         const combined = results.flat();
         const validated = NagerHolidaysSchema.safeParse(combined);
         if (!cancelled) {
           setLocalHolidays(validated.success ? validated.data : []);
         }
       } catch {
+        clearTimeout(timeout);
         if (!cancelled) setLocalHolidays([]);
       } finally {
         if (!cancelled) setLocalLoading(false);
@@ -263,7 +267,7 @@ export function useHolidays(selectedDate: Date = new Date(), viewerLocation?: Sw
     return () => {
       cancelled = true;
     };
-  }, [baseYear, countryCode, selectedDate, daysAhead]);
+  }, [baseYear, countryCode]);
 
   // Step 3: Compute holidays across the 14-day range
   const holidays = useMemo<HolidayEntry[]>(() => {

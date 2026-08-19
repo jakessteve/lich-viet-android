@@ -43,6 +43,18 @@
   --color-info: #2563eb;
   --color-info-dark: #60a5fa;
 
+  /* ── Five Elements (Ngũ Hành) Palette ───────────────────── */
+  --color-element-metal: #64748b;
+  --color-element-metal-dark: #cbd5e1;
+  --color-element-wood: #16a34a;
+  --color-element-wood-dark: #4ade80;
+  --color-element-water: #2563eb;
+  --color-element-water-dark: #60a5fa;
+  --color-element-fire: #dc2626;
+  --color-element-fire-dark: #f87171;
+  --color-element-earth: #d97706;
+  --color-element-earth-dark: #fbbf24;
+
   /* ── Semantic Aliases (Mapped to Core Tokens) ──────────── */
   --color-eastern-gold: var(--color-gold);
   --color-eastern-gold-light: var(--color-gold-light);
@@ -73,6 +85,25 @@
   --color-polarity-tension-dark: var(--color-bad-dark);
   --color-polarity-neutral: var(--color-info);
   --color-polarity-neutral-dark: var(--color-info-dark);
+
+  /* ── Astrology & Astrological Visual Tokens ────────────── */
+  --color-aspect-trine: var(--color-info);
+  --color-aspect-trine-dark: var(--color-info-dark);
+  --color-aspect-square: var(--color-bad);
+  --color-aspect-square-dark: var(--color-bad-dark);
+  --color-aspect-sextile: var(--color-good);
+  --color-aspect-sextile-dark: var(--color-good-dark);
+  --color-aspect-opposition: var(--color-orange);
+  --color-aspect-opposition-dark: var(--color-orange-dark);
+  --color-aspect-conjunction: var(--color-purple);
+  --color-aspect-conjunction-dark: var(--color-purple-dark);
+
+  /* ── Tử Vi Star Luster Visual Tokens ───────────────────── */
+  --color-star-mieu: #dc2626;
+  --color-star-vuong: #ea580c;
+  --color-star-dac: #059669;
+  --color-star-binh: #2563eb;
+  --color-star-ham: #64748b;
 
   /* ── Mystery Dark Palette ──────────────────────────────── */
   --color-mystery-deep: #0a0a1a;

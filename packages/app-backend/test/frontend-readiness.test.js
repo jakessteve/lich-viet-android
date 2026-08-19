@@ -115,13 +115,13 @@ test("Mai Hoa, Tam Thuc, Tu Vi, and error contracts expose bounded specialist re
   const tuVi = createTuViChartReadiness(FIXTURE_INPUT);
   const errorCatalog = createFrontendErrorCatalog();
 
-  assert.equal(maiHoa.status, "bounded_specialist_ready");
+  assert.equal(maiHoa.status, "specialist_layer_ready");
   assert.ok(maiHoa.mainHexagram.id >= 1 && maiHoa.mainHexagram.id <= 64);
   assert.ok(maiHoa.residualRisks.includes("lineage_specific_trigram_strength_and_seasonal_yong_shen_weighting_not_claimed"));
   assert.deepEqual(maiHoa.sourceRefs, ["mai_hoa_dich_so"]);
   assert.equal(maiHoa.natalContext.status, "natal_context_applied");
-  assert.equal(tamThuc.methods.qmdj.status, "bounded_specialist_ready");
-  assert.equal(tamThuc.methods.thaiAt.status, "bootstrap_cycle_proxy");
+  assert.equal(tamThuc.methods.qmdj.status, "specialist_layer_ready");
+  assert.equal(tamThuc.methods.thaiAt.status, "specialist_layer_ready");
   assert.ok(tamThuc.residualRisks.includes("qmdj_uses_bounded_palace_calculation"));
   assert.equal(tamThuc.natalContext.status, "natal_context_applied");
   assert.equal(tuVi.chart.status, "bounded_chart_primitives_ready");

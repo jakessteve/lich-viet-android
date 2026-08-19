@@ -15,3 +15,4 @@ export * from './accordion';
 export * from './input';
 export * from './label';
 export * from './motion-primitives';
+export * from './PageSkeleton';

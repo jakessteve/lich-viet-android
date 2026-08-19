@@ -25,7 +25,7 @@ export default defineConfig({
       { find: '@lich-viet/core-logic', replacement: path.resolve(__dirname, 'packages/core-logic/src/index.js') },
       { find: '@lich-viet/canonical-db', replacement: path.resolve(__dirname, 'packages/canonical-db/src/index.js') },
       { find: '@lich-viet/swisseph-wasm', replacement: path.resolve(__dirname, 'packages/swisseph-wasm/src/index.js') },
-      { find: '@lich-viet/app-backend', replacement: path.resolve(__dirname, 'packages/app-backend/src/index.js') },
+      { find: '@lich-viet/app-backend', replacement: path.resolve(__dirname, 'packages/app-backend/src/index.ts') },
     ],
   },
   test: {

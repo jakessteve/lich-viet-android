@@ -5,8 +5,11 @@ import { classifyTuViChart } from '../../services/tuvi/chartClassification';
 import { calculateFlyingStars } from '../../services/tuvi/flyingStars';
 import { SegmentedControl, type SegmentedOption } from '../shared';
 import { TuViTieuHanPanel } from './TuViTieuHanPanel';
-import { TrendingUp, Network, ChevronRight, Activity } from 'lucide-react';
+import { TrendingUp, Network, ChevronRight, Activity, Download, FileText, Crown } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { useAuthStore } from '../../stores/authStore';
+import { checkFeatureAccess } from '../../utils/tierGuard';
+import { UpgradePromptModal } from '../shared/UpgradePromptModal';
 
 type SummaryTab = 'overview' | 'tieuHan' | 'daiHan' | 'phiTinh';
 
@@ -80,6 +83,17 @@ export const TuViSummaryPanel: React.FC<{
   onModeChange?: (mode: 'simple' | 'advanced') => void;
 }> = React.memo(({ chart, mode = 'simple' }) => {
   const [activeTab, setActiveTab] = useState<SummaryTab>('overview');
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const user = useAuthStore((s) => s.user);
+
+  const handleExportPdf = () => {
+    const access = checkFeatureAccess('tuvi_pdf_export', user?.tier);
+    if (!access.allowed) {
+      setIsUpgradeModalOpen(true);
+    } else {
+      window.print();
+    }
+  };
 
   const viewYear = chart.hanContext?.viewYear;
   const allDaiHan = useMemo(() => getAllDaiHanInterpretations(chart, viewYear), [chart, viewYear]);
@@ -139,16 +153,28 @@ export const TuViSummaryPanel: React.FC<{
   return (
     <section className="surface-panel space-y-4 p-4 sm:p-5">
       <div className="space-y-3">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-text-secondary-light dark:text-text-secondary-dark">
-            Tóm tắt lá số
-          </p>
-          <h3 className="mt-1 text-base font-semibold text-text-primary-light dark:text-text-primary-dark">
-            Tổng quan cấu trúc và Đại hạn
-          </h3>
-          <p className="mt-1 text-sm text-text-secondary-light dark:text-text-secondary-dark">
-            Thông tin cấu trúc lá số và luận giải dòng chảy vận trình 10 năm theo Tử Vi Đẩu Số.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-text-secondary-light dark:text-text-secondary-dark">
+              Tóm tắt lá số
+            </p>
+            <h3 className="mt-1 text-base font-semibold text-text-primary-light dark:text-text-primary-dark">
+              Tổng quan cấu trúc và Đại hạn
+            </h3>
+            <p className="mt-1 text-sm text-text-secondary-light dark:text-text-secondary-dark">
+              Thông tin cấu trúc lá số và luận giải dòng chảy vận trình 10 năm theo Tử Vi Đẩu Số.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleExportPdf}
+            className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold bg-gold/15 text-amber-950 dark:text-gold-dark border border-gold/30 hover:bg-gold/25 transition-all cursor-pointer shadow-2xs"
+            title="Xuất bản in ấn hoặc lưu PDF lá số và luận giải"
+          >
+            <Download className="h-3.5 w-3.5" />
+            <span>Xuất Lá Số PDF</span>
+          </button>
         </div>
 
         <SegmentedControl
@@ -159,6 +185,14 @@ export const TuViSummaryPanel: React.FC<{
           className="w-full"
         />
       </div>
+
+      <UpgradePromptModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        title="Xuất Bản In Ấn & Lưu File PDF"
+        description="Tính năng xuất bản lá số chuẩn in ấn và báo cáo luận giải chi tiết dành riêng cho thành viên Nâng Cao (Pro & Expert)."
+        minTier="pro"
+      />
 
       {activeTab === 'overview' && (
         <div className="space-y-4">

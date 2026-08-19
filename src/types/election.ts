@@ -8,7 +8,18 @@ export interface ElectionInput {
   location?: { lat: number; lng: number; timezone: number };
 }
 
-export type ElectionActivityType = 'cuoi-hoi' | 'khai-truong' | 'xay-dung' | 'xuat-hanh' | 'nhap-trach' | 'khac';
+export type ElectionActivityType =
+  | 'cuoi-hoi'
+  | 'khai-truong'
+  | 'xay-dung'
+  | 'xuat-hanh'
+  | 'nhap-trach'
+  | 'dong-tho'
+  | 'cau-tai'
+  | 'giao-dich'
+  | 'an-tang'
+  | 'khac'
+  | (string & {});
 
 export interface ElectionCandidate {
   timestamp: number;
@@ -21,4 +32,5 @@ export interface ElectionCandidate {
   dayLabel: string;
   solarTerm: string;
   bestHours?: HourScoreEntry[];
+  scoringMethod?: 'ephemeris_v1' | 'heuristic_legacy';
 }

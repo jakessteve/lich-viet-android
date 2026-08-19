@@ -384,6 +384,19 @@ export interface DivineReadingSummary {
     readonly verdict: 'Cát' | 'Hung' | 'Bình';
     readonly interpretation: string;
   };
+  /** Ứng Kỳ timing prediction */
+  readonly ungKy?: UngKyResult;
+}
+
+/**
+ * Ứng Kỳ (Timing of Manifestation) Prediction in Mai Hoa.
+ */
+export interface UngKyResult {
+  readonly timing: 'fast' | 'medium' | 'slow' | 'unlikely';
+  readonly timingLabel: string;
+  readonly estimatedCount: number;
+  readonly estimatedUnit: 'giờ' | 'ngày' | 'tuần' | 'tháng';
+  readonly explanation: string;
 }
 
 /**

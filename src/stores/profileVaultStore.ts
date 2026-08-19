@@ -48,6 +48,7 @@ const DEFAULT_PROFILE: ActiveBirthProfile = {
 interface ProfileVaultState {
   activeProfile: ActiveBirthProfile;
   savedProfiles: VaultProfile[];
+  pendingDeletedProfileIds: string[];
   isLoading: boolean;
   isSyncing: boolean;
   lastSyncedAt: string | null;
@@ -64,6 +65,7 @@ interface ProfileVaultState {
 export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
   activeProfile: { ...DEFAULT_PROFILE },
   savedProfiles: [],
+  pendingDeletedProfileIds: [],
   isLoading: false,
   isSyncing: false,
   lastSyncedAt: null,
@@ -151,6 +153,10 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
     const profiles = await getAllVaultProfiles();
     const currentActiveId = get().activeProfile.id;
 
+    set((state) => ({
+      pendingDeletedProfileIds: [...state.pendingDeletedProfileIds, id],
+    }));
+
     if (currentActiveId === id) {
       if (profiles.length > 0) {
         const fallback = profiles[0];
@@ -189,7 +195,7 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
       const profiles = await getAllVaultProfiles();
       const profileMutations = profiles.map((p) => ({
         mutationId: `mut-prof-${p.id}`,
-        entityType: 'user_note' as const,
+        entityType: 'birth_profile' as const,
         entityId: p.id,
         action: 'update' as const,
         payload: { ...p },
@@ -197,19 +203,41 @@ export const useProfileVaultStore = create<ProfileVaultState>((set, get) => ({
           typeof p.updatedAt === 'number' ? new Date(p.updatedAt).toISOString() : new Date().toISOString(),
       }));
 
-      // Gather calendar & dam gio event mutations
+      // Gather deletion tombstones for removed profiles
+      const deleteProfileMutations = get().pendingDeletedProfileIds.map((id) => ({
+        mutationId: `mut-del-prof-${id}-${Date.now()}`,
+        entityType: 'birth_profile' as const,
+        entityId: id,
+        action: 'delete' as const,
+        clientUpdatedAt: new Date().toISOString(),
+      }));
+
+      // Gather calendar event mutations (including delete tombstones)
       const eventMutations = useEventStore.getState().exportSyncMutations();
-      const allMutations = [...profileMutations, ...eventMutations];
+      const allMutations = [...profileMutations, ...deleteProfileMutations, ...eventMutations];
 
       const res = await runtime.sync.sync({
         clientWatermark: get().lastSyncedAt || '2026-01-01T00:00:00.000Z',
         mutations: allMutations,
       });
 
+      // Clear acknowledged mutations on eventStore
+      if (res.acks && res.acks.length > 0) {
+        const ackedIds = res.acks.map((a) => a.mutationId);
+        useEventStore.getState().clearAcknowledgedMutations(ackedIds);
+      }
+
+      // Clear pending deleted profile IDs on successful sync
+      set({ pendingDeletedProfileIds: [] });
+
       // ── Process inbound deltas from server ────────────────────
       if (res.deltas && res.deltas.length > 0) {
         for (const delta of res.deltas) {
-          if (delta.entityType === 'user_note' || (delta.entityType === 'dam_gio' && delta.payload?.solarDate)) {
+          if (
+            delta.entityType === 'birth_profile' ||
+            delta.entityType === 'user_note' ||
+            (delta.entityType === 'dam_gio' && delta.payload?.solarDate)
+          ) {
             if (delta.action === 'delete') {
               await deleteVaultProfile(delta.entityId);
             } else if (delta.payload) {

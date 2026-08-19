@@ -21,7 +21,7 @@ const TUHOA_BADGE_CLASS: Record<string, string> = {
 function Badge({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span
-      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold border ${className ?? ''}`}
+      className={`inline-flex items-center justify-center text-center rounded-full px-2.5 py-0.5 min-w-[56px] text-[11px] font-semibold border tracking-tight ${className ?? ''}`}
     >
       {children}
     </span>
@@ -219,9 +219,6 @@ export const TuViTieuHanPanel: React.FC<{
             <CalendarDays className="h-4 w-4 text-info" />
             Tiến Trình 12 Tháng Nguyệt Hạn (Năm {tieuHanData.viewYear})
           </h4>
-          <span className="text-micro text-text-secondary-light dark:text-text-secondary-dark">
-            Chạm để xem chi tiết tháng
-          </span>
         </div>
 
         {/* Carousel strip */}

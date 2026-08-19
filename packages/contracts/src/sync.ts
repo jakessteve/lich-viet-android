@@ -1,4 +1,4 @@
-export type SyncEntityType = 'dam_gio' | 'user_note' | 'calendar_event';
+export type SyncEntityType = 'dam_gio' | 'user_note' | 'calendar_event' | 'birth_profile';
 export type SyncAction = 'insert' | 'update' | 'delete';
 
 export interface SyncMutation {

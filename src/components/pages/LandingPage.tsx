@@ -126,7 +126,7 @@ export default function LandingPage() {
             backgroundSize: '46px 46px, 78px 78px, 112px 112px',
           }}
         />
-        <div className="absolute inset-0 pointer-events-none" style={{ contain: 'strict' }}>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
           {[0, 1, 2, 3].map((i) => (
             <div
               key={i}
@@ -138,7 +138,6 @@ export default function LandingPage() {
                 right: `${-180 - i * 95}px`,
                 animation: `spin ${120 + i * 28}s linear infinite ${i % 2 ? 'reverse' : ''}`,
                 willChange: 'transform',
-                contain: 'strict',
               }}
             />
           ))}
@@ -195,22 +194,40 @@ export default function LandingPage() {
             </p>
 
             {/* CTA buttons */}
-            <div className="relative z-20 isolate flex flex-wrap items-center justify-start gap-4">
-              <ActionButton
-                onClick={() => navigate('/app/am-lich')}
-                className="px-5 py-3 font-medium cursor-pointer"
-                icon={<ArrowRight className="h-4 w-4" />}
-              >
-                Khám phá ngay
-              </ActionButton>
-              <ActionButton
-                onClick={() => navigate('/app/nang-cap')}
-                variant="secondary"
-                className="px-5 py-3 font-medium cursor-pointer border border-border-light dark:border-border-dark/60 bg-surface-subtle-light dark:bg-surface-elevated-dark"
-                icon={<Crown className="h-4 w-4" />}
-              >
-                Xem các gói
-              </ActionButton>
+            <div className="relative z-20 isolate space-y-3">
+              <div className="flex flex-wrap items-center justify-start gap-4">
+                <ActionButton
+                  onClick={() => navigate('/app/am-lich')}
+                  className="px-6 py-3.5 text-sm font-bold shadow-lg shadow-gold/20 hover:shadow-gold/30 cursor-pointer"
+                  icon={<ArrowRight className="h-4 w-4" />}
+                >
+                  Khám phá ngay
+                </ActionButton>
+                <ActionButton
+                  onClick={() => navigate('/app/nang-cap')}
+                  variant="secondary"
+                  className="px-5 py-3.5 text-sm font-semibold cursor-pointer border border-border-light dark:border-border-dark/60 bg-surface-subtle-light dark:bg-surface-elevated-dark"
+                  icon={<Crown className="h-4 w-4" />}
+                >
+                  Xem các gói
+                </ActionButton>
+              </div>
+
+              {/* Trust signals & privacy badge */}
+              <div className="flex items-center gap-4 text-xs text-text-secondary-light dark:text-text-secondary-dark flex-wrap pt-1">
+                <span className="inline-flex items-center gap-1.5 font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-good dark:text-good-dark" />
+                  <span>Miễn phí 100%</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-medium">
+                  <ShieldCheck className="w-3.5 h-3.5 text-info dark:text-info-dark" />
+                  <span>Không cần đăng ký</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-medium">
+                  <Lock className="w-3.5 h-3.5 text-purple dark:text-purple-dark" />
+                  <span>Bảo mật offline</span>
+                </span>
+              </div>
             </div>
 
           </div>

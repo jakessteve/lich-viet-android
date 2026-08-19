@@ -27,7 +27,7 @@ const BestTimesPanel: React.FC<BestTimesPanelProps> = ({ bestHours, activityName
           return (
             <div
               key={h.canChi.chi}
-              className="flex items-center gap-3 px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+              className="flex items-center gap-3 px-4 py-3 hover:bg-surface-subtle-light/60 dark:hover:bg-white/5 transition-colors"
             >
               <span className="text-lg shrink-0">{medals[idx] || ''}</span>
               <div className="flex-1 min-w-0">
@@ -38,8 +38,8 @@ const BestTimesPanel: React.FC<BestTimesPanelProps> = ({ bestHours, activityName
                   <span
                     className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${
                       h.isAuspicious
-                        ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-400'
-                        : 'bg-gray-100 text-gray-600 dark:bg-gray-700/40 dark:text-gray-400'
+                        ? 'bg-good/10 text-good dark:bg-good-dark/15 dark:text-good-dark'
+                        : 'bg-surface-subtle-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark'
                     }`}
                   >
                     {h.isAuspicious ? 'Hoàng Đạo' : 'Hắc Đạo'}
@@ -50,10 +50,10 @@ const BestTimesPanel: React.FC<BestTimesPanelProps> = ({ bestHours, activityName
               <span
                 className={`text-sm font-bold tabular-nums ${
                   entry.activityScore >= 70
-                    ? 'text-emerald-600 dark:text-emerald-400'
+                    ? 'text-good dark:text-good-dark'
                     : entry.activityScore >= 50
-                      ? 'text-amber-800 dark:text-amber-300'
-                      : 'text-red-600 dark:text-red-400'
+                      ? 'text-gold dark:text-gold-dark'
+                      : 'text-bad dark:text-bad-dark'
                 }`}
               >
                 {entry.activityScore}%

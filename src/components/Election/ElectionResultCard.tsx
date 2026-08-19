@@ -122,13 +122,23 @@ export const ElectionResultCard: React.FC<{ result: ElectionCandidate }> = ({ re
           </div>
         )}
 
-        {/* Action Link */}
-        <div className="pt-2 text-right">
+        {/* Action Links */}
+        <div className="pt-3 border-t border-border-light/40 dark:border-border-dark/40 flex flex-wrap items-center justify-between gap-2">
           <button
-            onClick={() => navigate(`/app/am-lich?date=${dateLink}`)}
-            className="text-sm font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center justify-end gap-1 w-full"
+            type="button"
+            onClick={() => navigate(`/app/ngay-tot?tab=dung-su&date=${dateLink}`)}
+            className="text-xs sm:text-sm font-semibold text-purple dark:text-purple-dark hover:underline inline-flex items-center gap-1.5 interactive-press"
           >
-            Xem chi tiết ngày này
+            <span>Tra cứu dụng sự ngày này</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate(`/app/am-lich?date=${dateLink}`)}
+            className="text-xs sm:text-sm font-bold text-good dark:text-good-dark hover:underline inline-flex items-center gap-1.5 interactive-press"
+          >
+            <span>Xem lịch ngày này</span>
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>

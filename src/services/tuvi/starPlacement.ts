@@ -170,7 +170,7 @@ const TUONG_TINH_12 = [
 
 const TRUONG_SINH_12 = [
   'Trường Sinh',
-  'Mục Dục',
+  'Mộc Dục',
   'Quan Đới',
   'Lâm Quan',
   'Đế Vượng',

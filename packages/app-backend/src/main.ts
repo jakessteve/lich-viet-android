@@ -19,14 +19,19 @@ export async function createApp(): Promise<NestFastifyApplication> {
   });
 
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, fastifyAdapter, {
-    logger: process.env.NODE_ENV === 'test' ? false : ['error', 'warn', 'log'],
+    logger: ['error', 'warn'],
   });
 
   // Fastify security & compression plugins
   const registerPlugin = app.register as unknown as (plugin: unknown, opts?: unknown) => Promise<unknown>;
+  const allowedOrigins = process.env.ALLOWED_ORIGINS
+    ? process.env.ALLOWED_ORIGINS.split(',').map((s) => s.trim())
+    : ['http://localhost:5173', 'http://localhost:4173', 'http://localhost:3000', 'capacitor://localhost', 'http://localhost'];
+
   await registerPlugin(fastifyCors, {
-    origin: true,
+    origin: process.env.NODE_ENV === 'production' ? allowedOrigins : true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    credentials: true,
   });
 
   await registerPlugin(fastifyHelmet, {

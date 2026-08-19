@@ -2,17 +2,18 @@ import React from 'react';
 import { Compass } from 'lucide-react';
 import { renderDynamicIcon } from '@/components/ui/icon-renderer';
 import type { SynastryDimensions } from '../../../stores/astrologyStore';
+import { CHART_THEME_TOKENS } from '@/utils/chartThemeTokens';
 
 interface SynastryRadarChartProps {
   dimensions: SynastryDimensions;
 }
 
 const DIMENSION_CONFIG = [
-  { key: 'emotional', label: 'Tâm Hồn', icon: 'favorite', color: '#ec4899' },
-  { key: 'chemistry', label: 'Hấp Dẫn', icon: 'local_fire_department', color: '#f43f5e' },
-  { key: 'intellect', label: 'Trí Tuệ', icon: 'psychology', color: '#3b82f6' },
-  { key: 'stability', label: 'Gia Đạo', icon: 'home', color: '#10b981' },
-  { key: 'complement', label: 'Bổ Trợ', icon: 'all_inclusive', color: '#8b5cf6' },
+  { key: 'emotional', label: 'Tâm Hồn', icon: 'favorite', color: CHART_THEME_TOKENS.synastry.emotional },
+  { key: 'chemistry', label: 'Hấp Dẫn', icon: 'local_fire_department', color: CHART_THEME_TOKENS.synastry.chemistry },
+  { key: 'intellect', label: 'Trí Tuệ', icon: 'psychology', color: CHART_THEME_TOKENS.synastry.intellect },
+  { key: 'stability', label: 'Gia Đạo', icon: 'home', color: CHART_THEME_TOKENS.synastry.stability },
+  { key: 'complement', label: 'Bổ Trợ', icon: 'all_inclusive', color: CHART_THEME_TOKENS.synastry.complement },
 ] as const;
 
 export const SynastryRadarChart: React.FC<SynastryRadarChartProps> = ({ dimensions }) => {

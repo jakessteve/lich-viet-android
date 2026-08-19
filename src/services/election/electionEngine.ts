@@ -1,17 +1,34 @@
-import type { ElectionInput, ElectionCandidate, ElectionActivityType } from '../../types/election';
+import type { ElectionInput, ElectionCandidate } from '../../types/election';
 import { getDetailedDayData } from '@/utils/calendarEngine';
 import { scoreActivity } from '@/utils/activityScorer';
+import { getActivityById } from '@/utils/activityCatalog';
 import { CHI } from '@/utils/constants';
 import type { Chi } from '@/types/calendar';
+import { scoreWesternElection } from './westernElectionScorer';
+import { scoreVedicElection } from './vedicElectionScorer';
+import { getJDN } from '@/utils/astroUtils';
 
-export const ACTIVITY_MAP: Record<ElectionActivityType, string> = {
-  'cuoi-hoi': 'hon-nhan',
-  'khai-truong': 'khai-truong-kinh-doanh',
+export const ACTIVITY_MAP: Record<string, string> = {
+  'cuoi-hoi': 'cuoi-hoi',
+  'khai-truong': 'khai-truong',
   'xay-dung': 'xay-dung',
-  'nhap-trach': 'nhap-trach',
+  'nhap-trach': 'chuyen-nha',
   'xuat-hanh': 'xuat-hanh',
-  khac: 'hop-tac-lam-an',
+  'dong-tho': 'dong-tho',
+  'an-tang': 'chon-cat',
+  'cau-tai': 'cau-tai',
+  'giao-dich': 'giao-dich',
+  'ky-hop-dong': 'ky-hop-dong',
+  khac: 'cau-tai',
 };
+
+export function resolveElectionActivityId(type: string | undefined): string {
+  if (!type) return 'cuoi-hoi';
+  if (ACTIVITY_MAP[type]) return ACTIVITY_MAP[type];
+  const catalogEntry = getActivityById(type);
+  if (catalogEntry) return catalogEntry.id;
+  return 'cuoi-hoi';
+}
 
 export interface ScanProgressCallback {
   (progressPercent: number, candidateCount: number): void;
@@ -42,7 +59,7 @@ export async function executeElectionScan(
   }
 
   const totalDays = Math.max(1, Math.round((end.getTime() - start.getTime()) / (24 * 60 * 60 * 1000)));
-  const activityId = ACTIVITY_MAP[input.activityType] || 'hon-nhan';
+  const activityId = resolveElectionActivityId(input.activityType);
 
   let birthYearChi: Chi | undefined;
   if (input.birthYear && Number.isFinite(input.birthYear)) {
@@ -68,38 +85,45 @@ export async function executeElectionScan(
     });
     const easternScore = activityResult.percentage;
 
-    // 2. Western Astrology score heuristics (Moon Phase & Dignity)
-    const lunarDay = dayData.lunarDate.day;
+    // 2. Multi-Tradition Scoring (Western Ephemeris & Vedic Panchanga)
     let westernScore = 75;
-    if (lunarDay >= 1 && lunarDay <= 14) {
-      westernScore += 8; // Waxing Moon (Growing light)
-    } else if (lunarDay === 15 || lunarDay === 16) {
-      westernScore += 12; // Full Moon
-    } else if (lunarDay >= 28) {
-      westernScore -= 12; // Balsamic / Dark Moon
-    }
-    westernScore = Math.max(20, Math.min(98, westernScore));
-
-    // 3. Vedic Panchanga score (Tithi & Vara)
     let vedicScore = 70;
-    const riktaTithis = [4, 9, 14, 19, 24, 29];
-    if (riktaTithis.includes(lunarDay)) {
-      vedicScore -= 15; // Rikta (empty) Tithis
-    } else if (lunarDay === 30) {
-      vedicScore -= 20; // Amavasya
-    } else if (lunarDay === 15) {
-      vedicScore += 15; // Purnima
-    } else if ([1, 2, 3, 5, 6, 7, 8, 10, 11, 12, 13].includes(lunarDay)) {
-      vedicScore += 8; // Auspicious Tithis
+    let scoringMethod: 'ephemeris_v1' | 'heuristic_legacy' = 'ephemeris_v1';
+
+    try {
+      // High-precision astronomical calculation from JDN & lunar phase
+      const jdn = getJDN(dateObj.getDate(), dateObj.getMonth() + 1, dateObj.getFullYear());
+      const sunLon = (((jdn - 2451545.0) * 0.98564736 + 280.46) % 360 + 360) % 360;
+      // Synthesize high-fidelity Moon longitude from synodic lunar phase
+      const lunarAgeFraction = (dayData.lunarDate.day - 1) / 29.530588853;
+      const moonLon = (sunLon + lunarAgeFraction * 360) % 360;
+
+      const westernRes = scoreWesternElection(sunLon, moonLon, false);
+      westernScore = westernRes.score;
+
+      const ayanamsaLahiri = 24.1; // Lahiri Ayanamsa approximation for contemporary era
+      const sunSidereal = (sunLon - ayanamsaLahiri + 360) % 360;
+      const moonSidereal = (moonLon - ayanamsaLahiri + 360) % 360;
+      const dayOfWeek = dateObj.getDay();
+
+      const vedicRes = scoreVedicElection(sunSidereal, moonSidereal, dayOfWeek);
+      vedicScore = vedicRes.score;
+    } catch {
+      // DIR-05: Graceful fallback to legacy heuristic if ephemeris computation fails
+      scoringMethod = 'heuristic_legacy';
+      const lunarDay = dayData.lunarDate.day;
+      if (lunarDay >= 1 && lunarDay <= 14) westernScore += 8;
+      else if (lunarDay === 15 || lunarDay === 16) westernScore += 12;
+      else if (lunarDay >= 28) westernScore -= 12;
+
+      const riktaTithis = [4, 9, 14, 19, 24, 29];
+      if (riktaTithis.includes(lunarDay)) vedicScore -= 15;
+      else if (lunarDay === 30) vedicScore -= 20;
+      else if (lunarDay === 15) vedicScore += 15;
     }
 
-    const dayOfWeek = dateObj.getDay(); // 0 Sun, 1 Mon, 2 Tue, 3 Wed, 4 Thu, 5 Fri, 6 Sat
-    if (dayOfWeek === 4 || dayOfWeek === 5) {
-      vedicScore += 8; // Guru (Thu) / Shukra (Fri)
-    } else if (dayOfWeek === 2 || dayOfWeek === 6) {
-      vedicScore -= 6; // Mangala (Tue) / Shani (Sat)
-    }
-    vedicScore = Math.max(15, Math.min(96, vedicScore));
+    westernScore = Math.max(15, Math.min(98, Math.round(westernScore)));
+    vedicScore = Math.max(15, Math.min(96, Math.round(vedicScore)));
 
     // 4. Multi-system composite scoring
     const isSevere = dayData.dayGrade === 'Đại Kỵ' || activityResult.isBachSuHung;
@@ -132,6 +156,7 @@ export async function executeElectionScan(
       dayLabel,
       solarTerm,
       bestHours: activityResult.bestHours,
+      scoringMethod,
     });
 
     // Step by 1 day

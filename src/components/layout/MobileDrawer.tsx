@@ -118,25 +118,11 @@ export default function MobileDrawer({ isOpen: controlledOpen, onClose: controll
           desc: 'Lá số 12 Cung · Sao & Vận hạn',
         },
         {
-          id: 'chiem-tinh-tay-phuong',
+          id: 'chiem-tinh',
           path: '/app/chiem-tinh/tay-phuong',
-          icon: 'public',
-          label: 'Chiêm Tinh Tây Phương',
-          desc: 'Bản đồ sao Natal & Transit hành tinh',
-        },
-        {
-          id: 'chiem-tinh-vedic',
-          path: '/app/chiem-tinh/vedic',
-          icon: 'sparkles',
-          label: 'Chiêm Tinh Vệ Đà (Vedic)',
-          desc: 'Jyotish · Dasha · Gochar & Yogas',
-        },
-        {
-          id: 'chiem-tinh-hop-la',
-          path: '/app/chiem-tinh/hop-la',
-          icon: 'favorite',
-          label: 'Tương Hợp Lá Số (Synastry)',
-          desc: 'So khớp 5 chiều Tử Vi, Vedic & Tây Phương',
+          icon: 'auto_graph',
+          label: 'Chiêm Tinh Học',
+          desc: 'Tây Phương · Vệ Đà · Hợp lá số',
         },
       ],
     },
@@ -235,7 +221,7 @@ export default function MobileDrawer({ isOpen: controlledOpen, onClose: controll
                 const isActive =
                   !isFullPage &&
                   (location.pathname === link.path ||
-                    (link.path === '/app/chiem-tinh/tay-phuong' && location.pathname === '/app/chiem-tinh') ||
+                    (link.path.startsWith('/app/chiem-tinh') && location.pathname.startsWith('/app/chiem-tinh')) ||
                     (link.path === '/app/am-lich' && (location.pathname === '/app' || location.pathname === '/app/am-lich')));
 
                 return (

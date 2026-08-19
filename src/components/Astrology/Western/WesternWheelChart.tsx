@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import type { WesternChartResult } from '../../../services/astrology/westernCalculator';
 import { useAppStore } from '../../../stores/appStore';
+import { CHART_THEME_TOKENS } from '@/utils/chartThemeTokens';
 
 const R = 180;
 const PAD = 28;
@@ -27,34 +28,10 @@ const Z = [
   '\u2652',
   '\u2653',
 ];
-const SC = [
-  '#e74c3c',
-  '#27ae60',
-  '#f39c12',
-  '#3498db',
-  '#e74c3c',
-  '#27ae60',
-  '#f39c12',
-  '#3498db',
-  '#e74c3c',
-  '#27ae60',
-  '#f39c12',
-  '#3498db',
-];
-const SD = [
-  '#ef5350',
-  '#2ecc71',
-  '#f1c40f',
-  '#5dade2',
-  '#ef5350',
-  '#2ecc71',
-  '#f1c40f',
-  '#5dade2',
-  '#ef5350',
-  '#2ecc71',
-  '#f1c40f',
-  '#5dade2',
-];
+
+const { fire, earth, air, water } = CHART_THEME_TOKENS.elements;
+const SC = [fire, earth, air, water, fire, earth, air, water, fire, earth, air, water];
+const SD = [fire, earth, air, water, fire, earth, air, water, fire, earth, air, water];
 
 const G: Record<string, string> = {
   sun: '\u2609',
@@ -69,23 +46,23 @@ const G: Record<string, string> = {
   pluto: '\u2647',
 };
 const GC: Record<string, string> = {
-  sun: '#e67e22',
-  moon: '#8e44ad',
-  mercury: '#f1c40f',
-  venus: '#1abc9c',
-  mars: '#e74c3c',
-  jupiter: '#d35400',
-  saturn: '#555',
-  uranus: '#2980b9',
-  neptune: '#8e44ad',
-  pluto: '#c0392b',
+  sun: CHART_THEME_TOKENS.planets.sun,
+  moon: CHART_THEME_TOKENS.planets.moon,
+  mercury: CHART_THEME_TOKENS.planets.mercury,
+  venus: CHART_THEME_TOKENS.planets.venus,
+  mars: CHART_THEME_TOKENS.planets.mars,
+  jupiter: CHART_THEME_TOKENS.planets.jupiter,
+  saturn: CHART_THEME_TOKENS.planets.saturn,
+  uranus: CHART_THEME_TOKENS.planets.uranus,
+  neptune: CHART_THEME_TOKENS.planets.neptune,
+  pluto: CHART_THEME_TOKENS.planets.pluto,
 };
 const AC: Record<string, string> = {
-  conjunction: '#e74c3c',
-  opposition: '#e74c3c',
-  trine: '#27ae60',
-  square: '#e74c3c',
-  sextile: '#3498db',
+  conjunction: CHART_THEME_TOKENS.elements.fire,
+  opposition: CHART_THEME_TOKENS.elements.fire,
+  trine: CHART_THEME_TOKENS.elements.wood,
+  sextile: CHART_THEME_TOKENS.elements.water,
+  square: CHART_THEME_TOKENS.elements.earth,
 };
 
 const nd = (v: number) => ((v % 360) + 360) % 360;

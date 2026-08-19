@@ -7,6 +7,7 @@ export const DEMO_USER_PROFILE: UserProfile = {
   avatarUrl: undefined,
   tier: 'curious',
   role: 'user',
+  provider: 'email',
   createdAt: '2026-01-01T00:00:00.000Z',
   updatedAt: '2026-01-01T00:00:00.000Z',
 };

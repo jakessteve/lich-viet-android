@@ -1,48 +1,34 @@
-import { Controller, Get, Patch, Body, Inject, Headers } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiHeader } from '@nestjs/swagger';
+import { Controller, Get, Patch, Body, Inject, UseGuards, NotFoundException } from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { AuthService } from '../auth/auth.service.js';
 import { UpdateUserProfileDto } from './dto/user.dto.js';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
+import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
 
 @ApiTags('Users & Profile')
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 @Controller('v1/users')
 export class UsersController {
   constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
   @Get('me')
   @ApiOperation({ summary: 'Get current user profile' })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
   @ApiResponse({ status: 200, description: 'Current user profile' })
-  getProfile(@Headers('authorization') authHeader?: string) {
-    const userId = this.extractUserId(authHeader);
+  @ApiResponse({ status: 401, description: 'Unauthorized - Invalid or missing JWT' })
+  getProfile(@CurrentUser('sub') userId: string) {
     const profile = this.authService.getUserById(userId);
-    if (profile) return profile;
-
-    return {
-      id: userId || 'demo-user-001',
-      email: 'demo@lichviet.local',
-      name: 'Người Dùng Lịch Việt',
-      tier: 'curious',
-      role: 'user',
-      createdAt: '2026-01-01T00:00:00.000Z',
-      updatedAt: new Date().toISOString(),
-    };
+    if (!profile) {
+      throw new NotFoundException('User profile not found');
+    }
+    return profile;
   }
 
   @Patch('me')
   @ApiOperation({ summary: 'Update current user profile' })
-  @ApiHeader({ name: 'Authorization', description: 'Bearer token', required: false })
   @ApiResponse({ status: 200, description: 'Updated user profile' })
-  updateProfile(@Body() body: UpdateUserProfileDto, @Headers('authorization') authHeader?: string) {
-    const userId = this.extractUserId(authHeader) || 'demo-user-001';
+  @ApiResponse({ status: 401, description: 'Unauthorized - Invalid or missing JWT' })
+  updateProfile(@CurrentUser('sub') userId: string, @Body() body: UpdateUserProfileDto) {
     return this.authService.updateUserProfile(userId, body);
-  }
-
-  private extractUserId(authHeader?: string): string {
-    if (!authHeader) return 'demo-user-001';
-    const parts = authHeader.replace(/^Bearer\s+/i, '').split('-');
-    if (parts.length >= 2 && parts[0] === 'jwt') {
-      return parts.slice(1, parts.length - 1).join('-');
-    }
-    return 'demo-user-001';
   }
 }

@@ -1,14 +1,15 @@
 /**
  * DungSuView — Wizard-based page orchestrator for Lịch Dụng Sự
- * UX Redesign: 3-step wizard → Intent → Activity → Results Dashboard
+ * UX Redesign: Unified Date Selector, Design Tokens & Seamless Logic Connection
  * All 13 scoring engines preserved. Progressive disclosure with tabs.
  */
 
 import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { DayDetailsData } from '../../types/calendar';
 import type { Chi } from '../../types/calendar';
 import { useAuthStore } from '../../stores/authStore';
-import { useAppStore } from '../../stores/appStore';
+import { useAppStore, parseIsoDate, toIsoDateString } from '../../stores/appStore';
 import { scoreActivity, ActivityScoreResult } from '@lich-viet/core/dungsu';
 import { getActivityById, mapDungSuToActivityIds } from '@lich-viet/core/dungsu';
 import CollapsibleCard from '../CollapsibleCard';
@@ -27,7 +28,18 @@ import FAQIntentCards, { type FAQIntent } from './FAQIntentCards';
 
 import SynergyRadar, { type RadarData } from '../shared/SynergyRadar';
 
-import { Compass, ListChecks, CalendarCheck, Calendar, Sparkles } from 'lucide-react';
+import {
+  Compass,
+  ListChecks,
+  CalendarCheck,
+  Calendar,
+  Sparkles,
+  ChevronLeft,
+  ChevronRight,
+  Clock,
+  User,
+  ArrowRight,
+} from 'lucide-react';
 import VerdictBanner from './VerdictBanner';
 import ResultTabs from './ResultTabs';
 import HourPickerGrid from './HourPickerGrid';
@@ -55,6 +67,10 @@ function clampPercentage(value: number): number {
 }
 
 const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDate }) => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const initializedFromUrl = useRef(false);
+
   const user = useAuthStore((s) => s.user);
   const userBirthProfile = useMemo(() => getUserBirthProfile(user), [user]);
   const isPersonalized = useAppStore((s) => s.isPersonalized);
@@ -67,23 +83,41 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
 
   // Active tab state
   const [activeResultTab, setActiveResultTab] = useState('overview');
-
-  // Date/time input fields — synced with selectedDate
-  const [inputDay, setInputDay] = useState(selectedDate.getDate().toString());
-  const [inputMonth, setInputMonth] = useState((selectedDate.getMonth() + 1).toString());
-  const [inputYear, setInputYear] = useState(selectedDate.getFullYear().toString());
-  const [inputHour, setInputHour] = useState('');
   const [now, setNow] = useState(() => new Date());
 
   // Ref for auto-scroll to results
   const resultRef = useRef<HTMLDivElement>(null);
 
-  // Sync input fields when sidebar calendar changes the selectedDate
+  // Hydrate state from URL search params on mount
   useEffect(() => {
-    setInputDay(selectedDate.getDate().toString());
-    setInputMonth((selectedDate.getMonth() + 1).toString());
-    setInputYear(selectedDate.getFullYear().toString());
-  }, [selectedDate]);
+    if (initializedFromUrl.current) return;
+    const actParam = searchParams.get('activity') || searchParams.get('act');
+    const hourParam = searchParams.get('hour') as Chi | null;
+    const intentParam = searchParams.get('intent') as FAQIntent | null;
+    const dateParam = searchParams.get('date') || searchParams.get('d');
+
+    if (actParam && getActivityById(actParam)) {
+      setSelectedActivity(actParam);
+    }
+    if (hourParam && CHI_LIST.includes(hourParam)) {
+      setSelectedHour(hourParam);
+    }
+    if (intentParam) {
+      setSelectedIntent(intentParam);
+    }
+    if (dateParam) {
+      const parsed = parseIsoDate(dateParam);
+      if (
+        parsed &&
+        (parsed.getFullYear() !== selectedDate.getFullYear() ||
+          parsed.getMonth() !== selectedDate.getMonth() ||
+          parsed.getDate() !== selectedDate.getDate())
+      ) {
+        onSelectDate(parsed);
+      }
+    }
+    initializedFromUrl.current = true;
+  }, [searchParams, selectedDate, onSelectDate]);
 
   useEffect(() => {
     if (!birthYear && userBirthProfile?.birthYear) {
@@ -118,31 +152,6 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
     if (!effectiveBirthProfile?.birthYear) return undefined;
     return yearToChi(effectiveBirthProfile.birthYear);
   }, [effectiveBirthProfile]);
-
-  // Apply date/time input — runs whenever fields change
-  const applyDateInput = useCallback(() => {
-    const d = parseInt(inputDay, 10);
-    const m = parseInt(inputMonth, 10);
-    const y = parseInt(inputYear, 10);
-    if (!d || !m || !y || d < 1 || d > 31 || m < 1 || m > 12 || y < 1900 || y > 2100) return;
-
-    const newDate = new Date(y, m - 1, d);
-    if (newDate.getDate() !== d || newDate.getMonth() !== m - 1) return;
-
-    if (newDate.getTime() !== selectedDate.getTime()) {
-      onSelectDate(newDate);
-    }
-
-    const h = parseInt(inputHour, 10);
-    if (!isNaN(h) && h >= 0 && h <= 23) {
-      setSelectedHour(hourToChi(h));
-    }
-  }, [inputDay, inputMonth, inputYear, inputHour, selectedDate, onSelectDate]);
-
-  useEffect(() => {
-    const timer = setTimeout(applyDateInput, 300);
-    return () => clearTimeout(timer);
-  }, [applyDateInput]);
 
   const activityData = useMemo(() => {
     if (!selectedActivity) return null;
@@ -268,17 +277,10 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
 
   const handleHourSelect = useCallback((chi: Chi | null) => {
     setSelectedHour(chi);
-    if (chi) {
-      const idx = CHI_LIST.indexOf(chi);
-      setInputHour(((idx * 2 + 23) % 24) + ''); // approximate start hour
-    } else {
-      setInputHour('');
-    }
   }, []);
 
   // Determine Hoàng/Hắc Đạo
   const dayType = useMemo(() => {
-    // Check from hour data — if more auspicious hours than not, it's likely Hoàng Đạo
     const auspicious = data.allHours.filter((h) => h.isAuspicious).length;
     return auspicious >= 6 ? 'Hoàng Đạo' : 'Hắc Đạo';
   }, [data.allHours]);
@@ -310,21 +312,18 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
     year: 'numeric',
   });
 
-  const inputFieldClass =
-    'w-full px-2.5 py-2 text-center rounded-lg bg-surface-subtle-light dark:bg-white/10 border border-border-light dark:border-border-dark text-sm font-medium text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-gold/50 dark:focus:ring-gold-dark/50 tabular-nums transition-all';
-
   // === RENDER ===
   return (
     <div className="w-full space-y-4 animate-fade-scale" data-testid="dung-su-view">
       {/* ══════════ Unified Input Section ══════════ */}
       <div className="space-y-4 transition-all duration-300">
         {/* ══════════ Combined Intent & Activity Selector ══════════ */}
-        <div className="rounded-xl border border-border-light dark:border-border-dark overflow-hidden shadow-sm bg-white dark:bg-black/20 transition-all duration-500">
+        <div className="rounded-2xl border border-border-light/60 dark:border-border-dark/60 overflow-hidden shadow-sm bg-surface-light dark:bg-surface-dark transition-all duration-300">
           {/* Top Half: FAQ Intent Cards */}
           <div
-            className={`p-4 sm:p-5 ${selectedIntent === 'xem-ngay' ? 'border-b border-border-light/30 dark:border-border-dark/30' : ''} bg-surface-subtle-light/30 dark:bg-white/5 transition-all duration-300`}
+            className={`p-4 sm:p-5 ${selectedIntent === 'xem-ngay' ? 'border-b border-border-light/40 dark:border-border-dark/40' : ''} bg-surface-subtle-light/30 dark:bg-surface-subtle-dark/30 transition-all duration-300`}
           >
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-3.5">
               <Compass className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
               <p className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark uppercase tracking-wider">
                 Bạn muốn tra cứu gì?
@@ -335,7 +334,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
 
           {/* Bottom Half: Activity Picker (Contextually Hidden) */}
           {selectedIntent && !['chon-ngay-cuoi', 'tang-le'].includes(selectedIntent) && (
-            <div className="p-4 sm:p-5 animate-fade-scale">
+            <div className="p-4 sm:p-5 animate-fade-scale border-t border-border-light/40 dark:border-border-dark/40">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
                   <ListChecks className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
@@ -344,7 +343,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
                   </span>
                 </div>
                 {activityData && (
-                  <span className="text-xs font-medium text-gold dark:text-gold-dark bg-gold/10 dark:bg-gold-dark/10 px-2 py-0.5 rounded-full">
+                  <span className="text-xs font-semibold text-gold dark:text-gold-dark bg-gold/10 dark:bg-gold-dark/15 px-2.5 py-0.5 rounded-full border border-gold/25 dark:border-gold-dark/25">
                     ✓ {activityData.nameVi}
                   </span>
                 )}
@@ -360,115 +359,195 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
           )}
         </div>
 
-        {/* Date & Time Input — compact inline */}
-        <div className="rounded-xl border border-border-light dark:border-border-dark overflow-hidden">
-          <div className="px-4 py-2.5 border-b border-border-light/30 dark:border-border-dark/30 flex items-center gap-2">
-            <CalendarCheck className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
-            <span className="text-sm font-semibold text-text-primary-light dark:text-text-primary-dark">
-              Chọn ngày giờ dự kiến
-            </span>
+        {/* ══════════ Unified Date & Profile Control Bar ══════════ */}
+        <div className="surface-card rounded-2xl border border-border-light/60 dark:border-border-dark/60 overflow-hidden shadow-sm">
+          <div className="px-4 py-3 border-b border-border-light/40 dark:border-border-dark/40 flex items-center justify-between gap-2 bg-surface-subtle-light/40 dark:bg-surface-subtle-dark/40">
+            <div className="flex items-center gap-2">
+              <CalendarCheck className="h-4 w-4 text-gold dark:text-gold-dark shrink-0" />
+              <span className="text-sm font-bold text-text-primary-light dark:text-text-primary-dark">
+                Ngày giờ dự kiến & Chủ sự
+              </span>
+            </div>
+            {/* Quick date steppers */}
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() =>
+                  onSelectDate(
+                    new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() - 1),
+                  )
+                }
+                className="p-1.5 rounded-lg border border-border-light/60 dark:border-border-dark/60 bg-surface-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white transition-colors interactive-press cursor-pointer"
+                title="Ngày hôm trước"
+                aria-label="Ngày hôm trước"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => onSelectDate(new Date())}
+                className="px-2.5 py-1 rounded-lg text-xs font-semibold border border-border-light/60 dark:border-border-dark/60 bg-surface-light dark:bg-surface-elevated-dark text-text-primary-light dark:text-text-primary-dark hover:bg-gold/10 hover:text-gold dark:hover:text-gold-dark transition-colors interactive-press cursor-pointer"
+                title="Về hôm nay"
+              >
+                Hôm nay
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  onSelectDate(
+                    new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate() + 1),
+                  )
+                }
+                className="p-1.5 rounded-lg border border-border-light/60 dark:border-border-dark/60 bg-surface-light dark:bg-surface-elevated-dark text-text-secondary-light dark:text-text-secondary-dark hover:text-text-primary-light dark:hover:text-white transition-colors interactive-press cursor-pointer"
+                title="Ngày tiếp theo"
+                aria-label="Ngày tiếp theo"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
-          <div className="p-3 space-y-3">
-            <div className="grid grid-cols-5 gap-2 items-end">
-              {/* Day */}
+
+          <div className="p-4 space-y-3.5">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 items-end">
+              {/* Date selector */}
               <div>
-                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1">
-                  Ngày
+                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                  <Calendar className="h-3.5 w-3.5 text-gold dark:text-gold-dark" />
+                  <span>Ngày tra cứu</span>
                 </label>
                 <input
-                  type="number"
-                  min={1}
-                  max={31}
-                  value={inputDay}
-                  onChange={(e) => setInputDay(e.target.value)}
-                  className={inputFieldClass}
+                  type="date"
+                  value={toIsoDateString(selectedDate)}
+                  onChange={(e) => {
+                    const parsed = parseIsoDate(e.target.value);
+                    if (parsed) onSelectDate(parsed);
+                  }}
+                  className="w-full px-3 py-2 rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light/60 dark:border-border-dark/60 text-sm font-semibold text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-gold/40 dark:focus:ring-gold-dark/40 transition-all"
                 />
               </div>
-              {/* Month */}
+
+              {/* Hour Selector */}
               <div>
-                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1">
-                  Tháng
+                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <Clock className="h-3.5 w-3.5 text-gold dark:text-gold-dark" />
+                    <span>Giờ thực hiện</span>
+                  </span>
+                  {selectedHour && (
+                    <button
+                      type="button"
+                      onClick={() => setSelectedHour(null)}
+                      className="text-[11px] font-medium text-text-secondary-light dark:text-text-secondary-dark hover:text-bad dark:hover:text-bad-dark transition-colors cursor-pointer"
+                    >
+                      Bỏ chọn
+                    </button>
+                  )}
                 </label>
-                <input
-                  type="number"
-                  min={1}
-                  max={12}
-                  value={inputMonth}
-                  onChange={(e) => setInputMonth(e.target.value)}
-                  className={inputFieldClass}
-                />
+                <div className="flex items-center gap-2">
+                  <select
+                    value={selectedHour || ''}
+                    onChange={(e) => setSelectedHour((e.target.value || null) as Chi | null)}
+                    className="w-full px-3 py-2 rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light/60 dark:border-border-dark/60 text-sm font-semibold text-text-primary-light dark:text-text-primary-dark focus:outline-none focus:ring-2 focus:ring-gold/40 dark:focus:ring-gold-dark/40 transition-all cursor-pointer"
+                  >
+                    <option value="">Cả ngày (Chưa chọn giờ)</option>
+                    {CHI_LIST.map((c) => (
+                      <option key={c} value={c}>
+                        Giờ {c}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              {/* Year */}
+
+              {/* Birth Year / Profile input */}
               <div>
-                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1">
-                  Năm
+                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <User className="h-3.5 w-3.5 text-gold dark:text-gold-dark" />
+                    <span>Năm sinh chủ sự</span>
+                  </span>
+                  {birthYearChi && (
+                    <span className="text-[11px] font-bold text-gold dark:text-gold-dark">Tuổi {birthYearChi}</span>
+                  )}
                 </label>
-                <input
-                  type="number"
-                  min={1900}
-                  max={2100}
-                  value={inputYear}
-                  onChange={(e) => setInputYear(e.target.value)}
-                  className={inputFieldClass}
-                />
-              </div>
-              {/* Hour */}
-              <div>
-                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1">
-                  Giờ
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  max={23}
-                  placeholder="--"
-                  value={inputHour}
-                  onChange={(e) => setInputHour(e.target.value)}
-                  className={inputFieldClass}
-                />
-              </div>
-              {/* Birth Year */}
-              <div>
-                <label className="block text-xs font-semibold text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider mb-1">
-                  Năm sinh
-                </label>
-                <input
-                  type="number"
-                  min={1900}
-                  max={2100}
-                  placeholder="--"
-                  value={birthYear}
-                  onChange={(e) => setBirthYear(e.target.value)}
-                  className={inputFieldClass}
-                />
+                <div className="relative flex items-center">
+                  <input
+                    type="number"
+                    min={1900}
+                    max={2100}
+                    placeholder="VD: 1990"
+                    value={birthYear}
+                    onChange={(e) => setBirthYear(e.target.value)}
+                    className="w-full px-3 py-2 rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light/60 dark:border-border-dark/60 text-sm font-semibold text-text-primary-light dark:text-text-primary-dark placeholder:text-text-secondary-light/50 dark:placeholder:text-text-secondary-dark/50 focus:outline-none focus:ring-2 focus:ring-gold/40 dark:focus:ring-gold-dark/40 transition-all"
+                  />
+                  {userBirthProfile?.birthYear && birthYear !== String(userBirthProfile.birthYear) && (
+                    <button
+                      type="button"
+                      onClick={() => setBirthYear(String(userBirthProfile.birthYear))}
+                      className="absolute right-1.5 px-2 py-0.5 rounded-lg bg-gold/15 dark:bg-gold-dark/15 text-gold dark:text-gold-dark text-xs font-bold hover:opacity-80 transition-opacity cursor-pointer"
+                      title="Nạp năm sinh từ hồ sơ"
+                    >
+                      Nạp
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
 
-            {/* Lunar date summary — compact */}
-            <div className="flex items-center gap-2 px-2 py-1.5 rounded-lg bg-surface-subtle-light dark:bg-white/5 text-xs text-text-secondary-light dark:text-text-secondary-dark">
-              <Calendar className="h-3.5 w-3.5 text-gold dark:text-gold-dark shrink-0" />
-              <span className="capitalize">{solarDateStr}</span>
-              <span className="text-gray-300 dark:text-gray-600">|</span>
-              <span>
-                Âm: {data.lunarDate.day}/{data.lunarDate.month} — {data.canChi.day.can} {data.canChi.day.chi}
+            {/* Profile banner if available */}
+            {userBirthProfile?.birthYear && (
+              <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-gold/10 dark:bg-gold-dark/10 border border-gold/25 dark:border-gold-dark/25 text-xs text-text-primary-light dark:text-text-primary-dark">
+                <div className="flex items-center gap-1.5 truncate">
+                  <Sparkles className="h-3.5 w-3.5 text-gold dark:text-gold-dark shrink-0" />
+                  <span className="truncate">
+                    Hồ sơ: <strong>{user?.displayName || 'Người dùng'}</strong> (
+                    {userBirthProfile.birthDay || '?'}/{userBirthProfile.birthMonth || '?'}/
+                    {userBirthProfile.birthYear})
+                  </span>
+                </div>
+                {birthYear !== String(userBirthProfile.birthYear) && (
+                  <button
+                    type="button"
+                    onClick={() => setBirthYear(String(userBirthProfile.birthYear))}
+                    className="font-bold text-gold dark:text-gold-dark hover:underline cursor-pointer ml-2 shrink-0"
+                  >
+                    Dùng hồ sơ này
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Compact Lunar & Astrological Summary */}
+            <div className="flex flex-wrap items-center gap-2 px-3 py-2 rounded-xl bg-surface-subtle-light/60 dark:bg-white/5 border border-border-light/40 dark:border-border-dark/40 text-xs text-text-secondary-light dark:text-text-secondary-dark">
+              <span className="font-semibold text-text-primary-light dark:text-text-primary-dark capitalize">
+                {solarDateStr}
               </span>
-              {selectedHour && (
-                <>
-                  <span className="text-gray-300 dark:text-gray-600">|</span>
-                  <span>Giờ {selectedHour}</span>
-                </>
-              )}
-              {birthYearChi && (
-                <>
-                  <span className="text-gray-300 dark:text-gray-600">|</span>
-                  <span>Tuổi {birthYearChi}</span>
-                </>
-              )}
+              <span className="text-border-light dark:text-border-dark">|</span>
+              <span>
+                Âm:{' '}
+                <strong className="text-text-primary-light dark:text-text-primary-dark">
+                  {data.lunarDate.day}/{data.lunarDate.month}
+                </strong>{' '}
+                — {data.canChi.day.can} {data.canChi.day.chi}
+              </span>
+              <span className="text-border-light dark:text-border-dark">|</span>
+              <span>
+                Tiết khí:{' '}
+                <strong className="text-text-primary-light dark:text-text-primary-dark">{data.solarTerm}</strong>
+              </span>
+              <span className="text-border-light dark:text-border-dark">|</span>
+              <span
+                className={
+                  dayType === 'Hoàng Đạo'
+                    ? 'font-bold text-good dark:text-good-dark'
+                    : 'font-semibold text-text-secondary-light dark:text-text-secondary-dark'
+                }
+              >
+                {dayType === 'Hoàng Đạo' ? '🌟' : '🌑'} {dayType}
+              </span>
             </div>
           </div>
         </div>
-
-        {/* (Activity Picker moved to Top section) */}
       </div>
 
       {/* ══════════ Results Dashboard ══════════ */}
@@ -488,6 +567,27 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
             isBachSuHung={result.isBachSuHung}
           />
 
+          {/* Quick Deep Link CTA to Tìm Ngày Tốt */}
+          <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light/60 dark:border-border-dark/60 shadow-sm">
+            <span className="text-xs text-text-secondary-light dark:text-text-secondary-dark">
+              Cần quét ngày hoàng đạo tốt nhất cho <strong>{activityData.nameVi}</strong>?
+            </span>
+            <button
+              type="button"
+              onClick={() => {
+                const startStr = toIsoDateString(selectedDate);
+                const end = new Date(selectedDate);
+                end.setDate(end.getDate() + 30);
+                const endStr = toIsoDateString(end);
+                navigate(`/app/ngay-tot?tab=tim-ngay&activity=${selectedActivity}&start=${startStr}&end=${endStr}`);
+              }}
+              className="text-xs font-bold text-good dark:text-good-dark hover:underline inline-flex items-center gap-1.5 interactive-press"
+            >
+              <span>Tìm ngày tốt trong 30 ngày tới</span>
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+
           {/* Result Tabs */}
           <ResultTabs
             activeTab={activeResultTab}
@@ -502,7 +602,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
             {activeResultTab === 'overview' && (
               <div className="space-y-4 animate-fade-scale">
                 {/* Unified Overview Card */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-3xl bg-surface-subtle-light dark:bg-black/20 border border-border-light/60 dark:border-white/5 relative overflow-hidden shadow-sm">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-2xl bg-surface-light dark:bg-surface-dark border border-border-light/60 dark:border-border-dark/60 relative overflow-hidden shadow-sm">
                   {/* Background ambient decoration */}
                   <div className="absolute -top-12 -right-12 w-48 h-48 bg-gold/5 dark:bg-gold-dark/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -510,19 +610,19 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
                   <div className="flex flex-row sm:flex-col justify-around sm:justify-center w-full sm:w-1/3 gap-3 z-10">
                     {/* Best hour mini-card */}
                     {bestHourInfo && (
-                      <div className="flex flex-col items-center justify-center p-3 sm:py-4 rounded-2xl bg-white/80 dark:bg-white/5 border border-black/5 dark:border-white/5 shadow-sm w-full transition-transform hover:scale-[1.02]">
-                        <p className="text-2xl font-bold text-emerald-600 dark:text-emerald-400">{bestHourInfo.chi}</p>
+                      <div className="flex flex-col items-center justify-center p-3 sm:py-4 rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light/50 dark:border-border-dark/50 shadow-sm w-full transition-transform hover:scale-[1.02]">
+                        <p className="text-2xl font-bold text-good dark:text-good-dark">{bestHourInfo.chi}</p>
                         <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark uppercase tracking-wider font-bold mt-1">
                           Giờ tốt nhất
                         </p>
-                        <p className="text-xs font-medium text-emerald-600/70 dark:text-emerald-400/70 mt-0.5">
+                        <p className="text-xs font-medium text-good/70 dark:text-good-dark/70 mt-0.5">
                           {bestHourInfo.score}%
                         </p>
                       </div>
                     )}
 
                     {/* Day type mini-card */}
-                    <div className="flex flex-col items-center justify-center p-3 sm:py-4 rounded-2xl bg-white/80 dark:bg-white/5 border border-black/5 dark:border-white/5 shadow-sm w-full transition-transform hover:scale-[1.02]">
+                    <div className="flex flex-col items-center justify-center p-3 sm:py-4 rounded-xl bg-surface-subtle-light dark:bg-surface-elevated-dark border border-border-light/50 dark:border-border-dark/50 shadow-sm w-full transition-transform hover:scale-[1.02]">
                       <p className="text-2xl font-bold">{dayType === 'Hoàng Đạo' ? '🌟' : '🌑'}</p>
                       <p className="text-xs uppercase tracking-wider font-bold mt-1 text-text-secondary-light dark:text-text-secondary-dark">
                         {dayType}
@@ -569,7 +669,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
             {activeResultTab === 'analysis' && (
               <div className="space-y-4 animate-fade-scale">
                 {radarData && (
-                  <div className="flex justify-center p-4 rounded-xl border border-border-light dark:border-border-dark">
+                  <div className="flex justify-center p-4 rounded-2xl border border-border-light/60 dark:border-border-dark/60 bg-surface-light dark:bg-surface-dark">
                     <SynergyRadar data={radarData} size={240} />
                   </div>
                 )}
@@ -587,7 +687,7 @@ const DungSuView: React.FC<DungSuViewProps> = ({ selectedDate, data, onSelectDat
       {/* Empty state */}
       {!result && (
         <div className="flex flex-col items-center justify-center py-8 text-center animate-fade-scale">
-          <Sparkles className="h-10 w-10 text-gray-300 dark:text-gray-600 mb-2 opacity-50" />
+          <Sparkles className="h-10 w-10 text-text-secondary-light/40 dark:text-text-secondary-dark/40 mb-2 opacity-50" />
           <p className="text-xs text-text-secondary-light dark:text-text-secondary-dark max-w-xs">
             Chọn mục đích hoặc một việc cần làm cụ thể để xem đánh giá tốt/xấu
           </p>

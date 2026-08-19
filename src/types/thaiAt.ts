@@ -48,6 +48,8 @@ export interface HostGuestResult {
   careerAdvice?: string;
   /** Personal life advice based on dominance */
   personalAdvice?: string;
+  /** Calculation model accuracy level */
+  accuracy?: 'canonical_table' | 'heuristic';
 }
 
 // ── Chart ───────────────────────────────────────────────────

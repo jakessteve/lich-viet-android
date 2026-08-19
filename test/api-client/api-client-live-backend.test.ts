@@ -1,12 +1,13 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { createApp } from '../../packages/app-backend/src/main';
-import { LichVietApiClient } from '@lich-viet/api-client';
+import { LichVietApiClient, ApiClientError } from '@lich-viet/api-client';
 import type { NestFastifyApplication } from '@nestjs/platform-fastify';
 
 describe('Live E2E Integration: LichVietApiClient <-> Fastify Backend', () => {
   let app: NestFastifyApplication;
   let client: LichVietApiClient;
   let serverPort: number;
+  let authToken: string;
 
   beforeAll(async () => {
     process.env.NODE_ENV = 'test';
@@ -43,6 +44,9 @@ describe('Live E2E Integration: LichVietApiClient <-> Fastify Backend', () => {
     });
     expect(loginResult.accessToken).toBeDefined();
     expect(loginResult.user.id).toBe(regResult.user.id);
+
+    authToken = loginResult.accessToken;
+    client.setToken(authToken);
   });
 
   it('performs Calendar calculations against live backend', async () => {
@@ -87,13 +91,23 @@ describe('Live E2E Integration: LichVietApiClient <-> Fastify Backend', () => {
     expect(tamThuc).toBeDefined();
   });
 
-  it('performs delta synchronization against live backend', async () => {
+  it('enforces authentication on sync and performs delta synchronization against live backend', async () => {
+    // 1. Unauthenticated sync request must fail with 401 UNAUTHORIZED
+    const unauthClient = new LichVietApiClient(`http://127.0.0.1:${serverPort}`);
+    await expect(
+      unauthClient.sync({
+        clientWatermark: '2026-01-01T00:00:00.000Z',
+        mutations: [],
+      }),
+    ).rejects.toThrow(ApiClientError);
+
+    // 2. Authenticated sync request succeeds and applies delta mutations
     const syncRes = await client.sync({
       clientWatermark: '2026-01-01T00:00:00.000Z',
       mutations: [
         {
           mutationId: 'live-sync-1',
-          entityType: 'user_profile',
+          entityType: 'birth_profile',
           entityId: 'usr-live-1',
           action: 'update',
           payload: { name: 'Người Thử Nghiệm Live' },
@@ -107,4 +121,3 @@ describe('Live E2E Integration: LichVietApiClient <-> Fastify Backend', () => {
     expect(syncRes.acks[0].status).toBe('applied');
   });
 });
-

@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Observable, from } from 'rxjs';
-import { concatMap, delay } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { createOmceBackendEnvelope } from '../../envelope.js';
 import { RunElectionScanDto } from './dto/election.dto.js';
 
@@ -21,10 +20,38 @@ export class ElectionService {
   }
 
   streamScan(dto: RunElectionScanDto): Observable<SseMessageEvent> {
-    const envelope = this.runScan(dto);
-    return from(envelope.events).pipe(
-      concatMap((event) => from([event]).pipe(delay(20))),
-      concatMap((event) => [{ data: event } as SseMessageEvent]),
-    );
+    return new Observable<SseMessageEvent>((subscriber) => {
+      let isCancelled = false;
+
+      // Execute asynchronously yielding to event loop
+      setImmediate(() => {
+        try {
+          if (isCancelled) return;
+          const envelope = this.runScan(dto);
+
+          let eventIdx = 0;
+          const emitNext = () => {
+            if (isCancelled || subscriber.closed) return;
+
+            if (eventIdx < envelope.events.length) {
+              const event = envelope.events[eventIdx++];
+              subscriber.next({ data: event });
+              // Yield each event to the event loop
+              setTimeout(emitNext, 10);
+            } else {
+              subscriber.complete();
+            }
+          };
+
+          emitNext();
+        } catch (err) {
+          subscriber.error(err);
+        }
+      });
+
+      return () => {
+        isCancelled = true;
+      };
+    });
   }
 }

@@ -99,6 +99,35 @@ export function clampDate(date: unknown): Date {
   return cloned;
 }
 
+/**
+ * Parses YYYY-MM-DD or YYYY-M-D into a local Date without timezone offset distortion.
+ * Returns null if invalid. Clamps result to supported year range.
+ */
+export function parseIsoDate(value: unknown): Date | null {
+  if (typeof value !== 'string') return null;
+  const match = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(value.trim());
+  if (!match) return null;
+  const y = parseInt(match[1], 10);
+  const m = parseInt(match[2], 10);
+  const d = parseInt(match[3], 10);
+  if (m < 1 || m > 12 || d < 1 || d > 31) return null;
+  const date = new Date(y, m - 1, d);
+  if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) {
+    return null;
+  }
+  return clampDate(date);
+}
+
+/**
+ * Formats a Date object into YYYY-MM-DD string in local civil time.
+ */
+export function toIsoDateString(d: Date): string {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 // ══════════════════════════════════════════════════════════
 // DOM Side Effects & Transition Management
 // ══════════════════════════════════════════════════════════

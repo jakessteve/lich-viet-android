@@ -33,6 +33,30 @@ export const ESOTERIC_TERMS: Record<string, { title: string; explanation: string
       'Hệ thống 28 chòm sao thiên văn cổ đại phân bố theo 4 phương (Thanh Long, Bạch Hổ, Chu Tước, Huyền Vũ), dùng để phân định cát hung khi khởi sự việc lớn.',
     category: 'Trực & Tú',
   },
+  'Cát thần': {
+    title: 'Cát Thần (Sao Tốt)',
+    explanation:
+      'Các cát tinh và phúc thần trợ mệnh trong ngày (như Thiên Đức, Nguyệt Đức, Thiên Hỷ, Tuế Đức), giúp giải trừ tai ách và tăng cường vận may khi hành sự.',
+    category: 'Cát Thần',
+  },
+  'Hung thần': {
+    title: 'Hung Thần (Sao Xấu)',
+    explanation:
+      'Các hung tinh mang trường khí xung hại (như Thụ Tử, Sát Chủ, Thiên Cương, Hoang Vu), nhắc nhở mệnh chủ cần kiêng kỵ các việc đại sự tương ứng.',
+    category: 'Hung Thần',
+  },
+  'Tú': {
+    title: 'Thập Nhị Bát Tú (28 Chòm Sao)',
+    explanation:
+      'Chòm sao cai quản ngày theo vòng chuyển dịch 28 thiên tú, xác định ngày cát hay hung cho các việc như xuất hành, cưới hỏi, mai táng.',
+    category: 'Trực & Tú',
+  },
+  'Ngũ hành': {
+    title: 'Ngũ Hành Tương Sinh Tương Khắc',
+    explanation:
+      'Hệ thống 5 yếu tố cơ bản (Kim, Mộc, Thủy, Hỏa, Thổ) vận động và chuyển hóa liên tục, quy định mối tương quan giữa Can Chi ngày và mệnh chủ.',
+    category: 'Ngũ Hành',
+  },
   'Hoàng Đạo': {
     title: 'Ngày / Giờ Hoàng Đạo',
     explanation:

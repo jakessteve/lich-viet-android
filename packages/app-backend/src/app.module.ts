@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { DatabaseModule } from './db/database.module.js';
 import { CalendarModule } from './modules/calendar/calendar.module.js';
 import { TuViModule } from './modules/tuvi/tuvi.module.js';
 import { AstrologyModule } from './modules/astrology/astrology.module.js';
@@ -10,6 +11,7 @@ import { SyncModule } from './modules/sync/sync.module.js';
 
 @Module({
   imports: [
+    DatabaseModule,
     AuthModule,
     UsersModule,
     CalendarModule,
@@ -21,4 +23,5 @@ import { SyncModule } from './modules/sync/sync.module.js';
   ],
 })
 export class AppModule {}
+
 

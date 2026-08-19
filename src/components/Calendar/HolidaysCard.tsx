@@ -1,6 +1,6 @@
 import React from 'react';
 import { HolidayEntry } from '../../hooks/useHolidays';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import CollapsibleCard from '../CollapsibleCard';
 import { Badge } from '@/components/ui/badge';
 import { CalendarHeart, Clock } from 'lucide-react';
 
@@ -23,24 +23,28 @@ const HolidaysCard: React.FC<HolidaysCardProps> = ({ holidays, isLoading, countr
     return null;
   }
 
+  const titleNode = (
+    <div className="flex items-center gap-2 font-semibold text-sm">
+      <CalendarHeart className="h-4 w-4 text-gold dark:text-gold-dark" />
+      <span>Ngày lễ sắp tới (14 ngày){countryName && !isVietnam ? ` — ${countryName}` : ''}</span>
+    </div>
+  );
+
+  const headerRightNode = holidays.length > 0 ? (
+    <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-gold/10 text-text-primary-light dark:text-gold-dark">
+      {holidays.length} ngày lễ
+    </span>
+  ) : null;
+
   return (
-    <Card className="rounded-2xl border border-border-light/60 dark:border-border-dark/60 overflow-hidden shadow-apple">
-      {/* Header */}
-      <CardHeader className="py-3 px-5 border-b border-border-light/40 dark:border-border-dark/40 bg-surface-subtle-light dark:bg-surface-subtle-dark">
-        <CardTitle className="font-semibold text-sm tracking-tight text-text-primary-light dark:text-text-primary-dark flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <CalendarHeart className="h-4 w-4 text-gold dark:text-gold-dark" />
-            <span>Ngày lễ sắp tới (14 ngày){countryName && !isVietnam ? ` — ${countryName}` : ''}</span>
-          </div>
-          {holidays.length > 0 && (
-            <span className="text-[11px] font-medium px-2 py-0.5 rounded-full bg-gold/10 text-text-primary-light dark:text-gold-dark">
-              {holidays.length} ngày lễ
-            </span>
-          )}
-        </CardTitle>
-      </CardHeader>
-      {/* Body */}
-      <CardContent className="px-5 py-4 space-y-3.5">
+    <CollapsibleCard
+      title={titleNode}
+      defaultOpen={false}
+      collapseOnMobile={true}
+      headerRight={headerRightNode}
+      className="shadow-apple"
+    >
+      <div className="p-4 space-y-3">
         {isLoading ? (
           <div className="flex items-center gap-3 py-2 animate-pulse">
             <div className="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700" />
@@ -111,8 +115,8 @@ const HolidaysCard: React.FC<HolidaysCardProps> = ({ holidays, isLoading, countr
             );
           })
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </CollapsibleCard>
   );
 };
 

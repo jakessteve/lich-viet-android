@@ -5,6 +5,7 @@ import { useAstrologyStore } from '../../../stores/astrologyStore';
 import { SegmentedControl } from '../../shared';
 import { WesternChartDisplay } from '../Western/WesternChartDisplay';
 import { SynastryRadarChart } from './SynastryRadarChart';
+import { getScoreToneColor } from '@/utils/chartThemeTokens';
 
 const TAB_OPTIONS = [
   { id: 'synastry', label: 'Hợp Lá Số', icon: 'favorite', shortLabel: 'Hợp' },
@@ -17,7 +18,7 @@ type ResultTab = (typeof TAB_OPTIONS)[number]['id'];
 function ScoreRing({ score }: { score: number }) {
   const circumference = 2 * Math.PI * 42;
   const offset = circumference * (1 - score / 100);
-  const tone = score >= 70 ? '#10b981' : score >= 45 ? '#f59e0b' : '#ef4444';
+  const tone = getScoreToneColor(score);
   return (
     <div className="relative w-28 h-28 mx-auto">
       <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">

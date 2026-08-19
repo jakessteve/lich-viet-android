@@ -90,8 +90,16 @@ function getMutualHexagram(upperTrigram, lowerTrigram) {
   };
 }
 
+const SEASONAL_STRENGTH_MAP = {
+  metal: { 1: "tu", 2: "tu", 3: "tu", 4: "tu", 5: "tu", 6: "tu", 7: "vuong", 8: "vuong", 9: "vuong", 10: "tuong", 11: "tuong", 12: "tuong" },
+  water: { 1: "huu", 2: "huu", 3: "huu", 4: "tu", 5: "tu", 6: "tu", 7: "tuong", 8: "tuong", 9: "tuong", 10: "vuong", 11: "vuong", 12: "vuong" },
+  wood:  { 1: "vuong", 2: "vuong", 3: "vuong", 4: "tuong", 5: "tuong", 6: "tuong", 7: "tu", 8: "tu", 9: "tu", 10: "huu", 11: "huu", 12: "huu" },
+  fire:  { 1: "tuong", 2: "tuong", 3: "tuong", 4: "vuong", 5: "vuong", 6: "vuong", 7: "tu", 8: "tu", 9: "tu", 10: "tu", 11: "tu", 12: "tu" },
+  earth: { 1: "tu", 2: "tu", 3: "vuong", 4: "tuong", 5: "tuong", 6: "vuong", 7: "vuong", 8: "vuong", 9: "vuong", 10: "tu", 11: "tu", 12: "vuong" }
+};
+
 export function calculateTraditionalMaiHoa(params) {
-  const { yearChi, lunarMonth, lunarDay, hourChi, customNumbers } = params;
+  const { yearChi, lunarMonth = 1, lunarDay = 1, hourChi, customNumbers } = params;
   
   let upperNum, lowerNum, movingLine;
   
@@ -128,8 +136,18 @@ export function calculateTraditionalMaiHoa(params) {
   const changedLower = getTrigramFromBinary([changedBinary[0], changedBinary[1], changedBinary[2]]);
   const changedUpper = getTrigramFromBinary([changedBinary[3], changedBinary[4], changedBinary[5]]);
   
+  const strength = SEASONAL_STRENGTH_MAP[bodyTrigram.element]?.[lunarMonth] || "binh";
+  const theDungRel = getElementRelationship(bodyTrigram, useTrigram);
+  const totalBaseCount = upperTrigram.number + lowerTrigram.number;
+  
+  const ungKy = {
+    timing: strength === "vuong" ? "fast" : strength === "tuong" ? "medium" : "slow",
+    estimatedCount: strength === "vuong" ? Math.max(1, totalBaseCount % 12) : Math.max(1, Math.ceil(totalBaseCount / 2)),
+    estimatedUnit: strength === "vuong" ? "ngày" : "tuần"
+  };
+
   return {
-    status: "bounded_specialist_ready",
+    status: "specialist_layer_ready",
     mainHexagram: {
       id: mainHexagramId,
       upper: upperTrigram,
@@ -150,7 +168,9 @@ export function calculateTraditionalMaiHoa(params) {
       bodyTrigram,
       useTrigram,
       movingTrigram,
-      relationship: getElementRelationship(bodyTrigram, useTrigram)
-    }
+      relationship: theDungRel,
+      bodyStrength: strength
+    },
+    ungKy
   };
 }

@@ -11,7 +11,43 @@ import {
   DateRange,
   AsyncCalculationRequest,
   HybridElectionTimeline,
+  TuViBirthInput,
+  TuViChartDto,
+  WesternChartInput,
+  WesternNatalChartDto,
+  VedicChartInput,
+  SynastryInput,
+  MaiHoaInput,
+  TamThucInput,
+  TamThucSynthesisDto,
+  ApiEnvelope,
 } from '@lich-viet/contracts';
+
+export type { ApiEnvelope };
+
+export class ApiClientError extends Error {
+  public readonly code: string;
+  public readonly statusCode: number;
+  public readonly details?: unknown;
+  public readonly traceId?: string;
+
+  constructor(
+    message: string,
+    options: {
+      code?: string;
+      statusCode: number;
+      details?: unknown;
+      traceId?: string;
+    },
+  ) {
+    super(message);
+    this.name = 'ApiClientError';
+    this.code = options.code || 'API_ERROR';
+    this.statusCode = options.statusCode;
+    this.details = options.details;
+    this.traceId = options.traceId;
+  }
+}
 
 export class LichVietApiClient {
   private baseUrl: string;
@@ -43,27 +79,53 @@ export class LichVietApiClient {
       headers,
     });
 
-    if (!response.ok) {
-      if (response.status === 401 && typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('lichviet:unauthorized', { detail: { path } }));
-      }
-      let errorMessage = `HTTP ${response.status} ${response.statusText}`;
-      try {
-        const errorBody = await response.json();
-        if (errorBody && errorBody.message) {
-          errorMessage = errorBody.message;
-        }
-      } catch {
-        // ignore json parse error
-      }
-      throw new Error(errorMessage);
-    }
-
     if (response.status === 204) {
       return undefined as unknown as T;
     }
 
-    return response.json();
+    let parsedBody: unknown;
+    try {
+      parsedBody = await response.json();
+    } catch {
+      // Body not JSON
+    }
+
+    if (!response.ok) {
+      if (response.status === 401 && typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('lichviet:unauthorized', { detail: { path } }));
+      }
+
+      const envelope = parsedBody as ApiEnvelope | undefined;
+      const errorCode = envelope?.error?.code || (parsedBody as { error?: string })?.error || 'HTTP_ERROR';
+      const errorMessage =
+        envelope?.error?.message ||
+        (parsedBody as { message?: string })?.message ||
+        `HTTP ${response.status} ${response.statusText}`;
+      const errorDetails = envelope?.error?.details || (parsedBody as { details?: unknown })?.details;
+      const traceId = envelope?.meta?.traceId;
+
+      throw new ApiClientError(errorMessage, {
+        code: errorCode,
+        statusCode: response.status,
+        details: errorDetails,
+        traceId,
+      });
+    }
+
+    const envelope = parsedBody as ApiEnvelope<T> | undefined;
+    if (envelope && typeof envelope === 'object' && 'ok' in envelope) {
+      if (envelope.ok === false) {
+        throw new ApiClientError(envelope.error?.message || 'Yêu cầu không thành công', {
+          code: envelope.error?.code || 'OPERATION_FAILED',
+          statusCode: response.status,
+          details: envelope.error?.details,
+          traceId: envelope.meta?.traceId,
+        });
+      }
+      return envelope.data as T;
+    }
+
+    return parsedBody as T;
   }
 
   // ── Auth Endpoints ──────────────────────────────────────────
@@ -91,7 +153,6 @@ export class LichVietApiClient {
   async loginWithSocial(payload: SocialTokenPayload): Promise<AuthResult> {
     return this.socialAuth(payload);
   }
-
 
   async getProfile(): Promise<UserProfile> {
     return this.fetchJson<UserProfile>('/v1/users/me');
@@ -146,43 +207,43 @@ export class LichVietApiClient {
     });
   }
 
-  async calculateTuViChart(data: unknown): Promise<unknown> {
-    return this.fetchJson('/v1/tu-vi/chart', {
+  async calculateTuViChart(data: TuViBirthInput): Promise<TuViChartDto> {
+    return this.fetchJson<TuViChartDto>('/v1/tu-vi/chart', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async calculateWesternChart(data: unknown): Promise<unknown> {
-    return this.fetchJson('/v1/astrology/western', {
+  async calculateWesternChart(data: WesternChartInput): Promise<WesternNatalChartDto> {
+    return this.fetchJson<WesternNatalChartDto>('/v1/astrology/western', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async calculateVedicChart(data: unknown): Promise<unknown> {
+  async calculateVedicChart(data: VedicChartInput): Promise<unknown> {
     return this.fetchJson('/v1/astrology/vedic', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async calculateSynastry(data: unknown): Promise<unknown> {
+  async calculateSynastry(data: SynastryInput): Promise<unknown> {
     return this.fetchJson('/v1/astrology/synastry', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async calculateMaiHoa(data: unknown): Promise<unknown> {
+  async calculateMaiHoa(data: MaiHoaInput): Promise<unknown> {
     return this.fetchJson('/v1/divination/mai-hoa', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async calculateTamThuc(data: unknown): Promise<unknown> {
-    return this.fetchJson('/v1/divination/tam-thuc', {
+  async calculateTamThuc(data: TamThucInput): Promise<TamThucSynthesisDto> {
+    return this.fetchJson<TamThucSynthesisDto>('/v1/divination/tam-thuc', {
       method: 'POST',
       body: JSON.stringify(data),
     });

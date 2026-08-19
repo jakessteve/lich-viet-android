@@ -1,8 +1,3 @@
-// ── Mai Hoa Dịch Số — Divination Interpretation Engine ─────────
-// Epic 3 (US_MH_06 → US_MH_08): Pure functions for Ngũ Hành assessment,
-// temporal influence, and hexagram meaning lookup.
-// All inputs as parameters, all outputs explicit. No side effects.
-
 import type {
   NguHanh,
   NguHanhRelation,
@@ -15,6 +10,7 @@ import type {
   HaoText,
   HexagramCategoryPredictions,
   MovingLinePrediction,
+  UngKyResult,
 } from '../types/maiHoa';
 
 import type { Season } from './constants';
@@ -481,6 +477,57 @@ function validateDivinationResult(result: DivinationResult): void {
  * @param lunarMonth - The lunar month (1–12) for temporal influence
  * @returns A complete DivineReadingSummary
  */
+/**
+ * Calculates Ứng Kỳ (timing of manifestation) based on Thể strength and Tiên Thiên count.
+ */
+export function calculateUngKy(result: DivinationResult, strength: ElementStrength): UngKyResult {
+  const theTrigramId = result.theTrigram === 'upper' ? result.mainHexagram.upper : result.mainHexagram.lower;
+  const dungTrigramId = result.dungTrigram === 'upper' ? result.mainHexagram.upper : result.mainHexagram.lower;
+  const baseCount = theTrigramId + dungTrigramId;
+  const theDungRel = getElementInteraction(result.elements.theElement, result.elements.dungElement);
+
+  if (strength === 'Vượng' || (theDungRel === 'Bị Sinh' && strength === 'Tướng')) {
+    const days = Math.max(1, baseCount % 12);
+    return {
+      timing: 'fast',
+      timingLabel: 'Mau chóng phát ứng',
+      estimatedCount: days,
+      estimatedUnit: 'ngày',
+      explanation: `Thể đang ${strength}, ${theDungRel === 'Bị Sinh' ? 'được Dụng sinh trợ' : 'khí lực cực thịnh'}, sự việc dự kiến ứng nghiệm nhanh trong khoảng ${days} ngày (hoặc giờ tương ứng).`,
+    };
+  }
+
+  if (strength === 'Tướng' || theDungRel === 'Tỷ Hòa') {
+    const weeks = Math.max(1, Math.ceil(baseCount / 2));
+    return {
+      timing: 'medium',
+      timingLabel: 'Ứng nghiệm bình hòa',
+      estimatedCount: weeks,
+      estimatedUnit: 'tuần',
+      explanation: `Thể đang ${strength}, tiến trình diễn ra thuận lý tuần tự, dự kiến phát ứng trong khoảng ${weeks} tuần.`,
+    };
+  }
+
+  if (strength === 'Hưu') {
+    const months = Math.max(1, Math.min(6, (baseCount % 6) + 1));
+    return {
+      timing: 'slow',
+      timingLabel: 'Chậm rãi phát ứng',
+      estimatedCount: months,
+      estimatedUnit: 'tháng',
+      explanation: `Thể đang Hưu (nghỉ ngơi dưỡng khí), cần chờ đợi thời cơ hoặc khoảng ${months} tháng.`,
+    };
+  }
+
+  return {
+    timing: 'unlikely',
+    timingLabel: 'Khó thành hoặc ứng rất muộn',
+    estimatedCount: baseCount,
+    estimatedUnit: 'tháng',
+    explanation: `Thể đang ${strength} ${theDungRel === 'Bị Khắc' ? 'lại bị Dụng khắc chế' : 'khí lực suy thoái'}, sự việc gặp trắc trở, cần kiên trì phòng thủ hoặc chuyển hướng.`,
+  };
+}
+
 export function interpretDivination(result: DivinationResult, lunarMonth: number): DivineReadingSummary {
   if (lunarMonth < 1 || lunarMonth > 12) {
     throw new RangeError(`Invalid lunar month: ${lunarMonth}. Must be 1–12.`);
@@ -513,6 +560,9 @@ export function interpretDivination(result: DivinationResult, lunarMonth: number
     season,
     result.mainHexagram,
   );
+
+  // Ứng Kỳ timing calculation
+  const ungKy = calculateUngKy(result, strength);
 
   // Extended content (optional — only present for hexagrams with rich data)
   const prophecy = result.mainHexagram.prophecy;
@@ -549,5 +599,6 @@ export function interpretDivination(result: DivinationResult, lunarMonth: number
     // ── Enriched Analysis ──
     hoQueAnalysis: analyzeSecondaryHexagram(result.mutualHexagram, theElement, 'Hỗ'),
     bienQueAnalysis: analyzeSecondaryHexagram(result.changedHexagram, theElement, 'Biến'),
+    ungKy,
   };
 }

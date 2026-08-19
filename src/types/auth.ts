@@ -1,77 +1,50 @@
-// ══════════════════════════════════════════════════════════
-// Auth Type Definitions
-// ══════════════════════════════════════════════════════════
+import type {
+  UserProfile,
+  UserTier as ContractUserTier,
+  BasicProfile as ContractBasicProfile,
+  ExtendedProfile as ContractExtendedProfile,
+  LoginInput,
+  RegisterInput,
+  SocialTokenPayload,
+  AuthResult,
+} from '@lich-viet/contracts';
 
-/** Supported authentication providers */
-export type AuthProvider = 'email' | 'google' | 'facebook';
+export type { BasicProfile, ExtendedProfile, SocialTokenPayload, AuthResult } from '@lich-viet/contracts';
+export type UserTier = ContractUserTier;
+export type AuthProvider = 'email' | 'google' | 'facebook' | 'apple' | 'zalo';
 
 /**
- * User access tiers.
- * - guest: Not logged in. No personalization.
- * - free:  Logged in, basic access.
- * - premium: Logged in, premium access.
- * - admin: Logged in, admin access.
+ * User model aligned with @lich-viet/contracts UserProfile
  */
-export type UserTier = 'guest' | 'free' | 'premium' | 'admin';
-
-/** Astrological basic profile for personalization */
-export interface BasicProfile {
-  birthYear?: number;
-  birthMonth?: number;
-  birthDay?: number;
-  birthHour?: number;
-  birthMinute?: number;
-  gender?: 'male' | 'female';
-}
-
-/** Extended profile for advanced astrology requiring birth time/location */
-export interface ExtendedProfile {
-  birthTime?: string; // HH:MM
-  birthLocation?: {
-    lat: number;
-    lng: number;
-    city: string;
-    countryCode?: string;
-    countryName?: string;
-  };
-  baziDayMaster?: { stem: string; element: string };
-  truongSinhPhase?: string;
-  thanSat?: string[];
-  tuanKhong?: string[]; // Void branches
-  natalChartCached?: Record<string, unknown>;
-}
-
-/** User profile */
 export interface User {
   id: string;
   email: string;
   displayName: string;
-  /** Account access tier for UI labels and feature gating */
+  name?: string;
   accessTier?: Exclude<UserTier, 'guest'>;
+  tier?: UserTier;
   avatarUrl?: string;
-  /** ISO date string YYYY-MM-DD */
   birthday?: string;
-  /** Personalization profile containing astrological details */
-  profile?: BasicProfile;
-  extendedProfile?: ExtendedProfile;
+  profile?: ContractBasicProfile;
+  extendedProfile?: ContractExtendedProfile;
   provider: AuthProvider;
+  role?: 'user' | 'admin';
   createdAt: string;
+  updatedAt?: string;
 }
 
-/** Login credentials */
 export interface LoginCredentials {
   email: string;
-  password: string;
+  password?: string;
 }
 
-/** Registration data */
 export interface RegisterData {
-  displayName: string;
+  displayName?: string;
+  name?: string;
   email: string;
-  password: string;
+  password?: string;
 }
 
-/** Auth state for the store */
 export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;

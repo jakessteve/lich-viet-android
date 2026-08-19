@@ -31,37 +31,37 @@ function getHourColor(
   if (score !== undefined) {
     if (score >= 70)
       return {
-        bg: 'bg-emerald-50/80 dark:bg-emerald-900/15',
-        text: 'text-emerald-600 dark:text-emerald-400',
-        ring: 'ring-emerald-300/40 dark:ring-emerald-600/30',
-        dot: 'bg-emerald-500',
+        bg: 'bg-good/10 dark:bg-good-dark/15',
+        text: 'text-good dark:text-good-dark',
+        ring: 'ring-good/30 dark:ring-good-dark/30',
+        dot: 'bg-good dark:bg-good-dark',
       };
     if (score >= 50)
       return {
-        bg: 'bg-amber-50/60 dark:bg-amber-900/10',
-        text: 'text-amber-800 dark:text-amber-300',
-        ring: 'ring-amber-300/40 dark:ring-amber-600/30',
-        dot: 'bg-amber-500',
+        bg: 'bg-gold/10 dark:bg-gold-dark/15',
+        text: 'text-gold dark:text-gold-dark',
+        ring: 'ring-gold/30 dark:ring-gold-dark/30',
+        dot: 'bg-gold dark:bg-gold-dark',
       };
     return {
-      bg: 'bg-red-50/40 dark:bg-red-900/8',
-      text: 'text-red-600 dark:text-red-400',
-      ring: 'ring-red-300/30 dark:ring-red-600/20',
-      dot: 'bg-red-400',
+      bg: 'bg-bad/10 dark:bg-bad-dark/15',
+      text: 'text-bad dark:text-bad-dark',
+      ring: 'ring-bad/30 dark:ring-bad-dark/30',
+      dot: 'bg-bad dark:bg-bad-dark',
     };
   }
   if (isAuspicious)
     return {
-      bg: 'bg-emerald-50/80 dark:bg-emerald-900/10',
-      text: 'text-emerald-600 dark:text-emerald-400',
-      ring: 'ring-emerald-300/30',
-      dot: 'bg-emerald-500',
+      bg: 'bg-good/10 dark:bg-good-dark/10',
+      text: 'text-good dark:text-good-dark',
+      ring: 'ring-good/25',
+      dot: 'bg-good dark:bg-good-dark',
     };
   return {
-    bg: 'bg-white dark:bg-transparent',
+    bg: 'bg-surface-subtle-light/40 dark:bg-surface-elevated-dark/40',
     text: 'text-text-secondary-light dark:text-text-secondary-dark',
     ring: '',
-    dot: 'bg-red-400/60',
+    dot: 'bg-bad/50',
   };
 }
 

@@ -97,15 +97,16 @@ export default function HeroAuspiciousArt() {
 
         <g>
           {/* 2. BIG BOLD BÁT QUÁI RING (Zoomed +30%, 30% faster spin: 60s) */}
-          <g style={{ transform: 'scale(1.3)', transformOrigin: '400px 400px' }}>
-            <g
-              style={{
-                animation: 'spin 60s linear infinite',
-                transformBox: 'view-box',
-                transformOrigin: '400px 400px',
-                willChange: 'transform',
-              }}
-            >
+          <g transform="translate(400, 400) scale(1.3) translate(-400, -400)">
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 400 400"
+                to="360 400 400"
+                dur="60s"
+                repeatCount="indefinite"
+              />
               {trigrams.map((val, i) => {
                 const isInnerSolid = (val & 1) !== 0;
                 const isMidSolid = (val & 2) !== 0;
@@ -130,15 +131,16 @@ export default function HeroAuspiciousArt() {
           </g>
 
           {/* 3. CHÒM SAO (Constellations Void Filler, Zoomed +30% to 1.43x, 30% faster: 70s) */}
-          <g style={{ transform: 'scale(1.43)', transformOrigin: '400px 400px' }}>
-            <g
-              style={{
-                animation: 'spin 70s linear infinite reverse',
-                transformBox: 'view-box',
-                transformOrigin: '400px 400px',
-                willChange: 'transform',
-              }}
-            >
+          <g transform="translate(400, 400) scale(1.43) translate(-400, -400)">
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="360 400 400"
+                to="0 400 400"
+                dur="70s"
+                repeatCount="indefinite"
+              />
               {[0, 72, 144, 216, 288].map((angle) => (
                 <use
                   key={`c1-${angle}`}
@@ -148,24 +150,14 @@ export default function HeroAuspiciousArt() {
                   transform={`rotate(${angle} 400 400)`}
                 />
               ))}
-              {[36, 108, 180, 252, 324].map((angle) => (
-                <use
-                  key={`c2-${angle}`}
-                  href={`#${constGroup2Id}`}
-                  x="520"
-                  y="260"
-                  transform={`rotate(${angle} 400 400)`}
-                />
-              ))}
-              {/* Dense Background starry dust filling the gap */}
-              {[...Array(80)].map((_, i) => {
-                const r = 90 + ((i * 17) % 140);
-                const angle = (i * 137.5) % 360;
-                const size = i % 3 === 0 ? 2 : i % 5 === 0 ? 2.5 : 1;
-                const op = 0.2 + (i % 7) * 0.1;
+              {Array.from({ length: 48 }).map((_, idx) => {
+                const angle = (idx * 360) / 48;
+                const r = 240 + ((idx * 17) % 70);
+                const size = 1.2 + (idx % 3) * 0.8;
+                const op = 0.3 + (idx % 5) * 0.12;
                 return (
                   <circle
-                    key={`star-${i}`}
+                    key={`dust-${idx}`}
                     cx={400 + r * Math.cos((angle * Math.PI) / 180)}
                     cy={400 + r * Math.sin((angle * Math.PI) / 180)}
                     r={size}
@@ -177,20 +169,21 @@ export default function HeroAuspiciousArt() {
             </g>
           </g>
 
-          {/* 4. TAIJI / ÂM DƯƠNG (Centerpiece Zoomed to 1.85x, 30% faster spin: 80s) */}
-          <g style={{ transform: 'scale(1.85)', transformOrigin: '400px 400px' }}>
+          {/* 4. TAIJI / ÂM DƯƠNG (Centerpiece Zoomed to 1.85x, 30% faster spin: 60s) */}
+          <g transform="translate(400, 400) scale(1.85) translate(-400, -400)">
             {/* Core background aura */}
             <circle cx="400" cy="400" r="72" fill={`url(#${goldGradId})`} opacity="0.12" />
 
             {/* Rotating Taiji Symbol (synchronized with Bagua at 60s) */}
-            <g
-              style={{
-                animation: 'spin 60s linear infinite',
-                transformBox: 'view-box',
-                transformOrigin: '400px 400px',
-                willChange: 'transform',
-              }}
-            >
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 400 400"
+                to="360 400 400"
+                dur="60s"
+                repeatCount="indefinite"
+              />
               <circle cx="400" cy="400" r="54" stroke={`url(#${goldGradId})`} strokeWidth="3" fill="none" opacity="0.95" />
 
               {/* S-curve path representing the Yin/Yang split */}

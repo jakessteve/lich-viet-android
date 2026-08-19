@@ -322,9 +322,31 @@ export default function TheoryCard({
             </div>
             <div className="card-subtle">
               <span className="label-standard block mb-2">Kết luận tổng hợp</span>
-              <p className="text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark whitespace-pre-line">
-                {summary.detailedExplanation}
-              </p>
+              <div className="space-y-2 text-sm leading-relaxed text-text-primary-light dark:text-text-primary-dark">
+                {summary.detailedExplanation.split('\n').map((line, idx) => {
+                  const bracketMatch = line.match(/^【([^】]+)】:?(.*)$/) || line.match(/^\[([^\]]+)\]:?(.*)$/);
+                  if (bracketMatch) {
+                    const [, title, content] = bracketMatch;
+                    return (
+                      <div key={idx} className="pt-1.5 first:pt-0">
+                        <span className="font-bold text-gold dark:text-gold-dark">{title}</span>
+                        {content && <span>: {content.trim()}</span>}
+                      </div>
+                    );
+                  }
+                  if (line.startsWith('• ') || line.startsWith('→ ')) {
+                    return (
+                      <div key={idx} className="pl-3 text-xs sm:text-sm text-text-secondary-light dark:text-text-secondary-dark">
+                        {line}
+                      </div>
+                    );
+                  }
+                  if (!line.trim()) {
+                    return <div key={idx} className="h-1" />;
+                  }
+                  return <div key={idx}>{line}</div>;
+                })}
+              </div>
             </div>
           </div>
         </CollapsibleSection>
